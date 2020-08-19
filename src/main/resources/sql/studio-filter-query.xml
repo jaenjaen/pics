@@ -12,7 +12,7 @@
 	<association property="category" javaType="category">
 		<result column="category" property="category"/>
 	</association>
-	<association property="studiofilter" javaType="studiofilter">
+	<association property="studioFilter" javaType="studioFilter">
 		<result column="size" property="size"/>
 		<result column="options" property="options"/>
 		<result column="parking" property="parking"/>
@@ -31,7 +31,7 @@
 	</association>
 	</resultMap>
 
-	<sql id="Studio_Filter">
+	<sql id="studioFilter">
 	SELECT
 	s.stu_id, s.name, s.desc, s.main_img,
 	s.category,
@@ -63,7 +63,7 @@
 	</sql>
 
 	<select id="showAllStudio" resultMap="stuRM">
-		<include refid="Select_Filter"/>
+		<include refid="studioFilter"/>
 	</select>
 
 </mapper>

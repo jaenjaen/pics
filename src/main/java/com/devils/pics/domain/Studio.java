@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Studio {
 	private int stdId;
-	private String category;
 	private String name;
 	private String desc;
 	private String rule;
@@ -17,14 +16,15 @@ public class Studio {
 	private ArrayList<RepeatDate> repeatDate;
 	private Company company;
 	private ExceptionDate exceptionDate;
+	private Category category;
 	
 	public Studio() {}
-	
-	public Studio(int stdId, String category, String name, String desc, String rule, int filterId, String mainImg,
-			String portImg, String cadImg, int floor, StudioFilter studioFilter, ArrayList<RepeatDate> repeatDate,
-			Company company, ExceptionDate exceptionDate) {
+
+	public Studio(int stdId, String name, String desc, String rule, int filterId, String mainImg, String portImg,
+			String cadImg, int floor, StudioFilter studioFilter, ArrayList<RepeatDate> repeatDate, Company company,
+			ExceptionDate exceptionDate, Category category) {
+		super();
 		this.stdId = stdId;
-		this.category = category;
 		this.name = name;
 		this.desc = desc;
 		this.rule = rule;
@@ -37,6 +37,7 @@ public class Studio {
 		this.repeatDate = repeatDate;
 		this.company = company;
 		this.exceptionDate = exceptionDate;
+		this.category = category;
 	}
 
 	public int getStdId() {
@@ -45,14 +46,6 @@ public class Studio {
 
 	public void setStdId(int stdId) {
 		this.stdId = stdId;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 	public String getName() {
@@ -151,14 +144,21 @@ public class Studio {
 		this.exceptionDate = exceptionDate;
 	}
 
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
-		return "Studio [stdId=" + stdId + ", category=" + category + ", name=" + name + ", desc=" + desc + ", rule="
-				+ rule + ", filterId=" + filterId + ", mainImg=" + mainImg + ", portImg=" + portImg + ", cadImg="
-				+ cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter + ", repeatDate=" + repeatDate
-				+ ", company=" + company + ", exceptionDate=" + exceptionDate + "]";
+		return "Studio [stdId=" + stdId + ", name=" + name + ", desc=" + desc + ", rule=" + rule + ", filterId="
+				+ filterId + ", mainImg=" + mainImg + ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor
+				+ ", studioFilter=" + studioFilter + ", repeatDate=" + repeatDate + ", company=" + company
+				+ ", exceptionDate=" + exceptionDate + ", category=" + category + "]";
 	}
-	
 	
 	
 }

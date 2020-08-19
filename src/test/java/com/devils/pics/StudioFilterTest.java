@@ -13,6 +13,9 @@ class StudioFilterTest {
 	
 	@Test
 	void contextLoads() {
+		final String NS = "StudioFilterMapper.";
+		//showAllStudio
+		System.out.println(session.selectList(NS+"showAllStudio"));
 	}
 
 }

@@ -16,8 +16,14 @@ class StudioInfoTest {
 	@Test
 	void contextLoads() {
 		String NS = "StudioInfoMapper.";
-		Studio vo=sqlSession.selectOne(NS+"getStudioInfo",1);
+		Studio vo =sqlSession.selectOne(NS+"getStudioInfo",1);
 		System.out.println(vo);
+	}
+	
+	@Test
+	public void getCategoryId() {
+		Studio studio = new Studio(); 
+		sqlSession.insert("StudioInfoMapper.getCategoryId", studio);
 	}
 
 }

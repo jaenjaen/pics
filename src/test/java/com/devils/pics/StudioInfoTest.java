@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PicExtraTest {
+class StudioInfoTest {
 
 	@Autowired
 	  private SqlSession session;

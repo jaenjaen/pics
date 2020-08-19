@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.devils.pics.domain.Company;
 
 @SpringBootTest
-class PicCompanyTest {
+class CompanyTest {
 	
 	@Autowired
 	  private SqlSession session;

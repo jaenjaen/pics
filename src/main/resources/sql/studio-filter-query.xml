@@ -22,8 +22,8 @@
 		<result column="address" property="address"/>
 		<result column="max_capacity" property="maxCapacity"/>
 		<result column="filter_id" property="filterId"/>
-		<association property="tag" javaType="tag">
-			<result column="tag" property="tag"/>
+		<association property="tag" javaType="ArrayList">
+			<result column="Tag" property="Tag"/>
 		</association>
 	</association>
 	<association property="review" javaType="review">

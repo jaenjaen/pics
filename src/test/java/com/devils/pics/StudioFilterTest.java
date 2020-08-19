@@ -24,7 +24,7 @@ class StudioFilterTest {
 	public void registerStudioFilter() {
 		StudioFilter studioFilter = new StudioFilter(); 
 		studioFilter.setSize(120);
-		studioFilter.setOption("카메라/조명/포토그래퍼"); 
+		studioFilter.setOptions("카메라/조명/포토그래퍼"); 
 		studioFilter.setParking(4);
 		studioFilter.setUnitPrice(37000); studioFilter.setDefaultCapacity(3);
 		studioFilter.setExcharge(5000); studioFilter.setAddress("서울특별시 서초구 효령로 335");

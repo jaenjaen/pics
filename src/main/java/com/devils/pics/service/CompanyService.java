@@ -1,6 +1,8 @@
 package com.devils.pics.service;
 
-public interface CompanyService {
+import com.devils.pics.domain.Company;
 
+public interface CompanyService {
+	int registerCompany(Company company) throws Exception;
 }
 

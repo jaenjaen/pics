@@ -1,6 +1,8 @@
 package com.devils.pics.dao;
 
-public interface CompanyDAO {
+import com.devils.pics.domain.Company;
 
+public interface CompanyDAO {
+	int registerCompany(Company company) throws Exception;
 }
 

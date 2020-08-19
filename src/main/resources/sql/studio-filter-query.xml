@@ -3,25 +3,67 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="StudioFilterMapper">
-<sql id="SELECT_Filter">
-SELECT
-s.stu_id, s.com_id, s.category_id, s.name, s.desc, s.rule,
-s.filter_id, s.main_img, s.port_img, s.cad_img, floor,
-f.area, f.options, f.parking, f.unit_price, f.default_capacity,
-f.excharge, f.address, f.max_capacity
-FROM studio s 
-JOIN studui_filter f
-ON filter_id
-</sql>
 
 <resultMap type="studio" id="stuRM">
 <id column="stu_id" property="stdId"/>
-<result column="" property=""/>
-<result column="" property=""/>
+<result column="name" property="name"/>
+<result column="desc" property="desc"/>
+<result column="main_img" property="mainImg"/>
+<association property="category" javaType="category">
+	<result column="category" property="category"/>
+</association>
+<association property="studiofilter" javaType="studiofilter">
+	<result column="size" property="size"/>
+	<result column="options" property="options"/>
+	<result column="parking" property="parking"/>
+	<result column="unit_price" property="unitPrice"/>
+	<result column="default_capacity" property="defaultCapacity"/>
+	<result column="excharge" property="excharge"/>
+	<result column="address" property="address"/>
+	<result column="max_capacity" property="maxCapacity"/>
+	<result column="filter_id" property="filterId"/>
+	<association property="tag" javaType="tag">
+		<result column="tag" property="tag"/>
+	</association>
+</association>
+<association property="review" javaType="review">
+	<result column="avg" property="avgScore"/>
+</association>
 </resultMap>
 
-<select id="showAllStudio">
-<include refid="SELECT_Filter"/>
+<sql id="Studio_Filter">
+SELECT
+s.stu_id, s.name, s.desc, s.main_img,
+s.category,
+f.size, f.options, f.parking, f.unit_price, f.default_capacity,
+f.excharge, f.address, f.max_capacity, f.filter_id, f.tag,
+AVG(r.score) avg
+FROM (
+SELECT
+s.stu_id, s.name, s.desc, s.main_img, s.filter_id,
+c.category
+FROM studio s
+JOIN studio_category c
+ON s.category_id = c.category_id
+) s
+LEFT OUTER JOIN 
+(
+SELECT 
+f.size, f.options, f.parking, f.unit_price, f.default_capacity,
+f.excharge, f.address, f.max_capacity, f.filter_id,
+t.tag_dic_id, t.tag
+FROM studio_filter f
+JOIN tag_dic t
+ON f.filter_id = t.filter_id
+) f
+ON f.filter_id = s.filter_id
+LEFT OUTER JOIN review r
+ON s.stu_id = r.stu_id
+GROUP BY s.stu_id;
+</sql>
+
+<select id="showAllStudio" resultMap="stuRM">
+<include refid="Select_Filter"/>
 </select>
 
 

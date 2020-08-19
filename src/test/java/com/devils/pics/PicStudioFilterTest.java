@@ -15,12 +15,12 @@ class PicStudioFilterTest {
 
 	@Test
 	void contextLoads() throws IOException {
-		Reader r = Resources.getResourceAsReader("SqlMapConfig.xml");
+		Reader r = Resources.getResourceAsReader("config/SqlMapConfig.xml");
 		SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(r);
 		SqlSession session = factory.openSession();
-		
+		final String NS = "StudioFilterMapper.";
 		//showAllStudio
-		session.
+		session.selectList(NS+"showAllStudio");
 	}
 
 }

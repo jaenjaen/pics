@@ -4,37 +4,43 @@ import java.util.ArrayList;
 
 public class Studio {
 	private int stdId;
+	private int comId;
+	private int categoryId;
 	private String name;
 	private String desc;
 	private String rule;
+	private int filterId;
 	private String mainImg;
 	private String portImg;
 	private String cadImg;
 	private int floor;
 	private StudioFilter studioFilter;
 	private ArrayList<RepeatDate> repeatDate;
-	private ExceptionDate exceptionDate;
 	private Company company;
+	private ExceptionDate exceptionDate;
 	private Category category;
 	
 	public Studio() {}
 
-	public Studio(int stdId, String name, String desc, String rule, String mainImg, String portImg, String cadImg,
-			int floor, StudioFilter studioFilter, ArrayList<RepeatDate> repeatDate, ExceptionDate exceptionDate,
-			Company company, Category category) {
+	public Studio(int stdId, int comId, int categoryId, String name, String desc, String rule, int filterId,
+			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter,
+			ArrayList<RepeatDate> repeatDate, Company company, ExceptionDate exceptionDate, Category category) {
 		super();
 		this.stdId = stdId;
+		this.comId = comId;
+		this.categoryId = categoryId;
 		this.name = name;
 		this.desc = desc;
 		this.rule = rule;
+		this.filterId = filterId;
 		this.mainImg = mainImg;
 		this.portImg = portImg;
 		this.cadImg = cadImg;
 		this.floor = floor;
 		this.studioFilter = studioFilter;
 		this.repeatDate = repeatDate;
-		this.exceptionDate = exceptionDate;
 		this.company = company;
+		this.exceptionDate = exceptionDate;
 		this.category = category;
 	}
 
@@ -44,6 +50,22 @@ public class Studio {
 
 	public void setStdId(int stdId) {
 		this.stdId = stdId;
+	}
+
+	public int getComId() {
+		return comId;
+	}
+
+	public void setComId(int comId) {
+		this.comId = comId;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
 	}
 
 	public String getName() {
@@ -68,6 +90,14 @@ public class Studio {
 
 	public void setRule(String rule) {
 		this.rule = rule;
+	}
+
+	public int getFilterId() {
+		return filterId;
+	}
+
+	public void setFilterId(int filterId) {
+		this.filterId = filterId;
 	}
 
 	public String getMainImg() {
@@ -118,20 +148,20 @@ public class Studio {
 		this.repeatDate = repeatDate;
 	}
 
-	public ExceptionDate getExceptionDate() {
-		return exceptionDate;
-	}
-
-	public void setExceptionDate(ExceptionDate exceptionDate) {
-		this.exceptionDate = exceptionDate;
-	}
-
 	public Company getCompany() {
 		return company;
 	}
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+	public ExceptionDate getExceptionDate() {
+		return exceptionDate;
+	}
+
+	public void setExceptionDate(ExceptionDate exceptionDate) {
+		this.exceptionDate = exceptionDate;
 	}
 
 	public Category getCategory() {
@@ -144,10 +174,10 @@ public class Studio {
 
 	@Override
 	public String toString() {
-		return "Studio [stdId=" + stdId + ", name=" + name + ", desc=" + desc + ", rule=" + rule + ", mainImg="
-				+ mainImg + ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter="
-				+ studioFilter + ", repeatDate=" + repeatDate + ", exceptionDate=" + exceptionDate + ", company="
-				+ company + ", category=" + category + "]";
+		return "Studio [stdId=" + stdId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
+				+ ", desc=" + desc + ", rule=" + rule + ", filterId=" + filterId + ", mainImg=" + mainImg + ", portImg="
+				+ portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
+				+ ", repeatDate=" + repeatDate + ", company=" + company + ", exceptionDate=" + exceptionDate
+				+ ", category=" + category + "]";
 	}
-	
 }

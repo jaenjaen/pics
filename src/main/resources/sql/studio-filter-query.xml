@@ -3,4 +3,28 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="StudioFilterMapper">
+<sql id="SELECT_Filter">
+SELECT
+s.stu_id, s.com_id, s.category_id, s.name, s.desc, s.rule,
+s.filter_id, s.main_img, s.port_img, s.cad_img, floor,
+f.area, f.options, f.parking, f.unit_price, f.default_capacity,
+f.excharge, f.address, f.max_capacity
+FROM studio s 
+JOIN studui_filter f
+ON filter_id
+</sql>
+
+<resultMap type="studio" id="stuRM">
+<id column="stu_id" property="stdId"/>
+<result column="" property=""/>
+<result column="" property=""/>
+</resultMap>
+
+<select id="showAllStudio">
+<include refid="SELECT_Filter"/>
+</select>
+
+
+
+
 </mapper>

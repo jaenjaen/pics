@@ -10,10 +10,10 @@ public class Company {
 	private String tel;
 	private String desc;
 	private String logoImg;
-	private ArrayList<Studio> Studio;
+	private ArrayList<Studio> studio;
 	
-	public Company(String comId, String name, String address, String password, String tel, String desc,
-			String logoImg) {
+	public Company(String comId, String name, String address, String password, String tel, String desc, String logoImg,
+			ArrayList<Studio> studio) {
 		this.comId = comId;
 		this.name = name;
 		this.address = address;
@@ -21,84 +21,62 @@ public class Company {
 		this.tel = tel;
 		this.desc = desc;
 		this.logoImg = logoImg;
+		this.studio = studio;
 	}
-		
-	public Company() {}
-
-
+	
+	public Company() {
+	}
 	public String getComId() {
 		return comId;
 	}
-
 	public void setComId(String comId) {
 		this.comId = comId;
 	}
-
-
 	public String getName() {
 		return name;
 	}
-
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
 	public String getAddress() {
 		return address;
 	}
-
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-
 	public String getPassword() {
 		return password;
 	}
-
-
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-
 	public String getTel() {
 		return tel;
 	}
-
-
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-
-
 	public String getDesc() {
 		return desc;
 	}
-
-
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
-
 	public String getLogoImg() {
 		return logoImg;
 	}
-
-
 	public void setLogoImg(String logoImg) {
 		this.logoImg = logoImg;
 	}
-
-
+	public ArrayList<Studio> getStudio() {
+		return studio;
+	}
+	public void setStudio(ArrayList<Studio> studio) {
+		this.studio = studio;
+	}
 	@Override
 	public String toString() {
 		return "Company [comId=" + comId + ", name=" + name + ", address=" + address + ", password=" + password
-				+ ", tel=" + tel + ", desc=" + desc + ", logoImg=" + logoImg + "]";
+				+ ", tel=" + tel + ", desc=" + desc + ", logoImg=" + logoImg + ", studio=" + studio + "]";
 	}
-	
 }

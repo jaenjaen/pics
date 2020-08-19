@@ -1,10 +1,12 @@
 package com.devils.pics.domain;
 
 import java.util.ArrayList;
+import java.util.Locale.Category;
 
 public class Studio {
 	private int stdId;
-	private String category;
+	private int comId;
+	private int categoryId;
 	private String name;
 	private String desc;
 	private String rule;
@@ -17,14 +19,16 @@ public class Studio {
 	private ArrayList<RepeatDate> repeatDate;
 	private Company company;
 	private ExceptionDate exceptionDate;
+	private Category category;
 	
 	public Studio() {}
-	
-	public Studio(int stdId, String category, String name, String desc, String rule, int filterId, String mainImg,
-			String portImg, String cadImg, int floor, StudioFilter studioFilter, ArrayList<RepeatDate> repeatDate,
-			Company company, ExceptionDate exceptionDate) {
+	public Studio(int stdId, int comId, int categoryId, String name, String desc, String rule, int filterId,
+			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter,
+			ArrayList<RepeatDate> repeatDate, Company company, ExceptionDate exceptionDate, Category category) {
+		super();
 		this.stdId = stdId;
-		this.category = category;
+		this.comId = comId;
+		this.categoryId = categoryId;
 		this.name = name;
 		this.desc = desc;
 		this.rule = rule;
@@ -37,128 +41,112 @@ public class Studio {
 		this.repeatDate = repeatDate;
 		this.company = company;
 		this.exceptionDate = exceptionDate;
+		this.category = category;
 	}
-
+	
 	public int getStdId() {
 		return stdId;
 	}
-
 	public void setStdId(int stdId) {
 		this.stdId = stdId;
 	}
-
-	public String getCategory() {
-		return category;
+	public int getComId() {
+		return comId;
 	}
-
-	public void setCategory(String category) {
-		this.category = category;
+	public void setComId(int comId) {
+		this.comId = comId;
 	}
-
+	public int getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
 	public String getDesc() {
 		return desc;
 	}
-
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-
 	public String getRule() {
 		return rule;
 	}
-
 	public void setRule(String rule) {
 		this.rule = rule;
 	}
-
 	public int getFilterId() {
 		return filterId;
 	}
-
 	public void setFilterId(int filterId) {
 		this.filterId = filterId;
 	}
-
 	public String getMainImg() {
 		return mainImg;
 	}
-
 	public void setMainImg(String mainImg) {
 		this.mainImg = mainImg;
 	}
-
 	public String getPortImg() {
 		return portImg;
 	}
-
 	public void setPortImg(String portImg) {
 		this.portImg = portImg;
 	}
-
 	public String getCadImg() {
 		return cadImg;
 	}
-
 	public void setCadImg(String cadImg) {
 		this.cadImg = cadImg;
 	}
-
 	public int getFloor() {
 		return floor;
 	}
-
 	public void setFloor(int floor) {
 		this.floor = floor;
 	}
-
 	public StudioFilter getStudioFilter() {
 		return studioFilter;
 	}
-
 	public void setStudioFilter(StudioFilter studioFilter) {
 		this.studioFilter = studioFilter;
 	}
-
 	public ArrayList<RepeatDate> getRepeatDate() {
 		return repeatDate;
 	}
-
 	public void setRepeatDate(ArrayList<RepeatDate> repeatDate) {
 		this.repeatDate = repeatDate;
 	}
-
 	public Company getCompany() {
 		return company;
 	}
-
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-
 	public ExceptionDate getExceptionDate() {
 		return exceptionDate;
 	}
-
 	public void setExceptionDate(ExceptionDate exceptionDate) {
 		this.exceptionDate = exceptionDate;
 	}
-
-	@Override
-	public String toString() {
-		return "Studio [stdId=" + stdId + ", category=" + category + ", name=" + name + ", desc=" + desc + ", rule="
-				+ rule + ", filterId=" + filterId + ", mainImg=" + mainImg + ", portImg=" + portImg + ", cadImg="
-				+ cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter + ", repeatDate=" + repeatDate
-				+ ", company=" + company + ", exceptionDate=" + exceptionDate + "]";
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return "Studio [stdId=" + stdId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
+				+ ", desc=" + desc + ", rule=" + rule + ", filterId=" + filterId + ", mainImg=" + mainImg + ", portImg="
+				+ portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
+				+ ", repeatDate=" + repeatDate + ", company=" + company + ", exceptionDate=" + exceptionDate
+				+ ", category=" + category + "]";
+	}
 }

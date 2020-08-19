@@ -66,4 +66,9 @@
 		<include refid="Select_Filter"/>
 	</select>
 
+	<insert id="registerStudioFilter" parameterType="studioFilter">
+		INSERT INTO
+		studio_filter(size, options, parking, unit_price, default_capacity, excharge, address, max_capacity)
+		VALUES (#{size}, #{option}, #{parking}, #{unitPrice}, #{defaultCapacity}, #{excharge}, #{address}, #{maxCapacity})
+	</insert>
 </mapper>

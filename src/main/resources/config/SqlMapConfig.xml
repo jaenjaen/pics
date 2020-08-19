@@ -12,6 +12,7 @@
 	</typeAliases>
 	
 	
+	
 	<mappers>
 		<mapper resource="sql/customer-query.xml"/>
 		<mapper resource="sql/studio-info-query.xml"/>

@@ -15,7 +15,6 @@
 		<result property="portImg" column="port_img"/>
 		<result property="cadImg" column="cad_img"/>
 		<result property="floor" column="floor"/>
-											
 	</resultMap>							
 								
 	<!-- Dynamic Query -->
@@ -52,6 +51,6 @@
 	</select>	
 	
 	<select id="getCategoryId" parameterType="studio" resultType="int">
-		SELECT category_id FROM studio_category WHERE category=#{}
-	</select>													
+		SELECT category_id FROM studio_category WHERE category=#{category}
+	</select>
 </mapper>	

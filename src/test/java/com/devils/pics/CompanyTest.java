@@ -23,11 +23,14 @@ class CompanyTest {
 	void contextLoads() throws IOException {
 		
 		String ns = "CompanyMapper.";
+		
 		/*
 		 * Company c = new Company(); c.setComId("aa"); c.setName("12");
 		 * c.setAddress("서울시"); c.setPassword("123"); c.setTel("111-111-1111");
+		 * c.setLogoImg("aa.png");
+		 * 
+		 * session.insert(ns+"registerCompany",c);
 		 */
-		//session.insert(ns+"registerCompany",c);
 		
 	}
 

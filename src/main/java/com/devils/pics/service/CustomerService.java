@@ -1,6 +1,8 @@
 package com.devils.pics.service;
 
-public interface CustomerService {
+import com.devils.pics.domain.Customer;
 
+public interface CustomerService {
+	int registerCustomer(Customer Customer) throws Exception;
 }
 

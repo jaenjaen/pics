@@ -12,4 +12,9 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	private final String NS = "StudioInfoMapper.";
+	@Override
+	public int getStudioInfo(int stdId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

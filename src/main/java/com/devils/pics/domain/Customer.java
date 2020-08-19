@@ -10,10 +10,14 @@ public class Customer {
 	private String email;
 	private String tel;
 	private String apiKey;
-
-	public Customer(int custId, char gender, int age, String job, String funnel, String email, String tel,
-			String apiKey) {
+	private String imgSrc;
+	
+	public Customer() {}
+	
+	public Customer(int custId, int apiId, char gender, int age, String job, String funnel, String email, String tel,
+			String apiKey, String imgSrc) {
 		this.custId = custId;
+		this.apiId = apiId;
 		this.gender = gender;
 		this.age = age;
 		this.job = job;
@@ -21,18 +25,20 @@ public class Customer {
 		this.email = email;
 		this.tel = tel;
 		this.apiKey = apiKey;
+		this.imgSrc = imgSrc;
 	}
 	
-	public Customer() {
-
-	}
-
 	public int getCustId() {
 		return custId;
 	}
-	
 	public void setCustId(int custId) {
 		this.custId = custId;
+	}
+	public int getApiId() {
+		return apiId;
+	}
+	public void setApiId(int apiId) {
+		this.apiId = apiId;
 	}
 	public char getGender() {
 		return gender;
@@ -76,11 +82,18 @@ public class Customer {
 	public void setApiKey(String apiKey) {
 		this.apiKey = apiKey;
 	}
+	public String getImgSrc() {
+		return imgSrc;
+	}
+	public void setImgSrc(String imgSrc) {
+		this.imgSrc = imgSrc;
+	}
+
 	@Override
 	public String toString() {
-		return "Customer [custId=" + custId + ", gender=" + gender + ", age=" + age + ", job=" + job + ", funnel="
-	
-				+ funnel + ", email=" + email + ", tel=" + tel + ", apiKey=" + apiKey + "]";
+		return "Customer [custId=" + custId + ", apiId=" + apiId + ", gender=" + gender + ", age=" + age + ", job="
+				+ job + ", funnel=" + funnel + ", email=" + email + ", tel=" + tel + ", apiKey=" + apiKey + ", imgSrc="
+				+ imgSrc + "]";
 	}
 		
 }

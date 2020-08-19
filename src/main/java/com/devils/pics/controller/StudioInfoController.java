@@ -8,7 +8,6 @@ import com.devils.pics.service.StudioInfoService;
 
 @RestController
 public class StudioInfoController {
-	
 
 	@Autowired
 	private StudioInfoService studioInfoService;

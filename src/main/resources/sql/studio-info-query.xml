@@ -1,8 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<mapper namespace="StudioInfoMapper">
-
-
-</mapper>
+								
+<mapper namespace="StudioInfoMapper">								
+	<resultMap type="studio" id="studioInfoRM">							
+		<result property="stdId" column="stu_id"/>			
+		<result property="comId" column="com_id"/>
+		<result property="category" column="category_id"/>
+		<result property="name" column="name"/>
+		<result property="desc" column="desc"/>
+		<result property="rule" column="rule"/>			
+		<result property="filterId" column="filter_id"/>
+		<result property="mainImg" column="main_img"/>
+		<result property="portImg" column="port_img"/>
+		<result property="cadImg" column="cad_img"/>
+		<result property="floor" column="floor"/>
+											
+	</resultMap>							
+								
+	<!-- Dynamic Query -->
+				
+	<sql id="select-studio">							
+		select 						
+		s.stu_id,s.com_id,s.category_id,s.name,s.desc,s.rule,s.filter_id
+		from studio s
+	</sql>							
+								
+	<sql id="select-studioFilter">							
+		select 						
+		sf.filter_id,sf.size,sf.option,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge
+		from studio_filter sf
+	</sql>							
+	
+	<sql id="select-company">
+		select						
+		com.name,com.logo_img
+		from company com
+	</sql>
+					
+	<!-- SQL QUERY -->							
+	<select id="getStudioInfo" parameterType="int" resultMap="studioInfoRM">							
+		<include refid="select-studio"/>
+		where stu_id=${value}
+	</select>							
+								
+	<select id="getCompany" parameterType="int" resultMap="studioInfoRM">							
+		select
+		com.name,com.logo_img
+		from company com
+		where com.com_Id=(select s.com_Id from studio s where stu_id=${value})
+	</select>														
+</mapper>								

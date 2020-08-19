@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Studio {
 	private int stdId;
+	private int comId;
 	private String category;
 	private String name;
 	private String desc;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CustomerMapper">
+	<sql id="select-customer">
+		SELECT cust_id,api_id,gender,age,job,funnel,email,tel,api_key
+		FROM customer;
+	</sql>
+	
+	<insert id="registerCustomer" parameterType="customer">
+		INSERT INTO customer(api_id,gender,age,job,funnel,email,tel,api_key)
+		VALUES ((SELECT api_id FROM loginapi WHERE api_id = #{apiId})
+				,#{gender},#{age},#{job},#{funnel},#{email},#{tel},#{apiKey})
+	</insert>
+</mapper>

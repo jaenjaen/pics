@@ -27,7 +27,7 @@ public class ExtraServiceImpl implements ExtraService {
 	}
 
 	@Override
-	public int deleteBookmark(Bookmark bookmark) throws Exception {
-		return extraDao.deleteBookmark(bookmark);
+	public int deleteBookmark(int bookId) throws Exception {
+		return extraDao.deleteBookmark(bookId);
 	}
 }

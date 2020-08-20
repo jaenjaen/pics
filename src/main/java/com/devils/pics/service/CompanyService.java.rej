@@ -1,0 +1,11 @@
+diff a/src/main/java/com/devils/pics/service/CompanyService.java b/src/main/java/com/devils/pics/service/CompanyService.java	(rejected hunks)
+@@ -1,6 +1,8 @@
+ package com.devils.pics.service;
+ 
+-public interface CompanyService {
++import com.devils.pics.domain.Company;
+ 
++public interface CompanyService {
++	int registerCompany(Company company) throws Exception;
+ }
+ 

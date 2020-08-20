@@ -5,9 +5,8 @@ public class Tag {
 	private String tagName;
 	
 	public Tag() {}
-
+	
 	public Tag(int tagDicId, String tagName) {
-		super();
 		this.tagDicId = tagDicId;
 		this.tagName = tagName;
 	}
@@ -23,7 +22,7 @@ public class Tag {
 	public String getTagName() {
 		return tagName;
 	}
-
+	
 	public void setTagName(String tagName) {
 		this.tagName = tagName;
 	}

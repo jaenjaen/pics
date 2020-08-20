@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Category;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
@@ -17,19 +18,28 @@ import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.service.StudioInfoService;
 
 @RestController
-public class StudioRegisterControlloer {
+public class StudioRegisterController {
 
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
 	private StudioFilterService studioFilterService;
+	
+	@Autowired
 	private StudioInfoService studioInfoService;
 	
 	@PostMapping("/studioReg")
 	public ResponseEntity registerStudio(@RequestBody RepeatDate repeatDate,
 			@RequestBody Studio studio, @RequestBody StudioFilter studioFilter,
-			HttpSession httpSession) {
-		String comId = (String)httpSession.getAttribute("");
+			@RequestBody Category category, HttpSession httpSession) {
 		try {
+			/* 세션으로부터 회사 아이디를 받아와서 studio 객체에 추가 */
+			String comId = (String)httpSession.getAttribute("comId");
+			studio.setComId(comId);
+			
+			/* Studio를 등록 */
+			studioInfoService.registerStudioInfo(studio);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

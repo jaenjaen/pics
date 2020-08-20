@@ -17,7 +17,7 @@ import com.devils.pics.domain.Company;
 class CompanyTest {
 	
 	@Autowired
-	  private SqlSession session;
+	  private SqlSession sqlSession;
 	
 	@Test
 	void contextLoads() throws IOException {
@@ -29,7 +29,7 @@ class CompanyTest {
 		 * c.setAddress("서울시"); c.setPassword("123"); c.setTel("111-111-1111");
 		 * c.setLogoImg("aa.png");
 		 * 
-		 * session.insert(ns+"registerCompany",c);
+		 * sqlSession.insert(ns+"registerCompany",c);
 		 */
 		
 	}

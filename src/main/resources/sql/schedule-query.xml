@@ -3,4 +3,9 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ScheduleMapper">
+	<insert id="registerRepeatDate">
+		INSERT INTO
+		repeat_date(weekday, time, stu_id)
+		VALUES(#{weekDate}, #{time}, #{stuId});
+	</insert>
 </mapper>

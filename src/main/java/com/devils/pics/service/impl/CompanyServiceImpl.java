@@ -16,7 +16,6 @@ public class CompanyServiceImpl implements CompanyService {
 	@Autowired
 	private CompanyDAO companyDAO;
 
-	@Override
 	public int registerCompany(Company company) throws Exception {
 		return companyDAO.registerCompany(company);
 	}

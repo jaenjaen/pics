@@ -16,6 +16,7 @@ public class Studio {
 	private Category category;
 	private Schedule schedule;
 	private double avgScore;
+	private Tag tag;
 
 	public Studio() {
 	}
@@ -37,6 +38,7 @@ public class Studio {
 		this.category = category;
 		this.schedule = schedule;
 		this.avgScore = avgScore;
+		this.tag = tag;
 	}
 
 	public int getstuId() {
@@ -86,7 +88,7 @@ public class Studio {
 	public void setRule(String rule) {
 		this.rule = rule;
 	}
-
+	
 	public String getMainImg() {
 		return mainImg;
 	}
@@ -158,6 +160,14 @@ public class Studio {
 	public void setAvgScore(double avgScore) {
 		this.avgScore = avgScore;
 	}
+	
+	public Tag getTag() {
+		return tag;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
 
 	@Override
 	public String toString() {
@@ -165,6 +175,6 @@ public class Studio {
 				+ ", description=" + description + ", rule=" + rule + ",mainImg=" + mainImg
 				+ ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
 				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + ", avgScore="
-				+ avgScore + "]";
+				+ avgScore + ", tag=" + tag + "]";
 	}
 }

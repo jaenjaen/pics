@@ -1,7 +1,5 @@
 package com.devils.pics.domain;
 
-import java.util.ArrayList;
-
 public class StudioFilter {
 	private int filterId;
 	private int stdId;
@@ -13,12 +11,11 @@ public class StudioFilter {
 	private int excharge;	
 	private String address;
 	private int maxCapacity;
-	private ArrayList<Tag> tag;
 	
 	public StudioFilter() {}
 
 	public StudioFilter(int filterId, int stdId, double size, String options, int parking, int unitPrice, int defaultCapacity,
-			int excharge, String address, int maxCapacity, ArrayList<Tag> tag) {
+			int excharge, String address, int maxCapacity) {
 		super();
 		this.filterId = filterId;
 		this.stdId = stdId;
@@ -30,7 +27,6 @@ public class StudioFilter {
 		this.excharge = excharge;
 		this.address = address;
 		this.maxCapacity = maxCapacity;
-		this.tag = tag;
 	}
 
 	public int getFilterId() {
@@ -111,19 +107,11 @@ public class StudioFilter {
 		this.maxCapacity = maxCapacity;
 	}
 
-	public ArrayList<Tag> getTag() {
-		return tag;
-	}
-
-	public void setTag(ArrayList<Tag> tag) {
-		this.tag = tag;
-	}
-
 	@Override
 	public String toString() {
 		return "StudioFilter [filterId=" + filterId + ", stdId=" + stdId + ", size=" + size + ", options=" + options + ", parking=" + parking
 				+ ", unitPrice=" + unitPrice + ", defaultCapacity=" + defaultCapacity + ", excharge=" + excharge
-				+ ", address=" + address + ", maxCapacity=" + maxCapacity + ", tag=" + tag + "]";
+				+ ", address=" + address + ", maxCapacity=" + maxCapacity + "]";
 	}
 	
 	

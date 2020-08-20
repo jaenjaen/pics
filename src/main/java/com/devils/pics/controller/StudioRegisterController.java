@@ -45,15 +45,19 @@ public class StudioRegisterController {
 			int result = studioInfoService.registerStudioInfo(studio);
 			System.out.println("Studio 등록 결과 : "+result);
 			
-			/* autoIncrement로 생긴 Studio Id를 가져와서 StudioFilter에 Set  */
+			/* autoIncrement로 생긴 Studio Id를 가져와서 StudioFilter, RepeatDate에 Set  */
 			int stdId = studioInfoService.getStudioId(studio);
 			System.out.println("autoIncrement로 생긴 Studio Id : "+stdId);
 			studioFilter.setStdId(stdId);
+			repeatDate.setStuId(stdId);
 			
 			/* StudioFilter를 등록 */
 			result = studioFilterService.registerStudioFilter(studioFilter);
 			System.out.println("StudioFilter 등록 결과 : "+result);
 			
+			/* RepeatDate를 등록 */
+			result = scheduleService.registerRepeatDate(repeatDate);
+			System.out.println("RepeatDate 등록 결과 : "+result);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

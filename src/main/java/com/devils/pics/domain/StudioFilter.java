@@ -46,12 +46,10 @@ public class StudioFilter {
 	public void setSize(double size) {
 		this.size = size;
 	}
-
-	public String getOptions() {
+	public String getoptions() {
 		return options;
 	}
-
-	public void setOptions(String options) {
+	public void setoptions(String options) {
 		this.options = options;
 	}
 

@@ -4,17 +4,17 @@ public class ExceptionDate {
 	private int exceptionId;
 	private String startDate;
 	private String endDate;
-	private Customer stuId;
-
-	public ExceptionDate(int exceptionId, String startDate, String endDate, Customer stuId) {
+	private int stuId;
+	public ExceptionDate(int exceptionId, String startDate, String endDate, int stuId) {
+		super();
 		this.exceptionId = exceptionId;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.stuId = stuId;
 	}
-	
-	public ExceptionDate() {}
-
+	public ExceptionDate() {
+		super();
+	}
 	public int getExceptionId() {
 		return exceptionId;
 	}
@@ -33,10 +33,10 @@ public class ExceptionDate {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public Customer getStuId() {
+	public int getStuId() {
 		return stuId;
 	}
-	public void setStuId(Customer stuId) {
+	public void setStuId(int stuId) {
 		this.stuId = stuId;
 	}
 	@Override

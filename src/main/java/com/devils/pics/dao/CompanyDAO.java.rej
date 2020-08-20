@@ -1,0 +1,11 @@
+diff a/src/main/java/com/devils/pics/dao/CompanyDAO.java b/src/main/java/com/devils/pics/dao/CompanyDAO.java	(rejected hunks)
+@@ -1,6 +1,8 @@
+ package com.devils.pics.dao;
+ 
+-public interface CompanyDAO {
++import com.devils.pics.domain.Company;
+ 
++public interface CompanyDAO {
++	int registerCompany(Company company) throws Exception;
+ }
+ 

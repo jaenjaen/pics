@@ -8,18 +8,18 @@ public class Company {
 	private String address;
 	private String password;
 	private String tel;
-	private String desc;
+	private String description;
 	private String logoImg;
 	private ArrayList<Studio> studio;
 	
-	public Company(String comId, String name, String address, String password, String tel, String desc, String logoImg,
+	public Company(String comId, String name, String address, String password, String tel, String description, String logoImg,
 			ArrayList<Studio> studio) {
 		this.comId = comId;
 		this.name = name;
 		this.address = address;
 		this.password = password;
 		this.tel = tel;
-		this.desc = desc;
+		this.description = description;
 		this.logoImg = logoImg;
 		this.studio = studio;
 	}
@@ -56,11 +56,11 @@ public class Company {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public String getDesc() {
-		return desc;
+	public String getdescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setdescription(String description) {
+		this.description = description;
 	}
 	public String getLogoImg() {
 		return logoImg;
@@ -77,6 +77,6 @@ public class Company {
 	@Override
 	public String toString() {
 		return "Company [comId=" + comId + ", name=" + name + ", address=" + address + ", password=" + password
-				+ ", tel=" + tel + ", desc=" + desc + ", logoImg=" + logoImg + ", studio=" + studio + "]";
+				+ ", tel=" + tel + ", description=" + description + ", logoImg=" + logoImg + ", studio=" + studio + "]";
 	}
 }

@@ -1,6 +1,5 @@
 package com.devils.pics.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,6 @@ public class CustomerController {
 			customerService.registerCustomer(customer);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}

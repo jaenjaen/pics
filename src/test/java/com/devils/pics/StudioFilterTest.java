@@ -1,10 +1,13 @@
 package com.devils.pics;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 
 @SpringBootTest
@@ -26,5 +29,10 @@ class StudioFilterTest {
 		studioFilter.setAddress("서울특별시 서초구 효령로 335");
 		System.out.println(studioFilter);
 		session.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
+		
+		//검색 결과 (필터 없음)
+		List<Studio> list = session.selectList("StudioFilterMapper.selectByFilter");
+		System.out.println("조회된 총 studio 수 : "+list.size());
+		System.out.println(list);
 	}
 }

@@ -2,7 +2,7 @@ package com.devils.pics.domain;
 
 public class Studio {
 	private int stdId;
-	private int comId;
+	private String comId;
 	private int categoryId;
 	private String name;
 	private String description;
@@ -15,13 +15,14 @@ public class Studio {
 	private StudioFilter studioFilter;
 	private Company company;
 	private Category category;
-	private Schedule schedule; 
+	private Schedule schedule;
+	private double avgScore;
 
 	public Studio() {}
 
-	public Studio(int stdId, int comId, int categoryId, String name, String description, String rule, int filterId,
+	public Studio(int stdId, String comId, int categoryId, String name, String description, String rule, int filterId,
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
-			Category category, Schedule schedule) {
+			Category category, Schedule schedule, double avgScore) {
 		super();
 		this.stdId = stdId;
 		this.comId = comId;
@@ -38,6 +39,7 @@ public class Studio {
 		this.company = company;
 		this.category = category;
 		this.schedule = schedule;
+		this.avgScore = avgScore;
 	}
 
 	public int getStdId() {
@@ -48,11 +50,11 @@ public class Studio {
 		this.stdId = stdId;
 	}
 
-	public int getComId() {
+	public String getComId() {
 		return comId;
 	}
 
-	public void setComId(int comId) {
+	public void setComId(String comId) {
 		this.comId = comId;
 	}
 
@@ -160,11 +162,20 @@ public class Studio {
 		this.schedule = schedule;
 	}
 
+	public double getAvgScore() {
+		return avgScore;
+	}
+
+	public void setAvgScore(double avgScore) {
+		this.avgScore = avgScore;
+	}
+
 	@Override
 	public String toString() {
 		return "Studio [stdId=" + stdId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
 				+ ", description=" + description + ", rule=" + rule + ", filterId=" + filterId + ", mainImg=" + mainImg
 				+ ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
-				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + "]";
+				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + ", avgScore="
+				+ avgScore + "]";
 	}
 }

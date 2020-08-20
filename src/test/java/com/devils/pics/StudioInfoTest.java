@@ -86,9 +86,7 @@ class StudioInfoTest {
 		
 		
 		System.out.println(service.getAccCustomer(1));
-		
-		
+				
 	}
-
 
 }

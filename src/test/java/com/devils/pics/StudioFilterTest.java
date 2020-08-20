@@ -40,7 +40,5 @@ class StudioFilterTest {
 		System.out.println("조회된 총 studio 수 : "+list.size());
 		System.out.println(list);
 
-		
-
 	}
 }

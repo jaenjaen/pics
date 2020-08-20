@@ -1,5 +1,7 @@
 package com.devils.pics.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.service.ScheduleService;
 import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.service.StudioInfoService;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @RestController
 public class StudioRegisterController {
@@ -29,10 +32,11 @@ public class StudioRegisterController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 	
-	@PostMapping("/studioReg")
-	public ResponseEntity registerStudio(@RequestBody RepeatDate repeatDate,
-			@RequestBody Studio studio, @RequestBody StudioFilter studioFilter,
-			@RequestBody Category category, HttpSession httpSession) {
+	@PostMapping("/studio")
+	public ResponseEntity registerStudio(@RequestBody Studio studio, HttpSession httpSession) {
+		ArrayList<RepeatDate> repeatDates = studio.getSchedule().getRepeatDate();
+		StudioFilter studioFilter = studio.getStudioFilter();
+		
 		try {
 			/* 세션으로부터 회사 아이디를 받아와서 Studio에 Set */
 			String comId = (String)httpSession.getAttribute("comId");
@@ -45,18 +49,20 @@ public class StudioRegisterController {
 			int result = studioInfoService.registerStudioInfo(studio);
 			System.out.println("Studio 등록 결과 : "+result);
 			
-			/* autoIncrement로 생긴 Studio Id를 가져와서 StudioFilter, RepeatDate에 Set  */
+			/* autoIncrement로 생긴 Studio Id를 가져옴  */
 			int stdId = studioInfoService.getStudioId(studio);
 			System.out.println("autoIncrement로 생긴 Studio Id : "+stdId);
-			studioFilter.setStdId(stdId);
-			repeatDate.setStuId(stdId);
 			
-			/* StudioFilter를 등록 */
+			/* StudioFilter에 Studio Id를 set하고, StudioFilter를 등록 */
+			studioFilter.setStdId(stdId);
 			result = studioFilterService.registerStudioFilter(studioFilter);
 			System.out.println("StudioFilter 등록 결과 : "+result);
 			
-			/* RepeatDate를 등록 */
-			result = scheduleService.registerRepeatDate(repeatDate);
+			/* RepeatDate에 Studio Id를 set하고, RepeatDate를 등록 */
+			for(RepeatDate repeatDate : repeatDates) {
+				repeatDate.setStuId(stdId);
+				result = scheduleService.registerRepeatDate(repeatDate);
+			}
 			System.out.println("RepeatDate 등록 결과 : "+result);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(RuntimeException e) {

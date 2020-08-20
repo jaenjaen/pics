@@ -19,6 +19,33 @@ public class Schedule {
 	public Schedule() {
 		super();
 	}
-	
-	
+	public int getStuId() {
+		return stuId;
+	}
+	public void setStuId(int stuId) {
+		this.stuId = stuId;
+	}
+	public ArrayList<RepeatDate> getRepeatDate() {
+		return repeatDate;
+	}
+	public void setRepeatDate(ArrayList<RepeatDate> repeatDate) {
+		this.repeatDate = repeatDate;
+	}
+	public ArrayList<ExceptionDate> getExceptionDate() {
+		return exceptionDate;
+	}
+	public void setExceptionDate(ArrayList<ExceptionDate> exceptionDate) {
+		this.exceptionDate = exceptionDate;
+	}
+	public Reservation getReservation() {
+		return reservation;
+	}
+	public void setReservation(Reservation reservation) {
+		this.reservation = reservation;
+	}
+	@Override
+	public String toString() {
+		return "Schedule [stuId=" + stuId + ", repeatDate=" + repeatDate + ", exceptionDate=" + exceptionDate
+				+ ", reservation=" + reservation + "]";
+	}	
 }

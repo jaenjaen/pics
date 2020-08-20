@@ -1,5 +1,7 @@
 package com.devils.pics.domain;
 
+import java.util.ArrayList;
+
 public class Studio {
 	private int stuId;
 	private String comId;
@@ -16,13 +18,13 @@ public class Studio {
 	private Category category;
 	private Schedule schedule;
 	private double avgScore;
-	private Tag tag;
+	private ArrayList<Tag> tag;
 
 	public Studio() {
 	}
 	public Studio(int stuId, String comId, int categoryId, String name, String description, String rule, int filterId,
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
-			Category category, Schedule schedule, double avgScore) {
+			Category category, Schedule schedule, double avgScore, ArrayList<Tag> tag) {
 		this.stuId = stuId;
 		this.comId = comId;
 		this.categoryId = categoryId;
@@ -161,11 +163,11 @@ public class Studio {
 		this.avgScore = avgScore;
 	}
 	
-	public Tag getTag() {
+	public ArrayList<Tag> getTag() {
 		return tag;
 	}
 
-	public void setTag(Tag tag) {
+	public void setTag(ArrayList<Tag> tag) {
 		this.tag = tag;
 	}
 

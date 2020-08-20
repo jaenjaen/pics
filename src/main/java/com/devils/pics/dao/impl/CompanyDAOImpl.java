@@ -15,8 +15,11 @@ public class CompanyDAOImpl implements CompanyDAO {
 	@Autowired
 	private SqlSession session;
 	private final String ns = "CompanyMapper.";
+	
 	@Override
-	public int registerCompany(Company company) throws Exception {
-		return session.insert(ns+"registerCompany",company);
+	public int registerCompany(Company company) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
 }

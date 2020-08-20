@@ -3,6 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 								
+
 <mapper namespace="StudioInfoMapper">			
 
 	<resultMap type="studio" id="studioInfoRM">							
@@ -98,4 +99,10 @@
 	</select>
 
 															
+
+<mapper namespace="StudioInfoMapper">								
+	<select id="getCategoryId" parameterType="category" resultType="int">
+		SELECT category_id AS categoryId FROM studio_category WHERE category = #{categoryName} 	
+	</select>											
+
 </mapper>	

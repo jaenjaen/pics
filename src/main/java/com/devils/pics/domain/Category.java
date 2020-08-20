@@ -8,7 +8,7 @@ public class Category {
 	public Category(int categoryId, String categoryName) {
 		super();
 		this.categoryId = categoryId;
-		this.categoryName= categoryName;
+		this.categoryName = categoryName;
 	}
 	public int getCategoryId() {
 		return categoryId;
@@ -20,13 +20,11 @@ public class Category {
 		return categoryName;
 	}
 	public void setCategory(String categoryName) {
-		this.categoryName= categoryName;
+		this.categoryName = categoryName;
 	}
 	@Override
 	public String toString() {
 		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + "]";
 	}
-	
-	
 	
 }

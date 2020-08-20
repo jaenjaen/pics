@@ -52,4 +52,10 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 		return sqlSession.selectOne(NS+"getStudioId", studio);
 	}
 
+	@Override
+	public int checkBookmark(int stdId, int custId) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

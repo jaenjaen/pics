@@ -2,13 +2,15 @@ package com.devils.pics.domain;
 
 public class RepeatDate {
 	private int repeatId;
+	private int stuId;
 	private String weekDate;
 	private String time;
 
 	public RepeatDate() {}
 
-	public RepeatDate(int repeatId, String weekDate, String time) {
+	public RepeatDate(int repeatId, int stuId, String weekDate, String time) {
 		this.repeatId = repeatId;
+		this.stuId = stuId;
 		this.weekDate = weekDate;
 		this.time = time;
 	}
@@ -19,6 +21,14 @@ public class RepeatDate {
 
 	public void setRepeatId(int repeatId) {
 		this.repeatId = repeatId;
+	}
+	
+	public int getStuId() {
+		return stuId;
+	}
+
+	public void setStuId(int stuId) {
+		this.stuId = stuId;
 	}
 
 	public String getWeekDate() {
@@ -39,6 +49,6 @@ public class RepeatDate {
 
 	@Override
 	public String toString() {
-		return "RepeatDate [repeatId=" + repeatId + ", weekDate=" + weekDate + ", time=" + time + "]";
+		return "RepeatDate [repeatId=" + repeatId + ", stuId=" + stuId  + ", weekDate=" + weekDate + ", time=" + time + "]";
 	}
 }

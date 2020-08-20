@@ -1,7 +1,7 @@
 package com.devils.pics.domain;
 
 public class Studio {
-	private int stdId;
+	private int stuId;
 	private String comId;
 	private int categoryId;
 	private String name;
@@ -17,13 +17,12 @@ public class Studio {
 	private Schedule schedule;
 	private double avgScore;
 
-	public Studio() {}
-
-	public Studio(int stdId, String comId, int categoryId, String name, String description, String rule,
+	public Studio() {
+	}
+	public Studio(int stuId, String comId, int categoryId, String name, String description, String rule, int filterId,
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
 			Category category, Schedule schedule, double avgScore) {
-		super();
-		this.stdId = stdId;
+		this.stuId = stuId;
 		this.comId = comId;
 		this.categoryId = categoryId;
 		this.name = name;
@@ -40,12 +39,12 @@ public class Studio {
 		this.avgScore = avgScore;
 	}
 
-	public int getStdId() {
-		return stdId;
+	public int getstuId() {
+		return stuId;
 	}
 
-	public void setStdId(int stdId) {
-		this.stdId = stdId;
+	public void setstuId(int stuId) {
+		this.stuId = stuId;
 	}
 
 	public String getComId() {
@@ -162,8 +161,8 @@ public class Studio {
 
 	@Override
 	public String toString() {
-		return "Studio [stdId=" + stdId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
-				+ ", description=" + description + ", rule=" + rule + ", mainImg=" + mainImg
+		return "Studio [stuId=" + stuId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
+				+ ", description=" + description + ", rule=" + rule + ",mainImg=" + mainImg
 				+ ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
 				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + ", avgScore="
 				+ avgScore + "]";

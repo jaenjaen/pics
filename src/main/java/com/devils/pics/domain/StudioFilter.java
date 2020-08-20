@@ -10,7 +10,7 @@ public class StudioFilter {
 	private int parking;
 	private int unitPrice;
 	private int defaultCapacity;
-	private int excharge;
+	private int excharge;	
 	private String address;
 	private int maxCapacity;
 	private ArrayList<Tag> tag;

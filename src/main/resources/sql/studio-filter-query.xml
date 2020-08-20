@@ -5,7 +5,8 @@
 <mapper namespace="StudioFilterMapper">
 	<insert id="registerStudioFilter" parameterType="studioFilter">
 		INSERT INTO
-		studio_filter(size, options, parking, unit_price, default_capacity, excharge, address, max_capacity)
-		VALUES (#{size}, #{options}, #{parking}, #{unitPrice}, #{defaultCapacity}, #{excharge}, #{address}, #{maxCapacity})
+		studio_filter(stu_id, size, options, parking, unit_price, default_capacity, excharge, address, max_capacity)
+		VALUES (#{stdId}, #{size}, #{options}, #{parking}, #{unitPrice}, #{defaultCapacity}, #{excharge}, #{address}, #{maxCapacity})
 	</insert>
+	<select id="getStudioFilterId"></select>
 </mapper>

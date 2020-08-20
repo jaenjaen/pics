@@ -13,6 +13,7 @@ class StudioFilterTest {
 	@Autowired
 	private SqlSession session;
 
+	/* StudioFilter 등록 - 단위 테스트 성공 */
 	@Test
 	public void registerStudioFilter() {
 		StudioFilter studioFilter = new StudioFilter(); 
@@ -25,6 +26,8 @@ class StudioFilterTest {
 		studioFilter.setExcharge(5000); 
 		studioFilter.setAddress("서울특별시 서초구 효령로 335");
 		System.out.println(studioFilter);
+		/*
 		session.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
+		*/
 	}
 }

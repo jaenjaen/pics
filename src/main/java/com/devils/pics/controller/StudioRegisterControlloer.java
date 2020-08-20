@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Category;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
@@ -21,13 +22,17 @@ public class StudioRegisterControlloer {
 
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
 	private StudioFilterService studioFilterService;
+	
+	@Autowired
 	private StudioInfoService studioInfoService;
 	
 	@PostMapping("/studioReg")
 	public ResponseEntity registerStudio(@RequestBody RepeatDate repeatDate,
 			@RequestBody Studio studio, @RequestBody StudioFilter studioFilter,
-			HttpSession httpSession) {
+			@RequestBody Category category, HttpSession httpSession) {
 		String comId = (String)httpSession.getAttribute("");
 		try {
 			return new ResponseEntity(HttpStatus.OK);

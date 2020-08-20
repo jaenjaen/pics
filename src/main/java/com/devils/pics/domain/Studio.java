@@ -2,12 +2,11 @@ package com.devils.pics.domain;
 
 public class Studio {
 	private int stdId;
-	private int comId;
+	private String comId;
 	private int categoryId;
 	private String name;
 	private String description;
 	private String rule;
-	private int filterId;
 	private String mainImg;
 	private String portImg;
 	private String cadImg;
@@ -19,7 +18,7 @@ public class Studio {
 
 	public Studio() {}
 
-	public Studio(int stdId, int comId, int categoryId, String name, String description, String rule, int filterId,
+	public Studio(int stdId, String comId, int categoryId, String name, String description, String rule,
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
 			Category category, Schedule schedule) {
 		super();
@@ -29,7 +28,6 @@ public class Studio {
 		this.name = name;
 		this.description = description;
 		this.rule = rule;
-		this.filterId = filterId;
 		this.mainImg = mainImg;
 		this.portImg = portImg;
 		this.cadImg = cadImg;
@@ -48,11 +46,11 @@ public class Studio {
 		this.stdId = stdId;
 	}
 
-	public int getComId() {
+	public String getComId() {
 		return comId;
 	}
 
-	public void setComId(int comId) {
+	public void setComId(String comId) {
 		this.comId = comId;
 	}
 
@@ -86,14 +84,6 @@ public class Studio {
 
 	public void setRule(String rule) {
 		this.rule = rule;
-	}
-
-	public int getFilterId() {
-		return filterId;
-	}
-
-	public void setFilterId(int filterId) {
-		this.filterId = filterId;
 	}
 
 	public String getMainImg() {
@@ -163,7 +153,7 @@ public class Studio {
 	@Override
 	public String toString() {
 		return "Studio [stdId=" + stdId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
-				+ ", description=" + description + ", rule=" + rule + ", filterId=" + filterId + ", mainImg=" + mainImg
+				+ ", description=" + description + ", rule=" + rule + ", mainImg=" + mainImg
 				+ ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
 				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + "]";
 	}

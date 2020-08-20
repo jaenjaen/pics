@@ -2,6 +2,8 @@ package com.devils.pics;
 
 
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +24,28 @@ class ExtraTest {
 	void contextLoads() {
 		
 		
+		
 		/*
 		 * Customer c = new Customer(); c.setCustId(1); Studio s = new Studio();
-		 * s.setstuId(8);
+		 * s.setstuId(7);
 		 * 
 		 * Bookmark b = new Bookmark(); b.setCustomer(c); b.setStudio(s);
 		 * 
 		 * sqlSession.insert(NS+"addBookmark",b);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * List<Studio> studios = session.selectList(NS+"getBookmark",1); for(Studio s:
-		 * studios) { System.out.println(s); }
-		 * 
-		 * 
-		 * sqlSession.delete(NS+"deleteBookmark",b);
 		 */
+		  
+		  
+		  
+		  
+		
+		/*
+		 * List<Studio> studios = sqlSession.selectList(NS+"getBookmark",1); for(Studio
+		 * s: studios) { System.out.println(s); }
+		 */
+		  
+		  //sqlSession.delete(NS+"deleteBookmark",3);
+		 
+		 
 		 
 	}
 

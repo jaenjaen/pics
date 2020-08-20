@@ -26,7 +26,7 @@ class StudioInfoTest {
 	
 	public Studio getSample() {
 		Studio studio = new Studio();
-		studio.setComId("company41@gmail.com");
+		studio.setComId("com1@gmail.com");
 		studio.setCategoryId(1);
 		studio.setName("짱조은카페");
 		studio.setDescription("설명~~");
@@ -42,10 +42,8 @@ class StudioInfoTest {
 	@Test
 	public void registerStudioInfo() {
 		Studio studio = getSample();
-		/*
 		int result = sqlSession.insert("StudioInfoMapper.registerStudioInfo", studio);
 		System.out.println("카테고리 아이디 : "+result);
-		*/
 	}
 	
 	/* Studio로 Studio 아이디 찾아오기 - 단위 테스트 성공*/

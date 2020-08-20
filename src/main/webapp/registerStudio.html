@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+
+<body>
+    <form action="studioReg" method="post">
+        <table>
+            <tr>
+                <td>스튜디오 이름</td>
+                <td>
+                    <input type="text" name="name">
+                </td>
+            </tr>
+            <tr>
+                <td>스튜디오 종류</td>
+                <td>
+                    <select name="categoryId">
+                        <option value="1">카페</option>
+                        <option value="2">스튜디오</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>소개</td>
+                <td>
+                    <textarea rows="5" col="50" wrap="hard" name="description">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>이용수칙</td>
+                <td>
+                    <textarea rows="5" col="50" wrap="hard" name="rule">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <!-- 파일 업로드 영역 -->
+                <td>대표사진</td>
+                <td>
+                    <input type="text" name="mainImg">
+                    <br/>
+                </td>
+            </tr>
+            <tr>
+                <td>태그</td>
+                <td>
+                    <input type="text" name="tag">
+                </td>
+            </tr>
+            <tr>
+                <td>주소</td>
+                <td>
+                    <input type="text" name="address">
+                </td>
+            </tr>
+            <tr>
+                <td>층수</td>
+                <td>
+                    <input type="text" name="floor">
+                </td>
+            </tr>
+            <tr>
+                <td>면적</td>
+                <td>
+                    <input type="text" name="size">
+                </td>
+            </tr>
+
+            <tr>
+                <!-- 파일 업로드 영역 -->
+                <td>공간도면</td>
+                <td>
+                    <input type="text" name="cadImg">
+                </td>
+            </tr>
+            <tr>
+                <td>시간당 대여료</td>
+                <td>
+                    <input type="text" name="unitPrice">
+                </td>
+            </tr>
+            <tr>
+                <td>인원 추가시 1인당 추가금액</td>
+                <td>
+                    <input type="text" name="excharge">
+                </td>
+            </tr>
+            <tr>
+                <td>기본 인원</td>
+                <td>
+                    <input type="text" name="defaultCapacity">
+                </td>
+            </tr>
+            <tr>
+                <td>최대 인원</td>
+                <td>
+                    <input type="text" name="maxCapacity">
+                </td>
+            </tr>
+            <tr>
+                <!-- 시간표처럼 드래그해서 선택 -->
+                <td>운영 시간</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>주차 가능</td>
+                <td>
+                    <input type="radio" name="parkSelect" value="unable" checked> 불가
+                    <input type="radio" name="parkSelect" value="able"> 가능
+                </td>
+            </tr>
+            <tr>
+                <td>주차 가능 대수</td>
+                <td>
+                    <input type="text" name="parking">
+                </td>
+            </tr>
+            <tr>
+                <td>장비 및 옵션</td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <select name="options" size="4" multiple>
+                                    <option>카메라</option>
+                                    <option>조명</option>
+                                    <option>반사판</option>
+                                    <option>포토그래퍼</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button>></button>
+                                <br/>
+                                <button><</button>
+                            </td>
+                            <td>
+                                <select size="4" multiple>
+                                    <option></option>
+                                    <option></option>
+                                    <option></option>
+                                    <option></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <!-- 파일업로드 영역 -->
+                <td>포트폴리오</td>
+                <td>
+                    <input type="name" name="portImg">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>ㅇ</td>
+                            <td>ㅇ</td>
+                            <td>ㅇ</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="center">
+                                전체동의
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colpsan="2">
+                    <button>임시저장</button>
+                    <button>등록</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>

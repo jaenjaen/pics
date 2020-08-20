@@ -26,7 +26,7 @@ public class ExtraDAOImpl implements ExtraDAO {
 		return sqlSession.selectList(NS+"getBookmark",custId);
 	}
 	@Override
-	public int deleteBookmark(Bookmark bookmark) throws Exception {
-		return sqlSession.delete(NS+"deleteBookmark",bookmark);
+	public int deleteBookmark(int bookId) throws Exception {
+		return sqlSession.delete(NS+"deleteBookmark",bookId);
 	}
 }

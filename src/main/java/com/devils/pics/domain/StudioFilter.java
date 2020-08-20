@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class StudioFilter {
 	private int filterId;
 	private double size;
-	private String option;
+	private String options;
 	private int parking;
 	private int unitPrice;
 	private int defaultCapacity;
@@ -16,11 +16,11 @@ public class StudioFilter {
 	
 	public StudioFilter() {}
 	
-	public StudioFilter(int filterId, double size, String option, int parking, int unitPrice, int defaultCapacity,
+	public StudioFilter(int filterId, double size, String options, int parking, int unitPrice, int defaultCapacity,
 			int excharge, String address, int maxCapacity, ArrayList<Tag> tag) {
 		this.filterId = filterId;
 		this.size = size;
-		this.option = option;
+		this.options = options;
 		this.parking = parking;
 		this.unitPrice = unitPrice;
 		this.defaultCapacity = defaultCapacity;
@@ -41,11 +41,11 @@ public class StudioFilter {
 	public void setSize(double size) {
 		this.size = size;
 	}
-	public String getOption() {
-		return option;
+	public String getoptions() {
+		return options;
 	}
-	public void setOption(String option) {
-		this.option = option;
+	public void setoptions(String options) {
+		this.options = options;
 	}
 	public int getParking() {
 		return parking;
@@ -91,7 +91,7 @@ public class StudioFilter {
 	}
 	@Override
 	public String toString() {
-		return "StudioFilter [filterId=" + filterId + ", size=" + size + ", option=" + option + ", parking=" + parking
+		return "StudioFilter [filterId=" + filterId + ", size=" + size + ", options=" + options + ", parking=" + parking
 				+ ", unitPrice=" + unitPrice + ", defaultCapacity=" + defaultCapacity + ", excharge=" + excharge
 				+ ", address=" + address + ", maxCapacity=" + maxCapacity + ", tag=" + tag + "]";
 	}

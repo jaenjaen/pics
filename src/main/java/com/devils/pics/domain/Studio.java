@@ -5,37 +5,35 @@ import java.util.ArrayList;
 public class Studio {
 	private int stdId;
 	private String name;
-	private String desc;
+	private String description;
 	private String rule;
 	private String mainImg;
 	private String portImg;
 	private String cadImg;
 	private int floor;
 	private StudioFilter studioFilter;
-	private ArrayList<RepeatDate> repeatDate;
-	private ExceptionDate exceptionDate;
 	private Company company;
 	private Category category;
-	
+	private Schedule schedule; 
+
 	public Studio() {}
 
-	public Studio(int stdId, String name, String desc, String rule, String mainImg, String portImg, String cadImg,
-			int floor, StudioFilter studioFilter, ArrayList<RepeatDate> repeatDate, ExceptionDate exceptionDate,
-			Company company, Category category) {
+	public Studio(int stdId, String name, String description, String rule, String mainImg, String portImg,
+			String cadImg, int floor, StudioFilter studioFilter, Company company, Category category,
+			Schedule schedule) {
 		super();
 		this.stdId = stdId;
 		this.name = name;
-		this.desc = desc;
+		this.description = description;
 		this.rule = rule;
 		this.mainImg = mainImg;
 		this.portImg = portImg;
 		this.cadImg = cadImg;
 		this.floor = floor;
 		this.studioFilter = studioFilter;
-		this.repeatDate = repeatDate;
-		this.exceptionDate = exceptionDate;
 		this.company = company;
 		this.category = category;
+		this.schedule = schedule;
 	}
 
 	public int getStdId() {
@@ -54,12 +52,12 @@ public class Studio {
 		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public String getRule() {
@@ -110,22 +108,6 @@ public class Studio {
 		this.studioFilter = studioFilter;
 	}
 
-	public ArrayList<RepeatDate> getRepeatDate() {
-		return repeatDate;
-	}
-
-	public void setRepeatDate(ArrayList<RepeatDate> repeatDate) {
-		this.repeatDate = repeatDate;
-	}
-
-	public ExceptionDate getExceptionDate() {
-		return exceptionDate;
-	}
-
-	public void setExceptionDate(ExceptionDate exceptionDate) {
-		this.exceptionDate = exceptionDate;
-	}
-
 	public Company getCompany() {
 		return company;
 	}
@@ -142,12 +124,20 @@ public class Studio {
 		this.category = category;
 	}
 
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
+	}
+
 	@Override
 	public String toString() {
-		return "Studio [stdId=" + stdId + ", name=" + name + ", desc=" + desc + ", rule=" + rule + ", mainImg="
-				+ mainImg + ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter="
-				+ studioFilter + ", repeatDate=" + repeatDate + ", exceptionDate=" + exceptionDate + ", company="
-				+ company + ", category=" + category + "]";
+		return "Studio [stdId=" + stdId + ", name=" + name + ", description=" + description + ", rule=" + rule
+				+ ", mainImg=" + mainImg + ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor
+				+ ", studioFilter=" + studioFilter + ", company=" + company + ", category=" + category + ", schedule="
+				+ schedule + "]";
 	}
 	
 }

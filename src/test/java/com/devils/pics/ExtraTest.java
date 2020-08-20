@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ExtraTest {
 
 	@Autowired
-	  private SqlSession session;
+	  private SqlSession sqlSession;
 	
 	@Test
 	void contextLoads() {

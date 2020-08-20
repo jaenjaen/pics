@@ -11,7 +11,7 @@ import com.devils.pics.domain.StudioFilter;
 class StudioFilterTest {
 
 	@Autowired
-	private SqlSession session;
+	private SqlSession sqlSession;
 
 	/* StudioFilter 등록 - 단위 테스트 성공 */
 	@Test
@@ -27,7 +27,7 @@ class StudioFilterTest {
 		studioFilter.setAddress("서울특별시 서초구 효령로 335");
 		System.out.println(studioFilter);
 		/*
-		session.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
+		sqlSession.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
 		*/
 	}
 }

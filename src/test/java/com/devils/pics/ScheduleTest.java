@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ScheduleTest {
 
 	@Autowired
-	  private SqlSession session;
+	  private SqlSession sqlSession;
 	
 	@Test
 	void contextLoads() {

@@ -18,7 +18,7 @@ import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.service.StudioInfoService;
 
 @RestController
-public class StudioRegisterControlloer {
+public class StudioRegisterController {
 
 	@Autowired
 	private ScheduleService scheduleService;
@@ -33,8 +33,13 @@ public class StudioRegisterControlloer {
 	public ResponseEntity registerStudio(@RequestBody RepeatDate repeatDate,
 			@RequestBody Studio studio, @RequestBody StudioFilter studioFilter,
 			@RequestBody Category category, HttpSession httpSession) {
-		String comId = (String)httpSession.getAttribute("");
 		try {
+			/* 세션으로부터 회사 아이디를 받아와서 studio 객체에 추가 */
+			String comId = (String)httpSession.getAttribute("comId");
+			studio.setComId(comId);
+			
+			/* Studio를 등록 */
+			studioInfoService.registerStudioInfo(studio);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

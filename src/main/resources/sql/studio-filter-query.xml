@@ -14,52 +14,61 @@
 	<select id="getStudioFilterId"></select>
 	
 	<!-- ============================제영스 공간 ======================================-->
-	<!-- 필터 검색  결과를 위한 RM (Tag 제외) -->
+	<!-- 필터 검색 결과를 위한 RM (Tag 제외) -->
 	<resultMap type="studio" id="studioRM">
-	<id column="stu_id" property="stdId"/>
-	<result column="name" property="name"/>
-	<result column="description" property="description"/>
-	<result column="main_img" property="mainImg"/>
-	<result column="avg" property="avgScore"/>
-	<association property="category" javaType="category">
-		<result column="category" property="categoryName"/>
-	</association>
-	<association property="studioFilter" javaType="studioFilter">
-		<result column="unit_price" property="unitPrice"/>
-	</association>
+		<id column="stu_id" property="stuId" />
+		<result column="name" property="name" />
+		<result column="description" property="description" />
+		<result column="main_img" property="mainImg" />
+		<result column="avg" property="avgScore" />
+		<association property="category" javaType="category">
+			<result column="category" property="categoryName" />
+		</association>
+<!-- 		<association property="schedule" javaType="schedule">
+			<association property="repeatDate" javaType="repeatDate">
+				<result column="weekday" property="weekDate"/>
+			</association>
+		</association> -->
+		<association property="studioFilter"
+			javaType="studioFilter">
+			<result column="unit_price" property="unitPrice" />
+		</association>
 	</resultMap>
-	
-	<!-- 필터 검색  결과를 위한 쿼리 모듈 -->
+
+	<!-- 필터 검색 결과를 위한 쿼리 모듈 -->
 	<sql id="Select-J-Studio-Category-filter-tag-review">
-	SELECT
-	s.stu_id, s.name, s.description, s.main_img,
-	s.category,
-	f.unit_price, f.tag,
-	ifnull((r.score),0) avg
-	FROM (
-	SELECT
-	s.stu_id, s.name, s.description, s.main_img, s.filter_id,
-	c.category
-	FROM studio s
-	JOIN studio_category c
-	ON s.category_id = c.category_id
-	) s
-	LEFT OUTER JOIN 
-	(SELECT 
-	f.unit_price, f.filter_id, t.tag
-	FROM studio_filter f
-	JOIN tag_dic t
-	ON f.filter_id = t.filter_id) f
-	ON f.filter_id = s.filter_id
-	LEFT OUTER JOIN review r
-	ON s.stu_id = r.stu_id
-	
+		SELECT
+		s.stu_id, s.name, s.description, s.main_img,
+		c.category_name,
+		r.weekday, r.time,
+		e.start_date, e.end_date,
+		t.tag,
+		f.unit_price,
+		ifnull(rv.avg,0)
+		FROM studio s
+		JOIN studio_filter f
+		ON s.stu_id = f.stu_id
+		LEFT JOIN studio_category c
+		ON s.category_id = c.category_id
+		LEFT OUTER JOIN repeat_date r
+		ON s.stu_id = r.stu_id
+		LEFT OUTER JOIN exception_date e
+		ON s.stu_id = e.stu_id
+		LEFT OUTER JOIN tag_dic t
+		ON s.stu_id = t.stu_id
+		LEFT OUTER JOIN
+		(SELECT
+		stu_id, AVG(score) avg
+		FROM review
+		GROUP BY stu_id
+		) rv
+		ON s.stu_id = rv.stu_id
 	</sql>
-	
+
 	<!-- 필터 검색 쿼리 -->
-	<select id="selectByFilter" parameterType="studioFilter" resultMap="studioRM">
-		<include refid="Select-J-Studio-Category-filter-tag-review"/>
+	<select id="selectStudioByFilter" parameterType="studioFilter" resultMap="studioRM">
+		<include refid="Select-J-Studio-Category-filter-tag-review" />
 		WHERE s.stu_id
-		GROUP BY s.stu_id
+		ORDER BY s.stu_id;
 	</select>
 </mapper>

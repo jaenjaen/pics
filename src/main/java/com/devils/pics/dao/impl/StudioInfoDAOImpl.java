@@ -1,5 +1,8 @@
 package com.devils.pics.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,27 +20,18 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	private final String NS = "StudioInfoMapper.";
 	
 	@Override
-	public Studio getStudioInfo(int stdId) {
-		
-		return null;
+	public List<Studio> getStudioInfo(int stdId) {
+		return sqlSession.selectList(NS+"getStudioInfo", stdId);
 	}
-	
-	@Override
-	public int checkBookmark(int stdId, int custId) {
 		
-		return 0;
-	}
-	
 	@Override
 	public int getAccCustomer(int stdId) {
-
-		return 0;
+		return sqlSession.selectOne(NS+"getAccCustomer", stdId);
 	}
 	
 	@Override
-	public Review getReviews(int stdId) {
-		
-		return null;
+	public List<Review> getReviews(List<Integer> idList) {
+		return sqlSession.selectList(NS+"getStudioReview",idList);
 	}
 	
 	
@@ -56,6 +50,12 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	public int getStudioId(Studio studio) {
 		//Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
 		return sqlSession.selectOne(NS+"getStudioId", studio);
+	}
+
+	@Override
+	public int checkBookmark(int stdId, int custId) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

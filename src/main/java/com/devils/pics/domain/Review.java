@@ -10,7 +10,6 @@ public class Review {
 	private String regDate;
 	private String answer;
 
-	
 	public Review() {}
 	public Review(int reviewId, Customer customer, Studio studio, int score, String content, String img, String regDate,
 			String answer) {

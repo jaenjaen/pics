@@ -2,6 +2,7 @@ package com.devils.pics.domain;
 
 public class Tag {
 	private int tagId;
+
 	private int stuId;
 	private String tag;
 	
@@ -37,8 +38,6 @@ public class Tag {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-
-
 	@Override
 	public String toString() {
 		return "Tag [tagId=" + tagId + ", stuId=" + stuId + ", tag=" + tag + "]";

@@ -10,7 +10,6 @@ public class Company {
 	private String tel;
 	private String description;
 	private String logoImg;
-	private ArrayList<Studio> studio;
 	
 	public Company(String comId, String name, String address, String password, String tel, String description, String logoImg,
 			ArrayList<Studio> studio) {
@@ -21,7 +20,6 @@ public class Company {
 		this.tel = tel;
 		this.description = description;
 		this.logoImg = logoImg;
-		this.studio = studio;
 	}
 	
 	public Company() {
@@ -56,10 +54,10 @@ public class Company {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	public String getdescription() {
+	public String getDescription() {
 		return description;
 	}
-	public void setdescription(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 	public String getLogoImg() {
@@ -68,15 +66,9 @@ public class Company {
 	public void setLogoImg(String logoImg) {
 		this.logoImg = logoImg;
 	}
-	public ArrayList<Studio> getStudio() {
-		return studio;
-	}
-	public void setStudio(ArrayList<Studio> studio) {
-		this.studio = studio;
-	}
 	@Override
 	public String toString() {
 		return "Company [comId=" + comId + ", name=" + name + ", address=" + address + ", password=" + password
-				+ ", tel=" + tel + ", description=" + description + ", logoImg=" + logoImg + ", studio=" + studio + "]";
+				+ ", tel=" + tel + ", description=" + description + ", logoImg=" + logoImg + "]";
 	}
 }

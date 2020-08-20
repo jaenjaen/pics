@@ -2,13 +2,13 @@ package com.devils.pics.domain;
 
 public class Category {
 	private int categoryId;
-	private String categoryName;
+	private String category;
 	
 	public Category() {}
-	public Category(int categoryId, String categoryName) {
+	public Category(int categoryId, String category) {
 		super();
 		this.categoryId = categoryId;
-		this.categoryName = categoryName;
+		this.category = category;
 	}
 	public int getCategoryId() {
 		return categoryId;
@@ -16,15 +16,15 @@ public class Category {
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
-	public String getCategoryName() {
-		return categoryName;
+	public String getCategory() {
+		return category;
 	}
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	@Override
 	public String toString() {
-		return "Category [categoryId=" + categoryId + ", categoryName=" + categoryName + "]";
+		return "Category [categoryId=" + categoryId + ", category=" + category + "]";
 	}
 	
 	

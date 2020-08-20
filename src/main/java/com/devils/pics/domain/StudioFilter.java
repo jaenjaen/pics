@@ -41,10 +41,10 @@ public class StudioFilter {
 	public void setSize(double size) {
 		this.size = size;
 	}
-	public String getoptions() {
+	public String getOptions() {
 		return options;
 	}
-	public void setoptions(String options) {
+	public void setOptions(String options) {
 		this.options = options;
 	}
 	public int getParking() {

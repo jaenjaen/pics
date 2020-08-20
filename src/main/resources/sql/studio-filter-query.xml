@@ -8,7 +8,8 @@
 		studio_filter(stu_id, size, options, parking, unit_price, default_capacity, excharge, address, max_capacity)
 		VALUES (#{stdId}, #{size}, #{options}, #{parking}, #{unitPrice}, #{defaultCapacity}, #{excharge}, #{address}, #{maxCapacity})
 	</insert>
-<<<<<<< HEAD
+	<select id="getStudioFilterId"></select>
+
 	
 	<!-- ============================제영스 공간 ======================================-->
 	<!-- 필터 검색  결과를 위한 RM (Tag 제외) -->
@@ -62,7 +63,7 @@
 	<!-- ============================제영스 공간 ======================================-->
 	
 	
-=======
-	<select id="getStudioFilterId"></select>
->>>>>>> 2f91168ab8a33ca8cdb74c12f6d7e2cb466b9aed
+
+	
+
 </mapper>

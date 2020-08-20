@@ -16,8 +16,15 @@ class StudioInfoTest {
 	@Test
 	void contextLoads() {
 		String NS = "StudioInfoMapper.";
+		System.out.println("====================getStudioInfo====================");
 		Studio vo=sqlSession.selectOne(NS+"getStudioInfo",1);
 		System.out.println(vo);
+		
+		System.out.println("==================== getStudioFilter ====================");
+		vo=sqlSession.selectOne(NS+"getStudioInfo",1);
+		System.out.println(vo);
+
+		
 	}
 
 }

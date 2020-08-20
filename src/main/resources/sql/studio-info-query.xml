@@ -3,21 +3,62 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 								
-<mapper namespace="StudioInfoMapper">								
+<mapper namespace="StudioInfoMapper">			
+
 	<resultMap type="studio" id="studioInfoRM">							
 		<result property="stdId" column="stu_id"/>			
 		<result property="comId" column="com_id"/>
-		<result property="category" column="category_id"/>
+		<result property="categoryId" column="category_id"/>
 		<result property="name" column="name"/>
-		<result property="desc" column="desc"/>
+		<result property="description" column="description"/>
 		<result property="rule" column="rule"/>			
 		<result property="filterId" column="filter_id"/>
 		<result property="mainImg" column="main_img"/>
 		<result property="portImg" column="port_img"/>
 		<result property="cadImg" column="cad_img"/>
 		<result property="floor" column="floor"/>
-											
 	</resultMap>							
+
+	private int filterId;
+	private double size;
+	private String options;
+	private int parking;
+	private int unitPrice;
+	private int defaultCapacity;
+	private int excharge;
+	private String address;
+	private int maxCapacity;
+	private ArrayList<Tag> tag;
+	
+	<resultMap type="category" id="stuRM">
+	<result column="name" property="name"/>
+	<result column="description" property="description"/>
+	<result column="main_img" property="mainImg"/>
+	<association property="category" javaType="category">
+	<id column="stu_id" property="stdId"/>
+
+		<result column="categoryName" property="category"/>
+	</association>
+	<association property="studioFilter" javaType="studioFilter">
+		<result column="size" property="size"/>
+		<result column="options" property="options"/>
+		<result column="parking" property="parking"/>
+		<result column="unit_price" property="unitPrice"/>
+		<result column="default_capacity" property="defaultCapacity"/>
+		<result column="excharge" property="excharge"/>
+		<result column="address" property="address"/>
+		<result column="max_capacity" property="maxCapacity"/>
+		<result column="filter_id" property="filterId"/>
+		<association property="tag" javaType="tag">
+			<result column="tag" property="tag"/>
+		</association>
+	</association>
+	<association property="review" javaType="review">
+		<result column="avg" property="avgScore"/>
+	</association>
+	</resultMap>
+
+	
 								
 	<!-- Dynamic Query -->
 				
@@ -50,5 +91,11 @@
 		com.name,com.logo_img
 		from company com
 		where com.com_Id=(select s.com_Id from studio s where stu_id=${value})
-	</select>														
+	</select>
+	
+	<select id="getstudioFilter" parameterType="int" resultMap="studioInfoRM">							
+		<include refid="select-studioFilter"/>
+	</select>
+
+															
 </mapper>	

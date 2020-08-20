@@ -1,7 +1,6 @@
 package com.devils.pics;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ import com.devils.pics.domain.Studio;
 class ExtraTest {
 
 	@Autowired
-	private SqlSession session;
+	private SqlSession sqlSession;
 	private String NS ="ExtraMapper.";
 	
 	@Test
@@ -29,7 +28,7 @@ class ExtraTest {
 		 * 
 		 * Bookmark b = new Bookmark(); b.setCustomer(c); b.setStudio(s);
 		 * 
-		 * session.insert(NS+"addBookmark",b);
+		 * sqlSession.insert(NS+"addBookmark",b);
 		 * 
 		 * 
 		 * 
@@ -38,7 +37,7 @@ class ExtraTest {
 		 * studios) { System.out.println(s); }
 		 * 
 		 * 
-		 * session.delete(NS+"deleteBookmark",b);
+		 * sqlSession.delete(NS+"deleteBookmark",b);
 		 */
 		 
 	}

@@ -7,16 +7,12 @@ public class Tag {
 	
 	public Tag() {}
 
-	
-	
 	public Tag(int tagId, int stuId, String tag) {
 		super();
 		this.tagId = tagId;
 		this.stuId = stuId;
 		this.tag = tag;
 	}
-
-
 
 	public int getTagId() {
 		return tagId;
@@ -47,6 +43,5 @@ public class Tag {
 	public String toString() {
 		return "Tag [tagId=" + tagId + ", stuId=" + stuId + ", tag=" + tag + "]";
 	}
-	
 	
 }

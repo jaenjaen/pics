@@ -12,5 +12,4 @@
 		INSERT INTO company(com_id,name,address,password,tel,logo_img)
 		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg})
 	</insert>
-	
 </mapper>

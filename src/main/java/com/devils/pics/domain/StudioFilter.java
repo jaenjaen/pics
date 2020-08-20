@@ -1,25 +1,24 @@
 package com.devils.pics.domain;
 
-import java.util.ArrayList;
-
 public class StudioFilter {
 	private int filterId;
+	private int stdId;
 	private double size;
 	private String options;
 	private int parking;
 	private int unitPrice;
 	private int defaultCapacity;
-	private int excharge;
+	private int excharge;	
 	private String address;
 	private int maxCapacity;
-	private ArrayList<Tag> tag;
 	
 	public StudioFilter() {}
 
-	public StudioFilter(int filterId, double size, String options, int parking, int unitPrice, int defaultCapacity,
-			int excharge, String address, int maxCapacity, ArrayList<Tag> tag) {
+	public StudioFilter(int filterId, int stdId, double size, String options, int parking, int unitPrice, int defaultCapacity,
+			int excharge, String address, int maxCapacity) {
 		super();
 		this.filterId = filterId;
+		this.stdId = stdId;
 		this.size = size;
 		this.options = options;
 		this.parking = parking;
@@ -28,7 +27,6 @@ public class StudioFilter {
 		this.excharge = excharge;
 		this.address = address;
 		this.maxCapacity = maxCapacity;
-		this.tag = tag;
 	}
 
 	public int getFilterId() {
@@ -37,6 +35,14 @@ public class StudioFilter {
 
 	public void setFilterId(int filterId) {
 		this.filterId = filterId;
+	}
+	
+	public int getStdId() {
+		return stdId;
+	}
+
+	public void setStdId(int stdId) {
+		this.stdId = stdId;
 	}
 
 	public double getSize() {
@@ -101,19 +107,11 @@ public class StudioFilter {
 		this.maxCapacity = maxCapacity;
 	}
 
-	public ArrayList<Tag> getTag() {
-		return tag;
-	}
-
-	public void setTag(ArrayList<Tag> tag) {
-		this.tag = tag;
-	}
-
 	@Override
 	public String toString() {
-		return "StudioFilter [filterId=" + filterId + ", size=" + size + ", options=" + options + ", parking=" + parking
+		return "StudioFilter [filterId=" + filterId + ", stdId=" + stdId + ", size=" + size + ", options=" + options + ", parking=" + parking
 				+ ", unitPrice=" + unitPrice + ", defaultCapacity=" + defaultCapacity + ", excharge=" + excharge
-				+ ", address=" + address + ", maxCapacity=" + maxCapacity + ", tag=" + tag + "]";
+				+ ", address=" + address + ", maxCapacity=" + maxCapacity + "]";
 	}
 	
 	

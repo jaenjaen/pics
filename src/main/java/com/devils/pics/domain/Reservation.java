@@ -2,6 +2,7 @@ package com.devils.pics.domain;
 
 public class Reservation {
 	private int resId;
+	private int stuId;
 	private Customer customer;
 	private Studio studio;
 	private String startDate;
@@ -12,10 +13,11 @@ public class Reservation {
 	
 	public Reservation() {}
 	
-	public Reservation(int resId, Customer customer, Studio studio, String startDate, String endDate, int totalPrice,
+	public Reservation(int resId, int stuId, Customer customer, Studio studio, String startDate, String endDate, int totalPrice,
 			String resDate, int totalPeople) {
 
 		this.resId = resId;
+		this.stuId = stuId;
 		this.customer = customer;
 		this.studio = studio;
 		this.startDate = startDate;
@@ -29,6 +31,12 @@ public class Reservation {
 	}
 	public void setResId(int resId) {
 		this.resId = resId;
+	}
+	public int getStuId() {
+		return stuId;
+	}
+	public void setStuId(int stuId) {
+		this.stuId = stuId;
 	}
 	public Customer getCustomer() {
 		return customer;
@@ -74,7 +82,7 @@ public class Reservation {
 	}
 	@Override
 	public String toString() {
-		return "Reservation [resId=" + resId + ", customer=" + customer + ", studio=" + studio + ", startDate="
+		return "Reservation [resId=" + resId + ", stuId=" + stuId +", customer=" + customer + ", studio=" + studio + ", startDate="
 				+ startDate + ", endDate=" + endDate + ", totalPrice=" + totalPrice + ", resDate=" + resDate
 				+ ", totalPeople=" + totalPeople + "]";
 	}

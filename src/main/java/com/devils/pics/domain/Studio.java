@@ -1,13 +1,12 @@
 package com.devils.pics.domain;
 
 public class Studio {
-	private int stdId;
+	private int stuId;
 	private String comId;
 	private int categoryId;
 	private String name;
 	private String description;
 	private String rule;
-	private int filterId;
 	private String mainImg;
 	private String portImg;
 	private String cadImg;
@@ -16,20 +15,20 @@ public class Studio {
 	private Company company;
 	private Category category;
 	private Schedule schedule;
+	private double avgScore;
 	
-	public Studio() {}
-
-	public Studio(int stdId, String comId, int categoryId, String name, String description, String rule, int filterId,
+	public Studio() {
+	}
+	
+	public Studio(int stuId, String comId, int categoryId, String name, String description, String rule, int filterId,
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
-			Category category, Schedule schedule) {
-		super();
-		this.stdId = stdId;
+			Category category, Schedule schedule, double avgScore) {
+		this.stuId = stuId;
 		this.comId = comId;
 		this.categoryId = categoryId;
 		this.name = name;
 		this.description = description;
 		this.rule = rule;
-		this.filterId = filterId;
 		this.mainImg = mainImg;
 		this.portImg = portImg;
 		this.cadImg = cadImg;
@@ -38,14 +37,15 @@ public class Studio {
 		this.company = company;
 		this.category = category;
 		this.schedule = schedule;
+		this.avgScore = avgScore;
 	}
 
-	public int getStdId() {
-		return stdId;
+	public int getstuId() {
+		return stuId;
 	}
 
-	public void setStdId(int stdId) {
-		this.stdId = stdId;
+	public void setstuId(int stuId) {
+		this.stuId = stuId;
 	}
 
 	public String getComId() {
@@ -86,14 +86,6 @@ public class Studio {
 
 	public void setRule(String rule) {
 		this.rule = rule;
-	}
-
-	public int getFilterId() {
-		return filterId;
-	}
-
-	public void setFilterId(int filterId) {
-		this.filterId = filterId;
 	}
 
 	public String getMainImg() {
@@ -160,12 +152,21 @@ public class Studio {
 		this.schedule = schedule;
 	}
 
+	public double getAvgScore() {
+		return avgScore;
+	}
+
+	public void setAvgScore(double avgScore) {
+		this.avgScore = avgScore;
+	}
+
 	@Override
 	public String toString() {
-		return "Studio [stdId=" + stdId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
-				+ ", description=" + description + ", rule=" + rule + ", filterId=" + filterId + ", mainImg=" + mainImg
+		return "Studio [stuId=" + stuId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
+				+ ", description=" + description + ", rule=" + rule + ",mainImg=" + mainImg
 				+ ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
-				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + "]";
+				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + ", avgScore="
+				+ avgScore + "]";
 	}
 	
 }

@@ -3,4 +3,24 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ExtraMapper">
+	
+	<!-- Bookmark -->
+	<insert id="addBookmark" parameterType="bookmark">
+		INSERT IGNORE INTO bookmark (stu_id,cust_id) 
+		VALUES (#{studio.stuId},#{customer.custId})
+	</insert>
+	
+	<select id="getBookmark" parameterType="int" resultType="studio">
+		SELECT s.stu_id, s.category_id, s.name, s.description, s.rule
+			   ,s.main_img,s.port_img,s.cad_img,s.floor 
+		FROM studio s,customer c,bookmark b
+		WHERE c.cust_id = #{value}
+		  AND b.cust_id = c.cust_id
+		  AND s.stu_id = b.stu_id;
+	</select>
+	
+	<delete id="deleteBookmark" parameterType="int">
+		DELETE FROM bookmark
+		WHERE book_id = #{value}
+	</delete>
 </mapper>

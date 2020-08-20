@@ -11,7 +11,7 @@ import com.devils.pics.domain.Customer;
 class CustomerTest {
 	
 	@Autowired
-	  private SqlSession session;
+	  private SqlSession sqlSession;
 	
 	@Test
 	void contextLoads() {
@@ -25,7 +25,7 @@ class CustomerTest {
 		c.setGender('F');
 		c.setJob("aa");
 		c.setTel("0101");
-		session.insert(ns+"registerCustomer",c);
+		sqlSession.insert(ns+"registerCustomer",c);
 	}
 
 }

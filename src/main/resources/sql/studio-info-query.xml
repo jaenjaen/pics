@@ -2,10 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-								
-
 <mapper namespace="StudioInfoMapper">			
-
 	<resultMap type="studio" id="studioInfoRM">							
 		<result property="stdId" column="stu_id"/>			
 		<result property="comId" column="com_id"/>
@@ -18,91 +15,93 @@
 		<result property="portImg" column="port_img"/>
 		<result property="cadImg" column="cad_img"/>
 		<result property="floor" column="floor"/>
-	</resultMap>							
-
-	private int filterId;
-	private double size;
-	private String options;
-	private int parking;
-	private int unitPrice;
-	private int defaultCapacity;
-	private int excharge;
-	private String address;
-	private int maxCapacity;
-	private ArrayList<Tag> tag;
-	
-	<resultMap type="category" id="stuRM">
-	<result column="name" property="name"/>
-	<result column="description" property="description"/>
-	<result column="main_img" property="mainImg"/>
-	<association property="category" javaType="category">
-	<id column="stu_id" property="stdId"/>
-
-		<result column="categoryName" property="category"/>
-	</association>
-	<association property="studioFilter" javaType="studioFilter">
-		<result column="size" property="size"/>
-		<result column="options" property="options"/>
-		<result column="parking" property="parking"/>
-		<result column="unit_price" property="unitPrice"/>
-		<result column="default_capacity" property="defaultCapacity"/>
-		<result column="excharge" property="excharge"/>
-		<result column="address" property="address"/>
-		<result column="max_capacity" property="maxCapacity"/>
-		<result column="filter_id" property="filterId"/>
-		<association property="tag" javaType="tag">
-			<result column="tag" property="tag"/>
+		<association property="category" javaType="category">
+			<id property="categoryId" column="category_id"/>
+				<result column="category_id" property="categoryId"/>
+				<result column="categoryName" property="category"/>
 		</association>
-	</association>
-	<association property="review" javaType="review">
-		<result column="avg" property="avgScore"/>
-	</association>
+		<association property="company" javaType="company">
+			<id property="comId" column="com_id" />
+				<result property="comId" column="com_id" />
+				<result property="name" column="name"/>
+				<result property="address" column="address"/>
+				<result property="password" column="password"/>
+				<result property="tel" column="tel" />
+				<result property="description" column="description"/>
+				<result property="logoImg" column="logoImg" />
+		</association>
+		<association property="studioFilter" javaType="studioFilter">
+			<id property="filterId" column="filter_id"/>
+				<result property="filterId" column="filter_id" />
+				<result property="size" column="size" />
+				<result property="options" column="options"/>
+				<result property="parking" column="parking"/>
+				<result property="unitPrice" column="unit_price"/>
+				<result property="defaultCapacity" column="default_capacity" />
+				<result property="excharge" column="excharge"/>
+				<result property="address" column="address" />
+				<result property="maxCapacity" column="max_capacity"/>
+		</association>
+		<association property="tag" javaType="tag">
+			<id property="stuId" column="stu_id"/>
+				<result property="tagId" column="tag_id"/>
+				<result property="tagName" column="tag"/>
+		</association>
 	</resultMap>
-
+	
+	<resultMap type="review" id="reviewRM">
+		<result column="review_id" property="reviewId"/>
+		<result column="cust_id" property="custId"/>
+		<result column="stu_id" property="stdId"/>
+		<result column="score" property="score"/>
+		<result column="content" property="content"/>
+		<result column="img" property="img"/>
+		<result column="regDate" property="regDate"/>
+		<result column="answer" property="answer"/>
+<!-- 		<association property="Customer" javaType="customer">
+			<id column="std_id" property="stdId"/>
+				<result property="apiId" column="api_id" />
+				<result property="gender" column="gender"/>
+				<result property="age" column="age"/>
+				<result property="job" column="job"/>
+				<result property="funnel" column="funnel"/>
+				<result property="email" column="email"/>
+				<result property="tel" column="tel" />
+				<result property="apiKey" column="api_key"/>
+				<result property="imgSrc" column="img_src" />
+		</association> -->
+ 	</resultMap>
+ 
 	
 								
-	<!-- Dynamic Query -->
-				
-	<sql id="select-studio">							
-		select 						
-		s.stu_id,s.com_id,s.category_id,s.name,s.desc,s.rule,s.filter_id
-		from studio s
-	</sql>							
-								
-	<sql id="select-studioFilter">							
-		select 						
-		sf.filter_id,sf.size,sf.option,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge
-		from studio_filter sf
-	</sql>							
-	
-	<sql id="select-company">
-		select						
-		com.name,com.logo_img
-		from company com
-	</sql>
-					
 	<!-- SQL QUERY -->							
 	<select id="getStudioInfo" parameterType="int" resultMap="studioInfoRM">							
-		<include refid="select-studio"/>
-		where stu_id=${value}
+		select 						
+		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,
+		ctg.category_id,ctg.category_name,
+		com.name,com.logo_img,
+		sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,
+		t.tag_id,t.tag
+		from studio s
+		join studio_category ctg on s.category_id=ctg.category_id
+		join company com on s.com_id=com.com_id
+		join studio_filter sf on s.stu_id=sf.stu_id
+		left join tag t on s.stu_id=t.stu_id
+		where s.stu_id=${value};
 	</select>							
-								
-	<select id="getCompany" parameterType="int" resultMap="studioInfoRM">							
+
+ 	<select id="getStudioReview" parameterType="list" resultMap="reviewRM">
 		select
-		com.name,com.logo_img
-		from company com
-		where com.com_Id=(select s.com_Id from studio s where stu_id=${value})
-	</select>
-	
-	<select id="getstudioFilter" parameterType="int" resultMap="studioInfoRM">							
-		<include refid="select-studioFilter"/>
+		re.review_id, re.cust_id, re.stu_id, re.content, re.img, re.reg_date, re.answer
+		from review re
+		where re.stu_Id=${list[0]} and re.cust_Id=${list[1]}
 	</select>
 
-															
-
-<mapper namespace="StudioInfoMapper">								
-	<select id="getCategoryId" parameterType="category" resultType="int">
-		SELECT category_id AS categoryId FROM studio_category WHERE category = #{categoryName} 	
-	</select>											
+	<select id="getAccCustomer" parameterType="int" resultType="int">							
+		select count(res.res_id)
+		from reservation res
+		group by res.stu_id
+		having res.stu_id=${value};	
+	</select>							
 
 </mapper>	

@@ -2,7 +2,7 @@ package com.devils.pics.domain;
 
 public class Studio {
 	private int stdId;
-	private int comId;
+	private String comId;
 	private int categoryId;
 	private String name;
 	private String description;
@@ -15,11 +15,11 @@ public class Studio {
 	private StudioFilter studioFilter;
 	private Company company;
 	private Category category;
-	private Schedule schedule; 
-
+	private Schedule schedule;
+	
 	public Studio() {}
 
-	public Studio(int stdId, int comId, int categoryId, String name, String description, String rule, int filterId,
+	public Studio(int stdId, String comId, int categoryId, String name, String description, String rule, int filterId,
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
 			Category category, Schedule schedule) {
 		super();
@@ -48,11 +48,11 @@ public class Studio {
 		this.stdId = stdId;
 	}
 
-	public int getComId() {
+	public String getComId() {
 		return comId;
 	}
 
-	public void setComId(int comId) {
+	public void setComId(String comId) {
 		this.comId = comId;
 	}
 
@@ -167,4 +167,5 @@ public class Studio {
 				+ ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
 				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + "]";
 	}
+	
 }

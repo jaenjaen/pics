@@ -1,28 +1,28 @@
 package com.devils.pics.domain;
 
 public class Tag {
-	private int tagDicId;
-	private String tag;
+	private int tagId;
+	private String tagName;
 	
 	public Tag() {}
-	public Tag(int tagDicId, String tag) {
-		this.tagDicId = tagDicId;
-		this.tag = tag;
+	public Tag(int tagId, String tagName) {
+		this.tagId = tagId;
+		this.tagName = tagName;
 	}
-	public int getTagDicId() {
-		return tagDicId;
+	public int getTagId() {
+		return tagId;
 	}
-	public void setTagDicId(int tagDicId) {
-		this.tagDicId = tagDicId;
+	public void setTagId(int tagId) {
+		this.tagId = tagId;
 	}
-	public String getTag() {
-		return tag;
+	public String getTagName() {
+		return tagName;
 	}
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTagName(String tagName) {
+		this.tagName= tagName;
 	}
 	@Override
 	public String toString() {
-		return "Tag [tagDicId=" + tagDicId + ", tag=" + tag + "]";
+		return "Tag [tagId=" + tagId + ", tagName=" + tagName+"]";
 	}
 }

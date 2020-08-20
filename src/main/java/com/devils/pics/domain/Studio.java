@@ -16,12 +16,13 @@ public class Studio {
 	private Category category;
 	private Schedule schedule;
 	private double avgScore;
+	private Tag tag;
 
 	public Studio() {}
 
-	public Studio(int stdId, String comId, int categoryId, String name, String description, String rule,
+	public Studio(int stdId, String comId, int categoryId, String name, String description, String rule, 
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
-			Category category, Schedule schedule, double avgScore) {
+			Category category, Schedule schedule, double avgScore, Tag tag) {
 		super();
 		this.stdId = stdId;
 		this.comId = comId;
@@ -38,6 +39,7 @@ public class Studio {
 		this.category = category;
 		this.schedule = schedule;
 		this.avgScore = avgScore;
+		this.tag = tag;
 	}
 
 	public int getStdId() {
@@ -87,7 +89,7 @@ public class Studio {
 	public void setRule(String rule) {
 		this.rule = rule;
 	}
-
+	
 	public String getMainImg() {
 		return mainImg;
 	}
@@ -159,6 +161,14 @@ public class Studio {
 	public void setAvgScore(double avgScore) {
 		this.avgScore = avgScore;
 	}
+	
+	public Tag getTag() {
+		return tag;
+	}
+
+	public void setTag(Tag tag) {
+		this.tag = tag;
+	}
 
 	@Override
 	public String toString() {
@@ -166,6 +176,6 @@ public class Studio {
 				+ ", description=" + description + ", rule=" + rule + ", mainImg=" + mainImg
 				+ ", portImg=" + portImg + ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter
 				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + ", avgScore="
-				+ avgScore + "]";
+				+ avgScore + ", tag=" + tag + "]";
 	}
 }

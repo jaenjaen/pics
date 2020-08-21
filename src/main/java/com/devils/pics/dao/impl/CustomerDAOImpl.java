@@ -15,7 +15,22 @@ public class CustomerDAOImpl implements CustomerDAO {
 	private final String ns = "CustomerMapper.";
 	
 	@Override
-	public int registerCustomer(Customer Customer) throws Exception {
-		return session.insert(ns+"registerCustomer",Customer);
+	public int registerCustomer(Customer customer) throws Exception {
+		return session.insert(ns+"registerCustomer",customer);
+	}
+
+	@Override
+	public Customer getCustomer(int custId) throws Exception {
+		return session.selectOne(ns+"getCustomer",custId);
+	}
+
+	@Override
+	public int updateCustomer(Customer customer) throws Exception {
+		return session.update(ns+"updateCustomer",customer);
+	}
+
+	@Override
+	public int deleteCustomer(int custId) throws Exception {
+		return session.delete(ns+"deleteCustomer",custId);
 	}
 }

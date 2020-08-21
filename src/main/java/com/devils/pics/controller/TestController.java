@@ -21,8 +21,9 @@ public class TestController {
 	@PostMapping("/test")
 	public ResponseEntity registerStudio(@RequestBody RepeatDate repeatDate) {
 		try {
+			System.out.println(repeatDate);
 			scheduleService.registerRepeatDate(repeatDate);
-			return new ResponseEntity(HttpStatus.OK);
+			return new ResponseEntity("test2.html", HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}

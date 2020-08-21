@@ -14,7 +14,22 @@ public class CustomerServiceImpl implements CustomerService {
 	private CustomerDAO customerDao;
 
 	@Override
-	public int registerCustomer(Customer Customer) throws Exception {
-		return customerDao.registerCustomer(Customer);
+	public int registerCustomer(Customer customer) throws Exception {
+		return customerDao.registerCustomer(customer);
+	}
+
+	@Override
+	public Customer getCustomer(int custId) throws Exception {
+		return customerDao.getCustomer(custId);
+	}
+
+	@Override
+	public int updateCustomer(Customer customer) throws Exception {
+		return customerDao.updateCustomer(customer);
+	}
+
+	@Override
+	public int deleteCustomer(int custId) throws Exception {
+		return customerDao.deleteCustomer(custId);
 	}
 }

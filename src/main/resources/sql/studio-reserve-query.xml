@@ -1,59 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<!-- ================== 스튜디오 상세 페이지  ================== -->	
-<mapper namespace="StudioInfoMapper">			
-	<resultMap type="studio" id="studioInfoRM">							
-		<result property="stuId" column="stu_id"/>			
-		<result property="comId" column="com_id"/>
-		<result property="categoryId" column="category_id"/>
-		<result property="name" column="name"/>
-		<result property="description" column="description"/>
-		<result property="rule" column="rule"/>			
-		<result property="mainImg" column="main_img"/>
-		<result property="portImg" column="port_img"/>
-		<result property="cadImg" column="cad_img"/>
-		<result property="floor" column="floor"/>
-		<association property="studioFilter" javaType="studioFilter">
-			<id property="filterId" column="filter_id"/>
-				<result property="filterId" column="filter_id" />
-				<result property="size" column="size" />
-				<result property="options" column="options"/>
-				<result property="parking" column="parking"/>
-				<result property="unitPrice" column="unit_price"/>
-				<result property="defaultCapacity" column="default_capacity" />
-				<result property="excharge" column="excharge"/>
-				<result property="address" column="address" />
-				<result property="maxCapacity" column="max_capacity"/>
-		</association>
-		<association property="company" javaType="company">
-			<id property="comId" column="com_id" />
-				<result property="comId" column="com_id" />
-				<result property="name" column="name"/>
-				<result property="address" column="address"/>
-				<result property="password" column="password"/>
-				<result property="tel" column="tel" />
-				<result property="description" column="description"/>
-				<result property="logoImg" column="logoImg" />
-		</association>
-		<association property="category" javaType="category">
-			<id property="categoryId" column="category_id"/>
-				<result column="category_id" property="categoryId"/>
-				<result column="categoryName" property="category"/>
-		</association>
-		
- 	</resultMap>
+	<!-- 예약 Flow 정리 
+		1. 해당 스튜디오의 예약 관련 정보 불러오기 (예약 가능 일자 >> 캘린더 표시, )
+		2. 
+	-->
 	
-	<resultMap type="review" id="reviewRM">
-		<result column="review_id" property="reviewId"/>
-		<result column="cust_id" property="custId"/>
-		<result column="stu_id" property="stdId"/>
-		<result column="score" property="score"/>
-		<result column="content" property="content"/>
-		<result column="img" property="img"/>
-		<result column="regDate" property="regDate"/>
-		<result column="answer" property="answer"/>
+<!-- ================== 예약 모달 창================== -->	
+<mapper namespace="StudioInfoMapper">			
+	<resultMap type="Reservation" id="ReservationRM">
+		<result column="res_id" property="resId"/>
+		<result column="cust_id" property="stuId"/>
+		<result column="stu_id" property="startDate"/>
+		<result column="score" property="endDate"/>
+		<result column="content" property="totalPrice"/>
+		<result column="img" property="totalPeople"/>
+<!-- 		<association property="Customer" javaType="customer">
+			<id column="std_id" property="stdId"/>
+				<result property="imgSrc" column="img_src" />
+		</association> -->
  	</resultMap>
 
 	<select id="getStudioInfo" parameterType="int" resultMap="studioInfoRM">							

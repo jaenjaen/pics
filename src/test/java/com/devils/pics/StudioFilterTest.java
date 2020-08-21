@@ -33,7 +33,7 @@ class StudioFilterTest {
 		sqlSession.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
 		*/
 		
-		sqlSession.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
+		//sqlSession.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
 		
 		//검색 결과 (필터 없음)
 		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectByFilter");

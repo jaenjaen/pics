@@ -24,11 +24,12 @@
 		<association property="category" javaType="category">
 			<result column="category" property="categoryName" />
 		</association>
-<!-- 		<association property="schedule" javaType="schedule">
-			<association property="repeatDate" javaType="repeatDate">
+		<association property="schedule" javaType="schedule">
+			<collection property="" javaType="ArrayList" ofType="repeatDate">
 				<result column="weekday" property="weekDate"/>
-			</association>
-		</association> -->
+				<result column="time" property="time"/>
+			</collection>
+		</association>
 		<association property="studioFilter"
 			javaType="studioFilter">
 			<result column="unit_price" property="unitPrice" />

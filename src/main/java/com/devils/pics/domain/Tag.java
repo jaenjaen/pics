@@ -2,14 +2,12 @@ package com.devils.pics.domain;
 
 public class Tag {
 	private int tagId;
-
 	private int stuId;
 	private String tag;
 	
 	public Tag() {}
 
 	public Tag(int tagId, int stuId, String tag) {
-		super();
 		this.tagId = tagId;
 		this.stuId = stuId;
 		this.tag = tag;

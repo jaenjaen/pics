@@ -86,16 +86,16 @@ class StudioInfoTest {
 //		System.out.println(cnt);
 //		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
 //
-		System.out.println("==================== getBookmark ====================");
-		try {
-			List<Integer> idList=new ArrayList<Integer>();
-			idList.add(1);//cust_id
-			idList.add(12);//stu_id
-
-			int cnt=sqlSession.selectOne(NS+"getBookmark",idList);
-			System.out.println(cnt+","+idList.get(0)+","+idList.get(1));
-		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
-
+//		System.out.println("==================== getBookmark ====================");
+//		try {
+//			List<Integer> idList=new ArrayList<Integer>();
+//			idList.add(1);//cust_id
+//			idList.add(12);//stu_id
+//
+//			int cnt=sqlSession.selectOne(NS+"getBookmark",idList);
+//			System.out.println(cnt+","+idList.get(0)+","+idList.get(1));
+//		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
+//
 		
 //		System.out.println("==================== DAO & Service Test ====================");
 //		System.out.println("==================== getAccCustomer ====================");

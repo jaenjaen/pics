@@ -1,9 +1,0 @@
-diff a/src/main/java/com/devils/pics/controller/CustomerController.java b/src/main/java/com/devils/pics/controller/CustomerController.java	(rejected hunks)
-@@ -23,7 +23,6 @@
- 			customerService.registerCustomer(customer);
- 			return new ResponseEntity(HttpStatus.OK);
- 		} catch (Exception e) {
--			// TODO Auto-generated catch block
- 			e.printStackTrace();
- 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
- 		}

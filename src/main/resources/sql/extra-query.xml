@@ -16,11 +16,19 @@
 		FROM studio s,customer c,bookmark b
 		WHERE c.cust_id = #{value}
 		  AND b.cust_id = c.cust_id
-		  AND s.stu_id = b.stu_id;
+		  AND s.stu_id = b.stu_id
 	</select>
 	
 	<delete id="deleteBookmark" parameterType="int">
 		DELETE FROM bookmark
 		WHERE book_id = #{value}
 	</delete>
+	
+	<!-- Review -->
+	<insert id="writeReview" parameterType="review">
+		INSERT INTO review(cust_id,stu_id,score,content,img,reg_date) 
+		VALUES (SELECT cust_id FROM customer WHERE cust_id = #{customer.custId},
+			  SELECT stu_id FROM studio WHERE stu_id = #{studio.stuId},
+			  #{score},#{content},#{img},#{regDate})
+	</insert>
 </mapper>

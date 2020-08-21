@@ -91,7 +91,7 @@
 	</select>						
 </mapper>	
 	
-<!-- <mapper namespace="StudioInfoMapper">					
+<!--mapper namespace="StudioInfoMapper">					
 
 	<select id="getStudioInfo" parameterType="int" resultMap="studioInfoRM">							
 		SELECT 						
@@ -135,8 +135,9 @@
 	</select>							
  	
 </mapper>	
-
-	<!-- ================== 스튜디오 공간 등록 관련 쿼리 ======================== 
+-->
+<!-- 
+ ================== 스튜디오 공간 등록 관련 쿼리 ======================== 
 <mapper namespace="StudioInfoMapper">
 
 	

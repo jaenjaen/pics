@@ -10,10 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Company;
+import com.devils.pics.domain.Reservation;
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
+import com.devils.pics.domain.Tag;
 import com.devils.pics.service.StudioInfoService;
 
 @SpringBootTest
@@ -39,20 +41,20 @@ class StudioInfoTest {
 	}
 	
 	/* Studio 등록 - 단위 테스트 성공 */
-	@Test
-	public void registerStudioInfo() {
-		Studio studio = getSample();
-		int result = sqlSession.insert("StudioInfoMapper.registerStudioInfo", studio);
-		System.out.println("카테고리 아이디 : "+result);
-	}
-	
-	/* Studio로 Studio 아이디 찾아오기 - 단위 테스트 성공*/
-	@Test
-	public void getStudioId() {
-		Studio studio = getSample();
-		int stuId = sqlSession.selectOne("StudioInfoMapper.getStudioId", studio);
-		System.out.println("스튜디오 아이디 : "+stuId);
-	}
+//	@Test
+//	public void registerStudioInfo() {
+//		Studio studio = getSample();
+//		int result = sqlSession.insert("StudioInfoMapper.registerStudioInfo", studio);
+//		System.out.println("카테고리 아이디 : "+result);
+//	}
+//	
+//	/* Studio로 Studio 아이디 찾아오기 - 단위 테스트 성공*/
+//	@Test
+//	public void getStudioId() {
+//		Studio studio = getSample();
+//		int stuId = sqlSession.selectOne("StudioInfoMapper.getStudioId", studio);
+//		System.out.println("스튜디오 아이디 : "+stuId);
+//	}
 
 	/* 카테고리 이름으로 카테고리 아이디 찾아오기 - 단위 테스트 성공 */
 	@Test
@@ -63,29 +65,54 @@ class StudioInfoTest {
 	}*/	
 	void contextLoads() {
 		String NS = "StudioInfoMapper.";
-		System.out.println("====================getStudioInfo====================");
-		List<Studio> studioVO=sqlSession.selectList(NS+"getStudioInfo",1);
-		System.out.println(studioVO);
+//		System.out.println("====================getStudioInfo====================");
+//		try {
+//		List<Studio> studioVO=sqlSession.selectList(NS+"getStudioInfo",1);
+//		System.out.println(studioVO);
+//		}catch (NullPointerException e) {
+//			e.getMessage();
+//			System.out.println("찾으시는 스튜디오가 없습니다");
+//		}
 		
-//		System.out.println("==================== getStudioFilter ====================");
-//		Company companyVO=sqlSession.selectOne(NS+"getCompany",1);
-//		String categoryVO=sqlSession.selectOne(NS+"getStudioInfo",1);
-//		studioVO vo=new Studio(stdId, comId, categoryId, name, description, rule, filterId,
-//				mainImg, portImg, cadImg, floor, StudioFilter studioFilter, Company company,
-//				Category category, Schedule schedule)
-//		System.out.println(companyVO);
-
-//		ArrayList<Integer> idList=new ArrayList<Integer>();
-//		idList.add(1);
-//		idList.add(1);
-//		List<Review> reviewVO=sqlSession.selectList(NS+"getStudioReview",idList);
+//		System.out.println("==================== getReview ====================");
+//		try {
+//		List<Review> reviewVO=sqlSession.selectList(NS+"getStudioReviews",1);
 //		System.out.println(reviewVO);
-		
+//		}catch (NullPointerException e) {System.out.println("찾으시는 스튜디오가 없습니다");}
+//
+//		System.out.println("==================== getAccCustomer ====================");
+//		try {
 //		int cnt=sqlSession.selectOne(NS+"getAccCustomer",1);
 //		System.out.println(cnt);
+//		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
+//
+		System.out.println("==================== getBookmark ====================");
+		try {
+			List<Integer> idList=new ArrayList<Integer>();
+			idList.add(1);//cust_id
+			idList.add(12);//stu_id
+
+			int cnt=sqlSession.selectOne(NS+"getBookmark",idList);
+			System.out.println(cnt+","+idList.get(0)+","+idList.get(1));
+		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
+
 		
-		
+//		System.out.println("==================== DAO & Service Test ====================");
+//		System.out.println("==================== getAccCustomer ====================");
+//		try {
 //		System.out.println(service.getAccCustomer(1));
+//		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
+//		
+//		System.out.println("==================== getReview ====================");
+//		try {
+//			List<Review> reviewVO=service.getStudioReviews(idList);
+//		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
+//		
+//		System.out.println("==================== getTags ====================");
+//		try {
+//			Tag tagVO=service.getTags(1);
+//		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
+
 	}
 
 }

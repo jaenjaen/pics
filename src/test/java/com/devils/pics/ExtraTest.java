@@ -23,6 +23,7 @@ class ExtraTest {
 		
 		
 		
+		
 		/*
 		 * Customer c = new Customer(); c.setCustId(1); Studio s = new Studio();
 		 * s.setstuId(7);
@@ -31,6 +32,7 @@ class ExtraTest {
 		 * 
 		 * sqlSession.insert(NS+"addBookmark",b);
 		 */
+		 
 		  
 		  
 		  

@@ -7,6 +7,7 @@ import com.devils.pics.dao.StudioInfoDAO;
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
+import com.devils.pics.domain.Tag;
 import com.devils.pics.service.StudioInfoService;
 
 @Service
@@ -43,8 +44,18 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 	}
 
 	@Override
-	public List<Review> getReviews(List<Integer> idList) {
-		return studioInfoDao.getReviews(idList);
+	public List<Review> getStudioReviews(int stdId) {
+		return studioInfoDao.getStudioReviews(stdId);
 
+	}
+
+	@Override
+	public Tag getTags(int stdId) {
+		return studioInfoDao.getTags(stdId);
+	}
+
+	@Override
+	public int checkBookmark(List<Integer> idList) {
+		return studioInfoDao.checkBookmark(idList);
 	}
 }

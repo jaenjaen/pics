@@ -11,6 +11,7 @@ import com.devils.pics.dao.StudioInfoDAO;
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
+import com.devils.pics.domain.Tag;
 
 @Repository
 public class StudioInfoDAOImpl implements StudioInfoDAO {
@@ -30,8 +31,8 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	}
 	
 	@Override
-	public List<Review> getReviews(List<Integer> idList) {
-		return sqlSession.selectList(NS+"getStudioReview",idList);
+	public List<Review> getStudioReviews(int stdId) {
+		return sqlSession.selectList(NS+"getStudioReviews",stdId);
 	}
 	
 	
@@ -53,9 +54,13 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	}
 
 	@Override
-	public int checkBookmark(int stdId, int custId) {
-		// TODO Auto-generated method stub
-		return 0;
+	public Tag getTags(int stdId) {
+		return sqlSession.selectOne(NS+"getTags", stdId);
+	}
+
+	@Override
+	public int checkBookmark(List<Integer> idList) {
+		return sqlSession.selectOne(NS+"checkBookmark",idList);
 	}
 
 }

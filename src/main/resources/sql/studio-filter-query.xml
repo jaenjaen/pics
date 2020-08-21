@@ -16,20 +16,20 @@
 	<!-- ============================제영스 공간 ======================================-->
 	<!-- 필터 검색 결과를 위한 RM (Tag 제외) -->
 	<resultMap type="studio" id="studioRM">
-		<id column="stu_id" property="stuId" />
+		<id column="stu_id" property="stuId"/>
 		<result column="name" property="name" />
 		<result column="description" property="description" />
 		<result column="main_img" property="mainImg" />
 		<result column="avg" property="avgScore" />
 		<association property="category" javaType="category">
-			<result column="category" property="categoryName" />
+			<result column="category_name" property="categoryName" />
 		</association>
-		<association property="schedule" javaType="schedule">
-			<collection property="" javaType="ArrayList" ofType="repeatDate">
+		<!-- <association property="schedule" javaType="schedule">
+			<collection property="repeatDate" javaType="java.util.ArrayList" ofType="repeatDate">
 				<result column="weekday" property="weekDate"/>
 				<result column="time" property="time"/>
 			</collection>
-		</association>
+		</association> -->
 		<association property="studioFilter"
 			javaType="studioFilter">
 			<result column="unit_price" property="unitPrice" />
@@ -40,12 +40,10 @@
 	<sql id="Select-J-Studio-Category-filter-tag-review">
 		SELECT
 		s.stu_id, s.name, s.description, s.main_img,
-		c.category_name,
-		r.weekday, r.time,
-		e.start_date, e.end_date,
+		c.category_id, c.category_name,
 		t.tag,
 		f.unit_price,
-		ifnull(rv.avg,0)
+		ifnull(rv.avg,0) avg
 		FROM studio s
 		JOIN studio_filter f
 		ON s.stu_id = f.stu_id
@@ -55,7 +53,7 @@
 		ON s.stu_id = r.stu_id
 		LEFT OUTER JOIN exception_date e
 		ON s.stu_id = e.stu_id
-		LEFT OUTER JOIN tag_dic t
+		LEFT OUTER JOIN tag t
 		ON s.stu_id = t.stu_id
 		LEFT OUTER JOIN
 		(SELECT
@@ -67,9 +65,38 @@
 	</sql>
 
 	<!-- 필터 검색 쿼리 -->
-	<select id="selectStudioByFilter" parameterType="studioFilter" resultMap="studioRM">
+	<select id="selectStudioByFilter" parameterType="HashMap" resultMap="studioRM">
 		<include refid="Select-J-Studio-Category-filter-tag-review" />
-		WHERE s.stu_id
+		<where>
+			<!-- 카테고리/필터 조건 -->
+			<if test="categoryId != null">
+				AND c.category_id = #{categoryId}
+			</if>
+			<if test="weekDate != null">
+				AND r.weekday = #{weekDate}
+			</if>
+			<if test="selectedDate != null">
+				AND (e.start_date > #{selectedDate}
+				OR #{selectedDate} > e.end_date)
+			</if>
+			<if test="address != null">
+				AND f.address Like "%${address}%"
+			</if>
+			<if test="maxSize != null and minSize != null">
+				AND (f.size >= #{minSize}
+				AND #{maxSize} >= f.size)
+			</if>
+			<if test="minUnitPrice != null and maxUnitPrice">
+				AND (f.unit_price >= #{minUnitPrice}
+				AND #{maxUnitPrice} >= f.unit_price)
+			</if>
+			<if test="capacity != null">
+				AND f.max_capacity >= #{capacity}
+			</if>
+			<!-- 검색어 -->
+				AND 
+		</where>
+		<!-- 정렬 -->
 		ORDER BY s.stu_id;
 	</select>
 </mapper>

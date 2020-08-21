@@ -1,5 +1,6 @@
 package com.devils.pics;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 
@@ -35,10 +37,28 @@ class StudioFilterTest {
 		
 		//sqlSession.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
 		
-		//검색 결과 (필터 없음)
-		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectByFilter");
-		System.out.println("조회된 총 studio 수 : "+list.size());
-		System.out.println(list);
+		//검색 결과 (필터 포함)
+		/*
+		 * Studio studio = new Studio(); Category category = new Category();
+		 * StudioFilter filter = new StudioFilter();
+		 * 
+		 * category.setCategoryId(1); //카테고리 별 filter.set studio.setCategory(category);
+		 */
+		HashMap<String, String> filterMap = new HashMap<String, String>();
+//		filterMap.put("categoryId", "1");
+//		filterMap.put("weekDate","월");
+//		filterMap.put("selectedDate","2020-08-13");
+//		filterMap.put("address","서울시 ");
+//		filterMap.put("minSize", "100");
+//		filterMap.put("maxSize", "150");
+//		filterMap.put("minUnitPrice", "10000");
+//		filterMap.put("maxUnitPrice", "15000");
+//		filterMap.put("capacity", "15");
+		filterMap.put("studioName", "15");
+
+		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", filterMap);
+		System.out.println("조회된 총 studio 수 : " + list.size());
+		for (Studio s : list) System.out.println(s);
 
 	}
 }

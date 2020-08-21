@@ -150,3 +150,5 @@ VALUES(1,'2020-08-15','2020-08-17',2);
 INSERT 
 into exception_date
 VALUES(2,'2020-08-15 13:00:00','2020-08-15 23:59:59',3);
+
+insert into exception_date VALUES(3,'2020-08-13','2020-08-13',1);

@@ -1,3 +1,4 @@
+
 package com.devils.pics.domain;
 
 public class Tag {

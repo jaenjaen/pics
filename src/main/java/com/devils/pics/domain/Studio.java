@@ -16,9 +16,10 @@ public class Studio {
 	private Category category;
 	private Schedule schedule;
 	private double avgScore;
-
+	
 	public Studio() {
 	}
+	
 	public Studio(int stuId, String comId, int categoryId, String name, String description, String rule, int filterId,
 			String mainImg, String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company,
 			Category category, Schedule schedule, double avgScore) {
@@ -167,4 +168,5 @@ public class Studio {
 				+ ", company=" + company + ", category=" + category + ", schedule=" + schedule + ", avgScore="
 				+ avgScore + "]";
 	}
+	
 }

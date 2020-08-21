@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <span>요일 : </span><input type="text" ref="weekDate" v-model="repeatDate.weekDate"><br/>
+        <span>시간 : </span><input type="text" ref="time" v-model="repeatDate.time"><br/>
+        <span>스튜디오 아이디 : </span><input type="text" ref="stuId" v-model="repeatDate.stuId">
+        <button @click="checkForm">제출</button>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    loading: true,
+                    errored: false,
+                    repeatDate: {
+                        weekDate: '',
+                        time: '',
+                        stuId: ''
+                    }
+                }
+            },
+            methods: {
+                checkForm() { //입력값 체크
+                    let err = true;
+                    let msg = '';
+
+                    !this.repeatDate.weekDate && (msg = '요일을 입력해주세요', err = false, this.$refs.weekDate.focus());
+                    //err & !this.repeatDate.time && (msg = '시간을 입력해주세요', err = false, this.$refs.time.focus());
+                    err & !this.repeatDate.stuId && (msg = '스튜디오 아이디를 입력해주세요', err = false, this.$refs.stuId.focus());
+
+
+                    // 만약, 내용이 다 입력되어 있다면 createHandler 호출
+                    if (!err) alert(msg);
+                    else this.addRepeatDate();
+                },
+                addRepeatDate() {
+                    axios
+                        .post('http://127.0.0.1:7777/test', this.repeatDate)
+                        .then(function(response) {
+                            alert(`${app.repeatDate.stuId} 님이 등록되셨습니다.`)
+                            location.href = "./test2.html"
+                        })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

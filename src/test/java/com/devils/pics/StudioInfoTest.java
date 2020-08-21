@@ -63,9 +63,9 @@ class StudioInfoTest {
 	}*/	
 	void contextLoads() {
 		String NS = "StudioInfoMapper.";
-//		System.out.println("====================getStudioInfo====================");
-//		Studio studioVO=sqlSession.selectOne(NS+"getStudioInfo",1);
-//		System.out.println(studioVO);
+		System.out.println("====================getStudioInfo====================");
+		List<Studio> studioVO=sqlSession.selectList(NS+"getStudioInfo",1);
+		System.out.println(studioVO);
 		
 //		System.out.println("==================== getStudioFilter ====================");
 //		Company companyVO=sqlSession.selectOne(NS+"getCompany",1);
@@ -85,8 +85,7 @@ class StudioInfoTest {
 //		System.out.println(cnt);
 		
 		
-		System.out.println(service.getAccCustomer(1));
-				
+//		System.out.println(service.getAccCustomer(1));
 	}
 
 }

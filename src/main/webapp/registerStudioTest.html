@@ -56,21 +56,9 @@
                 </td>
             </tr>
             <tr>
-                <td>주소</td>
-                <td>
-                    <input type="text" name="address" v-model="studio.studioFilter.address">
-                </td>
-            </tr>
-            <tr>
                 <td>층수</td>
                 <td>
                     <input type="text" name="floor" v-model="studio.floor">
-                </td>
-            </tr>
-            <tr>
-                <td>면적</td>
-                <td>
-                    <input type="text" name="size" v-model="studio.studioFilter.size">
                 </td>
             </tr>
 
@@ -79,81 +67,6 @@
                 <td>공간도면</td>
                 <td>
                     <input type="text" name="cadImg" v-model="studio.cadImg">
-                </td>
-            </tr>
-            <tr>
-                <td>시간당 대여료</td>
-                <td>
-                    <input type="text" name="unitPrice" v-model="studio.studioFilter.unitPrice">
-                </td>
-            </tr>
-            <tr>
-                <td>인원 추가시 1인당 추가금액</td>
-                <td>
-                    <input type="text" name="excharge" v-model="studio.studioFilter.excharge">
-                </td>
-            </tr>
-            <tr>
-                <td>기본 인원</td>
-                <td>
-                    <input type="text" name="defaultCapacity" v-model="studio.studioFilter.defaultCapacity">
-                </td>
-            </tr>
-            <tr>
-                <td>최대 인원</td>
-                <td>
-                    <input type="text" name="maxCapacity" v-model="studio.studioFilter.maxCapacity">
-                </td>
-            </tr>
-            <tr>
-                <!-- 시간표처럼 드래그해서 선택 -->
-                <td>운영 시간</td>
-                <td>
-                    <span>요일 <input type="text" name="weekDate"></span>
-                    <span> 시간 <input type="text" name="time"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>주차 가능</td>
-                <td>
-                    <input type="radio" name="parkSelect" value="unable" checked> 불가
-                    <input type="radio" name="parkSelect" value="able"> 가능
-                </td>
-            </tr>
-            <tr>
-                <td>주차 가능 대수</td>
-                <td>
-                    <input type="text" name="parking" v-model="studio.studioFilter.parking">
-                </td>
-            </tr>
-            <tr>
-                <td>장비 및 옵션</td>
-                <td>
-                    <table>
-                        <tr>
-                            <td>
-                                <select name="options" size="4" v-model="studio.studioFilter.options" multiple>
-                                    <option>카메라</option>
-                                    <option>조명</option>
-                                    <option>반사판</option>
-                                    <option>포토그래퍼</option>
-                                </select>
-                            </td>
-                            <td>
-                                <button>></button>
-                                <br/>
-                                <button><</button>
-                            </td>
-                            <td>
-                                <select size="4" multiple>
-                                    <option></option>
-                                    <option></option>
-                                    <option></option>
-                                    <option></option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
                 </td>
             </tr>
             <tr>
@@ -200,17 +113,7 @@
                         mainImg: '',
                         portImg: '',
                         cadImg: '',
-                        floor: '',
-                        studioFilter: {
-                            size: '',
-                            options: [],
-                            parking: '',
-                            unitPrice: '',
-                            defaultCapacity: '',
-                            excharge: '',
-                            address: '',
-                            maxCapacity: ''
-                        }
+                        floor: ''
                     }
                 }
             },

@@ -3,17 +3,16 @@ package com.devils.pics.domain;
 
 public class Tag {
 	private int tagId;
-
 	private int stuId;
-	private String tag;
+	private String tagName;
 	
 	public Tag() {}
-
-	public Tag(int tagId, int stuId, String tag) {
+	
+	public Tag(int tagId, int stuId, String tagName) {
 		super();
 		this.tagId = tagId;
 		this.stuId = stuId;
-		this.tag = tag;
+		this.tagName = tagName;
 	}
 
 	public int getTagId() {
@@ -32,16 +31,16 @@ public class Tag {
 		this.stuId = stuId;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getTagName() {
+		return tagName;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
 	}
 	@Override
 	public String toString() {
-		return "Tag [tagId=" + tagId + ", stuId=" + stuId + ", tag=" + tag + "]";
+		return "Tag [tagId=" + tagId + ", stuId=" + stuId + ", tagName=" + tagName + "]";
 	}
 	
 }

@@ -38,21 +38,21 @@ public class ExtraTest {
 			  
 			  //sqlSession.delete(NS+"deleteBookmark",3);
 		
-			  Customer c = new Customer();
-			  c.setCustId(1);
-			  Studio s = new Studio();
-			  s.setStuId(18);
-		  
-			Review r = new Review();
-			r.setCustomer(c);
-			r.setStudio(s);
-			r.setScore(5);
-			r.setContent("광주에서야경찍으려면여기로걍야경개쩜");
-			r.setImg("사진.png");
-			r.setRegDate(time1);
-			System.out.println(c+","+r+","+s);
-			int result=sqlSession.insert(NS+"writeReview",r);
-			System.out.println("result : "+result);
+		/*
+		 * Customer c = new Customer(); c.setCustId(1); Studio s = new Studio();
+		 * s.setStuId(18);
+		 * 
+		 * Review r = new Review(); r.setCustomer(c); r.setStudio(s); r.setScore(5);
+		 * r.setContent("광주에서야경찍으려면여기로걍야경개쩜"); r.setImg("사진.png"); r.setRegDate(time1);
+		 * System.out.println(c+","+r+","+s); int
+		 * result=sqlSession.insert(NS+"writeReview",r);
+		 * System.out.println("result : "+result);
+		 */
+		
+//		List<Review> reviewList = sqlSession.selectList(NS+"getCustomerReivews",1);
+//		for(Review r:reviewList) {
+//			System.out.println(r);
+//		}
 		 
 		  
 		 

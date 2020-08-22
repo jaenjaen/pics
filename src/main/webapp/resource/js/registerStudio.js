@@ -45,6 +45,16 @@ var app = new Vue({
                 alert("제거");
             }
         },
+        controlModal(cmd, modalId) {
+            let modal = document.getElementById(modalId);
+            if (cmd == 'showModalAgree') {
+                modal.style.display = "block";
+            }
+            if (cmd == 'hideModalAgree') {
+                alert('확인');
+                modal.style.display = "none";
+            }
+        },
         controlAgree(control) {
             let agrees = document.getElementsByName('checkAgree[]');
             let allAgree = document.getElementById('allCheckAgree');

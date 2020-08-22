@@ -40,7 +40,7 @@
                     <label for="description">스튜디오 소개</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="description" name="description" v-model="studio.description" style="height:100px"></textarea>
+                    <textarea id="description" name="description" v-model="studio.description"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -48,7 +48,7 @@
                     <label for="rule">이용 수칙</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="rule" name="rule" v-model="studio.rule" style="height:100px"></textarea>
+                    <textarea id="rule" name="rule" v-model="studio.rule"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -206,22 +206,22 @@
             </div>
             <div class="row">
                 <p>서비스 동의</p>
-                <table id="agreeTable" width="100%" style="padding-bottom: 20px; border-top: 1px solid #747474;">
-                    <tr style="background:white; height:80px;">
+                <table id="agreeTable" width="100%">
+                    <tr id="partAgree">
+                        <td>
+                            <input type="checkbox" name="checkAgree[]" value="0" @change="controlAgree('partCheck')">
+                            <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree1')">환불 규정 안내에 대한 동의</a>
+                        </td>
                         <td>
                             <input type="checkbox" name="checkAgree[]" value="1" @change="controlAgree('partCheck')">
-                            <a href="#">환불 규정 안내에 대한 동의</a>
+                            <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree2')">개인 정보 제 3자 제공 동의</a>
                         </td>
                         <td>
                             <input type="checkbox" name="checkAgree[]" value="2" @change="controlAgree('partCheck')">
-                            <a href="#">개인 정보 제 3자 제공 동의</a>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="checkAgree[]" value="3" @change="controlAgree('partCheck')">
-                            <a href="#">개인 정보 수집 및 이용 동의</a>
+                            <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree3')">개인 정보 수집 및 이용 동의</a>
                         </td>
                     </tr>
-                    <tr style="background:#D5D5D5; height:50px;">
+                    <tr id="allAgree">
                         <td colspan="3" align="center">
                             <input type="checkbox" id="allCheckAgree" @change="controlAgree('allCheck')">
                             <span>전체동의</span>
@@ -233,6 +233,27 @@
                 <input type="submit" value="Submit">
             </div>
         </form>
+    </div>
+    <!-- Modal : 환불 규정 안내에 대한 동의 -->
+    <div id="modalAgree1" class="modal">
+        <div class="modal-content">
+            <span class="close" @click="controlModal('hideModalAgree', 'modalAgree1')">&times;</span>
+            <p>환불 규정 안내에 대한 동의</p>
+        </div>
+    </div>
+    <!-- Modal : 개인 정보 제 3자 제공 동의 -->
+    <div id="modalAgree2" class="modal">
+        <div class="modal-content">
+            <span class="close" @click="controlModal('hideModalAgree', 'modalAgree2')">&times;</span>
+            <p>개인 정보 제 3자 제공 동의</p>
+        </div>
+    </div>
+    <!-- Modal : 개인 정보 수집 및 이용 동의 -->
+    <div id="modalAgree3" class="modal">
+        <div class="modal-content">
+            <span class="close" @click="controlModal('hideModalAgree', 'modalAgree3')">&times;</span>
+            <p>개인 정보 수집 및 이용 동의</p>
+        </div>
     </div>
     <script src="resource/js/registerStudio.js"></script>
 </body>

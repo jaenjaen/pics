@@ -1,9 +1,13 @@
 package com.devils.pics.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devils.pics.dao.StudioFilterDAO;
+import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.service.StudioFilterService;
 
@@ -18,5 +22,10 @@ public class StudioFilterServiceImpl implements StudioFilterService {
 	public int registerStudioFilter(StudioFilter studioFilter) {
 		//StudioFilter 등록
 		return studioFilterDao.registerStudioFilter(studioFilter);
+	}
+
+	@Override
+	public List<Studio> searchStudio(HashMap<String, String> filterMap) {
+		return studioFilterDao.searchStudio(filterMap);
 	}
 }

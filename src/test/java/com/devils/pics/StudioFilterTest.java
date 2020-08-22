@@ -37,7 +37,7 @@ class StudioFilterTest {
 		
 		//sqlSession.insert("StudioFilterMapper.registerStudioFilter", studioFilter);
 		
-		//검색 결과 (필터 포함)
+		//========== 검색 결과 (필터 포함, 검색어) ================
 		/*
 		 * Studio studio = new Studio(); Category category = new Category();
 		 * StudioFilter filter = new StudioFilter();
@@ -53,9 +53,12 @@ class StudioFilterTest {
 //		filterMap.put("maxSize", "150");
 //		filterMap.put("minUnitPrice", "10000");
 //		filterMap.put("maxUnitPrice", "15000");
-//		filterMap.put("capacity", "15");
-		filterMap.put("studioName", "15");
-
+//		filterMap.put("capacity", "15")`;
+//		filterMap.put("studioName", "15");
+//		filterMap.put("searchContent", "카페");
+//		filterMap.put("searchTag", "모던");
+		filterMap.put("orderCon", "4");
+		
 		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", filterMap);
 		System.out.println("조회된 총 studio 수 : " + list.size());
 		for (Studio s : list) System.out.println(s);

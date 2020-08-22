@@ -72,7 +72,7 @@
 		ctg.category_id,ctg.category_name,
 		com.name,com.logo_img,
 		sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,
-		t.tag_id,t.tag_name
+		t.tag_id,t.tag_name, <!-- 강제영 : 쉼표가 없어서 에러 났음 지워도 됨 -->
 		FROM studio s
 		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id
 		LEFT JOIN company com ON s.com_id=com.com_id

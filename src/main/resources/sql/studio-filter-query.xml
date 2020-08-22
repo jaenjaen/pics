@@ -24,27 +24,35 @@
 		<association property="category" javaType="category">
 			<result column="category_name" property="categoryName" />
 		</association>
+		<association property="studioFilter"
+			javaType="studioFilter">
+			<result column="unit_price" property="unitPrice" />
+		</association>
 		<!-- <association property="schedule" javaType="schedule">
 			<collection property="repeatDate" javaType="java.util.ArrayList" ofType="repeatDate">
 				<result column="weekday" property="weekDate"/>
 				<result column="time" property="time"/>
 			</collection>
 		</association> -->
-		<association property="studioFilter"
-			javaType="studioFilter">
-			<result column="unit_price" property="unitPrice" />
-		</association>
+		
 	</resultMap>
 
 	<!-- 필터 검색 결과를 위한 쿼리 모듈 -->
+	<!-- 필요없는 컬럼 지우기 :: 프론트 검사 이후 -->
 	<sql id="Select-J-Studio-Category-filter-tag-review">
 		SELECT
 		s.stu_id, s.name, s.description, s.main_img,
 		c.category_id, c.category_name,
-		t.tag,
-		f.unit_price,
-		ifnull(rv.avg,0) avg
+		com.name com_name,
+		r.weekday,
+		e.start_date, e.end_date,
+		t.tag_name,
+		f.unit_price, f.address,
+		ifnull(rv.avg,0) avg,
+		ifnull(res.count,0) count
 		FROM studio s
+		JOIN company com
+		ON s.com_id = com.com_id
 		JOIN studio_filter f
 		ON s.stu_id = f.stu_id
 		LEFT JOIN studio_category c
@@ -62,12 +70,25 @@
 		GROUP BY stu_id
 		) rv
 		ON s.stu_id = rv.stu_id
+		LEFT OUTER JOIN
+		(SELECT
+		stu_id, COUNT(stu_id) count
+		FROM reservation
+		GROUP BY stu_id
+		) res
+		ON s.stu_id = res.stu_id
 	</sql>
 
 	<!-- 필터 검색 쿼리 -->
 	<select id="selectStudioByFilter" parameterType="HashMap" resultMap="studioRM">
 		<include refid="Select-J-Studio-Category-filter-tag-review" />
 		<where>
+		<choose>
+			<!-- tag 검색 :: tag 검색 시 필터 조건 걸리지 않음 -->
+			<when test="searchTag != null">
+				AND t.tag_name = #{searchTag}
+			</when>
+			<otherwise>
 			<!-- 카테고리/필터 조건 -->
 			<if test="categoryId != null">
 				AND c.category_id = #{categoryId}
@@ -93,10 +114,35 @@
 			<if test="capacity != null">
 				AND f.max_capacity >= #{capacity}
 			</if>
-			<!-- 검색어 -->
-				AND 
+			<if test="searchContent != null">
+			<!-- 검색어 : 회사이름, 스튜디오 이름, 상세설명, 태그, 주소-->
+				AND (
+				s.name Like '%${searchContent}%'
+				OR c.category_name Like '%${searchContent}%'
+				OR s.description Like '%${searchContent}%'
+				OR t.tag_name Like '%${searchContent}%'
+				OR f.address Like '%${searchContent}%'
+				OR com.name Like '%${searchContent}%'
+				)
+			</if>
+			</otherwise>	
+		</choose>
 		</where>
-		<!-- 정렬 -->
-		ORDER BY s.stu_id;
+		<!-- 정렬  0최신순: 1:인기오름차순, 2: 인기오름차순, 3: 가격오름차순, 4: 가격내림차순 -->
+		<if test="orderCon == 0">
+			ORDER BY s.stu_id DESC;
+		</if>
+		<if test="orderCon == 1">
+			ORDER BY res.count ASC;
+		</if>
+		<if test="orderCon == 2">
+			ORDER BY res.count DESC;
+		</if>
+		<if test="orderCon == 3">
+			ORDER BY f.unit_price ASC;
+		</if>
+		<if test="orderCon == 4">
+			ORDER BY f.unit_price DESC;
+		</if>
 	</select>
 </mapper>

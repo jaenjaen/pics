@@ -54,12 +54,16 @@ select * from tag_dic;
 SELECT
 s.stu_id, s.name, s.description, s.main_img,
 c.category_id, c.category_name,
+com.name com_name,
 r.weekday,
 e.start_date, e.end_date,
-t.tag,
-f.unit_price,
-ifnull(rv.avg,0) avg
+t.tag_name,
+f.unit_price, f.address,
+ifnull(rv.avg,0) avg,
+ifnull(res.count,0) count
 FROM studio s
+JOIN company com
+ON s.com_id = com.com_id
 JOIN studio_filter f
 ON s.stu_id = f.stu_id
 LEFT JOIN studio_category c
@@ -77,8 +81,14 @@ FROM review
 GROUP BY stu_id
 ) rv
 ON s.stu_id = rv.stu_id
-WHERE s.stu_id
-ORDER BY s.stu_id;
+LEFT OUTER JOIN
+(SELECT
+stu_id, COUNT(stu_id) count
+FROM reservation
+GROUP BY stu_id
+) res
+ON s.stu_id = res.stu_id
+ORDER BY f.unit_price DESC;
 
-insert into exception_date VALUES(3,'2020-08-13','2020-08-13',1);
-delete from exception_date where stu_id = 1;
+select stu_id, count(stu_id) from reservation group by stu_id;
+select * from customer;

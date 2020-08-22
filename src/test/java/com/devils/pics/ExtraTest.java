@@ -38,20 +38,21 @@ class ExtraTest {
 			  
 			  //sqlSession.delete(NS+"deleteBookmark",3);
 		
-		  Customer c = new Customer();
-		  c.setCustId(3);
-		  Studio s = new Studio();
-		  s.setStuId(18);
+			  Customer c = new Customer();
+			  c.setCustId(1);
+			  Studio s = new Studio();
+			  s.setStuId(18);
 		  
-		 Review r = new Review();
-		 r.setCustomer(c);
-		 r.setStudio(s);
-		 r.setScore(5);
-		 r.setContent("광주에서 야경찍으려면 여기로 걍 야경 개쩜");
-		 r.setImg("사진.png");
-		 r.setRegDate(time1);
-		 
-		 sqlSession.insert(NS+"writeReview",r);
+			Review r = new Review();
+			r.setCustomer(c);
+			r.setStudio(s);
+			r.setScore(5);
+			r.setContent("광주에서야경찍으려면여기로걍야경개쩜");
+			r.setImg("사진.png");
+			r.setRegDate(time1);
+			System.out.println(c+","+r+","+s);
+			int result=sqlSession.insert(NS+"writeReview",r);
+			System.out.println("result : "+result);
 		 
 		  
 		 

@@ -8,10 +8,10 @@ import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 
 public interface StudioInfoService {
-	public List<Studio> getStudioInfo(int stdId); // Studio DAO에 있는 스튜디오 기본 정보 조회
-	public int getAccCustomer(int stdId); 	//누적 이용자수 조회
-	public List<Review> getStudioReviews(int stdId); //스튜디오에 등록된 모든 리뷰
-	public Tag getTags(int stdId); //tag 가져오기
+	public List<Studio> getStudioInfo(int stuId); // Studio DAO에 있는 스튜디오 기본 정보 조회
+	public int getAccCustomer(int stuId); 	//누적 이용자수 조회
+	public List<Review> getStudioReviews(int stuId); //스튜디오에 등록된 모든 리뷰
+	public List<Tag> getTags(int stuId); //tag 가져오기
 	public int checkBookmark(List<Integer> idList); //tag 가져오기
 	
 	/* 스튜디오 공간 등록 관련 메소드 */

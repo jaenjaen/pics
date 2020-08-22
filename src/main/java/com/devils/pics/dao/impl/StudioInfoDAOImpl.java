@@ -21,18 +21,18 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	private final String NS = "StudioInfoMapper.";
 	
 	@Override
-	public List<Studio> getStudioInfo(int stdId) {
-		return sqlSession.selectList(NS+"getStudioInfo", stdId);
+	public List<Studio> getStudioInfo(int stuId) {
+		return sqlSession.selectList(NS+"getStudioInfo", stuId);
 	}
 		
 	@Override
-	public int getAccCustomer(int stdId) {
-		return sqlSession.selectOne(NS+"getAccCustomer", stdId);
+	public int getAccCustomer(int stuId) {
+		return sqlSession.selectOne(NS+"getAccCustomer", stuId);
 	}
 	
 	@Override
-	public List<Review> getStudioReviews(int stdId) {
-		return sqlSession.selectList(NS+"getStudioReviews",stdId);
+	public List<Review> getStudioReviews(int stuId) {
+		return sqlSession.selectList(NS+"getStudioReviews",stuId);
 	}
 	
 	
@@ -54,8 +54,8 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	}
 
 	@Override
-	public Tag getTags(int stdId) {
-		return sqlSession.selectOne(NS+"getTags", stdId);
+	public List<Tag> getTags(int stuId) {
+		return sqlSession.selectList(NS+"getTags", stuId);
 	}
 
 	@Override

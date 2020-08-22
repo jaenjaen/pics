@@ -11,9 +11,11 @@ public class Customer {
 	private String tel;
 	private String apiKey;
 	private String imgSrc;
-	
+
 	public Customer() {}
-	
+	public Customer(int custId) {
+		this.custId = custId;
+	}
 	public Customer(int custId, int apiId, char gender, int age, String job, String funnel, String email, String tel,
 			String apiKey, String imgSrc) {
 		this.custId = custId;

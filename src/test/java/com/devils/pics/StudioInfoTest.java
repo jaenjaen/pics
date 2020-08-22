@@ -26,19 +26,19 @@ class StudioInfoTest {
 	@Autowired
 	private StudioInfoService service;
 	
-	public Studio getSample() {
-		Studio studio = new Studio();
-		studio.setComId("com1@gmail.com");
-		studio.setCategoryId(1);
-		studio.setName("짱조은카페");
-		studio.setDescription("설명~~");
-		studio.setRule("규칙");
-		studio.setMainImg("main.jpg");
-		studio.setPortImg("port.jpg");
-		studio.setCadImg("cad.jpg");
-		studio.setFloor(5);
-		return studio;
-	}
+//	public Studio getSample() {
+//		Studio studio = new Studio();
+//		studio.setComId("com1@gmail.com");
+//		studio.setCategoryId(1);
+//		studio.setName("짱조은카페");
+//		studio.setDescription("설명~~");
+//		studio.setRule("규칙");
+//		studio.setMainImg("main.jpg");
+//		studio.setPortImg("port.jpg");
+//		studio.setCadImg("cad.jpg");
+//		studio.setFloor(5);
+//		return studio;
+//	}
 	
 	/* Studio 등록 - 단위 테스트 성공 */
 //	@Test
@@ -76,27 +76,27 @@ class StudioInfoTest {
 		
 //		System.out.println("==================== getReview ====================");
 //		try {
-//		List<Review> reviewVO=sqlSession.selectList(NS+"getStudioReviews",1);
+//		List<Review> reviewVO=sqlSession.selectList(NS+"getStudioReviews",10);
 //		System.out.println(reviewVO);
 //		}catch (NullPointerException e) {System.out.println("찾으시는 스튜디오가 없습니다");}
-//
+
 //		System.out.println("==================== getAccCustomer ====================");
 //		try {
-//		int cnt=sqlSession.selectOne(NS+"getAccCustomer",1);
+//		int cnt=sqlSession.selectOne(NS+"getAccCustomer",10);
 //		System.out.println(cnt);
 //		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
-//
+
 //		System.out.println("==================== getBookmark ====================");
 //		try {
-//			List<Integer> idList=new ArrayList<Integer>();
-//			idList.add(1);//cust_id
-//			idList.add(12);//stu_id
+			List<Integer> idList=new ArrayList<Integer>();
+			idList.add(1);//cust_id
+			idList.add(12);//stu_id
 //
 //			int cnt=sqlSession.selectOne(NS+"getBookmark",idList);
 //			System.out.println(cnt+","+idList.get(0)+","+idList.get(1));
-//		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
+//		}catch (NullPointerException e) {e.getMessage();}
 //
-		
+//		
 //		System.out.println("==================== DAO & Service Test ====================");
 //		System.out.println("==================== getAccCustomer ====================");
 //		try {
@@ -112,6 +112,12 @@ class StudioInfoTest {
 //		try {
 //			Tag tagVO=service.getTags(1);
 //		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
+
+		System.out.println("==================== getBookmark ====================");
+		try {
+			int vo=service.checkBookmark(idList);
+			System.out.println("vo : "+vo);
+		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
 
 	}
 

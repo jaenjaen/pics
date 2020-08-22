@@ -34,24 +34,24 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 		return studioInfoDao.getStudioId(studio);
 	}
 	@Override
-	public List<Studio> getStudioInfo(int stdId) {
-		return studioInfoDao.getStudioInfo(stdId);
+	public List<Studio> getStudioInfo(int stuId) {
+		return studioInfoDao.getStudioInfo(stuId);
 	}
 
 	@Override
-	public int getAccCustomer(int stdId) {
-		return studioInfoDao.getAccCustomer(stdId);
+	public int getAccCustomer(int stuId) {
+		return studioInfoDao.getAccCustomer(stuId);
 	}
 
 	@Override
-	public List<Review> getStudioReviews(int stdId) {
-		return studioInfoDao.getStudioReviews(stdId);
+	public List<Review> getStudioReviews(int stuId) {
+		return studioInfoDao.getStudioReviews(stuId);
 
 	}
 
 	@Override
-	public Tag getTags(int stdId) {
-		return studioInfoDao.getTags(stdId);
+	public List<Tag> getTags(int stuId) {
+		return studioInfoDao.getTags(stuId);
 	}
 
 	@Override

@@ -28,7 +28,8 @@
 	<insert id="writeReview" parameterType="review">
 		INSERT INTO review(cust_id,stu_id,score,content,img,reg_date) 
 		VALUES (SELECT cust_id FROM customer WHERE cust_id = #{customer.custId},
-			  SELECT stu_id FROM studio WHERE stu_id = #{studio.stuId},
-			  #{score},#{content},#{img},#{regDate})
+	    SELECT stu_id FROM studio WHERE stu_id = #{studio.stuId},
+	    #{score},#{content},#{img},#{regDate})
 	</insert>
+	
 </mapper>

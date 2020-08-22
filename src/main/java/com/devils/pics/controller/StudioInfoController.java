@@ -35,11 +35,11 @@ public class StudioInfoController {
 	 * 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
 	 * 2. Studio 클래스에 없는 정보 (태그(채은), 누적 이용자수(채은),찜 여부(재은))
 	 * 3. 리뷰 영역 (리뷰 객체, 평균 평점)
-	 * 4. 데이터 분석 정보, 추천 스튜디오 목록  
+	 * 4. 데이터 분석 정보 >> 프론트에서 chart.js로, 추천 스튜디오 목록  
 	 */
 
-	@GetMapping("/studio/{stdId}")
-	public ResponseEntity getStudioInfo(@PathVariable int stuId, HttpSession httpSession) {
+	@GetMapping("/getStudioInfo/{stuId}")
+	public ResponseEntity getStudioInfo(@PathVariable int stuId) {
 		// 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
 		try {
 		List<Studio> studioVO=studioInfoService.getStudioInfo(stuId);
@@ -51,54 +51,47 @@ public class StudioInfoController {
 	}
 
 	// 2-1. Studio 클래스에 없는 정보 (누적 이용자수)
-	@GetMapping("/studio/{stdId}")
-	public ResponseEntity getAccCustomer(@PathVariable int stuId,HttpSession httpSession) {	
+	@GetMapping("/getAccCustomer/{stuId}")
+	public ResponseEntity getAccCustomer(@PathVariable int stuId) {	
 		try {
 		//누적 이용자 수
 		int accCust=studioInfoService.getAccCustomer(stuId);
 		System.out.println(accCust);
 		return new ResponseEntity(accCust,HttpStatus.OK);
 		}catch (NullPointerException e) {
-		e.getMessage();
-		System.out.println("아직 해당 스튜디오를 이용한 고객이 없습니다.");
-		return new ResponseEntity(HttpStatus.NO_CONTENT);
+		System.out.println("아직 해당 스튜디오를 이용한 고객이 없습니다."+e.getMessage());
+		return new ResponseEntity("실패",HttpStatus.NO_CONTENT);
 		}
 		}
 	//2-2. Studio 클래스에 없는 정보 (태그)
-	@GetMapping("/studio/{stdId}")
-	public ResponseEntity getTags(@PathVariable int stuId,HttpSession httpSession) {	
-		try {
-		Tag tagVO=studioInfoService.getTags(stuId);
-		System.out.println(tagVO);
+	@GetMapping("/getTags/{stuId}")
+	public ResponseEntity getTags(@PathVariable int stuId) {	
+		List<Tag> tagVO=studioInfoService.getTags(stuId);
 		return new ResponseEntity(tagVO,HttpStatus.OK);
-		}catch (NullPointerException e) {
-			e.getMessage();
-			System.out.println("아직 해당 스튜디오를 이용한 고객이 없습니다.");
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
 	}
 	//2-2. Studio 클래스에 없는 정보 (찜 여부)
-	@GetMapping("/studio/{stdId}")
-	public ResponseEntity checkBookmark(@PathVariable int custId, int stuId,HttpSession httpSession) {	
+	@GetMapping("/checkBookmark/{custId}/{stuId}")
+	public ResponseEntity checkBookmark(@PathVariable("custId") int custId, 
+										@PathVariable("stuId") int stuId) {	
 		if((""+custId)!=("")) {
 			List<Integer> idList=new ArrayList<Integer>();
 			idList.add(custId);
 			idList.add(stuId);
 			int marking=studioInfoService.checkBookmark(idList);
-			if(marking>0) 
+			if(marking>0)
 				return new ResponseEntity(marking,HttpStatus.OK);
-			else 
+			else
 				return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
-	@GetMapping("/studio/{stdId}")
-	public ResponseEntity getStudioReviews(@PathVariable int stuId,HttpSession httpSession) {	
+	@GetMapping("/getStudioReviews/{stuId}")
+	public ResponseEntity getStudioReviews(@PathVariable int stuId) {	
 		try {
 		List<Review> reviewVO=studioInfoService.getStudioReviews(stuId);
 		System.out.println(reviewVO);
-		return new ResponseEntity(HttpStatus.OK);
+		return new ResponseEntity(reviewVO,HttpStatus.OK);
 		}catch (NullPointerException e) {
 			System.out.println("아직 작성된 스튜디오 리뷰가 없습니다");
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

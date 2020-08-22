@@ -14,10 +14,10 @@ public interface StudioInfoDAO {
 	public int getStudioId(Studio studio); //Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
 	
 	// 스튜디오 상세조회	
-	public List<Studio> getStudioInfo(int stdId); // Studio DAO에 있는 스튜디오 기본 정보 조회
-	public int getAccCustomer(int stdId); 	//누적 이용자수 조회
-	public List<Review> getStudioReviews(int stdId); //스튜디오에 등록된 모든 리뷰
-	public Tag getTags(int stdId); //tag 가져오기
+	public List<Studio> getStudioInfo(int stuId); // Studio DAO에 있는 스튜디오 기본 정보 조회
+	public int getAccCustomer(int stuId); 	//누적 이용자수 조회
+	public List<Review> getStudioReviews(int stuId); //스튜디오에 등록된 모든 리뷰
+	public List<Tag> getTags(int stuId); //tag 가져오기
 	public int checkBookmark(List<Integer> idList);//찜했는지 여부 판단
 
 }

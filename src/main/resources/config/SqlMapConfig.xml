@@ -18,7 +18,7 @@
 		<mapper resource="sql/schedule-query.xml"/>
 		<mapper resource="sql/extra-query.xml"/>
 		<mapper resource="sql/company-query.xml"/>
-		<mapper resource="sql/studio-reserve-query.xml"/>
+	 	<mapper resource="sql/studio-reserve-query.xml"/> 
 		
 	</mappers>
 </configuration>

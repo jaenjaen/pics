@@ -5,16 +5,15 @@ public class ExceptionDate {
 	private String startDate;
 	private String endDate;
 	private int stuId;
+	
 	public ExceptionDate(int exceptionId, String startDate, String endDate, int stuId) {
-		super();
 		this.exceptionId = exceptionId;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.stuId = stuId;
 	}
-	public ExceptionDate() {
-		super();
-	}
+	public ExceptionDate() {}
+	
 	public int getExceptionId() {
 		return exceptionId;
 	}

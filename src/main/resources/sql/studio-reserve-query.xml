@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 	<!-- 예약 Flow 정리 
 		1. Select
 		1-1. 해당 스튜디오의 예약 관련 정보 불러오기 
@@ -9,31 +10,67 @@
 		1-2. 총 금액
 			- 초과 인원 : excharge*초과 인원수 계산
 			- 폼 조건 입력 할 때마다 총 금액에는 keyup 이벤트로 계산 결과 제시
-
+		★ 예약부터는 로긴 필요 >> 사용자 정보 및 스튜디오 정보는 session에 넣고 활용하는 방법도 있음
 		2. insert
-		2-1. 입력한 조건으로 예약한 내역 있는지 조회
+		2-1. 입력한 조건으로 예약한 내역 있는지 조회 >>> 있으면 이미 예약된 내역 있다고 알림 & 마이페이지 가기
 			- 예약자 id, 스튜디오 id, 날짜, 시간 비교
-		2-2. 예약 버튼 누르면 스튜디오 정보, 예약 정보, 고객 정보 가지고 서버로
+		2-2. 예약 버튼 누르면 스튜디오 정보, 예약 정보, 고객 정보 가지고 서버로, 이후 작업
 			★ service에서 꼭꼭꼭 transaction처리!!!!
-			- Reservation 테이블에 예약 row 1개 추가 
-			- 고객 마이페이지에서도 Reservation 테이블에서 cust_id와 일치하는 모든 예약정보 불러오기
-			- 업체 측 일정도 불가능으로 변경(Exception Date에 해당 일자 추가)
-			- 		
-		
+			- Reservation 테이블에 예약 row 1개 추가 (ok)
+			- 고객 마이페이지에서도 Reservation 테이블에서 cust_id와 일치하는 모든 예약정보 불러오기 
+			- 업체 측 일정도 불가능으로 변경(Exception Date에 해당 일자 추가)	
 		3. update : 1-1 ~ 2-2 과정과 동일. 다만 update 적용
 		4. delete : 2-2에서 reserve id 지우기
 	-->
-	
-<!-- ================== 예약 모달 창================== -->	
-<mapper namespace="ReserveMapper">			
-	<select id="getSchedule" parameterType="schedule" resultType="schedule">							
-		SELECT count(res.res_id)
-		FROM reservation res
-		GROUP BY res.stu_id
-		<if test="'${value}'!=null">
-		
-		</if>
-	</select>		
-	
-</mapper> <!-- 강제영 : mapper 태그가 닫히지 않아서 에러났음 -->
+<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
+<mapper namespace="StudioReserveMapper">
+	<resultMap type="reservation" id="reservationRM">
+		<result property="resId" column="res_id"/>
+		<result property="stuId" column="stu_id"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="resDate" column="res_date"/>
+		<result property="totalPeople" column="total_people"/>
+		<association property="customer" javaType="customer">
+			<id property="custId" column="cust_id"/>
+				<result property="custId" column="cust_id" />
+		</association>	
+	</resultMap>
 
+  	<select id="getExceptionDate" parameterType="studio" resultType="exceptionDate">							
+		SELECT exception_id, start_date, end_date, stu_id
+		FROM exception_date
+		WHERE stu_id=#{stuId}
+	</select>
+
+	<select id="getRepeatDate" parameterType="studio" resultType="repeatDate">							
+		SELECT rep.repeat_id, rep.stu_id, rep.weekday weekDate, rep.time
+		FROM repeat_date rep
+		WHERE rep.stu_id=#{stuId}
+	</select>
+
+	<!-- ================== 2-1. 예약하기 ================== -->
+	<select id="checkReservation" parameterType="reservation" resultType="int">							
+		SELECT res_id
+		FROM reservation
+		WHERE cust_id=#{customer.custId} AND stu_id=#{stuId} AND start_date=date(#{startDate}) AND end_date=date(#{endDate})
+	</select>
+	<insert id="reservation" parameterType="reservation">							
+		INSERT into reservation(cust_id,stu_id,start_date,end_date,total_price,res_date,total_people)
+		VALUES(#{customer.custId},#{studio.stuId},date(#{startDate}),date(#{endDate}),#{totalPrice},date(#{resDate}),#{totalPeople})
+	</insert> 
+	
+	<!-- ================== 2-2. 예약 후  ================== -->
+	<select id="reservations" parameterType="int" resultMap="reservationRM">							
+		SELECT res_id,stu_id,start_date,end_date,total_price,res_date,total_people
+		FROM reservation
+		<if test="'${value}'!=null">
+			WHERE cust_id=${value}
+		</if>
+		<if test="'${value.isnull()}'">
+			null
+		</if>
+	</select>	
+		
+</mapper> 

@@ -37,6 +37,8 @@ public class StudioRegisterController {
 	
 	@PostMapping("/studio")
 	public ResponseEntity registerStudio(@RequestBody Studio studio) {
+		System.out.println("받아온 폼값 : "+studio);
+		
 		StudioFilter studioFilter = studio.getStudioFilter();
 		//ArrayList<Tag> tags = studio.getTag();
 		//ArrayList<RepeatDate> repeatDates = studio.getSchedule().getRepeatDate();
@@ -44,9 +46,8 @@ public class StudioRegisterController {
 		try {
 			/* 세션으로부터 회사 아이디를 받아와서 Studio에 Set */
 			//String comId = (String)httpSession.getAttribute("comId");
-			System.out.println(studio);
 			
-			String comId = "com1@gmail.com";
+			String comId = "11@sample.com";
 			System.out.println("회사 아이디 : "+ comId);
 			studio.setComId(comId);
 			

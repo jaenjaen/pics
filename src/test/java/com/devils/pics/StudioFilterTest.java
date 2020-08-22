@@ -11,7 +11,7 @@ import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 
 @SpringBootTest
-class StudioFilterTest {
+public class StudioFilterTest {
 
 	@Autowired
 	private SqlSession sqlSession;

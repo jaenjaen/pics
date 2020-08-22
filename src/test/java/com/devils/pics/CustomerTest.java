@@ -5,13 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.devils.pics.domain.Customer;
-
 @SpringBootTest
-class CustomerTest {
-	
+public class CustomerTest {
+
 	@Autowired
-	  private SqlSession sqlSession;
+	private SqlSession sqlSession;
 	private String ns = "CustomerMapper.";
 	
 	@Test
@@ -33,5 +31,4 @@ class CustomerTest {
 		//sqlSession.update(ns+"updateCustomer",c);
 		sqlSession.delete(ns+"deleteCustomer",6);
 	}
-
 }

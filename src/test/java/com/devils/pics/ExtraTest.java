@@ -1,18 +1,12 @@
 package com.devils.pics;
 
-import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.devils.pics.domain.Bookmark;
-import com.devils.pics.domain.Customer;
-import com.devils.pics.domain.Studio;
-
 @SpringBootTest
-class ExtraTest {
+public class ExtraTest {
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -20,10 +14,6 @@ class ExtraTest {
 	
 	@Test
 	void contextLoads() {
-		
-		
-		
-		
 		/*
 		 * Customer c = new Customer(); c.setCustId(1); Studio s = new Studio();
 		 * s.setstuId(7);
@@ -44,9 +34,5 @@ class ExtraTest {
 		 */
 		  
 		  //sqlSession.delete(NS+"deleteBookmark",3);
-		 
-		 
-		 
 	}
-
 }

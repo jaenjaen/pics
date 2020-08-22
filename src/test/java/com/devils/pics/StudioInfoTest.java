@@ -1,6 +1,5 @@
 package com.devils.pics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,25 +7,19 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.devils.pics.domain.Category;
-import com.devils.pics.domain.Company;
-import com.devils.pics.domain.Review;
-import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
-import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.service.StudioInfoService;
 
 @SpringBootTest
-class StudioInfoTest {
-
+public class StudioInfoTest {
 	@Autowired
-	  private SqlSession sqlSession;
+	private SqlSession sqlSession;
 	@Autowired
 	private StudioInfoService service;
 	
 	public Studio getSample() {
 		Studio studio = new Studio();
-		studio.setComId("com1@gmail.com");
+		studio.setComId("11@sample.com");
 		studio.setCategoryId(1);
 		studio.setName("짱조은카페");
 		studio.setDescription("설명~~");
@@ -87,5 +80,4 @@ class StudioInfoTest {
 		
 //		System.out.println(service.getAccCustomer(1));
 	}
-
 }

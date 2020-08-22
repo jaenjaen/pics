@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+}
+
+input[type=text],
+input[type=number],
+select,
+option,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+input[type=submit],
+button {
+    background-color: #747474;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover,
+button:hover {
+    background-color: #353535;
+}
+
+.container {
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.col-25 {
+    float: left;
+    text-align: "right";
+    width: 25%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+.col-space {
+    padding-left: 20px;
+}
+
+#agreeTable a:link,
+#agreeTable a:visited {
+    color: #353535;
+}
+
+
+/* Clear floats after the columns */
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+/* 반응형 : 너비 950px 이하 */
+
+@media screen and (max-width: 950px) {
+    .col-25,
+    .col-75,
+    input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+    .col-space {
+        padding-left: 0;
+    }
+}

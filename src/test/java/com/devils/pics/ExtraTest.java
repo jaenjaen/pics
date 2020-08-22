@@ -15,7 +15,7 @@ import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 
 @SpringBootTest
-class ExtraTest {
+public class ExtraTest {
 
 	@Autowired
 	private SqlSession sqlSession;
@@ -57,5 +57,4 @@ class ExtraTest {
 		  
 		 
 	}
-
 }

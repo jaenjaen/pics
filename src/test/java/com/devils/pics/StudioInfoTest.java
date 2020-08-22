@@ -1,6 +1,5 @@
 package com.devils.pics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,13 +15,13 @@ import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.domain.Tag;
+import com.devils.pics.domain.Studio;
 import com.devils.pics.service.StudioInfoService;
 
 @SpringBootTest
-class StudioInfoTest {
-
+public class StudioInfoTest {
 	@Autowired
-	  private SqlSession sqlSession;
+	private SqlSession sqlSession;
 	@Autowired
 	private StudioInfoService service;
 	
@@ -120,5 +119,4 @@ class StudioInfoTest {
 		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
 
 	}
-
 }

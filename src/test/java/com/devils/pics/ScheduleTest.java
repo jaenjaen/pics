@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.devils.pics.domain.RepeatDate;
 
 @SpringBootTest
-class ScheduleTest {
+public class ScheduleTest {
 
 	@Autowired
 	private SqlSession sqlSession;

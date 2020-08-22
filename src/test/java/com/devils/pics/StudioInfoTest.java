@@ -87,9 +87,9 @@ public class StudioInfoTest {
 
 //		System.out.println("==================== getBookmark ====================");
 //		try {
-			List<Integer> idList=new ArrayList<Integer>();
-			idList.add(1);//cust_id
-			idList.add(12);//stu_id
+//			List<Integer> idList=new ArrayList<Integer>();
+//			idList.add(1);//cust_id
+//			idList.add(12);//stu_id
 //
 //			int cnt=sqlSession.selectOne(NS+"getBookmark",idList);
 //			System.out.println(cnt+","+idList.get(0)+","+idList.get(1));
@@ -112,11 +112,11 @@ public class StudioInfoTest {
 //			Tag tagVO=service.getTags(1);
 //		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
 
-		System.out.println("==================== getBookmark ====================");
-		try {
-			int vo=service.checkBookmark(idList);
-			System.out.println("vo : "+vo);
-		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
+//		System.out.println("==================== getBookmark ====================");
+//		try {
+//			int vo=service.checkBookmark(idList);
+//			System.out.println("vo : "+vo);
+//		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
 
 	}
 }

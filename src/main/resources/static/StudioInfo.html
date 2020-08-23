@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+</head>
+
+<body>
+    <h2>Get Certain Studio Information</h2>
+    <div class="search_box" align="center">
+        put the studio id in this input box<br>
+        <input type="button" name="name" @click="checkBookmark" value="bookmark">
+        <span v-html="bookmark"></span>
+    </div>
+    <hr>
+    <div id='app'>
+        <table class='list_table'>
+            <thead>
+                <row>
+                    <th>stu_id</th>
+                    <th>com_id</th>
+                    <th>category_id</th>
+                    <th>description</th>
+                    <th>rule</th>
+                </row>
+            </thead>
+            <tbody>
+                <tr v-for="info in infos">
+                    <td v-html="info.stuId"></td>
+                    <td v-html="info.comId"></td>
+                    <td v-html="info.categoryId"></td>
+                    <td v-html="info.description"></td>
+                    <td v-html="info.rule"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    infos: [],
+                    stuid: 0,
+                    loading: true,
+                    errored: false,
+                    bookmark: 0
+                }
+            },
+            mounted() {
+                axios
+                    .get('http://127.0.0.1:7777/getStudioInfo/18')
+                    .then(response => (this.infos = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+            },
+            methods: {
+                checkBookmark() {
+                    axios
+                        .get('http://127.0.0.1:7777/checkBookmark/4/18')
+                        .then(response => (this.bookmark = response.data))
+                        .catch(error => {
+                            console.log(error);
+                            this.errored = true
+                        })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

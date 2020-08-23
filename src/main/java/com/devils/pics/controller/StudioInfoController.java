@@ -1,5 +1,6 @@
 package com.devils.pics.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import com.devils.pics.service.StudioInfoService;
  */
 
 @RestController
+@CrossOrigin(origins={"*"}, maxAge=6000)
 public class StudioInfoController {
 	@Autowired
 	private StudioInfoService studioInfoService;

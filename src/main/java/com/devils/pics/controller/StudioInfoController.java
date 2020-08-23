@@ -1,5 +1,6 @@
 package com.devils.pics.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import java.util.ArrayList;
@@ -15,19 +16,20 @@ import com.devils.pics.service.StudioInfoService;
 
 /*스튜디오 정보 로딩 flow
  * 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
- * 2. Studio 클래스에 없는 정보 (태그(채은), 누적 이용자수(채은),찜 여부(재은))
+ * 2. Studio 클래스에 없는 정보 (태그, 누적 이용자수,찜 여부)
  * 3. 리뷰 영역 (리뷰 객체, 평균 평점)
  * 4. 데이터 분석 정보 >> 프론트에서 chart.js로, 추천 스튜디오 목록  
  */
 
 @RestController
+@CrossOrigin(origins={"*"}, maxAge=6000)
 public class StudioInfoController {
 	@Autowired
 	private StudioInfoService studioInfoService;
-
+	
+	// 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
 	@GetMapping("/getStudioInfo/{stuId}")
-	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {
-		// 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
+	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {	
 		try {
 		List<Studio> studioVO=studioInfoService.getStudioInfo(stuId);
 		return new ResponseEntity<List<Studio>>(studioVO,HttpStatus.OK);
@@ -54,6 +56,7 @@ public class StudioInfoController {
 		List<Tag> tagVO=studioInfoService.getTags(stuId);
 		return new ResponseEntity<List<Tag>>(tagVO,HttpStatus.OK);
 	}
+	
 	//2-2. Studio 클래스에 없는 정보 (찜 여부)
 	@GetMapping("/checkBookmark/{custId}/{stuId}")
 	public ResponseEntity<Integer> checkBookmark(@PathVariable("custId") int custId,@PathVariable("stuId") int stuId) {	
@@ -67,6 +70,7 @@ public class StudioInfoController {
 		}
 		return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
 	}
+	
 	//2-3. Studio 클래스에 없는 정보 (리뷰)
 	@GetMapping("/getStudioReviews/{stuId}")
 	public ResponseEntity<List<Review>> getStudioReviews(@PathVariable int stuId) {	

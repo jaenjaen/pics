@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스튜디오 상세 데이터 전송 확인 페이지</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+
+</head>
+
+<body>
+    <div id='app'>
+        <h2>Get Certain Studio Information</h2>
+        <div class="search_box">
+            찜하기 :
+            <span v-html="bookmark"></span>
+        </div>
+        <hr>
+
+        <table class='list_table'>
+            <thead>
+                <row>
+                    <th>stu_id</th>
+                    <th>com_id</th>
+                    <th>category_id</th>
+                    <th>description</th>
+                    <th>rule</th>
+                </row>
+            </thead>
+            <tbody>
+                <ul v-for="tag in tags">
+                    <li v-html="tag.tagName"></li>
+                </ul>
+                <tr v-for="info in infos">
+                    <td v-html="info.stuId"></td>
+                    <td v-html="info.comId"></td>
+                    <td v-html="info.categoryId"></td>
+                    <td v-html="info.description"></td>
+                    <td v-html="info.rule"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="reviews">
+            <ul v-for="review in reviews">
+                <li>
+                    <span>{{review.customer.email.trim()}}</span>
+                    <span>{{review.customer.job.trim()}}</span>
+                    <div>{{review.content}}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    infos: [],
+                    stuid: 0,
+                    loading: true,
+                    errored: false,
+                    bookmark: 0,
+                    reviews: [],
+                    tags: []
+                }
+            },
+            mounted() {
+                axios
+                    .get('http://127.0.0.1:7777/getStudioInfo/10')
+                    .then(response => (this.infos = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+                axios
+                    .get('http://127.0.0.1:7777/checkBookmark/3/10')
+                    .then(response => (this.bookmark = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                axios
+                    .get('http://127.0.0.1:7777/getStudioReviews/10')
+                    .then(response => (this.reviews = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                axios
+                    .get('http://127.0.0.1:7777/getTags/10')
+                    .then(response => (this.tags = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

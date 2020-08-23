@@ -2,7 +2,7 @@ package com.devils.pics.domain;
 
 public class StudioFilter {
 	private int filterId;
-	private int stdId;
+	private int stuId;
 	private double size;
 	private String options;
 	private int parking;
@@ -14,11 +14,11 @@ public class StudioFilter {
 	
 	public StudioFilter() {}
 
-	public StudioFilter(int filterId, int stdId, double size, String options, int parking, int unitPrice, int defaultCapacity,
-			int excharge, String address, int maxCapacity) {
+	public StudioFilter(int filterId, int stuId, double size, String options, int parking, int unitPrice,
+			int defaultCapacity, int excharge, String address, int maxCapacity) {
 		super();
 		this.filterId = filterId;
-		this.stdId = stdId;
+		this.stuId = stuId;
 		this.size = size;
 		this.options = options;
 		this.parking = parking;
@@ -36,13 +36,13 @@ public class StudioFilter {
 	public void setFilterId(int filterId) {
 		this.filterId = filterId;
 	}
-	
-	public int getStdId() {
-		return stdId;
+
+	public int getStuId() {
+		return stuId;
 	}
 
-	public void setStdId(int stdId) {
-		this.stdId = stdId;
+	public void setStuId(int stuId) {
+		this.stuId = stuId;
 	}
 
 	public double getSize() {
@@ -52,9 +52,11 @@ public class StudioFilter {
 	public void setSize(double size) {
 		this.size = size;
 	}
+
 	public String getOptions() {
 		return options;
 	}
+
 	public void setOptions(String options) {
 		this.options = options;
 	}
@@ -109,10 +111,8 @@ public class StudioFilter {
 
 	@Override
 	public String toString() {
-		return "StudioFilter [filterId=" + filterId + ", stdId=" + stdId + ", size=" + size + ", options=" + options + ", parking=" + parking
-				+ ", unitPrice=" + unitPrice + ", defaultCapacity=" + defaultCapacity + ", excharge=" + excharge
-				+ ", address=" + address + ", maxCapacity=" + maxCapacity + "]";
+		return "StudioFilter [filterId=" + filterId + ", stuId=" + stuId + ", size=" + size + ", options=" + options
+				+ ", parking=" + parking + ", unitPrice=" + unitPrice + ", defaultCapacity=" + defaultCapacity
+				+ ", excharge=" + excharge + ", address=" + address + ", maxCapacity=" + maxCapacity + "]";
 	}
-	
-	
 }

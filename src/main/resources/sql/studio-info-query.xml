@@ -16,7 +16,7 @@
 		<result property="cadImg" column="cad_img"/>
 		<result property="floor" column="floor"/>
 		<association property="studioFilter" javaType="studioFilter">
-			<id property="filterId" column="filter_id"/>
+			<id property="stuId" column="stu_id"/>
 				<result property="filterId" column="filter_id" />
 				<result property="size" column="size" />
 				<result property="options" column="options"/>
@@ -77,7 +77,7 @@
 		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,
 		ctg.category_id,ctg.category_name,
 		com.name,com.logo_img,
-		sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,
+		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,
  		t.tag_id,t.tag_name
  		FROM studio s
 		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id
@@ -111,7 +111,7 @@
 	</select>		
 		
 	<select id="checkBookmark" parameterType="list" resultType="int">
-		SELECT b.book_id
+		SELECT count(b.book_id)
 		FROM bookmark b
 		WHERE b.cust_id = ${list[0]}
 		AND b.stu_id = ${list[1]}

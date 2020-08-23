@@ -1,12 +1,9 @@
 package com.devils.pics.dao.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.devils.pics.dao.StudioInfoDAO;
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Review;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-	<!-- 예약 Flow 정리 
+<!-- 예약 Flow 정리 
 		1. Select
 		1-1. 해당 스튜디오의 예약 관련 정보 불러오기 
 			- 예약 가능 일자 : 캘린더 표시, 가능 시간 (-,로 split) : 불가능은 클릭 막든지... 
@@ -22,22 +22,9 @@
 		3. update : 1-1 ~ 2-2 과정과 동일. 다만 update 적용
 		4. delete : 2-2에서 reserve id 지우기
 	-->
-<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
-<mapper namespace="StudioReserveMapper">
-	<resultMap type="reservation" id="reservationRM">
-		<result property="resId" column="res_id"/>
-		<result property="stuId" column="stu_id"/>
-		<result property="startDate" column="start_date"/>
-		<result property="endDate" column="end_date"/>
-		<result property="totalPrice" column="total_price"/>
-		<result property="resDate" column="res_date"/>
-		<result property="totalPeople" column="total_people"/>
-		<association property="customer" javaType="customer">
-			<id property="custId" column="cust_id"/>
-				<result property="custId" column="cust_id" />
-		</association>	
-	</resultMap>
 
+<mapper namespace="StudioReserveMapper">
+	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
   	<select id="getExceptionDate" parameterType="studio" resultType="exceptionDate">							
 		SELECT exception_id, start_date, end_date, stu_id
 		FROM exception_date
@@ -50,27 +37,53 @@
 		WHERE rep.stu_id=#{stuId}
 	</select>
 
-	<!-- ================== 2-1. 예약하기 ================== -->
-	<select id="checkReservation" parameterType="reservation" resultType="int">							
-		SELECT res_id
+	<!-- ================== 2. 예약하기 ================== -->
+	<select id="getReservation" parameterType="reservation" resultType="reservation">							
+		SELECT res_id,stu_id,start_date,end_date,total_price,res_date,total_people
 		FROM reservation
-		WHERE cust_id=#{customer.custId} AND stu_id=#{stuId} AND start_date=date(#{startDate}) AND end_date=date(#{endDate})
+		<where>
+			<choose>
+			<when test="customer!=null and stuId!=0">
+				cust_id=#{customer.custId} AND stu_id=#{stuId}
+				<if test="startDate!=null and endDate!=null">
+				AND start_date=date(#{startDate}) AND end_date=date(#{endDate})
+				</if>
+			</when>
+			<otherwise>
+				<if test="stuId!=0">
+				stu_id=#{stuId}
+				</if>
+				<if test="customer!=null">
+				cust_id=#{customer.custId}
+				</if>
+			</otherwise>
+			</choose>
+		</where>
 	</select>
-	<insert id="reservation" parameterType="reservation">							
+	
+	<insert id="reserve" parameterType="reservation">							
 		INSERT into reservation(cust_id,stu_id,start_date,end_date,total_price,res_date,total_people)
 		VALUES(#{customer.custId},#{studio.stuId},date(#{startDate}),date(#{endDate}),#{totalPrice},date(#{resDate}),#{totalPeople})
 	</insert> 
-	
-	<!-- ================== 2-2. 예약 후  ================== -->
-	<select id="reservations" parameterType="int" resultMap="reservationRM">							
-		SELECT res_id,stu_id,start_date,end_date,total_price,res_date,total_people
-		FROM reservation
-		<if test="'${value}'!=null">
-			WHERE cust_id=${value}
-		</if>
-		<if test="'${value.isnull()}'">
-			null
-		</if>
-	</select>	
+
+	<insert id="AddexceptionDates" parameterType="reservation">							
+		INSERT into exception_date(start_date,end_date,stu_id)
+		VALUES(#{startDate},date(#{endDate}),#{stuId})
+	</insert>
 		
 </mapper> 
+
+<!-- 	<resultMap type="reservation" id="reservationRM">
+		<result property="resId" column="res_id"/>
+		<result property="stuId" column="stu_id"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="resDate" column="res_date"/>
+		<result property="totalPeople" column="total_people"/>
+		<association property="customer" javaType="customer">
+			<id property="custId" column="cust_id"/>
+				<result property="custId" column="cust_id" />
+		</association>
+	</resultMap>
+ -->

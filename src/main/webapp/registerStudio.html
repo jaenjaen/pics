@@ -157,6 +157,76 @@
             </div>
             <div class="row">
                 <div class="col-25">
+                    <label for="">운영 시간</label>
+                </div>
+                <div class="col-75">
+                    <!-- 시간표 -->
+                    <table>
+                        <tr>
+                            <td style="text-align: center;">월</td>
+                            <td style="text-align: center;">화</td>
+                            <td style="text-align: center;">수</td>
+                            <td style="text-align: center;">목</td>
+                            <td style="text-align: center;">금</td>
+                            <td style="text-align: center;">토</td>
+                            <td style="text-align: center;">일</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ol class="daySelectable selectable" name="mon">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="tue">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="wed">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="thu">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="fri">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="sat">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="sun">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
                     <label for="parkFlag">주차 가능</label>
                 </div>
                 <div class="col-25">
@@ -181,11 +251,11 @@
                     <table>
                         <tr>
                             <td>
-                                <ol class="selectable" id="selectable1">
-                                    <li class="ui-widget-content" name="options">카메라</li>
-                                    <li class="ui-widget-content" name="options">조명</li>
-                                    <li class="ui-widget-content" name="options">반사판</li>
-                                    <li class="ui-widget-content" name="options">포토그래퍼</li>
+                                <ol class="optionSelectable selectable" id="optionSelectable1">
+                                    <li class="ui-widget-content" name="option1">카메라</li>
+                                    <li class="ui-widget-content" name="option1">조명</li>
+                                    <li class="ui-widget-content" name="option1">반사판</li>
+                                    <li class="ui-widget-content" name="option1">포토그래퍼</li>
                                 </ol>
                             </td>
                             <td>
@@ -194,11 +264,11 @@
                                 <button type="button" class="optionBtn" @click="controlOptions('remove')"><</button>
                             </td>
                             <td>
-                                <ol class="selectable" id="selectable2">
-                                    <li class="ui-widget-content" data-value="1"></li>
-                                    <li class="ui-widget-content" data-value="2"></li>
-                                    <li class="ui-widget-content" data-value="3"></li>
-                                    <li class="ui-widget-content" data-value="4"></li>
+                                <ol class="optionSelectable selectable" id="optionSelectable2">
+                                    <li class="ui-widget-content" name="option2" data-value="1"></li>
+                                    <li class="ui-widget-content" name="option2" data-value="2"></li>
+                                    <li class="ui-widget-content" name="option2" data-value="3"></li>
+                                    <li class="ui-widget-content" name="option2" data-value="4"></li>
                                 </ol>
                             </td>
                         </tr>
@@ -267,5 +337,7 @@
     </div>
     <script src="resource/js/registerStudio.js"></script>
 </body>
+
+</html>
 
 </html>

@@ -26,7 +26,10 @@ var app = new Vue({
                     maxCapacity: ''
                 },
                 tag: ''
-            }
+            },
+            timePerDay: [
+                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
+            ]
         }
     },
     methods: {
@@ -42,15 +45,23 @@ var app = new Vue({
             }
         },
         controlOptions(control) {
-            let options = document.getElementsByName('options')
-            let temp = [];
+            var option1 = document.getElementsByName('option1');
+            var option2 = document.getElementsByName('option2');
+            var emptyIndex = 0;
             if (control == 'add') { //옵션 추가
-                for (i = 0; i < options.length; i++) {
-                    temp.push(options[i].innerHTML);
+                for (i = 0; i < option2.length; i++) {
+                    emptyIndex = i;
+                    var value = option2[i].innerHTML;
+                    if (value == '') break; //비어있는 경우
+                    for (j = 0; j < option_left.length; i++) {
+                        if (option_left[j] == value) { //중복 검사해서 같을 경우 중복 제거
+                            option_left = option_left.splice(j, 1);
+                        }
+                    }
                 }
-                optionlist = optionlist.concat(temp);
-                alert(optionlist[0]);
-                alert("추가");
+                for (i = emptyIndex; i < option_left.length; i++) {
+                    option2[i].innerHTML = option_left[i];
+                }
             }
             if (control == 'remove') { //옵션 제거
                 alert("제거");
@@ -129,25 +140,61 @@ var app = new Vue({
 
 //selectable
 $(function() {
-    $("#selectable1")
+    /* 운영시간 값 저장 */
+    $("ol[name=mon]")
         .selectable()
         .on("selectablestop", function() {
-            var temp = []
-            $('#selectable1 .ui-selected').each(function() {
+            alert("월요일");
+        });
+    $("ol[name=tue]")
+        .selectable()
+        .on("selectablestop", function() {
+            alert("화요일");
+        });
+    $("ol[name=wed]")
+        .selectable()
+        .on("selectablestop", function() {
+            alert("수요일");
+        });
+    $("ol[name=thu]")
+        .selectable()
+        .on("selectablestop", function() {
+            alert("목요일");
+        });
+    $("ol[name=fri]")
+        .selectable()
+        .on("selectablestop", function() {
+            alert("금요일");
+        });
+    $("ol[name=sat]")
+        .selectable()
+        .on("selectablestop", function() {
+            alert("토요일");
+        });
+    $("ol[name=sun]")
+        .selectable()
+        .on("selectablestop", function() {
+            alert("일요일");
+        });
+
+    /* 옵션 선택 후 값 저장*/
+    $("#optionSelectable1")
+        .selectable()
+        .on("selectablestop", function() {
+            let temp = []
+            $('#optionSelectable1 .ui-selected').each(function() {
                 temp.push($(this).html());
             });
             option_left = temp;
-            console.log(option_left);
         });
-    $("#selectable2")
+    $("#optionSelectable2")
         .selectable()
         .on("selectablestop", function() {
-            var temp = []
-            $('#selectable1 .ui-selected').each(function() {
-                temp.push($(this).html());
+            let temp = []
+            $('#optionSelectable2 .ui-selected').each(function() {
+                temp.push($(this).data('value'));
             });
             option_right = temp;
-            console.log(option_right);
         });
 });
 

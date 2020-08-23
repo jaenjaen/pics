@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.devils.pics.dao.StudioFilterDAO;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
+import com.devils.pics.util.SearchCon;
 
 @Repository
 public class StudioFilterDAOImpl implements StudioFilterDAO {
@@ -26,9 +27,14 @@ public class StudioFilterDAOImpl implements StudioFilterDAO {
 	}
 
 	@Override
-	public List<Studio> searchStudio(HashMap<String, String> filterMap) {
+	public List<Studio> searchStudio(SearchCon searchCon) {
 		//Studio 검색
-		return sqlSession.selectList(NS+"selectStudioByFilter", filterMap);
+		return sqlSession.selectList(NS+"selectStudioByFilter", searchCon);
+	}
+
+	@Override
+	public List<Studio> searchStudio() {
+		return sqlSession.selectList(NS+"selectStudioByFilter");
 	}
 	
 }

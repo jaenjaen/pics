@@ -1,5 +1,6 @@
 package com.devils.pics;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
+import com.devils.pics.util.SearchCon;
 
 @SpringBootTest
 public class StudioFilterTest {
@@ -44,24 +46,30 @@ public class StudioFilterTest {
 		 * 
 		 * category.setCategoryId(1); //카테고리 별 filter.set studio.setCategory(category);
 		 */
-		HashMap<String, String> filterMap = new HashMap<String, String>();
-//		filterMap.put("categoryId", "1");
+		SearchCon searchCon = new SearchCon();
+		ArrayList<String> search = new ArrayList<String>();
+		search.add("루프탑");
+		search.add("이태원");
+		
+//		searchCon.setCategoryId("1");
 //		filterMap.put("weekDate","월");
 //		filterMap.put("selectedDate","2020-08-13");
 //		filterMap.put("address","서울시 ");
 //		filterMap.put("minSize", "100");
 //		filterMap.put("maxSize", "150");
-//		filterMap.put("minUnitPrice", "10000");
-//		filterMap.put("maxUnitPrice", "15000");
+		searchCon.setMinUnitPrice("11000");
+		searchCon.setMaxUnitPrice("15000");
 //		filterMap.put("capacity", "15")`;
 //		filterMap.put("studioName", "15");
-//		filterMap.put("searchContent", "카페");
+		searchCon.setSearchContent(search);
 //		filterMap.put("searchTag", "모던");
-		filterMap.put("orderCon", "4");
+//		filterMap.put("orderCon", "4");
 		
-		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", filterMap);
+		
+		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", searchCon);
 		System.out.println("조회된 총 studio 수 : " + list.size());
 		for (Studio s : list) System.out.println(s);
+		 
 
 	}
 }

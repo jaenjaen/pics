@@ -9,6 +9,7 @@
 
 	<typeAliases>
 		<package name="com.devils.pics.domain"/>
+		<package name="com.devils.pics.util"/>
 	</typeAliases>
 	
 	<mappers>

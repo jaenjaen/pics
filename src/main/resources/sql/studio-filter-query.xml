@@ -116,14 +116,15 @@
 			</if>
 			<if test="searchContent != null">
 			<!-- 검색어 : 회사이름, 스튜디오 이름, 상세설명, 태그, 주소-->
-				AND (
-				s.name Like '%${searchContent}%'
-				OR c.category_name Like '%${searchContent}%'
-				OR s.description Like '%${searchContent}%'
-				OR t.tag_name Like '%${searchContent}%'
-				OR f.address Like '%${searchContent}%'
-				OR com.name Like '%${searchContent}%'
-				)
+				AND 
+				<foreach collection="searchContent" item="search" open="(" close =")" separator="OR">
+					s.name Like '%${search}%'
+					OR c.category_name Like '%${search}%'
+					OR s.description Like '%${search}%'
+					OR t.tag_name Like '%${search}%'
+					OR f.address Like '%${search}%'
+					OR com.name Like '%${search}%'
+				</foreach>
 			</if>
 			</otherwise>	
 		</choose>
@@ -144,5 +145,17 @@
 		<if test="orderCon == 4">
 			ORDER BY f.unit_price DESC;
 		</if>
+	</select>
+	
+	<select id="test" parameterType="searchCon" resultType="studio">
+		SELECT stu_id
+		FROM studio
+		<where>
+		<if test="searchContent != null">
+			
+				name Like '%${search}%'
+			
+		</if>
+		</where>
 	</select>
 </mapper>

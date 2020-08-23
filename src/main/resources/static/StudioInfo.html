@@ -5,57 +5,302 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스튜디오 상세 데이터 전송 확인 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 기본 script -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- ↑↑↑↑ 개발버전, 도움되는 콘솔 경고를 포함. 상용 버전과 다름 -->
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
 
+    <!-- 캐러셀 script -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- 지도라이브러리 불러오기 -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91cbdca7243fe89cb44e5d61a5aaaf44"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=LIBRARY"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services,clusterer,drawing"></script>
+
+
+    <style>
+        /* carousel style */
+        
+        .carousel-inner img {
+            width: 100%;
+            height: 550px;
+        }
+    </style>
+
+
+    <style>
+        /* sementic style */
+        
+        body {
+            width: 80%;
+            height: 100%;
+            margin: auto;
+        }
+        
+        #main-images-section {
+            margin: 5% 0 5% 0;
+        }
+        
+        article {
+            width: 65%;
+            float: left;
+            border: 1px solid gray;
+        }
+        
+        aside {
+            width: 30%;
+            margin-left: 5%;
+            float: left;
+            border: 1px solid gray;
+        }
+        
+        hr {
+            width: 90%;
+        }
+        
+        #map {
+            width: 40%;
+            height: 40%;
+            border: 1px solid green;
+        }
+    </style>
 </head>
 
 <body>
-    <div id='app'>
-        <h2>Get Certain Studio Information</h2>
-        <div class="search_box">
-            찜하기 :
-            <span v-html="bookmark"></span>
+
+    <header>
+        <!-- 상단 필터 부분(공통 적용) -->
+    </header>
+
+    <!-- 메인 이미지 : jumbo, carousel -->
+    <section id="main-images-section">
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <!-- 하단 바 -->
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+                <li data-target="#demo" data-slide-to="3"></li>
+            </ul>
+
+            <!-- 이미지 -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="static/img/crawling_images/barcel_1.jpg" alt="barcel_1">
+                </div>
+                <div class="carousel-item">
+                    <img src="static/img/crawling_images/barcel_2.jpg" alt="barcel_2">
+                </div>
+                <div class="carousel-item">
+                    <img src="static/img/crawling_images/barcel_3.jpg" alt="barcel_3">
+                </div>
+                <div class="carousel-item">
+                    <img src="static/img/crawling_images/barcel_4.jpg" alt="barcel_3">
+                </div>
+            </div>
+
+            <!-- 좌우 넘기기 아이콘 -->
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ============== Title ==============  -->
+    <article id='app1'>
+        <div class="article-title-area" v-for="info in infos">
+            <h2>{{info.name}}</h2>
+            <div class="bookmark-check">
+                찜하기 : <span v-html="bookmark"></span>
+            </div>
+            <div class="tags" v-for="tag in tags">
+                #<span>{{tag.tagName}}</span>
+            </div>
         </div>
         <hr>
 
-        <table class='list_table'>
-            <thead>
-                <row>
-                    <th>stu_id</th>
-                    <th>com_id</th>
-                    <th>category_id</th>
-                    <th>description</th>
-                    <th>rule</th>
-                </row>
-            </thead>
-            <tbody>
-                <ul v-for="tag in tags">
-                    <li v-html="tag.tagName"></li>
-                </ul>
-                <tr v-for="info in infos">
-                    <td v-html="info.stuId"></td>
-                    <td v-html="info.comId"></td>
-                    <td v-html="info.categoryId"></td>
-                    <td v-html="info.description"></td>
-                    <td v-html="info.rule"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div id="reviews">
-            <ul v-for="review in reviews">
-                <li>
-                    <span>{{review.customer.email.trim()}}</span>
-                    <span>{{review.customer.job.trim()}}</span>
-                    <div>{{review.content}}</div>
-                </li>
-            </ul>
-        </div>
-    </div>
+        <!-- ============== Description ============== -->
 
+        <div class>
+
+        </div>
+
+
+        <!-- ============== Map ============== -->
+        <div id="map">
+
+        </div>
+        <script>
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                mapOption = {
+                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                    level: 3 // 지도의 확대 레벨
+                };
+            // 지도를 표시할 div와지도 옵션으로  지도를 생성
+            var map = new kakao.maps.Map(mapContainer, mapOption);
+
+            // 마커가 표시될 위치
+            var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+            // 마커를 생성
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+            // 마커를 지도 위에 표시
+            marker.setMap(map);
+        </script>
+
+        <!-- ============== Review ============== -->
+        <h4>Reviews</h4>
+        <div class="article-review-area">
+            <table id='list_table'>
+                <thead>
+                    <row>
+                        <th>stu_id</th>
+                        <th>com_id</th>
+                        <th>category_id</th>
+                        <th>description</th>
+                        <th>rule</th>
+                    </row>
+                </thead>
+                <tbody>
+                    <tr v-for="info in infos">
+                        <td v-html="info.stuId"></td>
+                        <td v-html="info.comId"></td>
+                        <td v-html="info.categoryId"></td>
+                        <td v-html="info.description"></td>
+                        <td v-html="info.rule"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <ul v-for="review in reviews">
+                    <li>
+                        <span>{{review.customer.email.trim()}}</span>
+                        <span>{{review.customer.job.trim()}}</span>
+                        <div>{{review.content}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </article>
+    <aside id="app2">
+        <div>
+            <h2>예약하기</h2>
+        </div>
+        <div class="_cusoszn">
+            <div style="padding-bottom: 48px;">
+                <div class="_1gw6tte">
+                    <div style="margin-top: 48px;">
+                        <div style="border: 1px solid rgb(221, 221, 221); border-radius: 12px; padding: 24px; box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;">
+                            <div data-plugin-in-point-id="BOOK_IT_SIDEBAR" data-section-id="BOOK_IT_SIDEBAR">
+                                <div class="_ud8a1c">
+                                    <div class="_wgmchy" data-testid="book-it-default">
+                                        <div class="_13vog1a">
+                                            <div class="_xqcexm"><span class="_krjbj">1박당 ₩435,899</span>
+                                                <div class="_80f7zz">
+                                                    <div class="_ymq6as"><span><span class="_pgfqnw" aria-hidden="true">₩435,899</span><span class="_1l0ezq0" aria-hidden="true">/박</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div><span class="_1y9gwt75"><span class="_9qqdp4" style="font-size: 14px;"><span class="_8tbpu3" aria-hidden="true">󰀄</span></span><button aria-label="후기 85개로부터 5점 만점에 4.89점을 받은 숙소입니다." tabindex="-1" type="button"
+                                                    class="_1wlymrds"><span class="_12si43g">4.89</span><span class="_bq6krt">(85)</span></button></span>
+                                            </div>
+                                        </div>
+                                        <div class="_p03egf">
+                                            <div class="_e296pg">
+                                                <div>
+                                                    <div class="_poaz3m" style="border-radius: 8px;">
+                                                        <div class="_jro6t0">
+                                                            <div class="_zdxht7">
+                                                                <div class="_e296pg" style="flex: 1 1 0%;">
+                                                                    <div class="_sbmagf" style="background: none; border-radius: 8px 8px 0px 0px; top: 0px; left: 0px; right: 0px; bottom: -1px;"></div>
+                                                                    <div class="_11wiged" aria-label="날짜 변경하기; 체크인: 2020-08-27; 체크아웃: 2020-08-29" aria-invalid="false" role="button" tabindex="0">
+                                                                        <div class="_1acx77b">
+                                                                            <div class="_7eq2v2">체크인</div>
+                                                                            <div class="_1g8031c">2020.08.27.</div>
+                                                                        </div>
+                                                                        <div class="_14tl4ml5">
+                                                                            <div class="_7eq2v2">체크아웃</div>
+                                                                            <div class="_1g8031c">2020.08.29.</div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="_t26glb" style="top: 0px; left: 0px; right: 0px; bottom: -1px; border-radius: 8px 8px 0px 0px; border-color: rgb(176, 176, 176); border-width: 1px; z-index: 0;"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="_jro6t0">
+                                                            <div class="_bp34sw">
+                                                                <div class="_e296pg" style="flex: 1 1 0%;">
+                                                                    <div class="_sbmagf" style="background: none; border-radius: 0px 0px 8px 8px; top: 0px; left: 0px; right: 0px; bottom: -1px;"></div>
+                                                                    <div class="_11wiged" aria-expanded="false" aria-haspopup="true" aria-labelledby="guests-label GuestPicker-book_it-trigger" aria-disabled="false" role="button" tabindex="0"><label for="GuestPicker-book_it-trigger" class="_1x080uh"><div class="_7eq2v2">인원</div><div class="_1wo1vgi" id="GuestPicker-book_it-trigger" aria-invalid="false" aria-disabled="false"><div class="_1ir6ymk"><span>게스트 12명</span></div></div></label>
+                                                                        <div class="_vgx32s"><svg viewBox="0 0 18 18" role="presentation" aria-hidden="true" focusable="false" style="height: 16px; width: 16px; display: block; fill: currentcolor;"><path d="m16.29 4.3a1 1 0 1 1 1.41 1.42l-8 8a1 1 0 0 1 -1.41 0l-8-8a1 1 0 1 1 1.41-1.42l7.29 7.29z" fill-rule="evenodd"></path></svg></div>
+                                                                    </div>
+                                                                    <div class="_t26glb" style="top: 0px; left: 0px; right: 0px; bottom: -1px; border-radius: 0px 0px 8px 8px; border-color: rgb(176, 176, 176); border-width: 1px; z-index: 0;"></div>
+                                                                </div>
+                                                                <div></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="_fz3zdn">
+                                            <form action="/payments/book?hosting_id=16094212" method="post"><input type="hidden" name="s" value="undefined"><input type="hidden" name="hosting_id" value="16094212"><input type="hidden" name="guest_currency" value="KRW"><input type="hidden" name="checkin" value="2020-08-27">
+                                                <input type="hidden" name="checkout" value="2020-08-29"><input type="hidden" name="number_of_guests" value="1"><input type="hidden" name="number_of_adults" value="12"><input type="hidden" name="number_of_children"
+                                                    value="0"><input type="hidden" name="number_of_infants" value="0"><input type="hidden" name="selected_cancellation_policy_id" value="undefined"><input type="hidden" name="is_work_trip" value="false">
+                                                <button data-testid="homes-pdp-cta-btn" type="submit" class="_1ot1we5p"><span class="_163rr5i"><span class="_19di23v" style="background-position: calc((100 - var(--mouse-x, 0)) * 1%) calc((100 - var(--mouse-y, 0)) * 1%);"></span></span><span class="_tcp689">예약하기 </span></button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <ul class="_1mkur1q">
+                                        <li class="_qqc9rm">예약 확정 전에는 요금이 청구되지 않습니다.</li>
+                                    </ul>
+                                    <div class="_1cvivhm">
+                                        <div class="_ud8a1c">
+                                            <ul class="_1hvzytt">
+                                                <li class="_ryvszj"><span class="_bmsen5"><div class="_17y0hv9"><div><button type="button" class="_ebe4pze"><span class="_11o89bi">₩435,899 x 2박</span><span class="_krjbj">요금 내역 보기</span></button>
+                                        </div>
+                                    </div>
+                                    </span><span class="_ra05uc">₩871,797</span></li>
+                                    <li class="_ryvszj"><span class="_bmsen5"><div class="_17y0hv9"><div><button type="button" class="_ebe4pze"><span class="_11o89bi">청소비</span><span class="_krjbj">요금 내역 보기</span></button>
+                                </div>
+                            </div>
+                            </span><span class="_ra05uc">₩80,149</span></li>
+                            <li class="_adhikmk"><span class="_bmsen5"><div class="_17y0hv9"><div><button type="button" class="_ebe4pze"><span class="_11o89bi">서비스 수수료</span><span class="_krjbj">요금 내역 보기</span></button>
+                        </div>
+                    </div>
+                    </span><span class="_ra05uc">₩134,988</span></li>
+                    </ul>
+                    <ul class="_inlpfr">
+                        <li class="_adhikmk"><span class="_plc5prx">총 합계</span><span class="_1d3ext9m">₩1,086,934</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </aside>
+
+    <!-- ====================================================================================== -->
     <script>
-        new Vue({
-            el: "#app",
+        var information_area = new Vue({
+            el: "#app1",
             data() {
                 return {
                     infos: [],
@@ -98,8 +343,52 @@
                         this.errored = true
                     })
 
+            }
+        })
+
+        var reserve_area = new Vue({
+            el: "#app2",
+            data() {
+                return {
+                    infos: [],
+                    stuid: 0,
+                    loading: true,
+                    errored: false,
+                    bookmark: 0,
+                    reviews: [],
+                    tags: []
+                }
             },
-            methods: {
+            mounted() {
+                axios
+                    .get('http://127.0.0.1:7777/getStudioInfo/10')
+                    .then(response => (this.infos = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+                axios
+                    .get('http://127.0.0.1:7777/checkBookmark/3/10')
+                    .then(response => (this.bookmark = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                axios
+                    .get('http://127.0.0.1:7777/getStudioReviews/10')
+                    .then(response => (this.reviews = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                axios
+                    .get('http://127.0.0.1:7777/getTags/10')
+                    .then(response => (this.tags = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
 
             }
         })

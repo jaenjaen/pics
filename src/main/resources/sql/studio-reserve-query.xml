@@ -50,11 +50,11 @@
 				</if>
 			</when>
 			<otherwise>
-				<if test="stuId!=0">
-				stu_id=#{stuId}
-				</if>
 				<if test="customer!=null">
 				cust_id=#{customer.custId}
+				</if>
+				<if test="stuId!=0">
+				stu_id=#{stuId}
 				</if>
 			</otherwise>
 			</choose>

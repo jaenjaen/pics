@@ -1,16 +1,12 @@
 package com.devils.pics.controller;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +38,7 @@ public class StudioReserveController {
 		ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(studio);
 		ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(studio);
 		Schedule schedule=new Schedule();
-		schedule.setExceptionDate(exceptionDate);;
+		schedule.setExceptionDate(exceptionDate);
 		schedule.setRepeatDate(repeatDate);
 		return new ResponseEntity(schedule,HttpStatus.OK);
 		} catch (Exception e) {
@@ -52,7 +48,7 @@ public class StudioReserveController {
 	}
 
 	// 2. reservation 테이블에 추가, 예약 일자 
-	@GetMapping("/reserve")
+	@PostMapping("/reserve")
 	public ResponseEntity getExceptionDate(@RequestBody Reservation reservation) {
 		if(studioReserveService.reserve(reservation)==1) {
 			studioReserveService.AddexceptionDates(reservation);
@@ -61,5 +57,6 @@ public class StudioReserveController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
+
 
 

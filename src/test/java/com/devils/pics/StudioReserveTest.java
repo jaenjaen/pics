@@ -27,8 +27,8 @@ class StudioReserveTest {
 	@Test
 	void contextLoads() {
 		String NS = "StudioReserveMapper.";
-//		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
-//		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
+		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
+		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
 
 //		System.out.println("==================== getExceptionDate ====================");
 //		try {
@@ -39,31 +39,38 @@ class StudioReserveTest {
 //			System.out.println(e.getMessage());
 //		}
 		
-	
-//		System.out.println("==================== checkReservation ===================="); 
-//		System.out.println(customer);
-//		int result=sqlSession.selectOne(NS+"checkReservation",new Reservation(customer,10,"2020-08-21","2020-08-21"));
-//		if(result!=0) 
-//			System.out.println("이미 예약하신 내역이 있습니다. 마이페이지에서 확인하세요.");
-//		else System.out.println("중복된 예약 없습니다 ~! 등록 진행하세요.");
 
-//		System.out.println("==================== Reservation ====================");
+//		System.out.println("==================== Reserve ====================");
 //		
 //		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
 //				"2020-08-21", 150000,"2020-08-11", 7);
 //		try {
 //		int result=sqlSession.insert(NS+"reserve",reservation);
-//		System.out.println(result);
-//		}catch (NullPointerException e) {System.out.println("등록 과정에 문제가 생겼나봐!!!");}
+//		System.out.println(reservation);
+//		}catch (NullPointerException e) {System.out.println("등록 과정에 문제가 있나봐!!!");}
 
-//		System.out.println("==================== reservation (마이 페이지 예약 내역) ====================");
+//		System.out.println("==================== reservations ====================");
+//		Reservation resInfo=new Reservation();
+//		resInfo.setCustomer(customer);
+//		resInfo.setStuId(studio.getStuId());
+//		System.out.println(resInfo);
+//		resInfo.setStartDate("2020-08-20 00:00:00");
+//		resInfo.setEndDate("2020-08-22 00:00:00");
 //		try {
-//		List<Reservation> reserveVO=sqlSession.selectList(NS+"reservations");
+//		List<Reservation> reserveVO = sqlSession.selectList(NS+"reservations",resInfo);
 //		System.out.println(reserveVO);
 //		}catch (NullPointerException e) {
 //			System.out.println("예약 내역이 없습니다.");
 //		}
-		
+
+//		System.out.println("==================== exceptionDates ====================");
+//		try {
+//		int result = sqlSession.insert(NS+"exceptionDates",resInfo);
+//		System.out.println(result);
+//		}catch (NullPointerException e) {
+//			System.out.println("예외 일정 등록에 실패했습니다.");
+//		}
+
 		
 //		System.out.println("==================== DAO & Service Test ====================");
 //		System.out.println("==================== getAccCustomer ====================");

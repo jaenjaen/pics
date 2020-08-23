@@ -64,7 +64,7 @@ public class StudioRegisterController {
 			System.out.println("autoIncrement로 생긴 Studio Id : "+stdId);
 			
 			/* StudioFilter에 Studio Id를 set하고, StudioFilter를 등록 */
-			studioFilter.setStdId(stdId);
+			studioFilter.setStuId(stdId);
 			result = studioFilterService.registerStudioFilter(studioFilter);
 			System.out.println("StudioFilter 등록 결과 : "+result);
 			

@@ -42,8 +42,8 @@ class StudioReserveTest {
 
 //		System.out.println("==================== Reserve ====================");
 //		
-//		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
-//				"2020-08-21", 150000,"2020-08-11", 7);
+		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
+				"2020-08-21", 150000,"2020-08-11", 7);
 //		try {
 //		int result=sqlSession.insert(NS+"reserve",reservation);
 //		System.out.println(reservation);

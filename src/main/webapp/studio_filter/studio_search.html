@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            width: 800px;
+            margin: auto;
+        }
+        div *{
+            margin-top: 20px;
+        }
+        strong{
+            display: block;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        $(function(){
+            var app = new Vue({
+                el:'#app',
+                data () {
+                    return {
+                        studios : [],
+                        order : '',
+                        filters : [],
+                        loading : true
+                    }
+                },
+                mounted () {
+                    axios
+                        .get('http://127.0.0.1:7777/studio/search')
+                        .then(response => (this.studios = response.data))
+                        .catch(error=>{
+                            console.log(error);
+                            this.errored = true
+                        })
+                        .finally(()=>this.loading = false)
+                },
+                methods:{
+                    setOrder(){
+                        // alert(order.value);
+                        let filters = [this.order,123];
+                        alert(filters);
+                        axios
+                            .get('http://127.0.0.1:7777/studio/search/'+filters)
+                            .then(response => {
+                                // alert(response.data[0].stuId);
+                                this.studios = response.data;
+                            })
+                            .catch(error=>{
+                                console.log(error);
+                                this.errored = true
+                            })
+                            .finally(()=>this.loading = false)
+                    }
+                }
+            })
+        });//ready-on
+    </script>
+</head>
+<body>
+<div id="app">
+    <div id="search">
+        <p>지금 바로 나한테 딱 맞는</p>
+        <strong>촬영공간 찾기</strong>
+        <input type="text"><button>돋보기</button>
+    </div>
+    <hr>
+    <div id="filter">
+        <strong>예약 날짜</strong>
+        달력<input type="date"><br>
+        <strong>위치</strong>
+        GPS 아이콘 <input type="text">시 <input type="text">도 <br>
+        <strong>장소 규모</strong>
+        집 아이콘 <input type="text">m^2 ~ <input type="text"><br>
+        <strong>가격</strong>
+        화폐 아이콘 <input type="text">원 ~ <input type="text">원 <br>
+        <strong>최대 수용인원</strong>
+        사람 아이콘 <input type="text">명 <br>
+    </div>
+    <hr>   
+    <div v-if = "loading">
+        Loading...
+    </div>
+    <div id="searchList" v-else>
+        <select name="orderCon" id="order" @change='setOrder' v-model='order'>
+            <option value="orderCon=0">최신순</option>
+            <option value="orderCon=2">인기순-내림차순</option>
+            <option value="orderCon=1">인기순-오름차순</option>
+            <option value="orderCon=4">가격순-내림차순</option>
+            <option value="orderCon=3">가격순-오름차순</option>
+        </select>
+        <ul>
+            <li v-for="studio in studios">{{studio.stuId}}</li>
+        </ul>
+        <input type="hidden" name='filters'>
+    </div>
+</div>
+</body>
+</html>

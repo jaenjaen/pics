@@ -182,11 +182,19 @@ table#agreeTable {
 }
 
 .selectable li {
-    margin: 3px;
-    padding: 0.4em;
+    padding: 0.6em;
     font-size: 1.4em;
-    width: 20em;
     height: 40px;
+}
+
+.daySelectable li {
+    text-align: center;
+    width: 90px;
+}
+
+.optionSelectable li {
+    margin: 3px 0;
+    width: 10em;
     border-radius: 5px;
 }
 
@@ -206,7 +214,13 @@ table#agreeTable {
     .tag {
         padding-right: 0px;
     }
-    .selectable li {
+    .optionSelectable li {
         width: 11em;
+    }
+    .daySelectable li {
+        padding-top: 12px;
+        font-size: 9px;
+        text-align: center;
+        width: 55px;
     }
 }

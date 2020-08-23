@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- ================== 스튜디오 상세 페이지  ================== -->	
+<!-- ================== 스튜디오 상세 페이지  ResultMap================== -->	
 <mapper namespace="StudioInfoMapper">			
 	<resultMap type="studio" id="studioInfoRM">							
 		<result property="stuId" column="stu_id"/>			
@@ -35,15 +35,21 @@
 				<result property="password" column="password"/>
 				<result property="tel" column="tel" />
 				<result property="description" column="description"/>
-				<result property="logoImg" column="logoImg" />
+				<result property="logoImg" column="logo_img" />
 		</association>
 		<association property="category" javaType="category">
 			<id property="categoryId" column="category_id"/>
-				<result column="category_id" property="categoryId"/>
-				<result column="categoryName" property="category" />
+				<result property="categoryId" column="category_id" />
+				<result property="categoryName" column="category_name" />
 		</association>
- 	</resultMap>
- 	
+<!-- 		<association property="tag" javaType="list">
+			<id property="stuId" column="stu_id"/>
+				<result property="tagId" column="tag_id" />
+				<result property="tagName" column="tag_name"/>
+		</association>
+ -->		
+	</resultMap>
+ 		
  	<resultMap type="review" id="reviewRM">
 		<result property="reviewId" column="review_id" />
 		<result property="score" column="score"/>
@@ -72,8 +78,8 @@
 		ctg.category_id,ctg.category_name,
 		com.name,com.logo_img,
 		sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,
-		t.tag_id,t.tag_name, <!-- 강제영 : 쉼표가 없어서 에러 났음 지워도 됨 -->
-		FROM studio s
+ 		t.tag_id,t.tag_name
+ 		FROM studio s
 		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id
 		LEFT JOIN company com ON s.com_id=com.com_id
 		LEFT JOIN studio_filter sf ON s.stu_id=sf.stu_id
@@ -87,7 +93,6 @@
 		SELECT
 		re.review_id,re.score, re.content, re.img, re.reg_date, re.answer,
 		c.cust_id,c.api_id,c.gender,c.age,c.job,c.funnel,c.email,c.tel,c.api_key,c.img_src
-		<!-- s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule -->
 		FROM review re 
 		JOIN customer c ON re.cust_Id=c.cust_Id
 		<!-- JOIN studio s ON re.stu_Id=s.stu_Id -->
@@ -104,6 +109,13 @@
 			HAVING res.stu_id=${value};	
 		</if>
 	</select>		
+		
+	<select id="checkBookmark" parameterType="list" resultType="int">
+		SELECT b.book_id
+		FROM bookmark b
+		WHERE b.cust_id = ${list[0]}
+		AND b.stu_id = ${list[1]}
+	</select>
 	
 	<select id="getTags" parameterType="int" resultType="tag">							
 		SELECT t.tag_id, t.stu_id ,t.tag_name
@@ -111,13 +123,6 @@
 		<if test="'${value}'!=null">
 		WHERE stu_id=${value}	
 		</if>
-	</select>
-	
-	<select id="checkBookmark" parameterType="list" resultType="int">
-		SELECT b.book_id
-		FROM bookmark b
-		WHERE b.cust_id = ${list[0]}
-		AND b.stu_id = ${list[1]}
 	</select>
 		
 </mapper>	

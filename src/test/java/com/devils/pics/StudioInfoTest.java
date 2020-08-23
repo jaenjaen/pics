@@ -1,6 +1,5 @@
 package com.devils.pics;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,13 +15,13 @@ import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.domain.Tag;
+import com.devils.pics.domain.Studio;
 import com.devils.pics.service.StudioInfoService;
 
 @SpringBootTest
-class StudioInfoTest {
-
+public class StudioInfoTest {
 	@Autowired
-	  private SqlSession sqlSession;
+	private SqlSession sqlSession;
 	@Autowired
 	private StudioInfoService service;
 	
@@ -88,9 +87,9 @@ class StudioInfoTest {
 
 //		System.out.println("==================== getBookmark ====================");
 //		try {
-			List<Integer> idList=new ArrayList<Integer>();
-			idList.add(1);//cust_id
-			idList.add(12);//stu_id
+//			List<Integer> idList=new ArrayList<Integer>();
+//			idList.add(1);//cust_id
+//			idList.add(12);//stu_id
 //
 //			int cnt=sqlSession.selectOne(NS+"getBookmark",idList);
 //			System.out.println(cnt+","+idList.get(0)+","+idList.get(1));
@@ -113,12 +112,11 @@ class StudioInfoTest {
 //			Tag tagVO=service.getTags(1);
 //		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
 
-		System.out.println("==================== getBookmark ====================");
-		try {
-			int vo=service.checkBookmark(idList);
-			System.out.println("vo : "+vo);
-		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
+//		System.out.println("==================== getBookmark ====================");
+//		try {
+//			int vo=service.checkBookmark(idList);
+//			System.out.println("vo : "+vo);
+//		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
 
 	}
-
 }

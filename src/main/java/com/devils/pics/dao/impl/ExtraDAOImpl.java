@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.devils.pics.dao.ExtraDAO;
 import com.devils.pics.domain.Bookmark;
+import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 
 @Repository
@@ -28,5 +29,14 @@ public class ExtraDAOImpl implements ExtraDAO {
 	@Override
 	public int deleteBookmark(int bookId) throws Exception {
 		return sqlSession.delete(NS+"deleteBookmark",bookId);
+	}
+	
+	@Override
+	public int writeReview(Review review) throws Exception {
+		return sqlSession.insert(NS+"writeReview",review);
+	}
+	@Override
+	public List<Review> getCustomerReivews(int custId) throws Exception {
+		return sqlSession.selectList(NS+"getCustomerReivews",custId);
 	}
 }

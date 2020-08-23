@@ -10,15 +10,13 @@ public class Schedule {
 	
 	public Schedule(int stuId, ArrayList<RepeatDate> repeatDate, ArrayList<ExceptionDate> exceptionDate,
 			Reservation reservation) {
-		super();
 		this.stuId = stuId;
 		this.repeatDate = repeatDate;
 		this.exceptionDate = exceptionDate;
 		this.reservation = reservation;
 	}
-	public Schedule() {
-		super();
-	}
+	public Schedule() {}
+	
 	public int getStuId() {
 		return stuId;
 	}

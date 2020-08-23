@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devils.pics.domain.Bookmark;
+import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.service.ExtraService;
 
@@ -54,4 +55,26 @@ public class ExtraController {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PostMapping("/review")
+	public ResponseEntity writeReview(@RequestBody Review review) {
+		try {
+			int n = extraService.writeReview(review);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/review/{custId}")
+	public ResponseEntity getCustomerReivews(@PathVariable int custId) {
+		try {
+			List<Review> reviews= extraService.getCustomerReivews(custId);
+			
+			return new ResponseEntity(reviews,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

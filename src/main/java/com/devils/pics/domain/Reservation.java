@@ -15,7 +15,6 @@ public class Reservation {
 	
 	public Reservation(int resId, int stuId, Customer customer, Studio studio, String startDate, String endDate, int totalPrice,
 			String resDate, int totalPeople) {
-
 		this.resId = resId;
 		this.stuId = stuId;
 		this.customer = customer;
@@ -26,6 +25,14 @@ public class Reservation {
 		this.resDate = resDate;
 		this.totalPeople = totalPeople;
 	}
+
+	public Reservation(Customer customer,  int stuId, String startDate, String endDate) {
+		this.stuId = stuId;
+		this.customer = customer;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		}
+
 	public int getResId() {
 		return resId;
 	}

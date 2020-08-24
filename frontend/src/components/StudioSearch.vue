@@ -1,0 +1,115 @@
+<template>
+  <div id="app">
+        <div id="search">
+            <p>지금 바로 나한테 딱 맞는</p>
+            <strong>촬영공간 찾기</strong>
+            <input type="text"><button>돋보기</button>
+        </div>
+        <hr>
+        <div id="filter">
+            <button @click='showDateF=!showDateF'>날짜</button>
+            <button @click='showAddrF=!showAddrF'>위치</button>
+            <button @click='showSizeF=!showSizeF'>장소 규모</button>
+            <button @click='showPriceF=!showPriceF'>가격</button>
+            <button @click='showCapaF=!showCapaF'>최대 수용인원</button>
+            <br>
+            <span name='dateFilter' v-if="showDateF">
+                달력 <input type="date" v-model="selectedDate"> <br>
+            </span>
+            <span name='addrFilter' v-if="showAddrF">
+                GPS <input type="text" value="">시 <input type="text">도 <br>
+            </span>
+            <span name='sizeFilter' v-if="showSizeF">
+                집 <input type="text">m^2 ~ <input type="text"> <br>
+            </span>
+            <span name='priceFilter' v-if="showPriceF"> 
+                화폐 <input type="text">원 ~ <input type="text">원 <br>
+            </span>
+            <span name='capaFilter' v-if="showCapaF">
+                닝겐 <input type="text">명 <br>
+            </span>
+            <!-- <button name='setFilter' @click='setFilter'>적용</button> -->
+        </div>
+        <hr>
+        <div v-if="loading">
+            Loading...
+        </div>
+        <div id="searchList" v-else>
+            <select name="orderCon" id="order" @change='setOrder ' v-model='order '>
+              <option disabled value="">정렬하기</option>
+              <option value="orderCon=1">인기순</option>
+              <option value="orderCon=2">가격순-내림차순</option>
+              <option value="orderCon=3">가격순-오름차순</option>
+              <option value="orderCon=4">평점순</option>
+            </select>
+            <input type="hidden" name='filters'>
+            <ul>
+                <li v-for="studio in studios" v-bind:key="studio.stuId">{{studio.stuId}}</li>
+            </ul>
+            <input type="hidden" name='filters '>
+        </div>
+    </div>
+</template>
+
+<script>
+import axios from "axios"
+// const week = ['일', '월', '화', '수', '목', '금', '토'];
+export default{
+  name: "customers-list",
+  data() {
+      return {// Axios 전체 리스트 변수
+          studios: [],
+
+          // Axios 필터변수
+          weekDate: '',
+          selectedDate: '',
+          order: '',
+          filters: [],
+
+          //  필터이베트 관련 변수
+          showDateF: false,
+          showAddrF: false,
+          showSizeF: false,
+          showPriceF: false,
+          showCapaF: false,
+          // 로딩 변수
+          loading: true
+      }
+  },
+  mounted() {
+    this.retrieveStudios();
+  },
+    
+  methods: {
+    retrieveStudios() {
+      axios
+        .get('http://127.0.0.1:7777/studio/search')
+        .then(response => (this.studios = response.data))
+        .catch(error => {
+            console.log(error);
+            this.errored = true
+        })
+        .finally(()=>this.loading = false)
+    },
+    setOrder() {
+      // alert(order.value);
+      let filters = [this.order];
+      alert(filters);
+      this.search(filters);
+      },
+    search(filters){
+      axios
+          .get('http://127.0.0.1:7777/studio/search/' + filters)
+          .then(response => {
+              // alert(response.data[0].stuId);
+              this.studios = response.data;
+          })
+          .catch(error => { 
+              console.log(error);
+              this.errored = true
+          })
+          .finally(() => this.loading = false)
+    }
+  }
+}
+</script>

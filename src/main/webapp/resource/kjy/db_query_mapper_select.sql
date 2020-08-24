@@ -88,7 +88,12 @@ FROM reservation
 GROUP BY stu_id
 ) res
 ON s.stu_id = res.stu_id
-ORDER BY f.unit_price DESC;
-
+where s.stu_id <> All (select stu_id from exception_date where start_date < '2020-08-16' and end_date > '2020-08-16' )
+group by s.stu_id
+ORDER BY s.stu_id DESC;
 select stu_id, count(stu_id) from reservation group by stu_id;
-select * from customer;
+select * from exception_date ;
+select * from studio s LEFT OUTER join exception_date e on s.stu_id = e.stu_id 
+where s.stu_id <> (select stu_id from exception_date where start_date = '2020-08-30')
+;
+select e.stu_id, e.start_date from exception_date e RIGHT OUTER JOIN studio s on e.stu_id = s.stu_id where start_date = '2020-08-30';

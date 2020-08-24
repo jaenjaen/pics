@@ -1,6 +1,7 @@
 package com.devils.pics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,25 +49,28 @@ public class StudioFilterTest {
 		 */
 		SearchCon searchCon = new SearchCon();
 		ArrayList<String> search = new ArrayList<String>();
-		search.add("루프탑");
-		search.add("이태원");
+//		search.add("루프탑");
+//		search.add("이태원");
 		
 //		searchCon.setCategoryId("1");
 //		filterMap.put("weekDate","월");
 //		filterMap.put("selectedDate","2020-08-13");
-//		filterMap.put("address","서울시 ");
+		searchCon.setAddress1("서울");
+//		searchCon.setAddress2("해운대");
 //		filterMap.put("minSize", "100");
 //		filterMap.put("maxSize", "150");
-		searchCon.setMinUnitPrice("11000");
-		searchCon.setMaxUnitPrice("15000");
+//		searchCon.setMinUnitPrice("11000");
+//		searchCon.setMaxUnitPrice("15000");
 //		filterMap.put("capacity", "15")`;
 //		filterMap.put("studioName", "15");
-		searchCon.setSearchContent(search);
+//		searchCon.setSearchContent(search);
 //		filterMap.put("searchTag", "모던");
 //		filterMap.put("orderCon", "4");
+//		String str = "weekDate=";
 		
 		
 		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", searchCon);
+		System.out.println(searchCon);
 		System.out.println("조회된 총 studio 수 : " + list.size());
 		for (Studio s : list) System.out.println(s);
 		 

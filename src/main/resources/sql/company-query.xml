@@ -2,25 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="CompanyMapper">
-	<sql id="select-company">
-		SELECT com_id,name,address,password,tel,desc,logo_img
-		FROM company;
-	</sql>
-	
+<mapper namespace="CompanyMapper">	
 	<insert id="registerCompany" parameterType="company">
 		INSERT INTO company(com_id,name,address,password,tel,logo_img)
 		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg})
 	</insert>
 	
 	<select id="getCompany" parameterType="company" resultType="company">
-		SELECT com_id,name,address,password,tel,desc,logo_img
+		SELECT com_id, name, address, password, tel, description, logo_img
 		FROM company
-		<if test="company!=null">
+		<if test="comId !=null">
 			WHERE com_id = #{comId}
+		</if>
+		<if test="password !=null">
 			AND password = #{password}
 		</if>
 	</select>
+	
+	<update id="updateCompany" parameterType="company">
+		UPDATE company SET name=#{name}, address=#{address}, password= #{password},
+							tel=#{tel},description = #{description},logo_img =#{logoImg}
+		WHERE com_id = #{comId}
+	</update>
 	
 	<delete id="deleteCompany" parameterType="string">
 		DELETE FROM company

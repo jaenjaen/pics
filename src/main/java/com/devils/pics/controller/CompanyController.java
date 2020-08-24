@@ -10,52 +10,70 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devils.pics.domain.Customer;
-import com.devils.pics.service.CustomerService;
+import com.devils.pics.domain.Company;
+import com.devils.pics.service.CompanyService;
 
 @RestController
 @CrossOrigin(origins = "*")
 public class CompanyController {
 
 	@Autowired
-	private CustomerService customerService;
+	private CompanyService companyService;
 	
-	@PostMapping("/customer")
-	public ResponseEntity registerCustomer(@RequestBody Customer customer) {
+	@PostMapping("/company")
+	public ResponseEntity registerCustomer(@RequestBody Company company) {
 		try {
-			customerService.registerCustomer(customer);
+			companyService.registerCompany(company);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@GetMapping("/customer/{custId}")
-	public ResponseEntity getCustomer(@PathVariable int custId) {
+	@GetMapping("/company?comId={comId}&password={password}")
+	public ResponseEntity loginCompany(@RequestParam("comId") String comId,@RequestParam("password") String password) {
 		try {
-			Customer cust = customerService.getCustomer(custId);
-			return new ResponseEntity(cust,HttpStatus.OK);
+			Company company = new Company();
+			company.setComId(comId);
+			company.setPassword(password);
+			
+			Company comp = companyService.loginCompany(company);
+			return new ResponseEntity(comp,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@PutMapping("/customer")
-	public ResponseEntity updateCustomer(@RequestBody Customer customer) {
+	@GetMapping("/company/{comId}")
+	public ResponseEntity getCompany(@PathVariable String comId) {
 		try {
-			customerService.updateCustomer(customer);
+			Company company = new Company();
+			company.setComId(comId);
+			
+			Company comp = companyService.getCompany(company);
+			return new ResponseEntity(comp,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping("/company")
+	public ResponseEntity updateCustomer(@RequestBody Company company) {
+		try {
+			companyService.updateCompnay(company);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@DeleteMapping("/customer/{custId}")
-	public ResponseEntity deleteCustomer(@PathVariable int custId) {
+	@DeleteMapping("/company/{comId}")
+	public ResponseEntity deleteCustomer(@PathVariable String comId) {
 		try {
-			customerService.deleteCustomer(custId);
+			companyService.deleteCompany(comId);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

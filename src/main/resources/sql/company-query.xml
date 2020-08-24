@@ -12,4 +12,18 @@
 		INSERT INTO company(com_id,name,address,password,tel,logo_img)
 		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg})
 	</insert>
+	
+	<select id="getCompany" parameterType="company" resultType="company">
+		SELECT com_id,name,address,password,tel,desc,logo_img
+		FROM company
+		<if test="company!=null">
+			WHERE com_id = #{comId}
+			AND password = #{password}
+		</if>
+	</select>
+	
+	<delete id="deleteCompany" parameterType="string">
+		DELETE FROM company
+		WHERE com_id = #{value}
+	</delete>
 </mapper>

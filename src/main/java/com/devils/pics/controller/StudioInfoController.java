@@ -50,12 +50,13 @@ public class StudioInfoController {
 		return new ResponseEntity("실패",HttpStatus.NO_CONTENT);
 		}
 	}
-	//2-2. Studio 클래스에 없는 정보 (태그)
-	@GetMapping("/getTags/{stuId}")
-	public ResponseEntity<List<Tag>> getTags(@PathVariable int stuId) {	
-		List<Tag> tagVO=studioInfoService.getTags(stuId);
-		return new ResponseEntity<List<Tag>>(tagVO,HttpStatus.OK);
-	}
+	
+//	//2-2. Studio 클래스에 없는 정보 (태그)
+//	@GetMapping("/getTags/{stuId}")
+//	public ResponseEntity<List<Tag>> getTags(@PathVariable int stuId) {	
+//		List<Tag> tagVO=studioInfoService.getTags(stuId);
+//		return new ResponseEntity<List<Tag>>(tagVO,HttpStatus.OK);
+//	}
 	
 	//2-2. Studio 클래스에 없는 정보 (찜 여부)
 	@GetMapping("/checkBookmark/{custId}/{stuId}")

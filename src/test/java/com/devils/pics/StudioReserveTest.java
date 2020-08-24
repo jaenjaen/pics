@@ -16,20 +16,29 @@ import com.devils.pics.domain.Reservation;
 import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
+import com.devils.pics.service.CustomerService;
+import com.devils.pics.service.StudioInfoService;
+import com.devils.pics.service.StudioReserveService;
 
 @SpringBootTest
 class StudioReserveTest {
-	@Autowired
-	  private SqlSession sqlSession;
 //	@Autowired
-//	private StudioReserveService service;
+//	  private SqlSession sqlSession;
+	@Autowired
+	private StudioReserveService reserveService;
 
+	@Autowired
+	private StudioInfoService infoService;
+
+	@Autowired
+	private CustomerService customerService;
+	
 	@Test
-	void contextLoads() {
-		String NS = "StudioReserveMapper.";
-		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
-		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
-
+	void contextLoads() throws Exception {
+//		String NS = "StudioReserveMapper.";
+//		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
+//		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
+//
 //		System.out.println("==================== getExceptionDate ====================");
 //		try {
 //		List<ExceptionDate> ExceptionVO=sqlSession.selectList(NS+"getExceptionDate",studio);
@@ -42,9 +51,12 @@ class StudioReserveTest {
 
 //		System.out.println("==================== Reserve ====================");
 //		
-		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
-				"2020-08-21", 150000,"2020-08-11", 7);
-//		try {
+//		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
+//				"2020-08-21", 150000,"2020-08-11", 7);
+//		System.out.println(customer);
+//		System.out.println(studio);
+//		System.out.println(reservation);
+		//		try {
 //		int result=sqlSession.insert(NS+"reserve",reservation);
 //		System.out.println(reservation);
 //		}catch (NullPointerException e) {System.out.println("등록 과정에 문제가 있나봐!!!");}
@@ -71,28 +83,41 @@ class StudioReserveTest {
 //			System.out.println("예외 일정 등록에 실패했습니다.");
 //		}
 
-		
-//		System.out.println("==================== DAO & Service Test ====================");
-//		System.out.println("==================== getAccCustomer ====================");
-//		try {
-//		System.out.println(service.getAccCustomer(1));
-//		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
-//		
-//		System.out.println("==================== getReview ====================");
-//		try {
-//			List<Review> reviewVO=service.getStudioReviews(idList);
-//		}catch (NullPointerException e) {System.out.println("이용 고객이 없는 스튜디오 입니다");}
-//		
-//		System.out.println("==================== getTags ====================");
-//		try {
-//			Tag tagVO=service.getTags(1);
-//		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
-
-//		System.out.println("==================== getBookmark ====================");
-//		try {
-//			int vo=service.checkBookmark(idList);
-//			System.out.println("vo : "+vo);
-//		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
+//		Customer customer=customerService.getCustomer(1);
+//		List<Studio> studio=infoService.getStudioInfo(10);
+//		Reservation reservation =new Reservation(studio.get(0).getStuId(),customer,"2020-08-19","2020-08-21",250000,"2020-08-10",5);
 //
+//		System.out.println("==================== DAO & Service Test ====================");
+//		System.out.println("==================== getExceptionDate ====================");
+//		try {
+//		List<ExceptionDate> exceptionDateList=new ArrayList<ExceptionDate>();
+//		for(ExceptionDate ex:reserveService.getExceptionDate(11))
+//			exceptionDateList.add(ex);
+//		System.out.println(exceptionDateList);
+//		}catch (Exception e) {
+//			System.out.println(e.getMessage()+"이용 고객이 없는 스튜디오 입니다");
+//			}
+//		
+//		System.out.println("==================== DAO & Service Test ====================");
+//		System.out.println("==================== getRepeatDate ====================");
+//		try {
+//		List<RepeatDate> repeDateList=new ArrayList<RepeatDate>();
+//		for(RepeatDate re:reserveService.getRepeatDate(11))
+//			repeDateList.add(re);
+//		System.out.println(repeDateList);
+//		}catch (Exception e) {
+//			System.out.println(e.getMessage()+"이용 고객이 없는 스튜디오 입니다");
+//			}
+//		
+//		System.out.println("==================== AddexceptionDates ====================");
+//		try {
+//			System.out.println(reserveService.AddexceptionDates(reservation));
+//		}catch (NullPointerException e) {System.out.println("exptionDate에 등록");}
+
+//		System.out.println("==================== reserve ====================");
+//		try {
+//			System.out.println(reserveService.reserve(reservation));
+//		}catch (NullPointerException e) {System.out.println("예약에 실패했습니다.");}
+
 	}
 }

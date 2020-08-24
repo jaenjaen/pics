@@ -25,16 +25,16 @@
 
 <mapper namespace="StudioReserveMapper">
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
-  	<select id="getExceptionDate" parameterType="studio" resultType="exceptionDate">							
+  	<select id="getExceptionDate" parameterType="int" resultType="exceptionDate">							
 		SELECT exception_id, start_date, end_date, stu_id
 		FROM exception_date
-		WHERE stu_id=#{stuId}
+		WHERE stu_id=${value}
 	</select>
 
-	<select id="getRepeatDate" parameterType="studio" resultType="repeatDate">							
+	<select id="getRepeatDate" parameterType="int" resultType="repeatDate">							
 		SELECT rep.repeat_id, rep.stu_id, rep.weekday weekDate, rep.time
 		FROM repeat_date rep
-		WHERE rep.stu_id=#{stuId}
+		WHERE rep.stu_id=${value}
 	</select>
 
 	<!-- ================== 2. 예약하기 ================== -->
@@ -63,7 +63,7 @@
 	
 	<insert id="reserve" parameterType="reservation">							
 		INSERT into reservation(cust_id,stu_id,start_date,end_date,total_price,res_date,total_people)
-		VALUES(#{customer.custId},#{studio.stuId},date(#{startDate}),date(#{endDate}),#{totalPrice},date(#{resDate}),#{totalPeople})
+		VALUES(#{customer.custId},#{stuId},date(#{startDate}),date(#{endDate}),#{totalPrice},date(#{resDate}),#{totalPeople})
 	</insert> 
 
 	<insert id="AddexceptionDates" parameterType="reservation">							

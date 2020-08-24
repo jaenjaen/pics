@@ -34,6 +34,7 @@ public class StudioReserveController {
 	// 1. 예약 불가능/가능 날짜 받아서 Schedule로 옮기기
 	@GetMapping("/getExceptionDate")
 	public ResponseEntity getExceptionDate(@RequestBody Studio studio) {
+		// 페이지에 있는 studio 정보 & 세션에서 login 정보
 		try {
 		ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(studio);
 		ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(studio);
@@ -50,6 +51,7 @@ public class StudioReserveController {
 	// 2. reservation 테이블에 추가, 예약 일자 
 	@PostMapping("/reserve")
 	public ResponseEntity getExceptionDate(@RequestBody Reservation reservation) {
+		//time 받아서 startDate/endDate 만들어줘야 함.
 		if(studioReserveService.reserve(reservation)==1) {
 			studioReserveService.AddexceptionDates(reservation);
 			return new ResponseEntity(HttpStatus.OK);

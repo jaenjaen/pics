@@ -35,12 +35,11 @@
 
 .icon {
     display: inline-block;
-    fill: #606468;
     font-size: 16px;
     font-size: 1rem;
-    height: 1em;
+    height: 2em;
     vertical-align: middle;
-    width: 1em;
+    width: 2em;
 }
 
 
@@ -61,13 +60,13 @@ html {
 
 /* modules/anchor.css */
 
-a {
-    color: #eee;
+.register {
+    color: #034EA2;
     outline: 0;
     text-decoration: none;
 }
 
-a:focus,
+.register a:focus,
 a:hover {
     text-decoration: underline;
 }
@@ -129,7 +128,7 @@ input[type='submit'] {
 }
 
 .login label {
-    background-color: #363b41;
+    background-color: #F5F5F5;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     padding-left: 20px;
@@ -140,7 +139,7 @@ input[type='submit'] {
 
 .login input[type='password'],
 .login input[type='text'] {
-    background-color: #3b4148;
+    background-color: #F5F5F5;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
@@ -149,7 +148,7 @@ input[type='submit'] {
 .login input[type='password']:hover,
 .login input[type='text']:focus,
 .login input[type='text']:hover {
-    background-color: #434a52;
+    background-color: #EAF6FB;
 }
 
 .login input[type='submit'] {

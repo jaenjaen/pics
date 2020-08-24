@@ -80,7 +80,7 @@
 	</sql>
 
 	<!-- 필터 검색 쿼리 -->
-	<select id="selectStudioByFilter" parameterType="HashMap" resultMap="studioRM">
+	<select id="selectStudioByFilter" parameterType="searchCon" resultMap="studioRM">
 		<include refid="Select-J-Studio-Category-filter-tag-review" />
 		<where>
 		<choose>
@@ -98,10 +98,13 @@
 			</if>
 			<if test="selectedDate != null">
 				AND (e.start_date > #{selectedDate}
-				OR #{selectedDate} > e.end_date)
+				OR #{selectedDate} > e.end_date
+				OR e.start_date is null
+				OR e.end_date is null)
 			</if>
-			<if test="address != null">
-				AND f.address Like "%${address}%"
+			<if test="address1 != null or address2 != null">
+				AND f.address Like "%${address1}%"
+				AND f.address Like "%${address2}%"
 			</if>
 			<if test="maxSize != null and minSize != null">
 				AND (f.size >= #{minSize}

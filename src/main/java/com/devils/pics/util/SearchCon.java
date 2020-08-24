@@ -6,7 +6,8 @@ public class SearchCon {
 	private String categoryId;
 	private String weekDate;
 	private String selectedDate;
-	private String address;
+	private String address1;
+	private String address2;
 	private String minSize;
 	private String maxSize;
 	private String minUnitPrice;
@@ -18,14 +19,15 @@ public class SearchCon {
 	
 	public SearchCon() {}
 
-	public SearchCon(String categoryId, String weekDate, String selectedDate, String address, String minSize,
-			String maxSize, String minUnitPrice, String maxUnitPrice, String capacity, ArrayList<String> searchContent,
-			String searchTag, String orderCon) {
+	public SearchCon(String categoryId, String weekDate, String selectedDate, String address1, String address2,
+			String minSize, String maxSize, String minUnitPrice, String maxUnitPrice, String capacity,
+			ArrayList<String> searchContent, String searchTag, String orderCon) {
 		super();
 		this.categoryId = categoryId;
 		this.weekDate = weekDate;
 		this.selectedDate = selectedDate;
-		this.address = address;
+		this.address1 = address1;
+		this.address2 = address2;
 		this.minSize = minSize;
 		this.maxSize = maxSize;
 		this.minUnitPrice = minUnitPrice;
@@ -60,12 +62,20 @@ public class SearchCon {
 		this.selectedDate = selectedDate;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getAddress1() {
+		return address1;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
 	}
 
 	public String getMinSize() {
@@ -135,8 +145,8 @@ public class SearchCon {
 	@Override
 	public String toString() {
 		return "SearchCon [categoryId=" + categoryId + ", weekDate=" + weekDate + ", selectedDate=" + selectedDate
-				+ ", address=" + address + ", minSize=" + minSize + ", maxSize=" + maxSize + ", minUnitPrice="
-				+ minUnitPrice + ", maxUnitPrice=" + maxUnitPrice + ", capacity=" + capacity + ", searchContent="
-				+ searchContent + ", searchTag=" + searchTag + ", orderCon=" + orderCon + "]";
+				+ ", address1=" + address1 + ", address2=" + address2 + ", minSize=" + minSize + ", maxSize=" + maxSize
+				+ ", minUnitPrice=" + minUnitPrice + ", maxUnitPrice=" + maxUnitPrice + ", capacity=" + capacity
+				+ ", searchContent=" + searchContent + ", searchTag=" + searchTag + ", orderCon=" + orderCon + "]";
 	}
 }

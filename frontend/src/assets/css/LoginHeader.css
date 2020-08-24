@@ -1,0 +1,19 @@
+        .loginHeader {
+            width: 800px;
+            margin: auto;
+            text-align: center;
+        }
+        
+        .loginHeaderUl {
+            border-bottom-color: #034EA2;
+        }
+        
+        .loginSort {
+            display: inline-block;
+            margin: 1em;
+        }
+        
+        .loginSort a:-webkit-any-link {
+            color: #034EA2;
+            text-decoration-line: none;
+        }

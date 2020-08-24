@@ -18,8 +18,27 @@ public class CompanyDAOImpl implements CompanyDAO {
 	
 	@Override
 	public int registerCompany(Company company) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.insert(ns+"registerCompany",company);
+	}
+
+	@Override
+	public Company loginCompany(Company company) throws Exception {
+		return session.selectOne(ns+"getCompany",company);
+	}
+
+	@Override
+	public int deleteCompany(String comId) throws Exception {
+		return session.delete(ns+"deleteCompany", comId);
+	}
+
+	@Override
+	public int updateCompnay(Company company) throws Exception {
+		return session.update(ns+"updateCompany", company);
+	}
+
+	@Override
+	public Company getCompany(Company company) throws Exception {
+		return session.selectOne(ns+"getCompany",company);
 	}
 
 }

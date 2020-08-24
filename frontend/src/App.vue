@@ -5,6 +5,7 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/studioSearch">searchStudio</router-link> |
       <router-link to="/customerlogin">login</router-link>
+      <!-- <router-link to="/studioInfo">studioInfo</router-link> -->
     </div>
     <router-view />
   </div>

@@ -32,7 +32,13 @@ const routes = [{
         path: "/companylogin",
         name: "companylogin",
         component: CompanyLogin
-    }
+    },
+    // {
+    //     path: "/studioInfo",
+    //     name: "studioInfo",
+    //     component: StudioInfo
+    // }
+
 ];
 
 const router = new VueRouter({

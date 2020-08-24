@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="resource/css/registerStudio.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="https://unpkg.com/vue"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script>
-    </script>
-</head>
-
-<body>
-    <h2>스튜디오 등록</h2>
+<template>
+<h2>스튜디오 등록</h2>
     <div class="container">
         <form id="app" method="post" @submit.prevent="addStudio">
             <div class="row">
@@ -252,23 +234,17 @@
                         <tr>
                             <td>
                                 <ol class="optionSelectable selectable" id="optionSelectable1">
-                                    <li class="ui-widget-content" name="option1">카메라</li>
-                                    <li class="ui-widget-content" name="option1">조명</li>
-                                    <li class="ui-widget-content" name="option1">반사판</li>
-                                    <li class="ui-widget-content" name="option1">포토그래퍼</li>
+                                    <li class="ui-widget-content" name="option1" v-for="opt in option1">{{opt}}</li>
                                 </ol>
                             </td>
                             <td>
-                                <button type="button" class="optionBtn" @click="controlOptions('add')">></button>
+                                <button type="button" class="optionBtn" @click="controlOptions('add')">추가 ></button>
                                 <br/>
-                                <button type="button" class="optionBtn" @click="controlOptions('remove')"><</button>
+                                <button type="button" class="optionBtn" @click="controlOptions('remove')">< 삭제</button>
                             </td>
                             <td>
                                 <ol class="optionSelectable selectable" id="optionSelectable2">
-                                    <li class="ui-widget-content" name="option2" data-value="1"></li>
-                                    <li class="ui-widget-content" name="option2" data-value="2"></li>
-                                    <li class="ui-widget-content" name="option2" data-value="3"></li>
-                                    <li class="ui-widget-content" name="option2" data-value="4"></li>
+                                    <li class="ui-widget-content" name="option2" data-value="1" v-for="opt in option2">{{opt}}</li>
                                 </ol>
                             </td>
                         </tr>
@@ -336,8 +312,4 @@
         </div>
     </div>
     <script src="resource/js/registerStudio.js"></script>
-</body>
-
-</html>
-
-</html>
+</template>

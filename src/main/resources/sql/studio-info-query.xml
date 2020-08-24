@@ -42,12 +42,12 @@
 				<result property="categoryId" column="category_id" />
 				<result property="categoryName" column="category_name" />
 		</association>
-		<association property="tag" javaType="list">
+<!-- 		<association property="tag" javaType="tag">
 			<id property="stuId" column="stu_id"/>
 				<result property="tagId" column="tag_id" />
 				<result property="tagName" column="tag_name"/>
 		</association>
-	</resultMap>
+ -->	</resultMap>
  		
  	<resultMap type="review" id="reviewRM">
 		<result property="reviewId" column="review_id" />

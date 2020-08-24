@@ -5,96 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="resource/css/registerStudio.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
-        input[type=text],
-        input[type=number],
-        select,
-        option,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
-        
-        label {
-            padding: 12px 12px 12px 0;
-            display: inline-block;
-        }
-        
-        input[type=submit],
-        button {
-            background-color: #747474;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-        }
-        
-        input[type=submit]:hover,
-        button:hover {
-            background-color: #353535;
-        }
-        
-        .container {
-            margin: 0 auto;
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 20px;
-        }
-        
-        .col-25 {
-            float: left;
-            text-align: "right";
-            width: 25%;
-            margin-top: 6px;
-        }
-        
-        .col-75 {
-            float: left;
-            width: 75%;
-            margin-top: 6px;
-        }
-        
-        .col-space {
-            padding-left: 20px;
-        }
-        
-        #agreeTable a:link,
-        #agreeTable a:visited {
-            color: #353535;
-        }
-        /* Clear floats after the columns */
-        
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-        /* 반응형 : 너비 950px 이하 */
-        
-        @media screen and (max-width: 950px) {
-            .col-25,
-            .col-75,
-            input[type=submit] {
-                width: 100%;
-                margin-top: 0;
-            }
-            .col-space {
-                padding-left: 0;
-            }
-        }
-    </style>
+    <script>
+    </script>
 </head>
 
 <body>
@@ -126,7 +45,7 @@
                     <label for="description">스튜디오 소개</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="description" name="description" v-model="studio.description" style="height:100px"></textarea>
+                    <textarea id="description" name="description" v-model="studio.description"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -134,7 +53,7 @@
                     <label for="rule">이용 수칙</label>
                 </div>
                 <div class="col-75">
-                    <textarea id="rule" name="rule" v-model="studio.rule" style="height:100px"></textarea>
+                    <textarea id="rule" name="rule" v-model="studio.rule"></textarea>
                 </div>
             </div>
             <div class="row">
@@ -150,14 +69,17 @@
                 <div class="col-25">
                     <label for="tag">태그</label>
                 </div>
-                <div class="col-25">
-                    <input type="text" name="tag" placeholder="#">
+                <div class="col-25 tag">
+                    <label id='hashtag1'>#</label>
+                    <input type="text" name="tag" style="text-indent:10px;">
                 </div>
-                <div class="col-25">
-                    <input type="text" name="tag" placeholder="#">
+                <div class="col-25 tag">
+                    <label id='hashtag2'>#</label>
+                    <input type="text" name="tag" style="text-indent:10px;">
                 </div>
-                <div class="col-25">
-                    <input type="text" name="tag" placeholder="#">
+                <div class="col-25 tag">
+                    <label id='hashtag3'>#</label>
+                    <input type="text" name="tag" style="text-indent:10px;">
                 </div>
             </div>
             <div class="row">
@@ -166,7 +88,9 @@
                 </div>
                 <div class="col-75">
                     <!-- 주소 처리 -->
-                    <input type="text" id="address" name="address" v-model="studio.mainImg" required>
+                    <span style="padding-right:50px;">
+                    <input type="text" id="address" name="address" v-model="studio.address" required>
+                    </span>
                     <button type="button">찾기</button>
                 </div>
             </div>
@@ -190,7 +114,7 @@
                 </div>
                 <div class="col-75">
                     <!-- 파일 업로드 -->
-                    <input type="text" id="cadImg" name="cadImg" v-model="studio.cadImg" required>
+                    <input type="text" id="cadImg" name="cadImg" v-model="studio.cadImg">
                 </div>
             </div>
             <div class="row">
@@ -198,7 +122,7 @@
                     <label for="unitPrice">시간당 대여료</label>
                 </div>
                 <div class="col-25">
-                    <input type="text" id="unitPrice" name="unitPrice" v-model="studio.studioFilter.unitPrice">
+                    <input type="text" id="unitPrice" name="unitPrice" v-model="studio.studioFilter.unitPrice" required>
                 </div>
                 <div class="col-25 col-space">
                     <label for="excharge">인원 추가시 1인당 대여료</label>
@@ -233,6 +157,76 @@
             </div>
             <div class="row">
                 <div class="col-25">
+                    <label for="">운영 시간</label>
+                </div>
+                <div class="col-75">
+                    <!-- 시간표 -->
+                    <table>
+                        <tr>
+                            <td style="text-align: center;">월</td>
+                            <td style="text-align: center;">화</td>
+                            <td style="text-align: center;">수</td>
+                            <td style="text-align: center;">목</td>
+                            <td style="text-align: center;">금</td>
+                            <td style="text-align: center;">토</td>
+                            <td style="text-align: center;">일</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ol class="daySelectable selectable" name="mon">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="tue">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="wed">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="thu">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="fri">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="sat">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                            <td>
+                                <ol class="daySelectable selectable" name="sun">
+                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                        {{time}}시-{{time+1}}시
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
                     <label for="parkFlag">주차 가능</label>
                 </div>
                 <div class="col-25">
@@ -257,27 +251,19 @@
                     <table>
                         <tr>
                             <td>
-                                <select name="options" size="4" v-model="studio.studioFilter.options" multiple>
-                                <option>카메라</option>
-                                <option>조명</option>
-                                <option>반사판</option>
-                                <option>포토그래퍼</option>
-                            </select>
+                                <ol class="optionSelectable selectable" id="optionSelectable1">
+                                    <li class="ui-widget-content" name="option1" v-for="opt in option1">{{opt}}</li>
+                                </ol>
                             </td>
                             <td>
-                                <button type="button" @click="controlOptions('add')">></button>
+                                <button type="button" class="optionBtn" @click="controlOptions('add')">추가 ></button>
                                 <br/>
-                                <button type="button" @click="controlOptions('remove')"></button>
-                                <!-- 채은 : button앞에 '<' 붙어있어서 삭제. 
-                                    제가 한 부분은 지우셔도 됩니다.-->
+                                <button type="button" class="optionBtn" @click="controlOptions('remove')">< 삭제</button>
                             </td>
                             <td>
-                                <select size="4" multiple>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                                <option></option>
-                            </select>
+                                <ol class="optionSelectable selectable" id="optionSelectable2">
+                                    <li class="ui-widget-content" name="option2" data-value="1" v-for="opt in option2">{{opt}}</li>
+                                </ol>
                             </td>
                         </tr>
                     </table>
@@ -289,27 +275,27 @@
                 </div>
                 <div class="col-75">
                     <!-- 파일 업로드 -->
-                    <input type="text" id="portImg" name="portImg" v-model="studio.portImg" required>
+                    <input type="text" id="portImg" name="portImg" v-model="studio.portImg">
                 </div>
             </div>
             <div class="row">
                 <p>서비스 동의</p>
-                <table id="agreeTable" width="100%" style="padding-bottom: 20px; border-top: 1px solid #747474;">
-                    <tr style="background:white; height:80px;">
+                <table id="agreeTable" width="100%">
+                    <tr id="partAgree">
+                        <td>
+                            <input type="checkbox" name="checkAgree[]" value="0" @change="controlAgree('partCheck')">
+                            <a href="javascript:;" onclick="controlModal('showModalAgree', 'modalAgree1')">환불 규정 안내에 대한 동의</a>
+                        </td>
                         <td>
                             <input type="checkbox" name="checkAgree[]" value="1" @change="controlAgree('partCheck')">
-                            <a href="#">환불 규정 안내에 대한 동의</a>
+                            <a href="javascript:;" onclick="controlModal('showModalAgree', 'modalAgree2')">개인 정보 제 3자 제공 동의</a>
                         </td>
                         <td>
                             <input type="checkbox" name="checkAgree[]" value="2" @change="controlAgree('partCheck')">
-                            <a href="#">개인 정보 제 3자 제공 동의</a>
-                        </td>
-                        <td>
-                            <input type="checkbox" name="checkAgree[]" value="3" @change="controlAgree('partCheck')">
-                            <a href="#">개인 정보 수집 및 이용 동의</a>
+                            <a href="javascript:;" onclick="controlModal('showModalAgree', 'modalAgree3')">개인 정보 수집 및 이용 동의</a>
                         </td>
                     </tr>
-                    <tr style="background:#D5D5D5; height:50px;">
+                    <tr id="allAgree">
                         <td colspan="3" align="center">
                             <input type="checkbox" id="allCheckAgree" @change="controlAgree('allCheck')">
                             <span>전체동의</span>
@@ -322,93 +308,30 @@
             </div>
         </form>
     </div>
-    <script>
-        var app = new Vue({
-            el: '#app',
-            data() {
-                return {
-                    studio: {
-                        categoryId: '',
-                        name: '',
-                        description: '',
-                        rule: '',
-                        mainImg: '',
-                        portImg: '',
-                        cadImg: '',
-                        floor: '',
-                        studioFilter: {
-                            size: '',
-                            options: '',
-                            parking: '',
-                            unitPrice: '',
-                            defaultCapacity: '',
-                            excharge: '',
-                            address: '',
-                            maxCapacity: ''
-                        }
-                    }
-                }
-            },
-            methods: {
-                checkParkFlag(flag) {
-                    if (flag == 'yes') { //주차 가능(주차대수 입력 영역 보임)
-                        document.getElementById('parkAmount').setAttribute('style', 'display: block;');
-                        if (!this.parking) {
-                            alert("주차 가능 대수를 입력하세요.")
-                            this.$refs.parking.focus();
-                        }
-                    }
-                    if (flag == 'no') { // 주차 불가
-                        document.getElementById('parkAmount').setAttribute('style', 'display: none;');
-                    }
-                },
-                controlOptions(control) {
-                    if (control == 'add') { //옵션 추가
-                        alert("추가");
-                    }
-                    if (control == 'remove') { //옵션 제거
-                        alert("제거");
-                    }
-                },
-                controlAgree(control) {
-                    let agrees = document.getElementsByName('checkAgree[]');
-                    let allAgree = document.getElementById('allCheckAgree');
-                    if (control == 'allCheck') { //전체동의 선택시 모두 선택
-                        for (i = 0; i < agrees.length; i++) {
-                            agrees[i].checked = allAgree.checked;
-                        }
-                    }
-                    if (control == 'partCheck') {
-                        let count = 0;
-                        for (i = 0; i < agrees.length; i++) {
-                            if (agrees[i].checked == true) {
-                                count++;
-                            }
-                            if (agrees[i].checked == false) { //부분동의를 하나라도 선택 해제시 전체동의 또한 선택 해제
-                                allAgree.checked = false;
-                                break;
-                            }
-                        }
-                        if (count == 3) { //부분동의를 모두 선택시 전체동의 또한 선택
-                            allAgree.checked = true;
-                        }
-                    }
-                },
-                addStudio() {
-                    //스튜디오 등록
-                    axios
-                        .post('http://127.0.0.1:7777/studio', this.studio)
-                        .then(function(response) {
-                            console.log(response.data)
-                            alert(`등록되셨습니다.`)
-                            location.href = "./test.html"
-                        }, function() {
-                            console.log('failed')
-                        })
-                }
-            }
-        })
-    </script>
+    <!-- Modal : 환불 규정 안내에 대한 동의 -->
+    <div id="modalAgree1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="controlModal('hideModalAgree', 'modalAgree1')">&times;</span>
+            <p>환불 규정 안내에 대한 동의</p>
+        </div>
+    </div>
+    <!-- Modal : 개인 정보 제 3자 제공 동의 -->
+    <div id="modalAgree2" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="controlModal('hideModalAgree', 'modalAgree2')">&times;</span>
+            <p>개인 정보 제 3자 제공 동의</p>
+        </div>
+    </div>
+    <!-- Modal : 개인 정보 수집 및 이용 동의 -->
+    <div id="modalAgree3" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="controlModal('hideModalAgree', 'modalAgree3')">&times;</span>
+            <p>개인 정보 수집 및 이용 동의</p>
+        </div>
+    </div>
+    <script src="resource/js/registerStudio.js"></script>
 </body>
+
+</html>
 
 </html>

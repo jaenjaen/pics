@@ -1,5 +1,4 @@
 var count = 0;
-var option_list = [];
 var option_left = [];
 var option_right = [];
 var app = new Vue({
@@ -17,7 +16,7 @@ var app = new Vue({
                 floor: '',
                 studioFilter: {
                     size: '',
-                    options: '',
+                    options: this.option2,
                     parking: '',
                     unitPrice: '',
                     defaultCapacity: '',
@@ -29,7 +28,9 @@ var app = new Vue({
             },
             timePerDay: [
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
-            ]
+            ],
+            option1: ['카메라', '조명', '반사판', '포토그래퍼'],
+            option2: ['', '', '', '']
         }
     },
     methods: {
@@ -45,40 +46,36 @@ var app = new Vue({
             }
         },
         controlOptions(control) {
-            var option1 = document.getElementsByName('option1');
-            var option2 = document.getElementsByName('option2');
-            var list_option1 = [];
-            var list_option2 = [];
-            var emptyIndex = 0;
             if (control == 'add') { //옵션 추가
-                for (i = 0; i < option1.length; i++) { //option1 영역의 내용을 리스트에 추가
-                    list_option1.push(option1[i].innerHTML);
-                }
-                for (i = 0; i < option1.length; i++) {
-                    var value = option1[i].innerHTML;
+                for (i = 0; i < this.option1.length; i++) {
+                    if (this.option1[i] === '') break;
                     for (j = 0; j < option_left.length; j++) {
-                        if (option_left[j] == value) {
-                            list_option1.push(value);
+                        for (k = 0; k < this.option2.length; k++) {
+                            if (this.option1[i] === option_left[j] && this.option2[k] === '') {
+                                this.option2[k] = this.option1.splice(i, 1)[0];
+                            }
                         }
+
                     }
-                }
-                console.log(list_option1);
-                for (i = 0; i < option2.length; i++) {
-                    emptyIndex = i;
-                    var value = option2[i].innerHTML;
-                    if (value == '') break; //비어있는 경우
-                    for (j = 0; j < option_left.length; j++) {
-                        if (option_left[0] == value) { //중복 검사해서 같을 경우 중복 제거
-                            option_left.splice(0, 1);
-                        }
-                    }
-                }
-                for (i = 0; i < option_left.length; i++) {
-                    option2[emptyIndex++].innerHTML = option_left[i];
                 }
             }
             if (control == 'remove') { //옵션 제거
-                alert("제거");
+                for (i = 0; i < this.option2.length; i++) {
+                    if (this.option2[i] === '') break;
+                    for (j = 0; j < option_right.length; j++) {
+                        for (k = 0; k < this.option1.length; k++) {
+                            if (this.option2[i] === option_right[j] && this.option1[k] === '') {
+                                this.option1[k] = this.option2.splice(i, 1)[0];
+                            }
+                        }
+                    }
+                }
+            }
+            while (this.option1.length < 4) {
+                this.option1.push('');
+            }
+            while (this.option2.length < 4) {
+                this.option2.push('');
             }
         },
         controlAgree(control) {
@@ -206,7 +203,7 @@ $(function() {
         .on("selectablestop", function() {
             let temp = []
             $('#optionSelectable2 .ui-selected').each(function() {
-                temp.push($(this).data('value'));
+                temp.push($(this).html());
             });
             option_right = temp;
         });

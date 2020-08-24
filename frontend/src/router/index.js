@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import StudioSearch from "../components/StudioSearch.vue"
-
+import CustomerLogin from "../views/CustomerLogin.vue";
+import CompanyLogin from "../views/CompanyLogin.vue";
 Vue.use(VueRouter);
 
 const routes = [{
@@ -23,6 +24,14 @@ const routes = [{
         path: "/studioSearch",
         name: "studioSearch",
         component: StudioSearch
+    }, {
+        path: "/customerlogin",
+        name: "customerlogin",
+        component: CustomerLogin
+    }, {
+        path: "/companylogin",
+        name: "companylogin",
+        component: CompanyLogin
     }
 ];
 

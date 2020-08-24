@@ -129,21 +129,18 @@
 			</otherwise>	
 		</choose>
 		</where>
-		<!-- 정렬  0최신순: 1:인기오름차순, 2: 인기내림차순, 3: 가격오름차순, 4: 가격내림차순 -->
-		<if test="orderCon == 0">
-			ORDER BY s.stu_id DESC;
-		</if>
+		<!-- 정렬  1:인기순(기본), 2: 가격내림차순, 3: 가격오름차순  4: 평점순 -->
 		<if test="orderCon == 1">
-			ORDER BY res.count ASC;
+			ORDER BY res.count DESC;
 		</if>
 		<if test="orderCon == 2">
-			ORDER BY res.count DESC;
+			ORDER BY f.unit_price DESC;
 		</if>
 		<if test="orderCon == 3">
 			ORDER BY f.unit_price ASC;
 		</if>
 		<if test="orderCon == 4">
-			ORDER BY f.unit_price DESC;
+			ORDER BY rv.avg DESC;
 		</if>
 	</select>
 	

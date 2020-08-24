@@ -26,12 +26,17 @@ public class Reservation {
 		this.totalPeople = totalPeople;
 	}
 
-	public Reservation(Customer customer,  int stuId, String startDate, String endDate) {
+	public Reservation(int stuId, Customer customer,  String startDate, String endDate, int totalPrice,
+			String resDate, int totalPeople) {
 		this.stuId = stuId;
 		this.customer = customer;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		}
+		this.totalPrice = totalPrice;
+		this.resDate = resDate;
+		this.totalPeople = totalPeople;
+	}
+
 
 	public int getResId() {
 		return resId;

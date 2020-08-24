@@ -1,8 +1,9 @@
 /* basic style */
 
 body {
+    margin: 5% 5% 5% 5%;
     width: 80%;
-    height: 100%;
+    padding: 20px;
 }
 
 #main-images-section {
@@ -16,7 +17,7 @@ article {
 }
 
 aside {
-    width: 30%;
+    width: 35%;
     margin-left: 5%;
     float: left;
     border: 1px solid gray;
@@ -45,19 +46,12 @@ aside {
     height: 550px;
 }
 
-._uk27cm {
-    position: absolute !important;
-    left: 0px !important;
-    top: 100% !important;
-    z-index: 1 !important;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px !important;
-    margin-top: 12px !important;
-    background: rgb(255, 255, 255) !important;
-    border-width: 1px !important;
-    border-style: solid !important;
-    border-color: rgb(176, 176, 176) !important;
-    border-image: initial !important;
-    border-radius: 12px !important;
-    overflow: hidden !important;
-    padding: 8px 24px !important;
+
+/* 플로팅 예약 창 */
+
+#reservation-floating-banner {
+    background-color: #F0F0F0;
+    position: absolute;
+    width: 25%;
+    padding: 3px 10px
 }

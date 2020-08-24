@@ -17,13 +17,13 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	private final String NS = "StudioReserveMapper.";
 
 	@Override
-	public ArrayList<ExceptionDate> getExceptionDate(Studio studio) {
-		return (ArrayList) sqlSession.selectList(NS+"getExceptionDate", studio);
+	public ArrayList<ExceptionDate> getExceptionDate(int stuId) {
+		return (ArrayList) sqlSession.selectList(NS+"getExceptionDate", stuId);
 	}
 
 	@Override
-	public ArrayList<RepeatDate> getRepeatDate(Studio studio) {
-		return (ArrayList) sqlSession.selectList(NS+"getRepeatDate", studio);
+	public ArrayList<RepeatDate> getRepeatDate(int stuId) {
+		return (ArrayList) sqlSession.selectList(NS+"getRepeatDate", stuId);
 	}
 
 	@Override

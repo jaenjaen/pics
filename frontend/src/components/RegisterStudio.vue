@@ -1,4 +1,5 @@
 <template>
+<div>
 <h2>스튜디오 등록</h2>
     <div class="container">
         <form id="app" method="post" @submit.prevent="addStudio">
@@ -156,49 +157,49 @@
                         <tr>
                             <td>
                                 <ol class="daySelectable selectable" name="mon">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
                                         {{time}}시-{{time+1}}시
                                     </li>
                                 </ol>
                             </td>
                             <td>
                                 <ol class="daySelectable selectable" name="tue">
-                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
                                         {{time}}시-{{time+1}}시
                                     </li>
                                 </ol>
                             </td>
                             <td>
                                 <ol class="daySelectable selectable" name="wed">
-                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
                                         {{time}}시-{{time+1}}시
                                     </li>
                                 </ol>
                             </td>
                             <td>
                                 <ol class="daySelectable selectable" name="thu">
-                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
                                         {{time}}시-{{time+1}}시
                                     </li>
                                 </ol>
                             </td>
                             <td>
                                 <ol class="daySelectable selectable" name="fri">
-                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
                                         {{time}}시-{{time+1}}시
                                     </li>
                                 </ol>
                             </td>
                             <td>
                                 <ol class="daySelectable selectable" name="sat">
-                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
                                         {{time}}시-{{time+1}}시
                                     </li>
                                 </ol>
                             </td>
                             <td>
                                 <ol class="daySelectable selectable" name="sun">
-                                    <li class="ui-widget-content" v-for="time in timePerDay">
+                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
                                         {{time}}시-{{time+1}}시
                                     </li>
                                 </ol>
@@ -234,17 +235,17 @@
                         <tr>
                             <td>
                                 <ol class="optionSelectable selectable" id="optionSelectable1">
-                                    <li class="ui-widget-content" name="option1" v-for="opt in option1">{{opt}}</li>
+                                    <li class="ui-widget-content" name="option1" v-for="(opt, index) in option1" :key="index">{{opt}}</li>
                                 </ol>
                             </td>
                             <td>
                                 <button type="button" class="optionBtn" @click="controlOptions('add')">추가 ></button>
                                 <br/>
-                                <button type="button" class="optionBtn" @click="controlOptions('remove')">< 삭제</button>
+                                <button type="button" class="optionBtn" @click="controlOptions('remove')">삭제</button>
                             </td>
                             <td>
                                 <ol class="optionSelectable selectable" id="optionSelectable2">
-                                    <li class="ui-widget-content" name="option2" data-value="1" v-for="opt in option2">{{opt}}</li>
+                                    <li class="ui-widget-content" name="option2" v-for="(opt, index) in option2" :key="index">{{opt}}</li>
                                 </ol>
                             </td>
                         </tr>
@@ -311,5 +312,10 @@
             <p>개인 정보 수집 및 이용 동의</p>
         </div>
     </div>
-    <script src="resource/js/registerStudio.js"></script>
+</div>
 </template>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+import RegsiterStudioJS from '../assets/js/RegisterStudio.js';
+</script>

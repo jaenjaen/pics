@@ -1,7 +1,11 @@
+import axios from "axios";
+import $ from "jquery";
+import 'jquery-ui';
+
 var count = 0;
 var option_left = [];
 var option_right = [];
-var app = new Vue({
+export default {
     el: '#app',
     data() {
         return {
@@ -16,7 +20,7 @@ var app = new Vue({
                 floor: '',
                 studioFilter: {
                     size: '',
-                    options: this.option2,
+                    options: '',
                     parking: '',
                     unitPrice: '',
                     defaultCapacity: '',
@@ -47,10 +51,10 @@ var app = new Vue({
         },
         controlOptions(control) {
             if (control == 'add') { //옵션 추가
-                for (i = 0; i < this.option1.length; i++) {
+                for (let i = 0; i < this.option1.length; i++) {
                     if (this.option1[i] === '') break;
-                    for (j = 0; j < option_left.length; j++) {
-                        for (k = 0; k < this.option2.length; k++) {
+                    for (let j = 0; j < option_left.length; j++) {
+                        for (let k = 0; k < this.option2.length; k++) {
                             if (this.option1[i] === option_left[j] && this.option2[k] === '') {
                                 this.option2[k] = this.option1.splice(i, 1)[0];
                             }
@@ -60,10 +64,10 @@ var app = new Vue({
                 }
             }
             if (control == 'remove') { //옵션 제거
-                for (i = 0; i < this.option2.length; i++) {
+                for (let i = 0; i < this.option2.length; i++) {
                     if (this.option2[i] === '') break;
-                    for (j = 0; j < option_right.length; j++) {
-                        for (k = 0; k < this.option1.length; k++) {
+                    for (let j = 0; j < option_right.length; j++) {
+                        for (let k = 0; k < this.option1.length; k++) {
                             if (this.option2[i] === option_right[j] && this.option1[k] === '') {
                                 this.option1[k] = this.option2.splice(i, 1)[0];
                             }
@@ -78,18 +82,28 @@ var app = new Vue({
                 this.option2.push('');
             }
         },
+        controlModal(cmd, modalId) {
+            //Modal 띄우고 끄기
+            let modal = document.getElementById(modalId);
+            if (cmd == 'showModalAgree') {
+                modal.style.display = "block";
+            }
+            if (cmd == 'hideModalAgree') {
+                modal.style.display = "none";
+            }
+        },
         controlAgree(control) {
             let agrees = document.getElementsByName('checkAgree[]');
             let allAgree = document.getElementById('allCheckAgree');
             if (control == 'allCheck') { //전체동의 선택시 모두 선택
-                for (i = 0; i < agrees.length; i++) {
+                for (let i = 0; i < agrees.length; i++) {
                     agrees[i].checked = allAgree.checked;
                 }
                 count = 3;
             }
             if (control == 'partCheck') {
                 count = 0;
-                for (i = 0; i < agrees.length; i++) {
+                for (let i = 0; i < agrees.length; i++) {
                     if (agrees[i].checked == true) {
                         count++;
                     }
@@ -113,7 +127,7 @@ var app = new Vue({
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
             let tags = document.getElementsByName('tag');
             let taglist = '';
-            for (i = 0; i < tags.length; i++) {
+            for (let i = 0; i < tags.length; i++) {
                 if (tags[i].value == '') continue;
                 taglist += tags[i].value + '#';
             }
@@ -147,7 +161,7 @@ var app = new Vue({
                 })
         }
     }
-})
+}
 
 //selectable
 $(function() {
@@ -208,14 +222,3 @@ $(function() {
             option_right = temp;
         });
 });
-
-function controlModal(cmd, modalId) {
-    //Modal 띄우고 끄기
-    let modal = document.getElementById(modalId);
-    if (cmd == 'showModalAgree') {
-        modal.style.display = "block";
-    }
-    if (cmd == 'hideModalAgree') {
-        modal.style.display = "none";
-    }
-}

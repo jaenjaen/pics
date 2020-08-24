@@ -47,20 +47,34 @@ var app = new Vue({
         controlOptions(control) {
             var option1 = document.getElementsByName('option1');
             var option2 = document.getElementsByName('option2');
+            var list_option1 = [];
+            var list_option2 = [];
             var emptyIndex = 0;
             if (control == 'add') { //옵션 추가
+                for (i = 0; i < option1.length; i++) { //option1 영역의 내용을 리스트에 추가
+                    list_option1.push(option1[i].innerHTML);
+                }
+                for (i = 0; i < option1.length; i++) {
+                    var value = option1[i].innerHTML;
+                    for (j = 0; j < option_left.length; j++) {
+                        if (option_left[j] == value) {
+                            list_option1.push(value);
+                        }
+                    }
+                }
+                console.log(list_option1);
                 for (i = 0; i < option2.length; i++) {
                     emptyIndex = i;
                     var value = option2[i].innerHTML;
                     if (value == '') break; //비어있는 경우
-                    for (j = 0; j < option_left.length; i++) {
-                        if (option_left[j] == value) { //중복 검사해서 같을 경우 중복 제거
-                            option_left = option_left.splice(j, 1);
+                    for (j = 0; j < option_left.length; j++) {
+                        if (option_left[0] == value) { //중복 검사해서 같을 경우 중복 제거
+                            option_left.splice(0, 1);
                         }
                     }
                 }
-                for (i = emptyIndex; i < option_left.length; i++) {
-                    option2[i].innerHTML = option_left[i];
+                for (i = 0; i < option_left.length; i++) {
+                    option2[emptyIndex++].innerHTML = option_left[i];
                 }
             }
             if (control == 'remove') { //옵션 제거
@@ -108,7 +122,7 @@ var app = new Vue({
             }
             this.tag = taglist;
 
-            /* 주차가능 입력시 주차대수 필수 */
+            /* 주차가능 체크시 주차대수 입력 필수 */
             var parkAble = document.getElementsByName('parkFlag')[1].checked;
             var parking = document.getElementById('parking').value;
             if (parkAble == true) {

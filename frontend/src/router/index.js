@@ -37,7 +37,14 @@ const routes = [{
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
-    }
+    },
+    // {
+    //     path: "/studioInfo",
+    //     name: "studioInfo",
+    //     component: StudioInfo
+    // }
+
+
 ];
 
 const router = new VueRouter({

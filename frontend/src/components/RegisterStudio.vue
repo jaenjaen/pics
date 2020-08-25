@@ -1,4 +1,5 @@
 <style src="../assets/css/RegisterStudio.css"></style>
+<script type="text/javascript" src="https://unpkg.com/frs-hide-scrollbar/dist/FRS-hide-scrollbar.umd.js"></script>
 <template>
 <div id="app">
     <div class="container">
@@ -157,53 +158,53 @@
                         </tr>
                         <tr>
                             <td>
-                                <ol class="daySelectable selectable" name="mon">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
-                                        {{time}}시-{{time+1}}시
-                                    </li>
-                                </ol>
+                                <select multiple size='24' id="mon" name="mon" @change="selectDay('mon')">
+                                    <option class="daySelect" v-for="time in timePerDay" :key="time">
+                                         {{time}}시-{{time+1}}시
+                                    </option>
+                                </select>
                             </td>
                             <td>
-                                <ol class="daySelectable selectable" name="tue">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
-                                        {{time}}시-{{time+1}}시
-                                    </li>
-                                </ol>
+                                <select multiple id="tue" name="tue" class="daySelect">
+                                    <option v-for="time in timePerDay" :key="time">
+                                         {{time}}시-{{time+1}}시
+                                    </option>
+                                </select>
                             </td>
                             <td>
-                                <ol class="daySelectable selectable" name="wed">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
-                                        {{time}}시-{{time+1}}시
-                                    </li>
-                                </ol>
+                                <select multiple id="wed" name="wed" class="daySelect">
+                                    <option v-for="time in timePerDay" :key="time">
+                                         {{time}}시-{{time+1}}시
+                                    </option>
+                                </select>
                             </td>
                             <td>
-                                <ol class="daySelectable selectable" name="thu">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
-                                        {{time}}시-{{time+1}}시
-                                    </li>
-                                </ol>
+                                <select multiple id="thu" name="thu" class="daySelect">
+                                    <option v-for="time in timePerDay" :key="time">
+                                         {{time}}시-{{time+1}}시
+                                    </option>
+                                </select>
                             </td>
                             <td>
-                                <ol class="daySelectable selectable" name="fri">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
-                                        {{time}}시-{{time+1}}시
-                                    </li>
-                                </ol>
+                                <select multiple id="fri" name="fri" class="daySelect">
+                                    <option v-for="time in timePerDay" :key="time">
+                                         {{time}}시-{{time+1}}시
+                                    </option>
+                                </select>
                             </td>
                             <td>
-                                <ol class="daySelectable selectable" name="sat">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
-                                        {{time}}시-{{time+1}}시
-                                    </li>
-                                </ol>
+                                <select multiple id="sat" name="sat" class="daySelect">
+                                    <option v-for="time in timePerDay" :key="time">
+                                         {{time}}시-{{time+1}}시
+                                    </option>
+                                </select>
                             </td>
                             <td>
-                                <ol class="daySelectable selectable" name="sun">
-                                    <li class="ui-widget-content" v-for="(time, index) in timePerDay" :key="index">
-                                        {{time}}시-{{time+1}}시
-                                    </li>
-                                </ol>
+                                <select multiple id="sun" name="sun" class="daySelect">
+                                    <option v-for="time in timePerDay" :key="time">
+                                         {{time}}시-{{time+1}}시
+                                    </option>
+                                </select>
                             </td>
                         </tr>
                     </table>

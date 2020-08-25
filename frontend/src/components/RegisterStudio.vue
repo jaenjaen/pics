@@ -158,8 +158,8 @@
                         </tr>
                         <tr>
                             <td>
-                                <select multiple size='24' id="mon" name="mon" @change="selectDay('mon')">
-                                    <option class="daySelect" v-for="time in timePerDay" :key="time">
+                                <select multiple size='24' id="mon" name="mon" @change="selectDay('mon')" v-for="time in timePerDay" :key="time">
+                                    <option class="daySelect" value="time">
                                          {{time}}시-{{time+1}}시
                                     </option>
                                 </select>

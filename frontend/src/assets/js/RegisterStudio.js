@@ -82,7 +82,7 @@ export default {
                 }
             }
             //다시 생각해서 짜기...
-            for (let i = 1; i < temp_list.length; i++) {
+            for (let i = front + 1; i < temp_list.length; i++) {
                 if (!temp_list[i].selected) continue; //선택되지 않은 건 제낌
                 if (i - front == 1) { //연속적으로 이어지는 시간대일 경우
                     front = i;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import Treeselect from '@riophae/vue-treeselect';
+import Treeselect from '@riophae/vue-treeselect'; //https://github.com/riophae/vue-treeselect
 import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 export default {
@@ -25,11 +25,28 @@ export default {
                     address: '',
                     maxCapacity: ''
                 },
-                tag: ''
+                schedule: {
+                    repeatDate: [{
+                        weekDate: '',
+                        time: ''
+                    }]
+                },
+                tag: [{
+                    tagName: ''
+                }]
             },
             timePerDay: [
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
             ],
+            week: [{
+                mon: '',
+                tue: '',
+                wed: '',
+                thu: '',
+                fri: '',
+                sat: '',
+                sun: ''
+            }],
             optionList: [{
                 id: 'a',
                 label: '카메라'
@@ -49,6 +66,51 @@ export default {
         }
     },
     methods: {
+        //선택 취소할 수 있게 해야 함...
+        selectDay(day) {
+            /* 요일 공통 알고리즘 */
+            let time_list = '';
+            let start = -1; //시작시간
+            let front = 0;
+            let temp_list = document.getElementById(day);
+            for (let i = 0; i < temp_list.length; i++) {
+                if (temp_list[i].selected) {
+                    start = i; //시작 인덱스 할당
+                    front = i; //앞 인덱스 할당
+                    time_list = start + '-';
+                    break;
+                }
+            }
+            //다시 생각해서 짜기...
+            for (let i = 1; i < temp_list.length; i++) {
+                if (!temp_list[i].selected) continue; //선택되지 않은 건 제낌
+                if (i - front == 1) { //연속적으로 이어지는 시간대일 경우
+                    front = i;
+                }
+                if (i - front > 1) { //이어지지 않은 시간일 경우
+                    start = -1;
+                    front = i;
+                }
+            }
+
+            /* 요일별 바인딩 */
+            switch (day) {
+                case ('mon'):
+                    this.week.mon = time_list;
+                case ('tue'):
+                    this.week.tue = time_list;
+                case ('wed'):
+                    this.week.wed = time_list;
+                case ('thu'):
+                    this.week.thu = time_list;
+                case ('fri'):
+                    this.week.frii = time_list;
+                case ('sat'):
+                    this.week.sat = time_list;
+                case ('sun'):
+                    this.week.sun = time_list;
+            }
+        },
         checkParkFlag(flag) {
             if (flag == 'yes') { //주차 가능(주차대수 입력 영역 보임)
                 document.getElementById('parkAmount').setAttribute('style', 'display: block;');

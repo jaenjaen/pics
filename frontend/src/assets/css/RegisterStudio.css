@@ -197,13 +197,7 @@
             .tag {
                 padding-right: 0px;
             }
-            .optionSelectable li {
-                width: 11em;
-            }
-            .daySelectable li {
-                padding-top: 12px;
-                font-size: 9px;
-                text-align: center;
-                width: 55px;
+            .daySelect::-webkit-scrollbar {
+                display: none;
             }
         }

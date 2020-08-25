@@ -5,6 +5,7 @@ import StudioSearch from "../components/StudioSearch.vue"
 import CustomerLogin from "../views/CustomerLogin.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import RegisterStudio from "../components/RegisterStudio.vue";
+import Test from "../components/Test.vue";
 Vue.use(VueRouter);
 
 const routes = [{
@@ -37,6 +38,11 @@ const routes = [{
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
+    },
+    {
+        path: "/test",
+        name: "test",
+        component: Test
     }
 ];
 

@@ -6,6 +6,7 @@ import CustomerLogin from "../views/CustomerLogin.vue";
 import CompanyLogin from "../views/CompanyLogin.vue"
 import RegisterStudio from "../components/RegisterStudio.vue";
 import StudioInfo from "../components/StudioInfo.vue";
+
 Vue.use(VueRouter);
 
 const routes = [{
@@ -47,8 +48,6 @@ const routes = [{
         name: "studioInfo",
         component: StudioInfo
     }
-
-
 ];
 
 const router = new VueRouter({

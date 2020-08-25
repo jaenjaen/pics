@@ -1,7 +1,10 @@
-#view {
+.publicSpace {
+    background-color: #ffffff;
     margin: auto;
-    width: 800px;
+    width: 768px;
     text-align: center;
+    border-radius: 10px;
+    padding: 5% 0 5% 0;
 }
 
 .grid {
@@ -137,17 +140,14 @@ input[type='submit'] {
     padding-right: 1.25rem;
 }
 
-.login input[type='password'],
-.login input[type='text'] {
+.login input {
     background-color: #F5F5F5;
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 }
 
-.login input[type='password']:focus,
-.login input[type='password']:hover,
-.login input[type='text']:focus,
-.login input[type='text']:hover {
+.login input:focus,
+.login input:hover {
     background-color: #EAF6FB;
 }
 

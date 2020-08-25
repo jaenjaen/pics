@@ -38,15 +38,7 @@ const routes = [{
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
-    },
-    {
-        path: "/test",
-        name: "test",
-        component: Test >>>
-            >>>
-            >
-            yeony
-    } {
+    }, {
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio

@@ -6,6 +6,7 @@ import CustomerLogin from "../views/CustomerLogin.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import StudioInfo from "../components/StudioInfo.vue";
+import Register from "../views/Register.vue";
 
 Vue.use(VueRouter);
 
@@ -45,9 +46,11 @@ const routes = [{
         path: "/studioInfo",
         name: "studioInfo",
         component: StudioInfo
+    }, {
+        path: "/register",
+        name: "register",
+        component: Register
     }
-
-
 ];
 
 const router = new VueRouter({

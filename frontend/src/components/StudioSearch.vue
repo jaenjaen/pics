@@ -149,9 +149,6 @@ body {
   margin: auto;
 }
 
-#app div * {
-  margin-top: 20px;
-}
 
 strong {
   display: block;

@@ -5,8 +5,8 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/studioSearch">searchStudio</router-link> |
       <!-- <router-link to="/registerStudio">registerStudio</router-link> | -->
-      <router-link to="/customerlogin">login</router-link>
-      <router-link to="/studioInfo">studioInfo</router-link>
+      <router-link to="/customerlogin">login</router-link> |
+      <router-link to="/studioInfo">studioInfo</router-link> |
     </div>
     <router-view />
   </div>
@@ -19,6 +19,10 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+body {
+    background-color: #F5F5F5;
 }
 
 #nav {

@@ -11,8 +11,8 @@ export default {
 
 </script>
 <template>
-  <div class="customerLogin">
-      <LoginHeader/>
+  <div class="publicSpace">
+      <LoginHeader customerMode=true />
     <h1>고객로그인</h1>
   </div>
 </template>

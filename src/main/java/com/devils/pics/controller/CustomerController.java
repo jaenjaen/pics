@@ -13,13 +13,52 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devils.pics.domain.Customer;
-import com.devils.pics.service.CompanyService;
 import com.devils.pics.service.CustomerService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins={"*"})
 public class CustomerController {
 
 	@Autowired
-	private CompanyService compnayService;
+	private CustomerService customerService;
+	
+	@PostMapping("/customer")
+	public ResponseEntity registerCustomer(@RequestBody Customer customer) {
+		try {
+			customerService.registerCustomer(customer);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/customer/{custId}")
+	public ResponseEntity getCustomer(@PathVariable int custId) {
+		try {
+			Customer cust = customerService.getCustomer(custId);
+			return new ResponseEntity(cust,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PutMapping("/customer")
+	public ResponseEntity updateCustomer(@RequestBody Customer customer) {
+		try {
+			customerService.updateCustomer(customer);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@DeleteMapping("/customer/{custId}")
+	public ResponseEntity deleteCustomer(@PathVariable int custId) {
+		try {
+			customerService.deleteCustomer(custId);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
 }

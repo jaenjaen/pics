@@ -30,6 +30,8 @@
         "eslint-plugin-vue": "^6.2.2",
         "expose-loader": "^1.0.0",
         "prettier": "^1.19.1",
+        "stylus": "^0.54.8",
+        "stylus-loader": "^3.0.2",
         "vue-template-compiler": "^2.6.11"
     },
     "eslintConfig": {

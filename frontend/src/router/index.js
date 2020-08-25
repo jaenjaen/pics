@@ -1,10 +1,12 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import StudioSearch from "../components/StudioSearch.vue"
+import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
-import RegisterStudio from "../components/RegisterStudio.vue";
+// import RegisterStudio from "../components/RegisterStudio.vue";
+import StudioInfo from "../components/StudioInfo.vue";
+
 Vue.use(VueRouter);
 
 const routes = [{
@@ -33,16 +35,17 @@ const routes = [{
         path: "/companylogin",
         name: "companylogin",
         component: CompanyLogin
-    }, {
-        path: "/registerStudio",
-        name: "registerStudio",
-        component: RegisterStudio
-    },
+    }
     // {
-    //     path: "/studioInfo",
-    //     name: "studioInfo",
-    //     component: StudioInfo
-    // }
+    //     path: "/registerStudio",
+    //     name: "registerStudio",
+    //     component: RegisterStudio
+    // },
+    , {
+        path: "/studioInfo",
+        name: "studioInfo",
+        component: StudioInfo
+    }
 
 
 ];

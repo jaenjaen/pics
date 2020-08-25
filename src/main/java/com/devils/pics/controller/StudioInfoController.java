@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.devils.pics.domain.ExceptionDate;
+import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Review;
+import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.Tag;
 import com.devils.pics.service.StudioInfoService;
+import com.devils.pics.service.StudioReserveService;
 
 /*스튜디오 정보 로딩 flow
  * 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
@@ -26,12 +31,26 @@ import com.devils.pics.service.StudioInfoService;
 public class StudioInfoController {
 	@Autowired
 	private StudioInfoService studioInfoService;
-	
+
+	@Autowired
+	private StudioReserveService studioReserveService;
+
 	// 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
 	@GetMapping("/getStudioInfo/{stuId}")
 	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {	
 		try {
+		Schedule schedule=new Schedule();
+		ArrayList<ExceptionDate> exceptionDate=new ArrayList<ExceptionDate>(); 
+		ArrayList<RepeatDate> repeatDate=new ArrayList<RepeatDate>();
+		exceptionDate=studioReserveService.getExceptionDate(stuId);
+		repeatDate=studioReserveService.getRepeatDate(stuId);
+
+		schedule.setStuId(stuId);
+		schedule.setExceptionDate(exceptionDate);
+		schedule.setRepeatDate(repeatDate);
+
 		List<Studio> studioVO=studioInfoService.getStudioInfo(stuId);
+		studioVO.get(0).setSchedule(schedule);
 		return new ResponseEntity<List<Studio>>(studioVO,HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage()+"찾으시는 스튜디오가 없습니다");

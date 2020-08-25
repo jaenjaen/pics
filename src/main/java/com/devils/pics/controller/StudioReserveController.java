@@ -45,7 +45,6 @@ public class StudioReserveController {
 			Schedule schedule=new Schedule();
 			ArrayList<ExceptionDate> exceptionDate=new ArrayList<ExceptionDate>(); 
 			ArrayList<RepeatDate> repeatDate=new ArrayList<RepeatDate>(); 
-			/*Studio studio=studioInfoService.getStudioInfo(stuId);*/
 			exceptionDate=studioReserveService.getExceptionDate(stuId);
 			repeatDate=studioReserveService.getRepeatDate(stuId);
 			

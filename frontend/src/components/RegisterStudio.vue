@@ -314,7 +314,7 @@
     </div>
 </div>
 </template>
-<script>
+  <script>
 import axios from "axios";
 import $ from "jquery";
 import 'jquery-ui';

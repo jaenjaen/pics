@@ -42,24 +42,24 @@
                 <hr>
                 <div id="info-review-navigation">
                     <span><a href="#">상세보기</a></span>
-                    <span></span><a href="#">리뷰보기</a></span>
+                    <span><a href="#">리뷰보기</a></span>
                 </div>
                 <hr>
             </nav>
-            <article v-for="info in infos">
+            <article v-for="info in infos" v-bind:key="info">
                 <!-- ============== Title ==============  -->
                 <div class=" article-title-area">
                     <hr>
                     <h2>{{info.name}}</h2>
                     <div class="bookmark-check">
                         <span v-html="bookmark" role="button">
-                    <img></img>
+                    <img>
                     </span>
                     </div>
                     <div id="company-of-studio ">
                         <span><img :src="info.company.logoImg"/></span>&nbsp;<span>{{info.company.name}}</span>
                     </div>
-                    <ul class="tag-list" v-for="tag in tags">
+                    <ul class="tag-list" v-for="tag in tags" v-bind:key="tag">
                         <li style=list-style:none>#{{tag.tagName}}</li>
                     </ul>
                 </div>
@@ -123,7 +123,7 @@
                             </row>
                         </thead>
                         <tbody>
-                            <tr v-for="info in infos">
+                            <tr v-for="info in infos" v-bind:key="info">
                                 <td v-html="info.stuId "></td>
                                 <td v-html="info.comId "></td>
                                 <td v-html="info.categoryId "></td>
@@ -132,7 +132,7 @@
                         </tbody>
                     </table>
                     <div>
-                        <ul v-for="review in reviews ">
+                        <ul v-for="review in reviews" v-bind:key="review">
                             <li>
                                 <span>{{review.customer.email.trim()}}</span>
                                 <span>{{review.customer.job.trim()}}</span>
@@ -144,7 +144,7 @@
             </article>
 
             <!-- ============== Reservation ============== -->
-            <aside v-for="info in infos">
+            <aside v-for="info in infos" v-bind:key="info">
                 <div id="reservation-floating-banner">
                     <h2>예약하기</h2>
                     <form id=" reservation-form">
@@ -191,7 +191,7 @@ export default{
   },
     mounted() {
         axios
-            .get('http://127.0.0.1:7777/getStudioInfo')
+            .get('http://127.0.0.1:7777/getStudioInfo/10')
             .then(response => (this.infos = response.data))
             .catch(error => {
                 console.log(error);
@@ -206,21 +206,21 @@ export default{
                 this.errored = true
             })
         axios
-            .get('http://127.0.0.1:7777/getStudioReviews')
+            .get('http://127.0.0.1:7777/getStudioReviews/10')
             .then(response => (this.reviews = response.data))
             .catch(error => {
                 console.log(error);
                 this.errored = true
             })
         axios
-            .get('http://127.0.0.1:7777/getTags')
+            .get('http://127.0.0.1:7777/getTags/10')
             .then(response => (this.tags = response.data))
             .catch(error => {
                 console.log(error);
                 this.errored = true
             })
         axios
-            .get('http://127.0.0.1:7777/getSchedules')
+            .get('http://127.0.0.1:7777/getSchedules/10')
             .then(response => (this.schedule = response.data))
             .catch(error => {
                 console.log(error);

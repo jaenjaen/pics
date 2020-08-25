@@ -232,12 +232,12 @@
                     <label for="options">장비 및 옵션</label>
                 </div>
                 <div class="col-75">
-                    <v-select
-                        multiple
-                        class="select-style"
-                        placeholder="장비 및 옵션을 선택하세요."
-                        v-model="selected"
-                        :options="['카메라', '조명', '반사판', '포토그래퍼']"
+                    <treeselect
+                    :multiple="true"
+                    :options="optionList"
+                    :searchable="true"
+                    placeholder="장비 및 옵션을 검색하세요."
+                    v-model="studio.studioFilter.options"
                     />
                 </div>
             </div>
@@ -255,22 +255,22 @@
                 <table id="agreeTable" width="100%">
                     <tr id="partAgree">
                         <td id=checkAgree1>
-                            <input type="checkbox" name="checkAgree[]" value="0" @change="controlAgree('partCheck')">
+                            <input type="checkbox" name="checkAgree[]" value="0" @change="controlAgree('partCheck')">&nbsp;
                             <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree1')">환불 규정 안내에 대한 동의</a>
                         </td>
                         <td id=checkAgree2>
-                            <input type="checkbox" name="checkAgree[]" value="1" @change="controlAgree('partCheck')">
+                            <input type="checkbox" name="checkAgree[]" value="1" @change="controlAgree('partCheck')">&nbsp;
                             <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree2')">개인 정보 제 3자 제공 동의</a>
                         </td>
                         <td id=checkAgree3>
-                            <input type="checkbox" name="checkAgree[]" value="2" @change="controlAgree('partCheck')">
+                            <input type="checkbox" name="checkAgree[]" value="2" @change="controlAgree('partCheck')">&nbsp;
                             <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree3')">개인 정보 수집 및 이용 동의</a>
                         </td>
                     </tr>
                     <tr>
                         <td id="allAgree" colspan="3" align="center">
                             <input type="checkbox" id="allCheckAgree" @change="controlAgree('allCheck')">
-                            <span>전체동의</span>
+                            <span style="color:white">&nbsp;전체동의</span>
                         </td>
                     </tr>
                 </table>

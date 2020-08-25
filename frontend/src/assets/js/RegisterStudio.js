@@ -1,10 +1,9 @@
 import axios from "axios";
-import Vue from 'vue';
-import vSelect from 'vue-select'; /* https://vue-select.org/ */
-Vue.component('v-select', vSelect);
-import 'vue-select/dist/vue-select.css';
+import Treeselect from '@riophae/vue-treeselect';
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
 export default {
+    components: { Treeselect },
     data() {
         return {
             studio: {
@@ -18,7 +17,7 @@ export default {
                 floor: '',
                 studioFilter: {
                     size: '',
-                    options: '',
+                    options: null,
                     parking: '',
                     unitPrice: '',
                     defaultCapacity: '',
@@ -31,6 +30,19 @@ export default {
             timePerDay: [
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
             ],
+            optionList: [{
+                id: 'a',
+                label: '카메라'
+            }, {
+                id: 'b',
+                label: '조명',
+            }, {
+                id: 'c',
+                label: '반사판',
+            }, {
+                id: 'd',
+                label: '포토그래퍼',
+            }],
             selected: [],
             tagCount: 0,
             agreeCount: 0,

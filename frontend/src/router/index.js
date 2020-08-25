@@ -6,9 +6,6 @@ import CustomerLogin from "../views/CustomerLogin.vue";
 import CompanyLogin from "../views/CompanyLogin.vue"
 import RegisterStudio from "../components/RegisterStudio.vue";
 import StudioInfo from "../components/StudioInfo.vue";
-import Test from "../components/Test.vue";
-// import RegisterStudio from "../components/RegisterStudio.vue";
-// import StudioInfo from "../components/StudioInfo.vue";
 
 Vue.use(VueRouter);
 
@@ -37,8 +34,7 @@ const routes = [{
     }, {
         path: "/companylogin",
         name: "companylogin",
-        component: CompanyLogin <<
-            << << < HEAD
+        component: CompanyLogin
     }, {
         path: "/registerStudio",
         name: "registerStudio",
@@ -50,27 +46,8 @@ const routes = [{
     }, {
         path: "/studioInfo",
         name: "studioInfo",
-        component: StudioInfo ===
-            === =
+        component: StudioInfo
     }
-    // {
-    //     path: "/registerStudio",
-    //     name: "registerStudio",
-    //     component: RegisterStudio
-    // },
-    // , {
-    //     path: "/studioInfo",
-    //     name: "studioInfo",
-    //     component: StudioInfo
-    // }
-    , {
-        path: "/test",
-        name: "test",
-        component: Test >>>
-            >>> > origin / ice
-    }
-
-
 ];
 
 const router = new VueRouter({

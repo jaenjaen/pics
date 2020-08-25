@@ -1,6 +1,7 @@
 package com.devils.pics;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,8 @@ import com.devils.pics.service.CustomerService;
 import com.devils.pics.service.StudioInfoService;
 import com.devils.pics.service.StudioReserveService;
 
+import ch.qos.logback.core.subst.Token.Type;
+
 @SpringBootTest
 class StudioReserveTest {
 //	@Autowired
@@ -34,7 +37,8 @@ class StudioReserveTest {
 	private CustomerService customerService;
 	
 	@Test
-	void contextLoads() throws Exception {
+	void contextLoads() throws Exception {	
+
 //		String NS = "StudioReserveMapper.";
 //		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
 //		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
@@ -119,5 +123,6 @@ class StudioReserveTest {
 //			System.out.println(reserveService.reserve(reservation));
 //		}catch (NullPointerException e) {System.out.println("예약에 실패했습니다.");}
 
+		
 	}
 }

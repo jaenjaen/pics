@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +19,7 @@ import com.devils.pics.domain.Company;
 import com.devils.pics.service.CompanyService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins={"*"})
 public class CompanyController {
 
 	@Autowired
@@ -33,15 +35,15 @@ public class CompanyController {
 		}
 	}
 	
-	@GetMapping("/company?comId={comId}&password={password}")
-	public ResponseEntity loginCompany(@RequestParam("comId") String comId,@RequestParam("password") String password) {
+	@GetMapping("/company/{comId}/{password}")
+	public ResponseEntity loginCompany(@PathVariable String comId,@PathVariable String password) {
 		try {
 			Company company = new Company();
 			company.setComId(comId);
 			company.setPassword(password);
 			
 			Company comp = companyService.loginCompany(company);
-			return new ResponseEntity(comp,HttpStatus.OK);
+			return new ResponseEntity(comp, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}

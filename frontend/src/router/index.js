@@ -3,9 +3,14 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
-import CompanyLogin from "../views/CompanyLogin.vue";
+import CompanyLogin from "../views/CompanyLogin.vue"
 import RegisterStudio from "../components/RegisterStudio.vue";
+<<<<<<< HEAD
 import TempStudio from "../components/Temp_MoveToInfo.vue";
+=======
+import StudioInfo from "../components/StudioInfo.vue";
+import Register from "../views/Register.vue";
+>>>>>>> 5f1943977c43c78c8b68240dcc59c11ec6003b4c
 
 Vue.use(VueRouter);
 
@@ -42,6 +47,7 @@ const routes = [{
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
+<<<<<<< HEAD
     },
     {
         path: "/TempStudio/:stuId",
@@ -54,6 +60,21 @@ const routes = [{
     //     name: "studioInfo",
     //     component: StudioInfo
     // }
+=======
+    }, {
+        path: "/registerStudio",
+        name: "registerStudio",
+        component: RegisterStudio
+    }, {
+        path: "/studioInfo",
+        name: "studioInfo",
+        component: StudioInfo
+    }, {
+        path: "/register",
+        name: "register",
+        component: Register
+    }
+>>>>>>> 5f1943977c43c78c8b68240dcc59c11ec6003b4c
 ];
 
 const router = new VueRouter({

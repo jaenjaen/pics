@@ -1,12 +1,9 @@
 import axios from "axios";
-import $ from "jquery";
-import 'jquery-ui';
+import Treeselect from '@riophae/vue-treeselect';
+import '@riophae/vue-treeselect/dist/vue-treeselect.css';
 
-var count = 0;
-var option_left = [];
-var option_right = [];
 export default {
-    el: '#app',
+    components: { Treeselect },
     data() {
         return {
             studio: {
@@ -20,7 +17,7 @@ export default {
                 floor: '',
                 studioFilter: {
                     size: '',
-                    options: '',
+                    options: null,
                     parking: '',
                     unitPrice: '',
                     defaultCapacity: '',
@@ -33,53 +30,31 @@ export default {
             timePerDay: [
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
             ],
-            option1: ['카메라', '조명', '반사판', '포토그래퍼'],
-            option2: ['', '', '', '']
+            optionList: [{
+                id: 'a',
+                label: '카메라'
+            }, {
+                id: 'b',
+                label: '조명',
+            }, {
+                id: 'c',
+                label: '반사판',
+            }, {
+                id: 'd',
+                label: '포토그래퍼',
+            }],
+            selected: [],
+            tagCount: 0,
+            agreeCount: 0,
         }
     },
     methods: {
-        test() {
-            alert('테스트');
-        },
         checkParkFlag(flag) {
             if (flag == 'yes') { //주차 가능(주차대수 입력 영역 보임)
                 document.getElementById('parkAmount').setAttribute('style', 'display: block;');
             }
             if (flag == 'no') { // 주차 불가
                 document.getElementById('parkAmount').setAttribute('style', 'display: none;');
-            }
-        },
-        controlOptions(control) {
-            if (control == 'add') { //옵션 추가
-                for (let i = 0; i < this.option1.length; i++) {
-                    if (this.option1[i] === '') break;
-                    for (let j = 0; j < option_left.length; j++) {
-                        for (let k = 0; k < this.option2.length; k++) {
-                            if (this.option1[i] === option_left[j] && this.option2[k] === '') {
-                                this.option2[k] = this.option1.splice(i, 1)[0];
-                            }
-                        }
-
-                    }
-                }
-            }
-            if (control == 'remove') { //옵션 제거
-                for (let i = 0; i < this.option2.length; i++) {
-                    if (this.option2[i] === '') break;
-                    for (let j = 0; j < option_right.length; j++) {
-                        for (let k = 0; k < this.option1.length; k++) {
-                            if (this.option2[i] === option_right[j] && this.option1[k] === '') {
-                                this.option1[k] = this.option2.splice(i, 1)[0];
-                            }
-                        }
-                    }
-                }
-            }
-            while (this.option1.length < 4) {
-                this.option1.push('');
-            }
-            while (this.option2.length < 4) {
-                this.option2.push('');
             }
         },
         controlModal(cmd, modalId) {
@@ -99,39 +74,43 @@ export default {
                 for (let i = 0; i < agrees.length; i++) {
                     agrees[i].checked = allAgree.checked;
                 }
-                count = 3;
+                this.agreeCount = 3;
             }
             if (control == 'partCheck') {
-                count = 0;
+                this.agreeCount = 0;
                 for (let i = 0; i < agrees.length; i++) {
                     if (agrees[i].checked == true) {
-                        count++;
+                        this.agreeCount++;
                     }
                     if (agrees[i].checked == false) { //부분동의를 하나라도 선택 해제시 전체동의 또한 선택 해제
                         allAgree.checked = false;
                         break;
                     }
                 }
-                if (count == 3) { //부분동의를 모두 선택시 전체동의 또한 선택
+                if (this.agreeCount == 3) { //부분동의를 모두 선택시 전체동의 또한 선택
                     allAgree.checked = true;
                 }
             }
         },
         addStudio() {
-            /* 태그 1개 이상 입력 */
-            if (count < 1) {
-                alert("태그를 1개 이상 입력하세요.");
-                return false;
-            }
-
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
             let tags = document.getElementsByName('tag');
             let taglist = '';
             for (let i = 0; i < tags.length; i++) {
                 if (tags[i].value == '') continue;
                 taglist += tags[i].value + '#';
+                this.tagCount++;
             }
             this.tag = taglist;
+
+            /* 태그 1개 이상 입력 */
+            if (this.tagCount < 1) {
+                alert("태그를 1개 이상 입력하세요.");
+                return false;
+            }
+
+            /* 선택된 옵션을 문자열로 변환하여 바인딩 */
+            this.studio.studioFilter.options = this.selected.join(',');
 
             /* 주차가능 체크시 주차대수 입력 필수 */
             var parkAble = document.getElementsByName('parkFlag')[1].checked;
@@ -149,6 +128,17 @@ export default {
                 }
             }
 
+            /* 서비스에 모두 동의해야 등록 */
+            let agrees = document.getElementsByName('checkAgree[]');
+            this.agreeCount = 0;
+            for (let i = 0; i < agrees.length; i++) {
+                if (agrees[i].checked) this.agreeCount++;
+            }
+            if (this.agreeCount < 3) {
+                alert("서비스에 모두 동의하셔야 등록 가능합니다.");
+                return false;
+            }
+
             /* 스튜디오 등록 */
             axios
                 .post('http://127.0.0.1:7777/studio', this.studio)
@@ -162,63 +152,43 @@ export default {
         }
     }
 }
-
-//selectable
-$(function() {
-    /* 운영시간 값 저장 */
-    $("ol[name=mon]")
-        .selectable()
-        .on("selectablestop", function() {
-            alert("월요일");
-        });
-    $("ol[name=tue]")
-        .selectable()
-        .on("selectablestop", function() {
-            alert("화요일");
-        });
-    $("ol[name=wed]")
-        .selectable()
-        .on("selectablestop", function() {
-            alert("수요일");
-        });
-    $("ol[name=thu]")
-        .selectable()
-        .on("selectablestop", function() {
-            alert("목요일");
-        });
-    $("ol[name=fri]")
-        .selectable()
-        .on("selectablestop", function() {
-            alert("금요일");
-        });
-    $("ol[name=sat]")
-        .selectable()
-        .on("selectablestop", function() {
-            alert("토요일");
-        });
-    $("ol[name=sun]")
-        .selectable()
-        .on("selectablestop", function() {
-            alert("일요일");
-        });
-
-    /* 옵션 선택 후 값 저장*/
-    $("#optionSelectable1")
-        .selectable()
-        .on("selectablestop", function() {
-            let temp = []
-            $('#optionSelectable1 .ui-selected').each(function() {
-                temp.push($(this).html());
-            });
-            option_left = temp;
-        });
-    $("#optionSelectable2")
-        .selectable()
-        .on("selectablestop", function() {
-            let temp = []
-            $('#optionSelectable2 .ui-selected').each(function() {
-                temp.push($(this).html());
-            });
-            option_right = temp;
-        });
-});
+// //selectable
+// $(function() {
+//     /* 운영시간 값 저장 */
+//     $("ol[name=mon]")
+//         .selectable()
+//         .on("selectablestop", function() {
+//             alert("월요일");
+//         });
+//     $("ol[name=tue]")
+//         .selectable()
+//         .on("selectablestop", function() {
+//             alert("화요일");
+//         });
+//     $("ol[name=wed]")
+//         .selectable()
+//         .on("selectablestop", function() {
+//             alert("수요일");
+//         });
+//     $("ol[name=thu]")
+//         .selectable()
+//         .on("selectablestop", function() {
+//             alert("목요일");
+//         });
+//     $("ol[name=fri]")
+//         .selectable()
+//         .on("selectablestop", function() {
+//             alert("금요일");
+//         });
+//     $("ol[name=sat]")
+//         .selectable()
+//         .on("selectablestop", function() {
+//             alert("토요일");
+//         });
+//     $("ol[name=sun]")
+//         .selectable()
+//         .on("selectablestop", function() {
+//             alert("일요일");
+//         });
+// });     });
+// });

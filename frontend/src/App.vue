@@ -4,8 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/studioSearch">searchStudio</router-link> |
-      <!-- <router-link to="/registerStudio">registerStudio</router-link> | -->
-      <router-link to="/customerlogin">login</router-link>
+      <router-link to="/registerStudio">registerStudio</router-link> | 
+      <router-link to="/customerlogin">login</router-link> | 
       <router-link to="/studioInfo">studioInfo</router-link>
     </div>
     <router-view />

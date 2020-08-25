@@ -1,6 +1,8 @@
 package com.devils.pics.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +61,14 @@ public class StudioReserveController {
 
 	// 2. reservation 테이블에 추가, 예약 일자 
 	@PostMapping("/reserve")
-	public ResponseEntity getExceptionDate(@RequestBody Reservation reservation) {
-		//time 받아서 startDate/endDate 만들어줘야 함.
+	public ResponseEntity reserve(@RequestBody Reservation reservation) {
+		//등록 시간 삽입
+		long time = System.currentTimeMillis();
+		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+		String resDate = dayTime.format(new Date(time));
+		reservation.setResDate(resDate);
+		System.out.println(reservation);
+		
 		if(studioReserveService.reserve(reservation)==1) {
 			studioReserveService.AddexceptionDates(reservation);
 			return new ResponseEntity(HttpStatus.OK);

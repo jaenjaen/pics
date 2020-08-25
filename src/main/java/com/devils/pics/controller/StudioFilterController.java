@@ -42,8 +42,8 @@ public class StudioFilterController {
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
 			System.out.println("filter list : "+filters);
-			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
 			System.out.println("filtermap : "+getSearchCon(filters));
+			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
 			System.out.println("list size : "+list.size());
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
@@ -77,8 +77,9 @@ public class StudioFilterController {
 			ArrayList<String> array = new ArrayList<>(Arrays.asList(filters.get("searchContent").split(" ")));
 			searchCon.setSearchContent(array);
 		}
-		if (filters.get("searchTag").length()>0)
-			searchCon.setSearchTag(filters.get("searchTag"));
+		if (filters.get("searchTag").length()>0) {
+			searchCon.setSearchTag(filters.get("searchTag").substring(1, filters.get("searchTag").length()));
+		}
 		if (filters.get("orderCon").length()>0)
 			searchCon.setOrderCon(filters.get("orderCon"));
 

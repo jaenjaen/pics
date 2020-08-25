@@ -88,12 +88,31 @@ FROM reservation
 GROUP BY stu_id
 ) res
 ON s.stu_id = res.stu_id
-where s.stu_id <> All (select stu_id from exception_date where start_date < '2020-08-16' and end_date > '2020-08-16' )
+WHERE 
+c.category_id = 3
+AND (s.name Like '%서울%'
+OR c.category_name Like '%서울%'
+OR s.description Like '%서울%'
+OR t.tag_name Like '%서울%'
+OR f.address Like '%서울%'
+OR com.name Like '%서울%')
 group by s.stu_id
 ORDER BY s.stu_id DESC;
-select stu_id, count(stu_id) from reservation group by stu_id;
-select * from exception_date ;
-select * from studio s LEFT OUTER join exception_date e on s.stu_id = e.stu_id 
-where s.stu_id <> (select stu_id from exception_date where start_date = '2020-08-30')
+
+select * from studio;
+select * from exception_date;
 ;
+select * from studio_category;
+insert into tag(stu_id, tag_name) VALUES(10, '이태원');
 select e.stu_id, e.start_date from exception_date e RIGHT OUTER JOIN studio s on e.stu_id = s.stu_id where start_date = '2020-08-30';
+-- "../assets/img/studio/1_스튜디오.jp-- 
+update studio set main_img ="../assets/img/studio/1_스튜디오.jpg" where stu_id =10;
+update studio set main_img ='../assets/img/studio/1_카페식당.jpg' where stu_id =11;
+update studio set main_img ='../assets/img/studio/1_사무실.jpg' where stu_id =12;
+update studio set main_img ='../assets/img/studio/1_그-외-장소.jpg' where stu_id =13;
+update studio set main_img ='../assets/img/studio/1_펜션.jpg' where stu_id =14;
+update studio set main_img ='../assets/img/studio/3_카페식당.jpg' where stu_id =15;
+update studio set main_img ='../assets/img/studio/3_스튜디오.jpg' where stu_id =16;
+update studio set main_img ='../assets/img/studio/2_스튜디오.jpg' where stu_id =17;
+update studio set main_img ='../assets/img/studio/1_옥상.jpg' where stu_id =18;
+update studio set main_img ='../assets/img/studio/2_카페식당.jpg' where stu_id =19;

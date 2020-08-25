@@ -97,22 +97,27 @@
 				AND r.weekday = #{weekDate}
 			</if>
 			<if test="selectedDate != null">
-				AND (e.start_date > #{selectedDate}
-				OR #{selectedDate} > e.end_date
-				OR e.start_date is null
-				OR e.end_date is null)
+				AND s.stu_id != All 
+				(SELECT stu_id 
+				FROM exception_date 
+				WHERE #{selectedDate} >= start_date
+				AND end_date >= #{selectedDate} )
 			</if>
 			<if test="address1 != null or address2 != null">
 				AND f.address Like "%${address1}%"
 				AND f.address Like "%${address2}%"
 			</if>
-			<if test="maxSize != null and minSize != null">
-				AND (f.size >= #{minSize}
-				AND #{maxSize} >= f.size)
+			<if test="minSize != null">
+				AND f.size >= #{minSize}
 			</if>
-			<if test="minUnitPrice != null and maxUnitPrice">
-				AND (f.unit_price >= #{minUnitPrice}
-				AND #{maxUnitPrice} >= f.unit_price)
+			<if test ="maxSize != null">
+				AND #{maxSize} >= f.size
+			</if>
+			<if test="minUnitPrice != null">
+				AND f.unit_price >= #{minUnitPrice}
+			</if>
+			<if test="maxUnitPrice != null">
+				AND #{maxUnitPrice} >= f.unit_price
 			</if>
 			<if test="capacity != null">
 				AND f.max_capacity >= #{capacity}

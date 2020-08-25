@@ -49,13 +49,13 @@ public class StudioFilterTest {
 		 */
 		SearchCon searchCon = new SearchCon();
 		ArrayList<String> search = new ArrayList<String>();
-//		search.add("루프탑");
+		search.add("서울");
 //		search.add("이태원");
 		
-//		searchCon.setCategoryId("1");
+		searchCon.setCategoryId("1");
 //		filterMap.put("weekDate","월");
-//		filterMap.put("selectedDate","2020-08-13");
-		searchCon.setAddress1("서울");
+//		searchCon.setSelectedDate("2020-08-30");
+//		searchCon.setAddress1("서울");
 //		searchCon.setAddress2("해운대");
 //		filterMap.put("minSize", "100");
 //		filterMap.put("maxSize", "150");
@@ -63,8 +63,8 @@ public class StudioFilterTest {
 //		searchCon.setMaxUnitPrice("15000");
 //		filterMap.put("capacity", "15")`;
 //		filterMap.put("studioName", "15");
-//		searchCon.setSearchContent(search);
-//		filterMap.put("searchTag", "모던");
+		searchCon.setSearchContent(search);
+//		searchCon.setSearchTag("모던");
 //		filterMap.put("orderCon", "4");
 //		String str = "weekDate=";
 		

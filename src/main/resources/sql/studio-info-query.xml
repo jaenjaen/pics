@@ -86,15 +86,11 @@
 		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,
 		ctg.category_id,ctg.category_name,
 		com.name,com.logo_img,
-		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge
-<!--  	rep.stu_id,rep.repeat_id,rep.weekday,rep.time,
- 		exc.exception_id, exc.start_date, exc.end_date, exc.stu_id-->
+		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity
   		FROM studio s
 		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id
 		LEFT JOIN company com ON s.com_id=com.com_id
 		LEFT JOIN studio_filter sf ON s.stu_id=sf.stu_id
-<!-- 	LEFT JOIN repeat_date rep ON s.stu_id=rep.stu_id
-		LEFT JOIN exception_date exc ON s.stu_id=exc.stu_id-->
  		<if test="'${value}'!=null">
 		WHERE s.stu_id=${value};
 		</if>

@@ -6,7 +6,8 @@
       <router-link to="/studioSearch">searchStudio</router-link> |
       <!-- <router-link to="/registerStudio">registerStudio</router-link> | -->
       <router-link to="/customerlogin">login</router-link>
-      <router-link to="/studioInfo">studioInfo</router-link>
+      <!-- <router-link to="/studioInfo">studioInfo</router-link> -->
+      <router-link to="/Test">Test</router-link>
     </div>
     <router-view />
   </div>

@@ -9,9 +9,12 @@
     },
     "dependencies": {
         "axios": "^0.20.0",
+        "calendarpickerjs": "^1.2.0",
         "core-js": "^3.6.5",
+        "jQuery": "^1.7.4",
         "jquery": "^3.5.1",
         "jquery-ui": "^1.12.1",
+        "jsdom": "^16.4.0",
         "vue": "^2.6.11",
         "vue-router": "^3.2.0",
         "vue-session": "^1.0.0",

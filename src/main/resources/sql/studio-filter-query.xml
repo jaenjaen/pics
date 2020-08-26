@@ -27,6 +27,7 @@
 		<association property="studioFilter"
 			javaType="studioFilter">
 			<result column="unit_price" property="unitPrice" />
+			<result column="address" property="address"/>
 		</association>
 		<!-- <association property="schedule" javaType="schedule">
 			<collection property="repeatDate" javaType="java.util.ArrayList" ofType="repeatDate">

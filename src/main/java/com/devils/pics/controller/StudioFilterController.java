@@ -32,6 +32,7 @@ public class StudioFilterController {
 	public ResponseEntity searchStudio(){
 		try {
 			List<Studio> list = studioFilterService.searchStudio();
+			System.out.println("list sample : "+list.get(0));
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -45,6 +46,7 @@ public class StudioFilterController {
 			System.out.println("filtermap : "+getSearchCon(filters));
 			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
 			System.out.println("list size : "+list.size());
+			System.out.println("list sample : "+list.get(0));
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

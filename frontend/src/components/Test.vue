@@ -175,7 +175,7 @@ export default{
         tags: [],
         reviews: [],
         bookmark_check:0,
-        checkReservation=,
+        checkReservation:0,
         reservation:{
         start_date:"",
         end_date:"",
@@ -241,7 +241,7 @@ export default{
                 alert("최대 인원을 초과했습니다.")
             }
         },
-        retrieveStudios() {
+        checkReservationDuplicate() {
           axios
             .get("http://127.0.0.1:7777/studio/reservation")
             .then(response => (this.checkReservation = response.data))

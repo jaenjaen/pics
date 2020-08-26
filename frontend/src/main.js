@@ -5,7 +5,6 @@ import store from "./store";
 import VueSession from 'vue-session';
 import 'materialize-css/dist/css/materialize.min.css'
 import 'material-design-icons/iconfont/material-icons.css'
-import VueSession from "vue-session";
 import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;

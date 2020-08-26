@@ -3,12 +3,10 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
-import CompanyLogin from "../views/CompanyLogin.vue"
-import RegisterStudio from "../components/RegisterStudio.vue";
-import StudioInfo from "../components/StudioInfo.vue";
+import CompanyLogin from "../views/CompanyLogin.vue";
 import Test from "../components/Test.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
-// import StudioInfo from "../components/StudioInfo.vue";
+import StudioInfo from "../components/StudioInfo.vue";
 
 Vue.use(VueRouter);
 
@@ -30,47 +28,34 @@ const routes = [{
         path: "/studioSearch",
         name: "studioSearch",
         component: StudioSearch
-    }, {
+    },
+    {
         path: "/customerlogin",
         name: "customerlogin",
         component: CustomerLogin
-    }, {
+    },
+    {
         path: "/companylogin",
         name: "companylogin",
-        component: CompanyLogin <<
-            << << < HEAD
-    }, {
-        path: "/registerStudio",
-        name: "registerStudio",
-        component: RegisterStudio
-    }, {
-        path: "/registerStudio",
-        name: "registerStudio",
-        component: RegisterStudio
-    }, {
-        path: "/studioInfo",
-        name: "studioInfo",
-        component: StudioInfo ===
-            === =
-    }
+        component: CompanyLogin
+    },
     // {
     //     path: "/registerStudio",
     //     name: "registerStudio",
     //     component: RegisterStudio
     // },
-    // , {
-    //     path: "/studioInfo",
-    //     name: "studioInfo",
-    //     component: StudioInfo
-    // }
-    , {
+    // ,
+    {
+        path: "/studioInfo",
+        name: "studioInfo",
+        component: StudioInfo
+    },
+
+    {
         path: "/test",
         name: "test",
-        component: Test >>>
-            >>> > origin / ice
+        component: Test
     }
-
-
 ];
 
 const router = new VueRouter({

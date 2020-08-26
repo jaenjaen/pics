@@ -107,7 +107,7 @@ export default {
       if (this.selectedDate > 0) {
         this.weekDate = week[new Date(this.selectedDate).getDay()];
       }
-    // alert(this.weekDate);
+      // alert(this.weekDate);
       let filters = {
         categoryId: "",
         weekDate: this.weekDate,
@@ -123,7 +123,7 @@ export default {
         searchTag: "",
         orderCon: ""
       };
-    //   alert(filters);
+      //   alert(filters);
       this.search(filters);
     },
     search(filters) {

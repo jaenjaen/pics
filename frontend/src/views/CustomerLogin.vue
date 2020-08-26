@@ -8,11 +8,10 @@ export default {
     LoginHeader
   }
 };
-
 </script>
 <template>
   <div class="customerLogin">
-      <LoginHeader/>
+    <LoginHeader />
     <h1>고객로그인</h1>
   </div>
 </template>

@@ -26,16 +26,44 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 
 	@Override
 	public ArrayList<RepeatDate> getRepeatDate(int stuId) {
-		return studioReserveDAO.getRepeatDate(stuId);
+		List<RepeatDate> repeatDateList =new ArrayList<RepeatDate>();
+		for(RepeatDate rep: studioReserveDAO.getRepeatDate(stuId))
+			repeatDateList.add(rep);
+		return (ArrayList<RepeatDate>) repeatDateList;
 	}
 
 	@Override
-	public int reserve(Reservation reservation) {
-		return studioReserveDAO.reserve(reservation);
+	public int AddReservation(Reservation reservation) {
+		return studioReserveDAO.AddReservation(reservation);
 	}
 
 	@Override
-	public int AddexceptionDates(Reservation reservation) {
-		return studioReserveDAO.AddexceptionDates(reservation);
+	public int AddExceptionDates(Reservation reservation) {
+		return studioReserveDAO.AddExceptionDates(reservation);
+	}
+
+	@Override
+	public List<Reservation> getReservation(Reservation reservation) {
+		return studioReserveDAO.getReservation(reservation);
+	}
+
+	@Override
+	public int UpdateReservation(Reservation reservation) {
+		return studioReserveDAO.UpdateReservation(reservation);
+	}
+
+	@Override
+	public int UpdateExceptionDate(Reservation reservation) {
+		return studioReserveDAO.UpdateExceptionDate(reservation);
+	}
+
+	@Override
+	public int DeleteReservations(List<Reservation> reservationList) {
+		return studioReserveDAO.DeleteReservations(reservationList);
+	}
+
+	@Override
+	public int DeleteExceptionDates(List<Reservation> reservationList) {
+		return studioReserveDAO.DeleteExceptionDates(reservationList);
 	}
 }

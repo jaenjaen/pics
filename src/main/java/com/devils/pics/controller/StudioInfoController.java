@@ -36,7 +36,7 @@ public class StudioInfoController {
 	private StudioReserveService studioReserveService;
 
 	// 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
-	@GetMapping("/getStudioInfo/{stuId}")
+	@GetMapping("/studio/info/{stuId}")
 	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {	
 		try {
 		Schedule schedule=new Schedule();
@@ -58,7 +58,7 @@ public class StudioInfoController {
 		}
 	}
 	// 2-1. Studio 클래스에 없는 정보 (누적 이용자수)
-	@GetMapping("/getAccCustomer/{stuId}")
+	@GetMapping("/studio/accCustomer/{stuId}")
 	public ResponseEntity getAccCustomer(@PathVariable int stuId) {	
 		try {
 		int accCust=studioInfoService.getAccCustomer(stuId);
@@ -71,14 +71,14 @@ public class StudioInfoController {
 	}
 	
 	//2-2. Studio 클래스에 없는 정보 (태그)
-	@GetMapping("/getTags/{stuId}")
+	@GetMapping("studio/tags/{stuId}")
 	public ResponseEntity<List<Tag>> getTags(@PathVariable int stuId) {	
 		List<Tag> tagVO=studioInfoService.getTags(stuId);
 		return new ResponseEntity<List<Tag>>(tagVO,HttpStatus.OK);
 	}
 	
 	//2-2. Studio 클래스에 없는 정보 (찜 여부)
-	@GetMapping("/checkBookmark/{custId}/{stuId}")
+	@GetMapping("/studio/bookmark/{custId}/{stuId}")
 	public ResponseEntity<Integer> checkBookmark(@PathVariable("custId") int custId,@PathVariable("stuId") int stuId) {	
 		if((""+custId)!=("")) {
 			List<Integer> idList=new ArrayList<Integer>();
@@ -92,7 +92,7 @@ public class StudioInfoController {
 	}
 	
 	//2-3. Studio 클래스에 없는 정보 (리뷰)
-	@GetMapping("/getStudioReviews/{stuId}")
+	@GetMapping("/studio/reviews/{stuId}")
 	public ResponseEntity<List<Review>> getStudioReviews(@PathVariable int stuId) {	
 		try {
 		List<Review> reviewVO=studioInfoService.getStudioReviews(stuId);

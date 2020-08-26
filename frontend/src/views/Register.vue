@@ -2,41 +2,46 @@
 <template>
   <div class="publicSpace">
     <div class="grid">
-      <form action="" method="POST" class="form login" @submit.prevent="Register">
+      <h2>업체고객 가입</h2><br>
+      <form action="" method="POST" class="form login" @submit.prevent="companyRegister">
        
        <div class="form__field">
-          <label for="login__name"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Name</span></label>
-          <input id="login__name" type="text" v-model="name" class="form__input" placeholder="Name" required>
+          <label for="login__name"><img class="icon" src="../assets/img/register/companyName.svg"><span class="hidden">Name</span></label>
+          <input type="text" v-model="name" class="form__input" placeholder="업체 이름" required>
         </div>
 
        <div class="form__field">
          <label for="login__comId"><img class="icon" src="../assets/img/login/loginId.svg"><span class="hidden">comId</span></label>
-          <input id="login__comId" type="email" name="comId" v-model="comId" class="form__input" placeholder="E-mail" required>
+          <input type="email" v-model="comId" class="form__input" placeholder="업체 이메일" required @keyup="checkEmail">
+        </div>
+
+        <div v-html="idMsg"></div>
+
+        <div class="form__field">
+          <label for="login__password"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Password</span></label>
+          <input type="password" v-model="password" class="form__input" placeholder="비밀번호" required>
         </div>
 
         <div class="form__field">
           <label for="login__password"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Password</span></label>
-          <input id="login__password" type="password" v-model="password" class="form__input" placeholder="Password" required>
+          <input type="password" v-model="checkpassword" class="form__input" placeholder="비밀번호 확인" required @keyup="checkPw">
+        </div>
+
+        <div v-html="pwMsg"></div>
+
+        <div class="form__field">
+          <label for="login__address"><img class="icon" src="../assets/img/register/companyAddr.svg"><span class="hidden">Address</span></label>
+          <input type="text" v-model="address" class="form__input" placeholder="주소" required>
         </div>
 
         <div class="form__field">
-          <label for="login__password"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Password</span></label>
-          <input id="login__password" type="password" v-model="password" class="form__input" placeholder="CheckPassword" required>
+          <label for="login__tel"><img class="icon" src="../assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
+          <input type="tel" v-model="tel" class="form__input" placeholder="업체 전화번호" required>
         </div>
 
         <div class="form__field">
-          <label for="login__address"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Address</span></label>
-          <input id="login__address" type="text" v-model="address" class="form__input" placeholder="Address" required>
-        </div>
-
-        <div class="form__field">
-          <label for="login__tel"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">PhoneNumber</span></label>
-          <input id="login__tel" type="tel" v-model="tel" class="form__input" placeholder="Phone number" required>
-        </div>
-
-        <div class="form__field">
-          <label for="login__logImg"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Logo</span></label>
-          <input id="login__logImg" type="file" name="logImg" class="form__input" placeholder="Logo Image">
+          <label for="login__logImg"><img class="icon" src="../assets/img/register/companyLogo.svg"><span class="hidden">Logo</span></label>
+          <input type="file" class="form__input" placeholder="업체 로고">
         </div>
 
         <div class="form__field">
@@ -55,22 +60,69 @@ export default {
     name: "Register",
     data(){
     return {
+      idMsg:"",
+      idFlag:false,
+      pwMsg:"",
+      pwFlag:false,
+      name:"",
       comId:"",
       password:"",
-      rdata:[]
+      checkpassword:"",
+      address:"",
+      tel:"",
+      condata:"",
+
     }
   },methods:{
-    companyLogin: function(){
-      axios.get('http://localhost:7777/company/'+this.comId+"/"+this.password)
-        .then(response => {
-          this.rdata = response.data
-          console.log(response.data);
+    companyRegister: function(){
+      if(this.idFlag == true && this.pwFlag == true){
+        axios
+          .post('http://localhost:7777/company',{
+            name: this.name,
+            comId:this.comId,
+            password:this.password,
+            address:this.address,
+            tel:this.tel
+          })
+          .then(response => {
+            this.condata = response.data
+            alert(this.name+"의 가입을 환영합니다.");
+            location.href="http://localhost:9999"
+          })
+          .catch(e => {
+            console.log(e)
+          })
+        }
+        else{
+          alert("입력한 정보를 다시 한번 확인해주세요.");
+        }
+      }, //~companyRegister
+      checkEmail: function(){
+        axios
+        .get('http://localhost:7777/company/'+this.comId)
+        .then(res =>{
+          this.condata = res.data;
+          if(this.condata != ""){
+          this.idMsg="<p style='color:red;'>이미 사용중인 아이디입니다.</p>";
+          this.idFlag=true;
+          }
+          else{
+            this.idMsg="<p style='color:green;'>사용 가능한 아이디입니다.</p>";
+          }
         })
-        .catch(e => {
-          console.log(e)
+        .catch(e =>{
+          console.log(e);
         })
-    }
-  }
+      },//~checkEmail
+      checkPw: function(){
+        if (this.password == this.checkpassword){
+          this.pwFlag=true;
+          this.pwMsg="";
+        }else{
+          this.pwMsg="<p style='color:red;'>입력하신 비밀번호와 다릅니다.</p>";
+        }
+      }
+    },
 };
 
 </script>

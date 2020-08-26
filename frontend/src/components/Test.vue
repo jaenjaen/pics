@@ -270,7 +270,7 @@ export default{
  </script>
 
 
-<style lang="stylus">
+<style>
 
 #main-images-section {
     margin: 5% 0 5% 0;

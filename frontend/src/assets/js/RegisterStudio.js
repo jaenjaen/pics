@@ -97,18 +97,25 @@ export default {
             switch (day) {
                 case ('mon'):
                     this.week.mon = time_list;
+                    break;
                 case ('tue'):
                     this.week.tue = time_list;
+                    break;
                 case ('wed'):
                     this.week.wed = time_list;
+                    break;
                 case ('thu'):
                     this.week.thu = time_list;
+                    break;
                 case ('fri'):
                     this.week.frii = time_list;
+                    break;
                 case ('sat'):
                     this.week.sat = time_list;
+                    break;
                 case ('sun'):
                     this.week.sun = time_list;
+                    break;
             }
         },
         checkParkFlag(flag) {

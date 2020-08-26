@@ -302,8 +302,7 @@ export default{
 // });
 
 </script>
-
-<style lang="stylus">
+<style>
 
 #main-images-section {
     margin: 5% 0 5% 0;
@@ -343,4 +342,5 @@ aside {
     width: 25%;
     padding: 3px 10px
 }
-    </style>
+
+</style>

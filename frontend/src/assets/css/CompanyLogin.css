@@ -3,7 +3,7 @@
     margin: auto;
     width: 768px;
     text-align: center;
-    padding: 5% 0 5% 0;
+    padding: 1% 0 2% 0;
 }
 
 .grid {
@@ -146,7 +146,7 @@ input[type='submit'] {
     background-color: #EAF6FB;
 }
 
-.login input[type='submit'] {
+.login input[type='submit']{
     background-color: #33A3DC;
     color: #eee;
     font-weight: 700;
@@ -155,5 +155,16 @@ input[type='submit'] {
 
 .login input[type='submit']:focus,
 .login input[type='submit']:hover {
+    background-color: #034EA2;
+}
+
+.login input[type='button']{
+    background-color: #33A3DC;
+    color: #eee;
+    text-transform: uppercase;
+}
+
+.login input[type='button']:focus,
+.login input[type='button']:hover {
     background-color: #034EA2;
 }

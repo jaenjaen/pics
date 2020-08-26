@@ -165,7 +165,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import "vuetify"
 import axios from "axios"
 export default{

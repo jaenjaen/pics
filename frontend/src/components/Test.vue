@@ -165,7 +165,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import axios from "axios"
 export default{
   name: "studio-info",
@@ -270,7 +270,7 @@ export default{
  </script>
 
 
-<style>
+<style scoped>
 
 #main-images-section {
     margin: 5% 0 5% 0;

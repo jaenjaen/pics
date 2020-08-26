@@ -1,5 +1,5 @@
 
-<style src="../assets/css/RegisterStudio.css"></style>
+<style scoped src="../assets/css/RegisterStudio.css"></style>
 <template>
 <div id="app">
     <div class="container">
@@ -304,4 +304,4 @@
     </div>
 </div>
 </template>
-<script src="../assets/js/RegisterStudio.js"></script>
+<script scoped src="../assets/js/RegisterStudio.js"></script>

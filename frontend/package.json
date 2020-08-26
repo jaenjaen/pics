@@ -15,7 +15,7 @@
         "jquery": "^3.5.1",
         "jquery-ui": "^1.12.1",
         "material-design-icons": "^3.0.1",
-        "materialize-css": "^1.0.0-rc.2",
+        "materialize-css": "^1.0.0",
         "vue": "^2.6.11",
         "vue-moment": "^4.1.0",
         "vue-mq": "^1.0.1",

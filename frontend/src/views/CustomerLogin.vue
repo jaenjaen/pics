@@ -8,7 +8,6 @@ export default {
     LoginHeader
   }
 };
-
 </script>
 <template>
   <div class="publicSpace">

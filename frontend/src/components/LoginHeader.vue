@@ -1,6 +1,7 @@
 <style src="../assets/css/LoginHeader.css"></style>
 <template>
   <div class="loginHeader">
+
       <ul class="loginSort">
         <li class="loginMode" v-bind:class="{ 'is-active': customerMode }">
             <router-link to="/customerLogin">개인고객 로그인</router-link>
@@ -21,3 +22,4 @@ export default {
   }
 };
 </script>
+

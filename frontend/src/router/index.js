@@ -8,62 +8,84 @@ import RegisterStudio from "../components/RegisterStudio.vue";
 import TempStudio from "../components/Temp_MoveToInfo.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 import Register from "../views/Register.vue";
+import CompanyLogin from "../views/CompanyLogin.vue";
+import Test from "../components/Test.vue";
+// import RegisterStudio from "../components/RegisterStudio.vue";
+import StudioInfo from "../components/StudioInfo.vue";
 
 Vue.use(VueRouter);
 
 const routes = [{
-        path: "/",
-        name: "Home",
-        component: Home
-    },
-    {
-        path: "/about",
-        name: "About",
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import ( /* webpackChunkName: "about" */ "../views/About.vue")
-    },
-    {
-        path: "/studioSearch",
-        name: "studioSearch",
-        component: StudioSearch
-    },
-    {
-        path: "/customerlogin",
-        name: "customerlogin",
-        component: CustomerLogin
-    },
-    {
-        path: "/companylogin",
-        name: "companylogin",
-        component: CompanyLogin
-    },
-    {
-        path: "/registerStudio",
-        name: "registerStudio",
-        component: RegisterStudio
-    }, {
-        path: "/studioInfo",
-        name: "studioInfo",
-        component: StudioInfo
-    }, {
-        path: "/register",
-        name: "register",
-        component: Register
-    }, {
-        path: "/TempStudio/:stuId",
-        name: "TempStudio",
-        component: TempStudio,
-        props: true
-    }
-];
+            path: "/",
+            name: "Home",
+            component: Home
+        },
+        {
+            path: "/about",
+            name: "About",
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: () =>
+                import ( /* webpackChunkName: "about" */ "../views/About.vue")
+        },
+        {
+            path: "/studioSearch",
+            name: "studioSearch",
+            component: StudioSearch
+        },
+        {
+            path: "/customerlogin",
+            name: "customerlogin",
+            component: CustomerLogin
+        },
+        {
+            path: "/companylogin",
+            name: "companylogin",
+            component: CompanyLogin
+        }, <<
+        << << < HEAD {
+            path: "/registerStudio",
+            name: "registerStudio",
+            component: RegisterStudio
+        }, {
+            path: "/studioInfo",
+            name: "studioInfo",
+            component: StudioInfo
+        }, {
+            path: "/register",
+            name: "register",
+            component: Register
+        }, {
+            path: "/TempStudio/:stuId",
+            name: "TempStudio",
+            component: TempStudio,
+            props: true ===
+                === =
+                // {
+                //     path: "/registerStudio",
+                //     name: "registerStudio",
+                //     component: RegisterStudio
+                // },
+                // ,
+                {
+                    path: "/studioInfo",
+                    name: "studioInfo",
+                    component: StudioInfo
+                },
 
-const router = new VueRouter({
-    mode: "history",
-    base: process.env.BASE_URL,
-    routes
-});
+            {
+                path: "/test",
+                name: "test",
+                component: Test >>>
+                    >>> > origin / ice
+            }
+        ];
 
-export default router;
+        const router = new VueRouter({
+            mode: "history",
+            base: process.env.BASE_URL,
+            routes
+        });
+
+        export default router;

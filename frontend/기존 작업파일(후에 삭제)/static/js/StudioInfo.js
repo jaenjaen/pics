@@ -1,83 +1,159 @@
-var information_area = new Vue({
-    el: "#app ",
+Vue.component('v-date-time', {
+    props: ['value'],
+
+    template: `
+      <div>
+          <v-menu
+              ref="menu"
+              v-model="dropdownOpen"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              :return-value.sync="model"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              max-width="560px"
+              min-width="560px">
+              <template v-slot:activator="{ on }">
+                  <v-text-field
+                      v-model="displayDate"
+                      label="Date Time"
+                      prepend-icon="event"
+                      readonly
+                      v-on="on"
+                  ></v-text-field>
+              </template>
+ 
+             <div class="v-date-time-widget-container">
+                  <v-layout row wrap>
+                      <v-flex xs12 sm6>
+                          <v-date-picker 
+                              v-model="dateModel"
+                              width="240"
+                              color="primary"></v-date-picker>
+ 
+                      </v-flex>
+                      <v-flex xs12 sm6>
+                          <v-btn small 
+                            fab
+                            :color="getMeridiamButtonColor('AM')" 
+                            class="btn-am" @click="meridiam='AM'">AM</v-btn>
+ 
+                          <v-btn 
+                                fab
+                               small :color="getMeridiamButtonColor('PM')" 
+                                class="btn-pm"
+                                @click="meridiam='PM'">PM</v-btn>
+ 
+                          <v-time-picker 
+                              v-if="dropdownOpen" 
+                              v-model="timeModel" 
+                              color="primary"
+                              width="240"
+                              :no-title="true"></v-time-picker>
+ 
+                          <h3 class="text-xs-center">{{ currentSelection }}</h3>
+                      </v-flex>
+ 
+                      <v-flex xs12 class="text-xs-center">
+                          <v-btn flat small @click="dropdownOpen = false">Cancel</v-btn>
+                          <v-btn flat small @click="confirm()">Ok</v-btn>
+                      </v-flex>
+                  </v-layout>
+              </div>
+          </v-menu>
+      </div>
+    `,
+
     data() {
         return {
-            infos: [],
-            stuid: 0,
-            loading: true,
-            errored: false,
-            bookmark: 0,
-            reviews: [],
-            tags: [],
-            inavailabeDate: [],
-            availabeDate: []
-        }
-    },
-    mounted() {
-        axios
-            .get('http://127.0.0.1:7777/getStudioInfo/10')
-            .then(response => (this.infos = response.data))
-            .catch(error => {
-                console.log(error);
-                this.errored = true
-            })
-            .finally(() => this.loading = false)
-        axios
-            .get('http://127.0.0.1:7777/checkBookmark/3/10')
-            .then(response => (this.bookmark = response.data))
-            .catch(error => {
-                console.log(error);
-                this.errored = true
-            })
-        axios
-            .get('http://127.0.0.1:7777/getStudioReviews/10')
-            .then(response => (this.reviews = response.data))
-            .catch(error => {
-                console.log(error);
-                this.errored = true
-            })
-        axios
-            .get('http://127.0.0.1:7777/getTags/10')
-            .then(response => (this.tags = response.data))
-            .catch(error => {
-                console.log(error);
-                this.errored = true
-            })
-        axios
-            .get('http://127.0.0.1:7777/getSchedules/10')
-            .then(response => (this.schedule = response.data))
-            .catch(error => {
-                console.log(error);
-                this.errored = true
-            })
+            dropdownOpen: false,
+            meridiam: 'AM',
+            displayDate: '',
+            dateModel: '',
+            timeModel: '',
+            monthNames: [
+                "Jan", "Feb", "Mar",
+                "Apr", "May", "June", "Jul",
+                "Aug", "Sept", "Oct",
+                "Nov", "Dec"
+            ]
+        };
+
 
     },
+    computed: {
+        model: {
+            get() { return this.value; },
+            set(model) {}
+        },
+
+
+        currentSelection() {
+            let selectedTime = this.timeModel + ' ' + this.meridiam;
+            return this.formatDate(this.dateModel) + ' ' + selectedTime;
+        }
+    },
+
+
     methods: {
-        reservation_floating() {},
-        map() {
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-                mapOption = {
-                    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-                    level: 3 // 지도의 확대 레벨
-                };
-            // 지도를 표시할 div와지도 옵션으로  지도를 생성
-            var map = new kakao.maps.Map(mapContainer, mapOption);
-            // 마커가 표시될 위치
-            var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
-            // 마커를 생성
-            var marker = new kakao.maps.Marker({
-                position: markerPosition
-            });
-            // 마커를 지도 위에 표시
-            marker.setMap(map);
+        formatDate(date) {
+            if (!date) return '';
+
+            const [year, month, day] = date.split('-');
+            let monthName = this.monthNames[parseInt(month)];
+            return `${monthName} ${day}, ${year}`;
+        },
+
+        // Confirm the datetime selection and close the popover
+        confirm() {
+            this.onUpdateDate();
+            this.dropdownOpen = false;
+        },
+
+        // Format the date and trigger the input event
+        onUpdateDate() {
+            if (!this.dateModel || !this.timeModel) return false;
+
+            let selectedTime = this.timeModel + ' ' + this.meridiam;
+            this.displayDate = this.formatDate(this.dateModel) + ' ' + selectedTime;
+            this.$emit('input', this.dateModel + ' ' + selectedTime);
+        },
+
+        // Set the active state for the meridiam buttons
+        getMeridiamButtonColor(m) {
+            if (m === this.meridiam) {
+                return 'primary';
+            } else {
+                return 'darkgray';
+            }
+        }
+    },
+
+
+    mounted() {
+        // Set the current date and time as default value
+        var d = new Date();
+        var currentHour = d.getHours() % 12; // AM,PM format
+        var minutes = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+        var currentTime = currentHour + ':' + minutes;
+        this.timeModel = currentTime;
+        this.dateModel = d.toISOString().substr(0, 10);
+
+        if (d.getHours() >= 12) {
+            this.meridiam = 'PM';
         }
     }
-})
+});
 
-var currentPosition = parseInt($("#reservation-floating-banner").css("top")) - 350;
-$(window).scroll(function() {
-    var position = $(window).scrollTop();
-    $("#reservation-floating-banner").stop().animate({
-        "top": `${position + currentPosition}px`
-    }, 0);
+
+const vm = new Vue({
+    el: "#app",
+    data() {
+        return {
+            myDateTime: 'Select a Date'
+        };
+
+    }
 });

@@ -25,8 +25,8 @@ import ch.qos.logback.core.subst.Token.Type;
 
 @SpringBootTest
 class StudioReserveTest {
-//	@Autowired
-//	  private SqlSession sqlSession;
+	@Autowired
+	  private SqlSession sqlSession;
 	@Autowired
 	private StudioReserveService reserveService;
 
@@ -39,10 +39,10 @@ class StudioReserveTest {
 	@Test
 	void contextLoads() throws Exception {	
 
-//		String NS = "StudioReserveMapper.";
+		String NS = "StudioReserveMapper.";
 //		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
-//		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
-//
+		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
+
 //		System.out.println("==================== getExceptionDate ====================");
 //		try {
 //		List<ExceptionDate> ExceptionVO=sqlSession.selectList(NS+"getExceptionDate",studio);
@@ -65,19 +65,24 @@ class StudioReserveTest {
 //		System.out.println(reservation);
 //		}catch (NullPointerException e) {System.out.println("등록 과정에 문제가 있나봐!!!");}
 
-//		System.out.println("==================== reservations ====================");
-//		Reservation resInfo=new Reservation();
+//		System.out.println("==================== getReservations ====================");
+		List<Reservation> resInfo=new ArrayList<Reservation>();
+//		resInfo.setResId(1);;
 //		resInfo.setCustomer(customer);
 //		resInfo.setStuId(studio.getStuId());
-//		System.out.println(resInfo);
 //		resInfo.setStartDate("2020-08-20 00:00:00");
 //		resInfo.setEndDate("2020-08-22 00:00:00");
-//		try {
-//		List<Reservation> reserveVO = sqlSession.selectList(NS+"reservations",resInfo);
-//		System.out.println(reserveVO);
-//		}catch (NullPointerException e) {
-//			System.out.println("예약 내역이 없습니다.");
-//		}
+//		resInfo.setResDate("2020-08-22 00:00:00");
+//		resInfo.setTotalPrice(20000);
+//		resInfo.setTotalPeople(3);
+//		resInfo.add(new Reservation(3));
+//		resInfo.add(new Reservation(4));
+//		resInfo.add(new Reservation(5));
+//		System.out.println(resInfo);
+		List<Reservation> reserveVO = sqlSession.selectList(NS+"getReservation");
+//		for(Reservation re : reserveVO )
+//			System.out.println(re );
+		
 
 //		System.out.println("==================== exceptionDates ====================");
 //		try {
@@ -90,7 +95,42 @@ class StudioReserveTest {
 //		Customer customer=customerService.getCustomer(1);
 //		List<Studio> studio=infoService.getStudioInfo(10);
 //		Reservation reservation =new Reservation(studio.get(0).getStuId(),customer,"2020-08-19","2020-08-21",250000,"2020-08-10",5);
-//
+
+//		System.out.println("==================== UpdateReservation ====================");
+//		try {
+//		int result = sqlSession.update(NS+"UpdateReservation",resInfo);
+//		System.out.println(result);
+//		}catch (NullPointerException e) {
+//			System.out.println("예외 일정 등록에 실패했습니다.");
+//		}
+//		
+//		System.out.println("==================== UpdateExceptionDates ====================");
+//		try {
+//		int result = sqlSession.update(NS+"UpdateExceptionDates",resInfo);
+//		System.out.println(result);
+//		}catch (NullPointerException e) {
+//			System.out.println("예외 일정 등록에 실패했습니다.");
+//		}
+		
+//		System.out.println("==================== DeleteReservations ====================");
+//		System.out.println(resInfo);
+//		try {
+//		sqlSession.delete(NS+"DeleteReservations",resInfo);
+//		}catch (NullPointerException e) {
+//			System.out.println("예외 일정 등록에 실패했습니다.");
+//		}
+		
+		System.out.println("==================== DeleteExceptionDates ====================");
+		try {
+		int result = sqlSession.delete(NS+"DeleteExceptionDates",resInfo);
+		System.out.println(result);
+		}catch (NullPointerException e) {
+			System.out.println("예외 일정 등록에 실패했습니다.");
+		}
+		
+		
+		
+		
 //		System.out.println("==================== DAO & Service Test ====================");
 //		System.out.println("==================== getExceptionDate ====================");
 //		try {

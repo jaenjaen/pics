@@ -1,5 +1,4 @@
 <style src="../assets/css/RegisterStudio.css"></style>
-<script type="text/javascript" src="https://unpkg.com/frs-hide-scrollbar/dist/FRS-hide-scrollbar.umd.js"></script>
 <template>
 <div id="app">
     <div class="container">
@@ -158,8 +157,8 @@
                         </tr>
                         <tr>
                             <td>
-                                <select multiple size='24' id="mon" name="mon" @change="selectDay('mon')" v-for="time in timePerDay" :key="time">
-                                    <option class="daySelect" value="time">
+                                <select multiple size='24' id="mon" name="mon" @change="selectDay('mon')">
+                                    <option class="daySelect" v-for="time in timePerDay" :key="time">
                                          {{time}}시-{{time+1}}시
                                     </option>
                                 </select>

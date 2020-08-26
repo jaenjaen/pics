@@ -17,16 +17,16 @@
     <div class="row" id="filter">
       <!-- 카테고리 버튼 -->
       <div id="categoryBtn">
-        <button class="waves-effect waves-light btn-small" @click="searchAllStudios" >All</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(1)">Cafe</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(2)">Studio</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(3)">House</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(4)">Office</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(5)">Restuarant</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(6)">Bookstore</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(7)">Pub</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(8)">Gallery</button>
-        <button class="waves-effect waves-light btn-small" @click="setCategory(9)">Extra</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="searchAllStudios" >전체</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(1)">카페</button>
+        <button class="waves-effect waves-light btn-small col s2" @click="setCategory(2)">스튜디오</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(3)">집</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(4)">사무실</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(5)">음식점</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(6)">서점</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(7)">펍</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(8)">겔러리</button>
+        <button class="waves-effect waves-light btn-small col s1" @click="setCategory(9)">기타</button>
       </div>
       <!-- 필터 버튼 -->
       <div id='filterBtn' class="col s12">
@@ -65,9 +65,9 @@
         <span class="col s12" id='capaFilter' name="capaFilter">
           <p>인원</p>
           <span class="col offset-s4"></span>
-          <i class="material-icons col s1" @click="capacity--">exposure_neg_1</i>
+          <!-- <i class="material-icons col s1" @click="capacity--">exposure_neg_1</i> -->
           <span id='capa' class='col s1'>{{capacity}}명</span>
-          <i class="material-icons col s1" @click="capacity++">exposure_plus_1</i>
+          <!-- <i class="material-icons col s1" @click="capacity++">exposure_plus_1</i> -->
         </span>
         <!-- 가격 -->
         <span class="col s12" id='priceFilter' name="priceFilter">
@@ -111,6 +111,12 @@
 <script>
 import axios from "axios";
 
+// import 'material-design-icons/iconfont/material-icons.css'
+// import 'materialize-css/dist/css/materialize.min.css'
+// import MC from 'materialize-css/dist/css/materialize.min.css'
+// import M from "materialize-css/";
+// import MI from "material-design-icons/iconfont/material-icons.css";
+
 
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
@@ -151,6 +157,9 @@ export default {
   mounted() {
     // 페이지 오자마자 전체 리스트 뿌리기
     this.searchAllStudios();
+    // M.AutoInit();
+    // MC.AutoInit();
+    // MI.AutoInit();
   },
 
   methods: {
@@ -230,15 +239,19 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped src="materialize-css/dist/css/materialize.min.css">
+
 #searchStudio {
   width: 768px;
   margin: auto;
-  font-family: "Nanum Gothic", sans-serif;
 }
 
 #searchContent {
   width: 50%;
+}
+
+#categoryBtn #dateFilter{
+  margin-left: 2% !important;
 }
 
 #filterBtn {
@@ -251,7 +264,6 @@ export default {
   vertical-align: bottom;
   ;
 }
-
 #filterSpace>input[type=text]{
   height: 2rem;
 }

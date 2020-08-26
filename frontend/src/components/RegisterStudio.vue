@@ -1,4 +1,5 @@
-<style scoped src="../assets/css/RegisterStudio.css"></style>
+
+<style src="../assets/css/RegisterStudio.css"></style>
 <template>
 <div id="app">
     <div class="container">

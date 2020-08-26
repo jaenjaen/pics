@@ -24,6 +24,21 @@
 	-->
 
 <mapper namespace="StudioReserveMapper">
+
+ 	<resultMap type="reservation" id="reservationRM">
+		<result property="resId" column="res_id"/>
+		<result property="stuId" column="stu_id"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="resDate" column="res_date"/>
+		<result property="totalPeople" column="total_people"/>
+		<association property="customer" javaType="customer">
+			<id property="custId" column="cust_id"/>
+				<result property="custId" column="cust_id" />
+		</association>
+	</resultMap>
+
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
   	<select id="getExceptionDate" parameterType="int" resultType="exceptionDate">							
 		SELECT exception_id, start_date, end_date
@@ -38,52 +53,86 @@
 	</select>
 
 	<!-- ================== 2. 예약하기 ================== -->
-	<select id="getReservation" parameterType="reservation" resultType="reservation">							
-		SELECT res_id,stu_id,start_date,end_date,total_price,res_date,total_people
+	<select id="getReservation" parameterType="reservation" resultMap="reservationRM">							
+		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
 		FROM reservation
 		<where>
-			<choose>
-			<when test="customer!=null and stuId!=0">
-				cust_id=#{customer.custId} AND stu_id=#{stuId}
-				<if test="startDate!=null and endDate!=null">
-				AND start_date=date(#{startDate}) AND end_date=date(#{endDate})
-				</if>
+ 			<choose>
+			<!-- 필수적인 예약 요소들이 다 있는지 >> 동일한 예약 있는지 조회-->
+			<when  test="customer!=null and stuId!=null and startDate!=null and endDate!=null">
+				cust_id=#{customer.custId} AND stu_id=#{stuId} AND start_date=date(#{startDate}) AND end_date=date(#{endDate})
 			</when>
-			<otherwise>
-				<if test="customer!=null">
+			<!-- 특정 고객이 특정 스튜디오 예약한 적 있는지 확인 >> 고객 찜 리스트 -->
+			<when  test="customer!=null and stuId!=null">
+				cust_id=#{customer.custId} AND stu_id=#{stuId}
+			</when>
+			<!-- 특정 고객의 모든 스튜디오 확인 >> 마이페이지 예약 내역 -->
+			<when  test="customer!=null">
 				cust_id=#{customer.custId}
-				</if>
-				<if test="stuId!=0">
+			</when>
+			<!-- 특정 스튜디오의 모든 예약내역 확인 -->
+			<when test="stuId!=null">
 				stu_id=#{stuId}
-				</if>
-			</otherwise>
+			</when>			
+			<!-- 조건이 없다면 모든 예약 내역 가져오기 -->
+			<otherwise>				
+ 			</otherwise>
 			</choose>
-		</where>
+		</where> 
 	</select>
 	
-	<insert id="reserve" parameterType="reservation">							
+	<insert id="AddReservation" parameterType="reservation">							
 		INSERT into reservation(cust_id,stu_id,start_date,end_date,total_price,res_date,total_people)
 		VALUES(#{customer.custId},#{stuId},date(#{startDate}),date(#{endDate}),#{totalPrice},date(#{resDate}),#{totalPeople})
 	</insert> 
-
+	
 	<insert id="AddexceptionDates" parameterType="reservation">							
 		INSERT into exception_date(start_date,end_date,stu_id)
-		VALUES(#{startDate},date(#{endDate}),#{stuId})
+		VALUES (date(#{startDate}),date(#{endDate}),#{stuId})
 	</insert>
+
+	<update id="UpdateReservation" parameterType="reservation">							
+		UPDATE reservation 
+		SET 
+		start_date=date(#{startDate}),
+		end_date=date(#{endDate}),
+		total_price=#{totalPrice},
+		res_date=date(#{resDate}),
+		total_people=#{totalPeople}
+		WHERE res_id=#{resId}
+	</update>
+
+	<update id="UpdateExceptionDate" parameterType="reservation">							
+		UPDATE exception_date 
+		SET 
+		start_date=date(#{startDate}),
+		end_date=date(#{endDate})
+		WHERE stu_id=#{stuId}
+	</update>
+
+	<delete id="DeleteReservations" parameterType="list">							
+		Delete FROM reservation
+		WHERE res_id in
+ 		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
+		#{reservation.resId}
+		</foreach>
+	</delete>
+
+	<delete id="DeleteExceptionDates" parameterType="list">							
+		Delete FROM exception_date
+		WHERE stu_id in
+		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
+		#{reservation.stuId}
+		</foreach>
+		AND start_date in
+		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
+		date(#{reservation.startDate})
+		</foreach>
+		AND end_date in
+		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
+		date(#{reservation.endDate})
+		</foreach> 
+	</delete>
+	
 		
 </mapper> 
-
-<!-- 	<resultMap type="reservation" id="reservationRM">
-		<result property="resId" column="res_id"/>
-		<result property="stuId" column="stu_id"/>
-		<result property="startDate" column="start_date"/>
-		<result property="endDate" column="end_date"/>
-		<result property="totalPrice" column="total_price"/>
-		<result property="resDate" column="res_date"/>
-		<result property="totalPeople" column="total_people"/>
-		<association property="customer" javaType="customer">
-			<id property="custId" column="cust_id"/>
-				<result property="custId" column="cust_id" />
-		</association>
-	</resultMap>
- -->

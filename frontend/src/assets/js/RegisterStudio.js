@@ -1,7 +1,5 @@
 import axios from "axios";
 import Treeselect from '@riophae/vue-treeselect'; //https://github.com/riophae/vue-treeselect
-import '@riophae/vue-treeselect/dist/vue-treeselect.css';
-
 export default {
     components: { Treeselect },
     data() {
@@ -92,23 +90,29 @@ export default {
                     front = i;
                 }
             }
-
             /* 요일별 바인딩 */
             switch (day) {
                 case ('mon'):
                     this.week.mon = time_list;
+                    break;
                 case ('tue'):
                     this.week.tue = time_list;
+                    break;
                 case ('wed'):
                     this.week.wed = time_list;
+                    break;
                 case ('thu'):
                     this.week.thu = time_list;
+                    break;
                 case ('fri'):
                     this.week.frii = time_list;
+                    break;
                 case ('sat'):
                     this.week.sat = time_list;
+                    break;
                 case ('sun'):
                     this.week.sun = time_list;
+                    break;
             }
         },
         checkParkFlag(flag) {
@@ -164,16 +168,13 @@ export default {
                 this.tagCount++;
             }
             this.tag = taglist;
-
             /* 태그 1개 이상 입력 */
             if (this.tagCount < 1) {
                 alert("태그를 1개 이상 입력하세요.");
                 return false;
             }
-
             /* 선택된 옵션을 문자열로 변환하여 바인딩 */
             this.studio.studioFilter.options = this.selected.join(',');
-
             /* 주차가능 체크시 주차대수 입력 필수 */
             var parkAble = document.getElementsByName('parkFlag')[1].checked;
             var parking = document.getElementById('parking').value;
@@ -189,7 +190,6 @@ export default {
                     return false;
                 }
             }
-
             /* 서비스에 모두 동의해야 등록 */
             let agrees = document.getElementsByName('checkAgree[]');
             this.agreeCount = 0;
@@ -200,7 +200,6 @@ export default {
                 alert("서비스에 모두 동의하셔야 등록 가능합니다.");
                 return false;
             }
-
             /* 스튜디오 등록 */
             axios
                 .post('http://127.0.0.1:7777/studio', this.studio)

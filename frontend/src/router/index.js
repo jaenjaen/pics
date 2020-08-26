@@ -8,8 +8,8 @@ import TempStudio from "../components/Temp_MoveToInfo.vue";
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import Test from "../components/Test.vue";
-// import RegisterStudio from "../components/RegisterStudio.vue";
 import StudioInfo from "../components/StudioInfo.vue";
+
 Vue.use(VueRouter);
 const routes = [{
         path: "/",
@@ -57,22 +57,11 @@ const routes = [{
         name: "TempStudio",
         component: TempStudio,
         props: true
-    },
-    {
-        path: "/studioInfo",
-        name: "studioInfo",
-        component: StudioInfo
-    },
-
-    {
+    },{
         path: "/test",
         name: "test",
         component: Test
-    }, {
-        path: "/studioInfo",
-        name: "studioInfo",
-        component: StudioInfo
-    },
+    }
 ];
 const router = new VueRouter({
     mode: "history",

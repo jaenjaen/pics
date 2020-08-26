@@ -54,4 +54,4 @@ export default {
 };
 
 </script>
-<style src="../assets/css/CompanyLogin.css"></style>
+<style scoped src="../assets/css/CompanyLogin.css"></style>

@@ -74,4 +74,4 @@ export default {
 };
 
 </script>
-<style src="../assets/css/CompanyLogin.css"></style>
+<style scpoed src="../assets/css/CompanyLogin.css"></style>

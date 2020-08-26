@@ -233,7 +233,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #searchStudio {
   width: 768px;
   margin: auto;
@@ -248,13 +248,13 @@ export default {
   margin-top: 2%;
 }
 
+
 #filterSpace>span{
   margin-bottom: 2%;
   text-align: left;
   vertical-align: bottom;
   ;
 }
-
 #filterSpace>input[type=text]{
   height: 2rem;
 }

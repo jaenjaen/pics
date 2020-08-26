@@ -21,7 +21,6 @@
           <label for="login__password"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Password</span></label>
           <input type="password" v-model="password" class="form__input" placeholder="비밀번호" required>
         </div>
-
         <div class="form__field">
           <label for="login__password"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Password</span></label>
           <input type="password" v-model="checkpassword" class="form__input" placeholder="비밀번호 확인" required @keyup="checkPw">
@@ -31,8 +30,13 @@
 
         <div class="form__field">
           <label for="login__address"><img class="icon" src="../assets/img/register/companyAddr.svg"><span class="hidden">Address</span></label>
-          <input type="text" v-model="address" class="form__input" placeholder="주소" required>
+          <input type="text" v-model="address" class="form__input" placeholder="주소" required v-if="addrShow" readonly @click="editAddr"> 
+          <input type="button" value="주소 검색" v-if="!addrShow" @click="showModal">
         </div>
+        
+        <modal name="postcodeModal">
+          <vue-daum-postcode @complete="onComplete"/>
+        </modal>
 
         <div class="form__field">
           <label for="login__tel"><img class="icon" src="../assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
@@ -57,73 +61,83 @@
 import axios from "axios";
 
 export default {
-    name: "Register",
-    data(){
+  name: "Register",
+  data(){
     return {
-      idMsg:"",
-      idFlag:false,
-      pwMsg:"",
-      pwFlag:false,
-      name:"",
-      comId:"",
-      password:"",
-      checkpassword:"",
-      address:"",
-      tel:"",
-      condata:"",
-
-    }
-  },methods:{
+        idMsg:"",
+        idFlag:false,
+        pwMsg:"",
+        pwFlag:false,
+        addrShow:false,
+        name:"",
+        comId:"",
+        password:"",
+        checkpassword:"",
+        address:"",
+        tel:"",
+        condata:"",
+        
+      }
+  }
+  ,methods:{
     companyRegister: function(){
       if(this.idFlag == true && this.pwFlag == true){
         axios
-          .post('http://localhost:7777/company',{
-            name: this.name,
-            comId:this.comId,
-            password:this.password,
-            address:this.address,
-            tel:this.tel
-          })
-          .then(response => {
-            this.condata = response.data
-            alert(this.name+"의 가입을 환영합니다.");
-            location.href="http://localhost:9999"
-          })
-          .catch(e => {
-            console.log(e)
-          })
-        }
-        else{
-          alert("입력한 정보를 다시 한번 확인해주세요.");
-        }
-      }, //~companyRegister
-      checkEmail: function(){
-        axios
-        .get('http://localhost:7777/company/'+this.comId)
-        .then(res =>{
-          this.condata = res.data;
+        .post('http://localhost:7777/company',{
+          name: this.name,
+          comId:this.comId,
+          password:this.password,
+          address:this.address,
+          tel:this.tel
+        })
+         .then(response => {
+           this.condata = response.data
+           alert(this.name+"의 가입을 환영합니다.");
+           location.href="http://localhost:9999"
+           })
+        .catch(e => {
+          console.log(e)
+        })
+      }
+      else { alert("입력한 정보를 다시 한번 확인해주세요."); }
+    }, //~companyRegister
+    checkEmail: function(){
+      axios
+      .get('http://localhost:7777/company/'+this.comId)
+      .then(res =>{
+        this.condata = res.data;
           if(this.condata != ""){
-          this.idMsg="<p style='color:red;'>이미 사용중인 아이디입니다.</p>";
-          this.idFlag=true;
+            this.idMsg="<p style='color:red;'>이미 사용중인 아이디입니다.</p>";
+            this.idFlag=true;
           }
           else{
             this.idMsg="<p style='color:green;'>사용 가능한 아이디입니다.</p>";
           }
-        })
-        .catch(e =>{
-          console.log(e);
-        })
-      },//~checkEmail
-      checkPw: function(){
-        if (this.password == this.checkpassword){
-          this.pwFlag=true;
-          this.pwMsg="";
-        }else{
-          this.pwMsg="<p style='color:red;'>입력하신 비밀번호와 다릅니다.</p>";
-        }
+      })
+      .catch(e =>{
+        console.log(e);
+      })
+    },//~checkEmail
+    checkPw: function(){
+      if (this.password == this.checkpassword){
+        this.pwFlag=true;
+        this.pwMsg="";
+      }else{
+        this.pwMsg="<p style='color:red;'>입력하신 비밀번호와 다릅니다.</p>";
       }
+    },//~checkPw
+    showModal: function(){
+      this.$modal.show("postcodeModal");
     },
+    onComplete(data){
+      this.address = data.address;
+      this.addrShow = true;
+      this.$modal.hide("postcodeModal");
+    },
+    editAddr: function(){
+      this.$modal.show("postcodeModal");
+    }
+  }
 };
-
 </script>
 <style scpoed src="../assets/css/CompanyLogin.css"></style>

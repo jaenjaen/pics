@@ -1,4 +1,3 @@
-
 <style scoped src="../assets/css/RegisterStudio.css"></style>
 <template>
 <div id="app">
@@ -145,70 +144,103 @@
                     <label for="">운영 시간</label>
                 </div>
                 <div class="col-75">
+                    <span>요일 선택 </span>
+                    <input type="checkbox" name="day" id="mon" @change="selectDay('monTd')"> <span>월</span>
+                    <input type="checkbox" name="day" id="tue" @change="selectDay('tueTd')"> <span>화</span>
+                    <input type="checkbox" name="day" id="wed" @change="selectDay('wedTd')"> <span>수</span>
+                    <input type="checkbox" name="day" id="thu" @change="selectDay('thuTd')"> <span>목</span>
+                    <input type="checkbox" name="day" id="fri" @change="selectDay('friTd')"> <span>금</span>
+                    <input type="checkbox" name="day" id="sat" @change="selectDay('satTd')"> <span>토</span>
+                    <input type="checkbox" name="day" id="sun" @change="selectDay('sunTd')"> <span>일</span>
+                    <input type="checkbox" name="dayHide" id="no" @change="selectDay('no')"> <span id="dayNo">전체선택</span>
+                </div>
+            </div>
+            <div class="row">
                     <!-- 시간표 -->
-                    <table>
-                        <tr>
-                            <td style="text-align: center;">월</td>
-                            <td style="text-align: center;">화</td>
-                            <td style="text-align: center;">수</td>
-                            <td style="text-align: center;">목</td>
-                            <td style="text-align: center;">금</td>
-                            <td style="text-align: center;">토</td>
-                            <td style="text-align: center;">일</td>
-                        </tr>
+                    <table class="daySelect" id="monTd">
                         <tr>
                             <td>
-                                <select multiple size='24' id="mon" name="mon" @change="selectDay('mon')">
-                                    <option class="daySelect" v-for="time in timePerDay" :key="time">
-                                         {{time}}시-{{time+1}}시
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select multiple id="tue" name="tue" class="daySelect">
-                                    <option v-for="time in timePerDay" :key="time">
-                                         {{time}}시-{{time+1}}시
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select multiple id="wed" name="wed" class="daySelect">
-                                    <option v-for="time in timePerDay" :key="time">
-                                         {{time}}시-{{time+1}}시
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select multiple id="thu" name="thu" class="daySelect">
-                                    <option v-for="time in timePerDay" :key="time">
-                                         {{time}}시-{{time+1}}시
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select multiple id="fri" name="fri" class="daySelect">
-                                    <option v-for="time in timePerDay" :key="time">
-                                         {{time}}시-{{time+1}}시
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select multiple id="sat" name="sat" class="daySelect">
-                                    <option v-for="time in timePerDay" :key="time">
-                                         {{time}}시-{{time+1}}시
-                                    </option>
-                                </select>
-                            </td>
-                            <td>
-                                <select multiple id="sun" name="sun" class="daySelect">
-                                    <option v-for="time in timePerDay" :key="time">
-                                         {{time}}시-{{time+1}}시
+                                <select multiple size='24' id="monTime" name="monTime" @change="selectTime('mon')">
+                                    <option v-for="(time, index) in timePerDay" :key="index">
+                                         {{index}}시-{{index+1}}시
                                     </option>
                                 </select>
                             </td>
                         </tr>
                     </table>
-                </div>
+                    <table class="daySelect" id="tueTd">
+                        <tr>
+                            <td>
+                                <p>화</p>
+                                <button type="button" class="allSelectTime">전체선택</button>
+                                <button type="button" class="allDeselectTime">해제</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <select multiple size='24' id="tueTime" name="tueTime" @change="selectTime('tue')">
+                                    <option v-for="(time, index) in timePerDay" :key="index">
+                                         {{index}}시-{{index+1}}시
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="daySelect" id="wedTd">
+                        <tr>
+                            <td>
+                                <select multiple size='24' id="wedTime" name="wedTime" @change="selectTime('wed')">
+                                    <option v-for="(time, index) in timePerDay" :key="index">
+                                         {{index}}시-{{index+1}}시
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="daySelect" id="thuTd">
+                        <tr>
+                            <td>
+                                <select multiple size='24' id="thuTime" name="thuTime">
+                                    <option v-for="(time, index) in timePerDay" :key="index">
+                                         {{index}}시-{{index+1}}시
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="daySelect" id="friTd">
+                        <tr>
+                            <td>
+                                <select multiple size='24' id="friTime" name="friTime">
+                                    <option v-for="(time, index) in timePerDay" :key="index">
+                                         {{index}}시-{{index+1}}시
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="daySelect" id="satTd">
+                        <tr>
+                            <td>
+                                <select multiple size='24' id="satTime" name="satTime">
+                                    <option v-for="(time, index) in timePerDay" :key="index">
+                                         {{index}}시-{{index+1}}시
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="daySelect" id="sunTd">
+                        <tr>
+                            <td>
+                                <select multiple size='24' id="sunTime" name="sunTime">
+                                    <option v-for="(time, index) in timePerDay" :key="index">
+                                         {{index}}시-{{index+1}}시
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
             </div>
             <div class="row">
                 <div class="col-25">
@@ -233,13 +265,22 @@
                     <label for="options">장비 및 옵션</label>
                 </div>
                 <div class="col-75">
-                    <treeselect
-                    :multiple="true"
-                    :options="optionList"
-                    :searchable="true"
-                    placeholder="장비 및 옵션을 검색하세요."
-                    v-model="studio.studioFilter.options"
-                    />
+                    <div>
+                        <vue-multi-select
+                        ref="multiSelect"
+                        v-model="option_save"
+                        search
+                        historyButton
+                        :options="option_flags"
+                        :filters="option_filters"
+                        :btnLabel="btnLabel"
+                        :selectOptions="option_list">
+                        <template v-slot:option="{option}">
+                            <input type="checkbox" name="optionCheck" :checked="option.selected"/>
+                            <span name="optionName">{{option.name}}</span>
+                        </template>
+                        </vue-multi-select>
+                    </div>
                 </div>
             </div>
             <div class="row">

@@ -19,6 +19,7 @@
         "vue": "^2.6.11",
         "vue-moment": "^4.1.0",
         "vue-mq": "^1.0.1",
+        "vue-multi-select": "^4.5.0",
         "vue-router": "^3.2.0",
         "vue-session": "^1.0.0",
         "vuetify": "^2.3.10",

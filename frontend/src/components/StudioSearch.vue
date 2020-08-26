@@ -108,13 +108,13 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import axios from "axios";
 
 // import 'material-design-icons/iconfont/material-icons.css'
 // import 'materialize-css/dist/css/materialize.min.css'
 // import MC from 'materialize-css/dist/css/materialize.min.css'
-// import M from "materialize-css/";
+import M from "materialize-css/";
 // import MI from "material-design-icons/iconfont/material-icons.css";
 
 
@@ -157,7 +157,7 @@ export default {
   mounted() {
     // 페이지 오자마자 전체 리스트 뿌리기
     this.searchAllStudios();
-    // M.AutoInit();
+    M.AutoInit();
     // MC.AutoInit();
     // MI.AutoInit();
   },
@@ -239,8 +239,8 @@ export default {
 };
 </script>
 
-<style scoped src="materialize-css/dist/css/materialize.min.css">
-
+<style scoped src="materialize-css/dist/css/materialize.min.css"></style>
+<style scoped>
 #searchStudio {
   width: 768px;
   margin: auto;

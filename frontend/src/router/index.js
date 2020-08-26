@@ -51,6 +51,7 @@ const routes = [{
         path: "/register",
         name: "register",
         component: Register
+
     }, {
         path: "/TempStudio/:stuId",
         name: "TempStudio",
@@ -62,6 +63,7 @@ const routes = [{
         name: "studioInfo",
         component: StudioInfo
     },
+
     {
         path: "/test",
         name: "test",

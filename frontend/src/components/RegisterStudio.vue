@@ -1,3 +1,4 @@
+
 <style src="../assets/css/RegisterStudio.css"></style>
 <template>
 <div id="app">

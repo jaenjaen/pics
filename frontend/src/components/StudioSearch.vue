@@ -248,15 +248,12 @@ export default {
   margin-top: 2%;
 }
 
-<<<<<<< HEAD
 #filterSpace>span{
   margin-bottom: 2%;
   text-align: left;
   vertical-align: bottom;
   ;
 }
-=======
->>>>>>> 5f1943977c43c78c8b68240dcc59c11ec6003b4c
 
 #filterSpace>input[type=text]{
   height: 2rem;

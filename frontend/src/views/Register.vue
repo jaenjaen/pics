@@ -34,8 +34,8 @@
           <input type="button" value="주소 검색" v-if="!addrShow" @click="showModal">
         </div>
         
-        <modal name="postcodeModal">
-          <vue-daum-postcode @complete="onComplete"/>
+        <modal name="postcodeModal" :height="455">
+          <vue-daum-postcode @complete="onComplete" style="height: 455px; overflow: scroll;"/>
         </modal>
 
         <div class="form__field">

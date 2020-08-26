@@ -2,7 +2,6 @@
   <div id="app">
     <Header />
     <router-view />
-    <div class="test"></div>
   </div>
 </template>
 
@@ -31,9 +30,5 @@ body {
 
 #nav {
   padding: 30px;
-}
-
-.test {
-  height: 2000px;
 }
 </style>

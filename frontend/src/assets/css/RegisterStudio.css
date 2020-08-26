@@ -169,10 +169,6 @@
         }
         /* treeselect 관련 */
         
-        #app div * {
-            margin: 2px 0;
-        }
-        
         .vue-treeselect__multi-value-label {
             font-size: 16px;
         }

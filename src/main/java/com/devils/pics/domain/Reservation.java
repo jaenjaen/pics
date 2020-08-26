@@ -13,6 +13,10 @@ public class Reservation {
 	
 	public Reservation() {}
 	
+	public Reservation(int resId) {
+		this.resId = resId;
+	}
+	
 	public Reservation(int resId, int stuId, Customer customer, Studio studio, String startDate, String endDate, int totalPrice,
 			String resDate, int totalPeople) {
 		this.resId = resId;
@@ -36,7 +40,11 @@ public class Reservation {
 		this.resDate = resDate;
 		this.totalPeople = totalPeople;
 	}
-
+	
+	public Reservation(int stuId, Customer customer) {
+		this.stuId = stuId;
+		this.customer = customer;
+	}
 
 	public int getResId() {
 		return resId;

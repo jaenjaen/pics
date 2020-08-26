@@ -42,7 +42,7 @@
 				<result property="categoryId" column="category_id" />
 				<result property="categoryName" column="category_name" />
 		</association>
- <!-- 		<association property="schedule" javaType="schedule">
+<!--		<association property="schedule" javaType="schedule">
  			<result property="stuId" column="stu_id"/>
  			<association property="repeatDate" javaType="list">
 				<id property="stuId" column="stu_id"/>
@@ -55,9 +55,10 @@
 				<result property="exceptionId" column="exception_id"/>
 				<result property="startDate" column="start_date"/>
 				<result property="endDate" column="end_date"/>
-			</association>
+			</association> 
 		</association>
- -->	</resultMap>
+		-->
+	</resultMap>
  		
  	<resultMap type="review" id="reviewRM">
 		<result property="reviewId" column="review_id" />
@@ -112,9 +113,7 @@
 		SELECT count(res.res_id)
 		FROM reservation res
 		GROUP BY res.stu_id
-		<if test="'${value}'!=null">
-			HAVING res.stu_id=${value};	
-		</if>
+		HAVING res.stu_id=${value};
 	</select>		
 		
 	<select id="checkBookmark" parameterType="list" resultType="int">

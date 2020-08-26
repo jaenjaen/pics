@@ -11,10 +11,11 @@
         <div class="form__field">
           <label for="login__password"><img class="icon" src="../assets/img/login/loginPw.svg"><span class="hidden">Password</span></label>
           <input id="login__password" type="password" v-model="password" name="password" class="form__input" placeholder="Password" required>
+
         </div>
 
         <div class="form__field">
-          <input type="submit" value="Sign In">
+          <input type="submit" value="Sign In" />
         </div>
       </form>
       <br>

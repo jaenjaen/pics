@@ -1,6 +1,8 @@
 package com.devils.pics.dao.impl;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,13 +29,39 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	}
 
 	@Override
-	public int reserve(Reservation reservation) {
+	public int AddReservation(Reservation reservation) {
 		return sqlSession.insert(NS+"reserve", reservation);
 	}
 
 	@Override
-	public int AddexceptionDates(Reservation reservation) {
+	public int AddExceptionDates(Reservation reservation) {
 		return sqlSession.insert(NS+"AddexceptionDates", reservation);
+	}
+
+	@Override
+	public List<Reservation> getReservation(Reservation reservation) {
+		return sqlSession.selectList(NS+"getReservation", reservation);
+	}
+
+	@Override
+	public int UpdateReservation(Reservation reservation) {
+		return sqlSession.update(NS+"UpdateReservation", reservation);
+	}
+
+	@Override
+	public int UpdateExceptionDate(Reservation reservation) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(NS+"UpdateExceptionDate", reservation);
+	}
+
+	@Override
+	public int DeleteReservations(List<Reservation> reservationList) {
+		return sqlSession.delete(NS+"DeleteReservations", reservationList);
+	}
+
+	@Override
+	public int DeleteExceptionDates(List<Reservation> reservationList) {
+		return sqlSession.delete(NS+"DeleteExceptionDates", reservationList);
 	}
 
 }

@@ -3,14 +3,14 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
-import CompanyLogin from "../views/CompanyLogin.vue"
 import RegisterStudio from "../components/RegisterStudio.vue";
 import TempStudio from "../components/Temp_MoveToInfo.vue";
-import StudioInfo from "../components/StudioInfo.vue";
 import Register from "../views/Register.vue";
+import CompanyLogin from "../views/CompanyLogin.vue";
+import Test from "../components/Test.vue";
+import StudioInfo from "../components/StudioInfo.vue";
 
 Vue.use(VueRouter);
-
 const routes = [{
         path: "/",
         name: "Home",
@@ -39,8 +39,7 @@ const routes = [{
         path: "/companylogin",
         name: "companylogin",
         component: CompanyLogin
-    },
-    {
+    }, {
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
@@ -52,18 +51,21 @@ const routes = [{
         path: "/register",
         name: "register",
         component: Register
+
     }, {
         path: "/TempStudio/:stuId",
         name: "TempStudio",
         component: TempStudio,
         props: true
+    },{
+        path: "/test",
+        name: "test",
+        component: Test
     }
 ];
-
 const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,
     routes
 });
-
 export default router;

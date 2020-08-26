@@ -166,6 +166,7 @@
 </template>
 
 <script>
+import "vuetify"
 import axios from "axios"
 export default{
   name: "studio-info",
@@ -257,7 +258,7 @@ export default{
  </script>
 
 
-<style>
+<style scoped>
 
 
 #main-images-section {

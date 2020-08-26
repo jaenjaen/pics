@@ -109,10 +109,8 @@
 </template>
 
 <script>
-import 'materialize-css/dist/css/materialize.min.css'
-import 'material-design-icons/iconfont/material-icons.css'
 import axios from "axios";
-import M from "materialize-css";
+
 
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
@@ -153,7 +151,6 @@ export default {
   mounted() {
     // 페이지 오자마자 전체 리스트 뿌리기
     this.searchAllStudios();
-    M.AutoInit();
   },
 
   methods: {
@@ -233,7 +230,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #searchStudio {
   width: 768px;
   margin: auto;
@@ -248,15 +245,12 @@ export default {
   margin-top: 2%;
 }
 
-<<<<<<< HEAD
 #filterSpace>span{
   margin-bottom: 2%;
   text-align: left;
   vertical-align: bottom;
   ;
 }
-=======
->>>>>>> 5f1943977c43c78c8b68240dcc59c11ec6003b4c
 
 #filterSpace>input[type=text]{
   height: 2rem;

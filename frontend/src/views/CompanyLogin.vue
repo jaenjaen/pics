@@ -43,8 +43,10 @@ export default {
     companyLogin: function(){
       axios.get('http://localhost:7777/company/'+this.comId+"/"+this.password)
         .then(response => {
-          this.rdata = response.data
-          location.href="http://localhost:9999"
+          this.rdata = response.data;
+          if(this.rdata != "") {
+            location.href="http://localhost:9999";
+          }
         })
         .catch(e => {
           console.log(e)

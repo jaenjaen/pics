@@ -4,24 +4,21 @@
 
 <mapper namespace="CompanyMapper">	
 	<insert id="registerCompany" parameterType="company">
-		INSERT INTO company(com_id,name,address,password,tel,logo_img)
-		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg})
+		INSERT INTO company(com_id,name,address,password,tel,logo_img,salt)
+		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg},#{salt})
 	</insert>
 	
 	<select id="getCompany" parameterType="company" resultType="company">
-		SELECT com_id, name, address, password, tel, description, logo_img
+		SELECT com_id, name, address, password, tel, description, logo_img, salt
 		FROM company
 		<if test="comId !=null">
 			WHERE com_id = #{comId}
-		</if>
-		<if test="password !=null">
-			AND password = #{password}
 		</if>
 	</select>
 	
 	<update id="updateCompany" parameterType="company">
 		UPDATE company SET name=#{name}, address=#{address}, password= #{password},
-							tel=#{tel},description = #{description},logo_img =#{logoImg}
+							tel=#{tel},description = #{description},logo_img =#{logoImg},salt =#{salt}
 		WHERE com_id = #{comId}
 	</update>
 	

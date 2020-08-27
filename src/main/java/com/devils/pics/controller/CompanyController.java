@@ -1,5 +1,7 @@
 package com.devils.pics.controller;
 
+import java.io.FileNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,37 +31,43 @@ public class CompanyController {
 	public ResponseEntity registerCustomer(@RequestBody Company company) {
 		try {
 			companyService.registerCompany(company);
-			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
+
+		return new ResponseEntity(HttpStatus.OK);
 	}
 	
 	@GetMapping("/company/{comId}/{password}")
 	public ResponseEntity loginCompany(@PathVariable String comId,@PathVariable String password) {
+		Company comp = null;
+		Company company = new Company();
+		company.setComId(comId);
+		company.setPassword(password);
 		try {
-			Company company = new Company();
-			company.setComId(comId);
-			company.setPassword(password);
-			
-			Company comp = companyService.loginCompany(company);
-			return new ResponseEntity(comp, HttpStatus.OK);
-		} catch (Exception e) {
+			comp = companyService.loginCompany(company);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		} catch(Exception ex) {
+			ex.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity(comp, HttpStatus.OK);
 	}
 	
 	@GetMapping("/company/{comId}")
 	public ResponseEntity getCompany(@PathVariable String comId) {
+		Company comp =  null;
 		try {
 			Company company = new Company();
 			company.setComId(comId);
 			
-			Company comp = companyService.getCompany(company);
-			return new ResponseEntity(comp,HttpStatus.OK);
+			 comp = companyService.getCompany(company);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity(comp,HttpStatus.OK);
 	}
 	
 	@PutMapping("/company")
@@ -76,9 +84,9 @@ public class CompanyController {
 	public ResponseEntity deleteCustomer(@PathVariable String comId) {
 		try {
 			companyService.deleteCompany(comId);
-			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity(HttpStatus.OK);
 	}
 }

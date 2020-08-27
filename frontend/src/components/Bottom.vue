@@ -28,8 +28,8 @@
 </script>
 
 
-<style scoped src="../assets/css/remove_css.css">
-</style>
+<style scoped src="../assets/css/remove_css.css" />
+
 <style scoped>
 .bottom {
   position: fixed;

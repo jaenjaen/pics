@@ -25,7 +25,7 @@
 <script>
 import Bottom from "@/components/Bottom.vue";
 export default {
-  name: "bottom",
+  name: "pics-bottom",
   components: {
     Bottom
   },

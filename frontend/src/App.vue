@@ -7,16 +7,16 @@
 
 <script>
 import Header from "@/components/Header.vue";
+
 export default {
-  name: "header",
+  name: "pics-header",
   components: {
     Header
   }
 };
 </script>
 
-<style scoped src="materialize-css/dist/css/materialize.min.css">
-</style>
+<style scoped src="materialize-css/dist/css/materialize.min.css"></style>
 <style>
 body {
   background-color: #f5f5f5;

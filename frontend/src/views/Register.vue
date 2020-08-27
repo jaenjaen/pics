@@ -75,8 +75,7 @@ export default {
         checkpassword:"",
         address:"",
         tel:"",
-        condata:"",
-        
+        condata:""
       }
   }
   ,methods:{
@@ -99,7 +98,10 @@ export default {
           console.log(e)
         })
       }
-      else { alert("입력한 정보를 다시 한번 확인해주세요."); }
+      else { 
+        alert("입력한 정보를 다시 한번 확인해주세요.");
+        //console.log(this.idFlag+","+this.pwFlag+","+this.name+","+this.comId+","+this.password+","+this.address+","+this.tel);
+      }
     }, //~companyRegister
     checkEmail: function(){
       axios
@@ -108,10 +110,11 @@ export default {
         this.condata = res.data;
           if(this.condata != ""){
             this.idMsg="<p style='color:red;'>이미 사용중인 아이디입니다.</p>";
-            this.idFlag=true;
+            this.idFlag = false;
           }
           else{
             this.idMsg="<p style='color:green;'>사용 가능한 아이디입니다.</p>";
+            this.idFlag = true;
           }
       })
       .catch(e =>{
@@ -124,6 +127,7 @@ export default {
         this.pwMsg="";
       }else{
         this.pwMsg="<p style='color:red;'>입력하신 비밀번호와 다릅니다.</p>";
+        this.pwFlag=false;
       }
     },//~checkPw
     showModal: function(){

@@ -3,7 +3,7 @@
     <div id="loading" v-if="this.loading">Loading</div>
     <div id="result">
       <ol>
-        <li v-for="info in infos" v-bind:key="info.stuId">{{info.stuId}}</li>
+        <li v-for="info in infos" v-bind:key="info.stuId">{{ info.stuId }}</li>
       </ol>
     </div>
     <div class="input-field">
@@ -30,12 +30,12 @@ export default {
     };
   },
   mounted() {
-    this.showStudioInfo()
+    this.showStudioInfo();
   },
   methods: {
-    showStudioInfo () {
+    showStudioInfo() {
       axios
-        .get("http://127.0.0.1:7777/getStudioInfo/"+ this.stuId)
+        .get("http://127.0.0.1:7777/getStudioInfo/" + this.stuId)
         .then(response => (this.infos = response.data))
         .catch(error => {
           console.log(error);

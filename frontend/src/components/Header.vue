@@ -37,6 +37,7 @@ export default {
 <style scoped>
 .navbar-fixed {
   line-height: 44px !important;
+  z-index: 9999;
 }
 
 nav {

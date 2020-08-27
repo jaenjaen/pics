@@ -23,9 +23,13 @@
   </div>
 </template>
 
-<script></script>
 
-<style scoped src="../assets/css/remove_css.css"></style>
+<script>
+</script>
+
+
+<style scoped src="../assets/css/remove_css.css" />
+
 <style scoped>
 .bottom {
   position: fixed;

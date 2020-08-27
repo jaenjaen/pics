@@ -8,13 +8,12 @@
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
-        "@riophae/vue-treeselect": "^0.4.0",
         "axios": "^0.20.0",
         "calendarpickerjs": "^1.2.0",
         "core-js": "^3.6.5",
         "jquery": "^3.5.1",
-        "jquery-ui": "^1.12.1",
         "material-design-icons": "^3.0.1",
+        "material-icons": "^0.3.1",
         "materialize-css": "^1.0.0",
         "vue": "^2.6.11",
         "vue-daum-postcode": "^0.9.0",

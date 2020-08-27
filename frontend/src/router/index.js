@@ -10,47 +10,52 @@ import Test from "../components/Test.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 
 Vue.use(VueRouter);
-const routes = [{
-        path: "/studioSearch",
-        name: "studioSearch",
-        component: StudioSearch
-    },
-    {
-        path: "/customerlogin",
-        name: "customerlogin",
-        component: CustomerLogin
-    },
-    {
-        path: "/companylogin",
-        name: "companylogin",
-        component: CompanyLogin
-    }, {
-        path: "/registerStudio",
-        name: "registerStudio",
-        component: RegisterStudio
-    }, {
-        path: "/studioInfo",
-        name: "studioInfo",
-        component: StudioInfo
-    }, {
-        path: "/register",
-        name: "register",
-        component: Register
-
-    }, {
-        path: "/TempStudio/:stuId",
-        name: "TempStudio",
-        component: TempStudio,
-        props: true
-    }, {
-        path: "/test",
-        name: "test",
-        component: Test
-    }
+const routes = [
+  {
+    path: "/studioSearch",
+    name: "studioSearch",
+    component: StudioSearch
+  },
+  {
+    path: "/customerlogin",
+    name: "customerlogin",
+    component: CustomerLogin
+  },
+  {
+    path: "/companylogin",
+    name: "companylogin",
+    component: CompanyLogin
+  },
+  {
+    path: "/registerStudio",
+    name: "registerStudio",
+    component: RegisterStudio
+  },
+  {
+    path: "/studioInfo",
+    name: "studioInfo",
+    component: StudioInfo
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register
+  },
+  {
+    path: "/TempStudio/:stuId",
+    name: "TempStudio",
+    component: TempStudio,
+    props: true
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: Test
+  }
 ];
 const router = new VueRouter({
-    mode: "history",
-    base: process.env.BASE_URL,
-    routes
+  mode: "history",
+  base: process.env.BASE_URL,
+  routes
 });
 export default router;

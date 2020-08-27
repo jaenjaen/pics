@@ -1,199 +1,298 @@
-        #app {
-            background-color: #ffffff;
-            margin: auto;
-            width: 768px;
-            text-align: center;
-            padding: 1% 0 2% 0;
-        }
-        
-        input[type=text],
-        input[type=number],
-        select,
-        option,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
-        
-        textarea {
-            height: 100px;
-        }
-        
-        label {
-            padding: 12px 12px 12px 0;
-            display: inline-block;
-        }
-        
-        input[type=submit],
-        button {
-            background-color: #33A3DC;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-        }
-        
-        input[type=submit]:hover,
-        button:hover {
-            background-color: #034EA2;
-        }
-        
-        .optionBtn {
-            padding: 5px 10px;
-            margin: 20px 35px;
-        }
-        
-        .container {
-            margin: 0 auto;
-            border-radius: 5px;
-            background-color: white;
-            padding: 20px;
-        }
-        
-        .col-25 {
-            float: left;
-            text-align: "right";
-            width: 25%;
-            margin-top: 6px;
-        }
-        
-        .col-75 {
-            float: left;
-            width: 75%;
-            margin-top: 6px;
-        }
-        
-        .col-space {
-            padding-left: 20px;
-        }
-        
-        .row:after {
-            /* 열 다음에 Clear floats */
-            content: "";
-            display: table;
-            clear: both;
-        }
-        
-        #agreeTitle {
-            padding-bottom: 15px;
-        }
-        
-        table#agreeTable {
-            border-top: 1px solid #233157;
-            border-collapse: collapse;
-        }
-        
-        #agreeTable tr#partAgree {
-            background: white;
-            height: 60px;
-        }
-        
-        #checkAgree2 {
-            border-left: 1px solid #8E97A3;
-            border-right: 1px solid #8E97A3;
-        }
-        
-        #agreeTable td#allAgree {
-            background: #33A3DC;
-            border-top: 1px solid #8E97A3;
-            height: 50px;
-        }
-        
-        #agreeTable a:link,
-        #agreeTable a:visited {
-            color: #353535;
-        }
-        
-        #submitArea {
-            padding-top: 10px;
-        }
-        /* 일정 관리 */
-        
-        .daySelect {
-            display: none;
-        }
-        /* 태그 */
-        
-        .tag {
-            padding-right: 10px;
-        }
-        
-        #hashtag1,
-        #hashtag2,
-        #hashtag3 {
-            color: grey;
-            margin-top: -1px;
-            padding-left: 10px;
-            position: absolute;
-            font-size: 16px;
-        }
-        /* Modal 전체 */
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            padding-top: 100px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-        /* Modal 내용 */
-        
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-        /* Modal 닫기 버튼 */
-        
-        .close {
-            color: #aaaaaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        /* 장비 및 옵션 관련 */
-        
-        select {
-            /* 스크롤을 보이지 않게 함 */
-            overflow-y: auto;
-        }
-        
-        #selectTemplate {
-            height: 200px;
-        }
-        /* 반응형 : 너비 768px 이하 */
-        
-        @media screen and (max-width: 950px) {
-            .col-25,
-            .col-75,
-            input[type=submit] {
+            #app {
+                background-color: #ffffff;
+                margin: auto;
+                width: 768px;
+                text-align: center;
+                padding: 1% 0 2% 0;
+            }
+            
+            input[type=text],
+            input[type=number],
+            select,
+            option,
+            textarea {
                 width: 100%;
-                margin-top: 0;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                resize: vertical;
             }
+            
+            textarea {
+                height: 100px;
+            }
+            
+            label {
+                padding: 12px 12px 12px 0;
+                display: inline-block;
+            }
+            
+            input[type=submit],
+            button {
+                background-color: #33A3DC;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: right;
+            }
+            
+            input:focus,
+            select:focus,
+            textarea:focus {
+                border: 2px solid #33A3DC;
+            }
+            
+            input[type=submit]:hover,
+            button:hover {
+                background-color: #034EA2;
+            }
+            
+            .optionBtn {
+                padding: 5px 10px;
+                margin: 20px 35px;
+            }
+            
+            .container {
+                margin: 0 auto;
+                border-radius: 5px;
+                background-color: white;
+                padding: 20px;
+            }
+            
+            .col-25 {
+                float: left;
+                text-align: "right";
+                width: 25%;
+                margin-top: 6px;
+            }
+            
+            .col-75 {
+                float: left;
+                width: 75%;
+                margin-top: 6px;
+            }
+            
             .col-space {
-                padding-left: 0;
+                padding-left: 20px;
             }
+            
+            .row:after {
+                /* 열 다음에 Clear floats */
+                content: "";
+                display: table;
+                clear: both;
+            }
+            
+            #agreeTitle {
+                padding-bottom: 15px;
+            }
+            
+            table#agreeTable {
+                border-top: 1px solid #233157;
+                border-collapse: collapse;
+            }
+            
+            #agreeTable tr#partAgree {
+                background: white;
+                height: 60px;
+            }
+            
+            #checkAgree2 {
+                border-left: 1px solid #8E97A3;
+                border-right: 1px solid #8E97A3;
+            }
+            
+            #agreeTable td#allAgree {
+                background: #33A3DC;
+                border-top: 1px solid #8E97A3;
+                height: 50px;
+            }
+            
+            #agreeTable a:link,
+            #agreeTable a:visited {
+                color: #353535;
+            }
+            
+            #submitArea {
+                padding-top: 10px;
+            }
+            /* 운영시간 */
+            
+            select {
+                overflow-y: hidden;
+            }
+            
+            .daySelect {
+                display: none;
+            }
+            
+            .daySelect select {
+                border-width: 0;
+                margin: -5px;
+                outline: none;
+            }
+            
+            .daySelect option {
+                padding: 6px;
+                width: 60px;
+            }
+            /* 체크박스 CSS */
+            
+            .dayLabel {
+                padding: 0;
+            }
+            
+            input[name="day"]+label,
+            input[name="dayHide"]+label {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                border: 1px solid #8C8C8C;
+                cursor: pointer;
+                border-radius: 2px;
+            }
+            
+            input[id="mon"]:checked+label {
+                background-color: #46E8CC;
+            }
+            
+            select[id="monTime"] option:checked {
+                background: #46E8CC linear-gradient(0deg, #46E8CC 0%, #46E8CC 100%);
+            }
+            
+            input[id="tue"]:checked+label {
+                background-color: #49E1F2;
+            }
+            
+            select[id="tueTime"] option:checked {
+                background: #49E1F2 linear-gradient(0deg, #49E1F2 0%, #49E1F2 100%);
+            }
+            
+            input[id="wed"]:checked+label {
+                background-color: #4DA6DB;
+            }
+            
+            select[id="wedTime"] option:checked {
+                background: #4DA6DB linear-gradient(0deg, #4DA6DB 0%, #4DA6DB 100%);
+            }
+            
+            input[id="thu"]:checked+label {
+                background-color: #4987F2;
+            }
+            
+            select[id="thuTime"] option:checked {
+                background: #4987F2 linear-gradient(0deg, #4987F2 0%, #4987F2 100%);
+            }
+            
+            input[id="fri"]:checked+label {
+                background-color: #4657E8;
+            }
+            
+            select[id="friTime"] option:checked {
+                background: #4657E8 linear-gradient(0deg, #4657E8 0%, #4657E8 100%);
+            }
+            
+            input[id="sat"]:checked+label {
+                background-color: #A244F2;
+            }
+            
+            select[id="satTime"] option:checked {
+                background: #A244F2 linear-gradient(0deg, #A244F2 0%, #A244F2 100%);
+            }
+            
+            input[id="sun"]:checked+label {
+                background-color: #C941E8;
+            }
+            
+            select[id="sunTime"] option:checked {
+                background: #C941E8 linear-gradient(0deg, #C941E8 0%, #C941E8 100%);
+            }
+            
+            input[name="dayHide"]:checked+label {
+                background-color: #E66B67;
+            }
+            
+            input[name="day"],
+            input[name="dayHide"] {
+                display: none;
+            }
+            /* 태그 */
+            
             .tag {
-                padding-right: 0px;
+                padding-right: 10px;
             }
-        }
+            
+            #hashtag1,
+            #hashtag2,
+            #hashtag3 {
+                color: grey;
+                margin-top: -1px;
+                padding-left: 10px;
+                position: absolute;
+                font-size: 16px;
+            }
+            /* Modal 전체 */
+            
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                padding-top: 100px;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0, 0, 0);
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+            /* Modal 내용 */
+            
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+            }
+            /* Modal 닫기 버튼 */
+            
+            .close {
+                color: #aaaaaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+            
+            .close:hover,
+            .close:focus {
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            /* 장비 및 옵션 관련 */
+            
+            #selectTemplate {
+                height: 200px;
+            }
+            /* 반응형 : 너비 768px 이하 */
+            
+            @media screen and (max-width: 768px) {
+                #app {
+                    width: 100%;
+                }
+                .col-25,
+                .col-75,
+                input[type=submit] {
+                    width: 100%;
+                    margin-top: 0;
+                }
+                .col-space {
+                    padding-left: 0;
+                }
+                .tag {
+                    padding-right: 0px;
+                }
+            }

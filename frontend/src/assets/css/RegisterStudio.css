@@ -1,10 +1,9 @@
-        * {
-            box-sizing: border-box;
-        }
-        
-        body {
-            background-color: #f2f2f2;
-            margin-bottom: 50px;
+        #app {
+            background-color: #ffffff;
+            margin: auto;
+            width: 768px;
+            text-align: center;
+            padding: 1% 0 2% 0;
         }
         
         input[type=text],
@@ -116,7 +115,7 @@
         /* 일정 관리 */
         
         .daySelect {
-            display: inline-block;
+            display: none;
         }
         /* 태그 */
         
@@ -174,11 +173,15 @@
         }
         /* 장비 및 옵션 관련 */
         
+        select {
+            /* 스크롤을 보이지 않게 함 */
+            overflow-y: auto;
+        }
+        
         #selectTemplate {
             height: 200px;
         }
-        /* */
-        /* 반응형 : 너비 950px 이하 */
+        /* 반응형 : 너비 768px 이하 */
         
         @media screen and (max-width: 950px) {
             .col-25,

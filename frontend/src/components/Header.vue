@@ -11,7 +11,7 @@
               id="pics_logo"
             />
           </a>
-          <a href="#">
+          <a href="#" @click.prevent="moveToSearch">
             <img src="../assets/img/header_bottom/search_icon.svg" class="right" id="search_icon" />
           </a>
         </div>
@@ -28,6 +28,11 @@ export default {
   name: "bottom",
   components: {
     Bottom
+  },
+  methods :{
+    moveToSearch() {
+      this.$router.push("/studioSearch/");
+    }
   }
 };
 </script>

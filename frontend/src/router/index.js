@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
-import RegisterStudio from "../components/RegisterStudio.vue";
 import TempStudio from "../components/Temp_MoveToInfo.vue";
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
@@ -39,14 +38,10 @@ const routes = [{
         path: "/companylogin",
         name: "companylogin",
         component: CompanyLogin
-    }, {
-        path: "/registerStudio",
-        name: "registerStudio",
-        component: RegisterStudio
-    }, {
-        path: "/studioInfo",
-        name: "studioInfo",
-        component: StudioInfo
+            // }, {
+            //     path: "/registerStudio",
+            //     name: "registerStudio",
+            //     component: RegisterStudio
     }, {
         path: "/register",
         name: "register",
@@ -58,12 +53,6 @@ const routes = [{
         component: TempStudio,
         props: true
     },
-    {
-        path: "/studioInfo",
-        name: "studioInfo",
-        component: StudioInfo
-    },
-
     {
         path: "/test",
         name: "test",

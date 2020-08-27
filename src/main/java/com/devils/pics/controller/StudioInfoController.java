@@ -40,17 +40,15 @@ public class StudioInfoController {
 	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {	
 		try {
 		Schedule schedule=new Schedule();
-		ArrayList<ExceptionDate> exceptionDate=new ArrayList<ExceptionDate>(); 
-		ArrayList<RepeatDate> repeatDate=new ArrayList<RepeatDate>();
-		exceptionDate=studioReserveService.getExceptionDate(stuId);
-		repeatDate=studioReserveService.getRepeatDate(stuId);
-
+		ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(stuId); 
+		ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);		
 		schedule.setStuId(stuId);
 		schedule.setExceptionDate(exceptionDate);
 		schedule.setRepeatDate(repeatDate);
-
+		
 		List<Studio> studioVO=studioInfoService.getStudioInfo(stuId);
 		studioVO.get(0).setSchedule(schedule);
+		System.out.println(studioVO);
 		return new ResponseEntity<List<Studio>>(studioVO,HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage()+"찾으시는 스튜디오가 없습니다");

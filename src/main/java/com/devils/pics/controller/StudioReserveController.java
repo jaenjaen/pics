@@ -47,11 +47,9 @@ public class StudioReserveController {
 		// 페이지에 있는 studio 정보 & 세션에서 login 정보
 		try {
 			Schedule schedule=new Schedule();
-			ArrayList<ExceptionDate> exceptionDate=new ArrayList<ExceptionDate>(); 
-			ArrayList<RepeatDate> repeatDate=new ArrayList<RepeatDate>();
-			exceptionDate=studioReserveService.getExceptionDate(stuId);
-			repeatDate=studioReserveService.getRepeatDate(stuId);
-			
+			ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(stuId); 
+			ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);		
+			schedule.setStuId(stuId);
 			schedule.setExceptionDate(exceptionDate);
 			schedule.setRepeatDate(repeatDate);
 			return new ResponseEntity(schedule,HttpStatus.OK);
@@ -62,8 +60,9 @@ public class StudioReserveController {
 	}
 
 	//2.getReservation
-	@GetMapping("/studio/reservation")
-	public ResponseEntity getReservation(@RequestBody Reservation reservation) {
+	@GetMapping("/studio/reservation/{customer}/{stuId}")
+	public ResponseEntity getReservation(@PathVariable int stuId, @PathVariable Customer customer) {
+		Reservation reservation =new Reservation(stuId,customer); 
 		List<Reservation> resrvationList=studioReserveService.getReservation(reservation);
 		if(resrvationList.isEmpty())
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -78,9 +77,7 @@ public class StudioReserveController {
 		long time = System.currentTimeMillis();
 		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		String resDate = dayTime.format(new Date(time));
-		reservation.setResDate(resDate);
-		System.out.println(reservation);
-		
+
 		if(studioReserveService.AddReservation(reservation)==1) {
 			studioReserveService.AddExceptionDates(reservation);
 			return new ResponseEntity(HttpStatus.OK);
@@ -94,26 +91,21 @@ public class StudioReserveController {
 		long time = System.currentTimeMillis();
 		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		String resDate = dayTime.format(new Date(time));
-		reservation.setResDate(resDate);
-		System.out.println(reservation);
-		
+
 		if(studioReserveService.UpdateReservation(reservation)==1) {
 			studioReserveService.UpdateExceptionDate(reservation);
 			return new ResponseEntity(HttpStatus.OK);
 		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	
-	// 4. reservation,예약 불가능 일자 update 
+	// 4. reservation,예약 불가능 일자 delete 
 	@DeleteMapping("studio/reservation")
 	public ResponseEntity DeleteReservation(@RequestBody List<Reservation> reservationLIst) {
-		//현재 시각으로 등록 시각 설정
+		//등록 시간 삽입
 		long time = System.currentTimeMillis();
 		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 		String resDate = dayTime.format(new Date(time));
-		for(Reservation reservation:reservationLIst)
-			reservation.setResDate(resDate);
-		System.out.println(reservationLIst);
-		
+
 		if(studioReserveService.DeleteReservations(reservationLIst)>0) {
 			studioReserveService.DeleteExceptionDates(reservationLIst);
 			return new ResponseEntity(HttpStatus.OK);

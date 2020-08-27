@@ -1,48 +1,33 @@
+
 <template>
   <div id="container">
-    <div id="app">
       <!-- ==============  메인 이미지 : jumbo, carousel ============== -->
       <section id="main-images-section">
-        <!-- <div id="demo" class="carousel slide" data-ride="carousel"> -->
-        <!-- 하단 바 -->
-        <!-- <ul class="carousel-indicators">
-                        <li data-target="#demo" data-slide-to="0" class="active"></li>
-                        <li data-target="#demo" data-slide-to="1"></li>
-                        <li data-target="#demo" data-slide-to="2"></li>
-                        <li data-target="#demo" data-slide-to="3"></li>
-                    </ul> -->
-
-        <!-- 이미지 -->
-        <!-- <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="static/img/crawling_images/barcel_1.jpg" alt="barcel_1">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="static/img/crawling_images/barcel_2.jpg" alt="barcel_2">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="static/img/crawling_images/barcel_3.jpg" alt="barcel_3">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="static/img/crawling_images/barcel_4.jpg" alt="barcel_3">
-                        </div>
-                    </div> -->
-
-        <!-- 좌우 넘기기 아이콘 -->
-        <!-- <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </a>
-                    <a class="carousel-control-next" href="#demo" data-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </a>
-                </div> -->
+        <div class="row" v-for="(studio,index) in studios" v-bind:key="index">
+        <!-- <carousel navigationEnabled="true" navigationPrevLabel navigationNextLabel>  
+            <Slide
+                data-index="0"
+                data-name="MySlideName"
+                @slideclick="handleSlideClick">
+              <img :src="studio.mainImg">
+            </Slide>
+         </Carousel> -->
+        </div> 
       </section>
 
+      <hr />
+
       <nav>
-        <hr />
         <div id="studio-review-navigation">
-          <span><a href="#">상세보기</a></span>
-          <span><a href="#">리뷰보기</a></span>
+          <div>
+            <span id="tab-home" md-label="Home" to="/components/tabs" exact>
+              스튜디오 상세
+            </span>
+
+            <span id="tab-pages" md-label="Pages" to="/components/tabs/pages">
+              리뷰 보기
+            </span>
+          </div>
         </div>
         <hr />
       </nav>
@@ -52,15 +37,12 @@
           <hr />
           <h2>{{ studio.name }}</h2>
           <div class="bookmark-check">
-            <!-- <button  v-html="bookmark_check" @click="bookmarkChange"></button> -->
-            <v-btn icon color="pink" v-html="bookmark_check" @click="bookmarkChange">
-              <v-icon>mdi-heart</v-icon>
-            </v-btn>
+            <button v-html="bookmark_check" @click="bookmarkChange">
+            </button>
+            
           </div>
           <div id="company-of-studio ">
-            <span><img :src="studio.company.logoImg"/></span>&nbsp;<span>{{
-              studio.company.name
-            }}</span>
+            <span><img :src="studio.company.logoImg"/></span>&nbsp;<span>{{studio.company.name}}</span>
           </div>
           <ul class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
             <li style="list-style:none">{{ tag.tagName }}</li>
@@ -130,48 +112,69 @@
 
       <!-- ============== Reservation ============== -->
       <aside>
-        <div id="reservation-floating-banner" v-for="studio in studios" v-bind:key="studio.stuId">
-          <h2>예약하기</h2>
+        <div id="reservation-floating-banner">
           <form id=" reservation-form">
-            시작일 <input type="text" id="calender-start" name="start_Date" @focus="calenderOpen()" v-model="reservation.start_Date"><br>
             <!-- ============== calender ============== -->
-            <div id="calender">
+        <!-- 날짜 -->
+            <div class="row">
+              <div class="col s12 m3"></div>
+                <div class="col s12 m6">
+                  <form>
+                    <div class="date-input-field"> 
+                     대여 시작 일자
+                     <input type="date" id="start_date" name="start_date" v-model="reservation.start_date" required="required">
+                    </div>
+                    <br>
+                    <br>
+                    <div class="date-input-field"> 
+                     대여 종료 일자
+                     <input type="date" id="end_date" name="end_date"  v-model="reservation.end_date" required="required">
+                    </div>
+                  </form>
                 </div>
-
-            <!-- ============== calender ============== -->
-            종료일 <input type="text" id="calender-end" name="end_Date" v-model="reservation.end_Date"><br>
-            시간
-            <input type="text" /><br />
-            인원수
-            <button type="button" id="deletePeopleBtn" @click="deletePeople()">
-              -<img src="" />
-            </button>
-            <input type="text" name="total_people" v-model="reservation.total_people" />
-            <input type="hidden" id="maxCapacity" :value="studio.studioFilter.maxCapacity"/>
-            <button type="button" id="addPeopleBtn" @click="addPeople()">
-              +<img src="" />
-            </button>
-            <hr/>
-            <!-- 가격 계산 -->
+              <div class="col s12 m3"></div>
+            </div>
+           <hr/>
             <div>
-            총금액 <span>{{reservation.total_price}}</span>
+              시작 시간 선택
+              <select v-model="start_time" >
+                <option disabled value="예약 시작 시간"></option>
+                <option v-for="option in options" v-bind:key="option" required="required">{{options[option-1]}}</option>
+              </select>
+              <br>
+              종료 시간 선택
+              <select v-model="end_time" >
+                <option disabled value="예약 시작 시간"></option>
+                <option v-for="option in options" v-bind:key="option">{{options[option-1]}}</option>
+              </select>              
+            </div>
+            <div>
+            <button type="click" @click.prevent="totalPriceCalculate()"> </button>
+            <div v-for="stuio in studios" v-bind:key="stuio.stuId">
+              총금액 :{{reservation.total_price}}
+              단가 : {{studio.studioFilter.unitPrice}}
+              날짜 차이 : {{difTime}}
+            </div>
               <!-- (일자/24+일자%24)*unitPrice +(max_pep-default_pep)*excharge -->
             </div>
-            <button type="submit" @click="checkReservationDuplicate">예약하기</button>
+            <!-- <button type="submit" @click="checkReservationDuplicate">예약하기</button> -->
           </form>
         </div>
       </aside>
-    </div>
   </div>
 </template>
 
-<script>
-import axios from "axios"
+<script scoped>
+import axios from "axios";
+// import { Carousel, Slide } from 'vue-carousel';
+// import 'materialize-css/dist/css/materialize.min.css'
+// import M from "materialize-css/";
 export default{
   name: "studio-info",
-  data: () =>({
+  data(){
+        return{
         // studio 객체 변수
-        studios: {},
+        studios: [],
         tags: [],
         reviews: [],
         bookmark_check:0,
@@ -181,23 +184,29 @@ export default{
         total_people:1,
         total_price:0,
         },
+        //날짜 계산 변수
+        start_time:Date.now(),
+        end_time:Date.now(),
+        difTime:0,
+        options: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24],
         // 기본 변수
         loading: true,
-        errored: false,
-       
-         //캘린더 변수
-  }),
+        errored: false
+        };
+      },
     mounted() {
         axios
-            .get('http://127.0.0.1:7777/getStudioInfo/10')
-            .then(response => (this.studios = response.data))
+            .get('http://127.0.0.1:7777/studio/info/10')
+            .then(response => {
+              this.studios = response.data;
+            })
             .catch(error => {
                 console.log(error);
                 this.errored = true
             })
             .finally(() => this.loading = false)  
         axios
-            .get('http://127.0.0.1:7777/getTags/10')
+            .get('http://127.0.0.1:7777/studio/tags/10')
             .then(response => (this.tags = response.data))
             .catch(error => {
                 console.log(error);
@@ -205,7 +214,7 @@ export default{
             })
             .finally(() => this.loading = false)  
         axios
-            .get('http://127.0.0.1:7777/checkBookmark/3/10')
+            .get('http://127.0.0.1:7777/studio/bookmark/3/10')
             .then(response => (this.bookmark_check = response.data))
             .catch(error => {
                 console.log(error);
@@ -213,7 +222,15 @@ export default{
             })
             .finally(() => this.loading = false)
         axios
-            .get('http://127.0.0.1:7777/getStudioReviews/10')
+            .get('http://127.0.0.1:7777/studio/reviews/10')
+            .then(response => (this.reviews = response.data))
+            .catch(error => {
+                console.log(error);
+                this.errored = true
+            })
+            .finally(() => this.loading = false)
+                    axios
+          .get('http://127.0.0.1:7777/studio/accCustomer/10')
             .then(response => (this.reviews = response.data))
             .catch(error => {
                 console.log(error);
@@ -238,27 +255,48 @@ export default{
             else {
                 alert("최대 인원을 초과했습니다.")
             }
+        },
+        handleSlideClick (dataset) {
+          console.log(dataset.index, dataset.name)
+       }  
+      ,datePicker() {// 날짜 숫자로 받고 시작일과 마지막날 계산
+      if (this.start_date.length > 0 & this.end_date.length > 0) {
+        //alert(this.end_date+","+this.start_date+","+this.start_time+","+this.end_time);   
+        typeof(this.start_date)
+          }
+        },
+        totalPriceCalculate() {
+        // 1. 일자 >> 시간대로 변경
+        var startDate =this.reservation.start_date.split("-");
+        var endDate =this.reservation.end_date.split("-");
+        var startDateList=(new Date(startDate[0], startDate[1], startDate[2])).getTime();
+        var endDateList=(new Date(endDate[0], endDate[1], endDate[2])).getTime();
+        this.difTime=(endDateList-startDateList)/(60*60*1000);
+        // 2. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후로
+        if(this.difTime<0){
+          alert("대여 종료일을 시작일 이후로 설정하세요.");
+          this.reservation.endDate.html(this.reservation.startDate);
+        }else if(startDateList<Date.now()){
+          alert("대여 시작일은 현재 날짜 이후로 가능합니다.");
+          this.reservation.endDate.html(this.reservation.startDate);
+        }else{
+        // 3. 시간 계산 : 끝나는 시간이 시작 시간보다 작으면 끝나는 일자 다 계산하고 빼기
+        if(this.start_time>=this.end_time.getTime)
+          this.difTime-=(this.end_time-this.start_time);
+        else this.difTime+=(this.end_time-this.start_time);
         }
-        // ,totalPriceCalculate(){
-        //   var totalPeople=this.reservation.total_people;
-        //   var defaultCap=this.studio.studioFilter.defaultCapacity;
-        //   var excharge=this.studio.studioFilter.excharge;
-        //   var unitPrice=this.studio.studioFilter.unitPrice;
-        //   var endDate=this.reservation.total_people;
-        //   var startDate=this.studio.studioFilter.defaultCapacity;
-        //   //기본 인원 초과시
-        //   if(totalPeople>defaultCap){
-        //     this.reservation.total_price
-        //     =(endDate-startDate)*(unitPrice+(totalPeople-defaultCap)*excharge)
-        //   }else this.reservation.total_price=unitPrice*1
-        // }
+        // 4. 시간 * (unitPrice + excharge*초과 인원수)
+        this.reservation.total_price
+        =this.difTime*(this.studios.studioFilter.unitPrice
+        +this.studios.studioFilter.excharge
+        *(this.studioFilter.maxCapacity-this.studioFilter.defaultCapacity))
+        }
     }
 }
- </script>
 
+</script>
 
-<style>
-
+<style scoped>
 
 #main-images-section {
     margin: 5% 0 5% 0;
@@ -298,8 +336,8 @@ aside {
     width: 25%;
     padding: 3px 10px
 }
-
-.v-date-time-widget-container{
-    background: white;padding:15px
+#container{
+  width:80%;
 }
+
 </style>

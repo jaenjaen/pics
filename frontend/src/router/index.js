@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import Main from "../components/Main.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
 import RegisterStudio from "../components/RegisterStudio.vue";
@@ -11,6 +12,10 @@ import StudioInfo from "../components/StudioInfo.vue";
 
 Vue.use(VueRouter);
 const routes = [{
+        path: "/",
+        name: "pics-main",
+        component: Main
+    }, {
         path: "/studioSearch",
         name: "studioSearch",
         component: StudioSearch

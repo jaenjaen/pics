@@ -7,8 +7,9 @@
 
 <script>
 import Header from "@/components/Header.vue";
+
 export default {
-  name: "header",
+  name: "pics-header",
   components: {
     Header
   }

@@ -6,6 +6,12 @@
         <li v-for="info in infos" v-bind:key="info.stuId">{{info.stuId}}</li>
       </ol>
     </div>
+    <div class="input-field">
+      <select name="" id="">
+        <option value="">dd</option>
+        <option value="">ee</option>
+      </select>
+    </div>
   </div>
 </template>
 
@@ -42,8 +48,12 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js");
 #studioInfo {
   width: 768px;
   margin: auto;
 }
 </style>
+<style scoped src="materialize-css/dist/css/materialize.min.css"></style>
+<style scoped src="material-design-icons/iconfont/material-icons.css"></style>

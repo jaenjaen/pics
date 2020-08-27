@@ -42,80 +42,87 @@
         <i class="material-icons" @click="initFilter(5)">close</i>
       </span>
     </div> -->
-
+    <!-- <div id="categoryBtn">
+                <p>카테고리로 찾기</p>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="searchAllStudios"
+                >
+                  전체
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(1)"
+                >
+                  카페
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(2)"
+                >
+                  스튜디오
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(3)"
+                >
+                  집
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(4)"
+                >
+                  사무실
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(5)"
+                >
+                  음식점
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(6)"
+                >
+                  서점
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(7)"
+                >
+                  펍
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(8)"
+                >
+                  겔러리
+                </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  @click="setCategory(9)"
+                >
+                  기타
+                </button>
+              </div> -->
     <div class="row" id="filter">
       <!-- 카테고리 버튼 -->
-      <div id="categoryBtn">
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="searchAllStudios"
-        >
-          전체
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(1)"
-        >
-          카페
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s2"
-          @click="setCategory(2)"
-        >
-          스튜디오
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(3)"
-        >
-          집
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(4)"
-        >
-          사무실
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(5)"
-        >
-          음식점
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(6)"
-        >
-          서점
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(7)"
-        >
-          펍
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(8)"
-        >
-          겔러리
-        </button>
-        <button
-          class="waves-effect waves-light btn-small col s1"
-          @click="setCategory(9)"
-        >
-          기타
-        </button>
-      </div>
+      
 
       <!-- 필터 Collapse -->
       <div id="filterCol">
-        <ul class="collapsible">
+        <ul class="collapsible" ref="collapsible">
           <li>
             <div class="collapsible-header" id='colHeader'>
               <p>내가 원하는 조건으로 찾기</p>
             </div>
+            <!-- 카테고리 -->
             <div class="collapsible-body" id="filterSpace">
+              <div id='categoryFilter' name='categoryFilter'>
+                <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="false" :show-labels="false" placeholder="Pick a value"></multiselect>
+              </div>
+              <hr>
+
               <!-- 날짜 -->
               <div id="dateFilter" name="dateFilter">
                 <p>예약 날짜로 찾기</p>
@@ -224,13 +231,13 @@
         </ul>
       </div>
     </div>
+    <span id='searchTop'></span>
     <hr />
     <div v-if="loading">
       Loading...
     </div>
     <!-- 검색된 업체들이 출력되는 곳 -->
     <div class="row" id="searchList" v-else>
-      <input type="hidden" ref="searchTop">
       <!-- 정렬하기 위한 select 태그 -->
       <select name="orderCon" id="orderCon" @change="setFilter" v-model="order">
         <option disabled value="">정렬하기</option>
@@ -277,12 +284,16 @@ import axios from "axios";
 // import 'materialize-css/dist/css/materialize.min.css'
 // import MC from 'materialize-css/dist/css/materialize.min.css'
 import M from "materialize-css/";
+import Multiselect from 'vue-multi-select'
 // import MI from "material-design-icons/iconfont/material-icons.css";
 
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 // Vue 시작
 export default {
+  components:{
+    Multiselect
+  },
   name: "studio-list",
   data() {
     return {
@@ -303,6 +314,10 @@ export default {
       searchContent: "",
       searchTag: "",
       order: "",
+
+      value: null,
+      //select options
+      options:['전체','카페','스튜디오','가정집','사무실','식당','루프탑','펍','학교','기타'],
 
       // 기본 변수
       loading: true,
@@ -390,7 +405,8 @@ export default {
           this.studios = response.data;
           this.searchContent = "";
           this.searchTag = "";
-          location.href="#searchList";
+          // location.href="#searchTop";
+          this.closeCol(0);
         })
         .catch(error => {
           console.log(error);
@@ -425,6 +441,13 @@ export default {
         this.maxUnitPrice = "";
       }
       this.setFilter();
+    },
+    //collapse 닫기
+    closeCol (value) {
+      let elem = this.$refs.collapsible;
+      let instance = M.Collapsible.getInstance(elem);
+      instance.close(value);
+      elem.close(value);
     }
   }
 };
@@ -432,6 +455,7 @@ export default {
 
 <style scoped src="materialize-css/dist/css/materialize.min.css"></style>
 <style scoped src="material-design-icons/iconfont/material-icons.css"></style>
+// <style scoped src="vue-multi-select/dist/lib/vue-multi-select.css"></style>
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 
@@ -493,12 +517,11 @@ export default {
 
 #categoryBtn {
   margin-top: 1%;
-  margin-left: 0.5em;
   display: block;
 }
 
 #categoryBtn > button {
-  margin-right: 0.51em !important;
+  /* margin-right: 0.51em !important; */
 }
 
 .btn-small {

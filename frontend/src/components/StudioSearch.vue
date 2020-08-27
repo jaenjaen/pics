@@ -14,7 +14,7 @@
     </div>
 
     <!-- 필터 결과 출력 -->
-    <div id="filterResult">
+    <!-- <div id="filterResult">
       <span v-if="selectedDate"
         >날짜 : {{ selectedDate }}
         <i class="material-icons" @click="initFilter(1)">close</i></span
@@ -41,7 +41,7 @@
         <span v-if="maxUnitPrice">{{ maxUnitPrice | currency }}</span>
         <i class="material-icons" @click="initFilter(5)">close</i>
       </span>
-    </div>
+    </div> -->
 
     <div class="row" id="filter">
       <!-- 카테고리 버튼 -->
@@ -112,47 +112,113 @@
       <div id="filterCol">
         <ul class="collapsible">
           <li>
-            <div class="collapsible-header">
-              내가 원하는 조건으로 찾기
+            <div class="collapsible-header" id='colHeader'>
+              <p>내가 원하는 조건으로 찾기</p>
             </div>
             <div class="collapsible-body" id="filterSpace">
               <!-- 날짜 -->
               <div id="dateFilter" name="dateFilter">
                 <p>예약 날짜로 찾기</p>
-                <i class="material-icons" id='icon_filter'>insert_invitation</i>
+                <i class="material-icons" id="icon_filter">insert_invitation</i>
                 <input type="date" v-model="selectedDate" />
+                <span id='dateInit' @click="initFilter(1)">날짜 초기화</span>
               </div>
-              <hr>
+              <hr />
 
               <!-- 주소 -->
-              <div id='addrFilter' name="addrFilter">
+              <div id="addrFilter" name="addrFilter">
                 <p>주소로 찾기</p>
-                <i class="material-icons" id='icon_filter'>gps_fixed</i> 
-                <input type="text" value="" v-model="addr1" placeholder="도시명을 입력해주세요"/> 
-                  <span>시</span>
-                <input type="text" value="" v-model="addr2" placeholder="구/면/읍 입력해주세요" /> 
-                  <span>구/면/읍</span>
+                <i class="material-icons" id="icon_filter">gps_fixed</i>
+                <input
+                  type="text"
+                  value=""
+                  v-model="addr1"
+                  placeholder="도시명을 입력해주세요"
+                />
+                <span>시</span>
+                <input
+                  type="text"
+                  value=""
+                  v-model="addr2"
+                  placeholder="구/면/읍 입력해주세요"
+                />
+                <span>구/면/읍</span>
               </div>
-              <hr>
+              <hr />
 
               <!-- 장소 규모 -->
-              <div id='sizeFilter' name="sizeFilter">
+              <div id="sizeFilter" name="sizeFilter">
                 <p>공간 크기로 찾기</p>
-                <i class="material-icons" id='icon_filter'>location_city</i>
-                <input type="text" value="" v-model="minSize" placeholder="최소면적을 입력해주세요" />
-                <span>m<sub>2</sub></span><span>~</span>
-                <input type="text" value="" v-model="maxSize" placeholder="최대면적을 입력해주세요" />
+                <i class="material-icons" id="icon_filter">location_city</i>
+                <input
+                  type="text"
+                  value=""
+                  v-model="minSize"
+                  placeholder="최소면적을 입력해주세요"
+                />
+                <span>m<sub>2</sub></span
+                ><span>~</span>
+                <input
+                  type="text"
+                  value=""
+                  v-model="maxSize"
+                  placeholder="최대면적을 입력해주세요"
+                />
                 <span>m<sub>2</sub></span>
               </div>
-              <hr>
+              <hr />
 
               <!-- 인원수 -->
-              <div id='capaFilter' name="capaFilter">
+              <div id="capaFilter" name="capaFilter">
                 <p>인원 규모로 찾기</p>
-                <i class="material-icons" id='icon_filter'>accessibility</i> 
+                <i class="material-icons" id="icon_filter">accessibility</i>
+                <i class="material-icons" id="icon_capa1" @click="capacity--"
+                  >exposure_neg_1</i
+                >
+                <span>{{ capacity }}명</span>
+                <i class="material-icons" id="icon_capa2" @click="capacity++"
+                  >exposure_plus_1</i
+                >
               </div>
+              <hr />
 
-
+              <!-- 가격 -->
+              <div id="priceFilter" name="priceFilter">
+                <p>시간당 가격으로 찾기</p>
+                <i class="material-icons" id="icon_filter">attach_money</i>
+                <input
+                  type="text"
+                  value=""
+                  v-model="minUnitPrice"
+                  placeholder="최소금액을 입력해주세요"
+                />
+                <span>원</span><span>~</span>
+                <input
+                  type="text"
+                  value=""
+                  v-model="maxUnitPrice"
+                  placeholder="최대금액을 입력해주세요"
+                />
+                <span>원</span>
+              </div>
+              <div id='filterBtn'>
+                <!-- 초기화 버튼 -->
+                  <button
+                    class="waves-effect waves-light btn-small"
+                    id="initBtn"
+                    @click="initFilter(2)"
+                  >
+                    초기화
+                  </button>
+                  <!-- 적용 버튼 -->
+                  <button
+                    class="waves-effect waves-light btn-small"
+                    id="applyBtn"
+                    @click="setFilter"
+                  >
+                    적용
+                  </button>
+              </div>
             </div>
           </li>
         </ul>
@@ -164,6 +230,7 @@
     </div>
     <!-- 검색된 업체들이 출력되는 곳 -->
     <div class="row" id="searchList" v-else>
+      <input type="hidden" ref="searchTop">
       <!-- 정렬하기 위한 select 태그 -->
       <select name="orderCon" id="orderCon" @change="setFilter" v-model="order">
         <option disabled value="">정렬하기</option>
@@ -323,6 +390,7 @@ export default {
           this.studios = response.data;
           this.searchContent = "";
           this.searchTag = "";
+          location.href="#searchList";
         })
         .catch(error => {
           console.log(error);
@@ -345,15 +413,14 @@ export default {
       if (value == 1) {
         this.selectedDate = "";
         this.weekDate = "";
-      } else if (value == 2) {
+      } else {
+        this.selectedDate = "";
+        this.weekDate = "";
         this.addr1 = "";
         this.addr2 = "";
-      } else if (value == 3) {
         this.minSize = "";
         this.maxSize = "";
-      } else if (value == 4) {
         this.capacity = "";
-      } else if (value == 5) {
         this.minUnitPrice = "";
         this.maxUnitPrice = "";
       }
@@ -426,11 +493,12 @@ export default {
 
 #categoryBtn {
   margin-top: 1%;
+  margin-left: 0.5em;
   display: block;
 }
 
 #categoryBtn > button {
-  margin-right: 0.5em !important;
+  margin-right: 0.51em !important;
 }
 
 .btn-small {
@@ -441,47 +509,73 @@ export default {
 }
 
 #filterCol {
-  
+  width: 100%;
+}
+
+#filterCol #colHeader{
+  height: 3em !important;
+  padding-top: 0 !important;
 }
 
 #filterSpace {
   text-align: left;
-  padding-top: 0.5em;
-  padding-bottom: 0.9em;
+  padding-top: 0;
+  padding-bottom: 0.3em;
 }
 
-#filterSpace p{
+#filterCol p,
+#filterSpace p {
   font-size: 0.9em;
   font-weight: bold;
 }
 
 #filterSpace input[type="date"] {
-  width: 50%;
+  width: 20%;
+  height: 1.9em;
+  background-color: white;
+  border-radius: 0.3em;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.9em;
+  color: #737373;
+  text-align: center;
 }
 
 #icon_filter {
   margin-left: 0;
   margin-right: 0.7em;
-  font-size: 4rem;
-  color: #3571B5;
+  font-size: 2rem;
+  color: #3571b5;
   vertical-align: middle;
 }
 
 #filterSpace input[type="text"] {
+  width: 24%;
+  text-align: center;
+}
+
+#addrFilter span,
+#sizeFilter span,
+#priceFilter span,
+#capaFilter span {
+  margin-right: 1em;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+#dateInit {
+  margin-left:1em;
+  font-weight: bold;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+
+#filterSpace input[type="text"] {
   width: 30%;
   height: 1.8em;
-  margin-bottom: 3em;
   margin-right: 0.5em;
   background-color: white;
   border-radius: 0.3em;
-}
-
-#addrFilter input[type="text"] {
-  width: 24%;
-}
-
-#addrFilter span, #sizeFilter span {
-  margin-right: 1em;
 }
 
 #filterSpace input[type="text"]::placeholder {
@@ -490,37 +584,34 @@ export default {
   font-size: 0.9em;
 }
 
-#sizeFilter img {
-  vertical-align: middle;
-}
-
-#sizeFilter input[type="text"],
-#priceFilter input[type="text"] {
-  margin-bottom: 0;
-}
-
-#capaFilter #icon {
-  width: 80%;
-  height: 30%;
-  margin: auto;
-}
-
-#capaFilter #icon i {
-  width: 25%;
-  background-color: #f2f2f2;
+#capaFilter #icon_capa1,
+#icon_capa2 {
+  width: 6.2%;
+  margin-right: 0.5em;
+  background-color: white;
   border-radius: 1em;
   vertical-align: middle;
   cursor: pointer;
-  font-size: 1.5rem;
-}
-
-#capaFilter #icon span {
-  margin: 0em 1em;
-}
-
-#capa {
+  font-size: 1.4rem;
   text-align: center;
-  font-size: 1.2em;
+}
+
+#capaFilter span {
+  margin-right: 1em;
+  text-align: center;
+  font-size: 1em;
+}
+
+#filterBtn {
+  margin-top: 0.5em;
+}
+
+#filterBtn #initBtn {
+  margin-left: 81.5%;
+}
+
+#filterBtn #applyBtn {
+  margin-left: 0.5em;
 }
 
 #studioInf {
@@ -542,5 +633,4 @@ export default {
 .card.horizontal .card-image img {
   width: 100% !important;
 }
-
 </style>

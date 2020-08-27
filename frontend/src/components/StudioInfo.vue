@@ -165,10 +165,12 @@
 </template>
 
 <script scoped>
+
 import axios from "axios";
 // import { Carousel, Slide } from 'vue-carousel';
 // import 'materialize-css/dist/css/materialize.min.css'
 // import M from "materialize-css/";
+
 export default{
   name: "studio-info",
   data(){
@@ -297,6 +299,7 @@ export default{
 </script>
 
 <style scoped>
+
 
 #main-images-section {
     margin: 5% 0 5% 0;

@@ -1,8 +1,9 @@
 import axios from "axios";
-import Treeselect from '@riophae/vue-treeselect'; //https://github.com/riophae/vue-treeselect
+import vueMultiSelect from 'vue-multi-select'; //https://vue-multi-select.tuturu.io/
+import 'vue-multi-select/dist/lib/vue-multi-select.css';
 
 export default {
-    components: { Treeselect },
+    components: { vueMultiSelect },
     data() {
         return {
             studio: {
@@ -35,7 +36,7 @@ export default {
                 }]
             },
             timePerDay: [
-                0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             ],
             week: [{
                 mon: '',
@@ -46,20 +47,28 @@ export default {
                 sat: '',
                 sun: ''
             }],
-            optionList: [{
-                id: 'a',
-                label: '카메라'
-            }, {
-                id: 'b',
-                label: '조명',
-            }, {
-                id: 'c',
-                label: '반사판',
-            }, {
-                id: 'd',
-                label: '포토그래퍼',
+            btnLabel: option_save => `장비 및 옵션 (${option_save.length})`,
+            option_save: [],
+            option_list: [{
+                name: '장비 및 옵션',
+                list: [
+                    { name: '카메라' },
+                    { name: '조명' },
+                    { name: '반사판' },
+                    { name: '포토그래퍼' }
+                ],
             }],
-            selected: [],
+            option_filters: [{
+                nameAll: '전체선택',
+                nameNotAll: '전체선택 해제',
+                func() {
+                    return true;
+                },
+            }],
+            option_flags: {
+                multi: true,
+                groups: true,
+            },
             tagCount: 0,
             agreeCount: 0,
         }
@@ -67,11 +76,50 @@ export default {
     methods: {
         //선택 취소할 수 있게 해야 함...
         selectDay(day) {
+            if (day == 'no') {
+                let thisCheck = document.getElementById('no');
+                let checkDay = document.getElementsByName('day');
+                let allDay = document.getElementsByClassName('daySelect');
+                let dayNo = document.getElementById('dayNo');
+                if (thisCheck.checked) { //체크시
+                    for (let i = 0; i < allDay.length; i++) {
+                        allDay[i].style.display = 'inline-block';
+                        checkDay[i].checked = true;
+                    }
+                    dayNo.innerHTML = "전체선택 해제";
+                } else { //체크해제시
+                    for (let i = 0; i < allDay.length; i++) {
+                        allDay[i].style.display = 'none';
+                        checkDay[i].checked = false;
+                    }
+                    dayNo.innerHTML = "전체선택";
+                }
+            } else { //선택한 요일 시간 보이게 함
+                let whatDay = document.getElementById(day);
+                let thisCheck = document.getElementById(day.substring(0, 3));
+                if (thisCheck.checked) { //요일 체크시 보임
+                    whatDay.style.display = 'inline-block';
+                } else { //요일 체크 해제시 숨김
+                    whatDay.style.display = 'none';
+                }
+
+            }
+        },
+        selectTime(day) {
             /* 요일 공통 알고리즘 */
             let time_list = '';
             let start = -1; //시작시간
             let front = 0;
             let temp_list = document.getElementById(day);
+            for (let i = 0; i < temp_list.length; i++) {
+                if (this.timePerDay[i] == 0) { //선택하지 않은 상태
+                    this.timePerDay[i] = 1;
+                }
+                if (this.timePerDay[i] == 1) { //선택한 상태
+                    this.timePerDay[i] = 0;
+                }
+            }
+
             for (let i = 0; i < temp_list.length; i++) {
                 if (temp_list[i].selected) {
                     start = i; //시작 인덱스 할당
@@ -161,6 +209,18 @@ export default {
             }
         },
         addStudio() {
+            /* 선택된 옵션을 문자열로 변환하여 바인딩 */
+            this.option_save = [];
+            var optionName = document.getElementsByName('optionName');
+            for (let i = 0; i < optionName.length; i++) {
+                var optionCheck = document.getElementsByName('optionCheck');
+                if (optionCheck[i].checked) {
+                    this.option_save.push(optionName[i].innerHTML);
+                }
+            }
+            this.studio.studioFilter.options = this.option_save.join(',');
+            alert(this.studio.studioFilter.options);
+
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
             let tags = document.getElementsByName('tag');
             let taglist = '';
@@ -176,9 +236,6 @@ export default {
                 alert("태그를 1개 이상 입력하세요.");
                 return false;
             }
-
-            /* 선택된 옵션을 문자열로 변환하여 바인딩 */
-            this.studio.studioFilter.options = this.selected.join(',');
 
             /* 주차가능 체크시 주차대수 입력 필수 */
             var parkAble = document.getElementsByName('parkFlag')[1].checked;
@@ -220,6 +277,7 @@ export default {
         }
     }
 }
+
 // //selectable
 // $(function() {
 //     /* 운영시간 값 저장 */

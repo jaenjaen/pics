@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import axios from "axios";
 // Vue 시작
 export default {
@@ -41,7 +41,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #studioInfo {
   width: 768px;
   margin: auto;

@@ -113,6 +113,11 @@
         #submitArea {
             padding-top: 10px;
         }
+        /* 일정 관리 */
+        
+        .daySelect {
+            display: inline-block;
+        }
         /* 태그 */
         
         .tag {
@@ -167,21 +172,12 @@
             text-decoration: none;
             cursor: pointer;
         }
-        /* treeselect 관련 */
+        /* 장비 및 옵션 관련 */
         
-        #app div * {
-            margin: 2px 0;
+        #selectTemplate {
+            height: 200px;
         }
-        
-        .vue-treeselect__multi-value-label {
-            font-size: 16px;
-        }
-        
-        .vue-treeselect__input {
-            border: none !important;
-            height: 23px;
-            font-size: 16px;
-        }
+        /* */
         /* 반응형 : 너비 950px 이하 */
         
         @media screen and (max-width: 950px) {
@@ -196,8 +192,5 @@
             }
             .tag {
                 padding-right: 0px;
-            }
-            .daySelect::-webkit-scrollbar {
-                display: none;
             }
         }

@@ -106,17 +106,26 @@
             <button type="button">찾기</button>
           </div>
         </div>
+        <toggle-button :value="true"
+                            color="#33A3DC"
+                            :labels="{checked: '㎡', unchecked: '평'}"/>
         <div class="row">
           <div class="col-25">
             <label for="floor">층수</label>
           </div>
           <div class="col-25">
+            <div class="outContainer">
+              <label class="inContent">층</label>
+            </div>
             <input type="text" id="floor" name="floor" v-model="studio.floor" />
           </div>
           <div class="col-25 col-space">
             <label for="size">면적</label>
           </div>
           <div class="col-25">
+            <div class="col-25">
+              
+            </div>
             <input
               type="text"
               id="size"
@@ -145,6 +154,9 @@
             <label for="unitPrice">시간당 대여료</label>
           </div>
           <div class="col-25">
+            <div class="outContainer">
+              <label class="inContent">원</label>
+            </div>
             <input
               type="text"
               id="unitPrice"
@@ -157,6 +169,9 @@
             <label for="excharge">인원 추가시 1인당 대여료</label>
           </div>
           <div class="col-25">
+            <div class="outContainer">
+              <label class="inContent">원</label>
+            </div>
             <input
               type="text"
               id="excharge"
@@ -171,6 +186,9 @@
             <label for="defaultCapacity">기본 인원</label>
           </div>
           <div class="col-25">
+            <div class="outContainer">
+              <label class="inContent">명</label>
+            </div>
             <input
               type="text"
               id="defaultCapacity"
@@ -183,6 +201,9 @@
             <label for="maxCapacity">최대 인원</label>
           </div>
           <div class="col-25">
+            <div class="outContainer">
+              <label class="inContent">명</label>
+            </div>
             <input
               type="text"
               id="maxCapacity"
@@ -197,104 +218,84 @@
             <label for="">운영 시간</label>
           </div>
           <div class="col-75">
-            <!-- 시간표 -->
-            <input
-              type="text"
-              id="weekDate"
-              name="weekDate"
-              placeholder="요일"
-              required
-            />
-            <input
-              type="text"
-              id="time"
-              name="time"
-              placeholder="시간"
-              required
-            />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label for="">운영 시간</label>
-          </div>
-          <div class="col-75">
-            <input
-              type="checkbox"
-              name="day"
-              id="mon"
-              @change="selectDay('monTd')"
-            />
-            <label class="dayLabel" for="mon"></label>
-            <span>월</span>
-            <input
-              type="checkbox"
-              name="day"
-              id="tue"
-              @change="selectDay('tueTd')"
-            />
-            <label class="dayLabel" for="tue"></label>
-            <span>화</span>
-            <input
-              type="checkbox"
-              name="day"
-              id="wed"
-              @change="selectDay('wedTd')"
-            />
-            <label class="dayLabel" for="wed"></label>
-            <span>수</span>
-            <input
-              type="checkbox"
-              name="day"
-              id="thu"
-              @change="selectDay('thuTd')"
-            />
-            <label class="dayLabel" for="thu"></label>
-            <span>목</span>
-            <input
-              type="checkbox"
-              name="day"
-              id="fri"
-              @change="selectDay('friTd')"
-            />
-            <label class="dayLabel" for="fri"></label>
-            <span>금</span>
-            <input
-              type="checkbox"
-              name="day"
-              id="sat"
-              @change="selectDay('satTd')"
-            />
-            <label class="dayLabel" for="sat"></label>
-            <span>토</span>
-            <input
-              type="checkbox"
-              name="day"
-              id="sun"
-              @change="selectDay('sunTd')"
-            />
-            <label class="dayLabel" for="sun"></label>
-            <span>일</span>
-            <span id="dayAll">
+            <div id="dayList">
               <input
                 type="checkbox"
-                name="dayHide"
-                id="all"
-                @change="selectDay('all')"
+                name="day"
+                id="mon"
+                @change="selectDay('monTd')"
               />
-              <label class="dayLabel" for="all"></label>
-              전체선택
-            </span>
-            <span id="dayNo" style="display:none">
+              <label class="dayLabel" for="mon"></label>
+              <span>월</span>
               <input
                 type="checkbox"
-                name="dayHide"
-                id="no"
-                @change="selectDay('no')"
+                name="day"
+                id="tue"
+                @change="selectDay('tueTd')"
               />
-              <label class="dayLabel" for="no"></label>
-              전체해제
-             </span>
+              <label class="dayLabel" for="tue"></label>
+              <span>화</span>
+              <input
+                type="checkbox"
+                name="day"
+                id="wed"
+                @change="selectDay('wedTd')"
+              />
+              <label class="dayLabel" for="wed"></label>
+              <span>수</span>
+              <input
+                type="checkbox"
+                name="day"
+                id="thu"
+                @change="selectDay('thuTd')"
+              />
+              <label class="dayLabel" for="thu"></label>
+              <span>목</span>
+              <input
+                type="checkbox"
+                name="day"
+                id="fri"
+                @change="selectDay('friTd')"
+              />
+              <label class="dayLabel" for="fri"></label>
+              <span>금</span>
+              <input
+                type="checkbox"
+                name="day"
+                id="sat"
+                @change="selectDay('satTd')"
+              />
+              <label class="dayLabel" for="sat"></label>
+              <span>토</span>
+              <input
+                type="checkbox"
+                name="day"
+                id="sun"
+                @change="selectDay('sunTd')"
+              />
+              <label class="dayLabel" for="sun"></label>
+              <span>일</span>
+              <span id="dayAll">
+                <input
+                  type="checkbox"
+                  name="dayHide"
+                  id="all"
+                  @change="selectDay('all')"
+                />
+                <label class="dayLabel" for="all"></label>
+                전체선택
+              </span>
+              <span id="dayNo">
+                <input
+                  type="checkbox"
+                  name="dayHide"
+                  id="no"
+                  @change="selectDay('no')"
+                />
+                <label class="dayLabel" for="no"></label>
+                전체해제
+              </span>
+             </div>
           </div>
         </div>
         <div class="row">
@@ -490,20 +491,22 @@
             <label for="parkFlag">주차 가능</label>
           </div>
           <div class="col-25">
-            <input
-              type="radio"
-              name="parkFlag"
-              value="unable"
-              @change="checkParkFlag('no')"
-              checked
-            />
-            불가
-            <input
-              type="radio"
-              name="parkFlag"
-              value="able"
-              @change="checkParkFlag('yes')"
-            />가능
+            <div id="verticalFit">
+              <input
+                type="radio"
+                name="parkFlag"
+                value="unable"
+                @change="checkParkFlag('no')"
+                checked
+              />
+              불가
+              <input
+                type="radio"
+                name="parkFlag"
+                value="able"
+                @change="checkParkFlag('yes')"
+              />가능
+            </div>
           </div>
           <span id="parkAmount" style="display: none;">
             <div class="col-25 col-space">
@@ -511,8 +514,11 @@
             </div>
             <div class="col-25">
               <!-- 음수를 입력했을 때 0으로 -->
+              <div class="outContainer">
+                <label class="inContent">대</label>
+              </div>
               <input
-                type="number"
+                type="text"
                 id="parking"
                 name="parking"
                 ref="parking"
@@ -564,7 +570,7 @@
           </div>
         </div>
         <div class="row">
-          <p id="agreeTitle" style="padding-top:30px">서비스 동의</p>
+          <p id="agreeTitle" style="padding-top:10px">서비스 동의</p>
           <table id="agreeTable" width="100%">
             <tr id="partAgree">
               <td id="checkAgree1">

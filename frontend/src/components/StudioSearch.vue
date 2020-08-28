@@ -12,123 +12,44 @@
         />
       </span>
     </div>
-
-    <!-- 필터 결과 출력 -->
-    <!-- <div id="filterResult">
-      <span v-if="selectedDate"
-        >날짜 : {{ selectedDate }}
-        <i class="material-icons" @click="initFilter(1)">close</i></span
-      >
-      <span v-if="addr1 || addr2">
-        주소 :
-        <span v-if="addr1">{{ addr1 }}</span>
-        <span v-if="addr2">{{ addr2 }}</span>
-        <i class="material-icons" @click="initFilter(2)">close</i>
-      </span>
-      <span v-if="minSize || maxSize">
-        면적 :
-        <span v-if="minSize">{{ minSize }}</span> ~
-        <span v-if="maxSize">{{ maxSize }}</span>
-        <i class="material-icons" @click="initFilter(3)">close</i>
-      </span>
-      <span v-if="capacity"
-        >인원 : {{ capacity }}
-        <i class="material-icons" @click="initFilter(4)">close</i></span
-      >
-      <span v-if="minUnitPrice || maxUnitPrice">
-        가격 :
-        <span v-if="minUnitPrice">{{ minUnitPrice | currency }}</span> ~
-        <span v-if="maxUnitPrice">{{ maxUnitPrice | currency }}</span>
-        <i class="material-icons" @click="initFilter(5)">close</i>
-      </span>
-    </div> -->
-    <!-- <div id="categoryBtn">
-                <p>카테고리로 찾기</p>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="searchAllStudios"
-                >
-                  전체
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(1)"
-                >
-                  카페
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(2)"
-                >
-                  스튜디오
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(3)"
-                >
-                  집
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(4)"
-                >
-                  사무실
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(5)"
-                >
-                  음식점
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(6)"
-                >
-                  서점
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(7)"
-                >
-                  펍
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(8)"
-                >
-                  겔러리
-                </button>
-                <button
-                  class="waves-effect waves-light btn-small"
-                  @click="setCategory(9)"
-                >
-                  기타
-                </button>
-              </div> -->
     <div class="row" id="filter">
-      <!-- 카테고리 버튼 -->
-      
-
       <!-- 필터 Collapse -->
       <div id="filterCol">
         <ul class="collapsible" ref="collapsible">
           <li>
-            <div class="collapsible-header" id='colHeader'>
+            <div class="collapsible-header" id="colHeader">
               <p>내가 원하는 조건으로 찾기</p>
             </div>
-            <!-- 카테고리 -->
-            <div class="collapsible-body" id="filterSpace">
-              <div id='categoryFilter' name='categoryFilter'>
-                <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="false" :show-labels="false" placeholder="Pick a value"></multiselect>
-              </div>
-              <hr>
 
-              <!-- 날짜 -->
-              <div id="dateFilter" name="dateFilter">
-                <p>예약 날짜로 찾기</p>
-                <i class="material-icons" id="icon_filter">insert_invitation</i>
-                <input type="date" v-model="selectedDate" />
-                <span id='dateInit' @click="initFilter(1)">날짜 초기화</span>
+            <div class="collapsible-body" id="filterSpace">
+              <div id='cateNdate'>
+                <!-- 카테고리 -->
+                <div class='input-field' id="categoryFilter" name="categoryFilter">
+                  <div id="cateWord">카테고리로 찾기</div>
+                  <!-- <i class="material-icons" id="icon_filter">dashboard</i> -->
+                  <select name="cataSelect" id="cataSelect" @change="setCategory" ref="cataSelect">
+                    <option value="none">카테고리를 선택해주세요</option>
+                    <option value="-1">전체</option>
+                    <option value="1">카페</option>
+                    <option value="2">스튜디오</option>
+                    <option value="3">집</option>
+                    <option value="4">사무실</option>
+                    <option value="5">음식점</option>
+                    <option value="6">루프탑</option>
+                    <option value="7">펍</option>
+                    <option value="8">학교</option>
+                    <option value="9">기타</option>
+                  </select>
+                </div>
+                <!-- 날짜 -->
+                <div id="dateFilter" name="dateFilter">
+                  <p>예약 날짜로 찾기</p>
+                  <i class="material-icons" id="icon_filter"
+                    >insert_invitation</i
+                  >
+                  <input type="date" v-model="selectedDate" />
+                  <span id="dateInit" @click="initFilter(1)">날짜 초기화</span>
+                </div>
               </div>
               <hr />
 
@@ -208,36 +129,31 @@
                 />
                 <span>원</span>
               </div>
-              <div id='filterBtn'>
+              <div id="filterBtn">
                 <!-- 초기화 버튼 -->
-                  <button
-                    class="waves-effect waves-light btn-small"
-                    id="initBtn"
-                    @click="initFilter(2)"
-                  >
-                    초기화
-                  </button>
-                  <!-- 적용 버튼 -->
-                  <button
-                    class="waves-effect waves-light btn-small"
-                    id="applyBtn"
-                    @click="setFilter"
-                  >
-                    적용
-                  </button>
+                <button
+                  class="waves-effect waves-light btn-small"
+                  id="initBtn"
+                  @click="initFilter(2)"
+                >
+                  초기화
+                </button>
+                <!-- 적용 버튼 -->
+                <button
+                  class="waves-effect waves-light btn-small"
+                  id="applyBtn"
+                  @click="setFilter"
+                >
+                  적용
+                </button>
               </div>
             </div>
           </li>
         </ul>
       </div>
     </div>
-    <span id='searchTop'></span>
-    <hr />
-    <div v-if="loading">
-      Loading...
-    </div>
-    <!-- 검색된 업체들이 출력되는 곳 -->
-    <div class="row" id="searchList" v-else>
+    <span id="searchTop"></span>
+    <div id="order">
       <!-- 정렬하기 위한 select 태그 -->
       <select name="orderCon" id="orderCon" @change="setFilter" v-model="order">
         <option disabled value="">정렬하기</option>
@@ -246,6 +162,12 @@
         <option value="3">가격순-오름차순</option>
         <option value="4">평점순</option>
       </select>
+    </div>
+    <div v-if="loading">
+      Loading...
+    </div>
+    <!-- 검색된 업체들이 출력되는 곳 -->
+    <div class="row" id="searchList" v-else>
       <!-- 여기서 출력... 3개씩... 무한스크롤링 가즈아 -->
       <div
         class="card horizontal col s12"
@@ -261,15 +183,20 @@
             height="210.14em"
           />
         </div>
-        <div class="card-content">
-          <p>
+        <div class="card-content" id='studioContent'>
+          <div id="title">{{ studio.name }}</div>
+          <div id="nameDesc">
             {{ studio.category.categoryName }} /
             {{ studio.studioFilter.address | category }}
-          </p>
-          <p>{{ studio.name }}</p>
-          <p>{{ studio.description }}</p>
-          <p>{{ studio.studioFilter.unitPrice | currency }} 원/시간</p>
-          <p>{{ studio.avgScore | demical }} 점</p>
+          </div>
+          <div>{{ studio.description }}</div>
+          <div>{{ studio.studioFilter.unitPrice | currency }} 원/시간</div>
+          <div>
+            {{ studio.avgScore | demical }} 점
+            <span v-for="avgScore in studio.avgScore" :key="avgScore">
+              <i class="material-icons" id="icon_filter">star</i>{{avgScore}}
+            </span>
+          </div>
         </div>
         <div>♡</div>
       </div>
@@ -277,17 +204,50 @@
   </div>
 </template>
 
+<style scoped>
+#studioInf {
+  margin-top: 1em;
+  margin-bottom: 0;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  /* border-radius: 1em; */
+  cursor: pointer;
+}
+
+#studioContent {
+  width: 40%;
+  padding-top: 1em;
+  text-align: left;
+}
+
+#studioInf p {
+  text-align: left;
+  font-size: 0.8em;
+}
+
+#studioInf #studioImg {
+  width: 100% !important;
+  border-radius: 1em;
+}
+
+#studioContent #title {
+  margin-bottom: 0.1em;
+  font-weight: bold;
+}
+
+#studioContent #nameDesc {
+  font-size: 0.8em;
+  margin-bottom: 1em;
+}
+</style>
+
 <script scoped>
 import axios from "axios";
-
-// import 'material-design-icons/iconfont/material-icons.css'
-// import 'materialize-css/dist/css/materialize.min.css'
-// import MC from 'materialize-css/dist/css/materialize.min.css'
-import M from "materialize-css/";
-// import MI from "material-design-icons/iconfont/material-icons.css";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+// 카테고리 변한을 위한 리스트
 // Vue 시작
 export default {
   name: "studio-list",
@@ -311,6 +271,9 @@ export default {
       searchTag: "",
       order: "",
 
+      //별점
+      score : 0,
+
       // 기본 변수
       loading: true,
       errored: false
@@ -320,8 +283,6 @@ export default {
     // 페이지 오자마자 전체 리스트 뿌리기
     this.searchAllStudios();
     M.AutoInit();
-    // MC.AutoInit();
-    // MI.AutoInit();
   },
   filters: {
     // 돈에 , 붙여주는 필터
@@ -353,10 +314,8 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
-    //카테고리 설정 후 검색 이동
-    setCategory(categoryId) {
-      this.categoryId = categoryId;
-      this.setFilter();
+    setCategory() {
+      this.categoryId = this.$refs.cataSelect.value;
     },
     // 필터 값 넣고 검색
     setFilter() {
@@ -364,7 +323,7 @@ export default {
       if (this.selectedDate.length > 0) {
         this.weekDate = week[new Date(this.selectedDate).getDay()];
       }
-      // alert(this.searchContent.indexOf('#'))
+      // #을 입력하면 해시태그 검색으로 전환
       if (this.searchContent.indexOf("#") == 0) {
         this.searchTag = this.searchContent;
         this.searchContent = "";
@@ -397,7 +356,7 @@ export default {
           this.studios = response.data;
           this.searchContent = "";
           this.searchTag = "";
-          // location.href="#searchTop";
+          alert(response.data.avgScore);
           this.closeCol(0);
         })
         .catch(error => {
@@ -409,9 +368,9 @@ export default {
         });
     },
     // 상세페이지로 이동
-    showStudioInfo(stuId) {
-      this.$router.push("/TempStudio/" + stuId);
-    },
+    // showStudioInfo(stuId) {
+    //   this.$router.push("/TempStudio/" + stuId);
+    // },
     // 이미지 경로
     getImgUrl(url) {
       return require("../assets/img/studio/" + url);
@@ -435,7 +394,7 @@ export default {
       this.setFilter();
     },
     //collapse 닫기
-    closeCol (value) {
+    closeCol(value) {
       let elem = this.$refs.collapsible;
       let instance = M.Collapsible.getInstance(elem);
       instance.close(value);
@@ -447,6 +406,8 @@ export default {
 
 <style scoped src="materialize-css/dist/css/materialize.min.css"></style>
 <style scoped src="material-design-icons/iconfont/material-icons.css"></style>
+<style scoped src="vue-material/dist/theme/default.css"></style>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 
@@ -500,33 +461,15 @@ export default {
   font-size: 0.9em;
 }
 
-#filterResult span i {
-  vertical-align: middle;
-  font-size: 1rem;
-  cursor: pointer;
-}
-
-#categoryBtn {
-  margin-top: 1%;
-  display: block;
-}
-
-#categoryBtn > button {
-  /* margin-right: 0.51em !important; */
-}
-
-.btn-small {
-  height: 32.4px;
-  line-height: 32.4px;
-  font-size: 12px !important;
-  background: linear-gradient(135deg, #33a3dc, #034ea2) !important;
+#filter {
+  margin-bottom: 0;
 }
 
 #filterCol {
   width: 100%;
 }
 
-#filterCol #colHeader{
+#filterCol #colHeader {
   height: 3em !important;
   padding-top: 0 !important;
 }
@@ -538,18 +481,20 @@ export default {
 }
 
 #filterCol p,
-#filterSpace p {
+#filterSpace p,
+#cateWord {
   font-size: 0.9em;
   font-weight: bold;
 }
 
 #filterSpace input[type="date"] {
-  width: 20%;
+  width: 50%;
   height: 1.9em;
   background-color: white;
   border-radius: 0.3em;
   font-family: "Nanum Gothic", sans-serif;
-  font-size: 0.9em;
+  /* font-weight: bold; */
+  font-size: 0.8em;
   color: #737373;
   text-align: center;
 }
@@ -567,6 +512,19 @@ export default {
   text-align: center;
 }
 
+#categoryFilter {
+  width: 40%;
+  margin-top:0;
+  margin-bottom: 0;
+  display: inline-block;
+}
+
+#dateFilter {
+  width: 50%;
+  margin-left: 2em;
+  display: inline-block;
+}
+
 #addrFilter span,
 #sizeFilter span,
 #priceFilter span,
@@ -577,12 +535,11 @@ export default {
 }
 
 #dateInit {
-  margin-left:1em;
+  margin-left: 1em;
   font-weight: bold;
   font-size: 0.9em;
   cursor: pointer;
 }
-
 
 #filterSpace input[type="text"] {
   width: 30%;
@@ -628,23 +585,169 @@ export default {
   margin-left: 0.5em;
 }
 
-#studioInf {
-  margin-top: 1.5em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  cursor: pointer;
-}
-
-#studioInf p {
-  text-align: left;
-  font-size: 0.8em;
-}
-
-#studioInf #studioImg {
-  width: 100% !important;
+#order {
+  width: 20%;
 }
 
 .card.horizontal .card-image img {
   width: 100% !important;
 }
+
+.btn-small {
+  height: 32.4px;
+  line-height: 32.4px;
+  font-size: 12px !important;
+  background: linear-gradient(135deg, #33a3dc, #034ea2) !important;
+}
+
+select {
+  display: none;
+}
+
+select.browser-default {
+  display: block;
+}
+
+select {
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  height: 3rem;
+}
+
+.select-label {
+  position: absolute;
+}
+
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper.valid + label,
+.select-wrapper.invalid + label {
+  width: 100%;
+  pointer-events: none;
+}
+
+.select-wrapper input.select-dropdown {
+  position: relative;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #9e9e9e;
+  outline: none;
+  height: 3rem;
+  line-height: 3rem;
+  width: 100%;
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  padding: 0;
+  display: block;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  z-index: 1;
+}
+
+.select-wrapper input.select-dropdown:focus {
+  border-bottom: 1px solid #26a69a;
+}
+
+.select-wrapper .caret {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  z-index: 0;
+  fill: rgba(0, 0, 0, 0.87);
+}
+
+.select-wrapper + label {
+  position: absolute;
+  top: -26px;
+  font-size: 0.8rem;
+}
+
+select:disabled {
+  color: rgba(0, 0, 0, 0.42);
+}
+
+.select-wrapper.disabled + label {
+  color: rgba(0, 0, 0, 0.42);
+}
+
+.select-wrapper.disabled .caret {
+  fill: rgba(0, 0, 0, 0.42);
+}
+
+.select-wrapper input.select-dropdown:disabled {
+  color: rgba(0, 0, 0, 0.42);
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.select-wrapper i {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.select-dropdown li.disabled,
+.select-dropdown li.disabled > span,
+.select-dropdown li.optgroup {
+  color: rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+}
+
+body.keyboard-focused .select-dropdown.dropdown-content li:focus {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.select-dropdown.dropdown-content li:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.select-dropdown.dropdown-content li.selected {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.prefix ~ .select-wrapper {
+  margin-left: 3rem;
+  width: 92%;
+  width: calc(100% - 3rem);
+}
+
+.prefix ~ label {
+  margin-left: 3rem;
+}
+
+.select-dropdown li img {
+  height: 40px;
+  width: 40px;
+  margin: 5px 15px;
+  float: right;
+}
+
+.select-dropdown li.optgroup {
+  border-top: 1px solid #eee;
+}
+
+.select-dropdown li.optgroup.selected > span {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.select-dropdown li.optgroup > span {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.select-dropdown li.optgroup ~ li.optgroup-option {
+  padding-left: 1rem;
+}
+
+
 </style>

@@ -55,7 +55,7 @@ public class StudioFilterController {
 	
 	public SearchCon getSearchCon(HashMap<String, String> filters) {
 		SearchCon searchCon = new SearchCon();
-		if (filters.get("categoryId").length()>0)
+		if (filters.get("categoryId").length()>0 && !filters.get("categoryId").equals("-1"))
 			searchCon.setCategoryId(filters.get("categoryId"));
 		if (filters.get("weekDate").length()>0)
 			searchCon.setWeekDate(filters.get("weekDate"));

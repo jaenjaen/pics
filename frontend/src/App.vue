@@ -18,10 +18,12 @@ export default {
 
 <style scoped src="materialize-css/dist/css/materialize.min.css"></style>
 <style>
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
-
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("./assets/font/NanumGothic-Regular.ttf");
+}
 body {
-  background-color: #f5f5f5;
+  background: #f5f5f5 !important;
 }
 #app {
   font-family: "Nanum Gothic", sans-serif;

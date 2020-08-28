@@ -61,6 +61,10 @@ img {
   width: 20px;
   /* height: 30px; */
 }
+
+p {
+  font-weight: 900;
+}
 </style>
 
 <style scoped>

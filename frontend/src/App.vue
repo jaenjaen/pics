@@ -18,11 +18,15 @@ export default {
 
 <style scoped src="materialize-css/dist/css/materialize.min.css"></style>
 <style>
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("./assets/font/NanumGothic-Regular.ttf");
+}
 body {
-  background-color: #f5f5f5;
+  background: #f5f5f5 !important;
 }
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

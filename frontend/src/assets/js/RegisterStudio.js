@@ -1,6 +1,9 @@
 import axios from "axios";
+import Vue from "vue";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
+import { ToggleButton } from 'vue-js-toggle-button'
+Vue.component('ToggleButton', ToggleButton)
 
 export default {
     components: { vueMultiSelect },
@@ -82,10 +85,10 @@ export default {
             checkBox7: true,
 
             /* 장비 및 옵션 */
-            btnLabel: option_save => `장비 및 옵션 (${option_save.length})`,
+            btnLabel: option_save => `${option_save.length}개 선택`,
             option_save: [],
             option_list: [{
-                name: "장비 및 옵션",
+                name: "선택",
                 list: [
                     { name: "카메라" },
                     { name: "조명" },
@@ -124,31 +127,27 @@ export default {
             for (let i = 0; i < checkDay.length; i++) {
                 if (checkDay[i].checked) checkDayCount++;
             }
-            if (checkDayCount == 7) {
-                document.getElementById('no').checked = true;
-            }
 
             let dayAll = document.getElementById("dayAll"); //전체선택 영역
             let dayNo = document.getElementById("dayNo"); //전체해제 영역
 
-            /* 전체선택을 체크했을 때 */
+            /* 전체선택을 체크했을 때 모든 요일을 체크하고 체크한 요일 개수 7 할당 */
             if (day == "all") {
                 for (let i = 0; i < allDay.length; i++) {
                     allDay[i].style.display = "inline-block";
                     checkDay[i].checked = true;
                 }
-                dayAll.setAttribute('style', 'display:none');
-                dayNo.setAttribute('style', 'display:inline-block');
             }
 
-            /* 전체해제를 체크했을 때 */
+            /* 전체해제를 체크했을 때 모든 요일을 해제하고 전체체크가 보이게 함 */
             else if (day == "no") {
                 for (let i = 0; i < allDay.length; i++) {
                     allDay[i].style.display = "none";
                     checkDay[i].checked = false;
                 }
-                dayAll.setAttribute('style', 'display:inline-block');
                 dayNo.setAttribute('style', 'display:none');
+                dayAll.setAttribute('style', 'display:inline-block');
+                document.getElementById('all').checked = false;
             }
 
             /* 요일을 체크했을 때 */
@@ -160,6 +159,13 @@ export default {
                 } else { //요일 체크 해제시 숨김
                     whatDay.style.display = "none";
                 }
+            }
+
+            /* 요일을 모두 선택했거나 전체선택 클릭시 전체해제가 보이게 함 */
+            if (checkDayCount == 7 || day == 'all') {
+                dayAll.setAttribute('style', 'display:none');
+                dayNo.setAttribute('style', 'display:inline-block');
+                document.getElementById('no').checked = true;
             }
         },
         selectAllTime(command, dayTime, visibleArea, unvisibleArea, checkFlag) {

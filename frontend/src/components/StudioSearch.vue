@@ -284,16 +284,12 @@ import axios from "axios";
 // import 'materialize-css/dist/css/materialize.min.css'
 // import MC from 'materialize-css/dist/css/materialize.min.css'
 import M from "materialize-css/";
-import Multiselect from 'vue-multi-select'
 // import MI from "material-design-icons/iconfont/material-icons.css";
 
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 // Vue 시작
 export default {
-  components:{
-    Multiselect
-  },
   name: "studio-list",
   data() {
     return {
@@ -314,10 +310,6 @@ export default {
       searchContent: "",
       searchTag: "",
       order: "",
-
-      value: null,
-      //select options
-      options:['전체','카페','스튜디오','가정집','사무실','식당','루프탑','펍','학교','기타'],
 
       // 기본 변수
       loading: true,
@@ -455,7 +447,6 @@ export default {
 
 <style scoped src="materialize-css/dist/css/materialize.min.css"></style>
 <style scoped src="material-design-icons/iconfont/material-icons.css"></style>
-// <style scoped src="vue-multi-select/dist/lib/vue-multi-select.css"></style>
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 

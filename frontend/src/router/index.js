@@ -9,6 +9,8 @@ import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import Test from "../components/Test.vue";
 import StudioInfo from "../components/StudioInfo.vue";
+import Mypage from "../views/Mypage.vue";
+import WishList from "../views/WishList.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -46,6 +48,14 @@ const routes = [{
         path: "/test",
         name: "test",
         component: Test
+    }, {
+        path: "/mypage",
+        name: "mypage",
+        component: Mypage
+    }, {
+        path: "/wishlist",
+        name: "wishlist",
+        component: WishList
     }
 ];
 const router = new VueRouter({

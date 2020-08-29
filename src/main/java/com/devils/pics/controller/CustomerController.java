@@ -32,10 +32,10 @@ public class CustomerController {
 		}
 	}
 	
-	@GetMapping("/customer/{custId}")
-	public ResponseEntity getCustomer(@PathVariable int custId) {
+	@GetMapping("/customer/{apiKey}")
+	public ResponseEntity getCustomer(@PathVariable String apiKey) {
 		try {
-			Customer cust = customerService.getCustomer(custId);
+			Customer cust = customerService.getCustomer(apiKey);
 			return new ResponseEntity(cust,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

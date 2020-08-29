@@ -1,7 +1,8 @@
 <template>
   <div class="mainsecond_container">
     <div class="mainsecond_item">
-      <h3></h3>
+      <h3>추천 인기공간 더 찾아보기</h3>
+      <div></div>
     </div>
     <div class="mainsecond_item"></div>
   </div>

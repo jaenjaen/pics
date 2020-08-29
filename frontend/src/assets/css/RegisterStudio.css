@@ -243,7 +243,8 @@
             position: absolute;
             font-size: 16px;
         }
-        /* 층수 */
+        /* 층수, 시간당 대여료, 인원 추가시 1인당 대여료, 
+        기본 인원, 최대 인원, 주차 가능 대수의 단위를 input 안에 넣음 */
         
         .outContainer {
             text-align: right;
@@ -257,10 +258,17 @@
             position: absolute;
             font-size: 16px;
         }
+        
+        #sizeLabel {
+            /* 면적 토글을 input 안에 넣음 */
+            margin-top: -13px;
+            position: absolute;
+            font-size: 16px;
+        }
         /* 제곱미터, 평 토글 */
         
-        .v-switch-label {
-            line-height: 43px !important;
+        .vue-js-switch {
+            margin-left: -25px;
         }
         /* Modal 전체 */
         
@@ -284,7 +292,12 @@
             margin: auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .vue-daum-postcode-container {
+            height: 100% !important;
         }
         /* Modal 닫기 버튼 */
         

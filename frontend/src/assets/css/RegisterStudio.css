@@ -270,6 +270,10 @@
         .vue-js-switch {
             margin-left: -25px;
         }
+        
+        .v-switch-label {
+            line-height: 43px !important;
+        }
         /* Modal 전체 */
         
         .modal {

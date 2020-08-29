@@ -20,7 +20,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public Customer getCustomer(int custId) throws Exception {
+	public Customer getCustomer(String custId) throws Exception {
 		return session.selectOne(ns+"getCustomer",custId);
 	}
 

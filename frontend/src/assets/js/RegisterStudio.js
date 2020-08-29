@@ -2,11 +2,13 @@ import axios from "axios";
 import Vue from "vue";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
-import { ToggleButton } from 'vue-js-toggle-button'
+import { ToggleButton } from 'vue-js-toggle-button' //https://www.npmjs.com/package/vue-js-toggle-button
+import { VueDaumPostcode } from "vue-daum-postcode";
+
 Vue.component('ToggleButton', ToggleButton)
 
 export default {
-    components: { vueMultiSelect },
+    components: { vueMultiSelect, VueDaumPostcode },
     data() {
         return {
             /* Back으로 보낼 studio 데이터 */
@@ -39,7 +41,45 @@ export default {
                     tagName: ""
                 }]
             },
-
+            /* 주소 API */
+            addressResult: {
+                postcode: "",
+                postcode1: "",
+                postcode2: "",
+                postcodeSeq: "",
+                zonecode: "",
+                address: "",
+                addressEnglish: "",
+                addressType: "",
+                bcode: "",
+                bname: "",
+                bname1: "",
+                bname2: "",
+                sido: "",
+                sigungu: "",
+                sigunguCode: "",
+                userLanguageType: "",
+                query: "",
+                buildingName: "",
+                buildingCode: "",
+                apartment: "",
+                jibunAddress: "",
+                jibunAddressEnglish: "",
+                roadAddress: "",
+                roadAddressEnglish: "",
+                autoRoadAddress: "",
+                autoRoadAddressEnglish: "",
+                autoJibunAddress: "",
+                autoJibunAddressEnglish: "",
+                userSelectedType: "",
+                noSelected: "",
+                hname: "",
+                roadnameCode: "",
+                roadname: ""
+            },
+            /* 면적 */
+            sizeInput: "",
+            sizeUnit: 1,
             /* 운영시간 */
             timePerDay: [
                 0,
@@ -116,6 +156,24 @@ export default {
         };
     },
     methods: {
+        changeSizeUnit(value) { //평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄
+            if (value == 1) { //평->제곱미터
+                this.sizeUnit = 0;
+                if (this.sizeInput == "") {
+                    return false;
+                }
+                this.sizeInput = (this.sizeInput * 3.305785).toFixed(2);
+                this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
+            }
+            if (value == 0) { //제곱미터->평
+                this.sizeUnit = 1;
+                if (this.sizeInput == "") {
+                    return false;
+                }
+                this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
+                this.sizeInput = (this.sizeInput * 0.3025).toFixed(2);
+            }
+        },
         //선택 취소할 수 있게 해야 함...
         selectDay(day) {
             let thisCheck = document.getElementById(day); //선택한 요일 checkbox 객체

@@ -2,7 +2,7 @@
 <template>
   <div class="publicSpace">
     <div class="grid">
-      <h2>업체고객 가입</h2><br>
+      <h2>기업고객 가입</h2><br>
       <form action="" method="POST" class="form login" @submit.prevent="companyRegister">
        
        <div class="form__field">

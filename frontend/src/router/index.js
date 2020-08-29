@@ -4,7 +4,6 @@ import Main from "../components/Main.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
 import RegisterStudio from "../components/RegisterStudio.vue";
-import TempStudio from "../components/Temp_MoveToInfo.vue";
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import Test from "../components/Test.vue";
@@ -42,11 +41,6 @@ const routes = [{
         name: "register",
         component: Register
 
-    }, {
-        path: "/TempStudio/:stuId",
-        name: "TempStudio",
-        component: TempStudio,
-        props: true
     }, {
         path: "/test",
         name: "test",

@@ -2,11 +2,13 @@ import axios from "axios";
 import Vue from "vue";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
-import { ToggleButton } from 'vue-js-toggle-button'
+import { ToggleButton } from 'vue-js-toggle-button' //https://www.npmjs.com/package/vue-js-toggle-button
+import { VueDaumPostcode } from "vue-daum-postcode";
+
 Vue.component('ToggleButton', ToggleButton)
 
 export default {
-    components: { vueMultiSelect },
+    components: { vueMultiSelect, VueDaumPostcode },
     data() {
         return {
             /* Back으로 보낼 studio 데이터 */
@@ -39,7 +41,42 @@ export default {
                     tagName: ""
                 }]
             },
-
+            /* 주소 API */
+            addressResult: {
+                postcode: "",
+                postcode1: "",
+                postcode2: "",
+                postcodeSeq: "",
+                zonecode: "",
+                address: "",
+                addressEnglish: "",
+                addressType: "",
+                bcode: "",
+                bname: "",
+                bname1: "",
+                bname2: "",
+                sido: "",
+                sigungu: "",
+                sigunguCode: "",
+                userLanguageType: "",
+                query: "",
+                buildingName: "",
+                buildingCode: "",
+                apartment: "",
+                jibunAddress: "",
+                jibunAddressEnglish: "",
+                roadAddress: "",
+                roadAddressEnglish: "",
+                autoRoadAddress: "",
+                autoRoadAddressEnglish: "",
+                autoJibunAddress: "",
+                autoJibunAddressEnglish: "",
+                userSelectedType: "",
+                noSelected: "",
+                hname: "",
+                roadnameCode: "",
+                roadname: ""
+            },
             /* 운영시간 */
             timePerDay: [
                 0,
@@ -373,3 +410,15 @@ export default {
         }
     }
 };
+
+// window.onload = function() {
+//     var addr = window.VueDaumPostcode.getElementsByClassName('txt_addr');
+//     for (var i = 0; i < addr.length; i++) {
+//         addr[i].addEventListener('click', closeAddressModal);
+//     }
+// }
+
+// function closeAddressModal() {
+//     let modal = document.getElementById("addressAPI");
+//     modal.style.display = "none";
+// }

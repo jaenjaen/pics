@@ -329,15 +329,6 @@
         .select {
             display: block;
         }
-        
-        .select>button {
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
-        }
-        
-        .btn-select {
-            display: block;
-        }
         /* 반응형 : 너비 768px 이하 */
         
         @media screen and (max-width: 768px) {

@@ -77,6 +77,9 @@ export default {
                 roadnameCode: "",
                 roadname: ""
             },
+            /* 면적 */
+            sizeInput: "",
+            sizeUnit: 1,
             /* 운영시간 */
             timePerDay: [
                 0,
@@ -153,6 +156,24 @@ export default {
         };
     },
     methods: {
+        changeSizeUnit(value) { //평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄
+            if (value == 1) { //평->제곱미터
+                this.sizeUnit = 0;
+                if (this.sizeInput == "") {
+                    return false;
+                }
+                this.sizeInput = (this.sizeInput * 3.305785).toFixed(2);
+                this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
+            }
+            if (value == 0) { //제곱미터->평
+                this.sizeUnit = 1;
+                if (this.sizeInput == "") {
+                    return false;
+                }
+                this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
+                this.sizeInput = (this.sizeInput * 0.3025).toFixed(2);
+            }
+        },
         //선택 취소할 수 있게 해야 함...
         selectDay(day) {
             let thisCheck = document.getElementById(day); //선택한 요일 checkbox 객체
@@ -410,15 +431,3 @@ export default {
         }
     }
 };
-
-// window.onload = function() {
-//     var addr = window.VueDaumPostcode.getElementsByClassName('txt_addr');
-//     for (var i = 0; i < addr.length; i++) {
-//         addr[i].addEventListener('click', closeAddressModal);
-//     }
-// }
-
-// function closeAddressModal() {
-//     let modal = document.getElementById("addressAPI");
-//     modal.style.display = "none";
-// }

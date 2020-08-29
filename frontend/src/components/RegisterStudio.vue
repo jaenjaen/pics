@@ -94,17 +94,38 @@
           </div>
           <div class="col-75">
             <!-- 주소 처리 -->
-            <span style="padding-right:50px;">
               <input
                 type="text"
-                id="address"
-                name="address"
+                id="address1"
+                name="address1"
                 :value="addressResult.address"
                 disabled
                 required
+                style="float:left; width:80%; margin-bottom:5px;"
               />
-            </span>
-            <button type="button" @click="controlModal('showModalAgree', 'addressAPI')">찾기</button>
+            <button type="button" @click="controlModal('showModalAgree', 'addressAPI')" style="width:18%">찾기</button>
+            <p>
+              <vue-daum-postcode 
+              @complete="addressResult = $event"
+              :animation="true"
+              :no-shorthand="true"
+              :no-auto-mapping="true"
+              :please-read-guide="3"
+              :please-read-guide-timer="2"
+              :max-suggest-items="3"
+              :show-more-h-name="true"
+              :hide-map-btn="false"
+              :hide-eng-btn="true"
+              :always-show-eng-addr="false"
+              :zonecode-only="true" 
+              />
+            </p>
+            <input
+                type="text"
+                id="address2"
+                name="address2"
+                required
+              />
           </div>
         </div>
         <div class="row">
@@ -123,20 +144,18 @@
           <div class="col-25">
             <div class="outContainer">
               <label id="sizeLabel">
-                <!--
-                <toggle-button @change="onChangeEventHandler"/>
-                <toggle-button v-model="myDataVariable"/>
-                -->
                 <toggle-button :value="true"
                               :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
-                              :labels="{checked: '㎡', unchecked: '평'}"/>
+                              :labels="{checked: '㎡', unchecked: '평'}"
+                              v-model="sizeUnit"
+                              @change="changeSizeUnit(sizeUnit)"/>
               </label>
             </div>
             <input
               type="text"
               id="size"
               name="size"
-              v-model="studio.studioFilter.size"
+              v-model="sizeInput"
               required
             />
           </div>
@@ -637,8 +656,8 @@
       </form>
     </div>
     <!-- Modal : 주소 API -->
-    <div id="addressAPI" class="modal">
-      <div class="modal-content">
+    <div id="addressAPI">
+      <div>
         <span
           class="close"
           @click="controlModal('hideModalAgree', 'addressAPI')"

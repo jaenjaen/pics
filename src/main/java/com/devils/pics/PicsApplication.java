@@ -23,11 +23,11 @@ public class PicsApplication implements WebMvcConfigurer{
 	@Autowired
 	private JwtInterceptor jwtinterInterceptor;
 	
-	@Override
-	 public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(jwtinterInterceptor).addPathPatterns("/**")
-				.excludePathPatterns("/company/*/*"); //토큰 없이 진입할 경로 추가
-	}
+//	@Override
+//	 public void addInterceptors(InterceptorRegistry registry) {
+//		registry.addInterceptor(jwtinterInterceptor).addPathPatterns("/**")
+//				.excludePathPatterns("/company/*/*"); //토큰 없이 진입할 경로 추가
+//	}
 	
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {

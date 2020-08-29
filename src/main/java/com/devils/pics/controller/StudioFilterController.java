@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.util.SearchCon;
@@ -28,6 +29,7 @@ public class StudioFilterController {
 	@Autowired
 	private StudioFilterService studioFilterService;
 	
+	// 전체 출력
 	@GetMapping("/studio/search")
 	public ResponseEntity searchStudio(){
 		try {
@@ -39,6 +41,7 @@ public class StudioFilterController {
 		}
 	}
 	
+	// 필터 출력
 	@PostMapping("/studio/search/filter")
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
@@ -52,7 +55,7 @@ public class StudioFilterController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
-	
+	// Client로 받은 정보를 VO로 전환
 	public SearchCon getSearchCon(HashMap<String, String> filters) {
 		SearchCon searchCon = new SearchCon();
 		if (filters.get("categoryId").length()>0 && !filters.get("categoryId").equals("-1"))

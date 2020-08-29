@@ -6,7 +6,7 @@
 	
 	<!-- Bookmark -->
 	<insert id="addBookmark" parameterType="bookmark">
-		INSERT IGNORE INTO bookmark (stu_id,cust_id) 
+		INSERT INTO bookmark (stu_id,cust_id) 
 		VALUES (#{studio.stuId},#{customer.custId})
 	</insert>
 	

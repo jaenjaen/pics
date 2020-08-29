@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Category;
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.util.SearchCon;
@@ -73,7 +75,5 @@ public class StudioFilterTest {
 		System.out.println(searchCon);
 		System.out.println("조회된 총 studio 수 : " + list.size());
 		for (Studio s : list) System.out.println(s);
-		 
-
 	}
 }

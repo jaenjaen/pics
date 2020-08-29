@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.devils.pics.dao.StudioFilterDAO;
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.util.SearchCon;
@@ -25,16 +26,17 @@ public class StudioFilterDAOImpl implements StudioFilterDAO {
 		//StudioFilter 등록
 		return sqlSession.insert(NS+"registerStudioFilter", studioFilter);
 	}
-
+	
+	// 전체 출력
 	@Override
 	public List<Studio> searchStudio(SearchCon searchCon) {
 		//Studio 검색
 		return sqlSession.selectList(NS+"selectStudioByFilter", searchCon);
 	}
-
+	
+	// 필터 출력
 	@Override
 	public List<Studio> searchStudio() {
 		return sqlSession.selectList(NS+"selectStudioByFilter");
 	}
-	
 }

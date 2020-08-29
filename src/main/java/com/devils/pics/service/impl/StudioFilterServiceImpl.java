@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.devils.pics.dao.StudioFilterDAO;
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.service.StudioFilterService;
@@ -34,5 +35,4 @@ public class StudioFilterServiceImpl implements StudioFilterService {
 	public List<Studio> searchStudio(SearchCon searchCon) {
 		return studioFilterDao.searchStudio(searchCon);
 	}
-	
 }

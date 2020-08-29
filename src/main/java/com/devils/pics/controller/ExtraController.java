@@ -27,7 +27,10 @@ public class ExtraController {
 	@PostMapping("/bookmark")
 	public ResponseEntity addBookmark(@RequestBody Bookmark bookmark) {
 		try {
+			System.out.println(bookmark);
+			System.out.println(2);
 			int n = extraService.addBookmark(bookmark);
+			System.out.println(n);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

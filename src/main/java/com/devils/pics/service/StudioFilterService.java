@@ -3,6 +3,7 @@ package com.devils.pics.service;
 import java.util.HashMap;
 import java.util.List;
 
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.util.SearchCon;

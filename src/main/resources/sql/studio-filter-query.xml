@@ -21,6 +21,7 @@
 		<result column="description" property="description" />
 		<result column="main_img" property="mainImg" />
 		<result column="avg" property="avgScore" />
+		<result column="cntRv" property="countReview"/>
 		<association property="category" javaType="category">
 			<result column="category_name" property="categoryName" />
 		</association>
@@ -49,7 +50,7 @@
 		e.start_date, e.end_date,
 		t.tag_name,
 		f.unit_price, f.address,
-		ifnull(rv.avg,0) avg,
+		ifnull(rv.avg,0) avg, rv.cntRev cntRev,
 		ifnull(res.count,0) count
 		FROM studio s
 		JOIN company com
@@ -66,7 +67,7 @@
 		ON s.stu_id = t.stu_id
 		LEFT OUTER JOIN
 		(SELECT
-		stu_id, AVG(score) avg
+		stu_id, AVG(score) avg, COUNT(score) cntRev
 		FROM review
 		GROUP BY stu_id
 		) rv
@@ -164,4 +165,11 @@
 		</if>
 		</where>
 	</select>
+	
+	<!-- 찜기능 -->
+	<insert id="regBookMark" parameterType="bookmark">
+		INSERT
+		INTO bookmark (stu_id, cust_id)
+		VALUES(#{studio.stuId},#{customer.custId})
+	</insert>
 </mapper>

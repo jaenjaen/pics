@@ -77,6 +77,7 @@ export default {
                 roadnameCode: "",
                 roadname: ""
             },
+            addressDetail: "",
             /* 면적 */
             sizeInput: "",
             sizeUnit: true,
@@ -169,6 +170,10 @@ export default {
                 searchAddr.style.display = "none";
             }
             if (cmd == "hideAddress") {
+                if (this.addressResult.address == '') {
+                    alert("주소를 선택하세요");
+                    return false;
+                }
                 api.style.display = "none";
                 address2.style.display = "block";
                 address2.focus();
@@ -383,6 +388,17 @@ export default {
             }
         },
         addStudio() {
+            /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
+            if (this.addressResult.address == '') {
+                alert("주소를 선택하세요");
+                return false;
+            } else if (this.addressDetail == '') {
+                alert("상세주소를 입력하세요");
+                return false;
+            } else {
+                this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
+            }
+
             /* 선택된 옵션을 문자열로 변환하여 바인딩 */
             this.option_save = [];
             var optionName = document.getElementsByName("optionName");
@@ -393,7 +409,6 @@ export default {
                 }
             }
             this.studio.studioFilter.options = this.option_save.join(",");
-            alert(this.studio.studioFilter.options);
 
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
             let tags = document.getElementsByName("tag");

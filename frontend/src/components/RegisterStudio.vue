@@ -73,7 +73,7 @@
           </div>
           <div class="col-75">
             <!-- 주소 처리 -->
-            <input type="text" id="address1" name="address1" :value="addressResult.address" disabled required/>
+            <input type="text" id="address1" name="address1" :value="addressResult.address" disabled />
             <button type="button" id="searchAddr" @click="controlAddress('showAddress')">찾기</button>
             <button type="button" id="closeAddr" @click="controlAddress('hideAddress')">닫기</button>
             <p>
@@ -94,7 +94,7 @@
               />
             </p><br/>
             <p>
-              <input placeholder="상세주소를 작성하세요." type="text" id="address2" name="address2" required/>
+              <input placeholder="상세주소를 작성하세요." type="text" id="address2" name="address2" v-model="addressDetail" />
             </p>
           </div>
         </div>

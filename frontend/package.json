@@ -10,6 +10,7 @@
     "dependencies": {
         "@riophae/vue-treeselect": "^0.4.0",
         "axios": "^0.20.0",
+        "bootstrap-vue": "^2.16.0",
         "calendarpickerjs": "^1.2.0",
         "core-js": "^3.6.5",
         "jquery": "^3.5.1",

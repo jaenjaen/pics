@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.devils.pics.util.security.JwtInterceptor;
+//import com.devils.pics.util.security.JwtInterceptor;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +21,7 @@ public class PicsApplication implements WebMvcConfigurer{
 	}
 	
 	@Autowired
-	private JwtInterceptor jwtinterInterceptor;
+	//private JwtInterceptor jwtinterInterceptor;
 	
 //	@Override
 //	 public void addInterceptors(InterceptorRegistry registry) {

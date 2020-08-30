@@ -84,6 +84,22 @@
             display: table;
             clear: both;
         }
+        /* 파일 업로드 */
+        
+        .uploadArea {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        .uploadImg {
+            width: 16%;
+            height: 16%;
+            margin: 2%;
+        }
+        
+        .uploadImg:hover {
+            opacity: 0.60;
+        }
         /* 운영시간 */
         
         #dayList {

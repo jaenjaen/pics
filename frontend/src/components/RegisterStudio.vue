@@ -4,7 +4,7 @@
     <div class="container">
       <h2>스튜디오 등록</h2>
       <br />
-      <form method="post" @submit.prevent="addStudio">
+      <form enctype="multipart/form-data" @submit.prevent="addStudio">
         <div class="row">
           <div class="col-25">
             <label for="name">스튜디오 이름</label>
@@ -45,9 +45,28 @@
           <div class="col-25">
             <label for="mainImg">대표 사진</label>
           </div>
-          <div class="col-75">
-            <!-- 파일 업로드 -->
-            <input type="text" id="mainImg" name="mainImg" v-model="studio.mainImg" required />
+          <div class="col-75 uploadArea">
+            <input type=file id="mainImg1" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg1").click()'>
+            <input type=file id="mainImg2" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg2").click()'>
+            <input type=file id="mainImg3" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg3").click()'>
+            <input type=file id="mainImg4" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg4").click()'>
+            <input type=file id="mainImg5" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg5").click()'>
+            <br/>
+            <input type=file id="mainImg6" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg6").click()'>
+            <input type=file id="mainImg7" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg7").click()'>
+            <input type=file id="mainImg8" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg8").click()'>
+            <input type=file id="mainImg9" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg9").click()'>
+            <input type=file id="mainImg10" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg10").click()'>
           </div>
         </div>
         <div class="row">
@@ -121,27 +140,20 @@
                               @change="changeSizeUnit(sizeUnit)"/>
               </label>
             </div>
-            <input
-              type="text"
-              id="size"
-              name="size"
-              v-model="sizeInput"
-              required
-            />
+            <input type="text" id="size" name="size" v-model="sizeInput" required />
           </div>
         </div>
         <div class="row">
           <div class="col-25">
             <label for="cadImg">공간 도면</label>
           </div>
-          <div class="col-75">
-            <!-- 파일 업로드 -->
-            <input
-              type="text"
-              id="cadImg"
-              name="cadImg"
-              v-model="studio.cadImg"
-            />
+          <div class="col-75 uploadArea">
+            <input type=file id="cadImg" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("cadImg").click()'>
+            <!-- 이어서 하기 https://blog.naver.com/wj8606/221249672135
+            <input type="file"  @change="fileUpload($event)">
+            <button v-on:click="addCadImg()">Submit</button>
+            -->
           </div>
         </div>
         <div class="row">
@@ -152,13 +164,7 @@
             <div class="outContainer">
               <label class="inContent">원</label>
             </div>
-            <input
-              type="text"
-              id="unitPrice"
-              name="unitPrice"
-              v-model="studio.studioFilter.unitPrice"
-              required
-            />
+            <input type="text" id="unitPrice" name="unitPrice" v-model="studio.studioFilter.unitPrice" required />
           </div>
           <div class="col-25 col-space">
             <label for="excharge">인원 추가시 1인당 대여료</label>
@@ -167,13 +173,7 @@
             <div class="outContainer">
               <label class="inContent">원</label>
             </div>
-            <input
-              type="text"
-              id="excharge"
-              name="excharge"
-              v-model="studio.studioFilter.excharge"
-              required
-            />
+            <input type="text" id="excharge" name="excharge" v-model="studio.studioFilter.excharge" required />
           </div>
         </div>
         <div class="row">
@@ -184,13 +184,7 @@
             <div class="outContainer">
               <label class="inContent">명</label>
             </div>
-            <input
-              type="text"
-              id="defaultCapacity"
-              name="defaultCapacity"
-              v-model="studio.studioFilter.defaultCapacity"
-              required
-            />
+            <input type="text" id="defaultCapacity" name="defaultCapacity" v-model="studio.studioFilter.defaultCapacity" required/>
           </div>
           <div class="col-25 col-space">
             <label for="maxCapacity">최대 인원</label>
@@ -199,13 +193,7 @@
             <div class="outContainer">
               <label class="inContent">명</label>
             </div>
-            <input
-              type="text"
-              id="maxCapacity"
-              name="maxCapacity"
-              v-model="studio.studioFilter.maxCapacity"
-              required
-            />
+            <input type="text" id="maxCapacity" name="maxCapacity" v-model="studio.studioFilter.maxCapacity" required />
           </div>
         </div>
         <div class="row">
@@ -214,79 +202,34 @@
           </div>
           <div class="col-75">
             <div id="dayList">
-              <input
-                type="checkbox"
-                name="day"
-                id="mon"
-                @change="selectDay('monTd')"
-              />
+              <input type="checkbox" name="day" id="mon" @change="selectDay('monTd')" />
               <label class="dayLabel" for="mon"></label>
               <span>월</span>
-              <input
-                type="checkbox"
-                name="day"
-                id="tue"
-                @change="selectDay('tueTd')"
-              />
+              <input type="checkbox" name="day" id="tue" @change="selectDay('tueTd')" />
               <label class="dayLabel" for="tue"></label>
               <span>화</span>
-              <input
-                type="checkbox"
-                name="day"
-                id="wed"
-                @change="selectDay('wedTd')"
-              />
+              <input type="checkbox" name="day" id="wed" @change="selectDay('wedTd')" />
               <label class="dayLabel" for="wed"></label>
               <span>수</span>
-              <input
-                type="checkbox"
-                name="day"
-                id="thu"
-                @change="selectDay('thuTd')"
-              />
+              <input type="checkbox" name="day" id="thu" @change="selectDay('thuTd')" />
               <label class="dayLabel" for="thu"></label>
               <span>목</span>
-              <input
-                type="checkbox"
-                name="day"
-                id="fri"
-                @change="selectDay('friTd')"
-              />
+              <input type="checkbox" name="day" id="fri" @change="selectDay('friTd')" />
               <label class="dayLabel" for="fri"></label>
               <span>금</span>
-              <input
-                type="checkbox"
-                name="day"
-                id="sat"
-                @change="selectDay('satTd')"
-              />
+              <input type="checkbox" name="day" id="sat" @change="selectDay('satTd')" />
               <label class="dayLabel" for="sat"></label>
               <span>토</span>
-              <input
-                type="checkbox"
-                name="day"
-                id="sun"
-                @change="selectDay('sunTd')"
-              />
+              <input type="checkbox" name="day" id="sun" @change="selectDay('sunTd')" />
               <label class="dayLabel" for="sun"></label>
               <span>일</span>
               <span id="dayAll">
-                <input
-                  type="checkbox"
-                  name="dayHide"
-                  id="all"
-                  @change="selectDay('all')"
-                />
+                <input type="checkbox" name="dayHide" id="all" @change="selectDay('all')" />
                 <label class="dayLabel" for="all"></label>
                 전체선택
               </span>
               <span id="dayNo">
-                <input
-                  type="checkbox"
-                  name="dayHide"
-                  id="no"
-                  @change="selectDay('no')"
-                />
+                <input type="checkbox" name="dayHide" id="no" @change="selectDay('no')" />
                 <label class="dayLabel" for="no"></label>
                 전체해제
               </span>
@@ -310,13 +253,7 @@
             </tr>
             <tr>
               <td>
-                <select
-                  multiple
-                  size="24"
-                  id="monTime"
-                  name="monTime"
-                  @change="selectTime('mon')"
-                >
+                <select multiple size="24" id="monTime" name="monTime" @change="selectTime('mon')" >
                   <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#46E8CC">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -340,13 +277,7 @@
             </tr>
             <tr>
               <td>
-                <select
-                  multiple
-                  size="24"
-                  id="tueTime"
-                  name="tueTime"
-                  @change="selectTime('tue')"
-                >
+                <select multiple size="24" id="tueTime" name="tueTime" @change="selectTime('tue')" >
                   <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#49E1F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -370,13 +301,7 @@
             </tr>
             <tr>
               <td>
-                <select
-                  multiple
-                  size="24"
-                  id="wedTime"
-                  name="wedTime"
-                  @change="selectTime('wed')"
-                >
+                <select multiple size="24" id="wedTime" name="wedTime" @change="selectTime('wed')" >
                   <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4DA6DB">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -487,20 +412,8 @@
           </div>
           <div class="col-25">
             <div id="verticalFit">
-              <input
-                type="radio"
-                name="parkFlag"
-                value="unable"
-                @change="checkParkFlag('no')"
-                checked
-              />
-              불가
-              <input
-                type="radio"
-                name="parkFlag"
-                value="able"
-                @change="checkParkFlag('yes')"
-              />가능
+              <input type="radio" name="parkFlag" value="unable" @change="checkParkFlag('no')" checked /> 불가
+              <input type="radio" name="parkFlag" value="able" @change="checkParkFlag('yes')" /> 가능
             </div>
           </div>
           <span id="parkAmount" style="display: none;">
@@ -512,13 +425,7 @@
               <div class="outContainer">
                 <label class="inContent">대</label>
               </div>
-              <input
-                type="text"
-                id="parking"
-                name="parking"
-                ref="parking"
-                v-model="studio.studioFilter.parking"
-              />
+              <input type="text" id="parking" name="parking" ref="parking" v-model="studio.studioFilter.parking" />
             </div>
           </span>
         </div>
@@ -554,14 +461,15 @@
           <div class="col-25">
             <label for="portImg">포트폴리오</label>
           </div>
-          <div class="col-75">
-            <!-- 파일 업로드 -->
-            <input
-              type="text"
-              id="portImg"
-              name="portImg"
-              v-model="studio.portImg"
-            />
+          <div class="col-75 uploadArea">
+            <input type=file id="portImg1" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg1").click()'>
+            <input type=file id="portImg2" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg2").click()'>
+            <input type=file id="portImg3" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg3").click()'>
+            <input type=file id="portImg4" style='display: none;'> 
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg4").click()'>
           </div>
         </div>
         <div class="row">
@@ -569,52 +477,21 @@
           <table id="agreeTable" width="100%">
             <tr id="partAgree">
               <td id="checkAgree1">
-                <input
-                  type="checkbox"
-                  name="checkAgree[]"
-                  value="0"
-                  @change="controlAgree('partCheck')"
-                />&nbsp;
-                <a
-                  href="javascript:;"
-                  @click="controlModal('showModalAgree', 'modalAgree1')"
-                  >환불 규정 안내에 대한 동의</a
-                >
+                <input type="checkbox" name="checkAgree[]" value="0" @change="controlAgree('partCheck')" />&nbsp;
+                <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree1')" >환불 규정 안내에 대한 동의</a>
               </td>
               <td id="checkAgree2">
-                <input
-                  type="checkbox"
-                  name="checkAgree[]"
-                  value="1"
-                  @change="controlAgree('partCheck')"
-                />&nbsp;
-                <a
-                  href="javascript:;"
-                  @click="controlModal('showModalAgree', 'modalAgree2')"
-                  >개인 정보 제 3자 제공 동의</a
-                >
+                <input type="checkbox" name="checkAgree[]" value="1" @change="controlAgree('partCheck')" />&nbsp;
+                <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree2')" >개인 정보 제 3자 제공 동의</a>
               </td>
               <td id="checkAgree3">
-                <input
-                  type="checkbox"
-                  name="checkAgree[]"
-                  value="2"
-                  @change="controlAgree('partCheck')"
-                />&nbsp;
-                <a
-                  href="javascript:;"
-                  @click="controlModal('showModalAgree', 'modalAgree3')"
-                  >개인 정보 수집 및 이용 동의</a
-                >
+                <input type="checkbox" name="checkAgree[]" value="2" @change="controlAgree('partCheck')" />&nbsp;
+                <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree3')" >개인 정보 수집 및 이용 동의</a>
               </td>
             </tr>
             <tr>
               <td id="allAgree" colspan="3" align="center">
-                <input
-                  type="checkbox"
-                  id="allCheckAgree"
-                  @change="controlAgree('allCheck')"
-                />
+                <input type="checkbox" id="allCheckAgree" @change="controlAgree('allCheck')" />
                 <span style="color:white">&nbsp;전체동의</span>
               </td>
             </tr>
@@ -628,10 +505,7 @@
     <!-- Modal : 환불 규정 안내에 대한 동의 -->
     <div id="modalAgree1" class="modal">
       <div class="modal-content">
-        <span
-          class="close"
-          @click="controlModal('hideModalAgree', 'modalAgree1')"
-          >&times;
+        <span class="close" @click="controlModal('hideModalAgree', 'modalAgree1')" >&times;
         </span>
         <p>환불 규정 안내에 대한 동의</p>
       </div>
@@ -639,10 +513,7 @@
     <!-- Modal : 개인 정보 제 3자 제공 동의 -->
     <div id="modalAgree2" class="modal">
       <div class="modal-content">
-        <span
-          class="close"
-          @click="controlModal('hideModalAgree', 'modalAgree2')"
-          >&times;
+        <span class="close" @click="controlModal('hideModalAgree', 'modalAgree2')" >&times;
         </span>
         <p>개인 정보 제 3자 제공 동의</p>
       </div>
@@ -650,10 +521,7 @@
     <!-- Modal : 개인 정보 수집 및 이용 동의 -->
     <div id="modalAgree3" class="modal">
       <div class="modal-content">
-        <span
-          class="close"
-          @click="controlModal('hideModalAgree', 'modalAgree3')"
-          >&times;
+        <span class="close" @click="controlModal('hideModalAgree', 'modalAgree3')" >&times;
         </span>
         <p>개인 정보 수집 및 이용 동의</p>
       </div>

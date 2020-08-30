@@ -1,29 +1,31 @@
 <template>
   <div class="publicSpace">
     <LoginHeader customerMode="true" />
+    
     <div v-if="!flag">
-      <KakaoLogin 
-                  api-key="91cbdca7243fe89cb44e5d61a5aaaf44"
-                  :on-success = onSuccessKakao
-                  :on-failure = onFailureKakao
+      <KakaoLogin
+        api-key="91cbdca7243fe89cb44e5d61a5aaaf44"
+        :on-success = onSuccessKakao
+        :on-failure = onFailureKakao
       />
       <NaverLogin
-      clientId = "WPqClEa8eyJopmHuUcyb"
-      callbackUrl="http://localhost:7777/customerLogin"
-      :is-popup="true"
-      :button-type="3"
-      :button-height="50"
-      button-color="green"
-      :callbackFunction = "naverCallback"
-      :getLoginStatus="true"/>
+        clientId = "WPqClEa8eyJopmHuUcyb"
+        callbackUrl="http://localhost:7777/customerLogin"
+        :is-popup="true"
+        :button-type="3"
+        :button-height="50"
+        button-color="green"
+        :callbackFunction = "naverCallback"
+        :getLoginStatus="true"/>
 
-      <GoogleLogin 
-                  :params="params" 
-                  :renderParams="renderParams" 
-                  :onSuccess="onSuccessGoogle" 
-                  :onFailure="onFailureGoogle"></GoogleLogin>
+      <GoogleLogin
+        :params="params"
+        :renderParams="renderParams"
+        :onSuccess="onSuccessGoogle"
+        :onFailure="onFailureGoogle"></GoogleLogin>
 
-      <v-facebook-login app-id=""></v-facebook-login>
+      <v-facebook-login 
+        app-id=""></v-facebook-login>
     </div>
 
     <!-- 로그인 이후 추가 입력창-->
@@ -53,10 +55,8 @@
               <input type="submit" value="Register">
           </div>
         </form>
-      </div>
-
-    
-
+    </div>
+  
   </div>
 </template>
 
@@ -80,6 +80,28 @@ let onSuccessKakao = (data) => {
       this.imgSrc = res.properties.profile_image;
       this.nickname = res.properties.nickname;
       this.email = res.properties.email;
+      this.apiId = 0;
+
+      axios.get("http://localhost:7777/customer/"+this.apiKey,{
+            validateStatus: function (status) {
+        // 상태 코드가 500 이상일 경우 거부. 나머지(500보다 작은)는 허용.
+        return status <= 400;
+        }
+      })
+      .then((res) => {
+        if (res.data == ""){
+          this.flag = true;
+          console.log(this.flag)
+        }
+        else{
+          this.$session.start();
+          this.$session.set('customer',data);
+          location.href="http://localhost:9999";
+        }
+      })
+       .catch((err) => {
+        console.log(err);
+      })
     },
     fail: function(error) {
       console.log(error);
@@ -153,8 +175,8 @@ export default {
     VFacebookLogin
   },
   methods: {
-    onSuccessKakao,
     onFailureKakao,
+    onSuccessKakao,
     naverCallback,
     onSuccessGoogle,
     onFailureGoogle,
@@ -180,6 +202,7 @@ export default {
         console.log(err);
       });
     }
+  },updated:{
   }
 };
 </script>

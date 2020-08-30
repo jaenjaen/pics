@@ -79,7 +79,7 @@ export default {
             },
             /* 면적 */
             sizeInput: "",
-            sizeUnit: 1,
+            sizeUnit: true,
             /* 운영시간 */
             timePerDay: [
                 0,
@@ -156,17 +156,38 @@ export default {
         };
     },
     methods: {
-        changeSizeUnit(value) { //평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄
-            if (value == 1) { //평->제곱미터
-                this.sizeUnit = 0;
+        controlAddress(cmd) {
+            let api = document.getElementById("addressAPI");
+            let address2 = document.getElementById("address2");
+            let searchAddr = document.getElementById("searchAddr");
+            let closeAddr = document.getElementById("closeAddr");
+            if (cmd == "showAddress") {
+                api.style.display = "block";
+                address2.style.display = "none";
+                address2.value = "";
+                closeAddr.style.display = "block";
+                searchAddr.style.display = "none";
+            }
+            if (cmd == "hideAddress") {
+                api.style.display = "none";
+                address2.style.display = "block";
+                address2.focus();
+                searchAddr.style.display = "block";
+                closeAddr.style.display = "none";
+            }
+        },
+        changeSizeUnit(value) {
+            /* 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
+            if (value == true) { //평->제곱미터
+                this.sizeUnit = false;
                 if (this.sizeInput == "") {
                     return false;
                 }
                 this.sizeInput = (this.sizeInput * 3.305785).toFixed(2);
                 this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
             }
-            if (value == 0) { //제곱미터->평
-                this.sizeUnit = 1;
+            if (value == false) { //제곱미터->평
+                this.sizeUnit = true;
                 if (this.sizeInput == "") {
                     return false;
                 }

@@ -10,13 +10,7 @@
             <label for="name">스튜디오 이름</label>
           </div>
           <div class="col-75">
-            <input
-              type="text"
-              id="name"
-              name="name"
-              v-model="studio.name"
-              required
-            />
+            <input type="text" id="name" name="name" v-model="studio.name" required />
           </div>
         </div>
         <div class="row">
@@ -24,12 +18,7 @@
             <label for="country">스튜디오 종류</label>
           </div>
           <div class="col-75">
-            <select
-              id="categoryId"
-              name="categoryId"
-              v-model="studio.categoryId"
-              required
-            >
+            <select id="categoryId" name="categoryId" v-model="studio.categoryId" required >
               <option value="1">카페</option>
               <option value="2">스튜디오</option>
               <option value="3">집</option>
@@ -41,11 +30,7 @@
             <label for="description">스튜디오 소개</label>
           </div>
           <div class="col-75">
-            <textarea
-              id="description"
-              name="description"
-              v-model="studio.description"
-            ></textarea>
+            <textarea id="description" name="description" v-model="studio.description" ></textarea>
           </div>
         </div>
         <div class="row">
@@ -62,13 +47,7 @@
           </div>
           <div class="col-75">
             <!-- 파일 업로드 -->
-            <input
-              type="text"
-              id="mainImg"
-              name="mainImg"
-              v-model="studio.mainImg"
-              required
-            />
+            <input type="text" id="mainImg" name="mainImg" v-model="studio.mainImg" required />
           </div>
         </div>
         <div class="row">
@@ -94,18 +73,12 @@
           </div>
           <div class="col-75">
             <!-- 주소 처리 -->
-              <input
-                type="text"
-                id="address1"
-                name="address1"
-                :value="addressResult.address"
-                disabled
-                required
-                style="float:left; width:80%; margin-bottom:5px;"
-              />
-            <button type="button" @click="controlModal('showModalAgree', 'addressAPI')" style="width:18%">찾기</button>
+            <input type="text" id="address1" name="address1" :value="addressResult.address" disabled required/>
+            <button type="button" id="searchAddr" @click="controlAddress('showAddress')">찾기</button>
+            <button type="button" id="closeAddr" @click="controlAddress('hideAddress')">닫기</button>
             <p>
               <vue-daum-postcode 
+              id = "addressAPI"
               @complete="addressResult = $event"
               :animation="true"
               :no-shorthand="true"
@@ -119,13 +92,10 @@
               :always-show-eng-addr="false"
               :zonecode-only="true" 
               />
+            </p><br/>
+            <p>
+              <input placeholder="상세주소를 작성하세요." type="text" id="address2" name="address2" required/>
             </p>
-            <input
-                type="text"
-                id="address2"
-                name="address2"
-                required
-              />
           </div>
         </div>
         <div class="row">
@@ -654,29 +624,6 @@
           <input type="submit" value="등록" />
         </div>
       </form>
-    </div>
-    <!-- Modal : 주소 API -->
-    <div id="addressAPI">
-      <div>
-        <span
-          class="close"
-          @click="controlModal('hideModalAgree', 'addressAPI')"
-          >&times;
-        </span>
-          <vue-daum-postcode 
-          @complete="addressResult = $event"
-          :animation="true"
-          :no-shorthand="true"
-          :no-auto-mapping="true"
-          :please-read-guide="3"
-          :please-read-guide-timer="2"
-          :max-suggest-items="3"
-          :show-more-h-name="true"
-          :hide-map-btn="false"
-          :hide-eng-btn="true"
-          :always-show-eng-addr="false"
-          :zonecode-only="true" />
-      </div>
     </div>
     <!-- Modal : 환불 규정 안내에 대한 동의 -->
     <div id="modalAgree1" class="modal">

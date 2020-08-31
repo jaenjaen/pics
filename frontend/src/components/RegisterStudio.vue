@@ -277,7 +277,7 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="monTime" name="dayTime" @change="selectTime('mon')" >
+                <select multiple size="24" id="monTime" name="dayTime" @change="selectTime('monTime')" >
                   <option v-for="(time, index) in week.mon" :key="index" style="border: 2px solid #46E8CC">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -304,7 +304,7 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="tueTime" name="dayTime" @change="selectTime('tue')" >
+                <select multiple size="24" id="tueTime" name="dayTime" @change="selectTime('tueTime')" >
                   <option v-for="(time, index) in week.tue" :key="index" style="border: 2px solid #49E1F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -331,7 +331,7 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="wedTime" name="dayTime" @change="selectTime('wed')" >
+                <select multiple size="24" id="wedTime" name="dayTime" @change="selectTime('wedTime')" >
                   <option v-for="(time, index) in week.wed" :key="index" style="border: 2px solid #4DA6DB">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -358,7 +358,7 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="thuTime" name="dayTime">
+                <select multiple size="24" id="thuTime" name="dayTime" @change="selectTime('thuTime')">
                   <option v-for="(time, index) in week.thu" :key="index" style="border: 2px solid #4987F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -385,7 +385,7 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="friTime" name="dayTime">
+                <select multiple size="24" id="friTime" name="dayTime" @change="selectTime('friTime')">
                   <option v-for="(time, index) in week.fri" :key="index" style="border: 2px solid #4657E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -412,7 +412,7 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="satTime" name="dayTime">
+                <select multiple size="24" id="satTime" name="dayTime" @change="selectTime('satTime')">
                   <option v-for="(time, index) in week.sat" :key="index" style="border: 2px solid #A244F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
@@ -439,7 +439,7 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="sunTime" name="dayTime">
+                <select multiple size="24" id="sunTime" name="dayTime" @change="selectTime('sunTime')">
                   <option v-for="(time, index) in week.sun" :key="index" style="border: 2px solid #C941E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>

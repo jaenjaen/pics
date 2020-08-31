@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devils.pics.domain.Company;
 import com.devils.pics.service.CompanyService;
-//import com.devils.pics.util.security.JwtService;
+import com.devils.pics.util.security.JwtService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +36,7 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 	@Autowired
-	//private JwtService jwtService;
+	private JwtService jwtService;
 	
 	
 	@PostMapping("/company")
@@ -60,9 +60,9 @@ public class CompanyController {
 		try {
 			Company comp = companyService.loginCompany(company);
 			
-			//String token = jwtService.create(comp);
+			String token = jwtService.create(comp);
 			
-			//res.setHeader("jwt-auth-token", token);
+			res.setHeader("jwt-auth-token", token);
 			
 			return new ResponseEntity(comp, HttpStatus.OK);
 			

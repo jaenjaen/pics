@@ -11,7 +11,7 @@
 
         <div class="form__field" >
           <label for="login_job"><img class="icon" src="../assets/img/register/job.svg"><span class="hidden">Job</span></label>
-          <select name="job">
+          <select name="job" v-model="job">
             <option value="" disabled selected>직업을 선택 해주세요.</option>
             <option value="photographer">포토그래퍼</option>
             <option value="employee">회사원</option>
@@ -63,7 +63,7 @@ export default {
   ,methods:{
     customerRegister: function(){
         axios
-        .post('http://localhost:7777/company',{
+        .post('http://localhost:7777/customer',{
           apiId: this.apiId,
           apiKey: this.apiKey,
           imgSrc: this.imgSrc,
@@ -75,6 +75,7 @@ export default {
         })
          .then(response => {
            this.condata = response.data
+           sessionStorage.removeItem("apiData")
            alert(this.nickname+" 님의 가입을 환영합니다.");
            location.href="http://localhost:9999"
            })

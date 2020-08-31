@@ -155,7 +155,7 @@
             },
             // 상세페이지로 이동
             showStudioInfo(stuId) {
-                this.$router.push("/temp/" + stuId);
+                this.$router.push("/studioInfo/" + stuId);
                 alert(stuId);
             },
             // 이미지 경로

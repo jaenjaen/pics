@@ -45,6 +45,9 @@ public class Studio {
 		this.countReview = countReview;
 		this.tag = tag;
 	}
+	public Studio(int stuId) {
+		this.stuId = stuId;
+	}
 
 	public int getStuId() {
 		return stuId;

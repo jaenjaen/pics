@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
 <!-- 
     <div>
@@ -274,45 +275,26 @@ export default{
 //       }
 
 // </script>
+=======
+>>>>>>> a3248ecf7393f89b3233dc158f8fb690230d0fb3
 <style scoped>
-#main-images-section {
-    margin: 5% 0 5% 0;
+#movie-player-wrapper {
+	position: relative;
+	width: 16%;
+	height: 0;
+	overflow: hidden;
+	padding-bottom: 16%;
 }
-
-article {
-    width: 60%;
-    float: left;
-    border: 1px solid gray;
-}
-
-aside {
-    width: 35%;
-    margin-left: 5%;
-    float: left;
-    border: 1px solid gray;
-}
-
-#map {
-    width: 40%;
-    height: 40%;
-    border: 1px solid green;
-}
-
-#Studio-Filter-Table tr td {
-    border: 1px solid gray;
-}
-
-.carousel-inner img {
-    width: 100%;
-    height: 550px;
-}
-#reservation-floating-banner {
-    background-color: #F0F0F0;
-    position: absolute;
-    width: 25%;
-    padding: 3px 10px
-}
-#container{
-  width:80%;
+#movie-player-wrapper .wrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 }
 </style>
+<template>
+  <div id="movie-player-wrapper">
+    <img class="wrap" src="https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg">
+  </div>
+</template>

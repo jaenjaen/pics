@@ -7,7 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Company;
 import com.devils.pics.domain.Customer;
@@ -120,8 +123,20 @@ public class StudioInfoTest {
 //			System.out.println("vo : "+vo);
 //		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
 		
-		List<Customer> reserversList=new ArrayList<Customer>();
-		reserversList=sqlSession.selectList(NS+"genderRatio",10);
-		System.out.println(reserversList); 
+//		List<Customer> reserversList=new ArrayList<Customer>();
+//		reserversList=sqlSession.selectList(NS+"genderRatio",10);
+//		System.out.println(reserversList); 
+//		
+//		
+//		int result=sqlSession.insert(NS+"insertBookmark",new Bookmark(new Studio(11),new Customer(5)));
+//		System.out.println(result); 
+		
+		int count=0;
+		List<Customer> customerList=service.genderRatio(10);
+		System.out.println(customerList);
+		for(int i=0;i<customerList.size();i++) {
+			if(customerList.get(i).getGender()=='F') count++;
+		}	
+		System.out.println(count+"|"+customerList.size());
 	}
 }

@@ -1,13 +1,17 @@
-import axios from "axios"; //axios
+import axios from 'axios'; //axios
 import carousel from 'vue-owl-carousel'; //캐러셀
 import 'materialize-css'
-import 'material-design-icons/iconfont/material-icons.css'
+
 
 
 export default {
     name: "studio-info",
     components: { carousel },
+<<<<<<< HEAD
     // components: { VueperSlides, VueperSlide },zz
+=======
+
+>>>>>>> a3248ecf7393f89b3233dc158f8fb690230d0fb3
     data: function() {
         return {
             // studio 관련 변수 (GET)
@@ -40,8 +44,15 @@ export default {
                 tagId: 0,
                 tagName: ""
             }],
+
+            bookmarkCheck: 0, //북마크 id값 받은 변수
+
+            bookmark: { //북마크 추가할 변수
+                bookmarkId: 0,
+                studio: {},
+                customer: {},
+            },
             reviews: [],
-            bookmark_check: 0,
             accCustomer: 0,
 
             // 상태 체크 변수
@@ -60,15 +71,15 @@ export default {
             .finally(() => this.loading = false)
         axios
             .get('http://127.0.0.1:7777/studio/tags/3/10')
-            .then(response => (this.bookmark_check = response.data))
+            .then(response => (this.tags = response.data))
             .catch(error => {
                 console.log(error);
                 this.errored = true
             })
             .finally(() => this.loading = false)
         axios
-            .get('http://127.0.0.1:7777/studio/bookmark/3/10')
-            .then(response => (this.bookmark_check = response.data))
+            .get('http://127.0.0.1:7777/studio/getBookmark/3/10')
+            .then(response => (this.bookmarkCheck = response.data))
             .catch(error => {
                 console.log(error);
                 this.errored = true
@@ -90,20 +101,47 @@ export default {
                 this.errored = true
             })
             .finally(() => this.loading = false)
-    },
 
+    },
     methods: {
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },
         bookmarkChange() {
-            if (this.bookmark_check == 1) {
-                this.bookmark_check = 0;
+            if (this.bookmarkCheck != 0) {
+                this.bookmarkCheck = 0;
+                axios
+                    .delete('http://127.0.0.1:7777/bookmark/37')
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
 
             } else {
-                this.bookmark_check = 1;
+                this.bookmark.bookmarkId = this.bookmarkCheck;
+                this.bookmark.studio = this.studio;
+                this.bookmark.customer = this.customer;
+
+                axios
+                    .post('http://127.0.0.1:7777/bookmark', this.bookmark)
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+                axios
+                    .get('http://127.0.0.1:7777/studio/getBookmark/3/10')
+                    .then(response => (this.bookmarkCheck = response.data))
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+
 
             }
+
         },
         // kakaoShare() {
         //     Kakao.init('91cbdca7243fe89cb44e5d61a5aaaf44');

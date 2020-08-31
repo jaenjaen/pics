@@ -3,7 +3,11 @@ import VueRouter from "vue-router";
 import Main from "../components/Main.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
+<<<<<<< HEAD
 // import RegisterStudio from "../components/RegisterStudio.vue";
+=======
+import RegisterStudio from "../components/RegisterStudio.vue";
+>>>>>>> a3248ecf7393f89b3233dc158f8fb690230d0fb3
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import Reservation from "../components/Reservation.vue";
@@ -12,7 +16,11 @@ import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
 import Test from "../components/Test.vue";
 // import Map from "../components/Map.vue";
+<<<<<<< HEAD
 import temp from "../components/temp.vue";
+=======
+import Test from "../components/Test.vue";
+>>>>>>> a3248ecf7393f89b3233dc158f8fb690230d0fb3
 
 Vue.use(VueRouter);
 const routes = [{
@@ -34,10 +42,10 @@ const routes = [{
         name: "companylogin",
         component: CompanyLogin
     }, {
-        //     path: "/registerStudio",
-        //     name: "registerStudio",
-        //     component: RegisterStudio
-        // }, {
+        path: "/registerStudio",
+        name: "registerStudio",
+        component: RegisterStudio
+    }, {
         path: "/register",
         name: "register",
         component: Register
@@ -66,10 +74,11 @@ const routes = [{
         props: true,
     },
     // {
-    // path: "/Map",
-    // name: "Map",
-    // component: Map
+    //     path: "/Map",
+    //     name: "Map",
+    //     component: Map
     // }
+<<<<<<< HEAD
     {
         path: "/temp/:stuId",
         name: "temp",
@@ -78,6 +87,8 @@ const routes = [{
     },
 
 
+=======
+>>>>>>> a3248ecf7393f89b3233dc158f8fb690230d0fb3
 ];
 const router = new VueRouter({
     mode: "history",

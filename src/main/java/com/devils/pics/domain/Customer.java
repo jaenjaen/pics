@@ -15,6 +15,10 @@ public class Customer {
 	
 	public Customer() {}
 	
+	public Customer(int custId) {
+		this.custId = custId;
+	}
+	
 	public Customer(int custId, int apiId, String nickname, char gender, int age, String job, String funnel,
 			String email, String tel, String apiKey, String imgSrc) {
 		super();

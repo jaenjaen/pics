@@ -100,13 +100,13 @@
 		HAVING res.stu_id=${value};
 	</select>		
 		
-	<select id="checkBookmark" parameterType="list" resultType="int">
-		SELECT count(b.book_id)
+	<select id="getBookmark" parameterType="list" resultType="int">
+		SELECT b.book_id,cust_id,stu_id
 		FROM bookmark b
 		WHERE b.cust_id = ${list[0]}
 		AND b.stu_id = ${list[1]}
 	</select>
-	
+		
  	<select id="getTags" parameterType="int" resultType="tag">							
 		SELECT t.tag_id, t.stu_id ,t.tag_name
 		FROM tag t

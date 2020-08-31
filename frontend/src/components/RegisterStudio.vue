@@ -45,28 +45,47 @@
           <div class="col-25">
             <label for="mainImg">대표 사진</label>
           </div>
-          <div class="col-75 uploadArea">
-            <input type=file id="mainImg1" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg1").click()'>
-            <input type=file id="mainImg2" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg2").click()'>
-            <input type=file id="mainImg3" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg3").click()'>
-            <input type=file id="mainImg4" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg4").click()'>
-            <input type=file id="mainImg5" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg5").click()'>
-            <br/>
-            <input type=file id="mainImg6" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg6").click()'>
-            <input type=file id="mainImg7" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg7").click()'>
-            <input type=file id="mainImg8" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg8").click()'>
-            <input type=file id="mainImg9" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg9").click()'>
-            <input type=file id="mainImg10" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg10").click()'>
+          <div class="col-75 uploadTotal">
+            <div class="uploadArea">
+              <input type=file id="mainFile1" @change="handleImgFileSelect('mainFile1', 'mainImg1', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg1" onclick='document.getElementById("mainFile1").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile2" @change="handleImgFileSelect('mainFile2', 'mainImg2', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg2" onclick='document.getElementById("mainFile2").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile3" @change="handleImgFileSelect('mainFile3', 'mainImg3', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg3" onclick='document.getElementById("mainFile3").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile4" @change="handleImgFileSelect('mainFile4', 'mainImg4', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg4" onclick='document.getElementById("mainFile4").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile5" @change="handleImgFileSelect('mainFile5', 'mainImg5', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg5" onclick='document.getElementById("mainFile5").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile6" @change="handleImgFileSelect('mainFile6', 'mainImg6', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg6" onclick='document.getElementById("mainFile6").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile7" @change="handleImgFileSelect('mainFile7', 'mainImg7', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg7" onclick='document.getElementById("mainFile7").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile8" @change="handleImgFileSelect('mainFile8', 'mainImg8', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg8" onclick='document.getElementById("mainFile8").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile9" @change="handleImgFileSelect('mainFile9', 'mainImg9', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg9" onclick='document.getElementById("mainFile9").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile10" @change="handleImgFileSelect('mainFile10', 'mainImg10', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="mainImg10" onclick='document.getElementById("mainFile10").click()'>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -147,13 +166,15 @@
           <div class="col-25">
             <label for="cadImg">공간 도면</label>
           </div>
-          <div class="col-75 uploadArea">
-            <input type=file id="cadImg" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("cadImg").click()'>
-            <!-- 이어서 하기 https://blog.naver.com/wj8606/221249672135
-            <input type="file"  @change="fileUpload($event)">
-            <button v-on:click="addCadImg()">Submit</button>
-            -->
+          <div class="col-75 uploadTotal">
+            <div class="uploadArea">
+              <input type=file id="cadFile" @change="handleImgFileSelect('cadFile', 'cadImg', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/preview.png" class="uploadImg" id="cadImg" onclick='document.getElementById("cadFile").click()'>
+              <!-- 이어서 하기 https://blog.naver.com/wj8606/221249672135
+              <input type="file"  @change="fileUpload($event)">
+              <button v-on:click="addCadImg()">Submit</button>
+              -->
+            </div>
           </div>
         </div>
         <div class="row">
@@ -240,6 +261,9 @@
           <!-- 시간표 -->
           <table class="daySelect" id="monTd">
             <tr>
+              <td>월요일</td>
+            </tr>
+            <tr>
               <td>
                 <span id="allMonTime">
                   <input id="allMonTimeCheck" type="checkbox" @change="selectAllTime('select','monTime','noneMonTime','allMonTime','noneMonTimeCheck')"> 
@@ -253,8 +277,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="monTime" name="monTime" @change="selectTime('mon')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#46E8CC">
+                <select multiple size="24" id="monTime" name="dayTime" @change="selectTime('mon')" >
+                  <option v-for="(time, index) in week.mon" :key="index" style="border: 2px solid #46E8CC">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -263,6 +287,9 @@
           </table>
 
           <table class="daySelect" id="tueTd">
+            <tr>
+              <td>화요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allTueTime">
@@ -277,8 +304,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="tueTime" name="tueTime" @change="selectTime('tue')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#49E1F2">
+                <select multiple size="24" id="tueTime" name="dayTime" @change="selectTime('tue')" >
+                  <option v-for="(time, index) in week.tue" :key="index" style="border: 2px solid #49E1F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -287,6 +314,9 @@
           </table>
 
           <table class="daySelect" id="wedTd">
+            <tr>
+              <td>수요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allWedTime">
@@ -301,8 +331,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="wedTime" name="wedTime" @change="selectTime('wed')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4DA6DB">
+                <select multiple size="24" id="wedTime" name="dayTime" @change="selectTime('wed')" >
+                  <option v-for="(time, index) in week.wed" :key="index" style="border: 2px solid #4DA6DB">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -311,6 +341,9 @@
           </table>
 
           <table class="daySelect" id="thuTd">
+            <tr>
+              <td>목요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allThuTime">
@@ -325,8 +358,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="thuTime" name="thuTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4987F2">
+                <select multiple size="24" id="thuTime" name="dayTime">
+                  <option v-for="(time, index) in week.thu" :key="index" style="border: 2px solid #4987F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -335,6 +368,9 @@
           </table>
 
           <table class="daySelect" id="friTd">
+            <tr>
+              <td>금요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allFriTime">
@@ -349,8 +385,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="friTime" name="friTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4657E8">
+                <select multiple size="24" id="friTime" name="dayTime">
+                  <option v-for="(time, index) in week.fri" :key="index" style="border: 2px solid #4657E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -359,6 +395,9 @@
           </table>
 
           <table class="daySelect" id="satTd">
+            <tr>
+              <td>토요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allSatTime">
@@ -373,8 +412,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="satTime" name="satTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#A244F2">
+                <select multiple size="24" id="satTime" name="dayTime">
+                  <option v-for="(time, index) in week.sat" :key="index" style="border: 2px solid #A244F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -383,6 +422,9 @@
           </table>
 
           <table class="daySelect" id="sunTd">
+            <tr>
+              <td>일요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allSunTime">
@@ -397,8 +439,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="sunTime" name="sunTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#C941E8">
+                <select multiple size="24" id="sunTime" name="dayTime">
+                  <option v-for="(time, index) in week.sun" :key="index" style="border: 2px solid #C941E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -461,15 +503,23 @@
           <div class="col-25">
             <label for="portImg">포트폴리오</label>
           </div>
-          <div class="col-75 uploadArea">
-            <input type=file id="portImg1" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg1").click()'>
-            <input type=file id="portImg2" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg2").click()'>
-            <input type=file id="portImg3" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg3").click()'>
-            <input type=file id="portImg4" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg4").click()'>
+          <div class="col-75 uploadTotal">
+            <div class="uploadArea">
+              <input type=file id="portFile1" @change="handleImgFileSelect('portFile1', 'portImg1', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/port.png" class="uploadImg" id="portImg1" onclick='document.getElementById("portFile1").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="portFile2" @change="handleImgFileSelect('portFile2', 'portImg2', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/port.png" class="uploadImg" id="portImg2" onclick='document.getElementById("portFile2").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="portFile3" @change="handleImgFileSelect('portFile3', 'portImg3', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/port.png" class="uploadImg" id="portImg3" onclick='document.getElementById("portFile3").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="portFile4" @change="handleImgFileSelect('portFile4', 'portImg4', $event)" style='display: none;'> 
+              <img src="../assets/img/upload/port.png" class="uploadImg" id="portImg4" onclick='document.getElementById("portFile4").click()'>
+            </div>
           </div>
         </div>
         <div class="row">

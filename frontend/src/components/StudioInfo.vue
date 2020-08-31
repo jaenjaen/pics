@@ -1,7 +1,7 @@
    
 <template>
-
-  <div class="container">z
+  <div class="container">
+<div class="container">
       <!-- ==============  메인 이미지 : jumbo, carousel ============== -->
       <section id="main-images-section">
         <div class="row" v-for="(studio,index) in studios" v-bind:key="index">     
@@ -9,12 +9,12 @@
             <div>
                <img  class="item" data-merge="3" :src="imgUrl(studio.mainImg)" width="100%" height="500"/>
            </div>
-           <div>
+           <!-- <div>
                <img  class="item" data-merge="3" :src="imgUrl(studio.portImg)" width="100%" height="500"/>
            </div>
            <div>
                <img  class="item" data-merge="3" :src="imgUrl(studio.mainImg)" width="100%" height="500"/>
-           </div>
+           </div> -->
           </carousel>
          </div> 
       </section>
@@ -35,9 +35,11 @@
           <td>
              <!-- 찜하기 -->
             <span>
-            <a class="waves-effect waves-light btn-small" @click="bookmarkChange()" :v-model="bookmark_check">
-              <i class="material-icons">loyalty</i>
-            </a>
+            <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
+              찜
+              <!--  <img src="../assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt /> -->
+              <!-- <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt /> -->
+            </button>
             </span>
             <span>
             <a class="waves-effect waves-light btn-small" @click="shareUrl()">
@@ -48,9 +50,9 @@
            </td>
           </tr>
           </table>
-          <span class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
-            <button class="tagBtn">#{{tag.tagName}}</button>
-          </span>
+          <spand class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
+            <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
+          </spand>
 
          <div id="company-of-studio"> 
                <span>{{studio.company.name}}</span>
@@ -124,10 +126,10 @@
         
         <hr />
         <!-- ============== Chart & Graph ============== -->
-        <div class="article-Chart-area">
+        <!-- <div class="article-Chart-area">
           <div style="width:300px;heigth:300px">
-          <!-- 도넛 그래프 -->
-					<div id="canvas-holder" style="width:100%">
+           도넛 그래프
+					 <div id="canvas-holder" style="width:100%">
 						<div class="chartjs-size-monitor">
 							<div class="chartjs-size-monitor-expand">
 								<div class=""></div>
@@ -136,12 +138,12 @@
 								<div class=""></div>
 							</div>
 						</div>
-						<canvas id="doughnut-chart-area" style="display: block; height: 240px; width: 300px;" width="280" height="200" class="chartjs-render-monitor"></canvas>
+						<canvas id="doughnut-chart-area" style="display: block" width="280" height="200" class="chartjs-render-monitor"></canvas>
 					</div>
-					
+          <div>
 						
-				 	<!-- 히스토그램  평균가격대|쇼핑몰 -->
-					<!-- <div id="canvas-holder" style="width:100%">
+				 	히스토그램  평균가격대|쇼핑몰
+					<div id="canvas-holder" style="width:100%">
               <div class="chartjs-size-monitor">
                 <div class="chartjs-size-monitor-expand">
                   <div class=""></div>
@@ -152,9 +154,10 @@
               </div>
               <p></p>
               <canvas id="hist-canvas" style="display: block; height: 30%; width: 100%;" width="100%" height="100%" class="chartjs-render-monitor"></canvas>
-            </div>-->
+            </div>
           </div>
-        </div> 
+        </div>  -->
+
         <!-- ============== Review ============== -->
         <h4>Reviews</h4>
         <div class="article-review-area">
@@ -181,7 +184,6 @@
 </template>
 
 <script scoped src="../assets/js/StudioInfo.js"></script>
-<script scoped src="../assets/js/ChartJs.js"></script>
 
 <style scoped>
 

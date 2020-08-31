@@ -1,4 +1,5 @@
 package com.devils.pics.service;
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Studio;
@@ -13,7 +14,8 @@ public interface StudioInfoService {
 	public int getAccCustomer(int stuId); 	//누적 이용자수 조회
 	public List<Review> getStudioReviews(int stuId); //스튜디오에 등록된 모든 리뷰
 	public List<Tag> getTags(int stuId); //tag 가져오기
-	public int checkBookmark(List<Integer> idList); //tag 가져오기
+	public int getBookmark(List<Integer> idList); //tag 가져오기
+	public int addBookmark(Bookmark bookmark); //tag 추가
 	
 	/* 스튜디오 공간 등록 관련 메소드 */
 	public int getCategoryId(Category category); //카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)

@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.devils.pics.dao.StudioInfoDAO;
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Review;
@@ -57,13 +58,18 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	}
 
 	@Override
-	public int checkBookmark(List<Integer> idList) {
-		return sqlSession.selectOne(NS+"checkBookmark",idList);
+	public int getBookmark(List<Integer> idList) {
+		return sqlSession.selectOne(NS+"getBookmark",idList);
 	}
 
 	@Override
 	public List<Customer> genderRatio(int stuId) {
 		return sqlSession.selectList(NS+"genderRatio",stuId);
+	}
+
+	@Override
+	public int addBookmark(Bookmark bookmark) {
+		return sqlSession.insert(NS+"addBookmark",bookmark);
 	}
 
 }

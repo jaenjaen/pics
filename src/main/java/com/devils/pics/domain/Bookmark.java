@@ -12,6 +12,10 @@ public class Bookmark {
 	}
 	public Bookmark() {	}
 	
+	public Bookmark(Studio studio, Customer customer) {
+		this.studio = studio;
+		this.customer = customer;
+	}
 	public int getBookId() {
 		return bookId;
 	}

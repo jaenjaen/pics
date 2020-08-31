@@ -125,9 +125,9 @@
         
         <hr />
         <!-- ============== Chart & Graph ============== -->
-                <div class="article-Chart-area">
+        <!-- <div class="article-Chart-area">
           <div style="width:300px;heigth:300px">
-          <!-- 도넛 그래프 -->
+           도넛 그래프
 					 <div id="canvas-holder" style="width:100%">
 						<div class="chartjs-size-monitor">
 							<div class="chartjs-size-monitor-expand">
@@ -141,7 +141,7 @@
 					</div>
           <div>
 						
-				 	<!-- 히스토그램  평균가격대|쇼핑몰 -->
+				 	히스토그램  평균가격대|쇼핑몰
 					<div id="canvas-holder" style="width:100%">
               <div class="chartjs-size-monitor">
                 <div class="chartjs-size-monitor-expand">
@@ -155,7 +155,7 @@
               <canvas id="hist-canvas" style="display: block; height: 30%; width: 100%;" width="100%" height="100%" class="chartjs-render-monitor"></canvas>
             </div>
           </div>
-        </div> 
+        </div>  -->
 
         <!-- ============== Review ============== -->
         <h4>Reviews</h4>

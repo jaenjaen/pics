@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.Company;
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Reservation;
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Schedule;
@@ -58,11 +59,11 @@ public class StudioInfoTest {
 
 	/* 카테고리 이름으로 카테고리 아이디 찾아오기 - 단위 테스트 성공 */
 	@Test
-	/*public void getCategoryId() {
-		Category category = new Category(100, "카페");
-		int categoryId = sqlSession.selectOne("StudioInfoMapper.getCategoryId", category);
-		System.out.println("카테고리 아이디 : "+categoryId);
-	}*/	
+//	public void getCategoryId() {
+//		Category category = new Category(100, "카페");
+//		int categoryId = sqlSession.selectOne("StudioInfoMapper.getCategoryId", category);
+//		System.out.println("카테고리 아이디 : "+categoryId);
+//	}
 	void contextLoads() {
 		String NS = "StudioInfoMapper.";
 //		System.out.println("====================getStudioInfo====================");
@@ -118,6 +119,9 @@ public class StudioInfoTest {
 //			int vo=service.checkBookmark(idList);
 //			System.out.println("vo : "+vo);
 //		}catch (NullPointerException e) {System.out.println("태그가...없나?");}
-
+		
+		List<Customer> reserversList=new ArrayList<Customer>();
+		reserversList=sqlSession.selectList(NS+"genderRatio",10);
+		System.out.println(reserversList); 
 	}
 }

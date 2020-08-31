@@ -30,7 +30,13 @@ public class Customer {
 		this.apiKey = apiKey;
 		this.imgSrc = imgSrc;
 	}
-
+	public Customer(int custId,char gender, int age, String job, String funnel) {
+		this.custId = custId;
+		this.gender = gender;
+		this.age = age;
+		this.job = job;
+		this.funnel = funnel;
+	}
 	public int getCustId() {
 		return custId;
 	}

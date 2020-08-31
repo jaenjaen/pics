@@ -30,12 +30,12 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 
 	@Override
 	public int AddReservation(Reservation reservation) {
-		return sqlSession.insert(NS+"reserve", reservation);
+		return sqlSession.insert(NS+"addReservation", reservation);
 	}
 
 	@Override
 	public int AddExceptionDates(Reservation reservation) {
-		return sqlSession.insert(NS+"AddexceptionDates", reservation);
+		return sqlSession.insert(NS+"addExceptionDates", reservation);
 	}
 
 	@Override
@@ -45,23 +45,23 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 
 	@Override
 	public int UpdateReservation(Reservation reservation) {
-		return sqlSession.update(NS+"UpdateReservation", reservation);
+		return sqlSession.update(NS+"updateReservation", reservation);
 	}
 
 	@Override
 	public int UpdateExceptionDate(Reservation reservation) {
 		// TODO Auto-generated method stub
-		return sqlSession.update(NS+"UpdateExceptionDate", reservation);
+		return sqlSession.update(NS+"updateExceptionDate", reservation);
 	}
 
 	@Override
 	public int DeleteReservations(List<Reservation> reservationList) {
-		return sqlSession.delete(NS+"DeleteReservations", reservationList);
+		return sqlSession.delete(NS+"deleteReservations", reservationList);
 	}
 
 	@Override
 	public int DeleteExceptionDates(List<Reservation> reservationList) {
-		return sqlSession.delete(NS+"DeleteExceptionDates", reservationList);
+		return sqlSession.delete(NS+"deleteExceptionDates", reservationList);
 	}
 
 }

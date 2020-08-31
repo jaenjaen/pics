@@ -40,7 +40,7 @@ class StudioReserveTest {
 	void contextLoads() throws Exception {	
 
 		String NS = "StudioReserveMapper.";
-//		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
+		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
 		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
 
 //		System.out.println("==================== getExceptionDate ====================");
@@ -55,8 +55,8 @@ class StudioReserveTest {
 
 //		System.out.println("==================== Reserve ====================");
 //		
-//		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
-//				"2020-08-21", 150000,"2020-08-11", 7);
+		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
+				"2020-08-21", 150000,"2020-08-11", 7);
 //		System.out.println(customer);
 //		System.out.println(studio);
 //		System.out.println(reservation);
@@ -120,13 +120,13 @@ class StudioReserveTest {
 //			System.out.println("예외 일정 등록에 실패했습니다.");
 //		}
 		
-		System.out.println("==================== DeleteExceptionDates ====================");
-		try {
-		int result = sqlSession.delete(NS+"DeleteExceptionDates",resInfo);
-		System.out.println(result);
-		}catch (NullPointerException e) {
-			System.out.println("예외 일정 등록에 실패했습니다.");
-		}
+//		System.out.println("==================== DeleteExceptionDates ====================");
+//		try {
+//		int result = sqlSession.delete(NS+"DeleteExceptionDates",resInfo);
+//		System.out.println(result);
+//		}catch (NullPointerException e) {
+//			System.out.println("예외 일정 등록에 실패했습니다.");
+//		}
 		
 		
 		
@@ -158,10 +158,10 @@ class StudioReserveTest {
 //			System.out.println(reserveService.AddexceptionDates(reservation));
 //		}catch (NullPointerException e) {System.out.println("exptionDate에 등록");}
 
-//		System.out.println("==================== reserve ====================");
-//		try {
-//			System.out.println(reserveService.reserve(reservation));
-//		}catch (NullPointerException e) {System.out.println("예약에 실패했습니다.");}
+		System.out.println("==================== reserve ====================");
+		try {
+			System.out.println(reserveService.AddReservation(reservation));
+		}catch (NullPointerException e) {System.out.println("예약에 실패했습니다.");}
 
 		
 	}

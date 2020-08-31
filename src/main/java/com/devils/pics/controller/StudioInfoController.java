@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.ExceptionDate;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Review;
@@ -38,19 +39,9 @@ public class StudioInfoController {
 	// 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
 	@GetMapping("/studio/info/{stuId}")
 	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {	
-		try {
-		Schedule schedule=new Schedule();
-		ArrayList<ExceptionDate> exceptionDate=new ArrayList<ExceptionDate>(); 
-		ArrayList<RepeatDate> repeatDate=new ArrayList<RepeatDate>();
-		exceptionDate=studioReserveService.getExceptionDate(stuId);
-		repeatDate=studioReserveService.getRepeatDate(stuId);
-
-		schedule.setStuId(stuId);
-		schedule.setExceptionDate(exceptionDate);
-		schedule.setRepeatDate(repeatDate);
-
-		List<Studio> studioVO=studioInfoService.getStudioInfo(stuId);
-		studioVO.get(0).setSchedule(schedule);
+		try {		
+		List<Studio> studioVO=studioInfoService.getStudioInfo(stuId);		
+		System.out.println(studioVO);
 		return new ResponseEntity<List<Studio>>(studioVO,HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage()+"찾으시는 스튜디오가 없습니다");
@@ -103,7 +94,20 @@ public class StudioInfoController {
 			return new ResponseEntity<List<Review>>(HttpStatus.NO_CONTENT);
 			}
 		}
+	
+	@GetMapping("/studio/genderRatio/{stuId}")
+	public ResponseEntity genderRatio(@PathVariable int stuId) {	
+		try {
+		List<Customer> customerList=studioInfoService.genderRatio(stuId);
+		System.out.println(customerList);	
+		return new ResponseEntity(customerList,HttpStatus.OK);
+		}catch (NullPointerException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
 	}
+	}
+
+
 
 
 		

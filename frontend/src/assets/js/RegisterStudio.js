@@ -77,9 +77,10 @@ export default {
                 roadnameCode: "",
                 roadname: ""
             },
+            addressDetail: "",
             /* 면적 */
             sizeInput: "",
-            sizeUnit: 1,
+            sizeUnit: true,
             /* 운영시간 */
             timePerDay: [
                 0,
@@ -156,17 +157,42 @@ export default {
         };
     },
     methods: {
-        changeSizeUnit(value) { //평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄
-            if (value == 1) { //평->제곱미터
-                this.sizeUnit = 0;
+        controlAddress(cmd) {
+            let api = document.getElementById("addressAPI");
+            let address2 = document.getElementById("address2");
+            let searchAddr = document.getElementById("searchAddr");
+            let closeAddr = document.getElementById("closeAddr");
+            if (cmd == "showAddress") {
+                api.style.display = "block";
+                address2.style.display = "none";
+                address2.value = "";
+                closeAddr.style.display = "block";
+                searchAddr.style.display = "none";
+            }
+            if (cmd == "hideAddress") {
+                if (this.addressResult.address == '') {
+                    alert("주소를 선택하세요");
+                    return false;
+                }
+                api.style.display = "none";
+                address2.style.display = "block";
+                address2.focus();
+                searchAddr.style.display = "block";
+                closeAddr.style.display = "none";
+            }
+        },
+        changeSizeUnit(value) {
+            /* 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
+            if (value == true) { //평->제곱미터
+                this.sizeUnit = false;
                 if (this.sizeInput == "") {
                     return false;
                 }
                 this.sizeInput = (this.sizeInput * 3.305785).toFixed(2);
                 this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
             }
-            if (value == 0) { //제곱미터->평
-                this.sizeUnit = 1;
+            if (value == false) { //제곱미터->평
+                this.sizeUnit = true;
                 if (this.sizeInput == "") {
                     return false;
                 }
@@ -362,6 +388,17 @@ export default {
             }
         },
         addStudio() {
+            /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
+            if (this.addressResult.address == '') {
+                alert("주소를 선택하세요");
+                return false;
+            } else if (this.addressDetail == '') {
+                alert("상세주소를 입력하세요");
+                return false;
+            } else {
+                this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
+            }
+
             /* 선택된 옵션을 문자열로 변환하여 바인딩 */
             this.option_save = [];
             var optionName = document.getElementsByName("optionName");
@@ -372,7 +409,6 @@ export default {
                 }
             }
             this.studio.studioFilter.options = this.option_save.join(",");
-            alert(this.studio.studioFilter.options);
 
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
             let tags = document.getElementsByName("tag");

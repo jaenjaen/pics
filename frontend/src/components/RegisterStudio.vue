@@ -47,26 +47,26 @@
           </div>
           <div class="col-75 uploadArea">
             <input type=file id="mainImg1" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg1").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg1").click()'>
             <input type=file id="mainImg2" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg2").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg2").click()'>
             <input type=file id="mainImg3" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg3").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg3").click()'>
             <input type=file id="mainImg4" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg4").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg4").click()'>
             <input type=file id="mainImg5" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg5").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg5").click()'>
             <br/>
             <input type=file id="mainImg6" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg6").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg6").click()'>
             <input type=file id="mainImg7" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg7").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg7").click()'>
             <input type=file id="mainImg8" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg8").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg8").click()'>
             <input type=file id="mainImg9" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg9").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg9").click()'>
             <input type=file id="mainImg10" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("mainImg10").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("mainImg10").click()'>
           </div>
         </div>
         <div class="row">
@@ -149,7 +149,7 @@
           </div>
           <div class="col-75 uploadArea">
             <input type=file id="cadImg" style='display: none;'> 
-            <img src="../assets/img/upload/space.png" class="uploadImg" onclick='document.getElementById("cadImg").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("cadImg").click()'>
             <!-- 이어서 하기 https://blog.naver.com/wj8606/221249672135
             <input type="file"  @change="fileUpload($event)">
             <button v-on:click="addCadImg()">Submit</button>
@@ -463,13 +463,13 @@
           </div>
           <div class="col-75 uploadArea">
             <input type=file id="portImg1" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg1").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg1").click()'>
             <input type=file id="portImg2" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg2").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg2").click()'>
             <input type=file id="portImg3" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg3").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg3").click()'>
             <input type=file id="portImg4" style='display: none;'> 
-            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg4").click()'>
+            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg4").click()'>
           </div>
         </div>
         <div class="row">

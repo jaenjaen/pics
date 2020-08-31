@@ -4,14 +4,14 @@ import Main from "../components/Main.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
 import RegisterStudio from "../components/RegisterStudio.vue";
-// import TempStudio from "../components/Temp_MoveToInfo.vue";
+import TempStudio from "../components/Temp_MoveToInfo.vue";
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
-// import Map from "../components/Map.vue";
+import Map from "../components/Map.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -33,10 +33,10 @@ const routes = [{
         name: "companylogin",
         component: CompanyLogin
     }, {
-        //     path: "/registerStudio",
-        //     name: "registerStudio",
-        //     component: RegisterStudio
-        // }, {
+        path: "/registerStudio",
+        name: "registerStudio",
+        component: RegisterStudio
+    }, {
         path: "/register",
         name: "register",
         component: Register
@@ -68,12 +68,11 @@ const routes = [{
         name: "studioInfo",
         component: StudioInfo
     },
-    // {
-    // path: "/Map",
-    // name: "Map",
-    // component: Map
-    // }
-
+    {
+        path: "/Map",
+        name: "Map",
+        component: Map
+    }
 ];
 const router = new VueRouter({
     mode: "history",

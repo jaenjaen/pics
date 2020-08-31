@@ -1,47 +1,37 @@
 <template>
   <div class="publicSpace">
     <LoginHeader customerMode="true" />
-    <KakaoLogin
-      api-key="91cbdca7243fe89cb44e5d61a5aaaf44"
-      :on-success="onSuccessKakao"
-      :on-failure="onFailureKakao"
-    />
-    <NaverLogin
-      clientId="WPqClEa8eyJopmHuUcyb"
-      callbackUrl="http://localhost:7777/customerLogin"
-      :is-popup="true"
-      :button-type="3"
-      :button-height="50"
-      button-color="green"
-      :callbackFunction="naverCallback"
-      :getLoginStatus="true"
-    />
-
-    <GoogleLogin
-      :params="params"
-      :renderParams="renderParams"
-      :onSuccess="onSuccessGoogle"
-      :onFailure="onFailureGoogle"
-    ></GoogleLogin>
-
-    <v-facebook-login app-id=""></v-facebook-login>
-  </div>
+      <KakaoLogin
+        api-key="91cbdca7243fe89cb44e5d61a5aaaf44"
+        :on-success="onSuccessKakao"
+        :on-failure="onFailureKakao"
+      />
+      <br>
+        <GoogleLogin
+        :renderParams="renderParams"
+        :params="params"
+        :onSuccess="onSuccessGoogle"
+        :onFailure="onFailureGoogle"
+        >Google Login</GoogleLogin>
+      <br>
+      <br>
+      <v-facebook-login app-id="320153602657982"></v-facebook-login>
+    </div>
 </template>
 
 <script>
 import axios from "axios";
 import LoginHeader from "@/components/LoginHeader.vue";
 import KakaoLogin from "vue-kakao-login";
-import NaverLogin from "vue-naver-login";
 import GoogleLogin from "vue-google-login";
-import VFacebookLogin from "vue-facebook-login-component";
+import VFacebookLogin from 'vue-facebook-login-component'
 
 //kakao
 let onSuccessKakao = data => {
   console.log("KAKAO - success");
   console.log(data);
   window.Kakao.API.request({
-    url: "/v2/user/me",
+    url:"/v2/user/me",
     success: function(res) {
       console.log(res);
       this.apiKey = res.id;
@@ -49,13 +39,11 @@ let onSuccessKakao = data => {
       this.nickname = res.properties.nickname;
       this.email = res.kakao_account.email;
       this.apiId = 0;
-      this.apiData = {
-        apiKey: this.apiKey,
-        imgSrc: this.imgSrc,
-        nickname: this.nickname,
-        email: this.email,
-        apiId: this.apiId
-      };
+      this.apiData = {"apiKey":this.apiKey,
+                      "imgSrc":this.imgSrc,
+                      "nickname": this.nickname,
+                      "email": this.email,
+                      "apiId": this.apiId};
 
       axios
         .get("http://localhost:7777/customer/" + this.apiKey, {
@@ -70,7 +58,7 @@ let onSuccessKakao = data => {
             sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
             location.href = "http://localhost:9999/register";
           } else {
-            sessionStorage.setItem("customer", data);
+            sessionStorage.setItem("customer", JSON.stringify(res.data));
             location.href = "http://localhost:9999";
           }
         })
@@ -83,43 +71,13 @@ let onSuccessKakao = data => {
     }
   });
 };
-
 let onFailureKakao = data => {
   console.log(data);
   console.log("KAKAO - callback 처리에 실패하였습니다.");
 };
 
-//naver
-let naverCallback = status => {
-  if (status) {
-    /* (5) 필수적으로 받아야하는 프로필 정보가 있다면 callback처리 시점에 체크 */
-    var email = NaverLogin.user.getEmail();
-    if (email == undefined || email == null) {
-      alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
-      /* (5-1) 사용자 정보 재동의를 위하여 다시 네아로 동의페이지로 이동함 */
-      NaverLogin.reprompt();
-      return;
-    }
-
-    window.location.replace(
-      "http://" +
-        window.location.hostname +
-        (location.port == "" || location.port == undefined
-          ? ""
-          : ":" + location.port)
-    );
-  } else {
-    console.log("NAVER - callback 처리에 실패하였습니다.");
-  }
-};
-
 //google
-let onSuccessGoogle = googleUser => {
-  console.log(googleUser);
-  console.log("GOOGLE - success");
-};
-
-let onFailureGoogle = data => {
+let onFailureGoogle = function(data){
   console.log(data);
   console.log("GOOGLE - callback 처리에 실패하였습니다.");
 };
@@ -135,50 +93,97 @@ export default {
       nickname: "",
       email: "",
       params: {
-        client_id: ""
+        client_id:
+          "904661069189-3mk7nkmdpmp22qnb0sr0li8t1laim3cr.apps.googleusercontent.com"
       },
       renderParams: {
-        width: 250,
-        height: 50,
+        width: 300,
+        height: 49,
         logtitle: true
-      }
-    };
+      },
+      isConnected: false,
+      FB: undefined,
+    }
   },
   components: {
     LoginHeader,
     KakaoLogin,
-    NaverLogin,
     GoogleLogin,
     VFacebookLogin
   },
   methods: {
     onFailureKakao,
     onSuccessKakao,
-    naverCallback,
-    onSuccessGoogle,
-    onFailureGoogle,
-    customerRegister: function() {
-      axios
-        .post("http://localhost:7777/customer", {
-          apiId: this.apiId,
-          nicakname: this.nickname,
-          job: this.job,
-          funnel: this.funnel,
-          email: this.email,
-          tel: this.tel,
-          apiKey: this.apiKey,
-          imgSrc: this.imgSrc
-        })
-        .then(res => {
-          if (res != "") {
-            alert("가입 완.");
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+    onSuccessGoogle(googleUser){
+    console.log("GOOGLE - success");
+    var profile = googleUser.getBasicProfile();
+    this.apiKey = googleUser.getId();
+    this.imgSrc = profile.getImageUrl();
+    this.nickname = profile.getName();
+    this.email = profile.getEmail();
+    this.apiData = {"apiKey": this.apiKey,
+                    "imgSrc": this.imgSrc,
+                    "nickname": this.nickname,
+                    "email": this.email,
+                    "apiId": 2
+                    };
+         axios
+          .get("http://localhost:7777/customer/" + this.apiKey, {
+            validateStatus: function(status) {
+              // 상태 코드가 400 이상일 경우 거부. 나머지(400보다 작은)는 허용.
+              return status <= 400;
+            }
+          })
+          .then(res => {
+            if (res.data == "") {
+              console.log(this.apiData);
+              sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
+              location.href = "http://localhost:9999/register";
+            } else {
+              sessionStorage.setItem("customer", JSON.stringify(res.data));
+              location.href = "http://localhost:9999";
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
   },
-  updated: {}
+    onFailureGoogle,
+    
+    //facebook login
+    getUserData() {
+      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' }, 
+      user => {
+        console.log(user);
+        // this.personalID = user.id;
+        // this.email = user.email;
+        // this.name = user.name;
+        // this.picture = user.picture.data.url;
+      })
+    },
+    sdkLoaded(payload) {
+      this.isConnected = payload.isConnected;
+      this.FB = payload.FB;
+      if (this.isConnected) this.getUserData();
+    },
+    onLogin() {
+       this.isConnected = true;
+       this.getUserData();
+       this.redirectUser();
+     }
+  }
 };
 </script>
+
+<style scoped>
+
+#google-signin-btn-0{
+  display:inline-block;
+}
+.v-facebook-login{
+  margin:auto;
+  height:49px;
+  width:300px;
+
+}
+</style>

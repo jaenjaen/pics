@@ -10,7 +10,7 @@ import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
-import Map from "../components/Map.vue";
+// import Map from "../components/Map.vue";
 import Test from "../components/Test.vue";
 
 Vue.use(VueRouter);
@@ -63,11 +63,11 @@ const routes = [{
         name: "studioInfo",
         component: StudioInfo
     },
-    {
-        path: "/Map",
-        name: "Map",
-        component: Map
-    }
+    // {
+    //     path: "/Map",
+    //     name: "Map",
+    //     component: Map
+    // }
 ];
 const router = new VueRouter({
     mode: "history",

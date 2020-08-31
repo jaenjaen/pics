@@ -3,6 +3,9 @@ package com.devils.pics.controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.ExceptionDate;
 import com.devils.pics.domain.RepeatDate;
@@ -69,18 +73,19 @@ public class StudioInfoController {
 	}
 	
 	//2-2. Studio 클래스에 없는 정보 (찜 여부)
-	@GetMapping("/studio/bookmark/{custId}/{stuId}")
-	public ResponseEntity<Integer> checkBookmark(@PathVariable("custId") int custId,@PathVariable("stuId") int stuId) {	
+	@GetMapping("/studio/getBookmark/{custId}/{stuId}")
+	public ResponseEntity<Integer> getBookmark(@PathVariable("custId") int custId,@PathVariable("stuId") int stuId) {	
 		if((""+custId)!=("")) {
 			List<Integer> idList=new ArrayList<Integer>();
 			idList.add(custId);
 			idList.add(stuId);
-			int marking=studioInfoService.checkBookmark(idList);
-			if(marking>0) return new ResponseEntity<Integer>(marking,HttpStatus.OK);
-			else return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
+			int bookmarkId=studioInfoService.getBookmark(idList);
+			if(bookmarkId!=0) return new ResponseEntity<Integer>(bookmarkId,HttpStatus.OK);
+			else return new ResponseEntity<Integer>(0,HttpStatus.NO_CONTENT);
 		}
-		return new ResponseEntity<Integer>(HttpStatus.NO_CONTENT);
+		return new ResponseEntity<Integer>(0,HttpStatus.NO_CONTENT);
 	}
+	
 	
 	//2-3. Studio 클래스에 없는 정보 (리뷰)
 	@GetMapping("/studio/reviews/{stuId}")
@@ -98,8 +103,7 @@ public class StudioInfoController {
 	@GetMapping("/studio/genderRatio/{stuId}")
 	public ResponseEntity genderRatio(@PathVariable int stuId) {	
 		try {
-		List<Customer> customerList=studioInfoService.genderRatio(stuId);
-		System.out.println(customerList);	
+			List<Customer> customerList=studioInfoService.genderRatio(stuId);
 		return new ResponseEntity(customerList,HttpStatus.OK);
 		}catch (NullPointerException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

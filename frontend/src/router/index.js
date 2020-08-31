@@ -11,7 +11,7 @@ import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
-import Test from "../components/Test.vue";
+//import Test from "../components/Test.vue";
 // import Map from "../components/Map.vue";
 
 Vue.use(VueRouter);
@@ -42,20 +42,21 @@ const routes = [{
         name: "register",
         component: Register
 
-    }, {
-        path: "/test",
-        name: "test",
-        component: Test
-    }, {
+    }, //{
+    //     path: "/test",
+    //     name: "test",
+    //     component: Test
+    // }, 
+    {
         path: "/mypage",
         name: "mypage",
         component: Mypage
-    }, {
+    },
+    {
         path: "/wishlist",
         name: "wishlist",
         component: WishList
-    },
-    {
+    }, {
         path: "/reservation",
         name: "reservation",
         component: Reservation

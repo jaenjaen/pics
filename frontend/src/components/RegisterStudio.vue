@@ -463,13 +463,13 @@
           </div>
           <div class="col-75 uploadArea">
             <input type=file id="portImg1" style='display: none;'> 
-            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg1").click()'>
+            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg1").click()'>
             <input type=file id="portImg2" style='display: none;'> 
-            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg2").click()'>
+            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg2").click()'>
             <input type=file id="portImg3" style='display: none;'> 
-            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg3").click()'>
+            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg3").click()'>
             <input type=file id="portImg4" style='display: none;'> 
-            <img src="../assets/img/upload/preview.png" class="uploadImg" onclick='document.getElementById("portImg4").click()'>
+            <img src="../assets/img/upload/port.png" class="uploadImg" onclick='document.getElementById("portImg4").click()'>
           </div>
         </div>
         <div class="row">

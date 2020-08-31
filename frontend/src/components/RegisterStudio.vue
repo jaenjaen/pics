@@ -261,6 +261,9 @@
           <!-- 시간표 -->
           <table class="daySelect" id="monTd">
             <tr>
+              <td>월요일</td>
+            </tr>
+            <tr>
               <td>
                 <span id="allMonTime">
                   <input id="allMonTimeCheck" type="checkbox" @change="selectAllTime('select','monTime','noneMonTime','allMonTime','noneMonTimeCheck')"> 
@@ -274,8 +277,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="monTime" name="monTime" @change="selectTime('mon')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#46E8CC">
+                <select multiple size="24" id="monTime" name="dayTime" @change="selectTime('mon')" >
+                  <option v-for="(time, index) in week.mon" :key="index" style="border: 2px solid #46E8CC">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -284,6 +287,9 @@
           </table>
 
           <table class="daySelect" id="tueTd">
+            <tr>
+              <td>화요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allTueTime">
@@ -298,8 +304,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="tueTime" name="tueTime" @change="selectTime('tue')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#49E1F2">
+                <select multiple size="24" id="tueTime" name="dayTime" @change="selectTime('tue')" >
+                  <option v-for="(time, index) in week.tue" :key="index" style="border: 2px solid #49E1F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -308,6 +314,9 @@
           </table>
 
           <table class="daySelect" id="wedTd">
+            <tr>
+              <td>수요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allWedTime">
@@ -322,8 +331,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="wedTime" name="wedTime" @change="selectTime('wed')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4DA6DB">
+                <select multiple size="24" id="wedTime" name="dayTime" @change="selectTime('wed')" >
+                  <option v-for="(time, index) in week.wed" :key="index" style="border: 2px solid #4DA6DB">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -332,6 +341,9 @@
           </table>
 
           <table class="daySelect" id="thuTd">
+            <tr>
+              <td>목요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allThuTime">
@@ -346,8 +358,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="thuTime" name="thuTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4987F2">
+                <select multiple size="24" id="thuTime" name="dayTime">
+                  <option v-for="(time, index) in week.thu" :key="index" style="border: 2px solid #4987F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -356,6 +368,9 @@
           </table>
 
           <table class="daySelect" id="friTd">
+            <tr>
+              <td>금요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allFriTime">
@@ -370,8 +385,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="friTime" name="friTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4657E8">
+                <select multiple size="24" id="friTime" name="dayTime">
+                  <option v-for="(time, index) in week.fri" :key="index" style="border: 2px solid #4657E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -380,6 +395,9 @@
           </table>
 
           <table class="daySelect" id="satTd">
+            <tr>
+              <td>토요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allSatTime">
@@ -394,8 +412,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="satTime" name="satTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#A244F2">
+                <select multiple size="24" id="satTime" name="dayTime">
+                  <option v-for="(time, index) in week.sat" :key="index" style="border: 2px solid #A244F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -404,6 +422,9 @@
           </table>
 
           <table class="daySelect" id="sunTd">
+            <tr>
+              <td>일요일</td>
+            </tr>
             <tr>
               <td>
                 <span id="allSunTime">
@@ -418,8 +439,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="sunTime" name="sunTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#C941E8">
+                <select multiple size="24" id="sunTime" name="dayTime">
+                  <option v-for="(time, index) in week.sun" :key="index" style="border: 2px solid #C941E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>

@@ -82,49 +82,15 @@ export default {
             sizeInput: "",
             sizeUnit: true,
             /* 운영시간 */
-            timePerDay: [
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0
-            ],
-            week: [{
-                mon: "",
-                tue: "",
-                wed: "",
-                thu: "",
-                fri: "",
-                sat: "",
-                sun: ""
-            }],
-            checkBox1: true,
-            checkBox2: true,
-            checkBox3: true,
-            checkBox4: true,
-            checkBox5: true,
-            checkBox6: true,
-            checkBox7: true,
-
+            week: {
+                mon: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                tue: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                wed: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                thu: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                fri: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                sat: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                sun: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            },
             /* 장비 및 옵션 */
             btnLabel: option_save => `${option_save.length}개 선택`,
             option_save: [],
@@ -191,6 +157,8 @@ export default {
                     }) //forEach
             } //if
         },
+
+        /* 주소 API를 통해 주소 찾기, 닫기 */
         controlAddress(cmd) {
             let api = document.getElementById("addressAPI");
             let address2 = document.getElementById("address2");
@@ -215,8 +183,9 @@ export default {
                 closeAddr.style.display = "none";
             }
         },
+
+        /* 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
         changeSizeUnit(value) {
-            /* 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
             if (value == true) { //평->제곱미터
                 this.sizeUnit = false;
                 if (this.sizeInput == "") {
@@ -234,7 +203,8 @@ export default {
                 this.sizeInput = (this.sizeInput * 0.3025).toFixed(2);
             }
         },
-        //선택 취소할 수 있게 해야 함...
+
+        /* 요일을 클릭하면 해당 요일의 시간표가 화면에 뜨게 함 */
         selectDay(day) {
             let thisCheck = document.getElementById(day); //선택한 요일 checkbox 객체
             let checkDay = document.getElementsByName("day"); //전체 요일 checkbox 객체
@@ -257,15 +227,26 @@ export default {
                 }
             }
 
-            /* 전체해제를 체크했을 때 모든 요일을 해제하고 전체체크가 보이게 함 */
+            /* 전체해제를 선택했을 때 모든 요일을 해제하고 전체체크가 보이게 함 */
             else if (day == "no") {
+                //전체해제 선택시 모든 요일 선택해제
                 for (let i = 0; i < allDay.length; i++) {
                     allDay[i].style.display = "none";
                     checkDay[i].checked = false;
                 }
+
+                //모든 요일의 해당 시간표 전체 체크해제
+                let dayTime = document.getElementsByName("dayTime");
+                for (let i = 0; i < 7; i++) {
+                    for (let j = 0; j < 24; j++) {
+                        dayTime[i][j].selected = false;
+                    }
+                }
+
                 dayNo.setAttribute('style', 'display:none');
                 dayAll.setAttribute('style', 'display:inline-block');
                 document.getElementById('all').checked = false;
+                return;
             }
 
             /* 요일을 체크했을 때 */
@@ -274,9 +255,16 @@ export default {
                 thisCheck = document.getElementById(day.substring(0, 3));
                 if (thisCheck.checked) { //요일 체크시 보임
                     whatDay.style.display = "inline-block";
-                } else { //요일 체크 해제시 숨김
+                } else { //요일 선택해제시 해당 요일 시간표 전체 체크 해제 및 숨김
+                    let dayTime = document.getElementById(day.substring(0, 3) + 'Time');
+                    for (let i = 0; i < dayTime.length; i++) {
+                        dayTime[i].selected = false;
+                    }
                     whatDay.style.display = "none";
                 }
+                dayNo.setAttribute('style', 'display:none');
+                dayAll.setAttribute('style', 'display:inline-block');
+                document.getElementById('all').checked = false;
             }
 
             /* 요일을 모두 선택했거나 전체선택 클릭시 전체해제가 보이게 함 */
@@ -286,8 +274,9 @@ export default {
                 document.getElementById('no').checked = true;
             }
         },
+
+        /* 특정 요일의 하루 시간 전체 체크, 체크 해제 */
         selectAllTime(command, dayTime, visibleArea, unvisibleArea, checkFlag) {
-            /* 특정 요일의 하루 시간 전체 체크, 체크 해제 */
             var thisTime = document.getElementById(dayTime);
             var thisVisible = document.getElementById(visibleArea);
             var thisUnvisible = document.getElementById(unvisibleArea);
@@ -307,8 +296,9 @@ export default {
             thisVisible.setAttribute('style', 'display:block');
             thisUnvisible.setAttribute('style', 'display:none');
         },
+
+        /* 요일 공통 알고리즘 */
         selectTime(day) {
-            /* 요일 공통 알고리즘 */
             let time_list = "";
             let start = -1; //시작시간
             let front = 0;
@@ -369,6 +359,8 @@ export default {
                     break;
             }
         },
+
+        /* 주차 가능, 주차 불가 체크에 따른 화면 표기 */
         checkParkFlag(flag) {
             if (flag == "yes") {
                 //주차 가능(주차대수 입력 영역 보임)
@@ -383,8 +375,9 @@ export default {
                     .setAttribute("style", "display: none;");
             }
         },
+
+        /* 동의 Modal 보이기, 닫기 */
         controlModal(cmd, modalId) {
-            //Modal 띄우고 끄기
             let modal = document.getElementById(modalId);
             if (cmd == "showModalAgree") {
                 modal.style.display = "block";
@@ -393,6 +386,8 @@ export default {
                 modal.style.display = "none";
             }
         },
+
+        /* 부분동의 체크, 전체동의 체크 처리 */
         controlAgree(control) {
             let agrees = document.getElementsByName("checkAgree[]");
             let allAgree = document.getElementById("allCheckAgree");
@@ -421,6 +416,8 @@ export default {
                 }
             }
         },
+
+        /* 스튜디오 등록 */
         addStudio() {
             /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
             if (this.addressResult.address == '') {

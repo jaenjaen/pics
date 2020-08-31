@@ -23,4 +23,4 @@ var sessionOptions = {
 
 Vue.use(VueSession, sessionOptions);
 Vue.use(VueDaumPostcode);
-Vue.use(VModal)
+Vue.use(VModal);

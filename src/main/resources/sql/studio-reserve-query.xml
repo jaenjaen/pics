@@ -28,20 +28,17 @@
  	<resultMap type="reservation" id="reservationRM">
 		<result property="resId" column="res_id"/>
 		<result property="stuId" column="stu_id"/>
+		<result property="custId" column="cust_id"/>
 		<result property="startDate" column="start_date"/>
 		<result property="endDate" column="end_date"/>
 		<result property="totalPrice" column="total_price"/>
 		<result property="resDate" column="res_date"/>
 		<result property="totalPeople" column="total_people"/>
-		<association property="customer" javaType="customer">
-			<id property="custId" column="cust_id"/>
-				<result property="custId" column="cust_id" />
-		</association>
 	</resultMap>
 
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
   	<select id="getExceptionDate" parameterType="int" resultType="exceptionDate">							
-		SELECT exception_id, start_date, end_date
+		SELECT exception_id, start_date,end_date 
 		FROM exception_date
 		WHERE stu_id=${value}
 	</select>
@@ -52,15 +49,14 @@
 		WHERE rep.stu_id=${value}
 	</select>
 
-	<!-- ================== 2. 예약하기 ================== -->
-	<select id="getReservation" parameterType="reservation" resultMap="reservationRM">							
+	<select id="getReservation" parameterType="reservation" resultType="reservation">							
 		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
 		FROM reservation
 		<where>
  			<choose>
 			<!-- 필수적인 예약 요소들이 다 있는지 >> 동일한 예약 있는지 조회-->
 			<when  test="customer!=null and stuId!=null and startDate!=null and endDate!=null">
-				cust_id=#{customer.custId} AND stu_id=#{stuId} AND start_date=date(#{startDate}) AND end_date=date(#{endDate})
+				cust_id=#{customer.custId} AND stu_id=#{stuId} AND start_date=#{startDate} AND end_date=#{endDate}
 			</when>
 			<!-- 특정 고객이 특정 스튜디오 예약한 적 있는지 확인 >> 고객 찜 리스트 -->
 			<when  test="customer!=null and stuId!=null">
@@ -81,36 +77,37 @@
 		</where> 
 	</select>
 	
-	<insert id="AddReservation" parameterType="reservation">							
+	<!-- ================== 2. 예약하기 ================== -->
+	<insert id="addReservation" parameterType="reservation">							
 		INSERT into reservation(cust_id,stu_id,start_date,end_date,total_price,res_date,total_people)
-		VALUES(#{customer.custId},#{stuId},date(#{startDate}),date(#{endDate}),#{totalPrice},date(#{resDate}),#{totalPeople})
+		VALUES(#{custId},#{stuId},#{startDate},#{endDate},#{totalPrice},now(),#{totalPeople})
 	</insert> 
 	
-	<insert id="AddexceptionDates" parameterType="reservation">							
+ 	<insert id="addExceptionDates" parameterType="reservation">							
 		INSERT into exception_date(start_date,end_date,stu_id)
-		VALUES (date(#{startDate}),date(#{endDate}),#{stuId})
+		VALUES (#{startDate},#{endDate},#{stuId})
 	</insert>
 
-	<update id="UpdateReservation" parameterType="reservation">							
+	<update id="updateReservation" parameterType="reservation">							
 		UPDATE reservation 
 		SET 
-		start_date=date(#{startDate}),
-		end_date=date(#{endDate}),
+		start_date=#{startDate},
+		end_date=#{endDate},
 		total_price=#{totalPrice},
-		res_date=date(#{resDate}),
+		res_date=now(),
 		total_people=#{totalPeople}
 		WHERE res_id=#{resId}
 	</update>
 
-	<update id="UpdateExceptionDate" parameterType="reservation">							
+ 	<update id="updateExceptionDate" parameterType="reservation">							
 		UPDATE exception_date 
 		SET 
-		start_date=date(#{startDate}),
-		end_date=date(#{endDate})
+		start_date=#{startDate},
+		end_date=#{endDate}
 		WHERE stu_id=#{stuId}
 	</update>
 
-	<delete id="DeleteReservations" parameterType="list">							
+	<delete id="deleteReservations" parameterType="list">							
 		Delete FROM reservation
 		WHERE res_id in
  		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
@@ -118,7 +115,7 @@
 		</foreach>
 	</delete>
 
-	<delete id="DeleteExceptionDates" parameterType="list">							
+ 	<delete id="deleteExceptionDates" parameterType="list">							
 		Delete FROM exception_date
 		WHERE stu_id in
 		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
@@ -132,7 +129,5 @@
 		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
 		date(#{reservation.endDate})
 		</foreach> 
-	</delete>
-	
-		
-</mapper> 
+	</delete>		
+ </mapper> 

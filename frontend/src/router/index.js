@@ -6,8 +6,9 @@ import CustomerLogin from "../views/CustomerLogin.vue";
 import TempStudio from "../components/Temp_MoveToInfo.vue";
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
-import Test from "../components/Test.vue";
+import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
+// import Map from "../components/Map.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -28,11 +29,11 @@ const routes = [{
         path: "/companylogin",
         name: "companylogin",
         component: CompanyLogin
-            // }, {
-            //     path: "/registerStudio",
-            //     name: "registerStudio",
-            //     component: RegisterStudio
     }, {
+        //     path: "/registerStudio",
+        //     name: "registerStudio",
+        //     component: RegisterStudio
+        // }, {
         path: "/register",
         name: "register",
         component: Register
@@ -44,10 +45,19 @@ const routes = [{
         props: true
     },
     {
-        path: "/test",
-        name: "test",
-        component: Test
-    }
+        path: "/reservation",
+        name: "reservation",
+        component: Reservation
+    }, {
+        path: "/studioInfo",
+        name: "studioInfo",
+        component: StudioInfo
+    },
+    // {
+    // path: "/Map",
+    // name: "Map",
+    // component: Map
+    // }
 ];
 const router = new VueRouter({
     mode: "history",

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,16 +43,18 @@ public class StudioReserveController {
 	private StudioInfoService studioInfoService;
 	
 	// 1. 예약 불가능/가능 날짜 받아서 Schedule로 옮기기
-	@GetMapping("/studio/schedules/{stuId}")
-	public ResponseEntity getSchedules(@PathVariable int stuId) {
+	@GetMapping("/studio/schedule/{stuId}")
+	public ResponseEntity getSchedule(@PathVariable int stuId) {
 		// 페이지에 있는 studio 정보 & 세션에서 login 정보
 		try {
 			Schedule schedule=new Schedule();
 			ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(stuId); 
-			ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);		
+			ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);
+			List<Reservation> reservation=studioReserveService.getReservation( new Reservation(stuId));
 			schedule.setStuId(stuId);
 			schedule.setExceptionDate(exceptionDate);
 			schedule.setRepeatDate(repeatDate);
+			schedule.setReservation(reservation);
 			return new ResponseEntity(schedule,HttpStatus.OK);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -60,38 +63,37 @@ public class StudioReserveController {
 	}
 
 	//2.getReservation
-	@GetMapping("/studio/reservation/{customer}/{stuId}")
-	public ResponseEntity getReservation(@PathVariable int stuId, @PathVariable Customer customer) {
-		Reservation reservation =new Reservation(stuId,customer); 
-		List<Reservation> resrvationList=studioReserveService.getReservation(reservation);
-		if(resrvationList.isEmpty())
+	@GetMapping("/studio/reservation/{stuId}")
+	public ResponseEntity getReservation(@PathVariable int stuId) {
+		Reservation reservation = new Reservation(stuId);
+		List<Reservation> resultList= studioReserveService.getReservation(reservation);
+		System.out.println("studioReserveService :"+studioReserveService.getReservation(reservation));
+		if(resultList.isEmpty()) {
+			System.out.println("해당 스튜디오 예약 없음");
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		else 
-			return new ResponseEntity(resrvationList,HttpStatus.OK);
+		}else { 
+			System.out.println("해당 스튜디오 예약 있음");
+			return new ResponseEntity(resultList,HttpStatus.OK);
+			}
 	}
 	
 	// 3. reservation 테이블에 추가, 예약 일자 
-	@PostMapping("studio/reservation")
+	@PostMapping("/studio/reservation")
 	public ResponseEntity AddReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
-		long time = System.currentTimeMillis();
-		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-		String resDate = dayTime.format(new Date(time));
-
-		if(studioReserveService.AddReservation(reservation)==1) {
+		System.out.println("reservation : "+reservation);
+		int result=studioReserveService.AddReservation(reservation);
+		if(result==1){
+			System.out.println(result);
 			studioReserveService.AddExceptionDates(reservation);
-			return new ResponseEntity(HttpStatus.OK);
-		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
+			return new ResponseEntity(result,HttpStatus.OK);
+		}else return new ResponseEntity(0,HttpStatus.NO_CONTENT);
 		}
 	
 	// 4. reservation,예약 불가능 일자 update 
-	@PutMapping("studio/reservation")
+	@PutMapping("/studio/reservation")
 	public ResponseEntity UpdateReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
-		long time = System.currentTimeMillis();
-		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-		String resDate = dayTime.format(new Date(time));
-
 		if(studioReserveService.UpdateReservation(reservation)==1) {
 			studioReserveService.UpdateExceptionDate(reservation);
 			return new ResponseEntity(HttpStatus.OK);
@@ -99,7 +101,7 @@ public class StudioReserveController {
 		}
 	
 	// 4. reservation,예약 불가능 일자 delete 
-	@DeleteMapping("studio/reservation")
+	@DeleteMapping("/studio/reservation")
 	public ResponseEntity DeleteReservation(@RequestBody List<Reservation> reservationLIst) {
 		//등록 시간 삽입
 		long time = System.currentTimeMillis();

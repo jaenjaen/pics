@@ -13,7 +13,6 @@ import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
 import Test from "../components/Test.vue";
 // import Map from "../components/Map.vue";
-import Test from "../components/Test.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -71,24 +70,6 @@ const routes = [{
     //     name: "Map",
     //     component: Map
     // }
-    <<
-    <<
-    <<
-    <
-    HEAD {
-        path: "/temp/:stuId",
-        name: "temp",
-        component: temp,
-        props: true
-    },
-
-
-    ===
-    ===
-    = >>>
-    >>>
-    >
-    a3248ecf7393f89b3233dc158f8fb690230d0fb3
 ];
 const router = new VueRouter({
     mode: "history",

@@ -4,58 +4,56 @@ import Main from "../components/Main.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
 import RegisterStudio from "../components/RegisterStudio.vue";
-// import TempStudio from "../components/Temp_MoveToInfo.vue";
+import TempStudio from "../components/Temp_MoveToInfo.vue";
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
-// import Map from "../components/Map.vue";
+import Map from "../components/Map.vue";
 
 Vue.use(VueRouter);
 const routes = [{
-            path: "/",
-            name: "pics-main",
-            component: Main
-        }, {
-            path: "/studioSearch",
-            name: "studioSearch",
-            component: StudioSearch
-        },
-        {
-            path: "/customerlogin",
-            name: "customerlogin",
-            component: CustomerLogin
-        },
-        {
-            path: "/companylogin",
-            name: "companylogin",
-            component: CompanyLogin
-        }, {
-            //     path: "/registerStudio",
-            //     name: "registerStudio",
-            //     component: RegisterStudio
-            // }, {
-            path: "/register",
-            name: "register",
-            component: Register
+        path: "/",
+        name: "pics-main",
+        component: Main
+    }, {
+        path: "/studioSearch",
+        name: "studioSearch",
+        component: StudioSearch
+    },
+    {
+        path: "/customerlogin",
+        name: "customerlogin",
+        component: CustomerLogin
+    },
+    {
+        path: "/companylogin",
+        name: "companylogin",
+        component: CompanyLogin
+    }, {
+        path: "/registerStudio",
+        name: "registerStudio",
+        component: RegisterStudio
+    }, {
+        path: "/register",
+        name: "register",
+        component: Register
 
-        }, { <<
-            << << < HEAD
-            path: "/test",
-            name: "test",
-            component: Test
-        }, {
-            path: "/mypage",
-            name: "mypage",
-            component: Mypage
-        }, {
-            path: "/wishlist",
-            name: "wishlist",
-            component: WishList
-        } ===
-        === =
+    }, {
+        path: "/test",
+        name: "test",
+        component: Test
+    }, {
+        path: "/mypage",
+        name: "mypage",
+        component: Mypage
+    }, {
+        path: "/wishlist",
+        name: "wishlist",
+        component: WishList
+    }, {
         path: "/TempStudio/:stuId",
         name: "TempStudio",
         component: TempStudio,
@@ -70,13 +68,11 @@ const routes = [{
         name: "studioInfo",
         component: StudioInfo
     },
-    // {
-    // path: "/Map",
-    // name: "Map",
-    // component: Map
-    // }
-    >>>
-    >>> > origin / ice
+    {
+        path: "/Map",
+        name: "Map",
+        component: Map
+    }
 ];
 const router = new VueRouter({
     mode: "history",

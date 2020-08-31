@@ -274,8 +274,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="monTime" name="dayTime" @change="selectTime('mon')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border:2px solid #46E8CC">
+                <select multiple size="24" id="monTime" name="monTime" @change="selectTime('mon')" >
+                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#46E8CC">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -298,8 +298,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="tueTime" name="dayTime" @change="selectTime('tue')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border:2px solid #49E1F2">
+                <select multiple size="24" id="tueTime" name="tueTime" @change="selectTime('tue')" >
+                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#49E1F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -322,8 +322,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="wedTime" name="dayTime" @change="selectTime('wed')" >
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border:2px solid #4DA6DB">
+                <select multiple size="24" id="wedTime" name="wedTime" @change="selectTime('wed')" >
+                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4DA6DB">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -346,8 +346,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="thuTime" name="dayTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border:2px solid #4987F2">
+                <select multiple size="24" id="thuTime" name="thuTime">
+                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4987F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -370,8 +370,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="friTime" name="dayTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border:2px solid #4657E8">
+                <select multiple size="24" id="friTime" name="friTime">
+                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#4657E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -394,8 +394,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="satTime" name="dayTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border:2px solid #A244F2">
+                <select multiple size="24" id="satTime" name="satTime">
+                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#A244F2">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -418,8 +418,8 @@
             </tr>
             <tr>
               <td>
-                <select multiple size="24" id="sunTime" name="dayTime">
-                  <option v-for="(time, index) in timePerDay" :key="index" style="border:2px solid #C941E8">
+                <select multiple size="24" id="sunTime" name="sunTime">
+                  <option v-for="(time, index) in timePerDay" :key="index" style="border-color:#C941E8">
                     {{ index }}시-{{ index + 1 }}시
                   </option>
                 </select>
@@ -464,12 +464,14 @@
                 :options="option_flags"
                 :filters="option_filters"
                 :btnLabel="btnLabel"
-                :selectOptions="option_list">
+                :selectOptions="option_list"
+              >
                 <template v-slot:option="{ option }">
                   <input
                     type="checkbox"
                     name="optionCheck"
-                    :checked="option.selected"/>
+                    :checked="option.selected"
+                  />
                   <span name="optionName">{{ option.name }}</span>
                 </template>
               </vue-multi-select>

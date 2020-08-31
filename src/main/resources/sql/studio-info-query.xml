@@ -41,23 +41,7 @@
 			<id property="categoryId" column="category_id"/>
 				<result property="categoryId" column="category_id" />
 				<result property="categoryName" column="category_name" />
-		</association>
-<!--		<association property="schedule" javaType="schedule">
- 			<result property="stuId" column="stu_id"/>
- 			<association property="repeatDate" javaType="list">
-				<id property="stuId" column="stu_id"/>
-				<result property="repeatId" column="repeat_id"/>
-				<result property="time" column="time"/>
-				<result property="weekDate" column="weekday"/>
-			</association>
-			<association property="exceptionDate" javaType="list">
-				<id property="stuId" column="stu_id"/>
-				<result property="exceptionId" column="exception_id"/>
-				<result property="startDate" column="start_date"/>
-				<result property="endDate" column="end_date"/>
-			</association> 
-		</association>
-		-->
+		</association>	
 	</resultMap>
  		
  	<resultMap type="review" id="reviewRM">
@@ -84,7 +68,7 @@
  
 	<select id="getStudioInfo" parameterType="int" resultMap="studioInfoRM">							
 		SELECT 					
-		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,
+		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor,
 		ctg.category_id,ctg.category_name,
 		com.name,com.logo_img,
 		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity
@@ -129,9 +113,17 @@
 		<if test="'${value}'!=null">
 		WHERE stu_id=${value}	
 		</if>
+	</select>		
+
+	<select id="genderRatio" parameterType="int" resultType="customer">
+		SELECT c.cust_id,c.gender
+		FROM reservation res JOIN customer c ON c.cust_id=res.cust_id
+		WHERE res.stu_id=${value}
+		GROUP BY res.cust_id
 	</select>
-		
-</mapper>	
+	
+ </mapper>	
+
 
 <!-- 
  ================== 스튜디오 공간 등록 관련 쿼리 ======================== 

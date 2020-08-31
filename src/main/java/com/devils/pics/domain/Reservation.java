@@ -3,6 +3,7 @@ package com.devils.pics.domain;
 public class Reservation {
 	private int resId;
 	private int stuId;
+	private int custId;
 	private Customer customer;
 	private Studio studio;
 	private String startDate;
@@ -13,10 +14,9 @@ public class Reservation {
 	
 	public Reservation() {}
 	
-	public Reservation(int resId) {
-		this.resId = resId;
+	public Reservation(int stuId) {
+		this.stuId= stuId;
 	}
-	
 	public Reservation(int resId, int stuId, Customer customer, Studio studio, String startDate, String endDate, int totalPrice,
 			String resDate, int totalPeople) {
 		this.resId = resId;
@@ -29,21 +29,19 @@ public class Reservation {
 		this.resDate = resDate;
 		this.totalPeople = totalPeople;
 	}
-
-	public Reservation(int stuId, Customer customer,  String startDate, String endDate, int totalPrice,
-			String resDate, int totalPeople) {
+	
+	public Reservation(int stuId, int custId,  String startDate, String endDate, int totalPrice, int totalPeople) {
 		this.stuId = stuId;
-		this.customer = customer;
+		this.custId = custId;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.totalPrice = totalPrice;
-		this.resDate = resDate;
 		this.totalPeople = totalPeople;
 	}
 	
-	public Reservation(int stuId, Customer customer) {
+	public Reservation(int stuId, int custId) {
+		this.custId = custId;
 		this.stuId = stuId;
-		this.customer = customer;
 	}
 
 	public int getResId() {
@@ -58,6 +56,13 @@ public class Reservation {
 	public void setStuId(int stuId) {
 		this.stuId = stuId;
 	}
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
+
 	public Customer getCustomer() {
 		return customer;
 	}

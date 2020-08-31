@@ -1,6 +1,8 @@
 package com.devils.pics.dao;
 
 import com.devils.pics.domain.Category;
+import com.devils.pics.domain.Customer;
+
 import java.util.ArrayList;
 import java.util.List;
 import com.devils.pics.domain.Review;
@@ -19,5 +21,8 @@ public interface StudioInfoDAO {
 	public List<Review> getStudioReviews(int stuId); //스튜디오에 등록된 모든 리뷰
 	public List<Tag> getTags(int stuId); //tag 가져오기
 	public int checkBookmark(List<Integer> idList);//찜했는지 여부 판단
+	
+	// 스튜디오 chart & graph
+	public List<Customer> genderRatio(int stuId);
 
 }

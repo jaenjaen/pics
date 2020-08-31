@@ -1,5 +1,6 @@
 package com.devils.pics.service;
 import com.devils.pics.domain.Category;
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.Tag;
 
@@ -18,4 +19,8 @@ public interface StudioInfoService {
 	public int getCategoryId(Category category); //카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)
 	public int registerStudioInfo(Studio studio); //Studio 등록
 	public int getStudioId(Studio studio); //Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
+	
+	// 스튜디오 chart & graph
+	public List<Customer> genderRatio(int stuId);
+
 }

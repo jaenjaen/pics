@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.devils.pics.dao.StudioInfoDAO;
 import com.devils.pics.domain.Category;
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.Tag;
@@ -57,5 +58,10 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 	@Override
 	public int checkBookmark(List<Integer> idList) {
 		return studioInfoDao.checkBookmark(idList);
+	}
+
+	@Override
+	public List<Customer> genderRatio(int stuId) {
+		return studioInfoDao.genderRatio(stuId);
 	}
 }

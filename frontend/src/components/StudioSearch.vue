@@ -300,6 +300,213 @@
 
 <style scoped type="text/css" src="materialize-css/dist/css/materialize.min.css"></style>
 <style scoped src="material-design-icons/iconfont/material-icons.css"></style>
+
 <style scoped src="vue-material/dist/theme/default.css"></style>
 <style scoped src="@/assets/css/StudioSearch.css">
+
+/* <style scoped>
+@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
+
+#searchStudio {
+  width: 768px;
+  margin: auto;
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+#search {
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+#searchBorder {
+  width: 90%;
+  padding: 1.3em 0.2em 1.1em 0.2em;
+  border: 1px solid #33a3dc;
+  border-radius: 1.2em;
+  background: linear-gradient(45deg, #33a3dc, #034ea2);
+}
+
+#searchContent {
+  /* box-sizing: border-box; */
+  /* width: 90%;
+  height: 3.2em;
+  padding-left: 2em;
+  background-color: white !important;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+#searchContent::placeholder {
+  color: #4e83be;
+}
+
+#filterResult {
+  margin-left: 1.8em;
+  text-align: left;
+  vertical-align: middle;
+}
+
+#filterSpace>input[type=text]{
+  height: 2rem;}
+
+#filterResult > span {
+  display: inline-block;
+  margin-right: 0.5em;
+  padding: 0.5em;
+  background-color: #fff9c4;
+  border: 1px solid #f2f2f2;
+  border-radius: 1em;
+  color: #737373;
+  vertical-align: middle;
+  font-size: 0.9em;
+}
+
+#filterResult span i {
+  vertical-align: middle;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#categoryBtn {
+  margin-top: 1%;
+  margin-left: 0.5em;
+  display: block;
+}
+
+#categoryBtn > button {
+  margin-right: 0.51em !important;
+}
+
+.btn-small {
+  height: 32.4px;
+  line-height: 32.4px;
+  font-size: 12px !important;
+  background: linear-gradient(135deg, #33a3dc, #034ea2) !important;
+}
+
+#filterCol {
+  width: 100%;
+}
+
+#filterCol #colHeader{
+  height: 3em !important;
+  padding-top: 0 !important;
+}
+
+#filterSpace {
+  text-align: left;
+  padding-top: 0;
+  padding-bottom: 0.3em;
+}
+
+#filterCol p,
+#filterSpace p {
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+#filterSpace input[type="date"] {
+  width: 20%;
+  height: 1.9em;
+  background-color: white;
+  border-radius: 0.3em;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 0.9em;
+  color: #737373;
+  text-align: center;
+}
+
+#icon_filter {
+  margin-left: 0;
+  margin-right: 0.7em;
+  font-size: 2rem;
+  color: #3571b5;
+  vertical-align: middle;
+}
+
+#filterSpace input[type="text"] {
+  width: 24%;
+  text-align: center;
+}
+
+#addrFilter span,
+#sizeFilter span,
+#priceFilter span,
+#capaFilter span {
+  margin-right: 1em;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+#dateInit {
+  margin-left:1em;
+  font-weight: bold;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+
+#filterSpace input[type="text"] {
+  width: 30%;
+  height: 1.8em;
+  margin-right: 0.5em;
+  background-color: white;
+  border-radius: 0.3em;
+}
+
+#filterSpace input[type="text"]::placeholder {
+  color: #737373;
+  text-align: center;
+  font-size: 0.9em;
+}
+
+#capaFilter #icon_capa1,
+#icon_capa2 {
+  width: 6.2%;
+  margin-right: 0.5em;
+  background-color: white;
+  border-radius: 1em;
+  vertical-align: middle;
+  cursor: pointer;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+#capaFilter span {
+  margin-right: 1em;
+  text-align: center;
+  font-size: 1em;
+}
+
+#filterBtn {
+  margin-top: 0.5em;
+}
+
+#filterBtn #initBtn {
+  margin-left: 81.5%;
+}
+
+#filterBtn #applyBtn {
+  margin-left: 0.5em;
+}
+
+#studioInf {
+  margin-top: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  cursor: pointer;
+}
+
+#studioInf p {
+  text-align: left;
+  font-size: 0.8em;
+}
+
+#studioInf #studioImg {
+  width: 100% !important;
+}
+
+.card.horizontal .card-image img {
+  width: 100% !important;
+}  */
+
 </style>

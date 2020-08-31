@@ -54,7 +54,7 @@ public class StudioFilterTest {
 		search.add("서울");
 //		search.add("이태원");
 		
-		searchCon.setCategoryId("1");
+//		searchCon.setCategoryId("1");
 //		filterMap.put("weekDate","월");
 //		searchCon.setSelectedDate("2020-08-30");
 //		searchCon.setAddress1("서울");
@@ -65,7 +65,7 @@ public class StudioFilterTest {
 //		searchCon.setMaxUnitPrice("15000");
 //		filterMap.put("capacity", "15")`;
 //		filterMap.put("studioName", "15");
-		searchCon.setSearchContent(search);
+//		searchCon.setSearchContent(search);
 //		searchCon.setSearchTag("모던");
 //		filterMap.put("orderCon", "4");
 //		String str = "weekDate=";

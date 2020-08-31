@@ -21,7 +21,7 @@
 		<result column="description" property="description" />
 		<result column="main_img" property="mainImg" />
 		<result column="avg" property="avgScore" />
-		<result column="cntRv" property="countReview"/>
+		<result column="cntRev" property="countReview"/>
 		<association property="category" javaType="category">
 			<result column="category_name" property="categoryName" />
 		</association>
@@ -67,7 +67,7 @@
 		ON s.stu_id = t.stu_id
 		LEFT OUTER JOIN
 		(SELECT
-		stu_id, AVG(score) avg, COUNT(score) cntRev
+		stu_id, AVG(score) avg, COUNT(stu_id) cntRev
 		FROM review
 		GROUP BY stu_id
 		) rv

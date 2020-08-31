@@ -1,5 +1,6 @@
 <template>
   <div class="container" id="searchStudio">
+    <!-- 검색 부분 -->
     <div id="search">
       <span id="searchBorder">
         <input
@@ -12,6 +13,7 @@
         />
       </span>
     </div>
+    <!-- 필터 부분 -->
     <div class="row" id="filter">
       <!-- 필터 Collapse -->
       <div id="filterCol">
@@ -160,7 +162,7 @@
         </div>
       </div>
     </div>
-    <span id="searchTop"></span>
+    <!-- 정렬하기 부분 -->
     <div id="order">
       <!-- 정렬하기 위한 select 태그 -->
       <select name="orderCon" id="orderCon" @change="setFilter" v-model="order">
@@ -171,18 +173,33 @@
         <option value="4">평점순</option>
       </select>
     </div>
+    <!-- 로딩 시 출력 부분 -->
     <div v-if="loading">
-      Loading...
+      <div class="preloader-wrapper active">
+        <div class="spinner-layer spinner-red-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- 검색된 업체들이 출력되는 곳 -->
     <div class="row" id="searchList" v-else>
       <!-- 여기서 출력... 3개씩... 무한스크롤링 가즈아 -->
+      <!-- 카드 형식 큰 틀 -->
       <div
         class="card horizontal col s12"
         id="studioInf"
-        v-for="studio in studios"
-        v-bind:key="studio.stuId"
+        v-for="(studio, $index) in studios"
+        v-bind:key="$index"
       >
+        <!-- 이미지 출력 부분 -->
         <div class="card-image" id="studioImg">
           <img
             :src="getImgUrl(studio.mainImg)"
@@ -190,812 +207,99 @@
             height="210.14em"
           />
         </div>
+        <!-- 업체 간단 요약 부분 -->
         <div class="card-content" id="studioContent">
           <div id="title">{{ studio.name }}</div>
           <div id="nameAddr">
             {{ studio.category.categoryName }} /
             {{ studio.studioFilter.address | category }}
           </div>
-          <div id='desc'>{{ studio.description | shortenDesc }}</div>
-          <div id="info">{{ studio.studioFilter.unitPrice | currency }} 원/시간</div>
+          <div id="desc">{{ studio.description | shortenDesc }}</div>
+          <div id="info">
+            {{ studio.studioFilter.unitPrice | currency }} 원/시간
+          </div>
+          <!-- 평점 및 리뷰 출력 부분 -->
           <div id="review">
-            <div v-if="studio.countReview==0">
+            <!-- 별점 부분 -->
+            <span id="star">
+              <span v-if="studio.avgScore > 0 && studio.avgScore < 1">
+                <i class="material-icons" id="icon_filter">star_half</i>
+              </span>
+              <span v-if="studio.avgScore == 1">
+                <i class="material-icons" id="icon_filter">star</i>
+              </span>
+              <span v-if="studio.avgScore > 1 && studio.avgScore < 2">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star_half</i>
+              </span>
+              <span v-if="studio.avgScore == 2">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+              </span>
+              <span v-if="studio.avgScore > 2 && studio.avgScore < 3">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star_half</i>
+              </span>
+              <span v-if="studio.avgScore == 3">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+              </span>
+              <span v-if="studio.avgScore > 3 && studio.avgScore < 4">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star_half</i>
+              </span>
+              <span v-if="studio.avgScore == 4">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+              </span>
+              <span v-if="studio.avgScore > 4 && studio.avgScore < 5">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star_half</i>
+              </span>
+              <span v-if="studio.avgScore == 5">
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+                <i class="material-icons" id="icon_filter">star</i>
+              </span>
+            </span>
+            <span v-if="studio.countReview == 0">
               평가 없음
-            </div>
-            <div v-else>
-              {{ studio.avgScore | demical }} 점
-            </div>
+            </span>
+            <span v-else> {{ studio.avgScore | demical }} 점 </span>
           </div>
         </div>
+        <!-- 찜기능 부분 -->
         <div id="regBM">
-          <button class="btn-small" :value="studio.stuId" @click="setBookMark($event)">찜</button>
-          <input type="hidden" v-model="session" ref="session">
+          <button
+            class="btn-small"
+            :value="studio.stuId"
+            @click="setBookMark($event)"
+          >
+            찜
+          </button>
+          <input type="hidden" v-model="session" ref="session" />
         </div>
       </div>
+      <infinite-loading @infinite="infiniteHandler"></infinite-loading>
     </div>
   </div>
 </template>
 
-<style scoped>
-#studioInf {
-  margin-top: 1em;
-  margin-bottom: 0;
-  padding-top: 0.95em;
-  padding-bottom: 0.5em;
-  /* border-radius: 1em; */
-  cursor: pointer;
-}
+<script type="text/javascript" scoped src="@/assets/js/StudioSearch.js"></script>
 
-#studioContent {
-  width: 45%;
-  padding-top: 1em;
-  text-align: left;
-}
-
-#studioInf #studioImg {
-  width: 100% !important;
-  border-radius: 1em;
-}
-
-#studioContent #title {
-  margin-bottom: 0.1em;
-  font-weight: bold;
-}
-
-#studioContent #nameAddr {
-  font-size: 0.8em;
-  margin-bottom: 2em;
-  color: #034EA2;
-}
-
-#studioContent #desc {
-  font-size: 0.9em;
-  color: #737373;
-  margin-bottom: 2em;
-}
-
-#studioContent #info {
-  font-size: 0.9em;
-}
-
-#studioContent #review {
-  margin-top: 0.5em;
-  font-size: 0.8em;
-}
-
-#studioContent i {
-  color: #33A3DC;
-}
-
-#regBM {
-  margin-top: 25%;
-  margin-bottom: 0;
-  text-align: right;
-}
-
-input[type=hidden] {
-  display: none;
-}
-</style>
-
-<script type="text/javascript" scoped>
-import axios from "axios";
-import Vue from "vue";
-import { BCollapse } from "bootstrap-vue";
-import { VBToggle } from "bootstrap-vue";
-Vue.directive("b-toggle", VBToggle);
-Vue.component("b-collapse", BCollapse);
-
-// 요일 변환을 위한 리스트
-const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-// 카테고리 변한을 위한 리스트
-// Vue 시작
-export default {
-  components: {
-    BCollapse
-  },
-  name: "studio-list",
-  data() {
-    return {
-      // Axios 전체 리스트 변수
-      studios: [],
-
-      // Axios 필터변수
-      categoryId: "",
-      weekDate: "",
-      selectedDate: "",
-      addr1: "",
-      addr2: "",
-      minSize: "",
-      maxSize: "",
-      minUnitPrice: "",
-      maxUnitPrice: "",
-      capacity: 0,
-      searchContent: "",
-      searchTag: "",
-      order: "",
-
-      //로그인 session 변수
-      session: 3,
-
-      //별점
-      score: 0,
-
-      // 기본 변수
-      loading: true,
-      errored: false
-    };
-  },
-  mounted() {
-    // 페이지 오자마자 전체 리스트 뿌리기
-    this.searchAllStudios();
-    // M.AutoInit();
-  },
-  filters: {
-    // 돈에 , 붙여주는 필터
-    currency: function(value) {
-      let num = new Number(value);
-      return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
-    },
-    demical: function(value) {
-      let num = new Number(value);
-      return num.toFixed(1);
-    },
-    category: function(value) {
-      let str = value.split("시");
-      return str[0];
-    },
-    shortenDesc: function(value) {
-      if(value.length>52) return value.substring(0,51)+"..."
-      return value;
-    }
-  },
-  methods: {
-    // Studio 전체 불러오기
-    searchAllStudios() {
-      axios
-        .get("http://127.0.0.1:7777/studio/search")
-        .then(response => {
-          this.studios = response.data;
-          this.categoryId = "";
-        })
-        .catch(error => {
-          console.log(error);
-          this.errored = true;
-        })
-        .finally(() => (this.loading = false));
-    },
-    setCategory() {
-      this.categoryId = this.$refs.cataSelect.value;
-    },
-    // 필터 값 넣고 검색
-    setFilter() {
-      // 날짜가 입력이 되면 요일 리턴
-      if (this.selectedDate.length > 0) {
-        this.weekDate = week[new Date(this.selectedDate).getDay()];
-      }
-      // #을 입력하면 해시태그 검색으로 전환
-      if (this.searchContent.indexOf("#") == 0) {
-        this.searchTag = this.searchContent;
-        this.searchContent = "";
-      }
-      // 필터 객체
-      let filters = {
-        categoryId: this.categoryId,
-        weekDate: this.weekDate,
-        selectedDate: this.selectedDate,
-        address1: this.addr1,
-        address2: this.addr2,
-        minSize: this.minSize,
-        maxSize: this.maxSize,
-        minUnitPrice: this.minUnitPrice,
-        maxUnitPrice: this.maxUnitPrice,
-        capacity: this.capacity,
-        searchContent: this.searchContent,
-        searchTag: this.searchTag,
-        orderCon: this.order
-      };
-      this.search(filters);
-    },
-    // 검색 메소드
-    search(filters) {
-      axios
-        .post("http://127.0.0.1:7777/studio/search/filter", filters)
-        .then(response => {
-          this.studios = response.data;
-          this.searchContent = "";
-          this.searchTag = "";
-          this.closeCol(0);
-        })
-        .catch(error => {
-          console.log(error);
-          this.errored = true;
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-    // 상세페이지로 이동
-    // showStudioInfo(stuId) {
-    //   this.$router.push("/TempStudio/" + stuId);
-    // },
-    // 이미지 경로
-    getImgUrl(url) {
-      return require("../assets/img/studio/" + url);
-    },
-    // 검색 필터 삭제
-    initFilter(value) {
-      if (value == 1) {
-        this.selectedDate = "";
-        this.weekDate = "";
-      } else {
-        this.selectedDate = "";
-        this.weekDate = "";
-        this.addr1 = "";
-        this.addr2 = "";
-        this.minSize = "";
-        this.maxSize = "";
-        this.capacity = "";
-        this.minUnitPrice = "";
-        this.maxUnitPrice = "";
-      }
-      this.setFilter();
-    },
-    //collapse 닫기
-    closeCol(value) {
-      // let elem = this.$refs.collapsible;
-      // let instance = M.Collapsible.getInstance(elem);
-      // instance.close(value);
-      // elem.close(value);
-      alert(value);
-    },
-    setBookMark($event) {
-      let bookmark = {
-        studio : {
-          stuId:$event.target.value
-        },
-        customer: {
-          custId: this.session
-        }
-      }
-      axios
-        .post("http://127.0.0.1:7777/bookmark", bookmark)
-        .then(response => {
-          alert(response.data);
-        })
-
-    }
-  }
-};
-</script>
-
-<style
-  scoped
-  type="text/css"
-  src="materialize-css/dist/css/materialize.min.css"
-></style>
+<style scoped type="text/css" src="materialize-css/dist/css/materialize.min.css"></style>
 <style scoped src="material-design-icons/iconfont/material-icons.css"></style>
 <style scoped src="vue-material/dist/theme/default.css"></style>
-
-<style scoped>
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
-
-#searchStudio {
-  width: 768px;
-  margin: auto;
-  font-family: "Nanum Gothic", sans-serif;
-}
-
-#search {
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-}
-#searchBorder {
-  width: 90%;
-  padding: 1.3em 0.2em 1.1em 0.2em;
-  border: 1px solid #33a3dc;
-  border-radius: 1.2em;
-  background: linear-gradient(45deg, #33a3dc, #034ea2);
-}
-
-#searchContent {
-  /* box-sizing: border-box; */
-  width: 90%;
-  height: 3.2em;
-  padding-left: 2em;
-  background-color: white !important;
-  border-radius: 1em;
-  cursor: pointer;
-}
-
-#searchContent::placeholder {
-  color: #4e83be;
-}
-
-#filterResult {
-  margin-left: 1.8em;
-  text-align: left;
-  vertical-align: middle;
-}
-
-#filterResult > span {
-  display: inline-block;
-  margin-right: 0.5em;
-  padding: 0.5em;
-  background-color: #fff9c4;
-  border: 1px solid #f2f2f2;
-  border-radius: 1em;
-  color: #737373;
-  vertical-align: middle;
-  font-size: 0.9em;
-}
-
-#filter {
-  margin-bottom: 0;
-}
-
-#filterCol {
-  width: 100%;
-  box-shadow: 0.1em 0.1em 0.7em 0.1em #ddd;
-}
-
-#filterCol #colHeader {
-  height: 3em !important;
-  padding-top: 0 !important;
-}
-
-#filterSpace {
-  text-align: left;
-  padding-top: 0;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid #ddd;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-#filterCol p,
-#filterSpace p,
-#cateWord {
-  font-size: 0.9em;
-  font-weight: bold;
-}
-
-#filterSpace input[type="date"] {
-  width: 50%;
-  height: 1.9em;
-  background-color: white;
-  border-radius: 0.3em;
-  font-family: "Nanum Gothic", sans-serif;
-  /* font-weight: bold; */
-  font-size: 0.8em;
-  color: #737373;
-  text-align: center;
-}
-
-#icon_filter {
-  margin-left: 0;
-  margin-right: 0.7em;
-  font-size: 2rem;
-  color: #3571b5;
-  vertical-align: middle;
-}
-
-#filterSpace input[type="text"] {
-  width: 24%;
-  text-align: center;
-}
-
-#categoryFilter {
-  width: 40%;
-  margin-top: 0;
-  margin-bottom: 0;
-  display: inline-block;
-}
-
-#categoryFilter select {
-  height: 2.2em;
-  border-radius: 0.3em;
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 0.8em;
-  color: #737373;
-}
-
-#dateFilter {
-  width: 50%;
-  margin-left: 2em;
-  display: inline-block;
-}
-
-#addrFilter span,
-#sizeFilter span,
-#priceFilter span,
-#capaFilter span {
-  margin-right: 1em;
-  font-weight: bold;
-  font-size: 0.9em;
-}
-
-#dateInit {
-  margin-left: 1em;
-  font-weight: bold;
-  font-size: 0.9em;
-  cursor: pointer;
-}
-
-#filterSpace input[type="text"] {
-  width: 30%;
-  height: 1.8em;
-  margin-right: 0.5em;
-  background-color: white;
-  border-radius: 0.3em;
-}
-
-#filterSpace input[type="text"]::placeholder {
-  color: #737373;
-  text-align: center;
-  font-size: 0.9em;
-}
-
-#capaFilter #icon_capa1,
-#icon_capa2 {
-  width: 6.2%;
-  margin-right: 0.5em;
-  background-color: white;
-  border-radius: 1em;
-  vertical-align: middle;
-  cursor: pointer;
-  font-size: 1.4rem;
-  text-align: center;
-}
-
-#capaFilter span {
-  margin-right: 1em;
-  text-align: center;
-  font-size: 1em;
-}
-
-#filterBtn {
-  margin-top: 0.5em;
-}
-
-#filterBtn #initBtn {
-  margin-left: 81.5%;
-}
-
-#filterBtn #applyBtn {
-  margin-left: 0.5em;
-}
-
-#order {
-  width: 20%;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-  
-}
-
-#order select {
-  height: 3em;
-  background-color: #F5F5F5;
-  border-bottom: 1px solid black;
-  font-family: "Nanum Gothic", sans-serif;
-  font-size: 0.85em;
-  font-weight: bold;
-  box-shadow: none;
-}
-
-.card.horizontal .card-image img {
-  width: 100% !important;
-}
-
-.btn-small {
-  height: 32.4px;
-  line-height: 32.4px;
-  font-size: 12px !important;
-  background: linear-gradient(135deg, #33a3dc, #034ea2) !important;
-}
-
-select {
-  display: none;
-}
-
-select.browser-default {
-  display: block;
-}
-
-select {
-  background-color: rgba(255, 255, 255, 0.9);
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #f2f2f2;
-  border-radius: 2px;
-  height: 3rem;
-}
-
-.select-label {
-  position: absolute;
-}
-
-.select-wrapper {
-  position: relative;
-}
-
-.select-wrapper.valid + label,
-.select-wrapper.invalid + label {
-  width: 100%;
-  pointer-events: none;
-}
-
-.select-wrapper input.select-dropdown {
-  position: relative;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid #9e9e9e;
-  outline: none;
-  height: 3rem;
-  line-height: 3rem;
-  width: 100%;
-  font-size: 16px;
-  margin: 0 0 8px 0;
-  padding: 0;
-  display: block;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 1;
-}
-
-.select-wrapper input.select-dropdown:focus {
-  border-bottom: 1px solid #26a69a;
-}
-
-.select-wrapper .caret {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-  z-index: 0;
-  fill: rgba(0, 0, 0, 0.87);
-}
-
-.select-wrapper + label {
-  position: absolute;
-  top: -26px;
-  font-size: 0.8rem;
-}
-
-select:disabled {
-  color: rgba(0, 0, 0, 0.42);
-}
-
-.select-wrapper.disabled + label {
-  color: rgba(0, 0, 0, 0.42);
-}
-
-.select-wrapper.disabled .caret {
-  fill: rgba(0, 0, 0, 0.42);
-}
-
-.select-wrapper input.select-dropdown:disabled {
-  color: rgba(0, 0, 0, 0.42);
-  cursor: default;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.select-wrapper i {
-  color: rgba(0, 0, 0, 0.3);
-}
-
-.select-dropdown li.disabled,
-.select-dropdown li.disabled > span,
-.select-dropdown li.optgroup {
-  color: rgba(0, 0, 0, 0.3);
-  background-color: transparent;
-}
-
-body.keyboard-focused .select-dropdown.dropdown-content li:focus {
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.select-dropdown.dropdown-content li:hover {
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.select-dropdown.dropdown-content li.selected {
-  background-color: rgba(0, 0, 0, 0.03);
-}
-
-.prefix ~ .select-wrapper {
-  margin-left: 3rem;
-  width: 92%;
-  width: calc(100% - 3rem);
-}
-
-.prefix ~ label {
-  margin-left: 3rem;
-}
-
-.select-dropdown li img {
-  height: 40px;
-  width: 40px;
-  margin: 5px 15px;
-  float: right;
-}
-
-.select-dropdown li.optgroup {
-  border-top: 1px solid #eee;
-}
-
-.select-dropdown li.optgroup.selected > span {
-  color: rgba(0, 0, 0, 0.7);
-}
-
-.select-dropdown li.optgroup > span {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-.select-dropdown li.optgroup ~ li.optgroup-option {
-  padding-left: 1rem;
-}
-/* Select Field
-   ========================================================================== */
-select {
-  display: inline-block !important;
-}
-
-.select-wrapper {
-  display: none !important;
-}
-
-select.browser-default {
-  display: block;
-}
-
-select {
-  background-color: rgba(255, 255, 255, 0.9);
-  width: 100%;
-  padding: 5px;
-  border: 1px solid #f2f2f2;
-  border-radius: 2px;
-  height: 3rem;
-}
-
-.select-label {
-  position: absolute !important;
-}
-
-.select-wrapper {
-  position: relative !important;
-}
-
-.select-wrapper.valid + label,
-.select-wrapper.invalid + label {
-  width: 100% !important;
-  pointer-events: none !important;
-}
-
-.select-wrapper input.select-dropdown {
-  position: relative !important;
-  cursor: pointer !important;
-  background-color: transparent !important;
-  border: none !important;
-  border-bottom: 1px solid #9e9e9e !important;
-  outline: none !important;
-  height: 3rem !important;
-  line-height: 3rem !important;
-  width: 100% !important;
-  font-size: 16px !important;
-  margin: 0 0 8px 0 !important;
-  padding: 0 !important;
-  display: block !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-  z-index: 1 !important;
-}
-
-.select-wrapper input.select-dropdown:focus {
-  border-bottom: 1px solid #26a69a !important;
-}
-
-.select-wrapper .caret {
-  position: absolute !important;
-  right: 0 !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  margin: auto 0 !important;
-  z-index: 0 !important;
-  fill: rgba(0, 0, 0, 0.87) !important;
-}
-
-.select-wrapper + label {
-  position: absolute !important;
-  top: -26px !important;
-  font-size: 0.8rem !important;
-}
-
-select:disabled {
-  color: rgba(0, 0, 0, 0.42) !important;
-}
-
-.select-wrapper.disabled + label {
-  color: rgba(0, 0, 0, 0.42) !important;
-}
-
-.select-wrapper.disabled .caret {
-  fill: rgba(0, 0, 0, 0.42) !important;
-}
-
-.select-wrapper input.select-dropdown:disabled {
-  color: rgba(0, 0, 0, 0.42);
-  cursor: default;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-
-.select-wrapper i {
-  color: rgba(0, 0, 0, 0.3) !important;
-}
-
-.select-dropdown li.disabled,
-.select-dropdown li.disabled > span,
-.select-dropdown li.optgroup {
-  color: rgba(0, 0, 0, 0.3);
-  background-color: transparent;
-}
-
-body.keyboard-focused .select-dropdown.dropdown-content li:focus {
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.select-dropdown.dropdown-content li:hover {
-  background-color: rgba(0, 0, 0, 0.08);
-}
-
-.select-dropdown.dropdown-content li.selected {
-  background-color: rgba(0, 0, 0, 0.03);
-}
-
-.prefix ~ .select-wrapper {
-  margin-left: 3rem;
-  width: 92%;
-  width: calc(100% - 3rem);
-}
-
-.prefix ~ label {
-  margin-left: 3rem;
-}
-
-.select-dropdown li img {
-  height: 40px;
-  width: 40px;
-  margin: 5px 15px;
-  float: right;
-}
-
-.select-dropdown li.optgroup {
-  border-top: 1px solid #eee;
-}
-
-.select-dropdown li.optgroup.selected > span {
-  color: rgba(0, 0, 0, 0.7);
-}
-
-.select-dropdown li.optgroup > span {
-  color: rgba(0, 0, 0, 0.4);
-}
-
-.select-dropdown li.optgroup ~ li.optgroup-option {
-  padding-left: 1rem;
-}
+<style scoped src="@/assets/css/StudioSearch.css">
 </style>

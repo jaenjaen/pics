@@ -1,4 +1,10 @@
         @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
+        @media screen and (max-width: 768px) {
+            #app {
+                width: 100%;
+            }
+        }
+        
         #searchStudio {
             width: 768px;
             margin: auto;
@@ -219,7 +225,7 @@
             margin-top: 1em;
             margin-bottom: 0;
             padding-top: 0.95em;
-            padding-bottom: 0.5em;
+            padding-bottom: 0.95em;
             /* border-radius: 1em; */
             cursor: pointer;
         }
@@ -286,8 +292,8 @@
             color: #33a3dc;
         }
         
-        #noMore {
-            margin-bottom: 10em;
+        .bookYes {
+            color: red;
         }
         /* Select Field
    ========================================================================== */

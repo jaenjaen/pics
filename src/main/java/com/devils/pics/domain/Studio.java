@@ -20,12 +20,13 @@ public class Studio {
 	private double avgScore;
 	private int countReview;
 	private ArrayList<Tag> tag;
+	private ArrayList<Bookmark> bookmark;
 	
 	public Studio() {}
 
 	public Studio(int stuId, String comId, int categoryId, String name, String description, String rule, String mainImg,
 			String portImg, String cadImg, int floor, StudioFilter studioFilter, Company company, Category category,
-			Schedule schedule, double avgScore, int countReview, ArrayList<Tag> tag) {
+			Schedule schedule, double avgScore, int countReview, ArrayList<Tag> tag, ArrayList<Bookmark> bookmark) {
 		super();
 		this.stuId = stuId;
 		this.comId = comId;
@@ -44,9 +45,7 @@ public class Studio {
 		this.avgScore = avgScore;
 		this.countReview = countReview;
 		this.tag = tag;
-	}
-	public Studio(int stuId) {
-		this.stuId = stuId;
+		this.bookmark = bookmark;
 	}
 
 	public int getStuId() {
@@ -185,12 +184,20 @@ public class Studio {
 		this.tag = tag;
 	}
 
+	public ArrayList<Bookmark> getBookmark() {
+		return bookmark;
+	}
+
+	public void setBookmark(ArrayList<Bookmark> bookmark) {
+		this.bookmark = bookmark;
+	}
+
 	@Override
 	public String toString() {
 		return "Studio [stuId=" + stuId + ", comId=" + comId + ", categoryId=" + categoryId + ", name=" + name
 				+ ", description=" + description + ", rule=" + rule + ", mainImg=" + mainImg + ", portImg=" + portImg
 				+ ", cadImg=" + cadImg + ", floor=" + floor + ", studioFilter=" + studioFilter + ", company=" + company
 				+ ", category=" + category + ", schedule=" + schedule + ", avgScore=" + avgScore + ", countReview="
-				+ countReview + ", tag=" + tag + "]";
+				+ countReview + ", tag=" + tag + ", bookmark=" + bookmark + "]";
 	}
 }

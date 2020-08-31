@@ -1,7 +1,6 @@
    
 <template>
   <div class="container">
-<div class="container">
       <!-- ==============  메인 이미지 : jumbo, carousel ============== -->
       <section id="main-images-section">
         <div class="row" v-for="(studio,index) in studios" v-bind:key="index">     

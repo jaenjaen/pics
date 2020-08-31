@@ -12,7 +12,11 @@
             />
           </a>
           <a href="#" @click.prevent="moveToSearch">
-            <img src="../assets/img/header_bottom/search_icon.svg" class="right" id="search_icon" />
+            <img
+              src="../assets/img/header_bottom/search_icon.svg"
+              class="right"
+              id="search_icon"
+            />
           </a>
         </div>
       </nav>
@@ -21,7 +25,6 @@
   </div>
 </template>
 
-
 <script>
 import Bottom from "@/components/Bottom.vue";
 export default {
@@ -29,7 +32,7 @@ export default {
   components: {
     Bottom
   },
-  methods :{
+  methods: {
     moveToSearch() {
       this.$router.push("/studioSearch/");
     }
@@ -37,8 +40,7 @@ export default {
 };
 </script>
 
-<style scoped src="materialize-css/dist/css/materialize.min.css">
-</style>
+<style scoped src="materialize-css/dist/css/materialize.min.css"></style>
 <style scoped>
 .navbar-fixed {
   line-height: 44px !important;

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <CustomerRegister v-if="flag"/>
-    <CompanyRegister v-if="!flag"/>
+    <CustomerRegister v-if="flag" />
+    <CompanyRegister v-if="!flag" />
   </div>
 </template>
 
@@ -11,24 +11,24 @@ import CustomerRegister from "@/components/CustomerRegister.vue";
 import CompanyRegister from "@/components/CompanyRegister.vue";
 
 export default {
-  name:"Register",
-  components:{
+  name: "Register",
+  components: {
     CustomerRegister,
     CompanyRegister
   },
-  data(){
+  data() {
     return {
       flag: false,
-      apiData:{},
-    }
+      apiData: {}
+    };
   },
-  mounted(){
+  mounted() {
     this.apiData = sessionStorage.getItem("apiData");
     console.log(this.apiData);
-    
-    if (this.apiData != null){
+
+    if (this.apiData != null) {
       this.flag = true;
     }
-  },
-}
+  }
+};
 </script>

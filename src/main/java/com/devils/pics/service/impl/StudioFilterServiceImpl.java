@@ -1,10 +1,12 @@
 package com.devils.pics.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.devils.pics.dao.StudioFilterDAO;
 import com.devils.pics.domain.Bookmark;
@@ -30,9 +32,27 @@ public class StudioFilterServiceImpl implements StudioFilterService {
 	public List<Studio> searchStudio() {
 		return studioFilterDao.searchStudio();
 	}
-
+	
+	@Transactional
 	@Override
 	public List<Studio> searchStudio(SearchCon searchCon) {
-		return studioFilterDao.searchStudio(searchCon);
+		List<Studio> list = studioFilterDao.searchStudio(searchCon);
+		ArrayList<Bookmark> bmList = new ArrayList<Bookmark>();
+		for (Bookmark bm : checkBookMark(searchCon.getCustId())){
+			for (Studio std : list){
+				if(std.getStuId() == bm.getStuId()) {
+					bmList.add(bm);
+					std.setBookmark(bmList);
+					break;
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Transactional
+	@Override
+	public List<Bookmark> checkBookMark(int custId) {
+		return studioFilterDao.checkBookMark(custId);
 	}
 }

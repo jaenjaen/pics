@@ -8,9 +8,7 @@
   </div>
 </template>
 
-
-<script>
-</script>
+<script></script>
 
 <style scoped src="../assets/css/remove_css.css" />
 <style scoped src="materialize-css/dist/css/materialize.min.css" />

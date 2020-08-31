@@ -56,7 +56,8 @@
   </div>
 </template>
 
-// <script>
+//
+<script>
 import MainSecond from "@/components/MainSecond.vue";
 export default {
   name: "mainsecond",

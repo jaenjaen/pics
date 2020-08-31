@@ -28,9 +28,8 @@ public class ExtraController {
 	public ResponseEntity addBookmark(@RequestBody Bookmark bookmark) {
 		try {
 			System.out.println(bookmark);
-			System.out.println(2);
 			int n = extraService.addBookmark(bookmark);
-			System.out.println(n);
+			System.out.println("상태 매세지 : "+n);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

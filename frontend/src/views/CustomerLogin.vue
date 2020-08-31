@@ -1,31 +1,31 @@
 <template>
   <div class="publicSpace">
     <LoginHeader customerMode="true" />
-      <KakaoLogin
-        api-key="91cbdca7243fe89cb44e5d61a5aaaf44"
-        :on-success="onSuccessKakao"
-        :on-failure="onFailureKakao"
-      />
-      <NaverLogin
-        clientId="WPqClEa8eyJopmHuUcyb"
-        callbackUrl="http://localhost:7777/customerLogin"
-        :is-popup="true"
-        :button-type="3"
-        :button-height="50"
-        button-color="green"
-        :callbackFunction="naverCallback"
-        :getLoginStatus="true"
-      />
+    <KakaoLogin
+      api-key="91cbdca7243fe89cb44e5d61a5aaaf44"
+      :on-success="onSuccessKakao"
+      :on-failure="onFailureKakao"
+    />
+    <NaverLogin
+      clientId="WPqClEa8eyJopmHuUcyb"
+      callbackUrl="http://localhost:7777/customerLogin"
+      :is-popup="true"
+      :button-type="3"
+      :button-height="50"
+      button-color="green"
+      :callbackFunction="naverCallback"
+      :getLoginStatus="true"
+    />
 
-      <GoogleLogin
-        :params="params"
-        :renderParams="renderParams"
-        :onSuccess="onSuccessGoogle"
-        :onFailure="onFailureGoogle"
-      ></GoogleLogin>
+    <GoogleLogin
+      :params="params"
+      :renderParams="renderParams"
+      :onSuccess="onSuccessGoogle"
+      :onFailure="onFailureGoogle"
+    ></GoogleLogin>
 
-      <v-facebook-login app-id=""></v-facebook-login>
-    </div>
+    <v-facebook-login app-id=""></v-facebook-login>
+  </div>
 </template>
 
 <script>
@@ -38,12 +38,10 @@ import VFacebookLogin from "vue-facebook-login-component";
 
 //kakao
 let onSuccessKakao = data => {
-  
-
   console.log("KAKAO - success");
   console.log(data);
   window.Kakao.API.request({
-    url:"/v2/user/me",
+    url: "/v2/user/me",
     success: function(res) {
       console.log(res);
       this.apiKey = res.id;
@@ -51,11 +49,13 @@ let onSuccessKakao = data => {
       this.nickname = res.properties.nickname;
       this.email = res.kakao_account.email;
       this.apiId = 0;
-      this.apiData = {"apiKey":this.apiKey,
-                      "imgSrc":this.imgSrc,
-                      "nickname": this.nickname,
-                      "email": this.email,
-                      "apiId": this.apiId};
+      this.apiData = {
+        apiKey: this.apiKey,
+        imgSrc: this.imgSrc,
+        nickname: this.nickname,
+        email: this.email,
+        apiId: this.apiId
+      };
 
       axios
         .get("http://localhost:7777/customer/" + this.apiKey, {
@@ -85,8 +85,8 @@ let onSuccessKakao = data => {
 };
 
 let onFailureKakao = data => {
-  console.log(data)
-  console.log("KAKAO - callback 처리에 실패하였습니다.")
+  console.log(data);
+  console.log("KAKAO - callback 처리에 실패하였습니다.");
 };
 
 //naver
@@ -100,9 +100,14 @@ let naverCallback = status => {
       NaverLogin.reprompt();
       return;
     }
- 
+
     window.location.replace(
-      "http://" + window.location.hostname + ( (location.port==""||location.port==undefined)?"":":" + location.port));
+      "http://" +
+        window.location.hostname +
+        (location.port == "" || location.port == undefined
+          ? ""
+          : ":" + location.port)
+    );
   } else {
     console.log("NAVER - callback 처리에 실패하였습니다.");
   }
@@ -115,7 +120,7 @@ let onSuccessGoogle = googleUser => {
 };
 
 let onFailureGoogle = data => {
-  console.log(data)
+  console.log(data);
   console.log("GOOGLE - callback 처리에 실패하였습니다.");
 };
 
@@ -123,7 +128,7 @@ export default {
   name: "Login",
   data() {
     return {
-      apiData:[],
+      apiData: [],
       apiId: -1,
       apiKey: "",
       imgSrc: "",

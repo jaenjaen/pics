@@ -46,6 +46,7 @@ public class StudioFilterController {
 			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
 			System.out.println("list size : "+list.size());
 			System.out.println("list sample : "+list.get(0));
+			for(Studio std : list) System.out.println(std);
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -83,6 +84,8 @@ public class StudioFilterController {
 		}
 		if (filters.get("orderCon").length()>0)
 			searchCon.setOrderCon(filters.get("orderCon"));
+		if (filters.get("session").length()>0)
+			searchCon.setCustId(Integer.parseInt(filters.get("session")));
 		searchCon.setPage(Integer.parseInt(filters.get("page")));
 
 		return searchCon;

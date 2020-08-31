@@ -39,4 +39,10 @@ public class StudioFilterDAOImpl implements StudioFilterDAO {
 	public List<Studio> searchStudio() {
 		return sqlSession.selectList(NS+"selectStudioByFilter");
 	}
+	
+	// 찜여부 확인
+	@Override
+	public List<Bookmark> checkBookMark(int custId) {
+		return sqlSession.selectList(NS+"checkBookMark",custId);
+	}
 }

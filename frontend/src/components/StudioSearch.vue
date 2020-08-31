@@ -264,14 +264,9 @@
         </div>
         <!-- 찜기능 부분 -->
         <div id="regBM">
-          <button
-            class="btn-small"
-            :value="studio.stuId"
-            @click="setBookMark($event)"
-          >
-            찜
-          </button>
-          <input type="hidden" v-model="session" ref="session" />
+          <img src="@/assets/img/util/fullheart.svg" width="20em" @click.capture="setBookMark(1,studio.stuId,$event)" v-if="studio.bookmark"/>
+          <img src="@/assets/img/util/heart.svg" width="20em" @click.capture="setBookMark(0,studio.stuId,$event)" v-else/>
+          <!-- <input type="hidden" :value="studio.stuId" v-model="stuId"/> -->
         </div>
       </div>
       <!-- 스크롤 내려서 더 검색할 때 동글뱅이 -->

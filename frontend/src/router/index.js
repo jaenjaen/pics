@@ -11,7 +11,6 @@ import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
-import Test from "../components/Test.vue";
 // import Map from "../components/Map.vue";
 
 Vue.use(VueRouter);
@@ -19,7 +18,8 @@ const routes = [{
         path: "/",
         name: "pics-main",
         component: Main
-    }, {
+    },
+    {
         path: "/studioSearch",
         name: "studioSearch",
         component: StudioSearch
@@ -33,24 +33,23 @@ const routes = [{
         path: "/companylogin",
         name: "companylogin",
         component: CompanyLogin
-    }, {
+    },
+    {
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
-    }, {
+    },
+    {
         path: "/register",
         name: "register",
         component: Register
-
-    }, {
-        path: "/test",
-        name: "test",
-        component: Test
-    }, {
+    },
+    {
         path: "/mypage",
         name: "mypage",
         component: Mypage
-    }, {
+    },
+    {
         path: "/wishlist",
         name: "wishlist",
         component: WishList
@@ -59,12 +58,13 @@ const routes = [{
         path: "/reservation",
         name: "reservation",
         component: Reservation
-    }, {
+    },
+    {
         path: "/studioInfo/:stuId",
         name: "studioInfo",
         component: StudioInfo,
-        props: true,
-    },
+        props: true
+    }
     // {
     //     path: "/Map",
     //     name: "Map",

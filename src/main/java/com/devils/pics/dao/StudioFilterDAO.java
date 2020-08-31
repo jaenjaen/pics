@@ -14,4 +14,5 @@ public interface StudioFilterDAO {
 	public int registerStudioFilter(StudioFilter studioFilter); //StudioFilter 등록
 	public List<Studio> searchStudio(SearchCon searchCon); //Studio 검색
 	public List<Studio> searchStudio();
+	public List<Bookmark> checkBookMark(int custId);
 }

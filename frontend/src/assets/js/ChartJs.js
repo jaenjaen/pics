@@ -63,13 +63,13 @@ export default {
             });
         console.log(this.customers[1].gender + " : customer gender")
         console.log(this.datacollection.female + " : this.datacollection.female.")
-            // window.addEventListener('load', () => {
-            //     this.datacollection.total = this.customers.length;
-            //     for (var i = 0; i <this.datacollection.customers.length; i++) {
-            //         if (this.datacollection.customers[i].gender == "F") { //여자 수만큼 세기
-            //             this.datacollection.female++;
-            //         }
-            //     }
-            // })
+        window.addEventListener('load', () => {
+            this.datacollection.total = this.customers.length;
+            for (var i = 0; i < this.datacollection.customers.length; i++) {
+                if (this.datacollection.customers[i].gender == "F") { //여자 수만큼 세기
+                    this.datacollection.female++;
+                }
+            }
+        })
     }
 }

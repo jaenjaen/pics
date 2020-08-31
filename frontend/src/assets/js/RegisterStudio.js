@@ -191,6 +191,7 @@ export default {
                     }) //forEach
             } //if
         },
+        /* 주소 API 찾기, 닫기 */
         controlAddress(cmd) {
             let api = document.getElementById("addressAPI");
             let address2 = document.getElementById("address2");
@@ -215,8 +216,8 @@ export default {
                 closeAddr.style.display = "none";
             }
         },
+        /* 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
         changeSizeUnit(value) {
-            /* 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
             if (value == true) { //평->제곱미터
                 this.sizeUnit = false;
                 if (this.sizeInput == "") {
@@ -234,7 +235,7 @@ export default {
                 this.sizeInput = (this.sizeInput * 0.3025).toFixed(2);
             }
         },
-        //선택 취소할 수 있게 해야 함...
+        /* 요일 체크하면 해당 요일 시간표 뜨게 함 */
         selectDay(day) {
             let thisCheck = document.getElementById(day); //선택한 요일 checkbox 객체
             let checkDay = document.getElementsByName("day"); //전체 요일 checkbox 객체
@@ -259,22 +260,35 @@ export default {
 
             /* 전체해제를 체크했을 때 모든 요일을 해제하고 전체체크가 보이게 함 */
             else if (day == "no") {
+                /* 모든 요일 체크해제 */
                 for (let i = 0; i < allDay.length; i++) {
                     allDay[i].style.display = "none";
                     checkDay[i].checked = false;
                 }
+                /* 모든 요일의 모든 시간표 선택해제 */
+                let dayTime = document.getElementsByName('dayTime');
+                for (let i = 0; i < 7; i++) {
+                    for (let j = 0; j < 24; j++) {
+                        dayTime[i][j].selected = false;
+                    }
+                }
                 dayNo.setAttribute('style', 'display:none');
                 dayAll.setAttribute('style', 'display:inline-block');
                 document.getElementById('all').checked = false;
+                return;
             }
 
             /* 요일을 체크했을 때 */
             else {
                 let whatDay = document.getElementById(day);
                 thisCheck = document.getElementById(day.substring(0, 3));
+                let checkDayTime = document.getElementById(day.substring(0, 3) + "Time");
                 if (thisCheck.checked) { //요일 체크시 보임
                     whatDay.style.display = "inline-block";
-                } else { //요일 체크 해제시 숨김
+                } else { //요일 체크 해제시, 모든 시간 체크해제 하고 숨김
+                    for (let i = 0; i < checkDayTime.length; i++) {
+                        checkDayTime[i].selected = false;
+                    }
                     whatDay.style.display = "none";
                 }
             }
@@ -284,10 +298,15 @@ export default {
                 dayAll.setAttribute('style', 'display:none');
                 dayNo.setAttribute('style', 'display:inline-block');
                 document.getElementById('no').checked = true;
+            } else {
+                dayNo.setAttribute('style', 'display:none');
+                dayAll.setAttribute('style', 'display:inline-block');
+                document.getElementById('all').checked = false;
             }
         },
+        /* 특정 요일의 하루 시간 전체 체크, 체크 해제 */
         selectAllTime(command, dayTime, visibleArea, unvisibleArea, checkFlag) {
-            /* 특정 요일의 하루 시간 전체 체크, 체크 해제 */
+
             var thisTime = document.getElementById(dayTime);
             var thisVisible = document.getElementById(visibleArea);
             var thisUnvisible = document.getElementById(unvisibleArea);
@@ -307,8 +326,9 @@ export default {
             thisVisible.setAttribute('style', 'display:block');
             thisUnvisible.setAttribute('style', 'display:none');
         },
+        /* 요일 공통 알고리즘 */
         selectTime(day) {
-            /* 요일 공통 알고리즘 */
+
             let time_list = "";
             let start = -1; //시작시간
             let front = 0;
@@ -369,6 +389,7 @@ export default {
                     break;
             }
         },
+        /* 주차가능, 주차불가시 표기 */
         checkParkFlag(flag) {
             if (flag == "yes") {
                 //주차 가능(주차대수 입력 영역 보임)
@@ -383,8 +404,8 @@ export default {
                     .setAttribute("style", "display: none;");
             }
         },
+        //동의 Modal 띄우고 끄기
         controlModal(cmd, modalId) {
-            //Modal 띄우고 끄기
             let modal = document.getElementById(modalId);
             if (cmd == "showModalAgree") {
                 modal.style.display = "block";
@@ -393,6 +414,7 @@ export default {
                 modal.style.display = "none";
             }
         },
+        /* 동의 선택 처리 */
         controlAgree(control) {
             let agrees = document.getElementsByName("checkAgree[]");
             let allAgree = document.getElementById("allCheckAgree");
@@ -421,6 +443,7 @@ export default {
                 }
             }
         },
+        /* 스튜디오 등록 */
         addStudio() {
             /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
             if (this.addressResult.address == '') {

@@ -15,47 +15,45 @@ import WishList from "../views/WishList.vue";
 
 Vue.use(VueRouter);
 const routes = [{
-            path: "/",
-            name: "pics-main",
-            component: Main
-        }, {
-            path: "/studioSearch",
-            name: "studioSearch",
-            component: StudioSearch
-        },
-        {
-            path: "/customerlogin",
-            name: "customerlogin",
-            component: CustomerLogin
-        },
-        {
-            path: "/companylogin",
-            name: "companylogin",
-            component: CompanyLogin
-        }, {
-            //     path: "/registerStudio",
-            //     name: "registerStudio",
-            //     component: RegisterStudio
-            // }, {
-            path: "/register",
-            name: "register",
-            component: Register
+        path: "/",
+        name: "pics-main",
+        component: Main
+    }, {
+        path: "/studioSearch",
+        name: "studioSearch",
+        component: StudioSearch
+    },
+    {
+        path: "/customerlogin",
+        name: "customerlogin",
+        component: CustomerLogin
+    },
+    {
+        path: "/companylogin",
+        name: "companylogin",
+        component: CompanyLogin
+    }, {
+        //     path: "/registerStudio",
+        //     name: "registerStudio",
+        //     component: RegisterStudio
+        // }, {
+        path: "/register",
+        name: "register",
+        component: Register
 
-        }, { <<
-            << << < HEAD
-            path: "/test",
-            name: "test",
-            component: Test
-        }, {
-            path: "/mypage",
-            name: "mypage",
-            component: Mypage
-        }, {
-            path: "/wishlist",
-            name: "wishlist",
-            component: WishList
-        } ===
-        === =
+    }, {
+        path: "/test",
+        name: "test",
+        component: Test
+    }, {
+        path: "/mypage",
+        name: "mypage",
+        component: Mypage
+    }, {
+        path: "/wishlist",
+        name: "wishlist",
+        component: WishList
+    }, {
         path: "/TempStudio/:stuId",
         name: "TempStudio",
         component: TempStudio,
@@ -75,8 +73,7 @@ const routes = [{
     // name: "Map",
     // component: Map
     // }
-    >>>
-    >>> > origin / ice
+
 ];
 const router = new VueRouter({
     mode: "history",

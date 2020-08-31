@@ -7,11 +7,6 @@ import 'materialize-css'
 export default {
     name: "studio-info",
     components: { carousel },
-<<<<<<< HEAD
-    // components: { VueperSlides, VueperSlide },zz
-=======
-
->>>>>>> a3248ecf7393f89b3233dc158f8fb690230d0fb3
     data: function() {
         return {
             // studio 관련 변수 (GET)

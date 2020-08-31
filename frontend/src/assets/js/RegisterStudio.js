@@ -157,6 +157,40 @@ export default {
         };
     },
     methods: {
+        /* 파일 업로드 화면단 처리 */
+        handleImgFileSelect(fileId, imgId, e) {
+            var thisFileId = document.getElementById(fileId);
+            var thisImgId = document.getElementById(imgId);
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+
+            if (thisFileId.value != "") {
+                filesArr.forEach(function(f) {
+                        /* 확장자 제한 */
+                        if (!f.type.match("image.*")) {
+                            alert("확장자는 이미지 확장자만 가능합니다.");
+                            thisFileId.value = "";
+                            return false;
+                        }
+
+                        /* 용량 제한 */
+                        var fileSize = thisFileId.files[0].size;
+                        var maxSize = 5 * 1024 * 1000;
+                        if (fileSize > maxSize) {
+                            alert("파일용량 5MB을 초과했습니다.");
+                            thisFileId.value = "";
+                            return false;
+                        }
+
+                        /* 업로드 이미지 미리보기 */
+                        var reader = new FileReader();
+                        reader.onload = function(e) {
+                            thisImgId.setAttribute("src", e.target.result);
+                        }
+                        reader.readAsDataURL(f);
+                    }) //forEach
+            } //if
+        },
         controlAddress(cmd) {
             let api = document.getElementById("addressAPI");
             let address2 = document.getElementById("address2");

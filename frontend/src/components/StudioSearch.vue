@@ -7,7 +7,7 @@
           id="searchContent"
           name="searchContent"
           type="text"
-          v-model="searchContent"
+          v-model="filters.searchContent"
           placeholder="나에게 딱 맞는 촬영공간 찾기    ||    '#' 을 앞에 붙이면 해시태그 검색 "
           v-on:keyup.enter="setFilter"
         />

@@ -13,6 +13,9 @@
         :onSuccess="onSuccessGoogle"
         :onFailure="onFailureGoogle"
         >Google Login</GoogleLogin>
+      <br>
+      <br>
+      <v-facebook-login app-id="320153602657982"></v-facebook-login>
     </div>
 </template>
 
@@ -21,6 +24,7 @@ import axios from "axios";
 import LoginHeader from "@/components/LoginHeader.vue";
 import KakaoLogin from "vue-kakao-login";
 import GoogleLogin from "vue-google-login";
+import VFacebookLogin from 'vue-facebook-login-component'
 
 //kakao
 let onSuccessKakao = data => {
@@ -73,7 +77,7 @@ let onFailureKakao = data => {
 };
 
 //google
-let onFailureGoogle = data => {
+let onFailureGoogle = function(data){
   console.log(data);
   console.log("GOOGLE - callback 처리에 실패하였습니다.");
 };
@@ -96,13 +100,16 @@ export default {
         width: 300,
         height: 49,
         logtitle: true
-      }
+      },
+      isConnected: false,
+      FB: undefined,
     }
   },
   components: {
     LoginHeader,
     KakaoLogin,
-    GoogleLogin
+    GoogleLogin,
+    VFacebookLogin
   },
   methods: {
     onFailureKakao,
@@ -141,7 +148,29 @@ export default {
             console.log(err);
           });
   },
-    onFailureGoogle
+    onFailureGoogle,
+    
+    //facebook login
+    getUserData() {
+      this.FB.api('/me', 'GET', { fields: 'id,name,email,picture' }, 
+      user => {
+        console.log(user);
+        // this.personalID = user.id;
+        // this.email = user.email;
+        // this.name = user.name;
+        // this.picture = user.picture.data.url;
+      })
+    },
+    sdkLoaded(payload) {
+      this.isConnected = payload.isConnected;
+      this.FB = payload.FB;
+      if (this.isConnected) this.getUserData();
+    },
+    onLogin() {
+       this.isConnected = true;
+       this.getUserData();
+       this.redirectUser();
+     }
   }
 };
 </script>
@@ -150,5 +179,11 @@ export default {
 
 #google-signin-btn-0{
   display:inline-block;
+}
+.v-facebook-login{
+  margin:auto;
+  height:49px;
+  width:300px;
+
 }
 </style>

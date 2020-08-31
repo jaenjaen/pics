@@ -16,7 +16,7 @@
         "chart.js": "^2.9.3",
         "chartjs": "^0.3.24",
         "core-js": "^3.6.5",
-        "date-fns": "^2.16.0",
+        "date-fns": "^2.16.1",
         "jquery": "^3.5.1",
         "jquery-ui": "^1.12.1",
         "jsonwebtoken": "^8.5.1",

@@ -16,12 +16,13 @@ public class SearchCon {
 	private ArrayList<String> searchContent;
 	private String searchTag;
 	private String orderCon;
+	private int page;
 	
 	public SearchCon() {}
 
 	public SearchCon(String categoryId, String weekDate, String selectedDate, String address1, String address2,
 			String minSize, String maxSize, String minUnitPrice, String maxUnitPrice, String capacity,
-			ArrayList<String> searchContent, String searchTag, String orderCon) {
+			ArrayList<String> searchContent, String searchTag, String orderCon, int page) {
 		super();
 		this.categoryId = categoryId;
 		this.weekDate = weekDate;
@@ -36,6 +37,7 @@ public class SearchCon {
 		this.searchContent = searchContent;
 		this.searchTag = searchTag;
 		this.orderCon = orderCon;
+		this.page = page;
 	}
 
 	public String getCategoryId() {
@@ -142,11 +144,21 @@ public class SearchCon {
 		this.orderCon = orderCon;
 	}
 
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchCon [categoryId=" + categoryId + ", weekDate=" + weekDate + ", selectedDate=" + selectedDate
 				+ ", address1=" + address1 + ", address2=" + address2 + ", minSize=" + minSize + ", maxSize=" + maxSize
 				+ ", minUnitPrice=" + minUnitPrice + ", maxUnitPrice=" + maxUnitPrice + ", capacity=" + capacity
-				+ ", searchContent=" + searchContent + ", searchTag=" + searchTag + ", orderCon=" + orderCon + "]";
+				+ ", searchContent=" + searchContent + ", searchTag=" + searchTag + ", orderCon=" + orderCon + ", page="
+				+ page + "]";
 	}
-}
+	
+	}

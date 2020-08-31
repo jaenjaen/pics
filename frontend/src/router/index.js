@@ -3,15 +3,16 @@ import VueRouter from "vue-router";
 import Main from "../components/Main.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
-import RegisterStudio from "../components/RegisterStudio.vue";
-// import TempStudio from "../components/Temp_MoveToInfo.vue";
+// import RegisterStudio from "../components/RegisterStudio.vue";
 import Register from "../views/Register.vue";
 import CompanyLogin from "../views/CompanyLogin.vue";
 import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
+import Test from "../components/Test.vue";
 // import Map from "../components/Map.vue";
+import temp from "../components/temp.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -53,26 +54,29 @@ const routes = [{
         path: "/wishlist",
         name: "wishlist",
         component: WishList
-    }, {
-        path: "/TempStudio/:stuId",
-        name: "TempStudio",
-        component: TempStudio,
-        props: true
     },
     {
         path: "/reservation",
         name: "reservation",
         component: Reservation
     }, {
-        path: "/studioInfo",
+        path: "/studioInfo/:stuId",
         name: "studioInfo",
-        component: StudioInfo
+        component: StudioInfo,
+        props: true,
     },
     // {
     // path: "/Map",
     // name: "Map",
     // component: Map
     // }
+    {
+        path: "/temp/:stuId",
+        name: "temp",
+        component: temp,
+        props: true
+    },
+
 
 ];
 const router = new VueRouter({

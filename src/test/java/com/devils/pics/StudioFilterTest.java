@@ -69,7 +69,8 @@ public class StudioFilterTest {
 //		searchCon.setSearchTag("모던");
 //		filterMap.put("orderCon", "4");
 //		String str = "weekDate=";
-		
+		searchCon.setPage(5);   
+		  
 		
 		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", searchCon);
 		System.out.println(searchCon);

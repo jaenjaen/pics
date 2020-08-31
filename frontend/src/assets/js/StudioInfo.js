@@ -7,7 +7,7 @@ import 'material-design-icons/iconfont/material-icons.css'
 export default {
     name: "studio-info",
     components: { carousel },
-    // components: { VueperSlides, VueperSlide },
+    // components: { VueperSlides, VueperSlide },zz
     data: function() {
         return {
             // studio 관련 변수 (GET)

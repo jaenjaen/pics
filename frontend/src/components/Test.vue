@@ -67,7 +67,7 @@
 // import $ from "jquery";
 import axios from "axios";
 // import vSelect from 'vue-select';
-import loadScriptOnce from 'load-script-once'
+// import loadScriptOnce from 'load-script-once'
 export default{
   name: "studio-info",
   data:function(){
@@ -274,7 +274,6 @@ export default{
 //       }
 
 // </script>
-</script>
 <style scoped>
 #main-images-section {
     margin: 5% 0 5% 0;

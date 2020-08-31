@@ -139,37 +139,20 @@
 			</otherwise>	
 		</choose>
 		</where>
+		GROUP BY s.stu_id
 		<!-- 정렬  1:인기순(기본), 2: 가격내림차순, 3: 가격오름차순  4: 평점순 -->
 		<if test="orderCon == 1">
-			ORDER BY res.count DESC;
+			ORDER BY res.count DESC
 		</if>
 		<if test="orderCon == 2">
-			ORDER BY f.unit_price DESC;
+			ORDER BY f.unit_price DESC
 		</if>
 		<if test="orderCon == 3">
-			ORDER BY f.unit_price ASC;
+			ORDER BY f.unit_price ASC
 		</if>
 		<if test="orderCon == 4">
-			ORDER BY rv.avg DESC;
+			ORDER BY rv.avg DESC
 		</if>
+		limit #{page} , 5
 	</select>
-	
-	<select id="test" parameterType="searchCon" resultType="studio">
-		SELECT stu_id
-		FROM studio
-		<where>
-		<if test="searchContent != null">
-			
-				name Like '%${search}%'
-			
-		</if>
-		</where>
-	</select>
-	
-	<!-- 찜기능 -->
-	<insert id="regBookMark" parameterType="bookmark">
-		INSERT
-		INTO bookmark (stu_id, cust_id)
-		VALUES(#{studio.stuId},#{customer.custId})
-	</insert>
 </mapper>

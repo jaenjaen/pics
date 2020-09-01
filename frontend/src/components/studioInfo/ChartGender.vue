@@ -1,8 +1,12 @@
 <script>
+import Chart from 'chart.js'
 import { Doughnut } from "vue-chartjs";
 import axios from "axios";
+
 export default {
+  name: 'ChartGender',
   extends: Doughnut,
+  components : {Chart},
   data() {
     return {
       female: 0,
@@ -18,6 +22,7 @@ export default {
         labels: ["Female", "Male"]
       },
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         legend: {
           position: "top"
@@ -34,13 +39,10 @@ export default {
     };
   },
   mounted() {
-    console.log("aaa");
     axios
       .get("http://127.0.0.1:7777/studio/genderRatio/10")
       .then(response => {
         this.customers = response.data;
-        console.log(this.customers[0].gender + " : customer[0] gender");
-        console.log(this.customers[1].gender + " : customer[1] gender");
         var customer = this.customers;
         this.total = customer.length;
         // var female=0;
@@ -51,7 +53,7 @@ export default {
         }
       }
         this.chartData();
-        console.log(JSON.stringify(this.datacollection));
+        
         this.renderChart(this.datacollection, this.options);
         console.log("bbb");
       })
@@ -77,7 +79,6 @@ export default {
       }
       this.$set(this.datacollection.datasets[0].data,0,this.female);
       this.$set(this.datacollection.datasets[0].data,1,this.total);
-      console.log(this.female+"|"+this.total);
     }
   }
 }

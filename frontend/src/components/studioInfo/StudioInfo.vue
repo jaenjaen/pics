@@ -33,9 +33,9 @@
     <section align="left">
         <!-- 태그 -->
       <div>
-        <spand class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
+        <span class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
             <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
-          </spand>
+          </span>
       </div>
       <br>
         <!-- 타이틀 -->
@@ -54,9 +54,9 @@
         <!-- 찜하기, 공유하기, 누적 이용자 수 -->
         <span>
         <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-          <img src="@/assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
+          찜
           <img src="@/assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt />
-          <i class="material-icons"></i>
+          <!-- <img src="@/assets/img/header_bottom/marking.svg" v-if="!bookmarkCheck" alt /> -->
         </button>
         </span>
         <span>
@@ -111,6 +111,9 @@
 
           </div>
         </div>
+        <!-- ============== Reservation ============== -->
+
+
 
         <!-- ============== Description ============== -->
              
@@ -136,9 +139,9 @@
         
         <hr />
         <!-- ============== Chart & Graph ============== -->
-        <!-- <div class="article-Chart-area">
-          <div style="width:300px;heigth:300px">
-           도넛 그래프
+        <div class="article-Chart-area" border="2">
+          <div style="width:500px;heigth:500px">
+           <!--   도넛 그래프 -->
 					 <div id="canvas-holder" style="width:100%">
 						<div class="chartjs-size-monitor">
 							<div class="chartjs-size-monitor-expand">
@@ -148,12 +151,15 @@
 								<div class=""></div>
 							</div>
 						</div>
-						<canvas id="doughnut-chart-area" style="display: block" width="280" height="200" class="chartjs-render-monitor"></canvas>
-					</div>
-          <div>
-						
-				 	히스토그램  평균가격대|쇼핑몰
-					<div id="canvas-holder" style="width:100%">
+              <!-- <canvas id="doughnut-chart-area" width="700" height="700" class="chartjs-render-monitor"> -->
+                <ChartGender/>  
+              <!-- </canvas>              -->
+					</div> 
+          </div> 
+        </div>
+        		
+				 	 <!-- 히스토그램 연령대 -->
+					<!-- <div id="canvas-holder" style="width:100%">
               <div class="chartjs-size-monitor">
                 <div class="chartjs-size-monitor-expand">
                   <div class=""></div>
@@ -165,42 +171,41 @@
               <p></p>
               <canvas id="hist-canvas" style="display: block; height: 30%; width: 100%;" width="100%" height="100%" class="chartjs-render-monitor"></canvas>
             </div>
-          </div>
-        </div>  -->
+          </div> -->
+        
 
         <!-- ============== Review ============== -->
-        <h4>Reviews</h4>
         <div class="article-review-area">
-          <table id="list_table">
-            <tbody v-for="review in reviews" v-bind:key="review.reviewId">
-              <tr>
-                <td>작성자 Id</td>
-                :
-                <td v-html="review.customer.funnel"></td>
-              </tr>
-              <tr>
-              <td>평점</td>
-                :
-              <td v-html="review.score"></td>
-              </tr>
-              <tr>
-                <td>리뷰</td>
-                :            
-                <td v-html="review.content"></td>
-                
-              </tr>
-            </tbody>
-          </table>
+          <h4>리뷰보기</h4>
+            <table id="list_table">
+              <tbody v-for="review in reviews" v-bind:key="review.reviewId">
+                <tr>
+                  <td>작성자 Id</td>
+                  :
+                  <td v-html="review.customer.email"></td>
+                </tr>
+                <tr>
+                <td>평점</td>
+                  :
+                <td v-html="review.score"></td>
+                </tr>
+                <tr>
+                  <td>리뷰</td>
+                  :            
+                  <td v-html="review.content"></td>
+                  
+                </tr>
+              </tbody>
+            </table>
         </div>
       </article>
 
-      <!-- ============== Reservation ============== -->
+    
 
   </div>
 </template>
 
 <script scoped src="@/assets/js/StudioInfo.js"></script>
-
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 .container {
@@ -263,4 +268,8 @@ article {
 .tagBtn {
     display: inline;
 }
-</style>>
+
+.article-review-area{
+  text-align: left;
+}
+</style>

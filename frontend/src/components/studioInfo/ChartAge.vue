@@ -1,35 +1,16 @@
-
-
 <script>
 import { Doughnut } from "vue-chartjs";
 import axios from "axios";
-
 export default {
-  // computed: {
-  //   chartData() {
-  //     var customer = this.customers;
-  //     this.total =customer.length;
-  //     this.female=0;
-  //     for (var i = 0; i < this.total; i++) {
-  //       if (this.customers[i].gender == "F") {
-  //       //여자 수만큼 세기
-  //         this.female++;
-  //       }
-  //     }
-  //     alert(this.female+"|"+this.total);
-  //     return [this.female,this.total];
-  //   }
-  // },
   extends: Doughnut,
   data() {
     return {
-        female:0,
-        total:0,
-
-        datacollection: {
+      female: 0,
+      total: 0,
+      datacollection: {
         datasets: [
           {
-            data:chartData( ) ,
+            data:[0,0],
             backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
             label: "Gender Ratio"
           }
@@ -53,26 +34,24 @@ export default {
     };
   },
   mounted() {
-    //renderChart function renders the chart with the datacollection and options object.
-    this.renderChart(this.datacollection, this.options);
-  },
-  update(){
-    //renderChart function renders the chart with the datacollection and options object.
-   axios
+    console.log("aaa");
+    axios
       .get("http://127.0.0.1:7777/studio/genderRatio/10")
       .then(response => {
-        alert("update");
-        this.customers = response.data;        
+        this.customers = response.data;
         var customer = this.customers;
-        this.total =customer.length;
+        this.total = customer.length;
         // var female=0;
         for (var i = 0; i < this.total; i++) {
         if (this.customers[i].gender == "F") {
+          //여자 수만큼 세기
           this.female+=1;
         }
       }
-      this.data.datasets.data=[this.female,this.total-this.female];
-      alert("update data");
+        this.chartData();
+        
+        this.renderChart(this.datacollection, this.options);
+        console.log("bbb");
       })
       .catch(error => {
         console.log(error);
@@ -81,6 +60,22 @@ export default {
       .finally(() => {
         this.loading = false;
       });
+  },
+  methods: {
+    chartData() {
+      console.log("ccc");
+      var customer = this.customers;
+      this.total =customer.length;
+      this.female=0;
+      for (var i = 0; i < this.total; i++) {
+        if (this.customers[i].gender == "F") {
+        //여자 수만큼 세기
+          this.female++;
+        }
+      }
+      this.$set(this.datacollection.datasets[0].data,0,this.female);
+      this.$set(this.datacollection.datasets[0].data,1,this.total);
+    }
   }
 }
 </script>

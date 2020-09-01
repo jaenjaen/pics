@@ -73,13 +73,16 @@ public class StudioFilterTest {
 		searchCon.setCustId(3);
 		  
 		
-		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", searchCon);
-		System.out.println(searchCon);
-		System.out.println("조회된 총 studio 수 : " + list.size());
-		for (Studio s : list) System.out.println(s);
+//		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", searchCon);
+//		System.out.println(searchCon);
+//		System.out.println("조회된 총 studio 수 : " + list.size());
+//		for (Studio s : list) System.out.println(s);
 		
 //		List<Bookmark> bmList = sqlSession.selectList("StudioFilterMapper.checkBookMark",3);
 //		System.out.println("조회된 총 bm 수 : " + bmList.size());
 //		System.out.println(bmList);
+		
+		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudios", 3);
+		System.out.println("조회된 총 studio 수 : " + list.size());
 	}
 }

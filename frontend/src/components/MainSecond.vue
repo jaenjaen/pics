@@ -57,8 +57,10 @@ export default {
 };
 </script>
 
-<style scoped src="../assets/css/remove_css.css" />
-<style scoped src="materialize-css/dist/css/materialize.min.css" />
+<style scoped src="../assets/css/remove_css.css">
+</style>
+<style scoped src="materialize-css/dist/css/materialize.min.css">
+</style>
 
 <style scoped>
 .mainsecond_container {

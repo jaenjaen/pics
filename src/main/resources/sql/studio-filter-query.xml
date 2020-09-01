@@ -80,6 +80,15 @@
 		) res
 		ON s.stu_id = res.stu_id
 	</sql>
+	<!-- 전체 검색 쿼리 with category-->
+	<select id="selectStudios" parameterType="Integer" resultMap="studioRM">
+		<include refid="Select-J-Studio-Category-filter-tag-review" />
+		<where>
+			<if test="value != null">
+				AND c.category_id = #{value}
+			</if>
+		</where>
+	</select>
 
 	<!-- 필터 검색 쿼리 -->
 	<select id="selectStudioByFilter" parameterType="searchCon" resultMap="studioRM">

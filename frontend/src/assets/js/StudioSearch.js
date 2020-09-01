@@ -33,8 +33,8 @@ export default {
                 searchTag: "",
                 orderCon: "",
                 page: 0,
-                //로그인 session 변수
-                session: 3,
+                //로그인 session 변수, 기본값은 -1
+                session: -1,
 
             },
             //별점

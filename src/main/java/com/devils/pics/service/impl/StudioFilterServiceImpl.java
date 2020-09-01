@@ -38,14 +38,17 @@ public class StudioFilterServiceImpl implements StudioFilterService {
 	public List<Studio> searchStudio(SearchCon searchCon) {
 		List<Studio> list = studioFilterDao.searchStudio(searchCon);
 		ArrayList<Bookmark> bmList = new ArrayList<Bookmark>();
-		for (Bookmark bm : checkBookMark(searchCon.getCustId())){
-			for (Studio std : list){
-				if(std.getStuId() == bm.getStuId()) {
-					bmList.add(bm);
-					std.setBookmark(bmList);
-					break;
+		if(searchCon.getCustId() != -1) {
+			for (Bookmark bm : checkBookMark(searchCon.getCustId())){
+				for (Studio std : list){
+					if(std.getStuId() == bm.getStuId()) {
+						bmList.add(bm);
+						std.setBookmark(bmList);
+						break;
+					}
 				}
 			}
+			 
 		}
 		return list;
 	}

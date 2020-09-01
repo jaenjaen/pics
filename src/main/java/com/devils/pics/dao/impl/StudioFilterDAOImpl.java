@@ -26,17 +26,17 @@ public class StudioFilterDAOImpl implements StudioFilterDAO {
 		return sqlSession.insert(NS+"registerStudioFilter", studioFilter);
 	}
 	
-	// 전체 출력
+	// 필터 출력
 	@Override
 	public List<Studio> searchStudio(SearchCon searchCon) {
 		//Studio 검색
 		return sqlSession.selectList(NS+"selectStudioByFilter", searchCon);
 	}
 	
-	// 필터 출력
+	// 전체 출력
 	@Override
 	public List<Studio> searchStudio() {
-		return sqlSession.selectList(NS+"selectStudioByFilter");
+		return sqlSession.selectList(NS+"selectStudios");
 	}
 	
 	// 찜여부 확인

@@ -86,6 +86,7 @@ export default {
         .then(response => {
           this.rdata = response.data;
           if (this.rdata != "") {
+            sessionStorage.setItem("company",JSON.stringify(this.rdata));
             location.href = "http://localhost:9999";
           }
         })

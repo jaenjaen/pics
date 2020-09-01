@@ -14,10 +14,7 @@ export default {
     }, methods: {
         uploadFile(){
             let formData = new FormData();
-            var files = document.querySelector('.files');
-            for(let i=0; i<files.length; i++){
-                
-            }
+            var file = document.querySelector('.files');
             formData.append("files", file.files[0]);
             console.log(file.files[0]);
             axios.post('http://127.0.0.1:7777/imageUpload', formData, {

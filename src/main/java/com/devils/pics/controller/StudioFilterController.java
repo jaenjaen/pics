@@ -41,10 +41,14 @@ public class StudioFilterController {
 	@PostMapping("/studio/search/filter")
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
+			System.out.println("1.--------------------------");
 			System.out.println("filter list : "+filters);
+			System.out.println("2.--------------------------");
 			System.out.println("filtermap : "+getSearchCon(filters));
 			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
+			System.out.println("3.--------------------------");
 			System.out.println("list size : "+list.size());
+			System.out.println("4.--------------------------");
 			System.out.println("list sample : "+list.get(0));
 			for(Studio std : list) System.out.println(std);
 			return new ResponseEntity(list, HttpStatus.OK);

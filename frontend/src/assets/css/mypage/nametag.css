@@ -15,6 +15,10 @@
     text-align: center;
 }
 
+.userImg img {
+    border-radius: 100%;
+}
+
 .userName {
     padding-top: 10px;
     font-size: large;
@@ -26,7 +30,7 @@
     text-align: left;
 }
 
-.userHeart {
+#userHeart {
     width: 10%;
     padding: 10px;
     text-align: center;

@@ -12,7 +12,7 @@
       </tr>
       <tr>
         <td class="userDetail">
-          <a href="#">내 정보 관리 ></a>
+          <a href="#">정보 관리 ></a>
         </td>
       </tr>
     </table>

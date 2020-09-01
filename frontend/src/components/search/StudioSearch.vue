@@ -13,6 +13,9 @@
         />
       </span>
     </div>
+    <!-- <router-link to="/customerlogin">로그인하기</router-link> -->
+    <a @click.prevent="login">로그인하기</a>
+    <a @click.prevent="logout">로그아웃하기</a>
     <!-- 필터 부분 -->
     <div class="row" id="filter">
       <!-- 필터 Collapse -->
@@ -289,9 +292,9 @@
   </div>
 </template>
 
-<script type="text/javascript" scoped src="@/assets/js/StudioSearch.js"></script>
+<script type="text/javascript" scoped src="@/assets/js/search/StudioSearch.js"></script>
 
 <style scoped type="text/css" src="materialize-css/dist/css/materialize.min.css"></style>
 <style scoped src="material-design-icons/iconfont/material-icons.css"></style>
 
-<style scoped src="@/assets/css/StudioSearch.css">
+<style scoped src="@/assets/css/search/StudioSearch.css">

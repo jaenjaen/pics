@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "../components/Main.vue";
-import StudioSearch from "../components/StudioSearch.vue";
+import StudioSearch from "@/components/search/StudioSearch.vue";
 import CustomerLogin from "../views/CustomerLogin.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "../components/RegisterStudio.vue";
@@ -72,6 +72,7 @@ const routes = [{
         name: "chartgender",
         component: ChartGender
     },
+
 
     // {
     //     path: "/Map",

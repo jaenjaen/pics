@@ -170,6 +170,7 @@ export default {
         },
         // 검색 필터 삭제
         initFilter(value) {
+            alert(1);
             if (value == 1) {
                 this.filters.selectedDate = "";
                 this.filters.weekDate = "";
@@ -214,6 +215,19 @@ export default {
                         this.loading = false;
                     })
             }
+        },
+        login() {
+            let cust = {
+                custId: 3,
+            }
+            sessionStorage.setItem('cust', JSON.stringify(cust));
+            var sessionTemp = sessionStorage.getItem('cust');
+            if (sessionTemp) this.filters.session = JSON.parse(sessionTemp).custId;
+            alert("로그인함");
+        },
+        logout() {
+            sessionStorage.removeItem('cust');
+            this.filters.session = -1;
         }
     }
 };

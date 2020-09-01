@@ -28,9 +28,11 @@ public class StudioFilterController {
 	// 전체 출력
 	@GetMapping("/studio/search")
 	public ResponseEntity searchStudio(){
+		System.out.println("여기 들어옴?");
 		try {
 			List<Studio> list = studioFilterService.searchStudio();
 			System.out.println("list sample : "+list.get(0));
+			System.out.println("반응이 없어요?");
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -89,5 +91,16 @@ public class StudioFilterController {
 		searchCon.setPage(Integer.parseInt(filters.get("page")));
 
 		return searchCon;
+	}
+	
+	@GetMapping("/studio/popular")
+	public ResponseEntity getPopularStudios(){
+		try {
+			List<Studio> list = studioFilterService.searchStudio();
+			System.out.println("list sample : "+list.get(0));
+			return new ResponseEntity(list, HttpStatus.OK);
+		}catch(RuntimeException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
 	}
 }

@@ -1,11 +1,28 @@
 <template>
   <div class="publicSpace">
-    <h1>mypage 연결</h1>
-    <!-- 가입했는지 아닌지 확인? 세션에서 company인지 customer인지 확-->
+    <CompanyMypage />
+    <CustomerMypage />
     
   </div>
 </template>
 
 <script>
-export default {};
+//import axios from "axios";
+import CompanyMypage from "@/components/mypage/CompanyMypage.vue";
+import CustomerMypage from "@/components/mypage/CustomerMypage.vue";
+
+export default {
+   name: "Mypage",
+  components: {
+    CompanyMypage,
+    CustomerMypage
+  },
+  data() {
+    return {
+      flag:false
+    };
+  },
+  methods: {
+  }
+};
 </script>

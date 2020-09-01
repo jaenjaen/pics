@@ -1,0 +1,11 @@
+.gap {
+    background: #B5B5B5;
+    width: 100%;
+    height: 50px;
+    padding: 15px 0 0 0;
+}
+
+.categroy_name {
+    font-size: large;
+    font-weight: bold;
+}

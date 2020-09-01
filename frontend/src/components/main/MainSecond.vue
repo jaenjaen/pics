@@ -22,7 +22,15 @@
                 <img :src="getImgUrl(studio.mainImg)" />
               </div>
               <div class="card-content">
-                <div class="item">{{studio.name}}</div>
+                <div class="name">{{studio.name}}</div>
+                <div class="category">
+                  {{ studio.category.categoryName }}/
+                  {{studio.studioFilter.address | category}}
+                </div>
+                <div class="price">
+                  {{ studio.studioFilter.unitPrice | currency }}
+                  <span>원/시간</span>
+                </div>
               </div>
             </div>
           </div>
@@ -32,68 +40,12 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import carousel from "vue-owl-carousel";
-export default {
-  components: { carousel },
-  data() {
-    return {
-      studio_infos: []
-    };
-  },
-  mounted() {
-    axios
-      .get("http://127.0.0.1:7777/studio/search")
-      .then(response => (this.studio_infos = response.data))
-      .catch(error => {
-        console.log(error);
-        this.errored = true;
-      })
-      .finally(() => (this.loading = false));
-  },
-  methods: {
-    // 이미지 경로
-    getImgUrl(url) {
-      return require("@/assets/img/studio/" + url);
-    }
-  }
-};
-</script>
-
+<script scoped src="@/assets/js/main/mainsecond.js"></script>
 <style scoped src="../../assets/css/remove_css.css">
 </style>
 <style scoped src="materialize-css/dist/css/materialize.min.css">
 </style>
-
-<style scoped>
-.mainsecond_container {
-  width: 768px;
-  margin: 0 auto;
-  margin-top: 10px;
-  background-color: White;
-}
-
-.word_container {
-  width: 730px;
-  margin: 0 auto;
-  padding: 15px 5px;
-  display: flex;
-  justify-content: space-between;
-}
-.word_item:nth-child(1) {
-  font-weight: 700;
-}
-
-.mainsecond_carousel {
-  width: 730px;
-  margin: 0 auto;
-}
-.input_info {
-  width: 120px;
-}
-img {
-  width: 120px;
-  height: 127.5px;
-}
+<style scoped src="material-design-icons/iconfont/material-icons.css">
+</style>
+<style scoped src="@/assets/css/main/mainsecond.css">
 </style>

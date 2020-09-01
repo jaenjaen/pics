@@ -14,7 +14,6 @@
         "bootstrap-vue": "^2.16.0",
         "calendarpickerjs": "^1.2.0",
         "chart.js": "^2.9.3",
-        "chartjs": "^0.3.24",
         "core-js": "^3.6.5",
         "date-fns": "^2.16.1",
         "jquery": "^3.5.1",
@@ -42,7 +41,7 @@
         "vue-multi-select": "^4.5.0",
         "vue-owl-carousel": "^2.0.3",
         "vue-router": "^3.2.0",
-        "vueperslides": "^2.10.3",
+        "vueperslides": "^2.10.7",
         "vuetify": "^2.3.10",
         "vuex": "^3.4.0"
     },

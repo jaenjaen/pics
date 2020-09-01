@@ -1,8 +1,8 @@
    
 <template>
   <div class="container">
-      <!-- ==============  메인 이미지 : jumbo, carousel ============== -->
-      <section id="main-images-section">
+      <!-- ==============  메인 이미지 : carousel ============== -->
+      <header id="main-images-section">
         <div class="row" v-for="(studio,index) in studios" v-bind:key="index">     
           <carousel :itmes="1" :loop="true" :autoplay="true" >
             <div>
@@ -16,56 +16,99 @@
            </div> -->
           </carousel>
          </div> 
-      </section>
+      </header>
       <hr/>
+    
        <nav>
-          <div class="nav-tab">
-            <span id="studio-info-body"><a href="#">상세보기</a></span>
-            <span id="studio-info-review"><a href="#">리뷰보기</a></span>
+         <div class="tabs-field">
+           <div class="row">
+            <span class="nav-tab"><a href="#">상세보기</a></span>
+            <span class="nav-tab"><a href="#">리뷰보기</a></span>
+          </div>
           </div>
         </nav>
        <hr/>
-      <article>
+
+      
        <!-- ============== Title ==============  --> 
-        <div class="article-title-area" v-for="(studio,index) in studios" v-bind:key="index">
+        <!-- <div class="article-title-area" v-for="(studio,index) in studios" v-bind:key="index">
          <table>
           <tr>
           <td><h2> {{ studio.name }}</h2></td>
           <td>
-             <!-- 찜하기 -->
+            
             <span>
             <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
               찜
-              <!--  <img src="../assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt /> -->
-              <!-- <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt /> -->
+               <img src="../assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt /> 
+              <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
             </button>
             </span>
             <span>
             <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-              <!-- <i class="material-icons">share</i> -->
-              <img @click="kakaoShare" src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="30"/>
+              <i class="material-icons">share</i>
+               <img @click="kakaoShare" src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="30"/> 
             </a>
             </span>
            </td>
           </tr>
           </table>
-          <spand class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
+          <span class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
             <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
-          </spand>
+          </span>
 
          <div id="company-of-studio"> 
                <span>{{studio.company.name}}</span>
-               <!-- <img :src="imgUrl(studio.company.logoImg)"/> -->
+               <img :src="imgUrl(studio.company.logoImg)"/>
           </div>
-          <!-- 누적 이용자 수 -->
-          <!-- <span>
+         
+          <span>
           {{this.accCustomer}}명
-          </span> -->
+          </span>
  
         </div>        
-        <hr>
+        <hr> -->
+      <section align="left">
+        <!-- 태그 -->
+        <div class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
+          <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
+        </div>
+        <!-- 타이틀 -->
+        <div class="article-title-area" v-for="(studio,index) in studios" v-bind:key="index">
+          <div class="studio-name"> 
+           <strong> {{ studio.name }}</strong>
+          </div><br><br>
+
+          <div id="company-of-studio"> 
+               <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="20px" height="20px"/></span> -->
+               <span>{{studio.company.name}}</span>
+          </div>
+        </div> 
+
+        <div>
+        <!-- 찜하기, 공유하기, 누적 이용자 수 -->
+          <span>
+          <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
+            찜
+            <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
+          </button>
+          </span>
+          <span>
+          <a class="waves-effect waves-light btn-small" @click="shareUrl()">
+            <i class="material-icons">share</i>
+              <img @click="kakaoShare" src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="30"/> 
+          </a>
+          </span>
+
+          <!-- 누적 이용자 수 -->
+          <span>
+          {{this.accCustomer}}명
+          </span>
+        </div>        
+      </section>
 
         <!-- ============== Studio Filter ============== -->
+      <article>
         <div class="article-Filterstudiormation-map-area" >
           <div class="article-Filterstudiormation-area" >
             <div v-for="(studio,index) in studios" v-bind:key="index">
@@ -165,12 +208,18 @@
               <tr>
                 <td>작성자 Id</td>
                 :
-                <td v-html="review.customer.email"></td>
+                <td v-html="review.customer.funnel"></td>
+              </tr>
+              <tr>
+              <td>평점</td>
+                :
+              <td v-html="review.score"></td>
               </tr>
               <tr>
                 <td>리뷰</td>
                 :            
                 <td v-html="review.content"></td>
+                
               </tr>
             </tbody>
           </table>
@@ -183,49 +232,3 @@
 </template>
 
 <script scoped src="../assets/js/StudioInfo.js"></script>
-
-<style scoped>
-
-.container{
-  width: 768px;
-  margin: auto 3em 0 10em 0;
-
-}
-
-#main-images-section {
-  width: 768px;
-  margin: auto;
-}
-.nav-tab span{
-  margin: 20%;
-}
-article {
-    width: 100%;
-    float: left;
-    border: 1px solid gray;
-    margin-bottom: 10em;
-
-}
-
-#map {
-  width: 40%;
-  height: 40%;
-  border: 1px solid green;
-}
-
-#Studio-Filter-Table tr td {
-    border: 1px solid gray;
-    text-align: right;
-
-}
-
-.carousel-inner img {
-  width: 100%;
-  height: 550px;
-}
-
-.tagBtn{
-  display: inline;
-
-}
-</style>

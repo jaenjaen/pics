@@ -5,12 +5,12 @@
       <!-- 로그인 이후 추가 입력창-->
       <form action="" method="POST" class="form login" @submit.prevent="customerRegister">
         <div class="form__field" >
-          <label for="login__tel"><img class="icon" src="../assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
+          <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
           <input type="tel" v-model="tel" class="form__input" placeholder="고객 전화번호" required>
         </div>
 
         <div class="form__field" >
-          <label for="login_job"><img class="icon" src="../assets/img/register/job.svg"><span class="hidden">Job</span></label>
+          <label for="login_job"><img class="icon" src="@/assets/img/register/job.svg"><span class="hidden">Job</span></label>
           <select name="job" v-model="job">
             <option value="" disabled selected>직업을 선택 해주세요.</option>
             <option value="photographer">포토그래퍼</option>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form__field">
-          <label for="login__funnel"><img class="icon" src="../assets/img/register/funnel.svg"><span class="hidden">Funnel</span></label>
+          <label for="login__funnel"><img class="icon" src="@/assets/img/register/funnel.svg"><span class="hidden">Funnel</span></label>
           <input type="text" v-model="funnel" class="form__input" placeholder="유입경로">
         </div>
         <div class="form__field">
@@ -87,4 +87,4 @@ export default {
 }
 
 </script>
-<style scpoed src="../assets/css/CompanyLogin.css"></style>
+<style scpoed src="@/assets/css/login/CompanyLogin.css"></style>

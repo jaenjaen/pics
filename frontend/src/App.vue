@@ -7,7 +7,7 @@
 
 //
 <script>
-import Header from "@/components/Header.vue";
+import Header from "@/components/main/Header.vue";
 
 export default {
   name: "pics-header",

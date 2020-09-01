@@ -10,7 +10,7 @@
       >
         <div class="form__field">
           <label for="login__username"
-            ><img class="icon" src="../assets/img/login/loginId.svg" /><span
+            ><img class="icon" src="@/assets/img/login/loginId.svg" /><span
               class="hidden"
               >comId</span
             ></label
@@ -28,7 +28,7 @@
 
         <div class="form__field">
           <label for="login__password"
-            ><img class="icon" src="../assets/img/login/loginPw.svg" /><span
+            ><img class="icon" src="@/assets/img/login/loginPw.svg" /><span
               class="hidden"
               >Password</span
             ></label
@@ -96,4 +96,4 @@ export default {
   }
 };
 </script>
-<style src="../assets/css/CompanyLogin.css"></style>
+<style src="@/assets/css/login/CompanyLogin.css"></style>

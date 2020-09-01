@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
+.container {
+    width: 768px;
+    margin: auto 3em 0 10em 0;
+    background-color: azure;
+}
+
+#main-images-section {
+    width: 768px;
+    margin: auto;
+}
+
+.tabs-field {
+    width: 100%;
+    height: 50;
+}
+
+
+/* 
+.nav-tab {
+    margin: 20%;
+    list-style-type: none;
+    display: inline;
+} */
+
+article {
+    width: 100%;
+    float: left;
+    border: 1px solid gray;
+    margin-bottom: 10em;
+}
+
+#map {
+    width: 40%;
+    height: 40%;
+    border: 1px solid green;
+}
+
+#Studio-Filter-Table tr td {
+    border: 1px solid gray;
+    text-align: right;
+}
+
+.carousel-inner img {
+    width: 100%;
+    height: 550px;
+}
+
+.tagBtn {
+    display: inline;
+}

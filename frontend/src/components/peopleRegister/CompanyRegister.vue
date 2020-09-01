@@ -13,7 +13,7 @@
           <label for="login__name"
             ><img
               class="icon"
-              src="../assets/img/register/companyName.svg"
+              src="@/assets/img/register/companyName.svg"
             /><span class="hidden">Name</span></label
           >
           <input
@@ -27,7 +27,7 @@
 
         <div class="form__field">
           <label for="login__comId"
-            ><img class="icon" src="../assets/img/login/loginId.svg" /><span
+            ><img class="icon" src="@/assets/img/login/loginId.svg" /><span
               class="hidden"
               >comId</span
             ></label
@@ -46,7 +46,7 @@
 
         <div class="form__field">
           <label for="login__password"
-            ><img class="icon" src="../assets/img/login/loginPw.svg" /><span
+            ><img class="icon" src="@/assets/img/login/loginPw.svg" /><span
               class="hidden"
               >Password</span
             ></label
@@ -61,7 +61,7 @@
         </div>
         <div class="form__field">
           <label for="login__password"
-            ><img class="icon" src="../assets/img/login/loginPw.svg" /><span
+            ><img class="icon" src="@/assets/img/login/loginPw.svg" /><span
               class="hidden"
               >Password</span
             ></label
@@ -82,7 +82,7 @@
           <label for="login__address"
             ><img
               class="icon"
-              src="../assets/img/register/companyAddr.svg"
+              src="@/assets/img/register/companyAddr.svg"
             /><span class="hidden">Address</span></label
           >
           <input
@@ -114,7 +114,7 @@
           <label for="login__tel"
             ><img
               class="icon"
-              src="../assets/img/register/companyTel.svg"
+              src="@/assets/img/register/companyTel.svg"
             /><span class="hidden">PhoneNumber</span></label
           >
           <input
@@ -130,7 +130,7 @@
           <label for="login__logImg"
             ><img
               class="icon"
-              src="../assets/img/register/companyLogo.svg"
+              src="@/assets/img/register/companyLogo.svg"
             /><span class="hidden">Logo</span></label
           >
           <input type="file" class="form__input" placeholder="업체 로고" />
@@ -232,4 +232,4 @@ export default {
   }
 };
 </script>
-<style scpoed src="../assets/css/CompanyLogin.css"></style>
+<style scpoed src="@/assets/css/login/CompanyLogin.css"></style>

@@ -181,35 +181,27 @@ export default {
             }
         },
         /* 층수 - 지상과 지하로 전환하고, DB에는 지하일 경우 음수로 보냄 */
-        changeFloor(value) {
-            let floor = document.getElementById('floor').value;
-            if (value == true) { //지상
-                this.studio.floor = floor;
+        changeFloor() {
+            if (this.floorUnit == true) { //지상
                 this.floorUnit = false;
-            }
-            if (value == false) { //지하
-                this.studio.floor = floor * (-1);
+            } else if (this.floorUnit == false) { //지하
                 this.floorUnit = true;
             }
         },
 
         /* 면적 - 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
-        changeSizeUnit(value) {
-            if (value == true) { //평->제곱미터
+        changeSizeUnit() {
+            let size = document.getElementById('size').value;
+            if (this.sizeUnit == true) { //평->제곱미터
                 this.sizeUnit = false;
-                if (this.sizeInput == "") {
-                    return false;
+                if (size != "") {
+                    this.sizeInput = (size * 3.305785).toFixed(2);
                 }
-                this.sizeInput = (this.sizeInput * 3.305785).toFixed(2);
-                this.studio.studioFilter.size = parseFloat(this.sizeInput); //DB에 보낼 제곱미터
-            }
-            if (value == false) { //제곱미터->평
+            } else if (this.sizeUnit == false) { //제곱미터->평
                 this.sizeUnit = true;
-                if (this.sizeInput == "") {
-                    return false;
+                if (size != "") {
+                    this.sizeInput = (size * 0.3025).toFixed(2);
                 }
-                this.studio.studioFilter.size = parseFloat(this.sizeInput); //DB에 보낼 제곱미터
-                this.sizeInput = (this.sizeInput * 0.3025).toFixed(2);
             }
         },
 
@@ -743,10 +735,7 @@ export default {
             let tags = document.getElementsByName("tag");
             for (let i = 0; i < tags.length; i++) {
                 if (tags[i].value == "") continue;
-                let element = {
-                    tagName: tags[i].value
-                };
-                this.studio.tag.push(element);
+                this.studio.tag.push({ tagName: tags[i].value });
                 this.tagCount++;
             }
 
@@ -766,14 +755,25 @@ export default {
             } else {
                 this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
             }
-            /* 지상/지하 토글 버튼 안 눌러서 바인딩 안 된 경우 바인딩 */
-            if (this.studio.floor == "") {
-                this.studio.floor = document.getElementById('floor').value;
+
+            /* 지상/지하 토글 버튼에 맞춰 데이터 바인딩 */
+            let floor = document.getElementById('floor').value;
+            if (this.floorUnit == false) { //지상
+                this.studio.floor = floor;
+                this.floorUnit = true;
+            } else if (this.floorUnit == true) { //지하
+                this.studio.floor = floor * (-1);
+                this.floorUnit = false;
             }
 
-            /* 면적 단위 토글 버튼 안 눌러서 바인딩 안 된 경우 바인딩 */
-            if (this.studio.studioFilter.size == "") {
-                this.studio.studioFilter.size = this.sizeInput;
+            /* 면적 단위 토글 버튼 상태에 맞춰 데이터 바인딩 */
+            let size = document.getElementById('size').value;
+            if (this.sizeUnit == false) { //제곱미터
+                this.studio.studioFilter.size = size;
+                this.sizeUnit = true;
+            } else if (this.sizeUnit == true) { //평
+                this.studio.studioFilter.size = (size * 3.305785).toFixed(2);
+                this.sizeUnit = false;
             }
 
             /* 운영 시간 입력 필수 */
@@ -827,7 +827,7 @@ export default {
                 console.log(file);
                 formData.append('files[' + i + ']', file);
             }
-            axios.post('/imageUpload', formData, {
+            axios.post('http://127.0.0.1:7777/imageUpload', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },

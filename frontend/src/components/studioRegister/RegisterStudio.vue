@@ -148,7 +148,7 @@
                               :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
                               :labels="{checked: '지상', unchecked: '지하'}"
                               v-model="floorUnit"
-                              @change="changeFloor(floorUnit)"/>
+                              @change="changeFloor()"/>
                 </label>
             </div>
             <input type="text" id="floor" name="floor" />
@@ -163,7 +163,7 @@
                               :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
                               :labels="{checked: '㎡', unchecked: '평'}"
                               v-model="sizeUnit"
-                              @change="changeSizeUnit(sizeUnit)"/>
+                              @change="changeSizeUnit()"/>
               </label>
             </div>
             <input type="text" id="size" name="size" v-model="sizeInput" required />

@@ -32,32 +32,9 @@ export default {
                     maxCapacity: ""
                 },
                 schedule: {
-                    repeatDate: [{
-                        weekDate: "월",
-                        time: ""
-                    }, {
-                        weekDate: "화",
-                        time: ""
-                    }, {
-                        weekDate: "수",
-                        time: ""
-                    }, {
-                        weekDate: "목",
-                        time: ""
-                    }, {
-                        weekDate: "금",
-                        time: ""
-                    }, {
-                        weekDate: "토",
-                        time: ""
-                    }, {
-                        weekDate: "일",
-                        time: ""
-                    }]
+                    repeatDate: []
                 },
-                tag: [{
-                    tagName: ""
-                }]
+                tag: []
             },
             /* 주소 API */
             addressResult: {
@@ -96,6 +73,8 @@ export default {
                 roadname: ""
             },
             addressDetail: "",
+            /* 지상/지하 */
+            floorUnit: true,
             /* 면적 */
             sizeInput: "",
             sizeUnit: true,
@@ -201,8 +180,20 @@ export default {
                 closeAddr.style.display = "none";
             }
         },
+        /* 층수 - 지상과 지하로 전환하고, DB에는 지하일 경우 음수로 보냄 */
+        changeFloor(value) {
+            let floor = document.getElementById('floor').value;
+            if (value == true) { //지상
+                this.studio.floor = floor;
+                this.floorUnit = false;
+            }
+            if (value == false) { //지하
+                this.studio.floor = floor * (-1);
+                this.floorUnit = true;
+            }
+        },
 
-        /* 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
+        /* 면적 - 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
         changeSizeUnit(value) {
             if (value == true) { //평->제곱미터
                 this.sizeUnit = false;
@@ -210,14 +201,14 @@ export default {
                     return false;
                 }
                 this.sizeInput = (this.sizeInput * 3.305785).toFixed(2);
-                this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
+                this.studio.studioFilter.size = parseFloat(this.sizeInput); //DB에 보낼 제곱미터
             }
             if (value == false) { //제곱미터->평
                 this.sizeUnit = true;
                 if (this.sizeInput == "") {
                     return false;
                 }
-                this.studio.studioFilter.size = this.sizeInput; //DB에 보낼 제곱미터
+                this.studio.studioFilter.size = parseFloat(this.sizeInput); //DB에 보낼 제곱미터
                 this.sizeInput = (this.sizeInput * 0.3025).toFixed(2);
             }
         },
@@ -262,9 +253,7 @@ export default {
                 }
 
                 //모든 요일의 데이터 바인딩 초기화
-                for (let i = 0; i < 7; i++) {
-                    this.studio.schedule.repeatDate[i].time = '';
-                }
+                this.studio.schedule.repeatDate = [];
 
                 dayNo.setAttribute('style', 'display:none');
                 dayAll.setAttribute('style', 'display:inline-block');
@@ -288,10 +277,10 @@ export default {
                     whatDay.style.display = "none";
 
                     //해당 요일 데이터 바인딩 초기화
-                    let dayArr = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-                    for (let i = 0; i < 7; i++) {
-                        if (dayName == dayArr[i]) {
-                            this.studio.schedule.repeatDate[i].time = '';
+                    let arr = this.studio.schedule.repeatDate;
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i].weekDate == dayName) {
+                            this.studio.schedule.repeatDate.splice(i, 1);
                         }
                     }
                 }
@@ -314,17 +303,27 @@ export default {
             var thisVisible = document.getElementById(visibleArea);
             var thisUnvisible = document.getElementById(unvisibleArea);
             var flag = document.getElementById(checkFlag);
+            var dayName = dayTime.substring(0, 3);
             if (command == 'select') { //하루 시간 전체선택
                 for (let i = 0; i < thisTime.length; i++) {
                     thisTime[i].selected = true;
                 }
                 flag.checked = true;
+
+                /* 운영 시간 데이터 바인딩 */
+                this.studio.schedule.repeatDate.push({
+                    weekDate: dayName,
+                    time: "0-24"
+                });
             }
             if (command == 'deselect') { //하루 시간 전체해제
                 for (let i = 0; i < thisTime.length; i++) {
                     thisTime[i].selected = false;
                 }
                 flag.checked = false;
+
+                /* 운영 시간 데이터 초기화 */
+                this.studio.schedule.repeatDate = [];
             }
             thisVisible.setAttribute('style', 'display:block');
             thisUnvisible.setAttribute('style', 'display:none');
@@ -341,11 +340,16 @@ export default {
 
             let temp = '';
 
+            /* 운영시간 데이터 초기화 */
+            let arr = this.studio.schedule.repeatDate;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].weekDate == thisDay) {
+                    this.studio.schedule.repeatDate.splice(i, 1);
+                }
+            }
+
             switch (thisDay) {
                 case 'mon': //월요일
-                    /* 운영시간 데이터 초기화 */
-                    this.studio.schedule.repeatDate[0].time = '';
-
                     /* 해당 요일의 선택한 시간을 배열에 바인딩 */
                     for (let i = 0; i < thisDayTime.length; i++) {
                         if (thisDayTime[i].selected) {
@@ -367,7 +371,7 @@ export default {
 
                     /* 운영시간을 처리하여 data에 바인딩 */
                     if (first == 23) {
-                        this.studio.schedule.repeatDate[0].time += start + "-" + end + ",";
+                        temp += start + "-" + end + ",";
                     } else if (first > -1) {
                         for (let i = first + 1; i < 24; i++) {
                             if (first == -1 && this.week.mon[i] == 1) {
@@ -380,23 +384,18 @@ export default {
                                 //이어지는 인덱스인데 선택했을 경우
                                 end = i + 1;
                                 if (i == 23) { //마지막 인덱스일 경우
-                                    this.studio.schedule.repeatDate[0].time += start + "-" + end + ",";
+                                    temp += start + "-" + end + ",";
                                 }
                             }
                             if (first != -1 && this.week.mon[i] == 0) {
                                 first = -1; //여기서 링크를 끊음.
-                                this.studio.schedule.repeatDate[0].time += start + "-" + end + ",";
+                                temp += start + "-" + end + ",";
                             }
                         }
                     }
-                    temp = this.studio.schedule.repeatDate[0].time;
-                    this.studio.schedule.repeatDate[0].time = temp.slice(0, temp.length - 1); //가장 끝에 있는 ,를 제거함.
                     break;
 
                 case 'tue': //화요일
-                    /* 운영시간 데이터 초기화 */
-                    this.studio.schedule.repeatDate[1].time = '';
-
                     /* 해당 요일의 선택한 시간을 배열에 바인딩 */
                     for (let i = 0; i < thisDayTime.length; i++) {
                         if (thisDayTime[i].selected) {
@@ -418,7 +417,7 @@ export default {
 
                     /* 운영시간을 처리하여 data에 바인딩 */
                     if (first == 23) {
-                        this.studio.schedule.repeatDate[1].time += start + "-" + end + ",";
+                        temp += start + "-" + end + ",";
                     } else if (first > -1) {
                         for (let i = first + 1; i < 24; i++) {
                             if (first == -1 && this.week.tue[i] == 1) {
@@ -431,23 +430,18 @@ export default {
                                 //이어지는 인덱스인데 선택했을 경우
                                 end = i + 1;
                                 if (i == 23) { //마지막 인덱스일 경우
-                                    this.studio.schedule.repeatDate[1].time += start + "-" + end + ",";
+                                    temp += start + "-" + end + ",";
                                 }
                             }
                             if (first != -1 && this.week.tue[i] == 0) {
                                 first = -1; //여기서 링크를 끊음.
-                                this.studio.schedule.repeatDate[1].time += start + "-" + end + ",";
+                                temp += start + "-" + end + ",";
                             }
                         }
                     }
-                    temp = this.studio.schedule.repeatDate[1].time;
-                    this.studio.schedule.repeatDate[1].time = temp.slice(0, temp.length - 1); //가장 끝에 있는 ,를 제거함.
                     break;
 
                 case 'wed': //수요일
-                    /* 운영시간 데이터 초기화 */
-                    this.studio.schedule.repeatDate[2].time = '';
-
                     /* 해당 요일의 선택한 시간을 배열에 바인딩 */
                     for (let i = 0; i < thisDayTime.length; i++) {
                         if (thisDayTime[i].selected) {
@@ -469,7 +463,7 @@ export default {
 
                     /* 운영시간을 처리하여 data에 바인딩 */
                     if (first == 23) {
-                        this.studio.schedule.repeatDate[2].time += start + "-" + end + ",";
+                        temp += start + "-" + end + ",";
                     } else if (first > -1) {
                         for (let i = first + 1; i < 24; i++) {
                             if (first == -1 && this.week.wed[i] == 1) {
@@ -482,23 +476,18 @@ export default {
                                 //이어지는 인덱스인데 선택했을 경우
                                 end = i + 1;
                                 if (i == 23) { //마지막 인덱스일 경우
-                                    this.studio.schedule.repeatDate[2].time += start + "-" + end + ",";
+                                    temp += start + "-" + end + ",";
                                 }
                             }
                             if (first != -1 && this.week.wed[i] == 0) {
                                 first = -1; //여기서 링크를 끊음.
-                                this.studio.schedule.repeatDate[2].time += start + "-" + end + ",";
+                                temp += start + "-" + end + ",";
                             }
                         }
                     }
-                    temp = this.studio.schedule.repeatDate[2].time;
-                    this.studio.schedule.repeatDate[2].time = temp.slice(0, temp.length - 1); //가장 끝에 있는 ,를 제거함.
                     break;
 
                 case 'thu': //목요일
-                    /* 운영시간 데이터 초기화 */
-                    this.studio.schedule.repeatDate[3].time = '';
-
                     /* 해당 요일의 선택한 시간을 배열에 바인딩 */
                     for (let i = 0; i < thisDayTime.length; i++) {
                         if (thisDayTime[i].selected) {
@@ -520,7 +509,7 @@ export default {
 
                     /* 운영시간을 처리하여 data에 바인딩 */
                     if (first == 23) {
-                        this.studio.schedule.repeatDate[3].time += start + "-" + end + ",";
+                        temp += start + "-" + end + ",";
                     } else if (first > -1) {
                         for (let i = first + 1; i < 24; i++) {
                             if (first == -1 && this.week.thu[i] == 1) {
@@ -533,23 +522,18 @@ export default {
                                 //이어지는 인덱스인데 선택했을 경우
                                 end = i + 1;
                                 if (i == 23) { //마지막 인덱스일 경우
-                                    this.studio.schedule.repeatDate[3].time += start + "-" + end + ",";
+                                    temp += start + "-" + end + ",";
                                 }
                             }
                             if (first != -1 && this.week.thu[i] == 0) {
                                 first = -1; //여기서 링크를 끊음.
-                                this.studio.schedule.repeatDate[3].time += start + "-" + end + ",";
+                                temp += start + "-" + end + ",";
                             }
                         }
                     }
-                    temp = this.studio.schedule.repeatDate[3].time;
-                    this.studio.schedule.repeatDate[3].time = temp.slice(0, temp.length - 1); //가장 끝에 있는 ,를 제거함.
                     break;
 
                 case 'fri': //금요일
-                    /* 운영시간 데이터 초기화 */
-                    this.studio.schedule.repeatDate[4].time = '';
-
                     /* 해당 요일의 선택한 시간을 배열에 바인딩 */
                     for (let i = 0; i < thisDayTime.length; i++) {
                         if (thisDayTime[i].selected) {
@@ -571,7 +555,7 @@ export default {
 
                     /* 운영시간을 처리하여 data에 바인딩 */
                     if (first == 23) {
-                        this.studio.schedule.repeatDate[4].time += start + "-" + end + ",";
+                        temp += start + "-" + end + ",";
                     } else if (first > -1) {
                         for (let i = first + 1; i < 24; i++) {
                             if (first == -1 && this.week.fri[i] == 1) {
@@ -584,23 +568,18 @@ export default {
                                 //이어지는 인덱스인데 선택했을 경우
                                 end = i + 1;
                                 if (i == 23) { //마지막 인덱스일 경우
-                                    this.studio.schedule.repeatDate[4].time += start + "-" + end + ",";
+                                    temp += start + "-" + end + ",";
                                 }
                             }
                             if (first != -1 && this.week.fri[i] == 0) {
                                 first = -1; //여기서 링크를 끊음.
-                                this.studio.schedule.repeatDate[4].time += start + "-" + end + ",";
+                                temp += start + "-" + end + ",";
                             }
                         }
                     }
-                    temp = this.studio.schedule.repeatDate[4].time;
-                    this.studio.schedule.repeatDate[4].time = temp.slice(0, temp.length - 1); //가장 끝에 있는 ,를 제거함.
                     break;
 
                 case 'sat': //토요일
-                    /* 운영시간 데이터 초기화 */
-                    this.studio.schedule.repeatDate[5].time = '';
-
                     /* 해당 요일의 선택한 시간을 배열에 바인딩 */
                     for (let i = 0; i < thisDayTime.length; i++) {
                         if (thisDayTime[i].selected) {
@@ -622,7 +601,7 @@ export default {
 
                     /* 운영시간을 처리하여 data에 바인딩 */
                     if (first == 23) {
-                        this.studio.schedule.repeatDate[5].time += start + "-" + end + ",";
+                        temp += start + "-" + end + ",";
                     } else if (first > -1) {
                         for (let i = first + 1; i < 24; i++) {
                             if (first == -1 && this.week.sat[i] == 1) {
@@ -635,23 +614,18 @@ export default {
                                 //이어지는 인덱스인데 선택했을 경우
                                 end = i + 1;
                                 if (i == 23) { //마지막 인덱스일 경우
-                                    this.studio.schedule.repeatDate[5].time += start + "-" + end + ",";
+                                    temp += start + "-" + end + ",";
                                 }
                             }
                             if (first != -1 && this.week.sat[i] == 0) {
                                 first = -1; //여기서 링크를 끊음.
-                                this.studio.schedule.repeatDate[5].time += start + "-" + end + ",";
+                                temp += start + "-" + end + ",";
                             }
                         }
                     }
-                    temp = this.studio.schedule.repeatDate[5].time;
-                    this.studio.schedule.repeatDate[5].time = temp.slice(0, temp.length - 1); //가장 끝에 있는 ,를 제거함.
                     break;
 
                 case 'sun': //일요일
-                    /* 운영시간 데이터 초기화 */
-                    this.studio.schedule.repeatDate[6].time = '';
-
                     /* 해당 요일의 선택한 시간을 배열에 바인딩 */
                     for (let i = 0; i < thisDayTime.length; i++) {
                         if (thisDayTime[i].selected) {
@@ -673,7 +647,7 @@ export default {
 
                     /* 운영시간을 처리하여 data에 바인딩 */
                     if (first == 23) {
-                        this.studio.schedule.repeatDate[6].time += start + "-" + end + ",";
+                        temp += start + "-" + end + ",";
                     } else if (first > -1) {
                         for (let i = first + 1; i < 24; i++) {
                             if (first == -1 && this.week.sun[i] == 1) {
@@ -686,19 +660,23 @@ export default {
                                 //이어지는 인덱스인데 선택했을 경우
                                 end = i + 1;
                                 if (i == 23) { //마지막 인덱스일 경우
-                                    this.studio.schedule.repeatDate[6].time += start + "-" + end + ",";
+                                    temp += start + "-" + end + ",";
                                 }
                             }
                             if (first != -1 && this.week.sun[i] == 0) {
                                 first = -1; //여기서 링크를 끊음.
-                                this.studio.schedule.repeatDate[6].time += start + "-" + end + ",";
+                                temp += start + "-" + end + ",";
                             }
                         }
                     }
-                    temp = this.studio.schedule.repeatDate[6].time;
-                    this.studio.schedule.repeatDate[6].time = temp.slice(0, temp.length - 1); //가장 끝에 있는 ,를 제거함.
                     break;
             }
+
+            this.studio.schedule.repeatDate.push({
+                weekDate: thisDay,
+                time: temp.slice(0, temp.length - 1)
+            }); //가장 끝에 있는 ,를 제거해서 운영 시간 데이터에 바인딩함
+
         },
 
         /* 주차 가능, 주차 불가 체크에 따른 화면 표기 */
@@ -761,14 +739,16 @@ export default {
         /* 스튜디오 등록 */
         addStudio() {
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
+            this.studio.tag = [] //태그 데이터 초기화
             let tags = document.getElementsByName("tag");
-            let taglist = "";
             for (let i = 0; i < tags.length; i++) {
                 if (tags[i].value == "") continue;
-                taglist += tags[i].value + "#";
+                let element = {
+                    tagName: tags[i].value
+                };
+                this.studio.tag.push(element);
                 this.tagCount++;
             }
-            this.tag = taglist;
 
             /* 태그 1개 이상 입력 */
             if (this.tagCount < 1) {
@@ -786,15 +766,18 @@ export default {
             } else {
                 this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
             }
+            /* 지상/지하 토글 버튼 안 눌러서 바인딩 안 된 경우 바인딩 */
+            if (this.studio.floor == "") {
+                this.studio.floor = document.getElementById('floor').value;
+            }
+
+            /* 면적 단위 토글 버튼 안 눌러서 바인딩 안 된 경우 바인딩 */
+            if (this.studio.studioFilter.size == "") {
+                this.studio.studioFilter.size = this.sizeInput;
+            }
 
             /* 운영 시간 입력 필수 */
-            let dayTimeFlag = 0;
-            for (let i = 0; i < 7; i++) {
-                if (this.studio.schedule.repeatDate[i].time == '') {
-                    dayTimeFlag++;
-                }
-            }
-            if (dayTimeFlag == 7) {
+            if (this.studio.schedule.repeatDate.length < 1) {
                 alert("운영 시간을 입력하세요");
                 return false;
             }
@@ -824,7 +807,7 @@ export default {
                     this.option_save.push(optionName[i].innerHTML);
                 }
             }
-            this.studio.studioFilter.options = this.option_save.join(",");
+            this.studio.studioFilter.options = this.option_save.join(","); //배열을 string으로 만듦(,로 구분)
 
             /* 서비스에 모두 동의해야 등록 */
             let agrees = document.getElementsByName("checkAgree[]");
@@ -837,12 +820,31 @@ export default {
                 return false;
             }
 
+            /* 파일 업로드 */
+            let formData = new FormData();
+            for (var i = 0; i < this.$refs.file.files.length; i++) {
+                let file = this.$refs.file.files[i];
+                console.log(file);
+                formData.append('files[' + i + ']', file);
+            }
+            axios.post('/imageUpload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }).then(function(response) {
+                    console.log(response.data);
+                    console.log('성공');
+                })
+                .catch(function() {
+                    console.log('실패');
+                });
+
             /* 스튜디오 등록 */
             axios.post("http://127.0.0.1:7777/studio", this.studio).then(
                 function(response) {
                     console.log(response.data);
                     alert(`등록되셨습니다.`);
-                    location.href = "./test.html";
+                    //location.href = "./test.html";
                 },
                 function() {
                     console.log("failed");

@@ -1,8 +1,7 @@
 <template>
-  <div class="publicSpace">
-    <CompanyMypage />
-    <CustomerMypage />
-    
+  <div class="publicSpace" v-if="loginFlag">
+    <CompanyMypage v-if="modeFlag"/>
+    <CustomerMypage v-if="!modeFlag"/>
   </div>
 </template>
 
@@ -19,10 +18,20 @@ export default {
   },
   data() {
     return {
-      flag:false
+      modeFlag:false,
+      loginFlag:false,
     };
   },
-  methods: {
+  created(){
+    if(sessionStorage.getItem("company")==null && sessionStorage.getItem("customer")==null){
+      alert("로그인 후 접근 가능합니다.");
+      location.href = "http://localhost:9999/customerlogin";
+    }
+    if(sessionStorage.getItem("company")!=null) {
+      this.modeFlag = true;
+      this.loginFlag = true;
+      }
+    else if(sessionStorage.getItem("customer")!=null) this.loginFlag = true;
   }
 };
 </script>

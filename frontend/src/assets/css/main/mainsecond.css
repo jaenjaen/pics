@@ -1,0 +1,67 @@
+.mainsecond_container {
+    width: 768px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: White;
+}
+
+.row {
+    height: 200px;
+}
+
+.word_container {
+    width: 730px;
+    margin: 0 auto;
+    padding: 0 5px;
+    padding-top: 15px;
+}
+
+.word_item:nth-child(1) {
+    font-weight: 700;
+    text-align: left;
+}
+
+.word_item:nth-child(2) {
+    font-weight: 700;
+    text-align: right;
+    font-size: 10px;
+}
+
+.mainsecond_carousel {
+    width: 730px;
+    margin: 0 auto;
+}
+
+img {
+    width: 120px;
+    height: 150px;
+}
+
+.card-content {
+    padding: 7px !important;
+}
+
+.name {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    color: black;
+}
+
+.category {
+    padding-top: 2px;
+    color: black;
+    font-size: 10px;
+    text-align: left;
+}
+
+.price {
+    font-size: 13px;
+    text-align: right;
+    font-weight: 700;
+}
+
+.price>span {
+    font-size: 8px;
+    color: black;
+}

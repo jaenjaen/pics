@@ -1,4 +1,4 @@
-<style scoped src="../assets/css/RegisterStudio.css"></style>
+<style scoped src="@/assets/css/studioRegister/RegisterStudio.css"></style>
 <template>
   <div class="container" id="reserveStudio">
     <aside v-for="(studio, index) in studios" v-bind:key="index">
@@ -151,7 +151,7 @@
     </aside>
   </div>
 </template>
-<script scoped src="../assets/js/Reservation.js"></script>
+<script scoped src="@/assets/js/Reservation.js"></script>
 
 <style scoped>
 .container {

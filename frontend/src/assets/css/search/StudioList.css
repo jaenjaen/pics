@@ -231,8 +231,9 @@
         }
         
         #studioContent {
-            width: 45%;
+            width: 350px !important;
             padding-top: 1em;
+            padding-right: 0;
             text-align: left;
         }
         
@@ -269,12 +270,6 @@
         
         #studioContent i {
             color: #33a3dc;
-        }
-        
-        #regBM {
-            margin-top: 25%;
-            margin-bottom: 0;
-            text-align: right;
         }
         
         input[type="hidden"] {
@@ -449,4 +444,34 @@
         
         .select-dropdown li.optgroup~li.optgroup-option {
             padding-left: 1rem;
+        }
+        
+        #title {
+            font-size: 1.3em !important;
+        }
+        
+        #nameAddr {
+            padding-top: 3px;
+            padding-left: 3px;
+            color: black !important;
+        }
+        
+        #info {
+            text-align: right;
+            color: #034ea2;
+            font-size: 1.2em !important;
+        }
+        
+        #info>span {
+            color: black;
+            font-size: 0.8em;
+        }
+        
+        #review {
+            float: right;
+        }
+        
+        .container_name {
+            display: flex;
+            justify-content: space-between;
         }

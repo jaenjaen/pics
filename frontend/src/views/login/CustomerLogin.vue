@@ -50,7 +50,6 @@ let onSuccessKakao = data => {
         })
         .then(res => {
           if (res.data == "") {
-            console.log(this.apiData);
             sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
             location.href = "http://localhost:9999/register";
           } else {

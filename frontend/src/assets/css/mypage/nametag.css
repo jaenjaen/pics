@@ -3,19 +3,34 @@
     width: 100%;
 }
 
+#nameTag a:-webkit-any-link {
+    color: #B5B5B5;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .userImg {
     padding: 10px 5px 10px 5px;
     width: 15%;
     text-align: center;
 }
 
+.userImg img {
+    border-radius: 100%;
+}
+
 .userName {
     padding-top: 10px;
     font-size: large;
     font-weight: bold;
+    text-align: left;
 }
 
-.userHeart {
+.userDetail {
+    text-align: left;
+}
+
+#userHeart {
     width: 10%;
     padding: 10px;
     text-align: center;

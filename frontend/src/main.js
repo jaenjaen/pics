@@ -6,9 +6,9 @@ import VueDaumPostcode from "vue-daum-postcode";
 import VModal from "vue-js-modal";
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount("#app");
 
 Vue.config.productionTip = false;

@@ -3,16 +3,16 @@
     <table id="nameTag">
       <tr>
         <td rowspan="2" class="userImg">
-          <img src= "@/assets/img/mypage/defaultImg.svg" alt="userImg" width="70px" height="70px">
+          <img :src= "userImg" alt="userImg" width="70px" height="70px">
         </td>
         <td class="userName">{{username}}</td>
         <td rowspan="2" id="userHeart" v-bind:class="{ 'is-active': customerMode }">
-          <a href="http://localhost:9999/wishlist" ><img src="@/assets/img/common/redheart.svg" width="20px" height="20px"></a>
+          <a href="http://localhost:9999/wishlist?userid="><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px"></a>
         </td>
       </tr>
       <tr>
         <td class="userDetail">
-          <a href="#">내 정보 관리 ></a>
+          <a href="#">정보 관리 ></a>
         </td>
       </tr>
     </table>
@@ -32,10 +32,16 @@ export default {
     return {
       username:"",
       userid:"",
-      userImg:"",
+      userImg: "@/assets/img/mypage/defaultImg.svg",
     };
   },
   mounted(){
+    if(sessionStorage.getItem("customer")!= null){
+      var customer = JSON.parse(sessionStorage.getItem("customer"));
+      this.username = customer.nickname;
+      this.userId = customer.custId;
+      this.userImg = customer.imgSrc;
+    }
 
   },
   methods: {

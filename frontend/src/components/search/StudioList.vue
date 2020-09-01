@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="searchStudio">
+  <div class="container" id="searchStudio">
     <!-- 검색 부분 -->
     <div id="search">
       <span id="searchBorder">
@@ -28,11 +28,7 @@
             <div id="filterSpace">
               <div id="cateNdate">
                 <!-- 카테고리 -->
-                <div
-                  class="input-field"
-                  id="categoryFilter"
-                  name="categoryFilter"
-                >
+                <div class="input-field" id="categoryFilter" name="categoryFilter">
                   <p id="cateWord">카테고리로 찾기</p>
                   <!-- <i class="material-icons" id="icon_filter">dashboard</i> -->
                   <select name="cataSelect" id="cataSelect" @change="setCategory" ref="cataSelect">
@@ -52,9 +48,7 @@
                 <!-- 날짜 -->
                 <div id="dateFilter" name="dateFilter">
                   <p>예약 날짜로 찾기</p>
-                  <i class="material-icons" id="icon_filter"
-                    >insert_invitation</i
-                  >
+                  <i class="material-icons" id="icon_filter">insert_invitation</i>
                   <input type="date" v-model="filters.selectedDate" />
                   <span id="dateInit" @click="initFilter(1)">날짜 초기화</span>
                 </div>
@@ -65,19 +59,9 @@
               <div id="addrFilter" name="addrFilter">
                 <p>주소로 찾기</p>
                 <i class="material-icons" id="icon_filter">gps_fixed</i>
-                <input
-                  type="text"
-                  value=""
-                  v-model="filters.addr1"
-                  placeholder="도시명을 입력해주세요"
-                />
+                <input type="text" value v-model="filters.addr1" placeholder="도시명을 입력해주세요" />
                 <span>시</span>
-                <input
-                  type="text"
-                  value=""
-                  v-model="filters.addr2"
-                  placeholder="구/면/읍 입력해주세요"
-                />
+                <input type="text" value v-model="filters.addr2" placeholder="구/면/읍 입력해주세요" />
                 <span>구/면/읍</span>
               </div>
               <hr />
@@ -86,21 +70,17 @@
               <div id="sizeFilter" name="sizeFilter">
                 <p>공간 크기로 찾기</p>
                 <i class="material-icons" id="icon_filter">location_city</i>
-                <input
-                  type="text"
-                  value=""
-                  v-model="filters.minSize"
-                  placeholder="최소면적을 입력해주세요"
-                />
-                <span>m<sub>2</sub></span
-                ><span>~</span>
-                <input
-                  type="text"
-                  value=""
-                  v-model="filters.maxSize"
-                  placeholder="최대면적을 입력해주세요"
-                />
-                <span>m<sub>2</sub></span>
+                <input type="text" value v-model="filters.minSize" placeholder="최소면적을 입력해주세요" />
+                <span>
+                  m
+                  <sub>2</sub>
+                </span>
+                <span>~</span>
+                <input type="text" value v-model="filters.maxSize" placeholder="최대면적을 입력해주세요" />
+                <span>
+                  m
+                  <sub>2</sub>
+                </span>
               </div>
               <hr />
 
@@ -108,13 +88,13 @@
               <div id="capaFilter" name="capaFilter">
                 <p>인원 규모로 찾기</p>
                 <i class="material-icons" id="icon_filter">accessibility</i>
-                <i class="material-icons" id="icon_capa1" @click="filters.capacity--"
-                  >exposure_neg_1</i
-                >
+                <i class="material-icons" id="icon_capa1" @click="filters.capacity--">exposure_neg_1</i>
                 <span>{{ filters.capacity }}명</span>
-                <i class="material-icons" id="icon_capa2" @click="filters.capacity++"
-                  >exposure_plus_1</i
-                >
+                <i
+                  class="material-icons"
+                  id="icon_capa2"
+                  @click="filters.capacity++"
+                >exposure_plus_1</i>
               </div>
               <hr />
 
@@ -122,19 +102,10 @@
               <div id="priceFilter" name="priceFilter">
                 <p>시간당 가격으로 찾기</p>
                 <i class="material-icons" id="icon_filter">attach_money</i>
-                <input
-                  type="text"
-                  value=""
-                  v-model="filters.minUnitPrice"
-                  placeholder="최소금액을 입력해주세요"
-                />
-                <span>원</span><span>~</span>
-                <input
-                  type="text"
-                  value=""
-                  v-model="filters.maxUnitPrice"
-                  placeholder="최대금액을 입력해주세요"
-                />
+                <input type="text" value v-model="filters.minUnitPrice" placeholder="최소금액을 입력해주세요" />
+                <span>원</span>
+                <span>~</span>
+                <input type="text" value v-model="filters.maxUnitPrice" placeholder="최대금액을 입력해주세요" />
                 <span>원</span>
               </div>
               <div id="filterBtn">
@@ -143,17 +114,13 @@
                   class="waves-effect waves-light btn-small"
                   id="initBtn"
                   @click="initFilter(2)"
-                >
-                  초기화
-                </button>
+                >초기화</button>
                 <!-- 적용 버튼 -->
                 <button
                   class="waves-effect waves-light btn-small"
                   id="applyBtn"
                   @click="setFilter"
-                >
-                  적용
-                </button>
+                >적용</button>
               </div>
             </div>
           </b-collapse>
@@ -164,7 +131,7 @@
     <div id="order">
       <!-- 정렬하기 위한 select 태그 -->
       <select name="orderCon" id="orderCon" @change="setFilter" v-model="filters.orderCon">
-        <option value="" disabled>정렬하기</option>
+        <option value disabled>정렬하기</option>
         <option value="1">인기순</option>
         <option value="2">가격순-내림차순</option>
         <option value="3">가격순-오름차순</option>
@@ -187,22 +154,39 @@
       >
         <!-- 이미지 출력 부분 -->
         <div class="card-image" id="studioImg">
-          <img
-            :src="getImgUrl(studio.mainImg)"
-            width="200em"
-            height="210.14em"
-          />
+          <img :src="getImgUrl(studio.mainImg)" width="200em" height="210.14em" />
         </div>
         <!-- 업체 간단 요약 부분 -->
         <div class="card-content" id="studioContent">
-          <div id="title">{{ studio.name }}</div>
+          <div class="container_name">
+            <div id="title">{{ studio.name }}</div>
+            <!-- 찜기능 부분 -->
+            <div id="regBM">
+              <img
+                src="@/assets/img/util/fullheart.svg"
+                width="20em"
+                height="24em"
+                @click.capture="setBookMark(1,studio.stuId,$event)"
+                v-if="studio.bookmark"
+              />
+              <img
+                src="@/assets/img/util/heart.svg"
+                width="20em"
+                height="24em"
+                @click.capture="setBookMark(0,studio.stuId,$event)"
+                v-else
+              />
+              <!-- <input type="hidden" :value="studio.stuId" v-model="stuId"/> -->
+            </div>
+          </div>
           <div id="nameAddr">
             {{ studio.category.categoryName }} /
             {{ studio.studioFilter.address | category }}
           </div>
           <div id="desc">{{ studio.description | shortenDesc }}</div>
           <div id="info">
-            {{ studio.studioFilter.unitPrice | currency }} 원/시간
+            {{ studio.studioFilter.unitPrice | currency }}
+            <span>원/시간</span>
           </div>
           <!-- 평점 및 리뷰 출력 부분 -->
           <div id="review">
@@ -259,17 +243,9 @@
                 <i class="material-icons" id="icon_filter">star</i>
               </span>
             </span>
-            <span v-if="studio.countReview == 0">
-              평가 없음
-            </span>
-            <span v-else> {{ studio.avgScore | demical }} 점 </span>
+            <span v-if="studio.countReview == 0">평가 없음</span>
+            <span v-else>{{ studio.avgScore | demical }} 점</span>
           </div>
-        </div>
-        <!-- 찜기능 부분 -->
-        <div id="regBM">
-          <img src="@/assets/img/util/fullheart.svg" width="20em" @click.capture="setBookMark(1,studio.stuId,$event)" v-if="studio.bookmark"/>
-          <img src="@/assets/img/util/heart.svg" width="20em" @click.capture="setBookMark(0,studio.stuId,$event)" v-else/>
-          <!-- <input type="hidden" :value="studio.stuId" v-model="stuId"/> -->
         </div>
       </div>
       <!-- 스크롤 내려서 더 검색할 때 동글뱅이 -->

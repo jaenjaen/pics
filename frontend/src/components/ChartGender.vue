@@ -7,10 +7,10 @@ export default {
   extends: Doughnut,
   data() {
     return {  
-      customers:[{
-        cust_id:0,
-        gender:''
-      }],
+      // customers:[{
+      //   cust_id:0,
+      //   gender:''
+      // }],
       datacollection: {
         //Data to be represented on x-axis
         labels: ['Female', 'Male'],
@@ -24,7 +24,7 @@ export default {
             pointBackgroundColor: 'white',
             pointBorderColor: '#249EBF',
             //Data to be represented on y-axis
-            data: this.getGender()
+            data: this.getGender
           
           }
         ]
@@ -57,31 +57,28 @@ export default {
   mounted() {
     //renderChart function renders the chart with the datacollection and options object.
     this.renderChart(this.datacollection, this.options)
-        axios
+   },
+  methods: {
+          getGender:function(){
+             axios
             .get("http://127.0.0.1:7777/studio/genderRatio/10")
             .then(response => {
               this.customers = response.data
               var customers = this.customers
               this.total=customers.length
               alert(this.total)//2
+              console.log("mounted는 넘긴 total: +"+this.total)
             })
-            .catch(error => {
-                console.log(error);
-                this.errored = true;
-            })
-            .finally(() => {
-                this.loading = false;
-            });
-  },methods: {
-          getGender(){
-            var female=0;
+            alert("메소드 들왔고만")
             for (var i =0; i <this.total; i++) {
-              alert("for문까지 왔고만")
               if (this.customers[i].gender=="F") { //여자 수만큼 세기
-                  female+=1;
+                  alert("if문까지 왔고만")
+                  this.female+=1;
               }
-          }return [female,this.total];
-      }
+            console.log("리턴 직전의 메서드 : +"+this.female,this.total)
+            return [this.female,this.total];
+          }
+          }
   },
 
 }

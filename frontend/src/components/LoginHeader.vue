@@ -1,4 +1,4 @@
-<style scoped src="../assets/css/LoginHeader.css"></style>
+<style scoped src="@/assets/css/login/LoginHeader.css"></style>
 <template>
   <div class="loginHeader">
     <ul class="loginSort">

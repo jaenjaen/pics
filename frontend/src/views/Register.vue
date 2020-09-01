@@ -7,8 +7,8 @@
 
 <script>
 // @ is an alias to /src
-import CustomerRegister from "@/components/CustomerRegister.vue";
-import CompanyRegister from "@/components/CompanyRegister.vue";
+import CustomerRegister from "@/components/peopleRegister/CustomerRegister.vue";
+import CompanyRegister from "@/components/peopleRegister/CompanyRegister.vue";
 
 export default {
   name: "Register",

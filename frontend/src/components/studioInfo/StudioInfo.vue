@@ -54,8 +54,8 @@
         <!-- 찜하기, 공유하기, 누적 이용자 수 -->
         <span>
         <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-          <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
-          <img src="../assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt />
+          <img src="@/assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
+          <img src="@/assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt />
           <i class="material-icons"></i>
         </button>
         </span>
@@ -199,7 +199,7 @@
   </div>
 </template>
 
-<script scoped src="../assets/js/StudioInfo.js"></script>
+<script scoped src="@/assets/js/StudioInfo.js"></script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");

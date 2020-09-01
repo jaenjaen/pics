@@ -151,7 +151,7 @@
     </aside>
   </div>
 </template>
-<script scoped src="../assets/js/Reservation.js"></script>
+<script scoped src="@/assets/js/Reservation.js"></script>
 
 <style scoped>
 .container {

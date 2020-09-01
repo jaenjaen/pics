@@ -1,7 +1,17 @@
 import axios from "axios"; //axios
 import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
-
+// import Vue from "vue";
+// import Vuetify from "vuetify/lib";
+// import Chart from 'chart.js'
+// import genderChartData from "../assets/js/Chart.js"
+// Vue.use(Vuetify);
+// const ctx = document.getElementById('doughnut-chart-area');
+// const genderChart = new Chart(ctx, {
+//     type: '',
+//     data: [],
+//     potions: {}
+// });
 export default {
     name: "studio-info",
     components: { carousel },
@@ -44,7 +54,10 @@ export default {
 
             // 상태 체크 변수
             loading: true,
-            errored: false
+            errored: false,
+
+            //Chart & Graph 데이터
+            // genderChartData: genderChartData,
         };
     },
     mounted() {
@@ -124,20 +137,28 @@ export default {
                     })
                     .finally(() => (this.loading = false));
                 alert(this.bookmarkCheck + "찜 목록에 등록했습니다.")
-                    // axios //새로 등록한 북마크id 부여
-                    // .get("http://127.0.0.1:7777/studio/getBookmark/3/10")
-                    // .then(response => {
-                    //     this.bookmarkCheck = response.data
+                axios //새로 등록한 북마크id 부여
+                    .get("http://127.0.0.1:7777/studio/getBookmark/3/10")
+                    .then(response => {
+                        this.bookmarkCheck = response.data
 
-                // })
-                // .catch(error => {
-                //     console.log(error);
-                //     this.errored = true;
-                // })
-                // .finally(() => (this.loading = false));
-
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true;
+                    })
+                    .finally(() => (this.loading = false));
             }
         },
+        // creatChart(chartId, chartData) {
+        //     const ctx = document.getElementById(charId)
+        //     const genderChart = new Chart(ctx, {
+        //         type: chartData.type,
+        //         data: chartData.data,
+        //         options: chartData.options,
+        //     });
+        // },
+
         // kakaoShare() {
         //     Kakao.init('91cbdca7243fe89cb44e5d61a5aaaf44');
         //     Kakao.Link.sendDefault({

@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Main from "../components/Main.vue";
+import Main from "../components/main/Main.vue";
 import StudioSearch from "../components/StudioSearch.vue";
 import CustomerLogin from "../views/login/CustomerLogin.vue";
 import CompanyLogin from "../views/login/CompanyLogin.vue";

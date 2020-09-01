@@ -14,7 +14,6 @@
         "bootstrap-vue": "^2.16.0",
         "calendarpickerjs": "^1.2.0",
         "chart.js": "^2.9.3",
-        "chartjs": "^0.3.24",
         "core-js": "^3.6.5",
         "date-fns": "^2.16.1",
         "jquery": "^3.5.1",

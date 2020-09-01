@@ -12,18 +12,8 @@ import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
 // import Map from "../components/Map.vue";
-<<
-<<
-<< < HEAD
-    ===
-    ===
-    =
-    import Test from "../components/Test.vue";
+// import Test from "../components/Test.vue";
 import ChartGender from "../components/ChartGender.vue";
-
->>>
->>>
-> origin / ice
 
 Vue.use(VueRouter);
 const routes = [{

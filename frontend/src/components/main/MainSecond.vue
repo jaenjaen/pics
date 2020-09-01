@@ -8,14 +8,22 @@
     </div>
     <!-- 캐라셀 -->
     <div class="mainsecond_carousel">
-      <carousel :items="4" :margin="5" :loop="true" :nav="false">
+      <carousel
+        v-if="studio_infos && studio_infos.length"
+        :items="4"
+        :margin="5"
+        :loop="true"
+        :nav="false"
+      >
         <a href v-for="(studio,index) in studio_infos" :key="index">
           <div class="row">
             <div class="card">
               <div class="card-image">
                 <img :src="getImgUrl(studio.mainImg)" />
               </div>
-              <div class="card-content"></div>
+              <div class="card-content">
+                <div class="item">{{studio.name}}</div>
+              </div>
             </div>
           </div>
         </a>

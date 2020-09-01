@@ -1,4 +1,4 @@
-<style scoped src="@/assets/css/RegisterStudio.css"></style>
+<style scoped src="@/assets/css/studioRegister/RegisterStudio.css"></style>
 <template>
   <div id="app">
     <div class="container">
@@ -144,7 +144,16 @@
             <div class="outContainer">
               <label class="inContent">층</label>
               <div class="outContainer">
+                <label id="sizeLabel">
+                </label>
+              </div>
+              <div class="outContainer">
               <label id="sizeLabel">
+                <toggle-button :value="true"
+                              :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
+                              :labels="{checked: '지상', unchecked: '지하'}"
+                              v-model="sizeUnit"
+                              @change="changeSizeUnit(sizeUnit)"/>
               </label>
             </div>
             </div>
@@ -582,4 +591,4 @@
     </div>
   </div>
 </template>
-<script scoped src="@/assets/js/RegisterStudio.js"></script>
+<script scoped src="@/assets/js/studioRegister/RegisterStudio.js"></script>

@@ -1,4 +1,4 @@
-<style scoped src="../assets/css/RegisterStudio.css"></style>
+<style scoped src="@/assets/css/studioRegister/RegisterStudio.css"></style>
 <template>
   <div class="container" id="reserveStudio">
     <aside v-for="(studio, index) in studios" v-bind:key="index">

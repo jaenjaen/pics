@@ -12,6 +12,8 @@ import StudioInfo from "../components/StudioInfo.vue";
 import Mypage from "../views/Mypage.vue";
 import WishList from "../views/WishList.vue";
 // import Map from "../components/Map.vue";
+// import Test from "../components/Test.vue";
+import ChartGender from "../components/ChartGender.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -60,11 +62,17 @@ const routes = [{
         component: Reservation
     },
     {
+
         path: "/studioInfo/:stuId",
         name: "studioInfo",
         component: StudioInfo,
         props: true
-    }
+    }, {
+        path: "/chartgender",
+        name: "chartgender",
+        component: ChartGender
+    },
+
     // {
     //     path: "/Map",
     //     name: "Map",

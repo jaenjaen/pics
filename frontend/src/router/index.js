@@ -6,7 +6,7 @@ import CustomerLogin from "../views/login/CustomerLogin.vue";
 import CompanyLogin from "../views/login/CompanyLogin.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
-import RegisterSuccess from "@/components/studioRegister/RegisterSuccess.vue";
+import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
 import Register from "../views/Register.vue";
 import Reservation from "../components/Reservation.vue";
 import StudioInfo from "../components/StudioInfo.vue";
@@ -43,9 +43,9 @@ const routes = [{
         name: "registerStudio",
         component: RegisterStudio
     }, {
-        path: "/registerSuccess",
-        name: "registerSuccess",
-        component: RegisterSuccess
+        path: "/registerStudioSuccess",
+        name: "registerStudioSuccess",
+        component: RegisterStudioSuccess
     }, {
         path: "/register",
         name: "register",

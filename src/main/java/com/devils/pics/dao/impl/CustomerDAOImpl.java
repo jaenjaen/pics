@@ -20,8 +20,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public Customer getCustomer(String custId) throws Exception {
-		return session.selectOne(ns+"getCustomer",custId);
+	public Customer getCustomer(String apiId) throws Exception {
+		return session.selectOne(ns+"getCustomer",apiId);
 	}
 
 	@Override

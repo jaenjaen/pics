@@ -49,13 +49,14 @@ let onSuccessKakao = data => {
           }
         })
         .then(res => {
+          console.log(res.data);
           if (res.data == "") {
             console.log(this.apiData);
             sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
-            location.href = "http://localhost:9999/register";
+            //location.href = "http://localhost:9999/register";
           } else {
             sessionStorage.setItem("customer", JSON.stringify(res.data));
-            location.href = "http://localhost:9999";
+            //location.href = "http://localhost:9999";
           }
         })
         .catch(err => {

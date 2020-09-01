@@ -4,7 +4,7 @@ public class Customer {
 	private int custId;
 	private int apiId;
 	private String nickname;
-	private char gender;
+	private String gender;
 	private int age;
 	private String job;
 	private String funnel;
@@ -15,13 +15,8 @@ public class Customer {
 	
 	public Customer() {}
 	
-	public Customer(int custId) {
-		this.custId = custId;
-	}
-	
-	public Customer(int custId, int apiId, String nickname, char gender, int age, String job, String funnel,
+	public Customer(int custId, int apiId, String nickname, String gender, int age, String job, String funnel,
 			String email, String tel, String apiKey, String imgSrc) {
-		super();
 		this.custId = custId;
 		this.apiId = apiId;
 		this.nickname = nickname;
@@ -34,13 +29,7 @@ public class Customer {
 		this.apiKey = apiKey;
 		this.imgSrc = imgSrc;
 	}
-	public Customer(int custId,char gender, int age, String job, String funnel) {
-		this.custId = custId;
-		this.gender = gender;
-		this.age = age;
-		this.job = job;
-		this.funnel = funnel;
-	}
+	
 	public int getCustId() {
 		return custId;
 	}
@@ -65,11 +54,11 @@ public class Customer {
 		this.nickname = nickname;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

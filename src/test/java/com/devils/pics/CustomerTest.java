@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.devils.pics.domain.Customer;
+
 @SpringBootTest
 public class CustomerTest {
 
@@ -29,6 +31,7 @@ public class CustomerTest {
 //		System.out.println(cust);
 		
 		//sqlSession.update(ns+"updateCustomer",c);
-		sqlSession.delete(ns+"deleteCustomer",6);
+		Customer cust = sqlSession.selectOne(ns+"getCustomer","1463176461");
+		System.out.println(cust);
 	}
 }

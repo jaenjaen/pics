@@ -1,7 +1,7 @@
 <template>
   <div class="publicSpace">
-    <CompanyMypage />
-    <CustomerMypage />
+    <CompanyMypage v-if="falg"/>
+    <CustomerMypage v-if="!falg"/>
     
   </div>
 </template>

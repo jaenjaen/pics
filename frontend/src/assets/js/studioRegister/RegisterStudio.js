@@ -822,13 +822,18 @@ export default {
 
             /* 파일 업로드 */
             let formData = new FormData();
-            for (var i = 0; i < this.$refs.file.files.length; i++) {
-                let file = this.$refs.file.files[i];
+            var files = document.querySelector('#portFile1');
+            console.log("객체 : " + files);
+            console.log("파일길이 : " +
+                files.length);
+            for (var i = 0; i < files.length; i++) {
+                let file = files[i];
                 console.log(file);
                 formData.append('files[' + i + ']', file);
             }
             axios.post('http://127.0.0.1:7777/imageUpload', formData, {
                     headers: {
+                        'Accept': 'application/json',
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then(function(response) {

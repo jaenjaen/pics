@@ -5,7 +5,7 @@
         <div class="nav-wrapper">
           <a href="#">
             <img
-              src="../assets/img/header_bottom/pics_logo.svg"
+              src="../../assets/img/header_bottom/pics_logo.svg"
               alt="pics"
               class="brand-logo center"
               id="pics_logo"
@@ -13,7 +13,7 @@
           </a>
           <a href="#" @click.prevent="moveToSearch">
             <img
-              src="../assets/img/header_bottom/search_icon.svg"
+              src="../../assets/img/header_bottom/search_icon.svg"
               class="right"
               id="search_icon"
             />
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Bottom from "@/components/Bottom.vue";
+import Bottom from "@/components/main/Bottom.vue";
 export default {
   name: "pics-bottom",
   components: {

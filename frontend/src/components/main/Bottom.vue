@@ -3,19 +3,19 @@
     <div class="container_bottom">
       <div class="item_bottom">
         <router-link to="/wishlist">
-          <img src="../assets/img/header_bottom/marking.svg" alt />
+          <img src="../../assets/img/header_bottom/marking.svg" alt />
           <p>찜</p>
         </router-link>
       </div>
       <div class="item_bottom">
         <router-link to="/">
-          <img src="../assets/img/header_bottom/logo_symbol.svg" alt />
+          <img src="../../assets/img/header_bottom/logo_symbol.svg" alt />
           <p>홈</p>
         </router-link>
       </div>
       <div class="item_bottom">
         <router-link to="/mypage">
-          <img src="../assets/img/header_bottom/mypage.svg" alt />
+          <img src="../../assets/img/header_bottom/mypage.svg" alt />
           <p>MY PICS</p>
         </router-link>
       </div>
@@ -25,7 +25,7 @@
 
 <script></script>
 
-<style scoped src="../assets/css/remove_css.css" />
+<style scoped src="../../assets/css/remove_css.css" />
 
 <style scoped>
 .bottom {

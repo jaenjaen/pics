@@ -9,39 +9,13 @@
     <!-- 캐라셀 -->
     <div class="mainsecond_carousel">
       <carousel :items="4" :margin="5" :loop="true" :nav="false">
-        <a href>
+        <a href v-for="(studio,index) in studio_infos" :key="index">
           <div class="row">
             <div class="card">
               <div class="card-image">
-                <img src="../assets/img/studio/1_스튜디오.jpg" />
+                <img :src="getImgUrl(studio.mainImg)" />
               </div>
-              <div class="card-content">
-                <p>example</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href>
-          <div class="row">
-            <div class="card">
-              <div class="card-image">
-                <img src="../assets/img/studio/2_스튜디오.jpg" />
-              </div>
-              <div class="card-content">
-                <p>example</p>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href>
-          <div class="row">
-            <div class="card">
-              <div class="card-image">
-                <img src="../assets/img/studio/3_스튜디오.jpg" />
-              </div>
-              <div class="card-content">
-                <p>example</p>
-              </div>
+              <div class="card-content"></div>
             </div>
           </div>
         </a>
@@ -51,13 +25,35 @@
 </template>
 
 <script>
+import axios from "axios";
 import carousel from "vue-owl-carousel";
 export default {
-  components: { carousel }
+  components: { carousel },
+  data() {
+    return {
+      studio_infos: []
+    };
+  },
+  mounted() {
+    axios
+      .get("http://127.0.0.1:7777/studio/search")
+      .then(response => (this.studio_infos = response.data))
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      })
+      .finally(() => (this.loading = false));
+  },
+  methods: {
+    // 이미지 경로
+    getImgUrl(url) {
+      return require("@/assets/img/studio/" + url);
+    }
+  }
 };
 </script>
 
-<style scoped src="../assets/css/remove_css.css">
+<style scoped src="../../assets/css/remove_css.css">
 </style>
 <style scoped src="materialize-css/dist/css/materialize.min.css">
 </style>
@@ -84,6 +80,9 @@ export default {
 .mainsecond_carousel {
   width: 730px;
   margin: 0 auto;
+}
+.input_info {
+  width: 120px;
 }
 img {
   width: 120px;

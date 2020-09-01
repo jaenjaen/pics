@@ -1,8 +1,12 @@
 package com.devils.pics.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,9 +14,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.devils.pics.domain.Category;
+import com.devils.pics.domain.Company;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
@@ -20,12 +27,14 @@ import com.devils.pics.domain.Tag;
 import com.devils.pics.service.ScheduleService;
 import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.service.StudioInfoService;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
 public class StudioRegisterController {
 
+	String path;
+	String comId;
+	
 	@Autowired
 	private ScheduleService scheduleService;
 	
@@ -34,6 +43,35 @@ public class StudioRegisterController {
 	
 	@Autowired
 	private StudioInfoService studioInfoService;
+	
+	@PostMapping("/imageUpload")
+	public ResponseEntity uploadImage(@RequestBody List<MultipartFile> files, HttpServletRequest request, HttpServletResponse response) {
+		String[] nameList = new String[files.size()]; //파일 이름
+		
+		String root = request.getSession().getServletContext().getRealPath("/");
+		path = root+"\\frontend\\src\\assets\\img\\upload\\"; //파일 경로
+
+		int count = 0;
+		for(MultipartFile file : files) {
+			System.out.println("파일의 사이즈 :: "+file.getSize());
+			System.out.println("업로드된 파일명 :: "+file.getOriginalFilename());
+			System.out.println("파일의 파라미터명 :: "+file.getName());
+			
+			String filename = file.getOriginalFilename();
+			nameList[count++] = filename;
+			
+			try {
+				file.transferTo(new File(path+filename));
+			} catch (IllegalStateException e) {
+				//e.printStackTrace();
+			} catch (IOException e) {
+				//e.printStackTrace();
+			} 
+		}
+		
+		if(nameList==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+		else return new ResponseEntity(nameList, HttpStatus.OK);
+	}
 	
 	@PostMapping("/studio")
 	public ResponseEntity registerStudio(@RequestBody Studio studio) {
@@ -47,7 +85,7 @@ public class StudioRegisterController {
 			/* 세션으로부터 회사 아이디를 받아와서 Studio에 Set */
 			//String comId = (String)httpSession.getAttribute("comId");
 			
-			String comId = "11@sample.com";
+			comId = "11@sample.com";
 			System.out.println("회사 아이디 : "+ comId);
 			studio.setComId(comId);
 			

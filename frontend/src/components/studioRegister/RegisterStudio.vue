@@ -141,23 +141,17 @@
             <label for="floor">층수</label>
           </div>
           <div class="col-25">
+            <label class="inContent">층</label>
             <div class="outContainer">
-              <label class="inContent">층</label>
-              <div class="outContainer">
                 <label id="sizeLabel">
-                </label>
-              </div>
-              <div class="outContainer">
-              <label id="sizeLabel">
-                <toggle-button :value="true"
+                  <toggle-button :value="true"
                               :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
                               :labels="{checked: '지상', unchecked: '지하'}"
-                              v-model="sizeUnit"
-                              @change="changeSizeUnit(sizeUnit)"/>
-              </label>
+                              v-model="floorUnit"
+                              @change="changeFloor(floorUnit)"/>
+                </label>
             </div>
-            </div>
-            <input type="text" id="floor" name="floor" v-model="studio.floor" />
+            <input type="text" id="floor" name="floor" />
           </div>
           <div class="col-25 col-space">
             <label for="size">면적</label>

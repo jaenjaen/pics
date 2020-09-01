@@ -7,7 +7,7 @@
         </td>
         <td class="userName">{{username}}</td>
         <td rowspan="2" id="userHeart" v-bind:class="{ 'is-active': customerMode }">
-          <a href="http://localhost:9999/wishlist" ><img src="@/assets/img/common/redheart.svg" width="20px" height="20px"></a>
+          <a href="http://localhost:9999/wishlist" ><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px"></a>
         </td>
       </tr>
       <tr>

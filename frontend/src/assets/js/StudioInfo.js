@@ -1,17 +1,7 @@
 import axios from "axios"; //axios
 import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
-// import Vue from "vue";
-// import Vuetify from "vuetify/lib";
-// import Chart from 'chart.js'
-// import genderChartData from "../assets/js/Chart.js"
-// Vue.use(Vuetify);
-// const ctx = document.getElementById('doughnut-chart-area');
-// const genderChart = new Chart(ctx, {
-//     type: '',
-//     data: [],
-//     potions: {}
-// });
+
 export default {
     name: "studio-info",
     components: { carousel },
@@ -57,7 +47,7 @@ export default {
             errored: false,
 
             //Chart & Graph 데이터
-            // genderChartData: genderChartData,
+            datacollection: null
         };
     },
     mounted() {
@@ -101,13 +91,13 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
+        this.fillData()
     },
     methods: {
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },
         bookmarkChange() {
-            // alert(this.bookmarkCheck)
             if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
                 axios
                     .delete("http://127.0.0.1:7777/bookmark/" + this.bookmarkCheck)
@@ -150,6 +140,23 @@ export default {
                     .finally(() => (this.loading = false));
             }
         },
+        fillData() {
+            this.datacollection = {
+                labels: [this.getRandomInt(), this.getRandomInt()],
+                datasets: [{
+                    label: 'Data One',
+                    backgroundColor: '#f87979',
+                    data: [this.getRandomInt(), this.getRandomInt()]
+                }, {
+                    label: 'Data One',
+                    backgroundColor: '#f87979',
+                    data: [this.getRandomInt(), this.getRandomInt()]
+                }]
+            }
+        },
+        getRandomInt() {
+            return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+        }
         // creatChart(chartId, chartData) {
         //     const ctx = document.getElementById(charId)
         //     const genderChart = new Chart(ctx, {

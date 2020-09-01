@@ -3,7 +3,7 @@
   <div class="container">
       <!-- ==============  메인 이미지 : carousel ============== -->
       <header id="main-images-section">
-        <div class="row" v-for="(studio,index) in studios" v-bind:key="index">     
+        <div class="row" v-for="(studio,index) in studios" v-bind:key="index">
           <carousel :itmes="1" :loop="true" :autoplay="true" >
             <div>
                <img  class="item" data-merge="3" :src="imgUrl(studio.mainImg)" width="100%" height="500"/>
@@ -29,76 +29,42 @@
         </nav>
        <hr/>
 
-      
-       <!-- ============== Title ==============  --> 
-        <!-- <div class="article-title-area" v-for="(studio,index) in studios" v-bind:key="index">
-         <table>
-          <tr>
-          <td><h2> {{ studio.name }}</h2></td>
-          <td>
-            
-            <span>
-            <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-              찜
-               <img src="../assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt /> 
-              <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
-            </button>
-            </span>
-            <span>
-            <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-              <i class="material-icons">share</i>
-               <img @click="kakaoShare" src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="30"/> 
-            </a>
-            </span>
-           </td>
-          </tr>
-          </table>
-          <span class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
-            <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
-          </span>
 
-         <div id="company-of-studio"> 
-               <span>{{studio.company.name}}</span>
-               <img :src="imgUrl(studio.company.logoImg)"/>
-          </div>
-         
-          <span>
-          {{this.accCustomer}}명
-          </span>
- 
-        </div>        
-        <hr> -->
-      <section align="left">
+    <section align="left">
         <!-- 태그 -->
-        <div class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
-          <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
-        </div>
+      <div>
+        <spand class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
+            <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
+          </spand>
+      </div>
+      <br>
         <!-- 타이틀 -->
-        <div class="article-title-area" v-for="(studio,index) in studios" v-bind:key="index">
-          <div class="studio-name"> 
-           <strong> {{ studio.name }}</strong>
-          </div><br><br>
-
-          <div id="company-of-studio"> 
-               <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="20px" height="20px"/></span> -->
-               <span>{{studio.company.name}}</span>
+      <div class="article-title-area" v-for="(studio,index) in studios" v-bind:key="index">
+        <div class="studio-name">
+          <h2> {{ studio.name }}</h2>
+        </div><br>
+`
+        <div id="company-of-studio">
+              <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="20px" height="20px"/></span> -->
+              <span>{{studio.company.name}}</span>
           </div>
         </div> 
-
+        <br>
         <div>
         <!-- 찜하기, 공유하기, 누적 이용자 수 -->
-          <span>
-          <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-            찜
-            <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
-          </button>
-          </span>
-          <span>
-          <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-            <i class="material-icons">share</i>
-              <img @click="kakaoShare" src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="30"/> 
-          </a>
-          </span>
+        <span>
+        <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
+          <img src="../assets/img/header_bottom/marking.svg" v-if!="bookmarkCheck" alt />
+          <img src="../assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt />
+          <i class="material-icons"></i>
+        </button>
+        </span>
+        <span>
+        <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
+          <i class="material-icons">share</i>
+            <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="30"/> 
+        </a> -->
+        </span>
 
           <!-- 누적 이용자 수 -->
           <span>
@@ -106,7 +72,7 @@
           </span>
         </div>        
       </section>
-
+      <hr/>  
         <!-- ============== Studio Filter ============== -->
       <article>
         <div class="article-Filterstudiormation-map-area" >
@@ -138,17 +104,19 @@
                 </tr>
               </table>
             </div>
-
           </div>
+          
           <!-- ============== Map ============== -->
           <div id="map">
 
           </div>
         </div>
-        <hr />
+
         <!-- ============== Description ============== -->
+             
         <div class="article-Description-area"  v-for="(studio,index) in studios" v-bind:key="index">
-          <div>
+           <hr/>  
+          <div class="studio-rule">
           <h4>Studio 이용 수칙</h4>
           <p>{{ studio.rule }}</p>
           </div>
@@ -161,7 +129,7 @@
         <hr>
         <!-- ============== Portfolio Images ============== -->
         <table aligh="center" width="100%" height="100px">
-        <tr class="article-portfolio-area"  v-for="(studio,index) in studios" v-bind:key="index">   
+        <tr class="article-portfolio-area"  v-for="(studio,index) in studios" v-bind:key="index">
           <td style="list-style-type:none"><img :src="imgUrl(studio.portImg)" width="80%" height="400px"/></td><br>
         </tr>       
         </table>
@@ -232,3 +200,67 @@
 </template>
 
 <script scoped src="../assets/js/StudioInfo.js"></script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
+.container {
+    width: 768px;
+    margin: auto 3em 0 10em 0;
+}
+
+#main-images-section {
+    width: 100%;
+    margin: auto;
+}
+
+.tag-list {
+    padding: 3px;
+}
+
+.tabs-field {
+    width: 100%;
+    height: 50;
+}
+
+.nav-tab {
+    margin: 20%;
+    list-style-type: none;
+    display: inline;
+}
+
+article {
+    width: 100%;
+    float: left;
+    
+    margin-bottom: 10em;
+}
+
+#Studio-Filter-Table {
+    float:left;
+    width: 50%;
+    border-top: 2px solid #5a5a5a;
+    border-collapse: collapse;
+}
+
+#Studio-Filter-Table td {
+    text-align: right;
+    border-bottom: 1.5px solid #bbb5b5;
+    padding: 10px;
+}
+
+#map {
+    float:left;
+    margin-left: 5%;
+    width: 40%;
+    height: 40%;
+    border: 1px solid green;
+}
+.article-Description-area{
+  clear: both;
+  text-align: left;
+}
+
+.tagBtn {
+    display: inline;
+}
+</style>>

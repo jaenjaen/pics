@@ -44,7 +44,10 @@ export default {
 
             // 상태 체크 변수
             loading: true,
-            errored: false
+            errored: false,
+
+            //Chart & Graph 데이터
+            datacollection: null
         };
     },
     mounted() {
@@ -88,13 +91,13 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
+        this.fillData()
     },
     methods: {
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },
         bookmarkChange() {
-            // alert(this.bookmarkCheck)
             if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
                 axios
                     .delete("http://127.0.0.1:7777/bookmark/" + this.bookmarkCheck)
@@ -124,20 +127,45 @@ export default {
                     })
                     .finally(() => (this.loading = false));
                 alert(this.bookmarkCheck + "찜 목록에 등록했습니다.")
-                    // axios //새로 등록한 북마크id 부여
-                    // .get("http://127.0.0.1:7777/studio/getBookmark/3/10")
-                    // .then(response => {
-                    //     this.bookmarkCheck = response.data
+                axios //새로 등록한 북마크id 부여
+                    .get("http://127.0.0.1:7777/studio/getBookmark/3/10")
+                    .then(response => {
+                        this.bookmarkCheck = response.data
 
-                // })
-                // .catch(error => {
-                //     console.log(error);
-                //     this.errored = true;
-                // })
-                // .finally(() => (this.loading = false));
-
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true;
+                    })
+                    .finally(() => (this.loading = false));
             }
         },
+        fillData() {
+            this.datacollection = {
+                labels: [this.getRandomInt(), this.getRandomInt()],
+                datasets: [{
+                    label: 'Data One',
+                    backgroundColor: '#f87979',
+                    data: [this.getRandomInt(), this.getRandomInt()]
+                }, {
+                    label: 'Data One',
+                    backgroundColor: '#f87979',
+                    data: [this.getRandomInt(), this.getRandomInt()]
+                }]
+            }
+        },
+        getRandomInt() {
+            return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+        }
+        // creatChart(chartId, chartData) {
+        //     const ctx = document.getElementById(charId)
+        //     const genderChart = new Chart(ctx, {
+        //         type: chartData.type,
+        //         data: chartData.data,
+        //         options: chartData.options,
+        //     });
+        // },
+
         // kakaoShare() {
         //     Kakao.init('91cbdca7243fe89cb44e5d61a5aaaf44');
         //     Kakao.Link.sendDefault({

@@ -10,24 +10,38 @@
     margin: auto;
 }
 
+.tag-list {
+    padding: 3px;
+}
+
 .tabs-field {
     width: 100%;
     height: 50;
 }
 
-
-/* 
 .nav-tab {
     margin: 20%;
     list-style-type: none;
     display: inline;
-} */
+}
 
 article {
     width: 100%;
     float: left;
     border: 1px solid gray;
     margin-bottom: 10em;
+}
+
+#Studio-Filter-Table {
+    width: 30%;
+    border-top: 1px solid #444444;
+    border-collapse: collapse;
+}
+
+#Studio-Filter-Table td {
+    text-align: right;
+    border-bottom: 1px solid #444444;
+    padding: 10px;
 }
 
 #map {

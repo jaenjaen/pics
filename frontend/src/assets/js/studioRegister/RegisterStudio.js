@@ -73,6 +73,8 @@ export default {
                 roadname: ""
             },
             addressDetail: "",
+            /* 지상/지하 */
+            floorUnit: true,
             /* 면적 */
             sizeInput: "",
             sizeUnit: true,
@@ -176,6 +178,18 @@ export default {
                 address2.focus();
                 searchAddr.style.display = "block";
                 closeAddr.style.display = "none";
+            }
+        },
+        /* 층수 - 지상과 지하로 전환하고, DB에는 지하일 경우 음수로 보냄 */
+        changeFloor(value) {
+            let floor = document.getElementById('floor').value;
+            if (value == true) { //지상
+                this.studio.floor = floor;
+                this.floorUnit = false;
+            }
+            if (value == false) { //지하
+                this.studio.floor = floor * (-1);
+                this.floorUnit = true;
             }
         },
 
@@ -751,6 +765,10 @@ export default {
                 return false;
             } else {
                 this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
+            }
+            /* 지상/지하 토글 버튼 안 눌러서 바인딩 안 된 경우 바인딩 */
+            if (this.studio.floor == "") {
+                this.studio.floor = document.getElementById('floor').value;
             }
 
             /* 면적 단위 토글 버튼 안 눌러서 바인딩 안 된 경우 바인딩 */

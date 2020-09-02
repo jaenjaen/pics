@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,8 +30,8 @@ public class StudioRegisterController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 	
-	@PostMapping("/studio")
-	public ResponseEntity registerStudio(@RequestBody Studio studio) {
+	@PostMapping("/studio/{comId}")
+	public ResponseEntity registerStudio(@RequestBody Studio studio, @PathVariable String comId) {
 		System.out.println("받아온 폼값 : "+studio);
 		
 		StudioFilter studioFilter = studio.getStudioFilter();
@@ -41,7 +42,6 @@ public class StudioRegisterController {
 			/* 세션으로부터 회사 아이디를 받아와서 Studio에 Set */
 			//String comId = (String)httpSession.getAttribute("comId");
 			
-			comId = "11@sample.com";
 			System.out.println("회사 아이디 : "+ comId);
 			studio.setComId(comId);
 			

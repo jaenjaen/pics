@@ -13,6 +13,7 @@ export default {
         return {
             /* Back으로 보낼 studio 데이터 */
             studio: {
+                comId: "",
                 categoryId: "",
                 name: "",
                 description: "",
@@ -123,11 +124,18 @@ export default {
         /* 기업고객일 경우에만 스튜디오 등록 화면 볼 수 있고, 
                아닌 경우에는 기업고객 로그인 페이지로 이동 */
         var company = sessionStorage.getItem("company");
-        console.log(company);
         if (company === null) {
             alert("기업고객으로 로그인하세요.");
             location.href = "/companyLogin"
+        } else {
+            /* sessionStorage에 있는 company가 string이므로 split 하여
+            comId만 따로 뽑아내서 데이터 바인딩함 */
+            var comArr = company.split(",")[0].split(":");
+            var str = comArr[1];
+            this.comId = str.substring(1, str.length - 1);
+            console.log(this.comId); //뽑아낸 comId
         }
+
     },
     methods: {
         /* 파일 업로드 화면단 처리 */
@@ -850,7 +858,7 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/main', formData, {
+            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -873,7 +881,7 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://127.0.0.1:7777/fileUpload/cad', formData, {
+            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -898,7 +906,7 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/port', formData, {
+            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -917,11 +925,11 @@ export default {
 
         /* 스튜디오 등록 */
         addStudio() {
-            axios.post("http://127.0.0.1:7777/studio", this.studio).then(
+            axios.post("http://127.0.0.1:7777/studio/" + this.comId, this.studio).then(
                 function(response) {
                     console.log(response.data);
                     alert(`등록되셨습니다.`);
-                    location.href = "registerStudioSuccess";
+                    //location.href = "registerStudioSuccess";
                 },
                 function() {
                     console.log("failed");

@@ -7,40 +7,30 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.devils.pics.domain.Company;
+
 
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
 public class FileController {
 	
-	/* 업로드한 파일의 경로를 가지고 감 */
-	@GetMapping("/getPath/{subPath}")
-	public ResponseEntity getPath(@PathVariable String subPath,
-										HttpSession session) {
-		String root = session.getServletContext().getRealPath("/");
-		String path = root + "upload\\" + subPath + "\\";
-		return new ResponseEntity(path, HttpStatus.OK);
-	}
-	
 	/* 싱글 파일 업로드 */
-	@PostMapping("/fileUpload/{subPath}")
+	@PostMapping("/fileUpload/{subPath}/{comId}")
 	public ResponseEntity uploadImage(@RequestBody MultipartFile file, 
-									@PathVariable String subPath, 
+									@PathVariable String subPath, @PathVariable String comId,
 									HttpServletRequest request) {		
 		/* 업체 아이디 받아오기 */
-		String comId = "11@sample.com";
+		System.out.println("업체 아이디 : " + comId);
 		
 		String fileName = ""; //화면으로 보낼 파일의 이름들
 		
@@ -75,14 +65,12 @@ public class FileController {
 	}
 	
 	/* 멀티 파일 업로드 */
-	@PostMapping("/filesUpload/{subPath}")
+	@PostMapping("/filesUpload/{subPath}/{comId}")
 	public ResponseEntity uploadImages(@RequestBody List<MultipartFile> files, 
-									@PathVariable String subPath, 
+									@PathVariable String subPath, @PathVariable String comId,
 									HttpServletRequest request) {
 		/* 업체 아이디 받아오기 */
-		String comId = "11@sample.com";
-		
-		System.out.println();
+		System.out.println("업체 아이디 : " + comId);
 		
 		String fileNames = ""; //화면으로 보낼 파일의 이름들
 		

@@ -1,7 +1,7 @@
 <template>
   <div class="gap">
     <span clss="categroy_name"> 
-    <a :href="cateogryURL"> {{categoryName}} ></a>
+    <a :href="cateogryURL"> {{categoryName}}</a>
     </span>
   </div>
 </template>

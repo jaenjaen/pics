@@ -12,7 +12,7 @@
       </tr>
       <tr>
         <td class="userDetail">
-          <a href="#">내 정보 수정 ></a>
+          <router-link to="/edit">내 정보 수정 ></router-link>
         </td>
       </tr>
     </table>

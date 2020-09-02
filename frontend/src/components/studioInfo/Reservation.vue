@@ -1,4 +1,4 @@
-<style scoped src="@/assets/css/studioRegister/RegisterStudio.css"></style>
+
 <template>
   <div class="container" id="reserveStudio">
     <aside v-for="(studio, index) in studios" v-bind:key="index">
@@ -156,21 +156,19 @@
 <style scoped>
 .container {
   width: 768px;
-  margin: auto 2em 0 10em 0;
+  
 }
 aside {
-  width: 35%;
   margin-left: 5%;
-  float: left;
   border: 1px solid ffff;
 }
 #reservation-floating-banner {
   background-color: #ffff;
-  box-shadow: 5px 9px rgb(196, 194, 194);
-  position: absolute;
-  width: 25%;
+  /* box-shadow: 5px 9px rgb(196, 194, 194); */
+  /* position: absolute; */
+  width: 100%;
   padding: 3px 10px;
   border-radius: 10px;
-  margin: 10em 10em 10em 10em;
+  
 }
 </style>

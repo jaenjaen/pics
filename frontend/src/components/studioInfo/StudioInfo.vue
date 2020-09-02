@@ -7,14 +7,8 @@
           <carousel :itmes="1" :loop="true" :autoplay="true" >
             <div>
                <img  class="item" data-merge="3" :src="imgUrl(studio.mainImg)" width="100%" height="500"/>
-           </div>
-           <!-- <div>
-               <img  class="item" data-merge="3" :src="imgUrl(studio.portImg)" width="100%" height="500"/>
-           </div>
-           <div>
-               <img  class="item" data-merge="3" :src="imgUrl(studio.mainImg)" width="100%" height="500"/>
-           </div> -->
-          </carousel>
+            </div>
+           </carousel>
          </div> 
       </header>
       <hr/>
@@ -32,20 +26,19 @@
 
     <section align="left">
         <!-- 태그 -->
-      <div>
+      <div class = "section-tag-field">
         <span class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
             <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
           </span>
       </div>
       <br>
         <!-- 타이틀 -->
-      <div class="article-title-area" v-for="(studio,index) in studios" v-bind:key="index">
+      <div class="section-title-field" v-for="(studio,index) in studios" v-bind:key="index">
         <div class="studio-name">
           <h2> {{ studio.name }}</h2>
-        </div><br>
-`
+        </div>
         <div id="company-of-studio">
-              <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="20px" height="20px"/></span> -->
+              <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
               <span>{{studio.company.name}}</span>
           </div>
         </div> 
@@ -55,14 +48,14 @@
         <span>
         <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
           찜
-          <img src="@/assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt />
+          <img src="@/assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt width="10%"/>
           <!-- <img src="@/assets/img/header_bottom/marking.svg" v-if="!bookmarkCheck" alt /> -->
         </button>
         </span>
         <span>
         <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
           <i class="material-icons">share</i>
-            <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="30"/> 
+            <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
         </a> -->
         </span>
 
@@ -73,7 +66,14 @@
         </div>        
       </section>
       <hr/>  
+        <!-- ============== Reservation ============== -->
+      <div id =article-Filterstudiormation-map-area>
+        <Reservation></Reservation>
+      </div>
+
+
         <!-- ============== Studio Filter ============== -->
+      <hr>
       <article>
         <div class="article-Filterstudiormation-map-area" >
           <div class="article-Filterstudiormation-area" >
@@ -111,10 +111,6 @@
 
           </div>
         </div>
-        <!-- ============== Reservation ============== -->
-
-
-
         <!-- ============== Description ============== -->
              
         <div class="article-Description-area"  v-for="(studio,index) in studios" v-bind:key="index">
@@ -128,7 +124,6 @@
           <p>{{ studio.description }}</p>
           </div>
         </div>
-        <hr />
         <hr>
         <!-- ============== Portfolio Images ============== -->
         <table aligh="center" width="100%" height="100px">
@@ -151,9 +146,11 @@
 								<div class=""></div>
 							</div>
 						</div>
-              <!-- <canvas id="doughnut-chart-area" width="700" height="700" class="chartjs-render-monitor"> -->
-                <ChartGender/>  
-              <!-- </canvas>              -->
+              <canvas id="doughnut-chart-area" width="700" height="700" class="chartjs-render-monitor"> -->
+                <ChartGender>
+                  : Chart Data = GenderData
+                </ChartGender>  
+              </canvas>
 					</div> 
           </div> 
         </div>
@@ -176,6 +173,7 @@
 
         <!-- ============== Review ============== -->
         <div class="article-review-area">
+          <hr>
           <h4>리뷰보기</h4>
             <table id="list_table">
               <tbody v-for="review in reviews" v-bind:key="review.reviewId">
@@ -199,18 +197,24 @@
             </table>
         </div>
       </article>
-
-    
-
   </div>
 </template>
 
-<script scoped src="@/assets/js/studioInfo/StudioInfo.js"></script>
+
+<script src="@/assets/js/studioInfo/StudioInfo.js"></script>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
+
+@media screen and (max-width: 768px) {
+    #app {
+        width: 100%;
+    } 
+}
 .container {
     width: 768px;
     margin: auto 3em 0 10em 0;
+    
 }
 
 #main-images-section {
@@ -219,7 +223,7 @@
 }
 
 .tag-list {
-    padding: 3px;
+    padding: 0.5%;
 }
 
 .tabs-field {

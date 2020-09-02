@@ -6,7 +6,14 @@
       <form action="" method="POST" class="form login" @submit.prevent="customerRegister">
         <div class="form__field" >
           <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
-          <input type="tel" v-model="tel" class="form__input" placeholder="고객 전화번호" required>
+          <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" placeholder="고객 전화번호" required>
+        </div>
+
+        <div class="form__field" >
+          <label for="login__tel"><img class="icon" src="@/assets/img/register/gender.svg"><span class="hidden">gender</span></label>
+          <input type="radio" id="M" value="M" v-model="picked"> <label for="M">남성</label> 
+          <br> 
+          <input type="radio" id="F" value="F" v-model="picked"> <label for="W">여성</label>
         </div>
 
         <div class="form__field" >
@@ -48,6 +55,8 @@ export default {
       tel: "",
       job: "",
       funnel: "",
+      max: 13,
+      picked:""
       }
   },mounted(){
     var apiData = JSON.parse(sessionStorage.getItem("apiData"));
@@ -72,6 +81,7 @@ export default {
           tel: this.tel,
           job: this.job,
           funnel: this.funnel,
+          gender: this.picked
         })
          .then(response => {
            this.condata = response.data
@@ -82,9 +92,23 @@ export default {
         .catch(e => {
           console.log(e)
         })
+      },
+      insertDash(){
+        if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
       }
   }
 }
 
 </script>
 <style scpoed src="@/assets/css/login/CompanyLogin.css"></style>
+<style scoped>
+ .form__field select{
+   width: 248px;
+ }
+ .form__field{
+   background-color: #F5F5F5;
+ }
+  input[type='radio']{
+    margin-top:8%;
+  }
+</style>

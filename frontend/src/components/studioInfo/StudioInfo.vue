@@ -12,84 +12,81 @@
          </div> 
       </header>
       <hr/>
-    
+
        <nav>
          <div class="tabs-field">
            <div class="row">
-            <span class="nav-tab"><a href="#">상세보기</a></span>
-            <span class="nav-tab"><a href="#">리뷰보기</a></span>
+            <span class="nav-tab"><a href="#Studio-Filter-Table">상세보기</a></span>
+            <span class="nav-tab"><a href="#article-review-area">리뷰보기</a></span>
           </div>
-          </div>
-        </nav>
+        </div>
+      </nav>
        <hr/>
 
-
-    <section align="left">
-        <!-- 태그 -->
-      <div class = "section-tag-field">
-        <span class="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
-            <button class="tagBtn"><span>#</span>{{tag.tagName}}</button>
-          </span>
-      </div>
-      <br>
-        <!-- 타이틀 -->
-      <div class="section-title-field" v-for="(studio,index) in studios" v-bind:key="index">
-        <div class="studio-name">
-          <h2> {{ studio.name }}</h2>
+      <section align="left">
+          <!-- 태그 -->
+        <div class = "section-tag-field">
+          <span id="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
+              <button class="tag-btn"><span>#</span>{{tag.tagName}}</button>
+            </span>
         </div>
-        <div id="company-of-studio">
-              <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
-              <span>{{studio.company.name}}</span>
-          </div>
-        </div> 
         <br>
-        <div>
-        <!-- 찜하기, 공유하기, 누적 이용자 수 -->
-        <span>
-        <button class="waves-effect waves-light btn-small" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-          찜
-          <img src="@/assets/img/header_bottom/marking.svg" v-if="bookmarkCheck" alt width="10%"/>
-          <!-- <img src="@/assets/img/header_bottom/marking.svg" v-if="!bookmarkCheck" alt /> -->
-        </button>
-        </span>
-        <span>
-        <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-          <i class="material-icons">share</i>
-            <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
-        </a> -->
-        </span>
-
-          <!-- 누적 이용자 수 -->
+          <!-- 타이틀 -->
+        <div class="section-title-field" v-for="(studio,index) in studios" v-bind:key="index">
+          <div class="studio-name">
+            <h2> {{ studio.name }}</h2>
+          </div>
+          <div id="company-of-studio">
+                <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
+                <span>{{studio.company.name}}</span>
+            </div>
+          </div> 
+          <br>
+          <div>
+          <!-- 찜하기, 공유하기, 누적 이용자 수 -->
           <span>
-          {{this.accCustomer}}명
+          <button class="bookmark-btn" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
+            찜
+            <img src="@/assets/img/util/fullheart.svg" v-if="bookmarkCheck>0" alt />
+            <img src="@/assets/img/util/heart.svg" v-else alt width="10%"/>
+          </button>
+          </span>          
+          <span>
+          <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
+            <i class="material-icons">share</i>
+              <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
+          </a> -->
           </span>
-        </div>        
-      </section>
+
+            <!-- 누적 이용자 수 -->
+            <span>
+            {{this.accCustomer}}명
+            </span>
+          </div>        
+        </section>
       <hr/>  
         <!-- ============== Reservation ============== -->
-      <div id =article-Filterstudiormation-map-area>
+      <div class =article-Filterstudiormation-map-area>
         <Reservation></Reservation>
       </div>
-
-
         <!-- ============== Studio Filter ============== -->
       <hr>
       <article>
-        <div class="article-Filterstudiormation-map-area" >
           <div class="article-Filterstudiormation-area" >
             <div v-for="(studio,index) in studios" v-bind:key="index">
               <table id="Studio-Filter-Table">
                 <tr>
                   <td>넓이</td>
-                  <td>{{ studio.studioFilter.size }}</td>
+                  <td>{{ studio.studioFilter.size}}m<sup>2</sup>
+                  ({{ studio.studioFilter.size |sizeUnit}}/평)</td>
                 </tr>
                 <tr>
                   <td>옵션</td>
-                  <td>{{ studio.options }}</td>
+                  <td>{{studio.options}}</td>
                 </tr>
                 <tr>
                   <td>주차</td>
-                  <td>{{studio.studioFilter.parking}}</td>
+                  <td>{{studio.studioFilter.parking|parking}}</td>
                 </tr>
                 <tr>
                   <td>수용 인원</td>
@@ -100,17 +97,12 @@
                 </tr>
                 <tr>
                   <td>인원 초과 시 추가비용</td>
-                  <td>{{studio.studioFilter.excharge}}</td>
+                  <td>{{studio.studioFilter.excharge|currency}}</td>
                 </tr>
               </table>
             </div>
           </div>
           
-          <!-- ============== Map ============== -->
-          <div id="map">
-
-          </div>
-        </div>
         <!-- ============== Description ============== -->
              
         <div class="article-Description-area"  v-for="(studio,index) in studios" v-bind:key="index">
@@ -132,6 +124,12 @@
         </tr>       
         </table>
         
+        <!-- ============== Map ============== -->
+          <div id="map">
+
+          </div>
+        
+
         <hr />
         <!-- ============== Chart & Graph ============== -->
         <div class="article-Chart-area" border="2">
@@ -146,7 +144,7 @@
 								<div class=""></div>
 							</div>
 						</div>
-              <canvas id="doughnut-chart-area" width="700" height="700" class="chartjs-render-monitor"> -->
+              <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
                 <ChartGender>
                   : Chart Data = GenderData
                 </ChartGender>  
@@ -172,31 +170,124 @@
         
 
         <!-- ============== Review ============== -->
-        <div class="article-review-area">
-          <hr>
-          <h4>리뷰보기</h4>
-            <table id="list_table">
-              <tbody v-for="review in reviews" v-bind:key="review.reviewId">
-                <tr>
-                  <td>작성자 Id</td>
-                  :
-                  <td v-html="review.customer.email"></td>
-                </tr>
-                <tr>
-                <td>평점</td>
-                  :
-                <td v-html="review.score"></td>
-                </tr>
-                <tr>
-                  <td>리뷰</td>
-                  :            
-                  <td v-html="review.content"></td>
-                  
-                </tr>
-              </tbody>
-            </table>
+        <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
+          <div v-for="review in reviews" v-bind:key="review.reviewId">
+           <div>
+              <hr>
+              <h4>리뷰보기</h4>
+                <div class="card-content" id="reviews" >
+                  <div>
+                    <!-- <span id="reviewr-img"><img :src="imgUrl(review.costomer.srcImg)"></span>  -->
+                    <!-- <span id="reviewr-email"><strong>{{ review.cusomer.email|emailHide }}</strong></span> -->
+                    <span id="register-date">({{ review.regDate}})</span>
+                  </div>
+                    <!-- 별점 부분 -->
+                    <span id="star"> 별점
+                      <span v-if="review.score > 0 && review.score < 1">
+                        <i class="material-icons" id="icon_filter">star_half</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                      </span>
+                      <span v-if="review.score == 1">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                      </span>
+                      <span v-if="review.score > 1 && review.score < 2">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_half</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                      </span>
+                      <span v-if="review.score == 2">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                      </span>
+                      <span v-if="review.score > 2 && review.score < 3">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_half</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                      </span>
+                      <span v-if="review.score == 3">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                      </span>
+                      <span v-if="review.score > 3 && review.score < 4">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_half</i>
+                        <i class="material-icons" id="icon_filter">star_half</i>
+                      </span>
+                      <span v-if="review.score == 4">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_half</i>
+                      </span>
+                      <span v-if="review.score > 4 && review.score < 5">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star_half</i>
+                      </span>
+                      <span v-if="review.score == 5">
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                        <i class="material-icons" id="icon_filter">star</i>
+                      </span>              
+                      <span v-if="review.score == 0">
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                        <i class="material-icons" id="icon_filter">star_border</i>
+                      </span>
+                    </span>
+                </div>
+                <div>
+              <div id="content">{{ review.content }}</div>       
+            </div>
+            <div id="no-review" v-if="(reviews+'').length==0"><h3>"아직 등록된 리뷰가 없습니다!"</h3></div>
+            <div id=answer v-if="isNaN(review.answer)">
+                <div>{{ review.answer }}</div>
+            </div>
+          </div>
         </div>
-      </article>
+      </div>
+    </article>
+    <!-- 모달 모아두기 -->
+    <div>
+      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+        <div id="delBook">
+          <p>찜목록에서 제거했습니다</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
+      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+        <div id="regBook">
+          <p>찜 목록에 등록했습니다</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
+    </div>
   </div>
 </template>
 
@@ -211,9 +302,12 @@
         width: 100%;
     } 
 }
+.body{
+  background: white;
+}
 .container {
     width: 768px;
-    margin: auto 3em 0 10em 0;
+    margin: auto 20em 0 10em 0;
     
 }
 
@@ -269,11 +363,54 @@ article {
   text-align: left;
 }
 
-.tagBtn {
-    display: inline;
-}
 
+.tag-btn{
+    
+    background-color: #029BE0;
+    border: none;
+    color:#fff;
+    padding: 5px 5px 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius:5px;
+}
+.tag-btn:hover {
+    background-color: white;
+    color:#029BE0;
+    border:1.5px solid lightgray;
+}
 .article-review-area{
   text-align: left;
 }
+.card-content{
+  border:1px solid lightgray;
+  border-radius:10px;
+  padding:2%;
+  box-shadow:2px 2px 1.5px lightgray;
+}
+#reviewr-img{
+  width:10px;
+  height:10px;
+}
+#reviewr-email{
+  color:lightgray;
+}
+#no-review{
+  align-content: center;
+  border:1px solid lightgray;
+  border-radius:10px;
+  padding:2%;
+  box-shadow:2px 2px 1.5px lightgray;
+}
+#answer{
+  border:1px solid lightgray;
+  border-radius:10px;
+  padding:2%;
+  box-shadow:2px 2px 1.5px lightgray;
+}
+
 </style>

@@ -75,6 +75,7 @@ public class StudioInfoController {
 	//2-2. Studio 클래스에 없는 정보 (찜 여부)
 	@GetMapping("/studio/getBookmark/{custId}/{stuId}")
 	public ResponseEntity<Integer> getBookmark(@PathVariable int custId,@PathVariable int stuId) {	
+		try {
 		if(custId>0) {
 			List<Integer> idList=new ArrayList<Integer>();
 			idList.add(custId);
@@ -83,6 +84,9 @@ public class StudioInfoController {
 			if(bookmarkId!=0) return new ResponseEntity<Integer>(bookmarkId,HttpStatus.OK);
 			else return new ResponseEntity<Integer>(0,HttpStatus.NO_CONTENT);
 		}else return new ResponseEntity<Integer>(0,HttpStatus.NO_CONTENT);
+		}catch(NullPointerException e) {
+			return new ResponseEntity<Integer>(0,HttpStatus.NO_CONTENT);
+			}
 	}
 	
 	

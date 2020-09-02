@@ -64,6 +64,19 @@
 			<result property="apiKey" column="api_key" />
 			<result property="imgSrc" column="img_src" />
 		</association>
+		<association property="studio" javaType="studio">
+			<id property="stuId" column="stu_id" />
+			<result property="stuId" column="stu_id"/>			
+			<result property="comId" column="com_id"/>
+			<result property="categoryId" column="category_id"/>
+			<result property="name" column="name"/>
+			<result property="description" column="description"/>
+			<result property="rule" column="rule"/>			
+			<result property="mainImg" column="main_img"/>
+			<result property="portImg" column="port_img"/>
+			<result property="cadImg" column="cad_img"/>
+			<result property="floor" column="floor"/>
+		</association>
  	</resultMap> 
  
 	<select id="getStudioInfo" parameterType="int" resultMap="studioInfoRM">							
@@ -84,10 +97,11 @@
  	<select id="getStudioReviews" parameterType="int" resultMap="reviewRM">
 		SELECT
 		re.review_id,re.score, re.content, re.img, re.reg_date, re.answer,
-		c.cust_id,c.api_id,c.gender,c.age,c.job,c.funnel,c.email,c.tel,c.api_key,c.img_src
+		c.cust_id,c.api_id,c.gender,c.age,c.job,c.funnel,c.email,c.tel,c.api_key,c.img_src,
+		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
 		FROM review re 
 		JOIN customer c ON re.cust_Id=c.cust_Id
-		<!-- JOIN studio s ON re.stu_Id=s.stu_Id -->
+		JOIN studio s ON re.stu_Id=s.stu_Id
 		<if test="'${value}'!=null">
 		WHERE re.stu_Id=${value}
 		</if>

@@ -6,7 +6,7 @@
           <a href>
             <img src="@/assets/img/util/backward.svg" alt id="backward" @click.prevent="moveBack" />
           </a>
-          <a href="#">
+          <a href="http://localhost:9999">
             <img
               src="@/assets/img/header_bottom/pics_logo.svg"
               alt="pics"

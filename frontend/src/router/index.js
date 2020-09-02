@@ -2,7 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "../components/main/Main.vue";
 import StudioSearch from "../components/search/StudioSearch.vue";
-import Register from "../views/login/Register.vue";
+import CompanyRegister from "../views/register/CompanyRegister.vue";
+import CustomerRegister from "../views/register/CustomerRegister.vue";
 import CustomerLogin from "../views/login/CustomerLogin.vue";
 import CompanyLogin from "../views/login/CompanyLogin.vue";
 import Mypage from "../views/mypage/Mypage.vue";
@@ -49,9 +50,14 @@ const routes = [{
         name: "registerStudioSuccess",
         component: RegisterStudioSuccess
     }, {
-        path: "/register",
-        name: "register",
-        component: Register
+        path: "/companyRegister",
+        name: "companyRegister",
+        component: CompanyRegister
+    },
+    {
+        path: "/customerregister",
+        name: "customerregister",
+        component: CustomerRegister
     },
     {
         path: "/mypage",

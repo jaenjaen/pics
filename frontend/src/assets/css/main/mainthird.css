@@ -1,0 +1,38 @@
+.mainthird {
+    width: 768px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: White;
+    margin-bottom: 55px;
+}
+
+.word {
+    padding: 15px 0;
+    padding-left: 20px;
+    text-align: left;
+    font-weight: 700;
+}
+
+.img_container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+img {
+    width: 350px;
+    height: 230px;
+}
+
+.img {
+    width: 350px;
+    border: 1px solid white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 768px) {
+    .mainthird {
+        width: 100%;
+    }
+}

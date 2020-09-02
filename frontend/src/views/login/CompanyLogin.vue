@@ -51,7 +51,7 @@
       <br />
       <p class="text--center">
         회원이 아니신가요? &nbsp;&nbsp;<router-link
-          to="/register"
+          to="/companyregister"
           class="register"
           >회원가입</router-link
         >

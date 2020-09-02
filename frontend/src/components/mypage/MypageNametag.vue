@@ -3,16 +3,16 @@
     <table id="nameTag">
       <tr>
         <td rowspan="2" class="userImg">
-          <img :src= "userImg" alt="userImg" width="70px" height="70px">
+          <img :src="userImg" alt="userImg" width="70px" height="70px">
         </td>
         <td class="userName">{{username}}</td>
-        <td rowspan="2" id="userHeart" v-bind:class="{ 'is-active': customerMode }">
-          <a href="http://localhost:9999/wishlist?userid="><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px"></a>
+        <td rowspan="2" id="userHeart">
+          <a href="http://localhost:9999/wishlist?userid="><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></a>
         </td>
       </tr>
       <tr>
         <td class="userDetail">
-          <a href="#">정보 관리 ></a>
+          <router-link to="/edit">내 정보 수정 ></router-link>
         </td>
       </tr>
     </table>
@@ -32,7 +32,7 @@ export default {
     return {
       username:"",
       userid:"",
-      userImg: "@/assets/img/mypage/defaultImg.svg",
+      userImg: require("@/assets/img/mypage/defaultStudio.svg")
     };
   },
   mounted(){
@@ -42,7 +42,13 @@ export default {
       this.userId = customer.custId;
       this.userImg = customer.imgSrc;
     }
-
+    else if(sessionStorage.getItem("company")!=null){
+      var company = JSON.parse(sessionStorage.getItem("company"));
+      this.username = company.name;
+      this.userId = company.comId;
+      if (company.logoImg != null) this.userImg = company.logoImg;
+      console.log(this.userImg);
+    }
   },
   methods: {
     

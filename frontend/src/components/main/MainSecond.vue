@@ -10,7 +10,7 @@
     <div class="mainsecond_carousel">
       <carousel
         v-if="studio_infos && studio_infos.length"
-        :items="4"
+        v-bind:items="num"
         :margin="5"
         :loop="true"
         :nav="false"

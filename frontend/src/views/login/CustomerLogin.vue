@@ -51,7 +51,7 @@ let onSuccessKakao = data => {
         .then(res => {
           if (res.data == "") {
             sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
-            location.href = "http://localhost:9999/register";
+            location.href = "http://localhost:9999/customerregister";
           } else {
             sessionStorage.setItem("customer", JSON.stringify(res.data));
             location.href = "http://localhost:9999";
@@ -132,7 +132,7 @@ export default {
             if (res.data == "") {
               console.log(this.apiData);
               sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
-              location.href = "http://localhost:9999/register";
+              location.href = "http://localhost:9999/customerregister";
             } else {
               sessionStorage.setItem("customer", JSON.stringify(res.data));
               location.href = "http://localhost:9999";

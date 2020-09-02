@@ -2,20 +2,23 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Main from "../components/main/Main.vue";
 import StudioSearch from "../components/search/StudioSearch.vue";
+import CompanyRegister from "../views/register/CompanyRegister.vue";
+import CustomerRegister from "../views/register/CustomerRegister.vue";
 import CustomerLogin from "../views/login/CustomerLogin.vue";
 import CompanyLogin from "../views/login/CompanyLogin.vue";
+import Mypage from "../views/mypage/Mypage.vue";
+import Edit from "../views/mypage/Edit.vue";
+import WishList from "../views/WishList.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
-import Register from "../views/Register.vue";
-import Reservation from "../components/studioInfo/Reservation.vue";
 import StudioInfo from "../components/studioInfo/StudioInfo.vue";
-import Mypage from "../views/Mypage.vue";
-import WishList from "../views/WishList.vue";
+import Reservation from "../components/studioInfo/Reservation.vue";
 // import Map from "../components/Map.vue";
 // import Test from "../components/Test.vue";
 import ChartGender from "../components/studioInfo/ChartGender.vue";
 import StudioList from "@/components/search/StudioList.vue";
+
 
 Vue.use(VueRouter);
 const routes = [{
@@ -47,9 +50,14 @@ const routes = [{
         name: "registerStudioSuccess",
         component: RegisterStudioSuccess
     }, {
-        path: "/register",
-        name: "register",
-        component: Register
+        path: "/companyRegister",
+        name: "companyRegister",
+        component: CompanyRegister
+    },
+    {
+        path: "/customerregister",
+        name: "customerregister",
+        component: CustomerRegister
     },
     {
         path: "/mypage",
@@ -79,6 +87,10 @@ const routes = [{
         path: "/studioList",
         name: "studioList",
         component: StudioList
+    }, {
+        path: "/edit",
+        name: "edit",
+        component: Edit
     },
 
 

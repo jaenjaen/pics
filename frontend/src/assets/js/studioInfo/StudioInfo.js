@@ -3,14 +3,25 @@ import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
 // import Chart from 'chart.js'
 // import { Doughnut } from "vue-chartjs";
-import ChartGender from "@/components/studioInfo/StudioInfo.vue"
+import ChartGender from "@/assets/js/studioInfo/ChartJs.js"
+import Reservation from "@/components/studioInfo/Reservation.vue"
 
 export default {
     name: "studio-info",
-    components: { carousel, ChartGender },
+    components: { carousel, ChartGender, Reservation },
+    props: {
+        stuId: {
+            type: String,
+            default: ''
+        }
+    },
     data: function() {
         return {
+            datacollection: null,
+            loaded: false,
+
             // studio 관련 변수 (GET)
+            customer: {},
             studios: {
                 categoryId: 0,
                 name: "",
@@ -40,7 +51,6 @@ export default {
                 tagId: 0,
                 tagName: ""
             }],
-
             bookmarkCheck: 0, //북마크 id값 받은 변수
             reviews: [{}],
             accCustomer: 0,
@@ -48,22 +58,26 @@ export default {
             // 상태 체크 변수
             loading: true,
             errored: false,
-
-
         };
     },
-    mounted() {
+    async mounted() {
+        this.customer = JSON.parse(sessionStorage.getItem('customer'));
+
+
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         axios
-            .get("http://127.0.0.1:7777/studio/info/10")
-            .then(response => (this.studios = response.data))
+            .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+            .then(response => {
+                this.studios = response.data
+
+            })
             .catch(error => {
                 console.log(error);
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://127.0.0.1:7777/studio/tags/10")
+            .get("http://127.0.0.1:7777/studio/tags/" + this.stuId)
             .then(response => (this.tags = response.data))
             .catch(error => {
                 console.log(error);
@@ -71,7 +85,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://127.0.0.1:7777/studio/getBookmark/3/10")
+            .get("http://127.0.0.1:7777/studio/getBookmark/" + this.customer.custId + "/" + this.stuId)
             .then(response => (this.bookmarkCheck = response.data))
             .catch(error => {
                 console.log(error);
@@ -79,47 +93,26 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://127.0.0.1:7777/studio/reviews/10")
+            .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => (this.reviews = response.data))
             .catch(error => {
                 console.log(error);
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
+
         axios
-            .get("http://127.0.0.1:7777/studio/accCustomer/10")
+            .get("http://127.0.0.1:7777/studio/accCustomer/" + this.stuId)
             .then(response => (this.accCustomer = response.data))
             .catch(error => {
                 console.log(error);
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        ////////////////////////////// Chart & Graph //////////////////////////////
-        // axios
-        //     .get("http://127.0.0.1:7777/studio/genderRatio/10")
-        //     .then(response => {
-        //         this.customers = response.data;
-        //         var customer = this.customers;
-        //         this.total = customer.length;
-        //         // var female=0;
-        //         for (var i = 0; i < this.total; i++) {
-        //             if (this.customers[i].gender == "F") {
-        //                 //여자 수만큼 세기
-        //                 this.female += 1;
-        //             }
-        //         }
-        //         this.chartData();
 
-        //         this.renderChart(this.datacollection, this.options);
-        //         console.log("bbb");
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //         this.errored = true;
-        //     })
-        //     .finally(() => {
-        //         this.loading = false;
-        //     });
+        this.fillData();
+        await this.getGenderData();
+        ////////////////////////////// Chart & Graph //////////////////////////////
 
         // this.$nextTick(() => {
         //     var ctx = document.getElementById('doughnut-chart-area').getContext('2D');
@@ -152,8 +145,64 @@ export default {
         //     new Chart(ctx, config);
         // })
     },
+    // computed: {
+    //     param: function() {
+    //         return this.$route.params;
+    //     }
+    // },
     ////////////////////////////// Methods //////////////////////////////
     methods: {
+        filltData() {
+            this.datacollection = {
+                    datasets: [{
+                        data: [10, 10],
+                        backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
+                        label: "Gender Ratio"
+                    }],
+                    labels: ["Female", "Male"]
+                },
+                console.log("datacollection 지나서");
+
+            this.total = this.result.length;
+            this.female = 0;
+            for (var i = 0; i < this.result.length; i++) {
+                if (this.result[i].gender == "F") {
+                    this.female++;
+                }
+            }
+        },
+        getGenderData() {
+            axios
+                .get("http://127.0.0.1:7777/studio/genderRatio/" + this.stuId)
+                .then(response => {
+                    this.result = response.data;
+                    this.total = this.result.length;
+                    this.female = 0;
+                    // console.log("result : " + this.result + ", this.total : " + this.total)
+                    // var female=0;
+                    for (var i = 0; i < this.result.length; i++) {
+                        if (this.result[i].gender == "F") {
+                            //여자 수만큼 세기
+                            this.female += 1;
+                        }
+                    }
+                    this.fillData();
+                    console.log("aaa1");
+                    this.$set(this.datacollection.datasets[0].data, 0, this.female);
+                    this.$set(this.datacollection.datasets[0].data, 1, this.total);
+                    this.filltData()
+                    console.log("aaa2");
+
+                    // this.renderChart(this.datacollection, this.options);
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },
@@ -179,7 +228,7 @@ export default {
                     }
                 };
                 axios
-                    .post("http://127.0.0.1:7777/bookmark", bookmark)
+                    .post("http://127.0.0.1:7777/bookmark/" + bookmark)
                     .catch(error => {
                         console.log(error);
                         this.errored = true;

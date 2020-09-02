@@ -53,70 +53,15 @@
       </div>
     </div>
     <MainSecond />
+    <MainThird />
   </div>
 </template>
 
-//
-<script>
-import MainSecond from "@/components/main/MainSecond.vue";
-export default {
-  name: "mainsecond",
-  components: {
-    MainSecond
-  },
-  methods: {
-    moveToSearch() {
-      this.$router.push("/studioSearch/");
-    }
-  }
-};
-</script>
+<script scoped src="@/assets/js/main/main.js"></script>
 
 <style scoped src="../../assets/css/remove_css.css">
 </style>
 <style scoped src="materialize-css/dist/css/materialize.min.css">
 </style>
-<style scoped>
-.main_category {
-  background-color: white;
-  height: 250px;
-}
-.main_container {
-  display: flex;
-  width: 768px;
-  height: 250px;
-  padding-top: 20px;
-  vertical-align: middle;
-  margin: 0 auto;
-
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: space-around;
-
-  /* background-color: red; */
-}
-.main_icon {
-  flex: 1 1 25%;
-}
-img {
-  width: 60px;
-  height: 60px;
-}
-
-p {
-  font-weight: 700;
-}
-
-@media only screen and (max-width: 768px) {
-  .main_container {
-    width: 100%;
-    height: 200px;
-  }
-  .main_category {
-    height: 200px;
-  }
-  p {
-    font-size: 0.5rem;
-  }
-}
+<style scoped src="@/assets/css/main/main.css">
 </style>

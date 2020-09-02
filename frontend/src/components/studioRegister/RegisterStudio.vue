@@ -4,7 +4,7 @@
     <div class="container">
       <h2>스튜디오 등록</h2>
       <br />
-      <form enctype="multipart/form-data" @submit.prevent="addStudio">
+      <form enctype="multipart/form-data" @submit.prevent="checkStudio">
         <div class="row">
           <div class="col-25">
             <label for="name">스튜디오 이름</label>
@@ -47,44 +47,44 @@
           </div>
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
-              <input type=file id="mainFile1" name="files[0]" class="files" @change="handleImgFileSelect('mainFile1', 'mainImg1', $event)" style='display: none;'> 
+              <input type=file id="mainFile0" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile0', 'mainImg0', $event)" style='display: none;'> 
+              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg0" onclick='document.getElementById("mainFile0").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="mainFile1" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile1', 'mainImg1', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg1" onclick='document.getElementById("mainFile1").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile2" name="files[1]" class="files" @change="handleImgFileSelect('mainFile2', 'mainImg2', $event)" style='display: none;'> 
+              <input type=file id="mainFile2" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile2', 'mainImg2', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg2" onclick='document.getElementById("mainFile2").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile3" name="files[2]" class="files" @change="handleImgFileSelect('mainFile3', 'mainImg3', $event)" style='display: none;'> 
+              <input type=file id="mainFile3" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile3', 'mainImg3', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg3" onclick='document.getElementById("mainFile3").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile4" name="files[3]" class="files" @change="handleImgFileSelect('mainFile4', 'mainImg4', $event)" style='display: none;'> 
+              <input type=file id="mainFile4" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile4', 'mainImg4', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg4" onclick='document.getElementById("mainFile4").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile5" name="files[4]" class="files" @change="handleImgFileSelect('mainFile5', 'mainImg5', $event)" style='display: none;'> 
+              <input type=file id="mainFile5" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile5', 'mainImg5', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg5" onclick='document.getElementById("mainFile5").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile6" name="files[5]" class="files" @change="handleImgFileSelect('mainFile6', 'mainImg6', $event)" style='display: none;'> 
+              <input type=file id="mainFile6" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile6', 'mainImg6', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg6" onclick='document.getElementById("mainFile6").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile7" name="files[6]" class="files" @change="handleImgFileSelect('mainFile7', 'mainImg7', $event)" style='display: none;'> 
+              <input type=file id="mainFile7" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile7', 'mainImg7', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg7" onclick='document.getElementById("mainFile7").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile8" name="files[7]" class="files" @change="handleImgFileSelect('mainFile8', 'mainImg8', $event)" style='display: none;'> 
+              <input type=file id="mainFile8" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile8', 'mainImg8', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg8" onclick='document.getElementById("mainFile8").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile9" name="files[8]" class="files" @change="handleImgFileSelect('mainFile9', 'mainImg9', $event)" style='display: none;'> 
+              <input type=file id="mainFile9" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile9', 'mainImg9', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg9" onclick='document.getElementById("mainFile9").click()'>
-            </div>
-            <div class="uploadArea">
-              <input type=file id="mainFile10" name="files[9]" class="files" @change="handleImgFileSelect('mainFile10', 'mainImg10', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg10" onclick='document.getElementById("mainFile10").click()'>
             </div>
           </div>
         </div>
@@ -175,12 +175,8 @@
           </div>
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
-              <input type=file id="cadFile" name="files[10]" class="files" @change="handleImgFileSelect('cadFile', 'cadImg', $event)" style='display: none;'> 
+              <input type=file id="cadFile" name="cadFile" class="cadFile" @change="handleImgFileSelect('cadFile', 'cadImg', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="cadImg" onclick='document.getElementById("cadFile").click()'>
-              <!-- 이어서 하기 https://blog.naver.com/wj8606/221249672135
-              <input type="file"  @change="fileUpload($event)">
-              <button v-on:click="addCadImg()">Submit</button>
-              -->
             </div>
           </div>
         </div>
@@ -512,20 +508,20 @@
           </div>
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
-              <input type=file id="portFile1" name="files[11]" class="files" @change="handleImgFileSelect('portFile1', 'portImg1', $event)" style='display: none;'> 
+              <input type=file id="portFile0" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile0', 'portImg0', $event)" style='display: none;'> 
+              <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg0" onclick='document.getElementById("portFile0").click()'>
+            </div>
+            <div class="uploadArea">
+              <input type=file id="portFile1" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile1', 'portImg1', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg1" onclick='document.getElementById("portFile1").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="portFile2" name="files[12]" class="files" @change="handleImgFileSelect('portFile2', 'portImg2', $event)" style='display: none;'> 
+              <input type=file id="portFile2" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile2', 'portImg2', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg2" onclick='document.getElementById("portFile2").click()'>
             </div>
             <div class="uploadArea">
-              <input type=file id="portFile3" name="files[13]" class="files" @change="handleImgFileSelect('portFile3', 'portImg3', $event)" style='display: none;'> 
+              <input type=file id="portFile3" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile3', 'portImg3', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg3" onclick='document.getElementById("portFile3").click()'>
-            </div>
-            <div class="uploadArea">
-              <input type=file id="portFile4" name="files[14]" class="files" @change="handleImgFileSelect('portFile4', 'portImg4', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg4" onclick='document.getElementById("portFile4").click()'>
             </div>
           </div>
         </div>

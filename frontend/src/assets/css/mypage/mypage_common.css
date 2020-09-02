@@ -1,0 +1,13 @@
+.mypage_container {
+    background-color: #f8f8f8;
+    padding: 10px 0 61px 0;
+}
+
+.mypage_card {
+    background-color: #fff;
+    width: 99%;
+    margin: auto;
+    height: 180px;
+    padding: 1% 0 1% 4%;
+    text-align: left;
+}

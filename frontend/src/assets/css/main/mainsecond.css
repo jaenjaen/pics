@@ -65,3 +65,33 @@ img {
     font-size: 8px;
     color: black;
 }
+
+@media only screen and (max-width: 768px) {
+    .mainsecond_container {
+        width: 100%;
+    }
+    .word_container {
+        width: 100%;
+    }
+    .mainsecond_carousel {
+        width: 100%;
+    }
+    .row {
+        width: 300px !important;
+    }
+    img {
+        width: 300px !important;
+    }
+    .word_item:nth-child(1) {
+        padding-left: 5px;
+    }
+    .word_item:nth-child(2) {
+        padding-right: 15px;
+    }
+    .name {
+        font-size: 13px;
+    }
+    .category {
+        font-size: 3px;
+    }
+}

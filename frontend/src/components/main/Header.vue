@@ -3,23 +3,19 @@
     <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper">
-          <a href="">
-            <img src="@/assets/img/util/backward.svg" alt="" id="backward" @click.prevent="moveBack">
+          <a href>
+            <img src="@/assets/img/util/backward.svg" alt id="backward" @click.prevent="moveBack" />
           </a>
           <a href="#">
             <img
-              src="../../assets/img/header_bottom/pics_logo.svg"
+              src="@/assets/img/header_bottom/pics_logo.svg"
               alt="pics"
               class="brand-logo center"
               id="pics_logo"
             />
           </a>
           <a href="#" @click.prevent="moveToSearch">
-            <img
-              src="../../assets/img/header_bottom/search_icon.svg"
-              class="right"
-              id="search_icon"
-            />
+            <img src="@/assets/img/header_bottom/search_icon.svg" class="right" id="search_icon" />
           </a>
         </div>
       </nav>
@@ -28,85 +24,8 @@
   </div>
 </template>
 
-<script>
-import Bottom from "@/components/main/Bottom.vue";
-export default {
-  name: "pics-bottom",
-  components: {
-    Bottom
-  },
-  methods: {
-    moveToSearch() {
-      this.$router.push("/studioSearch/");
-    },
-    moveBack() {
-      this.$router.go(-1);
-    }
-  }
-};
+<script src="@/assets/js/main/header.js">
 </script>
-
 <style scoped src="materialize-css/dist/css/materialize.min.css"></style>
-<style scoped>
-.navbar-fixed {
-  line-height: 44px !important;
-  z-index: 9999;
-}
-
-nav {
-  background-color: white !important;
-  height: 44px !important;
-}
-.nav-wrapper {
-  width: 768px;
-  margin: 0 auto !important;
-}
-img {
-  margin-top: 13px !important;
-}
-
-#pics_logo {
-  width: 60px;
-}
-#search_icon {
-  width: 20px;
-  margin-right: 25px;
-}
-
-#backward {
-  width:20px;
-  float: left;
-}
-</style>
-
-<style scoped>
-@media only screen and (min-width: 768px) {
-  nav .navbar-fixed {
-    height: 44px !important;
-    line-height: 44px !important;
-  }
-}
-
-@media only screen and (min-width: 300px) and (max-width: 767px) {
-  nav .navbar-fixed {
-    height: 44px !important;
-    line-height: 44px !important;
-  }
-  .nav-wrapper {
-    width: 100%;
-    margin: 0 auto !important;
-  }
-}
-
-@media only screen and (min-width: 601px) {
-  .navbar-fixed {
-    height: 44px !important;
-  }
-}
-
-@media only screen and (max-width: 600px) {
-  .navbar-fixed {
-    height: 44px !important;
-  }
-}
+<style scoped src="@/assets/css/main/header.css">
 </style>

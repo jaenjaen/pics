@@ -138,11 +138,5 @@ public class StudioInfoTest {
 //			if(customerList.get(i).getGender()=='F') count++;
 //		}	
 //		System.out.println(count+"|"+customerList.size());
-		
-		List<Integer> ageList=sqlSession.selectList(NS+"ageRatio",10);
-		for (int age :ageList) {
-			System.out.println(age);
-			System.out.println(ageList);
-		}
 	}
 }

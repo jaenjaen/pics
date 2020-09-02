@@ -53,16 +53,19 @@
       </div>
     </div>
     <MainSecond />
+    <MainThird />
   </div>
 </template>
 
 //
 <script>
 import MainSecond from "@/components/main/MainSecond.vue";
+import MainThird from "@/components/main/mainThird.vue";
 export default {
   name: "mainsecond",
   components: {
-    MainSecond
+    MainSecond,
+    MainThird
   },
   methods: {
     moveToSearch() {

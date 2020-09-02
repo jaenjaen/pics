@@ -98,6 +98,9 @@ export default {
                     { name: "카메라" },
                     { name: "조명" },
                     { name: "반사판" },
+                    { name: "삼각대" },
+                    { name: "철제박스" },
+                    { name: "스피커" },
                     { name: "포토그래퍼" }
                 ]
             }],

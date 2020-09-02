@@ -728,8 +728,8 @@ export default {
             }
         },
 
-        /* 스튜디오 등록 */
-        addStudio() {
+        /* 스튜디오 등록 전 유효성 검사, 예외 처리, 데이터 바인딩 */
+        checkStudio() {
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
             this.studio.tag = [] //태그 데이터 초기화
             let tags = document.getElementsByName("tag");
@@ -820,31 +820,93 @@ export default {
                 return false;
             }
 
-            /* 파일 업로드 */
+            this.uploadMainImg();
+        },
+
+        /* 대표사진 멀티 이미지 업로드 */
+        uploadMainImg() {
             let formData = new FormData();
-            var files = document.querySelector('#portFile1');
-            console.log("객체 : " + files);
-            console.log("파일길이 : " +
-                files.length);
-            for (var i = 0; i < files.length; i++) {
-                let file = files[i];
-                console.log(file);
-                formData.append('files[' + i + ']', file);
+            let files = document.getElementsByName('mainFiles');
+            let count = 0;
+            for (let i = 0; i < files.length; i++) {
+                if (typeof(files[i].files[0]) == "undefined") {
+                    count++;
+                    continue;
+                }
+                formData.append("files", files[i].files[0]);
+                console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/imageUpload', formData, {
+            if (count == 10) {
+                alert("대표 사진을 1장 이상 입력하세요.");
+                return false;
+            }
+            axios.post('http://127.0.0.1:7777/filesUpload/main', formData, {
                     headers: {
-                        'Accept': 'application/json',
                         'Content-Type': 'multipart/form-data'
                     },
-                }).then(function(response) {
-                    console.log(response.data);
+                }).then((response) => {
                     console.log('성공');
+                    console.log('파일명 : ' + response.data);
+                    this.studio.mainImg = response.data; //대표사진 파일명 데이터 바인딩
                 })
-                .catch(function() {
+                .catch(() => {
                     console.log('실패');
+                })
+                .finally(() => {
+                    this.uploadCadImg();
                 });
+        },
 
-            /* 스튜디오 등록 */
+        /* 공간도면 단일 이미지 업로드 */
+        uploadCadImg() {
+            let formData = new FormData();
+            let file = document.querySelector('#cadFile');
+            formData.append("file", file.files[0]);
+            console.log("파일 정보 : " + file.files[0]);
+            axios.post('http://127.0.0.1:7777/fileUpload/cad', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }).then((response) => {
+                    console.log('성공');
+                    console.log('파일명 : ' + response.data);
+                    this.studio.cadImg = response.data; //공간도면 파일명 데이터 바인딩
+                })
+                .catch(() => {
+                    console.log('실패');
+                })
+                .finally(() => {
+                    this.uploadPortImg();
+                });
+        },
+
+        /* 포트폴리오 멀티 이미지 업로드 */
+        uploadPortImg() {
+            let formData = new FormData();
+            let files = document.getElementsByName('portFiles');
+            for (let i = 0; i < files.length; i++) {
+                formData.append("files", files[i].files[0]);
+                console.log("파일 정보 : " + files[i].files[0]);
+            }
+            axios.post('http://127.0.0.1:7777/filesUpload/port', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }).then((response) => {
+                    console.log('성공');
+                    console.log('파일명 : ' + response.data);
+                    this.studio.portImg = response.data; //대표사진 파일명 데이터 바인딩
+                })
+                .catch(() => {
+                    console.log('실패');
+                })
+                .finally(() => {
+                    this.addStudio();
+                });
+        },
+
+        /* 스튜디오 등록 */
+        addStudio() {
             axios.post("http://127.0.0.1:7777/studio", this.studio).then(
                 function(response) {
                     console.log(response.data);

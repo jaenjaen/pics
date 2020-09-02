@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,8 +34,7 @@ import com.devils.pics.service.StudioInfoService;
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
 public class StudioRegisterController {
-
-	String path; //공통 파일 경로
+	
 	String comId; //업체 아이디
 	
 	@Autowired
@@ -46,21 +46,25 @@ public class StudioRegisterController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 	
-	/* 단일 이미지 파일 업로드 */
-	@PostMapping("/imageUpload")
-	public ResponseEntity uploadImage(@RequestBody MultipartFile file, HttpServletRequest request, HttpServletResponse response) {		
+	/* 싱글 파일 업로드 */
+	@PostMapping("/fileUpload/{subPath}")
+	public ResponseEntity uploadImage(@RequestBody MultipartFile file, 
+									@PathVariable String subPath, 
+									HttpServletRequest request, HttpServletResponse response) {		
 		/* 업체 아이디 받아오기 */
 		comId = "11@sample.com";
 		
+		String fileName = ""; //화면으로 보낼 파일의 이름들
+		
 		/* 파일 경로 설정하기 */
 		String root = request.getSession().getServletContext().getRealPath("/");
-		path = root + "upload\\";
+		String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
 		System.out.println(path);
 		
 		if(file==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
 		
 		else {
-			String fileName = file.getOriginalFilename(); //업로드된 파일명
+			fileName = file.getOriginalFilename(); //업로드된 파일명
 			
 			/* 파일 정보 확인 */
 			System.out.println("파일의 사이즈 :: "+file.getSize());
@@ -69,34 +73,39 @@ public class StudioRegisterController {
 			
 			/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
 			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
-			int i = -1;
-	      	i = fileName.lastIndexOf("."); //파일 확장자 위치
-			String filename = now + "_" + comId + fileName.substring(i, fileName.length());
+			int i = fileName.lastIndexOf("."); //파일 확장자 위치
+			fileName = now + "_" + comId + fileName.substring(i, fileName.length());
 			System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
 			
 			try {
-				file.transferTo(new File(path+filename)); //파일 생성
+				file.transferTo(new File(path+fileName)); //파일 생성
 			} catch (IllegalStateException | IOException e) {
 				//e.printStackTrace();
 			}
-			return new ResponseEntity(filename, HttpStatus.OK);
+			return new ResponseEntity(fileName, HttpStatus.OK);
 		}
 	}
 	
-	/* 멀티 이미지 파일 업로드 */
-	@PostMapping("/imagesUpload")
-	public ResponseEntity uploadImages(@RequestBody List<MultipartFile> files, HttpServletRequest request, HttpServletResponse response) {
+	/* 멀티 파일 업로드 */
+	@PostMapping("/filesUpload/{subPath}")
+	public ResponseEntity uploadImages(@RequestBody List<MultipartFile> files, 
+									@PathVariable String subPath, 
+									HttpServletRequest request, HttpServletResponse response) {
 		/* 업체 아이디 받아오기 */
 		comId = "11@sample.com";
 		
-		String[] nameList = new String[files.size()]; //파일 이름을 저장할 배열
+		System.out.println();
+		
+		String fileNames = ""; //화면으로 보낼 파일의 이름들
 		
 		/* 파일 경로 설정하기 */
 		String root = request.getSession().getServletContext().getRealPath("/");
-		path = root + "upload\\";
+		String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
 		System.out.println(path);
 		
-		if(nameList==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+		if(files.size()==0) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
 		else {
 			int count = 0;
 			for(MultipartFile file : files) {
@@ -109,20 +118,20 @@ public class StudioRegisterController {
 				
 				/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
 				String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
-				int i = -1;
-		      	i = fileName.lastIndexOf("."); //파일 확장자 위치
-				String filename = now + "_" + comId + fileName.substring(i, fileName.length());
+				int i = fileName.lastIndexOf("."); //파일 확장자 위치
+				fileName = now + "_" + comId + fileName.substring(i, fileName.length());
 				System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
 				
-				nameList[count++] = filename;
+				fileNames += fileName + ",";
 				
 				try {
-					file.transferTo(new File(path+filename)); //파일 생성
+					file.transferTo(new File(path+fileName)); //파일 생성
 				} catch (IllegalStateException | IOException e) {
 					//e.printStackTrace();
 				}
 			}
-			return new ResponseEntity(nameList, HttpStatus.OK);
+			fileNames = fileNames.substring(0, fileNames.length()-1);
+			return new ResponseEntity(fileNames, HttpStatus.OK);
 		} 
 	}
 	

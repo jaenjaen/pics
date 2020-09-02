@@ -123,16 +123,13 @@ export default {
     created() {
         /* 기업고객일 경우에만 스튜디오 등록 화면 볼 수 있고, 
                아닌 경우에는 기업고객 로그인 페이지로 이동 */
-        var company = sessionStorage.getItem("company");
+        var company = JSON.parse(sessionStorage.getItem("company"));
+        console.log(company);
         if (company === null) {
             alert("기업고객으로 로그인하세요.");
             location.href = "/companyLogin"
         } else {
-            /* sessionStorage에 있는 company가 string이므로 split 하여
-            comId만 따로 뽑아내서 데이터 바인딩함 */
-            var comArr = company.split(",")[0].split(":");
-            var str = comArr[1];
-            this.comId = str.substring(1, str.length - 1);
+            this.comId = company.comId;
             console.log(this.comId); //뽑아낸 comId
         }
 
@@ -929,7 +926,7 @@ export default {
                 function(response) {
                     console.log(response.data);
                     alert(`등록되셨습니다.`);
-                    //location.href = "registerStudioSuccess";
+                    //location.href = "/mypage";
                 },
                 function() {
                     console.log("failed");

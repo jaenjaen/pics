@@ -14,8 +14,10 @@
         "bootstrap-vue": "^2.16.0",
         "calendarpickerjs": "^1.2.0",
         "chart.js": "^2.9.3",
+        "chartkick": "^3.2.1",
         "core-js": "^3.6.5",
         "date-fns": "^2.16.1",
+        "hchs-vue-charts": "^1.2.8",
         "jquery": "^3.5.1",
         "jquery-ui": "^1.12.1",
         "jsonwebtoken": "^8.5.1",
@@ -26,6 +28,7 @@
         "vue": "^2.6.11",
         "vue-carousel": "^0.18.0",
         "vue-chartjs": "^3.5.1",
+        "vue-chartkick": "^0.6.1",
         "vue-daum-map": "^1.0.15",
         "vue-daum-postcode": "^0.9.0",
         "vue-facebook-login-component": "^2.3.0",
@@ -64,7 +67,8 @@
         "stylus-loader": "^2.5.1",
         "vue-cli-plugin-vuetify": "~2.0.7",
         "vue-template-compiler": "^2.6.11",
-        "webpack": "^4.44.1"
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12"
     },
     "eslintConfig": {
         "root": true,

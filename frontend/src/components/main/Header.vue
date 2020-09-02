@@ -3,6 +3,9 @@
     <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper">
+          <a href="">
+            <img src="@/assets/img/util/backward.svg" alt="" id="backward" @click.prevent="moveBack">
+          </a>
           <a href="#">
             <img
               src="../../assets/img/header_bottom/pics_logo.svg"
@@ -35,6 +38,9 @@ export default {
   methods: {
     moveToSearch() {
       this.$router.push("/studioSearch/");
+    },
+    moveBack() {
+      this.$router.go(-1);
     }
   }
 };
@@ -65,6 +71,11 @@ img {
 #search_icon {
   width: 20px;
   margin-right: 25px;
+}
+
+#backward {
+  width:20px;
+  float: left;
 }
 </style>
 

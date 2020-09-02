@@ -1,0 +1,12 @@
+1. 플라스크 ResutfulAPI & 딥러닝 예제 풍부
+https://niceman.tistory.com/193?category=1009824
+
+2. FrameWork 안 쓰고 Socket 을 활용해서 Python - Spring 연동
+https://gusrb.tistory.com/47
+
+3. Flask Restful API 기본 (로그인 예제 등 다른 것들도 풍부)
+https://niceman.tistory.com/191
+
+
+
+

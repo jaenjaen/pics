@@ -2,6 +2,8 @@ package com.devils.pics.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,8 @@ import com.devils.pics.service.StudioInfoService;
 @CrossOrigin(origins={"*"}, maxAge=6000)
 public class StudioRegisterController {
 
-	String path;
-	String comId;
+	String path; //공통 파일 경로
+	String comId; //업체 아이디
 	
 	@Autowired
 	private ScheduleService scheduleService;
@@ -44,33 +46,84 @@ public class StudioRegisterController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 	
+	/* 단일 이미지 파일 업로드 */
 	@PostMapping("/imageUpload")
-	public ResponseEntity uploadImage(@RequestBody List<MultipartFile> files, HttpServletRequest request, HttpServletResponse response) {
-		String[] nameList = new String[files.size()]; //파일 이름
+	public ResponseEntity uploadImage(@RequestBody MultipartFile file, HttpServletRequest request, HttpServletResponse response) {		
+		/* 업체 아이디 받아오기 */
+		comId = "11@sample.com";
 		
+		/* 파일 경로 설정하기 */
 		String root = request.getSession().getServletContext().getRealPath("/");
-		path = root+"\\frontend\\src\\assets\\img\\upload\\"; //파일 경로
-
-		int count = 0;
-		for(MultipartFile file : files) {
+		path = root + "upload\\";
+		System.out.println(path);
+		
+		if(file==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
+		
+		else {
+			String fileName = file.getOriginalFilename(); //업로드된 파일명
+			
+			/* 파일 정보 확인 */
 			System.out.println("파일의 사이즈 :: "+file.getSize());
-			System.out.println("업로드된 파일명 :: "+file.getOriginalFilename());
+			System.out.println("업로드된 파일명 :: "+fileName);
 			System.out.println("파일의 파라미터명 :: "+file.getName());
 			
-			String filename = file.getOriginalFilename();
-			nameList[count++] = filename;
+			/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
+			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
+			int i = -1;
+	      	i = fileName.lastIndexOf("."); //파일 확장자 위치
+			String filename = now + "_" + comId + fileName.substring(i, fileName.length());
+			System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
 			
 			try {
-				file.transferTo(new File(path+filename));
-			} catch (IllegalStateException e) {
+				file.transferTo(new File(path+filename)); //파일 생성
+			} catch (IllegalStateException | IOException e) {
 				//e.printStackTrace();
-			} catch (IOException e) {
-				//e.printStackTrace();
-			} 
+			}
+			return new ResponseEntity(filename, HttpStatus.OK);
 		}
+	}
+	
+	/* 멀티 이미지 파일 업로드 */
+	@PostMapping("/imagesUpload")
+	public ResponseEntity uploadImages(@RequestBody List<MultipartFile> files, HttpServletRequest request, HttpServletResponse response) {
+		/* 업체 아이디 받아오기 */
+		comId = "11@sample.com";
+		
+		String[] nameList = new String[files.size()]; //파일 이름을 저장할 배열
+		
+		/* 파일 경로 설정하기 */
+		String root = request.getSession().getServletContext().getRealPath("/");
+		path = root + "upload\\";
+		System.out.println(path);
 		
 		if(nameList==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-		else return new ResponseEntity(nameList, HttpStatus.OK);
+		else {
+			int count = 0;
+			for(MultipartFile file : files) {
+				String fileName = file.getOriginalFilename(); //업로드된 파일명
+				
+				/* 파일 정보 확인 */
+				System.out.println("파일의 사이즈 :: "+file.getSize());
+				System.out.println("업로드된 파일명 :: "+file.getOriginalFilename());
+				System.out.println("파일의 파라미터명 :: "+file.getName());
+				
+				/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
+				String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
+				int i = -1;
+		      	i = fileName.lastIndexOf("."); //파일 확장자 위치
+				String filename = now + "_" + comId + fileName.substring(i, fileName.length());
+				System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
+				
+				nameList[count++] = filename;
+				
+				try {
+					file.transferTo(new File(path+filename)); //파일 생성
+				} catch (IllegalStateException | IOException e) {
+					//e.printStackTrace();
+				}
+			}
+			return new ResponseEntity(nameList, HttpStatus.OK);
+		} 
 	}
 	
 	@PostMapping("/studio")

@@ -66,7 +66,7 @@
                 >
               </select>
             </span>
-            <div>{{ checkSchedule }}</div>
+            <div id="checkSchedule">{{ checkSchedule }}</div>
             <br /><br />
             [종료 시간]
             <span>
@@ -151,7 +151,7 @@
     </aside>
   </div>
 </template>
-<script scoped src="@/assets/js/Reservation.js"></script>
+<script scoped src="@/assets/js/studioInfo/Reservation.js"></script>
 
 <style scoped>
 .container {

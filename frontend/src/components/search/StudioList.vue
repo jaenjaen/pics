@@ -139,7 +139,21 @@
       </select>
     </div>
     <!-- 로딩 시 출력 부분 -->
-    <div id="loading" v-if="loading"></div>
+    <div id="loading" v-if="loading">
+      <div class="preloader-wrapper active">
+          <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+    </div>
     <!-- 검색된 업체들이 출력되는 곳 -->
     <div class="row" id="searchList" v-else>
       <!-- 여기서 출력... 3개씩... 무한스크롤링 가즈아 -->
@@ -166,14 +180,15 @@
                 src="@/assets/img/util/fullheart.svg"
                 width="20em"
                 height="24em"
-                @click.capture="setBookMark(1,studio.stuId,$event)"
+                @click.capture="delBookMark(studio.bookmark[0].bookId,$event)"  
                 v-if="studio.bookmark"
               />
+              
               <img
                 src="@/assets/img/util/heart.svg"
                 width="20em"
                 height="24em"
-                @click.capture="setBookMark(0,studio.stuId,$event)"
+                @click.capture="regBookMark(studio.stuId,$event)"
                 v-else
               />
               <!-- <input type="hidden" :value="studio.stuId" v-model="stuId"/> -->
@@ -183,7 +198,7 @@
             {{ studio.category.categoryName }} /
             {{ studio.studioFilter.address | category }}
           </div>
-          <div id="desc">{{ studio.description | shortenDesc }}</div>
+          <div id="desc">{{ studio.description }}</div>
           <div id="info">
             {{ studio.studioFilter.unitPrice | currency }}
             <span>원/시간</span>
@@ -249,7 +264,7 @@
         </div>
       </div>
       <!-- 스크롤 내려서 더 검색할 때 동글뱅이 -->
-      <div id="loading" v-if="doSearch">
+      <div id="loading-after" v-if="doSearch">
         <div class="preloader-wrapper active">
           <div class="spinner-layer spinner-red-only">
             <div class="circle-clipper left">
@@ -265,6 +280,19 @@
         </div>
       </div>
     </div>
+    <!-- 찜등록/제거 시 팝업창 -->
+    <modal name="delBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+      <div id="unaBook">
+        <p>찜목록에서 제거됐습니다</p>
+        <button class="btn-small" @click="closePop">확인</button>
+      </div>
+    </modal>
+    <modal name="regBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+      <div id="regBook">
+        <p>찜목록에 등록됐습니다</p>
+        <button class="btn-small" @click="closePop">확인</button>
+      </div>
+    </modal>
   </div>
 </template>
 

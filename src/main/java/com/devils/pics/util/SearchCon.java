@@ -18,12 +18,13 @@ public class SearchCon {
 	private String orderCon;
 	private int page;
 	private int custId;
+	private int stuId;
 	
 	public SearchCon() {}
 
 	public SearchCon(String categoryId, String weekDate, String selectedDate, String address1, String address2,
 			String minSize, String maxSize, String minUnitPrice, String maxUnitPrice, String capacity,
-			ArrayList<String> searchContent, String searchTag, String orderCon, int page, int custId) {
+			ArrayList<String> searchContent, String searchTag, String orderCon, int page, int custId, int stuId) {
 		super();
 		this.categoryId = categoryId;
 		this.weekDate = weekDate;
@@ -40,6 +41,7 @@ public class SearchCon {
 		this.orderCon = orderCon;
 		this.page = page;
 		this.custId = custId;
+		this.stuId = stuId;
 	}
 
 	public String getCategoryId() {
@@ -162,12 +164,20 @@ public class SearchCon {
 		this.custId = custId;
 	}
 
+	public int getStuId() {
+		return stuId;
+	}
+
+	public void setStuId(int stuId) {
+		this.stuId = stuId;
+	}
+
 	@Override
 	public String toString() {
 		return "SearchCon [categoryId=" + categoryId + ", weekDate=" + weekDate + ", selectedDate=" + selectedDate
 				+ ", address1=" + address1 + ", address2=" + address2 + ", minSize=" + minSize + ", maxSize=" + maxSize
 				+ ", minUnitPrice=" + minUnitPrice + ", maxUnitPrice=" + maxUnitPrice + ", capacity=" + capacity
 				+ ", searchContent=" + searchContent + ", searchTag=" + searchTag + ", orderCon=" + orderCon + ", page="
-				+ page + ", custId=" + custId + "]";
-	}	
+				+ page + ", custId=" + custId + ", stuId=" + stuId + "]";
 	}
+}

@@ -1,5 +1,6 @@
 package com.devils.pics.service.impl;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,25 +38,26 @@ public class StudioFilterServiceImpl implements StudioFilterService {
 	@Override
 	public List<Studio> searchStudio(SearchCon searchCon) {
 		List<Studio> list = studioFilterDao.searchStudio(searchCon);
-		ArrayList<Bookmark> bmList = new ArrayList<Bookmark>();
-		if(searchCon.getCustId() != -1) {
-			for (Bookmark bm : checkBookMark(searchCon.getCustId())){
-				for (Studio std : list){
-					if(std.getStuId() == bm.getStuId()) {
-						bmList.add(bm);
-						std.setBookmark(bmList);
-						break;
-					}
+		System.out.println("첫 리스트 : " + list);
+		Bookmark b = new Bookmark();
+		b.setCustId(searchCon.getCustId());
+		if (searchCon.getCustId() != -1) {
+			for (Studio std : list) {
+				b.setStuId(std.getStuId());
+				if (checkBookMark(b) != null && std.getStuId() == checkBookMark(b).getStuId()) {
+					System.out.println(3);
+					ArrayList<Bookmark> bmList = new ArrayList<Bookmark>();
+					bmList.add(checkBookMark(b));
+					std.setBookmark(bmList);
 				}
 			}
-			 
 		}
 		return list;
 	}
 	
 	@Transactional
 	@Override
-	public List<Bookmark> checkBookMark(int custId) {
-		return studioFilterDao.checkBookMark(custId);
+	public Bookmark checkBookMark(Bookmark bm) {
+		return studioFilterDao.checkBookMark(bm);
 	}
 }

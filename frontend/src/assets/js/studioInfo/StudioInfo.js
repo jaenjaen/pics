@@ -1,10 +1,13 @@
 import axios from "axios"; //axios
 import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
+// import Chart from 'chart.js'
+// import { Doughnut } from "vue-chartjs";
+import ChartGender from "@/components/studioInfo/StudioInfo.vue"
 
 export default {
     name: "studio-info",
-    components: { carousel },
+    components: { carousel, ChartGender },
     data: function() {
         return {
             // studio 관련 변수 (GET)
@@ -46,11 +49,11 @@ export default {
             loading: true,
             errored: false,
 
-            //Chart & Graph 데이터
-            datacollection: null
+
         };
     },
     mounted() {
+        ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         axios
             .get("http://127.0.0.1:7777/studio/info/10")
             .then(response => (this.studios = response.data))
@@ -91,8 +94,65 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        this.fillData()
+        ////////////////////////////// Chart & Graph //////////////////////////////
+        // axios
+        //     .get("http://127.0.0.1:7777/studio/genderRatio/10")
+        //     .then(response => {
+        //         this.customers = response.data;
+        //         var customer = this.customers;
+        //         this.total = customer.length;
+        //         // var female=0;
+        //         for (var i = 0; i < this.total; i++) {
+        //             if (this.customers[i].gender == "F") {
+        //                 //여자 수만큼 세기
+        //                 this.female += 1;
+        //             }
+        //         }
+        //         this.chartData();
+
+        //         this.renderChart(this.datacollection, this.options);
+        //         console.log("bbb");
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         this.errored = true;
+        //     })
+        //     .finally(() => {
+        //         this.loading = false;
+        //     });
+
+        // this.$nextTick(() => {
+        //     var ctx = document.getElementById('doughnut-chart-area').getContext('2D');
+        //     var config = {
+        //         type: 'Doughnut',
+        //         data: {
+        //             datasets: [{
+        //                 data: [20, 30],
+        //                 backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
+        //                 label: "Gender Ratio"
+        //             }],
+        //             labels: ["Female", "Male"]
+        //         },
+        //         options: {
+        //             responsive: true,
+        //             legend: {
+        //                 position: "top"
+        //             },
+        //             title: {
+        //                 display: true,
+        //                 text: "Gender Ratio"
+        //             },
+        //             animation: {
+        //                 animateScale: true,
+        //                 animateRotate: true
+        //             }
+        //         }
+        //     }
+
+        //     new Chart(ctx, config);
+        // })
     },
+    ////////////////////////////// Methods //////////////////////////////
     methods: {
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
@@ -118,7 +178,6 @@ export default {
                         custId: this.filters.session
                     }
                 };
-
                 axios
                     .post("http://127.0.0.1:7777/bookmark", bookmark)
                     .catch(error => {
@@ -127,57 +186,19 @@ export default {
                     })
                     .finally(() => (this.loading = false));
                 alert(this.bookmarkCheck + "찜 목록에 등록했습니다.")
-                axios //새로 등록한 북마크id 부여
-                    .get("http://127.0.0.1:7777/studio/getBookmark/3/10")
-                    .then(response => {
-                        this.bookmarkCheck = response.data
-
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.errored = true;
-                    })
-                    .finally(() => (this.loading = false));
             }
-        },
-        fillData() {
-            this.datacollection = {
-                labels: [this.getRandomInt(), this.getRandomInt()],
-                datasets: [{
-                    label: 'Data One',
-                    backgroundColor: '#f87979',
-                    data: [this.getRandomInt(), this.getRandomInt()]
-                }, {
-                    label: 'Data One',
-                    backgroundColor: '#f87979',
-                    data: [this.getRandomInt(), this.getRandomInt()]
-                }]
-            }
-        },
-        getRandomInt() {
-            return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-        }
-        // creatChart(chartId, chartData) {
-        //     const ctx = document.getElementById(charId)
-        //     const genderChart = new Chart(ctx, {
-        //         type: chartData.type,
-        //         data: chartData.data,
-        //         options: chartData.options,
-        //     });
-        // },
-
-        // kakaoShare() {
-        //     Kakao.init('91cbdca7243fe89cb44e5d61a5aaaf44');
-        //     Kakao.Link.sendDefault({
-        //         objectType: 'feed',
-        //         content: {
-        //             title: this.title,
-        //             link: {
-        //                 mobileWebUrl: this.url,
-        //                 webUrl: this.url
-        //             }
+        }, ////////////////////////////// Chart & Graph Methods //////////////////////////////
+        // chartData: function() {
+        //     var customer = this.customers;
+        //     this.total = customer.length;
+        //     this.female = 0;
+        //     for (var i = 0; i < this.total; i++) {
+        //         if (this.customers[i].gender == "F") {
+        //             this.female++;
         //         }
-        // })
-
+        //     }
+        //     this.$set(this.datacollection.datasets[0].data, 0, this.female);
+        //     this.$set(this.datacollection.datasets[0].data, 1, this.total);
+        // }
     }
 };

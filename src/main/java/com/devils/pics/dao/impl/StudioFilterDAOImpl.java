@@ -41,7 +41,7 @@ public class StudioFilterDAOImpl implements StudioFilterDAO {
 	
 	// 찜여부 확인
 	@Override
-	public List<Bookmark> checkBookMark(int custId) {
-		return sqlSession.selectList(NS+"checkBookMark",custId);
+	public Bookmark checkBookMark(Bookmark bm) {
+		return sqlSession.selectOne(NS+"checkBookMark", bm);
 	}
 }

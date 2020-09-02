@@ -152,123 +152,129 @@ export default {
     },
     computed: {
         // 수정 필요
-        // checkSchedule: function() { //예약 불가능한 날짜
-        //     // 시간으로 변환한 날짜
-        //     var startDayTime = (new Date(this.start_date + " " + this.start_time + ":00:00")).getTime();
-        //     var endDayTime = (new Date(this.end_date + " " + this.end_time + ":00:00")).getTime();
-        //     // 요일로 변환한 날짜
-        //     var startDay = (new Date(this.start_date)).getDay();
-        //     var endDay = (new Date(this.end_date)).getDay();
-        //     var msg = "";
-        //     if (this.start_date == "" | this.and_date == "" | this.start_time == "" | this.end_time == "")
-        //         return msg;
-        //     else {
-        //         //방법 2. exeption에 포함 안 되는지
-        //         for (var k = 0; k < this.schedule.exceptionDate.length; k++) {
-        //             //포함안되면 repeat가서 뒤지기
-        //             console.log("새로 등록할 날짜 및 시간 : " + week[startDay] + "/" + startDayTime +
-        //                 "/end : " + endDayTime + "/" + week[endDay]);
-        //             console.log("Exc : " + new Date(this.schedule.exceptionDate[0].startDate).getTime() +
-        //                 "|" + new Date(this.schedule.exceptionDate[0].endDate).getTime());
-        //             if ((new Date(this.schedule.exceptionDate[k].endDate)).getTime() <= startDayTime |
-        //                 (new Date(this.schedule.exceptionDate[k].startDate)).getTime() >= endDayTime) {
-        //                 for (var j = 0; j < this.schedule.repeatDate.length; j++) {
-        //                     if (this.schedule.repeatDate[j].weekDate == week[startDay]) { //일치하는 요일의 시작 시간 가져오기
-        //                         console.log("시간 : " + parseInt(this.start_time) + week[startDay] + this.schedule.repeatDate[j].weekDate);
-        //                         if (parseInt(this.start_time) >= parseInt(this.schedule.repeatDate[j].time.split('-')[0]) &
-        //                             (parseInt(this.start_time) < parseInt(this.schedule.repeatDate[j].time.split('-')[1]))) {
-        //                             msg = "";
-        //                             return msg;
-        //                         } else {
-        //                             msg = "시작 시간이 영업 전 시간 입니다.";
-        //                             return msg;
-        //                         }
-        //                     }
-        //                     if (this.schedule.repeatDate[j].weekDate == week[endDay]) { //일치하는 요일의 종료 시간 가져오기
-        //                         if (parseInt(this.end_time) > parseInt(this.schedule.repeatDate[j].time.split('-')[0]) &
-        //                             (parseInt(this.end_time) <= parseInt(this.schedule.repeatDate[j].time.split('-')[1]))) {
-        //                             msg = "";
-        //                             return msg;
-        //                         } else {
-        //                             msg = "종료 시간이 영업 외 시간 입니다.";
-        //                             return msg;
-        //                         }
-        //                     } else {
-        //                         msg = "영업일이 아닙니다.";
-        //                         return msg;
-        //                     }
-
-        //                 }
-        //             } else {
-        //                 msg = "이미 예약이 된 일정입니다.";
-        //                 return msg;
-        //             }
-        //         }
-        //     }
-        // },        
-        // 1. 먼저 날짜랑 시간 쪼개서 변수 생성. 이 안에서 메서드 4개 호출
-        checkSchedule: function() {
+        checkSchedule: function() { //예약 불가능한 날짜
             // 시간으로 변환한 날짜
-            var startDayTime = new Date(
-                this.start_date + " " + this.start_time + ":00:00").getTime();
-            var endDayTime = new Date(
-                this.end_date + " " + this.end_time + ":00:00"
-            ).getTime();
-
+            var startDayTime = (new Date(this.start_date + " " + this.start_time + ":00:00")).getTime();
+            var endDayTime = (new Date(this.end_date + " " + this.end_time + ":00:00")).getTime();
             // 요일로 변환한 날짜
-            var startDay = new Date(this.start_date).getDay();
-            var endDay = new Date(this.end_date).getDay();
-            var msg = ""; // 출력 메세지
-            var start_idx = 0;
-            var end_idx = 0;
-            if (
-                (this.start_date == "") |
-                (this.and_date == "") |
-                (this.start_time == "") |
-                (this.end_time == "")
-            ) return msg;
-            else { //날짜 시간 모두 입력했다면...시작..! 
-                if (this.checkException(startDayTime, endDayTime)) { //1이라면 
-                    msg = "예약이 불가능한 일정입니다.";
-                    this.start_date = "";
-                    this.end_date = "";
-                    return msg;
-                } else {
-                    if (this.checkOpentDate(startDay, start_idx) == 0 && this.checkCloseDate(endDay, end_idx) == 0) {
-                        //시작과 종료일 모두  영업일이 아님
-                        msg = "예약 시작일과 종료일은 모두 비 영업일 입니다."
-                        return msg
-                    } else if (this.checkOpentDate(startDay, start_idx) == 0 && this.checkCloseDate(endDay, end_idx) != 0) {
-                        //종료일이 영업일이 아님
-                        msg = "예약 종료일은 영업일이 아닙니다."
-                        return msg
-                    } else if (this.checkOpentDate(startDay, start_idx) != 0 && this.checkCloseDate(endDay, end_idx) == 0) {
-                        //시작일이 영업일이 아님
-                        msg = "예약 시작일은 영업일이 아닙니다."
-                        return msg
-                    } else { // 둘다 영업일인 경우 영업 시간 체크
-                        // 영업 시간 체크
-                        if (this.checkOpenTime(start_idx) != 0 && this.checkCloseTime(end_idx) != 0) {
-                            //시작과 종료시간 모두  영업일이 아님
-                            msg = "예약 가능합니다."
-                            return msg
-                        } else if (this.checkOpenTime(start_idx) == 0 && this.checkCloseTime(end_idx) != 0) {
-                            //종료일이 영업시간이 아님
-                            msg = "예약 종료시간은 영업시간이 아닙니다."
-                            return msg
-                        } else if (this.checkOpenTime(start_idx) != 0 && this.checkCloseTime(end_idx) == 0) {
-                            //시작일이 영업일이 아님
-                            msg = "예약 시작시간은 영업시간이 아닙니다."
-                            return msg
-                        } else {
-                            msg = "예약 시작시간은 영업시간이 아닙니다."
-                            this.start_date = "";
-                            return msg
+            var startDay = (new Date(this.start_date)).getDay();
+            var endDay = (new Date(this.end_date)).getDay();
+            var msg = "";
+            if (this.start_date == "" | this.and_date == "" | this.start_time == "" | this.end_time == "")
+                return msg;
+            else {
+                //방법 2. exeption에 포함 안 되는지
+                for (var k = 0; k < this.schedule.exceptionDate.length; k++) {
+                    //포함안되면 repeat가서 뒤지기
+                    console.log("새로 등록할 날짜 및 시간 : " + week[startDay] + "/" + startDayTime +
+                        "/end : " + endDayTime + "/" + week[endDay]);
+                    console.log("Exc : " + new Date(this.schedule.exceptionDate[0].startDate).getTime() +
+                        "|" + new Date(this.schedule.exceptionDate[0].endDate).getTime());
+                    if ((new Date(this.schedule.exceptionDate[k].endDate)).getTime() <= startDayTime |
+                        (new Date(this.schedule.exceptionDate[k].startDate)).getTime() >= endDayTime) {
+                        for (var i = 0; i < this.schedule.repeatDate.length; i++) {
+                            if (this.schedule.repeatDate[i].weekDate == week[startDay]) { //일치하는 요일의 시작 시간 가져오기
+                                console.log("시간 : " + parseInt(this.start_time) + week[startDay] + this.schedule.repeatDate[i].weekDate);
+                                if (parseInt(this.start_time) >= parseInt(this.schedule.repeatDate[i].time.split('-')[0]) &
+                                    (parseInt(this.start_time) < parseInt(this.schedule.repeatDate[i].time.split('-')[1]))) {
+                                    for (var j = 0; j < this.schedule.repeatDate.length; j++) {
+                                        if (this.schedule.repeatDate[j].weekDate == week[endDay]) { //일치하는 요일의 종료 시간 가져오기
+                                            if (parseInt(this.end_time) > parseInt(this.schedule.repeatDate[j].time.split('-')[0]) &
+                                                (parseInt(this.end_time) <= parseInt(this.schedule.repeatDate[j].time.split('-')[1]))) {
+                                                msg = "";
+                                                return msg;
+                                            } else {
+                                                msg = "종료 시간이 영업 외 시간 입니다.";
+                                                this.end_time = "";
+                                                return msg;
+                                            }
+                                        }
+                                    }
+                                    msg = "종료일이 영업일이 아닙니다.";
+                                    this.end_date = "";
+                                    return msg;
+                                } else {
+                                    msg = "시작 시간이 영업 외 시간 입니다.";
+                                    this.start_time = "";
+                                    return msg;
+                                }
+                            }
                         }
+                        msg = "시작일이 영업일이 아닙니다.";
+                        this.start_date = "";
+                        return msg;
+                    } else {
+                        msg = "이미 예약이 된 일정입니다.";
+                        this.start_date = "";
+                        this.start_time = "";
+                        this.end_date = "";
+                        this.end_time = "";
+                        return msg;
                     }
                 }
             }
         },
+        // 1. 먼저 날짜랑 시간 쪼개서 변수 생성. 이 안에서 메서드 4개 호출
+        // checkSchedule: function() {
+        //     // 시간으로 변환한 날짜
+        //     var startDayTime = new Date(
+        //         this.start_date + " " + this.start_time + ":00:00").getTime();
+        //     var endDayTime = new Date(
+        //         this.end_date + " " + this.end_time + ":00:00"
+        //     ).getTime();
+
+        //     // 요일로 변환한 날짜
+        //     var startDay = new Date(this.start_date).getDay();
+        //     var endDay = new Date(this.end_date).getDay();
+        //     var msg = ""; // 출력 메세지
+        //     var start_idx = 0;
+        //     var end_idx = 0;
+        //     console.log("startDay : " + endDay + " | endDay : " + endDay + " | startDayTime : " + startDayTime + "| endDayTime : " + endDayTime);
+        //     console.log("this.start_date : " + this.start_date + " | this.end_date : " + this.end_date);
+        //     if ((this.start_date == "") | (this.and_date == "") | (this.start_time == "") | (this.end_time == ""))
+        //         return msg;
+        //     //   else { //날짜 시간 모두 입력했다면...시작..! 
+        //     if (this.checkException(startDayTime, endDayTime) == 1) { //1이라면 
+        //         msg = "예약이 불가능한 일정입니다.";
+        //         this.start_date = "";
+        //         this.end_date = "";
+        //         return msg;
+        //     } else {
+        //         if (this.checkOpentDate(startDay, start_idx) == 0 && this.checkCloseDate(endDay, end_idx) == 0) {
+        //             //시작과 종료일 모두  영업일이 아님
+        //             msg = "예약 시작일과 종료일은 모두 비 영업일 입니다."
+        //             return msg
+        //         } else if (this.checkOpentDate(startDay, start_idx) == 0 && this.checkCloseDate(endDay, end_idx) != 0) {
+        //             //종료일이 영업일이 아님
+        //             msg = "예약 종료일은 영업일이 아닙니다."
+        //             return msg
+        //         } else if (this.checkOpentDate(startDay, start_idx) != 0 && this.checkCloseDate(endDay, end_idx) == 0) {
+        //             //시작일이 영업일이 아님
+        //             msg = "예약 시작일은 영업일이 아닙니다."
+        //             return msg
+        //         } else { // 둘다 영업일인 경우 영업 시간 체크
+        //             // 영업 시간 체크
+        //             if (this.checkOpenTime(start_idx) != 0 && this.checkCloseTime(end_idx) != 0) {
+        //                 //시작과 종료시간 모두  영업일이 아님
+        //                 msg = "예약 가능합니다."
+        //                 return msg
+        //             } else if (this.checkOpenTime(start_idx) == 0 && this.checkCloseTime(end_idx) != 0) {
+        //                 //종료일이 영업시간이 아님
+        //                 msg = "예약 종료시간은 영업시간이 아닙니다."
+        //                 return msg
+        //             } else if (this.checkOpenTime(start_idx) != 0 && this.checkCloseTime(end_idx) == 0) {
+        //                 //시작일이 영업일이 아님
+        //                 msg = "예약 시작시간은 영업시간이 아닙니다."
+        //                 return msg
+        //             } else {
+        //                 msg = "예약 시작시간은 영업시간이 아닙니다."
+        //                 this.start_date = "";
+        //                 return msg
+        //             }
+        //         }
+        //     }
+        //     //}
+        // },
         totalPriceCalculate: function() {
             // 1. 일자 >> 시간대로 변경
             var startSplit = this.start_date.split("-");
@@ -367,57 +373,66 @@ export default {
         //////////////// ~~~~~ 예약 일정 체크 Method 시작 ~~~~~ ////////////////
         // 1. exception 
         // : 예약할 때 같이 넣어서 ExcpetionDate만 확인해도 예약 가능/불가능 체크 ok       
-        checkException(startDayTime, endDayTime) {
-            for (var k = 0; k < this.schedule.exceptionDate.length; k++) {
-                //포함안되면 repeat가서 뒤지기
-                //날짜 + 시간을 초로 환산 >> 등록하려는 시작일이 기존 예약의 종료시간보다 늦거나 
-                // 등록하려는 종료일이 기존 예약의 시작시간보다 빠른 경우 기존 예약 및 ExceptionDate에 포함 X
-                if ((new Date(this.schedule.exceptionDate[k].endDate).getTime() <= startDayTime) |
-                    (new Date(this.schedule.exceptionDate[k].startDate).getTime() >= endDayTime)) {
-                    continue;
-                } else {
-                    return 1;
-                }
-            } // For문을 빠져나왔다면 flag=0. 즉, 예약 불가능이 아니다 >> RepeatDate에서 영업일인지 체크        
-        },
-        //2. 
-        checkOpentDate(startDay, start_idx) {
-            // for (var j = 0; j < this.schedule.repeatDate.length; j++) {
-            var weekday = this.schedule.repeatDate.weekDate
-            if (weekday.include(week[startDay])) { //시작일이 요일 리스트에 있다면 영업 ㅇㅋ
-                return start_idx;
-            }
-            // }
-            this.start_date = "";
-            return 0;
-        },
-        checkCloseDate(endDay, end_idx) {
-            // for (var j = 0; j < this.schedule.repeatDate.length; j++) {
-            var weekday = this.schedule.repeatDate.weekDate
-            if (weekday.includes(week[endDay])) { //종료일이 요일 리스트에 있다면 영업 ㅇㅋ
-                end_idx = 1;
-                return end_idx;
-            }
-            //}
-            return 0;
-        },
-        checkOpenTime(start_idx) {
-            if ((parseInt(this.start_time) >= parseInt(this.schedule.repeatDate[start_idx].time.split("-")[0])) &
-                (parseInt(this.start_time) < parseInt(this.schedule.repeatDate[start_idx].time.split("-")[1]))) {
-                return 1;
-            } else { // 선택한 시작시간이 영업시간대가 아니면, 해당 요일의 오픈 시간 삽입
-                this.start_time = parseInt(this.schedule.repeatDate[start_idx].time.split("-")[0]);
-                return 0;
-            }
-        },
-        checkCloseTime(end_idx) {
-            if ((parseInt(this.end_time) >= parseInt(this.schedule.repeatDate[end_idx].time.split("-")[0])) &
-                (parseInt(this.end_time) < parseInt(this.schedule.repeatDate[end_idx].time.split("-")[1]))) {
-                return 1;
-            } else {
-                this.end_time = parseInt(this.schedule.repeatDate[end_idx].time.split("-")[1]);
-                return 0;
-            }
-        }
+        // checkException(startDayTime, endDayTime) {
+        //     console.log("checkException if 전 입니다 :" + startDayTime + ", exceptiondate" + this.schedule.exceptionDate[0]);
+        //     for (var i = 0; i < this.schedule.exceptionDate.length; i++) {
+        //         //포함안되면 repeat가서 뒤지기
+        //         //날짜 + 시간을 초로 환산 >> 등록하려는 시작일이 기존 예약의 종료시간보다 늦거나 
+        //         // 등록하려는 종료일이 기존 예약의 시작시간보다 빠른 경우 기존 예약 및 ExceptionDate에 포함 X
+        //         if ((new Date(this.schedule.exceptionDate[i].endDate).getTime() <= startDayTime) |
+        //             (new Date(this.schedule.exceptionDate[i].startDate).getTime() >= endDayTime)) {
+        //             console.log("checkException if 입니다. exception 일정이 없습니다.");
+        //             continue;
+        //         } else {
+        //             return 1;
+        //         }
+        //     }
+        //     return 0;
+        //     // For문을 빠져나왔다면 flag=0. 즉, 예약 불가능이 아니다 >> RepeatDate에서 영업일인지 체크        
+        // },
+        // //2. 
+        // checkOpentDate(startDay, start_idx) {
+        //     //var weekday = this.schedule.repeatDate.weekDate;
+        //     for (var i = 0; i < this.schedule.repeatDate.length; i++) {
+        //         console.log("checkOpentDate if 전 입니다 :" + (week[startDay]) + ", weekday" + this.schedule.repeatDate.weekDate);
+        //         if (this.schedule.repeatDate[i].weekDate == week[startDay]) { //시작일이 요일 리스트에 있다면 영업 ㅇㅋ
+        //             start_idx = i;
+        //             return start_idx;
+        //         }
+        //     }
+        //     this.start_date = "";
+        //     return 0;
+        // },
+        // checkCloseDate(endDay, end_idx) {
+        //     //var weekday = this.schedule.repeatDate.weekDate
+        //     for (var i = 0; i < this.schedule.repeatDate.length; i++) {
+        //         console.log("checkCloseDate if 전 입니다 :" + (week[endDay]) + ", weekday" + this.schedule.repeatDate.weekDate.length);
+        //         if (this.schedule.repeatDate[i].weekDate == week[endDay]) { //종료일이 요일 리스트에 있다면 영업 ㅇㅋ
+        //             end_idx = i;
+        //             return end_idx;
+        //         }
+        //     }
+        //     return 0;
+        // },
+        // checkOpenTime(start_idx) {
+        //     if ((parseInt(this.start_time) >= parseInt(this.schedule.repeatDate[start_idx].time.split("-")[0])) &
+        //         (parseInt(this.start_time) < parseInt(this.schedule.repeatDate[start_idx].time.split("-")[1]))) {
+        //         console.log("checkOpenTime if 입니다 :" + this.start_time + ", 시작시간" + this.schedule.repeatDate[start_idx].time.split("-")[0]);
+        //         return 1;
+        //     } else { // 선택한 시작시간이 영업시간대가 아니면, 해당 요일의 오픈 시간 삽입
+        //         this.start_time = parseInt(this.schedule.repeatDate[start_idx].time.split("-")[0]);
+        //         return 0;
+        //     }
+        // },
+        // checkCloseTime(end_idx) {
+        //     if ((parseInt(this.end_time) >= parseInt(this.schedule.repeatDate[end_idx].time.split("-")[0])) &
+        //         (parseInt(this.end_time) < parseInt(this.schedule.repeatDate[end_idx].time.split("-")[1]))) {
+        //         console.log("checkCloseTime if 입니다 :" + this.end_time + ", 시작시간" + this.schedule.repeatDate[end_idx].time.split("-")[1]);
+        //         return 1;
+        //     } else {
+        //         this.end_time = parseInt(this.schedule.repeatDate[end_idx].time.split("-")[1]);
+        //         return 0;
+        //     }
+        // }
     }
 };

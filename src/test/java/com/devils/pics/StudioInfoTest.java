@@ -135,7 +135,7 @@ public class StudioInfoTest {
 		List<Customer> customerList=service.genderRatio(10);
 		System.out.println(customerList);
 		for(int i=0;i<customerList.size();i++) {
-			if(customerList.get(i).getGender()=='F') count++;
+			//if(customerList.get(i).getGender()=='F') count++;
 		}	
 		System.out.println(count+"|"+customerList.size());
 	}

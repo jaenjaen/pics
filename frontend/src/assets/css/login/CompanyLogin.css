@@ -3,7 +3,7 @@
     margin: auto;
     width: 768px;
     text-align: center;
-    padding: 1% 0 2% 0;
+    padding: 1% 0 71px 0;
 }
 
 .grid {
@@ -74,7 +74,7 @@ a:hover {
 }
 
 .signout {
-    color: #a20303;
+    color: #9e5353;
     outline: 0;
     text-decoration: none;
 }

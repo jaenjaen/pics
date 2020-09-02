@@ -39,7 +39,7 @@ public class CompanyServiceImpl implements CompanyService {
 		String salt = comDao.getSalt();
 		String password = saltUtil.encodePassword(salt,company.getPassword());
 		if(!comDao.getPassword().equals(password)) throw new FileNotFoundException ("비밀번호가 존재하지 않습니다.");
-		return company;
+		return comDao;
 	}
 
 	@Override

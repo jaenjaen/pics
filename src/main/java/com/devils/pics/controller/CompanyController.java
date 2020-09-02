@@ -59,7 +59,6 @@ public class CompanyController {
 		
 		try {
 			Company comp = companyService.loginCompany(company);
-			
 			String token = jwtService.create(comp);
 			
 			res.setHeader("jwt-auth-token", token);

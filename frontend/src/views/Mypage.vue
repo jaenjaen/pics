@@ -1,5 +1,5 @@
 <template>
-  <div class="publicSpace" v-if="loginFlag">
+  <div class="mypage_container" v-if="loginFlag">
     <CompanyMypage v-if="modeFlag"/>
     <CustomerMypage v-if="!modeFlag"/>
   </div>
@@ -35,3 +35,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .mypage_container{
+    width:768px;
+    margin:auto;
+  }
+</style>

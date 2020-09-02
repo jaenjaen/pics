@@ -926,7 +926,7 @@ export default {
                 function(response) {
                     console.log(response.data);
                     alert(`등록되셨습니다.`);
-                    //location.href = "registerStudioSuccess";
+                    //location.href = "/mypage";
                 },
                 function() {
                     console.log("failed");

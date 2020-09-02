@@ -122,6 +122,14 @@
 		GROUP BY res.cust_id
 	</select>
 	
+
+	<select id="ageRatio" parameterType="int" resultType="int">
+		SELECT c.age-mod(c.age,10) ages ,count(distinct(c.cust_id)) cnt
+		FROM reservation res JOIN customer c ON c.cust_id=res.cust_id
+		WHERE res.stu_id=${value}
+		GROUP BY ages
+	</select>
+	
  </mapper>	
 
 

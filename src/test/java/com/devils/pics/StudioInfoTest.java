@@ -131,12 +131,18 @@ public class StudioInfoTest {
 //		int result=sqlSession.insert(NS+"insertBookmark",new Bookmark(new Studio(11),new Customer(5)));
 //		System.out.println(result); 
 		
-		int count=0;
-		List<Customer> customerList=service.genderRatio(10);
-		System.out.println(customerList);
-		for(int i=0;i<customerList.size();i++) {
-			if(customerList.get(i).getGender()=='F') count++;
-		}	
-		System.out.println(count+"|"+customerList.size());
+//		int count=0;
+//		List<Customer> customerList=service.genderRatio(10);
+//		System.out.println(customerList);
+//		for(int i=0;i<customerList.size();i++) {
+//			if(customerList.get(i).getGender()=='F') count++;
+//		}	
+//		System.out.println(count+"|"+customerList.size());
+		
+		List<Integer> ageList=sqlSession.selectList(NS+"ageRatio",10);
+		for (int age :ageList) {
+			System.out.println(age);
+			System.out.println(ageList);
+		}
 	}
 }

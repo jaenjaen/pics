@@ -2,7 +2,9 @@ import axios from "axios";
 import Vue from "vue";
 import { BCollapse } from "bootstrap-vue";
 import { VBToggle } from "bootstrap-vue";
+import VModal from 'vue-js-modal'
 
+Vue.use(VModal);
 Vue.directive("b-toggle", VBToggle);
 Vue.component("b-collapse", BCollapse);
 
@@ -63,11 +65,8 @@ export default {
     },
     mounted() {
         this.filters = JSON.parse(sessionStorage.getItem('filters'));
+        this.login();
         this.infiniteHandler();
-        // 페이지 오자마자 전체 리스트 뿌리기 --> 필터 검색 후 진행하도록
-        // this.infiniteHandler();
-        // this.filters.page += 5;
-        // M.AutoInit();
     },
     filters: {
         // 돈에 , 붙여주는 필터
@@ -83,10 +82,6 @@ export default {
         category: function(value) {
             let str = value.split("시");
             return str[0];
-        },
-        shortenDesc: function(value) {
-            if (value.length > 52) return value.substring(0, 51) + "...";
-            return value;
         }
     },
     methods: {
@@ -172,7 +167,6 @@ export default {
         },
         // 검색 필터 삭제
         initFilter(value) {
-            alert(1);
             if (value == 1) {
                 this.filters.selectedDate = "";
                 this.filters.weekDate = "";
@@ -194,7 +188,7 @@ export default {
         setBookMark(value, stuId, $event) {
             this.doBookMark = false;
             if (value == 1) {
-                alert("이미 찜한 공간입니다")
+                this.$modal.show("alreadyBooked");
             } else {
                 let bookmark = {
                     studio: {
@@ -224,12 +218,13 @@ export default {
             }
             sessionStorage.setItem('cust', JSON.stringify(cust));
             var sessionTemp = sessionStorage.getItem('cust');
-            if (sessionTemp) this.filters.session = JSON.parse(sessionTemp).custId;
-            alert("로그인함");
+            this.filters.session = JSON.parse(sessionTemp).custId;
+            alert("로그인 ID: " + 3);
         },
         logout() {
             sessionStorage.removeItem('cust');
             this.filters.session = -1;
+            alert("로그아웃");
         }
     }
 };

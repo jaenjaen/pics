@@ -58,6 +58,7 @@ public class StudioFilterController {
 	}
 	// Client로 받은 정보를 VO로 전환
 	public SearchCon getSearchCon(HashMap<String, String> filters) {
+		System.out.println("session : "+filters.get("session"));
 		SearchCon searchCon = new SearchCon();
 		if (filters.get("categoryId").length()>0 && !filters.get("categoryId").equals("-1"))
 			searchCon.setCategoryId(filters.get("categoryId"));

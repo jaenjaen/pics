@@ -74,7 +74,6 @@ export default {
         },
         // 검색 필터 삭제
         initFilter(value) {
-            alert(1);
             if (value == 1) {
                 this.filters.selectedDate = "";
                 this.filters.weekDate = "";
@@ -98,7 +97,7 @@ export default {
             }
             sessionStorage.setItem('cust', JSON.stringify(cust));
             var sessionTemp = sessionStorage.getItem('cust');
-            if (sessionTemp) this.filters.session = JSON.parse(sessionTemp).custId;
+            this.filters.session = JSON.parse(sessionTemp).custId;
             alert("로그인함");
         },
         logout() {

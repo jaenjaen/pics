@@ -257,6 +257,9 @@
             font-size: 0.9em;
             color: #737373;
             margin-bottom: 2em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         #studioContent #info {
@@ -289,6 +292,20 @@
         
         .bookYes {
             color: red;
+        }
+        
+        #modal {
+            vertical-align: middle;
+            margin-top: 9%;
+        }
+        
+        #modal p {
+            font-size: 1em;
+            font-weight: bold;
+        }
+        
+        #modal button {
+            margin: auto !important;
         }
         /* Select Field
    ========================================================================== */

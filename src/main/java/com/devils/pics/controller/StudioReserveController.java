@@ -62,7 +62,7 @@ public class StudioReserveController {
 		}
 	}
 
-	//2.getReservation
+	//2.getReservation for studio
 	@GetMapping("/studio/reservation/{stuId}")
 	public ResponseEntity getReservation(@PathVariable int stuId) {
 		Reservation reservation = new Reservation(stuId);

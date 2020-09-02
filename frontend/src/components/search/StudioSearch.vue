@@ -108,13 +108,9 @@
               <div id="capaFilter" name="capaFilter">
                 <p>인원 규모로 찾기</p>
                 <i class="material-icons" id="icon_filter">accessibility</i>
-                <i class="material-icons" id="icon_capa1" @click="filters.capacity--"
-                  >exposure_neg_1</i
-                >
+                <i class="material-icons" id="icon_capa1" @click="modifyCapa(0)">exposure_neg_1</i>
                 <span>{{ filters.capacity }}명</span>
-                <i class="material-icons" id="icon_capa2" @click="filters.capacity++"
-                  >exposure_plus_1</i
-                >
+                <i class="material-icons" id="icon_capa2" @click="modifyCapa(1)">exposure_plus_1</i>
               </div>
               <hr />
 
@@ -160,6 +156,18 @@
         </div>
       </div>
     </div>
+    <!-- 정렬하기 부분 -->
+    <div id="order">
+      <!-- 정렬하기 위한 select 태그 -->
+      <select name="orderCon" id="orderCon" @change="setFilter" v-model="filters.orderCon">
+        <option value disabled>정렬하기</option>
+        <option value="1">인기순</option>
+        <option value="2">높은 가격순</option>
+        <option value="3">낮은 가격순</option>
+        <option value="4">평점순</option>
+      </select>
+    </div>
+    <StudioList :filters="filters" ref="studioList"/>
   </div>
 </template>
 

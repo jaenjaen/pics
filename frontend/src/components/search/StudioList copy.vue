@@ -1,14 +1,43 @@
 <template>
   <div class="container" id="searchStudio">
+    <!-- StudioSearch -->
+    <StudioSearch />
+    <!-- 정렬하기 부분 -->
+    <div id="order">
+      <!-- 정렬하기 위한 select 태그 -->
+      <select name="orderCon" id="orderCon" @change="setFilter" v-model="filters.orderCon">
+        <option value disabled>정렬하기</option>
+        <option value="1">인기순</option>
+        <option value="2">가격순-내림차순</option>
+        <option value="3">가격순-오름차순</option>
+        <option value="4">평점순</option>
+      </select>
+    </div>
+    <!-- 로딩 시 출력 부분 -->
+    <div id="loading" v-if="loading">
+      <div class="preloader-wrapper active">
+          <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+    </div>
     <!-- 검색된 업체들이 출력되는 곳 -->
-    <div class="row" id="searchList">
+    <div class="row" id="searchList" v-else>
       <!-- 여기서 출력... 3개씩... 무한스크롤링 가즈아 -->
       <!-- 카드 형식 큰 틀 -->
       <div
         class="card horizontal col s12"
         id="studioInf"
-        v-for="(studio, index) in studios"
-        v-bind:key="index"
+        v-for="(studio, $index) in studios"
+        v-bind:key="$index"
         ref="scrollContainer"
         @click="showStudioInfo(studio.stuId)"
       >
@@ -21,12 +50,12 @@
           <div class="container_name">
             <div id="title">{{ studio.name }}</div>
             <!-- 찜기능 부분 -->
-            <div id="regBM" v-if="filters.session != -1">
+            <div id="regBM">
               <img
                 src="@/assets/img/util/fullheart.svg"
                 width="20em"
                 height="24em"
-                @click.capture="setBookMark(index, studio.stuId,$event)"  
+                @click.capture="delBookMark(studio.bookmark[0].bookId,$event)"  
                 v-if="studio.bookmark"
               />
               
@@ -34,7 +63,7 @@
                 src="@/assets/img/util/heart.svg"
                 width="20em"
                 height="24em"
-                @click.capture="setBookMark(index, studio.stuId,$event)"
+                @click.capture="regBookMark(studio.stuId,$event)"
                 v-else
               />
               <!-- <input type="hidden" :value="studio.stuId" v-model="stuId"/> -->
@@ -125,22 +154,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- 로딩 시 출력 부분 -->
-    <div id="loading" v-if="loading">
-      <div class="preloader-wrapper active">
-          <div class="spinner-layer spinner-red-only">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div>
-            <div class="gap-patch">
-              <div class="circle"></div>
-            </div>
-            <div class="circle-clipper right">
-              <div class="circle"></div>
-            </div>
-          </div>
-        </div>
     </div>
     <!-- 찜등록/제거 시 팝업창 -->
     <modal name="delBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>

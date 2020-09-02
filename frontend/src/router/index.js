@@ -79,7 +79,7 @@ const routes = [{
         path: "/studioList",
         name: "studioList",
         component: StudioList
-    }
+    },
 
 
     // {

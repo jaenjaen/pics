@@ -1,5 +1,6 @@
 package com.devils.pics.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class ExtraServiceImpl implements ExtraService {
 	public List<Studio> getBookmark(int custId) throws Exception {
 		return extraDao.getBookmark(custId);
 	}
+	
+	@Override
+	public Bookmark getBookId(HashMap<String, Integer> ids) throws Exception {
+		return extraDao.getBookId(ids);
+	}
 
 	@Override
 	public int deleteBookmark(int bookId) throws Exception {
@@ -41,4 +47,6 @@ public class ExtraServiceImpl implements ExtraService {
 	public List<Review> getCustomerReivews(int custId) throws Exception {
 		return extraDao.getCustomerReivews(custId);
 	}
+
+	
 }

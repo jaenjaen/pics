@@ -10,6 +10,7 @@
 		VALUES (#{studio.stuId},#{customer.custId})
 	</insert>
 	
+	<!-- 고객 아이디로 찾기 -->
 	<select id="getBookmark" parameterType="int" resultType="studio">
 		SELECT s.stu_id, s.category_id, s.name, s.description, s.rule
 			   ,s.main_img,s.port_img,s.cad_img,s.floor 
@@ -17,6 +18,14 @@
 		WHERE c.cust_id = #{value}
 		  AND b.cust_id = c.cust_id
 		  AND s.stu_id = b.stu_id
+	</select>
+	
+	<!-- 고객 아이디와 스튜디오 아이디로 찾기 -->
+	<select id="getBookId" parameterType="hashmap" resultType="bookmark">
+		SELECT book_id, stu_id, cust_id
+		FROM bookmark
+		WHERE cust_id = #{custId}
+		AND stu_id = #{stuId}
 	</select>
 	
 	<delete id="deleteBookmark" parameterType="int">

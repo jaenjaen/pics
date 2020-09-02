@@ -1,14 +1,15 @@
+import StudioList from "@/components/search/StudioList.vue";
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 // Vue 시작
 export default {
     name: "studio-list",
+    components: {
+        StudioList
+    },
     data() {
         return {
-            // Axios 전체 리스트 변수
-            studios: [],
-
-            // Axios 필터변수
+            // Studio 검색 필터변수
             filters: {
                 categoryId: "",
                 weekDate: "",
@@ -26,21 +27,27 @@ export default {
                 page: 0,
                 //로그인 session 변수, 기본값은 -1
                 session: -1,
-
             },
-
-            //collapse 변수
+            // Collapse 변수
             visible: true,
-
-            // 기본 변수
-            loading: true,
-            errored: false
         };
+    },
+    mounted() {
+        //로그인 세션 정보 받기
+        this.login();
     },
     methods: {
         // 카테고리 설정 메소드
         setCategory() {
             this.filters.categoryId = this.$refs.cataSelect.value;
+        },
+        // 인수 증감 메소드
+        modifyCapa(value) {
+            if (value == 1) { //증가 시
+                this.filters.capacity += 1;
+            } else { //감소 시
+                if (this.filters.capacity > 0) this.filters.capacity -= 1; // 0초과하면 감소하기 for 음수 방지
+            }
         },
         // 필터 값 넣고 검색
         setFilter() {
@@ -53,24 +60,16 @@ export default {
                 this.filters.searchTag = this.filters.searchContent;
                 this.filters.searchContent = "";
             }
-            // 필터를 새로 설정했으므로 페이지와 기존 리스트 0처리
-            this.filters.page = 0;
-            this.studios = [];
 
             //필터를 설정하면 collapse 문 닫기
             this.visible = false;
 
-            //로딩 시작
-            this.doSearch = true;
+            //필터를 설정하면 page랑 리스트 초기화
+            this.$refs.studioList.studios = [];
+            this.filters.page = 0;
 
-            // 필터 객체
-            this.searchList();
-            // setTimeout(() => { this.isDone = false; }, 2000)
-        },
-        // 검색 메소드(전체 & 필터)
-        searchList() {
-            sessionStorage.setItem('filters', JSON.stringify(this.filters));
-            this.$router.push("/studioList")
+            // 필터 지정 후 자식 컴포넌트의 검색메소드 실행
+            this.$refs.studioList.infiniteHandler();
         },
         // 검색 필터 삭제
         initFilter(value) {
@@ -98,7 +97,6 @@ export default {
             sessionStorage.setItem('cust', JSON.stringify(cust));
             var sessionTemp = sessionStorage.getItem('cust');
             this.filters.session = JSON.parse(sessionTemp).custId;
-            alert("로그인함");
         },
         logout() {
             sessionStorage.removeItem('cust');

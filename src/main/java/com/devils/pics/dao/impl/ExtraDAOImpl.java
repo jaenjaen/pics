@@ -1,5 +1,6 @@
 package com.devils.pics.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -25,6 +26,10 @@ public class ExtraDAOImpl implements ExtraDAO {
 	@Override
 	public List<Studio> getBookmark(int custId) throws Exception {
 		return sqlSession.selectList(NS+"getBookmark",custId);
+	}
+	@Override
+	public Bookmark getBookId(HashMap<String, Integer> ids) throws Exception {
+		return sqlSession.selectOne(NS+"getBookId", ids);
 	}
 	@Override
 	public int deleteBookmark(int bookId) throws Exception {

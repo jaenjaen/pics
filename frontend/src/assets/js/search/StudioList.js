@@ -8,53 +8,29 @@ Vue.use(VModal);
 Vue.directive("b-toggle", VBToggle);
 Vue.component("b-collapse", BCollapse);
 
-// 요일 변환을 위한 리스트
-const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 // 카테고리 변한을 위한 리스트
 // Vue 시작
 export default {
     name: "studio-list",
+    props: ["filters"],
     data() {
         return {
             // Axios 전체 리스트 변수
             studios: [],
 
-            // Axios 필터변수
-            filters: {
-                categoryId: "",
-                weekDate: "",
-                selectedDate: "",
-                address1: "",
-                address2: "",
-                minSize: "",
-                maxSize: "",
-                minUnitPrice: "",
-                maxUnitPrice: "",
-                capacity: 0,
-                searchContent: "",
-                searchTag: "",
-                orderCon: "",
-                page: 0,
-
-                //로그인 session 변수, 기본값은 -1
-                session: -1,
-
-            },
             //별점
             score: 0,
-
-            //collapse 변수
-            visible: false,
 
             //무한스크롤링 변수
             isDone: true, // 무한스크롤링 끝냄 & 스크롤바가 내려가서 무한 검색하는 것 방지 & 검색이 완료되면 동글뱅이 멈춘다
             doSearch: false, //true면 loading 중, false면 끝
 
             //bookmark 변수
-            doBookMark: true,
+            doBookMark: true, //찜 클릭 시, 상세페이지로 못 넘어가게 하는 변수
+            isBooked: [], // 반복적으로 찜 등록/해제를 가능하게 해주는 변수
 
             // 기본 변수
-            loading: true,
+            loading: false,
             errored: false
         };
     },
@@ -65,9 +41,7 @@ export default {
         window.removeEventListener("scroll", this.handleScroll);
     },
     mounted() {
-        this.filters = JSON.parse(sessionStorage.getItem('filters'));
-        this.login();
-        this.infiniteHandler();
+
     },
     filters: {
         // 돈에 , 붙여주는 필터
@@ -75,58 +49,32 @@ export default {
             let num = new Number(value);
             return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
         },
+        //평점에 0.0 식으로 표시하는 필터
         demical: function(value) {
             let num = new Number(value);
             if (num == 0) return 0;
             return num.toFixed(1);
         },
+        //지역 표기 시 "시" 빼기
         category: function(value) {
             let str = value.split("시");
             return str[0];
         }
     },
     methods: {
-        // 카테고리 설정 메소드
-        setCategory() {
-            this.filters.categoryId = this.$refs.cataSelect.value;
-        },
-        // 필터 값 넣고 검색
-        setFilter() {
-            // 날짜가 입력이 되면 요일 리턴
-            if (this.filters.selectedDate.length > 0) {
-                this.weekDate = week[new Date(this.filters.selectedDate).getDay()];
-            }
-            // #을 입력하면 해시태그 검색으로 전환
-            if (this.filters.searchContent.indexOf("#") == 0) {
-                this.filters.searchTag = this.filters.searchContent;
-                this.filters.searchContent = "";
-            }
-            // 필터를 새로 설정했으므로 페이지와 기존 리스트 0처리
-            this.filters.page = 0;
-            this.studios = [];
-
-            //필터를 설정하면 collapse 문 닫기
-            this.visible = false;
-
-            //로딩 시작
-            this.doSearch = true;
-
-            // 필터 객체
-            this.search();
-            // setTimeout(() => { this.isDone = false; }, 2000)
-        },
         //스크롤 이벤트 : 스크롤 바가 맨 밑에 있을 때
         handleScroll() {
             if (
                 window.innerHeight + window.scrollY >= document.body.offsetHeight &&
                 this.isDone == false
             ) {
-                this.search();
+                this.infiniteHandler();
                 this.isDone = true; // 검색 여러 번 방지
             }
         },
         // 검색 메소드(전체 & 필터)
-        search() {
+        infiniteHandler() {
+            this.loading = true;
             axios
                 .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
                 .then(response => {
@@ -134,9 +82,14 @@ export default {
                     setTimeout(() => {
                         if (response.data) {
                             this.studios = this.studios.concat(response.data);
+                            // 찜 여부를 확인하기 위한 반복문(있으면 true)
+                            response.data.forEach(element => {
+                                if (element.bookmark == null) this.isBooked.push(false);
+                                else this.isBooked.push(true);
+                            });
                             if (response.data.length < 5) {
                                 this.isDone = true;
-                                this.doSearch = false; //동글뱅이 끝(각 호출 끝마다)
+                                this.doSearch = false; //동글뱅이 끝(각 서치마다)
                             }
                             this.filters.page += 5;
                             this.isDone = false; // 다시 검색하도록 방지 풂
@@ -166,85 +119,40 @@ export default {
         getImgUrl(url) {
             return require("@/assets/img/studio/" + url);
         },
-        // 검색 필터 삭제
-        initFilter(value) {
-            if (value == 1) {
-                this.filters.selectedDate = "";
-                this.filters.weekDate = "";
-            } else {
-                this.filters.selectedDate = "";
-                this.filters.weekDate = "";
-                this.filters.addr1 = "";
-                this.filters.addr2 = "";
-                this.filters.minSize = "";
-                this.filters.maxSize = "";
-                this.filters.capacity = 0;
-                this.filters.minUnitPrice = "";
-                this.filters.maxUnitPrice = "";
-                this.filters.page = 0;
-            }
-            this.infiniteHandler();
-        },
-        // 찜 추가
-        regBookMark(stuId, $event) {
-            this.doBookMark = false;
-            let bookmark = {
-                studio: {
-                    stuId: stuId
-                },
-                customer: {
-                    custId: this.filters.session
-                }
-            };
-            axios
-                .post("http://127.0.0.1:7777/bookmark", bookmark)
-                .then(() => {
-                    this.$modal.show("regBook");
-                    $event.target.src = require("@/assets/img/util/fullheart.svg");
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.errored = true;
-                })
-                .finally(() => {
-                    this.loading = false;
-                })
-        },
-        //찜 제거
-        delBookMark(bookId, $event) {
-            this.doBookMark = false;
-            axios
-                .delete("http://127.0.0.1:7777/bookmark/" + bookId)
-                .then(() => {
+        // 찜 추가/제거
+        async setBookMark(index, stuId, $event) {
+            try {
+                this.doBookMark = false;
+                const bookmark = await axios.get("http://127.0.0.1:7777/bookmark/custId/" + this.filters.session + "/stuId/" + stuId)
+                if (bookmark.data) { //찜목록에 있다면
+                    await axios.delete("http://127.0.0.1:7777/bookmark/" + bookmark.data.bookId);
+                    // alert(deleteStatus.data); // 에러 페이지용
                     this.$modal.show("delBook");
-                    $event.target.src = require("@/assets/img/util/heart.svg");
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.errored = true;
-                })
-                .finally(() => {
-                    this.loading = false;
-                })
+                    this.isBooked[index] = false;
+                    $event.target.src = require("@/assets/img/util/heart.svg")
+                } else { // 찜목록에 없다면
+                    let regBookmark = {
+                        studio: {
+                            stuId: stuId
+                        },
+                        customer: {
+                            custId: this.filters.session
+                        }
+                    };
+                    await axios.post("http://127.0.0.1:7777/bookmark", regBookmark);
+                    // alert(insertStatus.data); // 에러 페이지용
+                    this.$modal.show("regBook");
+                    this.isBooked[index] = true;
+                    $event.target.src = require("@/assets/img/util/fullheart.svg");
+                }
+            } catch (error) {
+                console.error(error);
+            }
         },
-        // 팝창 제거 기능
+        // 팝업창 제거 기능
         closePop() {
             this.$modal.hide("delBook");
             this.$modal.hide("regBook");
         },
-        login() {
-            let cust = {
-                custId: 3,
-            }
-            sessionStorage.setItem('cust', JSON.stringify(cust));
-            var sessionTemp = sessionStorage.getItem('cust');
-            this.filters.session = JSON.parse(sessionTemp).custId;
-            alert("로그인 ID: " + 3);
-        },
-        logout() {
-            sessionStorage.removeItem('cust');
-            this.filters.session = -1;
-            alert("로그아웃");
-        }
     }
 };

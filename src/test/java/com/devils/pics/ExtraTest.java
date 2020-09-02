@@ -2,6 +2,7 @@ package com.devils.pics;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -53,8 +54,12 @@ public class ExtraTest {
 //		for(Review r:reviewList) {
 //			System.out.println(r);
 //		}
-		 
-		  
+		
+		HashMap<String, Integer> ids = new HashMap<String, Integer>();
+		ids.put("custId", 3);
+		ids.put("stuId", 10);
+		Bookmark b = sqlSession.selectOne(NS+"getBookId",ids);
+		System.out.println(b);
 		 
 	}
 }

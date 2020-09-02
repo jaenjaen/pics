@@ -180,14 +180,15 @@
                 src="@/assets/img/util/fullheart.svg"
                 width="20em"
                 height="24em"
-                @click.capture="setBookMark(1,studio.stuId,$event)"
+                @click.capture="delBookMark(studio.bookmark[0].bookId,$event)"  
                 v-if="studio.bookmark"
               />
+              
               <img
                 src="@/assets/img/util/heart.svg"
                 width="20em"
                 height="24em"
-                @click.capture="setBookMark(0,studio.stuId,$event)"
+                @click.capture="regBookMark(studio.stuId,$event)"
                 v-else
               />
               <!-- <input type="hidden" :value="studio.stuId" v-model="stuId"/> -->
@@ -279,10 +280,17 @@
         </div>
       </div>
     </div>
-    <modal name="alreadyBooked" width="20%" height="15%">
-      <div id="modal">
-        <p>이미 찜하신 공간입니다</p>
-        <button class="btn-small" >확인</button>
+    <!-- 찜등록/제거 시 팝업창 -->
+    <modal name="delBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+      <div id="unaBook">
+        <p>찜목록에서 제거됐습니다</p>
+        <button class="btn-small" @click="closePop">확인</button>
+      </div>
+    </modal>
+    <modal name="regBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+      <div id="regBook">
+        <p>찜목록에 등록됐습니다</p>
+        <button class="btn-small" @click="closePop">확인</button>
       </div>
     </modal>
   </div>

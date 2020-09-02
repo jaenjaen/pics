@@ -55,9 +55,9 @@
 		FROM studio s
 		JOIN company com
 		ON s.com_id = com.com_id
-		JOIN studio_filter f
+		LEFT OUTER JOIN studio_filter f
 		ON s.stu_id = f.stu_id
-		LEFT JOIN studio_category c
+		LEFT OUTER JOIN studio_category c
 		ON s.category_id = c.category_id
 		LEFT OUTER JOIN repeat_date r
 		ON s.stu_id = r.stu_id
@@ -166,9 +166,10 @@
 	</select>
 	
 	<!-- 찜 했는지 여부 확인하는 쿼리 -->
-	<select id="checkBookMark" parameterType="integer" resultType="bookmark">
-	SELECT stu_id
+	<select id="checkBookMark" parameterType="bookmark" resultType="bookmark">
+	SELECT book_id, stu_id
 	FROM bookmark
-	WHERE cust_id = #{value}
+	WHERE cust_id = #{custId}
+	AND stu_id = #{stuId}
 	</select>
 </mapper>

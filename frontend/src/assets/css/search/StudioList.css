@@ -294,18 +294,20 @@
             color: red;
         }
         
-        #modal {
-            vertical-align: middle;
-            margin-top: 9%;
+        .vm--modal {
+            margin: auto !important;
         }
         
-        #modal p {
+        #unaBook,
+        #regBook {
+            vertical-align: middle;
+            margin-top: 25%;
+        }
+        
+        #unaBook p,
+        #regBook p {
             font-size: 1em;
             font-weight: bold;
-        }
-        
-        #modal button {
-            margin: auto !important;
         }
         /* Select Field
    ========================================================================== */

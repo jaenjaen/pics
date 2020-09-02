@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.devils.pics.domain.Studio;
 import com.devils.pics.service.ExtraService;
 
 @RestController
+@CrossOrigin(origins= {"*"}, maxAge=6000)
 public class ExtraController {
 
 	@Autowired
@@ -30,7 +32,7 @@ public class ExtraController {
 			System.out.println(bookmark);
 			int n = extraService.addBookmark(bookmark);
 			System.out.println("상태 매세지 : "+n);
-			return new ResponseEntity(HttpStatus.OK);
+			return new ResponseEntity(n, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
@@ -52,7 +54,7 @@ public class ExtraController {
 		try {
 			int n= extraService.deleteBookmark(bookId);
 			
-			return new ResponseEntity(HttpStatus.OK);
+			return new ResponseEntity(n, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}

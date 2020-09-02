@@ -35,6 +35,7 @@ export default {
                 searchTag: "",
                 orderCon: "",
                 page: 0,
+
                 //로그인 session 변수, 기본값은 -1
                 session: -1,
 
@@ -46,7 +47,7 @@ export default {
             visible: false,
 
             //무한스크롤링 변수
-            isDone: true, // 검색이 완료되면 동글뱅이 멈춘다
+            isDone: true, // 무한스크롤링 끝냄 & 스크롤바가 내려가서 무한 검색하는 것 방지 & 검색이 완료되면 동글뱅이 멈춘다
             doSearch: false, //true면 loading 중, false면 끝
 
             //bookmark 변수
@@ -111,7 +112,7 @@ export default {
             this.doSearch = true;
 
             // 필터 객체
-            this.infiniteHandler();
+            this.search();
             // setTimeout(() => { this.isDone = false; }, 2000)
         },
         //스크롤 이벤트 : 스크롤 바가 맨 밑에 있을 때
@@ -120,25 +121,25 @@ export default {
                 window.innerHeight + window.scrollY >= document.body.offsetHeight &&
                 this.isDone == false
             ) {
-                this.infiniteHandler();
-                this.isDone = true;
+                this.search();
+                this.isDone = true; // 검색 여러 번 방지
             }
         },
         // 검색 메소드(전체 & 필터)
-        infiniteHandler() {
+        search() {
             axios
                 .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
                 .then(response => {
-                    this.doSearch = true;
+                    this.doSearch = true; //호출 시 동글뱅이 시작
                     setTimeout(() => {
                         if (response.data) {
                             this.studios = this.studios.concat(response.data);
                             if (response.data.length < 5) {
                                 this.isDone = true;
-                                this.doSearch = false;
+                                this.doSearch = false; //동글뱅이 끝(각 호출 끝마다)
                             }
                             this.filters.page += 5;
-                            this.isDone = false;
+                            this.isDone = false; // 다시 검색하도록 방지 풂
                             this.doSearch = false;
                         } else {
                             this.isDone = true; // 아무것도 없으면 무한스크롤링 끝낸다
@@ -184,33 +185,52 @@ export default {
             }
             this.infiniteHandler();
         },
-        // 찜기능
-        setBookMark(value, stuId, $event) {
+        // 찜 추가
+        regBookMark(stuId, $event) {
             this.doBookMark = false;
-            if (value == 1) {
-                this.$modal.show("alreadyBooked");
-            } else {
-                let bookmark = {
-                    studio: {
-                        stuId: stuId
-                    },
-                    customer: {
-                        custId: this.filters.session
-                    }
-                };
-                axios.post("http://127.0.0.1:7777/bookmark", bookmark)
-                    .then(() => {
-                        alert("찜목록에 등록했습니다");
-                        $event.target.src = "http://localhost:9999/img/fullheart.1f4198aa.svg";
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.errored = true;
-                    })
-                    .finally(() => {
-                        this.loading = false;
-                    })
-            }
+            let bookmark = {
+                studio: {
+                    stuId: stuId
+                },
+                customer: {
+                    custId: this.filters.session
+                }
+            };
+            axios
+                .post("http://127.0.0.1:7777/bookmark", bookmark)
+                .then(() => {
+                    this.$modal.show("regBook");
+                    $event.target.src = require("@/assets/img/util/fullheart.svg");
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                })
+        },
+        //찜 제거
+        delBookMark(bookId, $event) {
+            this.doBookMark = false;
+            axios
+                .delete("http://127.0.0.1:7777/bookmark/" + bookId)
+                .then(() => {
+                    this.$modal.show("delBook");
+                    $event.target.src = require("@/assets/img/util/heart.svg");
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => {
+                    this.loading = false;
+                })
+        },
+        // 팝창 제거 기능
+        closePop() {
+            this.$modal.hide("delBook");
+            this.$modal.hide("regBook");
         },
         login() {
             let cust = {

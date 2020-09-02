@@ -4,6 +4,7 @@ const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 // Vue 시작
 export default {
     name: "studio-list",
+    props: ["categoryId"],
     components: {
         StudioList
     },
@@ -11,7 +12,7 @@ export default {
         return {
             // Studio 검색 필터변수
             filters: {
-                categoryId: "",
+                categoryId: this.categoryId,
                 weekDate: "",
                 selectedDate: "",
                 address1: "",
@@ -33,6 +34,11 @@ export default {
         };
     },
     mounted() {
+        this.$refs.cataSelect.value = this.filters.categoryId; // 필터 창의 카테고리에 해당 값 표시
+        // 카테고리 설정해서 이동했으면 바로 리스트 창으로
+        if (this.filters.categoryId > 0) {
+            this.setFilter();
+        }
         //로그인 세션 정보 받기
         this.login();
     },

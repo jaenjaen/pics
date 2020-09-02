@@ -27,9 +27,10 @@ const routes = [{
         component: Main
     },
     {
-        path: "/studioSearch",
+        path: "/studioSearch/:categoryId",
         name: "studioSearch",
-        component: StudioSearch
+        component: StudioSearch,
+        props: true
     },
     {
         path: "/customerlogin",

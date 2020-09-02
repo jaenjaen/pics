@@ -20,8 +20,9 @@
         <div class="card-content" id="studioContent">
           <div class="container_name">
             <div id="title">{{ studio.name }}</div>
-            <!-- 찜기능 부분 -->
+            <!-- 찜기능 부분 : 로그인을 하지 않으면 안 보이게-->
             <div id="regBM" v-if="filters.session != -1">
+              <!-- 이미 찜했을 때 -->
               <img
                 src="@/assets/img/util/fullheart.svg"
                 width="20em"
@@ -29,7 +30,7 @@
                 @click.capture="setBookMark(index, studio.stuId,$event)"  
                 v-if="studio.bookmark"
               />
-              
+              <!-- 찜하지 않았을 때 -->
               <img
                 src="@/assets/img/util/heart.svg"
                 width="20em"

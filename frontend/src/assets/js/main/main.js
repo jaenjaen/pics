@@ -7,8 +7,8 @@ export default {
         MainThird
     },
     methods: {
-        moveToSearch() {
-            this.$router.push("/studioSearch/");
+        moveToSearch(value) {
+            this.$router.push("/studioSearch/" + value);
         }
     }
 };

@@ -5,11 +5,11 @@ export default {
         Bottom
     },
     methods: {
-        moveToSearch() {
-            this.$router.push("/studioSearch/");
+        moveToSearch(value) {
+            this.$router.push("/studioSearch/" + value);
         },
         moveBack() {
             this.$router.go(-1);
-        }
+        },
     }
 };

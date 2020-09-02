@@ -14,7 +14,7 @@
               id="pics_logo"
             />
           </a>
-          <a href="#" @click.prevent="moveToSearch">
+          <a href="#" @click.prevent="moveToSearch(-1)">
             <img src="@/assets/img/header_bottom/search_icon.svg" class="right" id="search_icon" />
           </a>
         </div>

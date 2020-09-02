@@ -38,8 +38,8 @@
                   <select name="cataSelect" id="cataSelect" @change="setCategory" ref="cataSelect">
                     <option value="none">카테고리를 선택해주세요</option>
                     <option value="-1">전체</option>
-                    <option value="1">카페</option>
-                    <option value="2">스튜디오</option>
+                    <option value="1">스튜디오</option>
+                    <option value="2">카페</option>
                     <option value="3">집</option>
                     <option value="4">사무실</option>
                     <option value="5">음식점</option>

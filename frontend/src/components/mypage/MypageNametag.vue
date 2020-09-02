@@ -7,12 +7,12 @@
         </td>
         <td class="userName">{{username}}</td>
         <td rowspan="2" id="userHeart">
-          <a href="http://localhost:9999/wishlist?userid="><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></a>
+          <a href="http://localhost:9999/wishlist"><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></a>
         </td>
       </tr>
       <tr>
         <td class="userDetail">
-          <router-link to="/edit">내 정보 수정 ></router-link>
+          <router-link :to="link" v-if="customerMode">내 정보 수정 ></router-link>
         </td>
       </tr>
     </table>
@@ -32,7 +32,8 @@ export default {
     return {
       username:"",
       userid:"",
-      userImg: require("@/assets/img/mypage/defaultStudio.svg")
+      userImg: require("@/assets/img/mypage/defaultStudio.svg"),
+      link:""
     };
   },
   mounted(){
@@ -41,13 +42,16 @@ export default {
       this.username = customer.nickname;
       this.userId = customer.custId;
       this.userImg = customer.imgSrc;
+      this.link = "/customeredit";
     }
     else if(sessionStorage.getItem("company")!=null){
       var company = JSON.parse(sessionStorage.getItem("company"));
       this.username = company.name;
       this.userId = company.comId;
+      this.link = "/companyedit";
       if (company.logoImg != null) this.userImg = company.logoImg;
       console.log(this.userImg);
+
     }
   },
   methods: {

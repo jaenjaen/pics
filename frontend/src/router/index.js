@@ -7,7 +7,8 @@ import CustomerRegister from "../views/register/CustomerRegister.vue";
 import CustomerLogin from "../views/login/CustomerLogin.vue";
 import CompanyLogin from "../views/login/CompanyLogin.vue";
 import Mypage from "../views/mypage/Mypage.vue";
-import Edit from "../views/mypage/Edit.vue";
+import CompanyEdit from "../views/mypage/edit/CompanyEdit.vue";
+import CustomerEdit from "../views/mypage/edit/CustomerEdit.vue";
 import WishList from "../views/WishList.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
@@ -88,10 +89,14 @@ const routes = [{
         name: "studioList",
         component: StudioList
     }, {
-        path: "/edit",
-        name: "edit",
-        component: Edit
-    },
+        path: "/companyedit",
+        name: "companyedit",
+        component: CompanyEdit
+    }, {
+        path: "/customeredit",
+        name: "customeredit",
+        component: CustomerEdit
+    }
 
 
     // {

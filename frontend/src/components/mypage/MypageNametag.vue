@@ -3,7 +3,7 @@
     <table id="nameTag">
       <tr>
         <td rowspan="2" class="userImg">
-          <img :src= "userImg" alt="userImg" width="70px" height="70px">
+          <img :src="userImg" alt="userImg" width="70px" height="70px">
         </td>
         <td class="userName">{{username}}</td>
         <td rowspan="2" id="userHeart">
@@ -32,7 +32,7 @@ export default {
     return {
       username:"",
       userid:"",
-      userImg: "",
+      userImg: require("@/assets/img/mypage/defaultStudio.svg")
     };
   },
   mounted(){

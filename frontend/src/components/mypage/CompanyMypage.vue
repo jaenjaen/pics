@@ -1,29 +1,23 @@
 <template>
   <div class="mypage_container">
     <MypageNametag :customerMode="false" />
-    <MypageGap categoryName="예약내역" cateogryURL="#"/>
-    <!-- 예약내역-->
+    <MypageGap categoryName="예약관리" cateogryURL="#"/>
+    <!-- 예약관리-->
     <div class="mypage_card">
-       <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-      <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-      <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-       <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
+       <p> 예약관리 테이블 들어가야함</p>
     </div>
-    <MypageGap categoryName="문의내역" cateogryURL="#"/>
+    <MypageGap categoryName="스튜디오 관리" cateogryURL="#"/>
     <!-- 문의 내역-->
     <div class="mypage_card"> 
-       <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-       <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-       <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-      <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
+       <p> 내가가진 스튜디오1</p>
+       <p> 내가가진 스튜디오2</p>
+       <p> 내가가진 스튜디오3</p>
+       <p> 내가가진 스튜디오4</p>
     </div>
-    <MypageGap categoryName="스튜디오 리뷰" cateogryURL="#"/>
+    <MypageGap categoryName="문의내역" cateogryURL="#"/>
     <!-- 리뷰 -->
     <div class="mypage_card">
-       <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-      <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-      <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
-       <p> 예약번호 예약업체 결제완료 표기 결제취소 버튼 </p>
+       <p>문의 내역 만들어놓기~</p>
     </div>
   </div>
 </template>
@@ -42,8 +36,7 @@ export default {
   },
   data() {
     return {
-      reservationList:[],
-      reviewList:[]
+      
     };
   },
   methods: {

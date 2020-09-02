@@ -1,10 +1,28 @@
 <template>
   <div class="mainthird">
-    <div>테마별 촬영 장소 찾기</div>
-    <div>
+    <div class="word">컨셉별 촬영장소 찾기</div>
+    <div class="img_container">
       <div class="img">
         <a href>
           <img src="@/assets/img/studio/1_펍.jpeg" alt />
+          <div></div>
+        </a>
+      </div>
+      <div class="img">
+        <a href>
+          <img src="@/assets/img/studio/2_펍.jpeg" alt />
+          <div></div>
+        </a>
+      </div>
+      <div class="img">
+        <a href>
+          <img src="@/assets/img/studio/3_펍.jpeg" alt />
+          <div></div>
+        </a>
+      </div>
+      <div class="img">
+        <a href>
+          <img src="@/assets/img/studio/4_펍.jpeg" alt />
           <div></div>
         </a>
       </div>

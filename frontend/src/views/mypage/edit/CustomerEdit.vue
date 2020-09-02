@@ -25,7 +25,7 @@
             type="text"
             v-model="name"
             class="form__input"
-            placeholder="업체 이름"
+            placeholder="닉네임"
             required
           />
         </div>
@@ -52,7 +52,7 @@
         탈퇴하시겠습니까? &nbsp;&nbsp;<router-link
           to="/companyregister"
           class="signout"
-          >탈퇴하기</router-link>
+          @click="signout">탈퇴하기</router-link>
       </p>
       </form>
     </div>
@@ -115,7 +115,11 @@ export default {
       },
       insertDash(){
         if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
-      }
+      },
+      signout :function(){
+      //1.db삭제
+      //2.세션삭제
+    }
   }
 }
 

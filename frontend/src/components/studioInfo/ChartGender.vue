@@ -1,32 +1,20 @@
 <script>
+import Chart from 'chart.js'
 import { Doughnut } from "vue-chartjs";
 import axios from "axios";
 
 export default {
-  methods: {
-    chartData() {
-      var customer = this.customers;
-      var total =customer.length;
-      var female=0;
-      for (var i = 0; i < total; i++) {
-        if (this.customers[i].gender == "F") {
-        //여자 수만큼 세기
-          female++;
-        }
-      }
-      alert(female+"|"+total);
-      return [female,total];
-    }
-  },
+  name: 'ChartGender',
   extends: Doughnut,
+  components : {Chart},
   data() {
     return {
-      female:0,
-      total:0,
+      female: 0,
+      total: 0,
       datacollection: {
         datasets: [
           {
-            data: this.chartData(),
+            data:[0,0],
             backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
             label: "Gender Ratio"
           }
@@ -34,6 +22,7 @@ export default {
         labels: ["Female", "Male"]
       },
       options: {
+        maintainAspectRatio: false,
         responsive: true,
         legend: {
           position: "top"
@@ -50,25 +39,23 @@ export default {
     };
   },
   mounted() {
-    //renderChart function renders the chart with the datacollection and options object.
-    this.renderChart(this.datacollection, this.options);
     axios
       .get("http://127.0.0.1:7777/studio/genderRatio/10")
       .then(response => {
         this.customers = response.data;
-        console.log(this.customers[0].gender + " : customer[0] gender");
-        console.log(this.customers[1].gender + " : customer[1] gender");        
         var customer = this.customers;
-        this.total =customer.length;
+        this.total = customer.length;
         // var female=0;
         for (var i = 0; i < this.total; i++) {
         if (this.customers[i].gender == "F") {
           //여자 수만큼 세기
           this.female+=1;
         }
-      }console.log(this.female + " : this.female");
-        console.log(this.total + " : this.total");
+      }
         this.chartData();
+        
+        this.renderChart(this.datacollection, this.options);
+        console.log("bbb");
       })
       .catch(error => {
         console.log(error);
@@ -77,16 +64,22 @@ export default {
       .finally(() => {
         this.loading = false;
       });
-    
-    // window.addEventListener("load", () => {
-    //   this.datacollection.total = this.customers.length;
-    //   for (var i = 0; i < this.datacollection.customers.length; i++) {
-    //     if (this.datacollection.customers[i].gender == "F") {
-    //       //여자 수만큼 세기
-    //       this.datacollection.female++;
-    //     }
-    //   }
-    // });
+  },
+  methods: {
+    chartData() {
+      console.log("ccc");
+      var customer = this.customers;
+      this.total =customer.length;
+      this.female=0;
+      for (var i = 0; i < this.total; i++) {
+        if (this.customers[i].gender == "F") {
+        //여자 수만큼 세기
+          this.female++;
+        }
+      }
+      this.$set(this.datacollection.datasets[0].data,0,this.female);
+      this.$set(this.datacollection.datasets[0].data,1,this.total);
+    }
   }
 }
 </script>

@@ -8,10 +8,8 @@
 	<insert id="registerStudioFilter" parameterType="studioFilter">
 		INSERT INTO
 		studio_filter(stu_id, size, options, parking, unit_price, default_capacity, excharge, address, max_capacity)
-		VALUES (#{stdId}, #{size}, #{options}, #{parking}, #{unitPrice}, #{defaultCapacity}, #{excharge}, #{address}, #{maxCapacity})
+		VALUES (#{stuId}, #{size}, #{options}, #{parking}, #{unitPrice}, #{defaultCapacity}, #{excharge}, #{address}, #{maxCapacity})
 	</insert>
-
-	<select id="getStudioFilterId"></select>
 	
 	<!-- ============================제영스 공간 ======================================-->
 	<!-- 필터 검색 결과를 위한 RM (Tag 제외) -->

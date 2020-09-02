@@ -31,6 +31,12 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 	}
 
 	@Override
+	public int registerTag(Tag tag) {
+		//Tag 등록
+		return studioInfoDao.registerTag(tag);
+	}
+	
+	@Override
 	public int getStudioId(Studio studio) {
 		//Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
 		return studioInfoDao.getStudioId(studio);

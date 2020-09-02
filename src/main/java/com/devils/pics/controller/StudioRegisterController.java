@@ -1,16 +1,18 @@
 package com.devils.pics.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Category;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
@@ -32,11 +34,21 @@ public class StudioRegisterController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 	
+	@GetMapping("/category")
+	public ResponseEntity getCategory() {
+		List<Category> category = studioInfoService.getCategory();
+		if(category.size()<1) return new ResponseEntity(HttpStatus.NO_CONTENT);
+		else return new ResponseEntity(category, HttpStatus.OK);
+	}
+	
 	@PostMapping("/studio")
 	public ResponseEntity registerStudio(@RequestBody Studio studio) {
 		System.out.println("받아온 폼값 : "+studio);
-		if(studio == null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-		else {
+		int flag = 0;
+		if(studio == null) {
+			flag = 0;
+			return new ResponseEntity(flag, HttpStatus.NO_CONTENT);
+		}else {
 			try {
 				/* 받아온 폼값에서 studioFilter, tags, repeatDate를 각각 뽑아옴 */
 				StudioFilter studioFilter = studio.getStudioFilter();
@@ -75,10 +87,11 @@ public class StudioRegisterController {
 					result = studioInfoService.registerTag(tag);
 				}
 				System.out.println("tags 등록 결과 : "+result);
-			
-				return new ResponseEntity(HttpStatus.OK);
+				flag = 1;
+				return new ResponseEntity(flag, HttpStatus.OK);
 			}catch(RuntimeException e) {
-				return new ResponseEntity(HttpStatus.NO_CONTENT);
+				flag = 0;
+				return new ResponseEntity(flag, HttpStatus.NO_CONTENT);
 			}
 		}
 	}

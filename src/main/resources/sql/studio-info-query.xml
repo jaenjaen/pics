@@ -144,7 +144,7 @@
 	<select id="getStudioId" parameterType="studio" resultType="int">
 		SELECT stu_id FROM studio WHERE name = #{name};
 	</select>
-	<select id="getCategoryId" parameterType="category" resultType="int">
-		SELECT category_id AS categoryId FROM studio_category WHERE category_name = #{categoryName} 	
+	<select id="getCategory" resultType="category">
+		SELECT category_id, category_name FROM studio_category; 	
 	</select>						
  </mapper>	

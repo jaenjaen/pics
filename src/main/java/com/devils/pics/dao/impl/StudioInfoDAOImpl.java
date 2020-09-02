@@ -46,9 +46,9 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 		return sqlSession.insert(NS+"registerTag", tag);
 	}
 	@Override
-	public int getCategoryId(Category category) {
+	public List<Category> getCategory() {
 		//카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)
-		return sqlSession.selectOne(NS+"getCategoryId", category);
+		return sqlSession.selectList(NS+"getCategory");
 	}
 	@Override
 	public int getStudioId(Studio studio) {

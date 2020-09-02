@@ -205,7 +205,7 @@
   </div>
 </template>
 
-<script scoped src="@/assets/js/StudioInfo.js"></script>
+<script scoped src="@/assets/js/studioInfo/StudioInfo.js"></script>
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 .container {

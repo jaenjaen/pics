@@ -124,15 +124,13 @@ export default {
         /* 기업고객일 경우에만 스튜디오 등록 화면 볼 수 있고, 
                아닌 경우에는 기업고객 로그인 페이지로 이동 */
         var company = JSON.parse(sessionStorage.getItem("company"));
-        console.log(company);
         if (company === null) {
             alert("기업고객으로 로그인하세요.");
             location.href = "/companyLogin"
         } else {
-            this.comId = company.comId;
-            console.log(this.comId); //뽑아낸 comId
+            this.studio.comId = company.comId;
+            console.log(this.studio.comId); //뽑아낸 comId
         }
-
     },
     methods: {
         /* 파일 업로드 화면단 처리 */
@@ -922,7 +920,7 @@ export default {
 
         /* 스튜디오 등록 */
         addStudio() {
-            axios.post("http://127.0.0.1:7777/studio/" + this.comId, this.studio).then(
+            axios.post("http://127.0.0.1:7777/studio", this.studio).then(
                 function(response) {
                     console.log(response.data);
                     alert(`등록되셨습니다.`);

@@ -37,14 +37,18 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	
 	/* 스튜디오 공간 등록 관련 메소드 */
 	@Override
-	public int getCategoryId(Category category) {
-		//카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)
-		return sqlSession.selectOne(NS+"getCategoryId", category);
-	}
-	@Override
 	public int registerStudioInfo(Studio studio) {
 		//Studio 등록
 		return sqlSession.insert(NS+"registerStudioInfo", studio);
+	}
+	@Override
+	public int registerTag(Tag tag) {
+		return sqlSession.insert(NS+"registerTag", tag);
+	}
+	@Override
+	public int getCategoryId(Category category) {
+		//카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)
+		return sqlSession.selectOne(NS+"getCategoryId", category);
 	}
 	@Override
 	public int getStudioId(Studio studio) {

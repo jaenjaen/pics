@@ -177,10 +177,6 @@
             <div class="uploadArea">
               <input type=file id="cadFile" name="cadFile" class="cadFile" @change="handleImgFileSelect('cadFile', 'cadImg', $event)" style='display: none;'> 
               <img src="@/assets/img/upload/preview.png" class="uploadImg" id="cadImg" onclick='document.getElementById("cadFile").click()'>
-              <!-- 이어서 하기 https://blog.naver.com/wj8606/221249672135
-              <input type="file"  @change="fileUpload($event)">
-              <button v-on:click="addCadImg()">Submit</button>
-              -->
             </div>
           </div>
         </div>

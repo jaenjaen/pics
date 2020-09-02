@@ -37,6 +37,9 @@ export default {
                 },
                 tag: []
             },
+            /* 카테고리 */
+            category: [],
+
             /* 주소 API */
             addressResult: {
                 postcode: "",
@@ -74,11 +77,14 @@ export default {
                 roadname: ""
             },
             addressDetail: "",
+
             /* 지상/지하 */
             floorUnit: true,
+
             /* 면적 */
             sizeInput: "",
             sizeUnit: true,
+
             /* 운영시간 */
             week: {
                 mon: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -89,6 +95,7 @@ export default {
                 sat: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 sun: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             },
+
             /* 장비 및 옵션 */
             btnLabel: option_save => `${option_save.length}개 선택`,
             option_save: [],
@@ -98,6 +105,9 @@ export default {
                     { name: "카메라" },
                     { name: "조명" },
                     { name: "반사판" },
+                    { name: "삼각대" },
+                    { name: "철제박스" },
+                    { name: "스피커" },
                     { name: "포토그래퍼" }
                 ]
             }],
@@ -131,6 +141,17 @@ export default {
             this.studio.comId = company.comId;
             console.log(this.studio.comId); //뽑아낸 comId
         }
+    },
+    mounted() {
+        axios.get('http://127.0.0.1:7777/category')
+            .then((response) => {
+                console.log('성공');
+                this.category = JSON.parse(JSON.stringify(response.data));
+                console.log(this.category);
+            })
+            .catch(() => {
+                console.log('실패');
+            })
     },
     methods: {
         /* 파일 업로드 화면단 처리 */

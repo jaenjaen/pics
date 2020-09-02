@@ -19,9 +19,9 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 
 	/* 스튜디오 공간 등록 관련 메소드 */
 	@Override
-	public int getCategoryId(Category category) {
+	public List<Category> getCategory() {
 		//카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)
-		return studioInfoDao.getCategoryId(category);
+		return studioInfoDao.getCategory();
 	}
 
 	@Override

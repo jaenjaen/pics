@@ -18,10 +18,8 @@
             <label for="country">스튜디오 종류</label>
           </div>
           <div class="col-75">
-            <select id="categoryId" name="categoryId" v-model="studio.categoryId" required >
-              <option value="1">카페</option>
-              <option value="2">스튜디오</option>
-              <option value="3">집</option>
+            <select id="categoryId" name="categoryId" v-model="studio.categoryId" required>
+              <option v-for="(category, index) in category" :key="index" :value="category.categoryId">{{category.categoryName}}</option>
             </select>
           </div>
         </div>

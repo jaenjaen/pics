@@ -1,4 +1,5 @@
 <template>
+
   <vue-daum-map
     :appKey="appKey"
     :center.sync="center"
@@ -11,6 +12,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
+Vue.use(Vuetify);
+
 import loadScriptOnce from "load-script-once";
 const MapTypeId = {
   ROADMAP: 1,

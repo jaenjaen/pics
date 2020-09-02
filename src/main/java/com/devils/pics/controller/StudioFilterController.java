@@ -94,4 +94,32 @@ public class StudioFilterController {
 
 		return searchCon;
 	}
+	
+	    // 추천 장소 보내주기 
+		@GetMapping("/studio/popular")
+		public ResponseEntity popularStudio(){
+			try {
+				List<Studio> list = studioFilterService.searchStudio();
+				List<Studio> sendList = new ArrayList<>();
+				int numList[] = new int[10];
+				
+				for(int i=0; i<10; i++) {
+					numList[i]= (int)(Math.random()*list.size())+1;
+					
+					for(int j=0; j<i; j++) {
+						if(numList[i]==numList[j]) {
+							i--;
+							break;
+						}// if
+					}//for j
+					
+					sendList.add(list.get(numList[i]));
+				} // for i
+				
+				System.out.println(sendList);
+				return new ResponseEntity(sendList, HttpStatus.OK);
+			}catch(RuntimeException e) {
+				return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
+		}
 }

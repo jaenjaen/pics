@@ -2,7 +2,7 @@ import axios from "axios";
 import carousel from "vue-owl-carousel";
 export default {
     components: {
-        carousel
+        carousel,
     },
     data() {
         return {
@@ -11,7 +11,7 @@ export default {
     },
     mounted() {
         axios
-            .get("http://127.0.0.1:7777/studio/search")
+            .get("http://localhost:7777/studio/popular")
             .then(response => (this.studio_infos = response.data))
             .catch(error => {
                 console.log(error);

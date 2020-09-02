@@ -1,0 +1,13 @@
+.mainthird {
+    width: 768px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: White;
+}
+
+.img {
+    width: 200px;
+    border: 1px solid white;
+    border-radius: 20px;
+    overflow: hidden;
+}

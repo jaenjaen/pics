@@ -1,178 +1,87 @@
-// import Vue from 'vue'
-// import Vuetify from 'vuetify'
-// import 'vuetify/dist/vuetify.min.css'
-import VueDaumMap from 'vue-daum-map'
-import loadScriptOnce from "load-script-once";
-
-const MapTypeId = {
-    ROADMAP: 1,
-    NORMAL: 1,
-    SKYVIEW: 2,
-    HYBRID: 3,
-    OVERLAY: 4,
-    ROADVIEW: 5,
-    TRAFFIC: 6,
-    TERRAIN: 7,
-    BICYCLE: 8,
-    BICYCLE_HYBRID: 9,
-    USE_DISTRICT: 10
-};
-const EVENTS = [
-    "center_changed",
-    "zoom_start",
-    "zoom_changed",
-    "bounds_changed",
-    "click",
-    "dblclick",
-    "rightclick",
-    "mousemove",
-    "dragstart",
-    "drag",
-    "dragend",
-    "idle",
-    "tilesloaded",
-    "maptypeid_changed"
-];
-export default {
-    name: "VueDaumMap",
-    props: {
-        appKey: {
-            type: String,
-            required: true
-        },
-        libraries: {
-            type: Array,
-            default: () => []
-        },
-        center: {
-            type: Object,
-            required: true
-        },
-        level: {
-            type: Number,
-            default: undefined
-        },
-        mapTypeId: {
-            type: Number,
-            default: undefined
-        },
-        draggable: {
-            type: Boolean,
-            default: undefined
-        },
-        scrollwheel: {
-            type: Boolean,
-            default: undefined
-        },
-        disableDoubleClick: {
-            type: Boolean,
-            default: undefined
-        },
-        disableDoubleClickZoom: {
-            type: Boolean,
-            default: undefined
-        },
-        projectionId: {
-            type: String,
-            default: undefined
-        },
-        tileAnimation: {
-            type: Boolean,
-            default: undefined
-        },
-        keyboardShortcuts: {
-            type: [Boolean, Object],
-            default: undefined
-        }
-    },
-    data: () => ({
-        appKey: '91cbdca7243fe89cb44e5d61a5aaaf44', // 테스트용 appkey
-        center: { lat: 33.450701, lng: 126.570667 }, // 지도의 중심 좌표
-        level: 3, // 지도의 레벨(확대, 축소 정도),
-        mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
-        libraries: [], // 추가로 불러올 라이브러리
-        map: null // 지도 객체. 지도가 로드되면 할당됨.
-    }),
-    mounted() {
-        loadScriptOnce(
-                `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${this.appKey}&libraries=${this.libraries.join(",")}`
-            )
-            .then(() => {
-                daum.maps.load(() => {
-                    this.render();
-                    this.bindEvents();
-                    this.$emit('load', this.map);
-                });
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    },
-    watch: {
-        level() {
-            if (!this.map) {
-                return;
+var api_key = process.env.DAUM_APIKEY
+var https_get = function(url, params, callback) {
+    var https = require('https')
+    var querystring = require('querystring')
+    https.get(url + '?' + querystring.stringify(params), function(res) {
+        buffer = ''
+        res.on('data', function(data) {
+            buffer += data
+        })
+        res.on('error', function(err) {
+            console.log(err)
+        })
+        res.on('end', function() {
+            var json = JSON.parse(buffer)
+            callback(json)
+        })
+    })
+}
+var mapImage = function(query, callback) {
+    var url = "https://apis.daum.net/local/v1/search/keyword.json"
+    var params = {
+        apikey: api_key,
+        query: query
+    }
+    https_get(url, params, function(json) {
+        if (json && json.channel) {
+            var item = json.channel.item[0]
+            if (item) {
+                getMapImageLink(item.longitude, item.latitude, callback)
             }
-            this.map.setLevel(this.level);
-        },
-        center: {
-            handler() {
-                if (!this.map) {
-                    return;
+        }
+    })
+}
+var map = function(query, callback) {
+    var url = "https://apis.daum.net/local/v1/search/keyword.json"
+    var params = {
+        apikey: api_key,
+        query: query
+    }
+    https_get(url, params, function(json) {
+        if (json && json.channel) {
+            var item = json.channel.item[0]
+            if (item) {
+                var map_link = 'http://map.daum.net/link/map/' + item.id
+                if (callback) {
+                    callback(map_link)
                 }
-                this.map
-                    .setCenter //new daum.maps.LatLng(this.center.lat, this.center.lng
-                    ();
-            },
-            deep: true
-        }
-    },
-    methods: {
-        onLoad(map) {
-            this.map = map;
-        },
-        render() {
-            const options = { //지도를 생성할 때 필요한 기본 옵션
-                center: new daum.maps.LatLng(this.center.lat, this.center.lng), //지도의 중심좌표.
-                level: this.level, //지도의 레벨(확대, 축소 정도)
-                mapTypeId: this.mapTypeId, //지도 타입
-                draggable: this.draggable,
-                scrollwheel: this.scrollwheel,
-                disableDoubleClick: this.disableDoubleClick,
-                disableDoubleClickZoom: this.disableDoubleClickZoom,
-                projectionId: this.projectionId,
-                tileAnimation: this.tileAnimation,
-                keyboardShortcuts: this.keyboardShortcuts
-            };
-            this.map = new daum.maps.Map(this.$el, options); //지도 생성 및 객체 리턴
-        },
-        bindEvents() {
-            const handlers = {
-                bounds_changed: this.onChange,
-                idle: this.onChange
-            };
-            for (let event of EVENTS) {
-                this.bindEvent(event, handlers[event]);
             }
-        },
-        // bindEvent(event, handler) {
-        //   console.log(event + "," + handler);
-        //   daum.maps.event.addListener(this.map, event, (...args) => {
-        //     this.$emit(event, args);
-        //     if (typeof handler === 'function') {
-        //       handler();
-        //     }
-        //   });
-        // },
-        onChange() {
-            const level = this.map.getLevel();
-            const latlng = this.map.getCenter();
-            this.$emit("update:level", level);
-            this.$emit("update:center", {
-                lat: latlng.getLat(),
-                lng: latlng.getLng()
-            });
         }
-    },
-    MapTypeId: MapTypeId
-};
+    })
+}
+var getMapImageLink = function(longitude, latitude, callback) {
+    transCoord(longitude, latitude, 'WGS84', 'WCONGNAMUL', function(x, y) {
+        var url = 'http://map2.daum.net/map/imageservice'
+        var params = {
+            IW: 550,
+            IH: 350,
+            MX: x,
+            MY: y,
+            CX: x,
+            CY: y,
+            SCALE: 2.5,
+            service: 'open'
+        }
+        var querystring = require('querystring')
+        var image_link = url + '?' + querystring.stringify(params) + '#.png'
+        if (callback) {
+            callback(image_link)
+        }
+    })
+}
+var transCoord = function(x, y, from, to, callback) {
+    var url = 'https://apis.daum.net/maps/transcoord'
+    var params = {
+        apikey: api_key,
+        x: x,
+        y: y,
+        fromCoord: from,
+        toCoord: to,
+        output: 'json'
+    }
+    https_get(url, params, function(json) {
+        callback(json.x, json.y)
+    })
+}
+module.exports.map = map
+module.exports.mapImage = mapImage

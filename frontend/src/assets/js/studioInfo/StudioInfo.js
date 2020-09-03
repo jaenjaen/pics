@@ -4,25 +4,22 @@ import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
 import VModal from 'vue-js-modal'
 import 'vue-material/dist/vue-material.min.css'
-// import 'vue-material/dist/theme/default.css'
-// import Chart from 'chart.js'
-// import { Doughnut } from "vue-chartjs";
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
-Vue.use(VueMaterial)
-import ChartGender from "@/assets/js/studioInfo/ChartJs.js"
 import Reservation from "@/components/studioInfo/Reservation.vue"
-
+// import Doughnut from "@/assets/js/studioInfo/GenderChart.js"
 
 // import Map from "@/components/studioInfo/Map.vue"
 
+Vue.use(VueMaterial)
+Vue.use(VueMaterial)
 Vue.use(VModal);
 
 export default {
     name: "studio-info",
-    components: { carousel, ChartGender, Reservation },
+    components: { carousel, Reservation }, //, Doughnut
     props: {
         stuId: {
             type: String,
@@ -31,9 +28,6 @@ export default {
     },
     data: function() {
         return {
-            datacollection: null,
-            loaded: false,
-
             // studio 관련 변수 (GET)
             customer: {},
             studios: {
@@ -76,6 +70,9 @@ export default {
             //이미지 split 변수
             mainImgList: [],
             portImgList: [],
+
+            // Chart & Graph 변수
+            datacollection: null,
         };
     },
 
@@ -136,40 +133,8 @@ export default {
                 .finally(() => (this.loading = false));
             console.log("this.bookmarkCheck : " + this.bookmarkCheck);
         }
-        // this.fillData;
+        this.fillData;
         // await this.getGenderData();
-        ////////////////////////////// Chart & Graph //////////////////////////////
-
-        // this.$nextTick(() => {
-        //     var ctx = document.getElementById('doughnut-chart-area').getContext('2D');
-        //     var config = {
-        //         type: 'Doughnut',
-        //         data: {
-        //             datasets: [{
-        //                 data: [20, 30],
-        //                 backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
-        //                 label: "Gender Ratio"
-        //             }],
-        //             labels: ["Female", "Male"]
-        //         },
-        //         options: {
-        //             responsive: true,
-        //             legend: {
-        //                 position: "top"
-        //             },
-        //             title: {
-        //                 display: true,
-        //                 text: "Gender Ratio"
-        //             },
-        //             animation: {
-        //                 animateScale: true,
-        //                 animateRotate: true
-        //             }
-        //         }
-        //     }
-
-        //     new Chart(ctx, config);
-        // })
     },
     filters: {
         currency: function(value) { // 숫자를 금액 형식으로
@@ -194,57 +159,54 @@ export default {
     },
     ////////////////////////////// Methods //////////////////////////////
     methods: {
-        // filltData() {
-        //     this.datacollection = {
-        //             datasets: [{
-        //                 data: [10, 10],
-        //                 backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
-        //                 label: "Gender Ratio"
-        //             }],
-        //             labels: ["Female", "Male"]
-        //         },
-        //         console.log("datacollection 지나서");
-
-        //     this.total = this.result.length;
-        //     this.female = 0;
-        //     for (var i = 0; i < this.result.length; i++) {
-        //         if (this.result[i].gender == "F") {
-        //             this.female++;
-        //         }
-        //     }
-        // },
-        // getGenderData() {
-        //     axios
-        //         .get("http://127.0.0.1:7777/studio/genderRatio/" + this.stuId)
-        //         .then(response => {
-        //             this.result = response.data;
-        //             this.total = this.result.length;
-        //             this.female = 0;
-        //             // console.log("result : " + this.result + ", this.total : " + this.total)
-        //             // var female=0;
-        //             for (var i = 0; i < this.result.length; i++) {
-        //                 if (this.result[i].gender == "F") {
-        //                     //여자 수만큼 세기
-        //                     this.female += 1;
-        //                 }
-        //             }
-        //             this.fillData();
-        //             console.log("aaa1");
-        //             this.$set(this.datacollection.datasets[0].data, 0, this.female);
-        //             this.$set(this.datacollection.datasets[0].data, 1, this.total);
-        //             this.filltData()
-        //             console.log("aaa2");
-
-        //             // this.renderChart(this.datacollection, this.options);
-        //         })
-        //         .catch(error => {
-        //             console.log(error);
-        //             this.errored = true;
-        //         })
-        //         .finally(() => {
-        //             this.loading = false;
-        //         });
-        // },
+        fillData() {
+            this.datacollection = {
+                labels: ["Female", "Male"],
+                datasets: [{
+                    label: "Gender Ratio",
+                    backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
+                    data: this.getGenderData()
+                }],
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    legend: {
+                        position: "top"
+                    },
+                    title: {
+                        display: true,
+                        text: "Gender Ratio"
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    }
+                }
+            }
+        },
+        getGenderData() {
+            axios
+                .get("http://127.0.0.1:7777/studio/genderRatio/" + this.stuId)
+                .then(response => {
+                    this.result = response.data;
+                    this.total = this.result.length;
+                    this.female = 0;
+                    // console.log("result : " + this.result + ", this.total : " + this.total)
+                    // var female=0;
+                    for (var i = 0; i < this.result.length; i++) {
+                        if (this.result[i].gender == "F") {
+                            //여자 수만큼 세기
+                            this.female += 1;
+                        }
+                    }
+                    return [this.female, this.total];
+                    // console.log("aaa1");
+                    // this.$set(this.datacollection.datasets[0].data, 0, this.female);
+                    // this.$set(this.datacollection.datasets[0].data, 1, this.total);
+                    // this.filltData()
+                    // console.log("aaa2");
+                })
+        },
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },

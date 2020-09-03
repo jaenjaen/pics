@@ -14,9 +14,7 @@
                 <span class="start-date">
                   <md-datepicker 
                   v-model="start_date"
-                  :md-disabled-dates="disabledDates"
-                  min:today
-                  max:maxDate
+                  format="YYYY-MM-DD"
                   ></md-datepicker>
                 </span>
                 <br />
@@ -24,13 +22,15 @@
                 <span class="end-date">
                   <md-datepicker 
                   v-model="end_date" 
-                  :md-disabled-dates="disabledDates"></md-datepicker>
+                 format="YYYY-MM-DD"
+                  ></md-datepicker>
                 </span>
               </div>
               </div>
             </div>
             <br />
             <!-- 시간 -->
+            <div class="md-layout-item">
             <div class="time-input-field">
               <md-field class="start-time">
                 <label for="time">예약 시작 시간</label>
@@ -41,30 +41,30 @@
                     style="width:45%">
                   <md-option
                     required="required"
-                    v-for="time in times"
-                    v-bind:key="time">
-                    {{time}}</md-option>
+                    v-for="(time,index) in times"
+                    v-bind:key="index">
+                    {{times[parseInt(time)-1]}}</md-option>
                   </md-select>
-                  </md-field>
+              </md-field>
+            
                   <br/>
                   <span id="checkSchedule">{{ checkSchedule }}</span>
                   <br />
-                  <md-field class="end-time">
-                    <label for="time">예약 종료 시간</label>
-                      <md-select id="end_time" 
-                      v-model="end_time" 
-                      required
-                      style="width:45%"
-                      >
+              <md-field class="end-time">
+                <label for="time">예약 종료 시간</label>
+                  <md-select id="end_time" 
+                    v-model="end_time" 
+                    required
+                    style="width:45%">
                       <md-option
                         required="required"
-                        v-for="time in times"
-                        v-bind:key="time"
-                        >{{ time }}</md-option
-                      >
-                      </md-select>
+                        v-for="(time,index) in times"
+                        v-bind:key="index"
+                        >{{times[parseInt(time)-1]}}</md-option>
+                  </md-select>
               </md-field>
             </div>
+          </div>
           <br />
           <br />
           <!-- 인원 -->
@@ -106,11 +106,11 @@
         <hr width="90%" color="lightgray">
           <!-- 요금 계산 -->
           <div class="pricing-field">
-            <vr/>
-            <table align="center">
+            <hr/>
+            <table align="center" v-for="(studio, index) in studios" v-bind:key="index">
               <tr align="right">
                 <td id="unitPrice">시간 당 비용 :</td>
-                <td>{{ studio.studioFilter.unitPrice | currency }} 원</td>
+                <td>{{ studio.studioFilter.unitprice | currency }} 원</td>
                 <td></td>
               </tr>
               <tr align="right">

@@ -4,25 +4,25 @@
     <div class="img_container">
       <div class="img">
         <a href>
-          <img src="@/assets/img/studio/1_펍.jpeg" alt />
+          <div class="img_word">화려한 조명</div>
           <div></div>
         </a>
       </div>
       <div class="img">
         <a href>
-          <img src="@/assets/img/studio/2_펍.jpeg" alt />
+          <div>브이로그 감성</div>
           <div></div>
         </a>
       </div>
       <div class="img">
         <a href>
-          <img src="@/assets/img/studio/3_펍.jpeg" alt />
+          <div>빈티지 정원</div>
           <div></div>
         </a>
       </div>
       <div class="img">
         <a href>
-          <img src="@/assets/img/studio/4_펍.jpeg" alt />
+          <div>조명 맛집</div>
           <div></div>
         </a>
       </div>

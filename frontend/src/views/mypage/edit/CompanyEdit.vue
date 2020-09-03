@@ -111,10 +111,11 @@
         <div class="form__field">
           <input type="submit" value="Register" />
         </div>
-      </form>
-    <p class="text--center">
-        탈퇴하시겠습니까? &nbsp;&nbsp;<a href="#" class="signout" @click="signout">탈퇴하기</a>
+        <p class="text--center">
+        탈퇴하시겠습니까? <a href="#" @click="signout"> 탈퇴하기</a>
       </p>
+
+      </form>
   </div>
   </div>
 </template>
@@ -207,19 +208,19 @@ export default {
       this.$modal.show("postcodeModal");
     },
     insertDash(){
-        if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
-      }
+      if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-";
   },signout(){
-     axios.delete("http://localhost:7777/customer/"+this.custId)
+     axios.delete("http://localhost:7777/company/"+this.comId)
         .then(res=>{
           console.log(res)
           alert("회원탈퇴 되었습니다.");
-          sessionStorage.removeItem("customer");
+          sessionStorage.removeItem("company");
           location.href="http://localhost:9999";
         })
         .catch(err=>{
           console.log(err);
         })
+    }
   }
 };
 </script>

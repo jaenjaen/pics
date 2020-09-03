@@ -19,7 +19,7 @@
             ><img
               class="icon"
               src="@/assets/img/register/userEdit.svg"
-            /><span class="hidden">Name</span></label
+            /><span class="hidden">nickname</span></label
           >
           <input
             type="text"
@@ -49,7 +49,7 @@
           <input type="submit" value="MODIFY">
         </div>
         <p class="text--center">
-        탈퇴하시겠습니까? &nbsp;&nbsp;<ra href="#" class="signout" @click="signout">탈퇴하기</ra>
+        탈퇴하시겠습니까? &nbsp;&nbsp;<a href="#" class="signout" @click="signout">탈퇴하기</a>
       </p>
       </form>
     </div>
@@ -130,14 +130,4 @@ export default {
  .form__field select{
    width: 248px;
  }
- .form__field{
-   background-color: #F5F5F5;
- }
-  input[type='radio']{
-    margin-top:8%;
-  }
-
-  router-link{
-
-  }
 </style>

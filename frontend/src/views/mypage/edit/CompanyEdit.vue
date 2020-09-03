@@ -20,29 +20,10 @@
             type="text"
             v-model="name"
             class="form__input"
-            placeholder="업체 이름"
+            :placeholder="name"
             required
           />
         </div>
-
-        <div class="form__field">
-          <label for="login__comId"
-            ><img class="icon" src="@/assets/img/login/loginId.svg" /><span
-              class="hidden"
-              >comId</span
-            ></label
-          >
-          <input
-            type="email"
-            v-model="comId"
-            class="form__input"
-            placeholder="업체 이메일"
-            required
-            @keyup="checkEmail"
-          />
-        </div>
-
-        <div v-html="idMsg"></div>
 
         <div class="form__field">
           <label for="login__password"
@@ -110,20 +91,9 @@
           />
         </modal>
 
-        <div class="form__field">
-          <label for="login__tel"
-            ><img
-              class="icon"
-              src="@/assets/img/register/companyTel.svg"
-            /><span class="hidden">PhoneNumber</span></label
-          >
-          <input
-            type="tel"
-            v-model="tel"
-            class="form__input"
-            placeholder="업체 전화번호"
-            required
-          />
+        <div class="form__field" >
+          <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
+          <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" :placeholder="tel" required>
         </div>
 
         <div class="form__field">
@@ -147,52 +117,60 @@
             type="text"
             v-model="desc"
             class="form__input"
-            placeholder="업체 설명"
+            :placeholder="desc"
           />
         </div>
 
         <div class="form__field">
-          <input type="submit" value="MODIFY">
+          <input type="submit" value="Register" />
         </div>
+
         <p class="text--center">
-        탈퇴하시겠습니까? &nbsp;&nbsp;<router-link
-          to="/companyregister"
-          class="signout"
-          @click="signout">탈퇴하기</router-link>
+        탈퇴하시겠습니까? &nbsp;&nbsp;<a href="#" class="signout" @click="signout">탈퇴하기</a>
       </p>
+
       </form>
-    </div>
+      </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import axios from "axios";
+var company = JSON.parse(sessionStorage.getItem("company"));
 
 export default {
-  name: "companyEdit",
+  name: "CompanyEdit",
   data() {
     return {
-      idMsg: "",
-      idFlag: false,
+      name: "",
       pwMsg: "",
       pwFlag: false,
-      addrShow: false,
-      name: "",
-      comId: "",
       password: "",
       checkpassword: "",
       address: "",
+      addrShow: false,
+      comId: "",
       tel: "",
+      imgSrc:"",
       desc:"",
-      condata: ""
+      max: 13,
     };
+  },mounted(){
+    console.log(company);
+    this.name = company.name;
+    this.address = company.address;
+    this.comId = company.comId;
+    this.tel = company.tel;
+    this.imgSrc = company.imgSrc;
+    this.desc = company.desc;
+
   },
   methods: {
     companyEdit: function() {
-      if (this.idFlag == true && this.pwFlag == true) {
+      if (this.pwFlag == true) {
         axios
-          .post("http://localhost:7777/company", {
+          .put("http://localhost:7777/company", {
             name: this.name,
             comId: this.comId,
             password: this.password,
@@ -201,8 +179,8 @@ export default {
           })
           .then(response => {
             this.condata = response.data;
-            alert(this.name + "의 가입을 환영합니다.");
-            location.href = "http://localhost:9999";
+            alert("회원정보가 수정되었습니다.");
+            //location.href = "http://localhost:9999";
           })
           .catch(e => {
             console.log(e);
@@ -212,25 +190,6 @@ export default {
         //console.log(this.idFlag+","+this.pwFlag+","+this.name+","+this.comId+","+this.password+","+this.address+","+this.tel);
       }
     }, //~companyRegister
-    checkEmail: function() {
-      axios
-        .get("http://localhost:7777/company/" + this.comId)
-        .then(res => {
-          this.condata = res.data;
-          if (this.condata != "") {
-            this.idMsg =
-              "<p style='color:red;'>이미 사용중인 아이디입니다.</p>";
-            this.idFlag = false;
-          } else {
-            this.idMsg =
-              "<p style='color:green;'>사용 가능한 아이디입니다.</p>";
-            this.idFlag = true;
-          }
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }, //~checkEmail
     checkPw: function() {
       if (this.password == this.checkpassword) {
         this.pwFlag = true;
@@ -250,10 +209,12 @@ export default {
     },
     editAddr: function() {
       this.$modal.show("postcodeModal");
-    },signout :function(){
-      //1.db삭제
-      //2.세션삭제
-    }
+    },
+    insertDash(){
+        if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
+      }
+  },signout(){
+
   }
 };
 </script>

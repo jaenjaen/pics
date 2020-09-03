@@ -49,6 +49,8 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public int updateCompnay(Company company) throws Exception {
+		//비밀번호같으면 패스
+		//다르면 새로 암호화
 		return companyDAO.updateCompnay(company);
 	}
 

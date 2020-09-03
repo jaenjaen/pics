@@ -13,6 +13,7 @@
       <tr>
         <td class="userDetail">
           <router-link :to="link" v-if="customerMode">내 정보 수정 ></router-link>
+          <router-link :to="link" v-if="!customerMode">업체 정보 수정 ></router-link>
         </td>
       </tr>
     </table>
@@ -50,12 +51,7 @@ export default {
       this.userId = company.comId;
       this.link = "/companyedit";
       if (company.logoImg != null) this.userImg = company.logoImg;
-      console.log(this.userImg);
-
     }
-  },
-  methods: {
-    
   }
 };
 </script>

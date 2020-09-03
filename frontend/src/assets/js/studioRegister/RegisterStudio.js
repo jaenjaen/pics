@@ -817,6 +817,11 @@ export default {
             }
         },
 
+        /* 임시저장 */
+        tempSave() {
+            alert("임시저장~");
+        },
+
         /* 스튜디오 등록 전 로그인 체크 */
         checkLogin() {
             if (this.studio.company == '') {

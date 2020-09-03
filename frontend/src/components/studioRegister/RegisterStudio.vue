@@ -603,7 +603,8 @@
           </table>
         </div>
         <div id="submitArea" class="row">
-          <input type="submit" value="등록" />
+          <button type="button" id="temp" @click="tempSave()">임시저장</button>
+          <button type="submit" id="register">등록</button>
         </div>
       </form>
     </div>

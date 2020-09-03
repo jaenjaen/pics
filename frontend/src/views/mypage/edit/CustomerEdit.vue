@@ -11,7 +11,7 @@
               src="@/assets/img/register/companyLogo.svg"
             /><span class="hidden">Logo</span></label
           >
-          <input type="file" class="form__input" placeholder="프로필 사진" />
+          <input type="file" class="form__input" />
         </div>
 
         <div class="form__field">
@@ -23,16 +23,16 @@
           >
           <input
             type="text"
-            v-model="name"
+            v-model="nickname"
             class="form__input"
-            placeholder="닉네임"
+            :placeholder="nickname"
             required
           />
         </div>
 
         <div class="form__field" >
           <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
-          <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" placeholder="고객 전화번호" required>
+          <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" :placeholder="tel" required>
         </div>
 
         <div class="form__field" >
@@ -49,10 +49,7 @@
           <input type="submit" value="MODIFY">
         </div>
         <p class="text--center">
-        탈퇴하시겠습니까? &nbsp;&nbsp;<router-link
-          to="/companyregister"
-          class="signout"
-          @click="signout">탈퇴하기</router-link>
+        탈퇴하시겠습니까? &nbsp;&nbsp;<ra href="#" class="signout" @click="signout">탈퇴하기</ra>
       </p>
       </form>
     </div>
@@ -62,52 +59,48 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
+var customer = JSON.parse(sessionStorage.getItem("customer"));
 
 export default {
   name: "CustomerEdit",
   data(){
     return {
-      apiId: -1,
-      apiKey: "",
-      imgSrc: "",
-      nickname: "",
-      email: "",
-      tel: "",
-      job: "",
-      funnel: "",
+      custId:-1,
+      nickname:"",
+      imgSr:"",
+      tel:"",
+      job:"",
       max: 13,
-      picked:""
       }
   },mounted(){
-    var apiData = JSON.parse(sessionStorage.getItem("apiData"));
-    console.log(apiData);
-    this.apiId = apiData.apiId;
-    this.apiKey = apiData.apiKey;
-    this.imgSrc = apiData.imgSrc;
-    this.nickname = apiData.nickname;
-    this.email = apiData.email;
-    console.log(this.apiId+","+this.apiKey+","+this.imgSrc+","+this.nickname+","+this.email);
-
+    console.log(customer);
+    this.custId = customer.custId;
+    this.imgSrc = customer.imgSrc;
+    this.nickname = customer.nickname;
+    this.tel = customer.tel;
+    this.job = customer.job;
   }
   ,methods:{
     customerEdit: function(){
         axios
-        .post('http://localhost:7777/customer',{
-          apiId: this.apiId,
-          apiKey: this.apiKey,
+        .put('http://localhost:7777/customer',{
+          custId: this.custId,
           imgSrc: this.imgSrc,
           nickname: this.nickname,
-          email: this.email,
           tel: this.tel,
-          job: this.job,
-          funnel: this.funnel,
-          gender: this.picked
+          job: this.job
         })
-         .then(response => {
-           this.condata = response.data
-           sessionStorage.removeItem("apiData")
-           alert(this.nickname+" 님의 가입을 환영합니다.");
-           location.href="http://localhost:9999"
+         .then(res => {
+           console.log(res);
+           customer.custId = this.custId;
+           customer.imgSrc = this.imgSrc;
+           customer.nickname = this.nickname;
+           customer.tel = this.tel;
+           customer.job = this.job;
+           sessionStorage.setItem("customer",JSON.stringify(customer));
+           //console.log(customer);
+           alert("정보가 수정되었습니다.");
+           location.href="http://localhost:9999/mypage";
            })
         .catch(e => {
           console.log(e)
@@ -117,8 +110,16 @@ export default {
         if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
       },
       signout :function(){
-      //1.db삭제
-      //2.세션삭제
+        axios.delete("http://localhost:7777/customer/"+this.custId)
+        .then(res=>{
+          console.log(res)
+          alert("회원탈퇴 되었습니다.");
+          sessionStorage.removeItem("customer");
+          location.href="http://localhost:9999";
+        })
+        .catch(err=>{
+          console.log(err);
+        })
     }
   }
 }

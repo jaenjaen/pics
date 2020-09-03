@@ -10,13 +10,11 @@ import Mypage from "../views/mypage/Mypage.vue";
 import CompanyEdit from "../views/mypage/edit/CompanyEdit.vue";
 import CustomerEdit from "../views/mypage/edit/CustomerEdit.vue";
 import WishList from "../views/WishList.vue";
-// import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
 import StudioInfo from "../components/studioInfo/StudioInfo.vue";
 import Reservation from "../components/studioInfo/Reservation.vue";
-// import Map from "../components/Map.vue";
-// import Test from "../components/Test.vue";
+// import Map from "../components/studioInfo/Map.vue";
 import ChartGender from "../components/studioInfo/ChartGender.vue";
 import StudioList from "@/components/search/StudioList.vue";
 
@@ -97,14 +95,12 @@ const routes = [{
         path: "/customeredit",
         name: "customeredit",
         component: CustomerEdit
+    },
+    {
+        path: "/Map",
+        name: "Map",
+        component: Map
     }
-
-
-    // {
-    //     path: "/Map",
-    //     name: "Map",
-    //     component: Map
-    // }
 ];
 const router = new VueRouter({
     mode: "history",

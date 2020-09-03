@@ -60,9 +60,9 @@ export default {
             ],
             //예약 로직 관련 변수
             today: new Date(),
-            maxDate: new Date((this.today).getYear(), (this.today).getMonth + 1, (this.today).getDate),
+            // maxDate: new Date((this.today).getYear(), (this.today).getMonth + 1, (this.today).getDate),
             disabledDates: [],
-            closedDates: [],
+            // closedDates: [],
             // 상태 체크 변수
             loading: true,
             errored: false,
@@ -89,10 +89,10 @@ export default {
                 for (var i = 0; i < (this.schedule.repeatDate).length; i++) {
                     repeat_date.push(this.schedule.repeatDate[i].weekDate)
                 }
-                let diff = ((this.getMaxDate).getTime - (this.today).getTime) / (1000 * 60 * 60)
-                for (var j = 0; j < diff; j++) { // weekDate를 돌면서
+                // let diff = ((this.getMaxDate).getTime - (this.today).getTime) / (1000 * 60 * 60)
+                for (var j = 0; j < 31; j++) { // weekDate를 돌면서
                     if (repeat_date.indexOf(week[(this.today.getDate() + j).getDay], 0) < 0) { // week에 없으면
-                        console.log("j : " + j + ", week[i] : " + week[j])
+                        // console.log("j : " + j + ", week[i] : " + week[j])
                         this.disabledDates.push(j)
                     }
                 }
@@ -122,9 +122,6 @@ export default {
             var startDay = (new Date(this.start_date)).getDay();
             var endDay = (new Date(this.end_date)).getDay();
             var msg = "";
-
-            // repeatDate로 가능 불가능 구분
-
             if (this.start_date == "" | this.and_date == "" | this.start_time == "" | this.end_time == "")
                 return msg;
             else {
@@ -293,6 +290,14 @@ export default {
             }
             this.total_price = total_price;
             return total_price;
+        },
+        dateFormat: {
+            get() {
+                return this.$material.locale.dateFormat
+            },
+            set(val) {
+                this.$material.locale.dateFormat = val
+            }
         }
     },
     methods: {

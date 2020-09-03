@@ -2,13 +2,24 @@ import axios from "axios"; //axios
 import Vue from 'vue'
 import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
+import VModal from 'vue-js-modal'
+import 'vue-material/dist/vue-material.min.css'
+// import 'vue-material/dist/theme/default.css'
 // import Chart from 'chart.js'
 // import { Doughnut } from "vue-chartjs";
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
+Vue.use(VueMaterial)
 import ChartGender from "@/assets/js/studioInfo/ChartJs.js"
 import Reservation from "@/components/studioInfo/Reservation.vue"
-import VModal from 'vue-js-modal'
+
+
+// import Map from "@/components/studioInfo/Map.vue"
 
 Vue.use(VModal);
+
 export default {
     name: "studio-info",
     components: { carousel, ChartGender, Reservation },
@@ -25,8 +36,35 @@ export default {
 
             // studio 관련 변수 (GET)
             customer: {},
-            studios: [{}],
-            tags: [{}],
+            studios: {
+                categoryId: 0,
+                name: "",
+                description: "",
+                rule: "",
+                mainImg: "",
+                portImg: "",
+                cadImg: "",
+                floor: 0,
+                studioFilter: {
+                    size: 0,
+                    options: null,
+                    parking: "",
+                    unitPrice: 0,
+                    defaultCapacity: 0,
+                    excharge: 0,
+                    address: "",
+                    maxCapacity: 0
+                },
+                company: {
+                    comId: 0,
+                    name: "",
+                    address: ""
+                }
+            },
+            tags: [{
+                tagId: 0,
+                tagName: ""
+            }],
             bookmarkCheck: 0, //북마크 id값 받은 변수
             reviews: [{}],
             accCustomer: 0,
@@ -36,24 +74,30 @@ export default {
             errored: false,
 
             //이미지 split 변수
-            mainImage: [],
-            portImage: [],
+            mainImgList: [],
+            portImgList: [],
         };
     },
-    async mounted() {
-        this.customer = JSON.parse(sessionStorage.getItem('customer'));
+
+    async mounted() { //async mount로 비동기 처리
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
+        this.customer = JSON.parse(sessionStorage.getItem('customer'));
+        console.log("this.stuId : " + this.stuId);
         axios
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
-                this.studios = response.data
-
+                this.studios = response.data;
+                //메인 이미지 split
+                this.mainImgList = this.studios[0].mainImg.split(',');
+                this.portImgList = this.studios[0].portImg.split(',');
+                console.log("this.portImgList : " + this.portImgList);
             })
             .catch(error => {
                 console.log(error);
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
+
         axios
             .get("http://127.0.0.1:7777/studio/tags/" + this.stuId)
             .then(response => (this.tags = response.data))
@@ -62,14 +106,7 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        axios
-            .get("http://127.0.0.1:7777/studio/getBookmark/" + this.customer.custId + "/" + this.stuId)
-            .then(response => (this.bookmarkCheck = response.data))
-            .catch(error => {
-                console.log(error);
-                this.errored = true;
-            })
-            .finally(() => (this.loading = false));
+        console.log("this.tags : " + this.tags);
         axios
             .get("http://127.0.0.1:7777/studio/accCustomer/" + this.stuId)
             .then(response => (this.accCustomer = response.data))
@@ -78,6 +115,7 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
+        console.log("this.accCustomer : " + this.accCustomer);
         axios
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => (this.reviews = response.data))
@@ -86,9 +124,18 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-
-
-
+        console.log("this.reviews[0].reviewId : " + this.reviews[0].reviewId);
+        if (this.customer != undefined) {
+            axios
+                .get("http://127.0.0.1:7777/studio/getBookmark/" + this.customer.custId + "/" + this.stuId)
+                .then(response => (this.bookmarkCheck = response.data))
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => (this.loading = false));
+            console.log("this.bookmarkCheck : " + this.bookmarkCheck);
+        }
         // this.fillData;
         // await this.getGenderData();
         ////////////////////////////// Chart & Graph //////////////////////////////
@@ -143,10 +190,8 @@ export default {
             } else {
                 return id.slice(0, 4) + "****님"
             }
-        }
-
+        },
     },
-
     ////////////////////////////// Methods //////////////////////////////
     methods: {
         // filltData() {
@@ -204,39 +249,58 @@ export default {
             return require("@/assets/img/studio/" + imgName);
         },
         bookmarkChange() {
-            if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
-                axios
-                    .delete("http://127.0.0.1:7777/bookmark/" + this.bookmarkCheck)
-                    .then(() => {
-                        this.bookmarkCheck = 0;
-                        this.$modal.show("delBook");
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.errored = true;
-                    })
-                    .finally(() => (this.loading = false));
-            } else { //찜한적 없다면 찜 목록 등록
-                let bookmark = {
-                    studio: {
-                        stuId: this.stuId
-                    },
-                    customer: {
-                        custId: this.customer.custId
-                    }
-                };
-                axios
-                    .post("http://127.0.0.1:7777/bookmark/", bookmark)
-                    .then(() => {
-                        this.$modal.show("regBook");
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.errored = true;
-                    })
-                    .finally(() => (this.loading = false));
+            if (this.customer != undefined) {
+                if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
+                    axios
+                        .delete("http://127.0.0.1:7777/bookmark/" + this.bookmarkCheck)
+                        .then(() => {
+                            this.bookmarkCheck = 0;
+                            this.$modal.show("delBook");
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.errored = true;
+                        })
+                        .finally(() => (this.loading = false));
+                } else { //찜한적 없다면 찜 목록 등록
+                    let bookmark = {
+                        studio: {
+                            stuId: this.stuId
+                        },
+                        customer: {
+                            custId: this.customer.custId
+                        }
+                    };
+                    axios
+                        .post("http://127.0.0.1:7777/bookmark/", bookmark)
+                        .then(() => {
+                            this.$modal.show("regBook");
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.errored = true;
+                        })
+                        .finally(() => (this.loading = false));
+                }
+            } else {
+                this.$modal.show("login-required");
             }
-        }, ////////////////////////////// Chart & Graph Methods //////////////////////////////
+        },
+        isEmpty(value) {
+            if (value == "" || value == null || value == undefined || (value != null &&
+                    typeof value == "object" && !Object.keys(value).length)) {
+                return true
+            } else return false
+        },
+        closePop() {
+            this.$modal.hide("delBook");
+            this.$modal.hide("regBook");
+            this.$modal.hide("login-required");
+        }
+
+
+
+        ////////////////////////////// Chart & Graph Methods //////////////////////////////
         // chartData: function() {
         //     var customer = this.customers;
         //     this.total = customer.length;

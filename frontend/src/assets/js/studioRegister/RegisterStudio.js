@@ -152,6 +152,31 @@ export default {
             })
     },
     methods: {
+        /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
+        checkLength() {
+            var changeArea = document.getElementsByName('changeArea');
+            var countLength = document.getElementsByName('countLength');
+            for (let i = 0; i < countLength.length; i++) {
+                let value = countLength[i].value;
+                let length = countLength[i].value.length;
+                if (i == 0) { //스튜디오 소개
+                    if (length > 500) {
+                        document.getElementsByName('countLength')[i].value = value.substring(0, 500);
+                        return false;
+                    } else {
+                        changeArea[i].innerHTML = length;
+                    }
+                } else if (i == 1) { //이용 수칙
+                    if (length > 400) {
+                        document.getElementsByName('countLength')[i].value = value.substring(0, 400);
+                        return false;
+                    } else {
+                        changeArea[i].innerHTML = length;
+                    }
+                }
+            }
+        },
+
         /* 파일 업로드 화면단 처리 */
         handleImgFileSelect(fileId, imgId, e) {
             var thisFileId = document.getElementById(fileId);
@@ -797,8 +822,65 @@ export default {
                 this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
             }
 
-            /* 지상/지하 토글 버튼에 맞춰 데이터 바인딩 */
+            /* 숫자 유효성 검사 */
             let floor = document.getElementById('floor').value;
+            let size = document.getElementById('size').value;
+            let unitPrice = document.getElementById('unitPrice').value;
+            let excharge = document.getElementById('excharge').value;
+            let defaultCapacity = document.getElementById('defaultCapacity').value;
+            let maxCapacity = document.getElementById('maxCapacity').value;
+            let parking = document.getElementById('parking').value;
+            let isNumeric = [{
+                check: floor,
+                message: "층수를 1 이상의 정수로 입력하세요."
+            }, {
+                check: size,
+                message: "면적을 1 이상의 숫자로 입력하세요."
+            }, {
+                check: unitPrice,
+                message: "시간당 대여료를 1 이상의 정수로 입력하세요."
+            }, {
+                check: excharge,
+                message: "1인 추가시 대여료를 1 이상의 정수로 입력하세요."
+            }, {
+                check: defaultCapacity,
+                message: "기본 인원을 1 이상의 정수로 입력하세요"
+            }, {
+                check: maxCapacity,
+                message: "최대 인원을 1 이상의 정수로 입력하세요",
+            }, {
+                check: parking,
+                message: "주차 대수를 0 이상의 정수로 입력하세요"
+            }];
+
+            for (let i = 0; i < isNumeric.length; i++) {
+                let temp = Number(isNumeric[i].check);
+                if (i == 1) { //면적
+                    if (isNaN(temp) || temp < 1) {
+                        alert(isNumeric[i].message);
+                        return false;
+                    }
+                } else if (i == isNumeric.length - 1) { //주차대수
+                    if (Number.isInteger(temp) && temp >= 0) {
+                        continue;
+                    } else {
+                        alert(isNumeric[i].message);
+                        return false;
+                    }
+                } else { //층수, 시간당 대여료, 1인 추가시 대여료, 기본 인원, 최대 인원
+                    if (isNumeric[i].check == '') {
+                        continue;
+                    }
+                    if (Number.isInteger(temp) && temp >= 1) {
+                        continue;
+                    } else {
+                        alert(isNumeric[i].message);
+                        return false;
+                    }
+                }
+            }
+
+            /* 지상/지하 토글 버튼에 맞춰 데이터 바인딩 */
             if (this.floorUnit == false) { //지상
                 this.studio.floor = floor;
                 this.floorUnit = true;
@@ -808,7 +890,6 @@ export default {
             }
 
             /* 면적 단위 토글 버튼 상태에 맞춰 데이터 바인딩 */
-            let size = document.getElementById('size').value;
             if (this.sizeUnit == false) { //제곱미터
                 this.studio.studioFilter.size = size;
                 this.sizeUnit = true;
@@ -825,7 +906,6 @@ export default {
 
             /* 주차가능 체크시 주차대수 입력 필수 */
             var parkAble = document.getElementsByName("parkFlag")[1].checked;
-            var parking = document.getElementById("parking").value;
             if (parkAble == true) {
                 if (parking == "") {
                     alert("주차 가능 대수를 입력하세요.");

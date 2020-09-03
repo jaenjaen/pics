@@ -2,21 +2,23 @@ import axios from "axios"; //axios
 import Vue from 'vue'
 import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
+import VModal from 'vue-js-modal'
+import 'vue-material/dist/vue-material.min.css'
+// import 'vue-material/dist/theme/default.css'
 // import Chart from 'chart.js'
 // import { Doughnut } from "vue-chartjs";
-import VModal from 'vue-js-modal'
-import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
+import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 
+Vue.use(VueMaterial)
 import ChartGender from "@/assets/js/studioInfo/ChartJs.js"
 import Reservation from "@/components/studioInfo/Reservation.vue"
+
+
 // import Map from "@/components/studioInfo/Map.vue"
 
 Vue.use(VModal);
-Vue.use(MdButton)
-Vue.use(MdContent)
-Vue.use(MdTabs)
 
 export default {
     name: "studio-info",
@@ -247,37 +249,41 @@ export default {
             return require("@/assets/img/studio/" + imgName);
         },
         bookmarkChange() {
-            if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
-                axios
-                    .delete("http://127.0.0.1:7777/bookmark/" + this.bookmarkCheck)
-                    .then(() => {
-                        this.bookmarkCheck = 0;
-                        this.$modal.show("delBook");
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.errored = true;
-                    })
-                    .finally(() => (this.loading = false));
-            } else { //찜한적 없다면 찜 목록 등록
-                let bookmark = {
-                    studio: {
-                        stuId: this.stuId
-                    },
-                    customer: {
-                        custId: this.customer.custId
-                    }
-                };
-                axios
-                    .post("http://127.0.0.1:7777/bookmark/", bookmark)
-                    .then(() => {
-                        this.$modal.show("regBook");
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.errored = true;
-                    })
-                    .finally(() => (this.loading = false));
+            if (this.customer != undefined) {
+                if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
+                    axios
+                        .delete("http://127.0.0.1:7777/bookmark/" + this.bookmarkCheck)
+                        .then(() => {
+                            this.bookmarkCheck = 0;
+                            this.$modal.show("delBook");
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.errored = true;
+                        })
+                        .finally(() => (this.loading = false));
+                } else { //찜한적 없다면 찜 목록 등록
+                    let bookmark = {
+                        studio: {
+                            stuId: this.stuId
+                        },
+                        customer: {
+                            custId: this.customer.custId
+                        }
+                    };
+                    axios
+                        .post("http://127.0.0.1:7777/bookmark/", bookmark)
+                        .then(() => {
+                            this.$modal.show("regBook");
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            this.errored = true;
+                        })
+                        .finally(() => (this.loading = false));
+                }
+            } else {
+                this.$modal.show("login-required");
             }
         },
         isEmpty(value) {
@@ -285,6 +291,11 @@ export default {
                     typeof value == "object" && !Object.keys(value).length)) {
                 return true
             } else return false
+        },
+        closePop() {
+            this.$modal.hide("delBook");
+            this.$modal.hide("regBook");
+            this.$modal.hide("login-required");
         }
 
 

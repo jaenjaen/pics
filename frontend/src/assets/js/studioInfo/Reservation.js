@@ -1,11 +1,10 @@
 import axios from "axios";
-// import Vue from 'vue';
-// import Vuetify from 'vuetify';
-// import 'vuetify/dist/vuetify.min.css';
-// import vmodal from 'vue-js-modal'
+import Vue from 'vue';
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/default.css';
 
-// Vue.use(Vuetify)
-
+Vue.use(VueMaterial)
 
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];

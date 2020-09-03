@@ -7,42 +7,40 @@
           <!-- ============== calender ============== -->
           <!-- 날짜 -->
           <div class="row">
-            <div class="col s12 m3"></div>
             <div class="col s12 m6">
               <div class="date-input-field">
                 [대여 시작 일자]
-                <input
+                <!-- <input
                   type="date"
                   id="start_date"
                   name="start_date"
                   v-model="start_date"
                   required="required"
                   min="this.today"
-                />
-              </div>
-
-              <!-- <v-date-picker
-                      v-model="date"
-                      :allowed-dates="allowedDates"
-                      class="mt-3"
-                      min="2016-06-15"
-                      max="2018-03-20"
-                    ></v-date-picker> -->
-
-              <br />
-              <div class="date-input-field">
-                [대여 종료 일자]
-                <input
+                 />
+                </div> -->
+                <div>
+                  <md-datepicker 
+                  v-model="selectedDate" 
+                  :md-disabled-dates="disabledDates"></md-datepicker>
+                </div>
+                <br />
+                <div class="date-input-field">
+                  [대여 종료 일자]
+                  <md-datepicker 
+                  v-model="selectedDate" 
+                  :md-disabled-dates="disabledDates"></md-datepicker>
+                </div>
+                <!-- <input
                   type="date"
                   id="end_date"
                   name="end_date"
                   v-model="end_date"
                   required="required"
                   min="this.start_date"
-                />
+                /> -->
               </div>
             </div>
-            <div class="col s12 m3"></div>
           </div>
           <br />
           <hr />

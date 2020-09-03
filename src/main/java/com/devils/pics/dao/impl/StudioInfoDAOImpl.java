@@ -56,14 +56,14 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 		return sqlSession.selectOne(NS+"getStudioId", studio);
 	}
 	@Override
-	public Studio getStudioByNameAndComId(Studio studio) {
+	public List<Studio> getStudioByNameAndComId(Studio studio) {
 		//name과 comId로 Studio를 가져옴
-		return sqlSession.selectOne(NS+"getStudioByNameAndComId", studio);
+		return sqlSession.selectList(NS+"getStudioByNameAndComId", studio);
 	}
 	@Override
-	public Studio getStudioByAddrAndComId(Studio studio) {
+	public List<Studio> getStudioByAddrAndComId(Studio studio) {
 		//address와 comId로 Studio를 가져옴
-		return sqlSession.selectOne(NS+"getStudioByAddrAndComId", studio);
+		return sqlSession.selectList(NS+"getStudioByAddrAndComId", studio);
 	}
 	
 	@Override

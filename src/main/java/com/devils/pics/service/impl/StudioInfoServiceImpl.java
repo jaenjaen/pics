@@ -39,9 +39,11 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 	@Override
 	public boolean isExistStudio(Studio studio) {
 		/* 중복 등록을 막기 위해 DB상에 이미 존재하는 스튜디오인지 검사함 */
-		Studio studio1 = studioInfoDao.getStudioByNameAndComId(studio); //name과 comId로 찾음
-		Studio studio2 = studioInfoDao.getStudioByAddrAndComId(studio); //address와 comId로 찾음
-		if(studio1 == null && studio2 == null) { //이미 존재하는 스튜디오가 아니라면
+		List<Studio> studio1 = studioInfoDao.getStudioByNameAndComId(studio); //name과 comId로 찾음
+		System.out.println(studio1);
+		List<Studio> studio2 = studioInfoDao.getStudioByAddrAndComId(studio); //address와 comId로 찾음
+		System.out.println(studio2);
+		if(studio1.size() < 1 && studio2.size() < 1) { //이미 존재하는 스튜디오가 아니라면
 			return false;
 		}else { //이미 존재하는 스튜디오라면
 			return true;

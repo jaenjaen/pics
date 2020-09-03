@@ -762,9 +762,9 @@ export default {
 
         /* 스튜디오 등록 전 로그인 체크 */
         checkLogin() {
-            if (this.studio.company === undefined) {
+            if (this.studio.company == '') {
                 alert("기업고객으로 로그인하세요.");
-                location.href = "/companyLogin";
+                //location.href = "/companyLogin";
             }
             this.checkStudio();
         },
@@ -888,10 +888,6 @@ export default {
                 }).then((response) => {
                     console.log('대표사진 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
-                    if (response.data == '0') { //로그인이 풀렸을 경우
-                        alert("기업고객으로 로그인하세요.");
-                        location.href = "/companyLogin";
-                    }
                     this.studio.mainImg = response.data; //대표사진 파일명 데이터 바인딩
                 })
                 .catch(() => {
@@ -915,10 +911,6 @@ export default {
                 }).then((response) => {
                     console.log('공간도면 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
-                    if (response.data == '0') { //로그인이 풀렸을 경우
-                        alert("기업고객으로 로그인하세요.");
-                        location.href = "/companyLogin";
-                    }
                     this.studio.cadImg = response.data; //공간도면 파일명 데이터 바인딩
                 })
                 .catch(() => {
@@ -944,10 +936,6 @@ export default {
                 }).then((response) => {
                     console.log('포트폴리오 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
-                    if (response.data == '0') { //로그인이 풀렸을 경우
-                        alert("기업고객으로 로그인하세요.");
-                        location.href = "/companyLogin";
-                    }
                     this.studio.portImg = response.data; //포트폴리오 파일명 데이터 바인딩
                 })
                 .catch(() => {
@@ -971,9 +959,6 @@ export default {
                         } else if (response.data == '-1') {
                             alert("이미 등록된 스튜디오입니다.");
                             return false;
-                        } else if (response.data == '0') { //로그인이 풀렸을 경우
-                            alert("기업고객으로 로그인하세요.");
-                            location.href = "/companyLogin";
                         }
                     },
                     function() {

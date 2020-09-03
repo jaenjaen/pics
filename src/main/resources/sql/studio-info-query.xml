@@ -166,7 +166,7 @@
 		SELECT * FROM studio WHERE name = #{name} AND com_id = #{comId};
 	</select>
 	<!-- address, comId로 studio를 가져옴 -->
-	<select id="getStudioByAddrAndComId" parameterType="studio" resultMap="studioInfoRM">
+	<select id="getStudioByAddrAndComId" resultMap="studioInfoRM">
 		SELECT *
 		FROM 
 		(SELECT * FROM studio WHERE com_id = #{comId}) s, 

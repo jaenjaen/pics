@@ -9,7 +9,7 @@
           <div class="col-25">
             <label for="name">
               스튜디오 이름
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75">
@@ -20,7 +20,7 @@
           <div class="col-25">
             <label for="country">
               스튜디오 종류
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75">
@@ -51,49 +51,59 @@
           <div class="col-25">
             <label for="mainImg">
               대표 사진
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
-              <input type=file id="mainFile0" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile0', 'mainImg0', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg0" onclick='document.getElementById("mainFile0").click()'>
+              <input type=file id="mainFile0" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile0', 'mainImg0', 'mainFilesBtn0', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg0" onclick='document.getElementById("mainFile0").click()'>
+              <button type="button" id="mainFilesBtn0" class="uploadResetBtn" @click="resetUploadImg('mainFile0', 'mainImg0', 'mainFilesBtn0', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile1" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile1', 'mainImg1', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg1" onclick='document.getElementById("mainFile1").click()'>
+              <input type=file id="mainFile1" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile1', 'mainImg1', 'mainFilesBtn1', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg1" onclick='document.getElementById("mainFile1").click()'>
+              <button type="button" id="mainFilesBtn1" class="uploadResetBtn" @click="resetUploadImg('mainFile1', 'mainImg1', 'mainFilesBtn1', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile2" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile2', 'mainImg2', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg2" onclick='document.getElementById("mainFile2").click()'>
+              <input type=file id="mainFile2" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile2', 'mainImg2', 'mainFilesBtn2', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg2" onclick='document.getElementById("mainFile2").click()'>
+              <button type="button" id="mainFilesBtn2" class="uploadResetBtn" @click="resetUploadImg('mainFile2', 'mainImg2', 'mainFilesBtn2', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile3" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile3', 'mainImg3', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg3" onclick='document.getElementById("mainFile3").click()'>
+              <input type=file id="mainFile3" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile3', 'mainImg3', 'mainFilesBtn3', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg3" onclick='document.getElementById("mainFile3").click()'>
+              <button type="button" id="mainFilesBtn3" class="uploadResetBtn" @click="resetUploadImg('mainFile3', 'mainImg3', 'mainFilesBtn3', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile4" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile4', 'mainImg4', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg4" onclick='document.getElementById("mainFile4").click()'>
+              <input type=file id="mainFile4" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile4', 'mainImg4', 'mainFilesBtn4', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg4" onclick='document.getElementById("mainFile4").click()'>
+              <button type="button" id="mainFilesBtn4" class="uploadResetBtn" @click="resetUploadImg('mainFile4', 'mainImg4', 'mainFilesBtn4', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile5" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile5', 'mainImg5', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg5" onclick='document.getElementById("mainFile5").click()'>
+              <input type=file id="mainFile5" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile5', 'mainImg5', 'mainFilesBtn5', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg5" onclick='document.getElementById("mainFile5").click()'>
+              <button type="button" id="mainFilesBtn5" class="uploadResetBtn" @click="resetUploadImg('mainFile5', 'mainImg5', 'mainFilesBtn5', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile6" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile6', 'mainImg6', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg6" onclick='document.getElementById("mainFile6").click()'>
+              <input type=file id="mainFile6" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile6', 'mainImg6', 'mainFilesBtn6', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg6" onclick='document.getElementById("mainFile6").click()'>
+              <button type="button" id="mainFilesBtn6" class="uploadResetBtn" @click="resetUploadImg('mainFile6', 'mainImg6', 'mainFilesBtn6', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile7" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile7', 'mainImg7', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg7" onclick='document.getElementById("mainFile7").click()'>
+              <input type=file id="mainFile7" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile7', 'mainImg7', 'mainFilesBtn7', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg7" onclick='document.getElementById("mainFile7").click()'>
+              <button type="button" id="mainFilesBtn7" class="uploadResetBtn" @click="resetUploadImg('mainFile7', 'mainImg7', 'mainFilesBtn7', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile8" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile8', 'mainImg8', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg8" onclick='document.getElementById("mainFile8").click()'>
+              <input type=file id="mainFile8" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile8', 'mainImg8', 'mainFilesBtn8', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg8" onclick='document.getElementById("mainFile8").click()'>
+              <button type="button" id="mainFilesBtn8" class="uploadResetBtn" @click="resetUploadImg('mainFile8', 'mainImg8', 'mainFilesBtn8', 'preview')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="mainFile9" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile9', 'mainImg9', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="mainImg9" onclick='document.getElementById("mainFile9").click()'>
+              <input type=file id="mainFile9" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile9', 'mainImg9', 'mainFilesBtn9', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="mainImg9" onclick='document.getElementById("mainFile9").click()'>
+              <button type="button" id="mainFilesBtn9" class="uploadResetBtn" @click="resetUploadImg('mainFile9', 'mainImg9', 'mainFilesBtn9', 'preview')">삭제</button>
             </div>
           </div>
         </div>
@@ -101,7 +111,7 @@
           <div class="col-25">
             <label for="tag">
               태그
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25 tag">
@@ -121,7 +131,7 @@
           <div class="col-25">
             <label for="address">
               주소
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75">
@@ -171,7 +181,7 @@
           <div class="col-25 col-space">
             <label for="size">
               면적
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -193,8 +203,9 @@
           </div>
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
-              <input type=file id="cadFile" name="cadFile" class="cadFile" @change="handleImgFileSelect('cadFile', 'cadImg', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/preview.png" class="uploadImg" id="cadImg" onclick='document.getElementById("cadFile").click()'>
+              <input type=file id="cadFile" name="cadFile" class="cadFile" @change="handleImgFileSelect('cadFile', 'cadImg', 'cadFileBtn', $event)" style='display: none;'> 
+              <img :src="preview" class="uploadImg" id="cadImg" onclick='document.getElementById("cadFile").click()'>
+              <button type="button" id="cadFileBtn" class="uploadResetBtn" @click="resetUploadImg('cadFile', 'cadImg', 'cadFileBtn', 'preview')">삭제</button>
             </div>
           </div>
         </div>
@@ -202,7 +213,7 @@
           <div class="col-25">
             <label for="unitPrice">
               시간당 대여료
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -214,7 +225,7 @@
           <div class="col-25 col-space">
             <label for="excharge">
               1인 추가시 대여료 
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -228,7 +239,7 @@
           <div class="col-25">
             <label for="defaultCapacity">
               기본 인원
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -240,7 +251,7 @@
           <div class="col-25 col-space">
             <label for="maxCapacity">
               최대 인원
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -254,7 +265,7 @@
           <div class="col-25">
             <label for="">
               운영 시간
-              <img src="@/assets/img/upload/required.png" width="20px">
+              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75">
@@ -541,27 +552,31 @@
           </div>
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
-              <input type=file id="portFile0" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile0', 'portImg0', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg0" onclick='document.getElementById("portFile0").click()'>
+              <input type=file id="portFile0" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile0', 'portImg0', 'portFilesBtn0', $event)" style='display: none;'> 
+              <img :src="port" class="uploadImg" id="portImg0" onclick='document.getElementById("portFile0").click()'>
+              <button type="button" id="portFilesBtn0" class="uploadResetBtn" @click="resetUploadImg('portFile0', 'portImg0', 'portFilesBtn0', 'port')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="portFile1" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile1', 'portImg1', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg1" onclick='document.getElementById("portFile1").click()'>
+              <input type=file id="portFile1" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile1', 'portImg1', 'portFilesBtn1', $event)" style='display: none;'> 
+              <img :src="port" class="uploadImg" id="portImg1" onclick='document.getElementById("portFile1").click()'>
+              <button type="button" id="portFilesBtn1" class="uploadResetBtn" @click="resetUploadImg('portFile1', 'portImg1', 'portFilesBtn1', 'port')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="portFile2" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile2', 'portImg2', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg2" onclick='document.getElementById("portFile2").click()'>
+              <input type=file id="portFile2" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile2', 'portImg2', 'portFilesBtn2', $event)" style='display: none;'> 
+              <img :src="port" class="uploadImg" id="portImg2" onclick='document.getElementById("portFile2").click()'>
+              <button type="button" id="portFilesBtn2" class="uploadResetBtn" @click="resetUploadImg('portFile2', 'portImg2', 'portFilesBtn2', 'port')">삭제</button>
             </div>
             <div class="uploadArea">
-              <input type=file id="portFile3" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile3', 'portImg3', $event)" style='display: none;'> 
-              <img src="@/assets/img/upload/port.png" class="uploadImg" id="portImg3" onclick='document.getElementById("portFile3").click()'>
+              <input type=file id="portFile3" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile3', 'portImg3', 'portFilesBtn3', $event)" style='display: none;'> 
+              <img :src="port" class="uploadImg" id="portImg3" onclick='document.getElementById("portFile3").click()'>
+              <button type="button" id="portFilesBtn3" class="uploadResetBtn" @click="resetUploadImg('portFile3', 'portImg3', 'portFilesBtn3', 'port')">삭제</button>
             </div>
           </div>
         </div>
         <div class="row">
           <p id="agreeTitle" style="padding-top:10px">
             서비스 동의&nbsp;
-            <img src="@/assets/img/upload/required.png" width="20px">
+            <img :src="required" width="20px">
           </p>
           
           <table id="agreeTable" width="100%">

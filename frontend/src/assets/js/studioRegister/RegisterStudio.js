@@ -37,6 +37,12 @@ export default {
                 },
                 tag: []
             },
+
+            /* 디폴트 이미지 */
+            required: require('@/assets/img/upload/required.png'),
+            preview: require('@/assets/img/upload/preview.png'),
+            port: require('@/assets/img/upload/port.png'),
+
             /* 카테고리 */
             category: [],
 
@@ -178,7 +184,7 @@ export default {
         },
 
         /* 파일 업로드 화면단 처리 */
-        handleImgFileSelect(fileId, imgId, e) {
+        handleImgFileSelect(fileId, imgId, btnId, e) {
             var thisFileId = document.getElementById(fileId);
             var thisImgId = document.getElementById(imgId);
             var files = e.target.files;
@@ -208,8 +214,34 @@ export default {
                             thisImgId.setAttribute("src", e.target.result);
                         }
                         reader.readAsDataURL(f);
+
+                        /* 파일 업로드 리셋 버튼 보이기 */
+                        var uploadBtn = document.getElementById(btnId);
+                        uploadBtn.setAttribute("style", "display: inline-block");
+
                     }) //forEach
             } //if
+        },
+
+        /* 업로드 이미지 삭제 */
+        resetUploadImg(fileId, imgId, btnId, img) {
+            alert("삭제됐다");
+
+            /* 파일 업로드된 파일을 삭제해서 리셋시킴 */
+            document.getElementById(fileId).value = '';
+
+            /* 파일 업로드 디폴트 이미지로 바꿈 */
+            var thisImgId = document.getElementById(imgId);
+            if (img === 'preview') {
+                thisImgId.setAttribute("src", require('@/assets/img/upload/preview.png'));
+            } else if (img === 'port') {
+                thisImgId.setAttribute("src", require('@/assets/img/upload/port.png'));
+            }
+
+
+            /* 파일 업로드 리셋 버튼 숨김 */
+            var thisBtnId = document.getElementById(btnId);
+            thisBtnId.setAttribute("style", "display: none");
         },
 
         /* 주소 API를 통해 주소 찾기, 닫기 */

@@ -4,7 +4,7 @@
     <div class="container">
       <h2>스튜디오 등록</h2>
       <br />
-      <form enctype="multipart/form-data" @submit.prevent="checkStudio">
+      <form enctype="multipart/form-data" @submit.prevent="checkLogin">
         <div class="row">
           <div class="col-25">
             <label for="name">스튜디오 이름</label>

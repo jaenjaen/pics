@@ -139,18 +139,16 @@ export default {
             location.href = "/companyLogin"
         } else {
             this.studio.comId = company.comId;
-            console.log(this.studio.comId); //뽑아낸 comId
+            console.log("comId : " + this.studio.comId); //뽑아낸 comId
         }
     },
     mounted() {
         axios.get('http://127.0.0.1:7777/category')
             .then((response) => {
-                console.log('성공');
                 this.category = JSON.parse(JSON.stringify(response.data));
-                console.log(this.category);
             })
             .catch(() => {
-                console.log('실패');
+                console.log('카테고리 가져오기 실패');
             })
     },
     methods: {
@@ -762,6 +760,15 @@ export default {
             }
         },
 
+        /* 스튜디오 등록 전 로그인 체크 */
+        checkLogin() {
+            if (this.studio.company === undefined) {
+                alert("기업고객으로 로그인하세요.");
+                location.href = "/companyLogin";
+            }
+            this.checkStudio();
+        },
+
         /* 스튜디오 등록 전 유효성 검사, 예외 처리, 데이터 바인딩 */
         checkStudio() {
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
@@ -874,17 +881,21 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.comId, formData, {
+            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('성공');
+                    console.log('대표사진 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
+                    if (response.data == '0') { //로그인이 풀렸을 경우
+                        alert("기업고객으로 로그인하세요.");
+                        location.href = "/companyLogin";
+                    }
                     this.studio.mainImg = response.data; //대표사진 파일명 데이터 바인딩
                 })
                 .catch(() => {
-                    console.log('실패');
+                    console.log('대표사진 파일 업로드 응답 실패');
                 })
                 .finally(() => {
                     this.uploadCadImg();
@@ -897,17 +908,21 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.comId, formData, {
+            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('성공');
+                    console.log('공간도면 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
+                    if (response.data == '0') { //로그인이 풀렸을 경우
+                        alert("기업고객으로 로그인하세요.");
+                        location.href = "/companyLogin";
+                    }
                     this.studio.cadImg = response.data; //공간도면 파일명 데이터 바인딩
                 })
                 .catch(() => {
-                    console.log('실패');
+                    console.log('공간도면 파일 업로드 응답 실패');
                 })
                 .finally(() => {
                     this.uploadPortImg();
@@ -922,17 +937,21 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.comId, formData, {
+            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('성공');
+                    console.log('포트폴리오 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
-                    this.studio.portImg = response.data; //대표사진 파일명 데이터 바인딩
+                    if (response.data == '0') { //로그인이 풀렸을 경우
+                        alert("기업고객으로 로그인하세요.");
+                        location.href = "/companyLogin";
+                    }
+                    this.studio.portImg = response.data; //포트폴리오 파일명 데이터 바인딩
                 })
                 .catch(() => {
-                    console.log('실패');
+                    console.log('포트폴리오 파일 업로드 응답 실패');
                 })
                 .finally(() => {
                     this.addStudio();
@@ -941,16 +960,26 @@ export default {
 
         /* 스튜디오 등록 */
         addStudio() {
-            axios.post("http://127.0.0.1:7777/studio", this.studio).then(
-                function(response) {
-                    console.log(response.data);
-                    alert(`등록되셨습니다.`);
-                    //location.href = "/mypage";
-                },
-                function() {
-                    console.log("failed");
-                }
-            );
+            axios.post("http://127.0.0.1:7777/studio", this.studio)
+                .then(
+                    function(response) {
+                        console.log("스튜디오 등록 응답 성공");
+                        console.log(response.data);
+                        if (response.data == '1') {
+                            alert(`스튜디오가 성공적으로 등록되었습니다.`);
+                            //location.href = "/mypage";
+                        } else if (response.data == '-1') {
+                            alert("이미 등록된 스튜디오입니다.");
+                            return false;
+                        } else if (response.data == '0') { //로그인이 풀렸을 경우
+                            alert("기업고객으로 로그인하세요.");
+                            location.href = "/companyLogin";
+                        }
+                    },
+                    function() {
+                        console.log("스튜디오 등록 응답 실패");
+                    }
+                );
         }
     }
 }

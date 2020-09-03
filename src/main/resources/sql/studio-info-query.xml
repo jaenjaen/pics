@@ -145,19 +145,35 @@
 	</select>
 	
 	<!--  ================== 스튜디오 공간 등록 관련 쿼리 ========================  -->
+	<!-- 스튜디오 등록 -->
 	<insert id="registerStudioInfo" parameterType="studio">
 		INSERT 
 		INTO studio (com_id, category_id, name, description, rule, main_img, port_img, cad_img, floor) 
 		VALUES(#{comId}, #{categoryId}, #{name}, #{description}, #{rule}, #{mainImg}, #{portImg}, #{cadImg}, #{floor});
 	</insert>
+	<!-- 태그 등록 -->
 	<insert id="registerTag" parameterType="tag">
 		INSERT 
 		INTO tag (stu_id, tag_name) 
 		VALUES(#{stuId}, #{tagName});
 	</insert>
+	<!-- autoIncreasement된 stuId를 가져옴  -->
 	<select id="getStudioId" parameterType="studio" resultType="int">
-		SELECT stu_id FROM studio WHERE name = #{name};
+		SELECT stu_id FROM studio WHERE name = #{name} AND com_id = #{comId};
 	</select>
+	<!-- name, comId로 studio를 가져옴  -->
+	<select id="getStudioByNameAndComId" parameterType="studio" resultType="studio">
+		SELECT * FROM studio WHERE name = #{name} AND com_id = #{comId};
+	</select>
+	<!-- address, comId로 studio를 가져옴 -->
+	<select id="getStudioByAddrAndComId" parameterType="studio" resultMap="studioInfoRM">
+		SELECT *
+		FROM 
+		(SELECT * FROM studio WHERE com_id = #{comId}) s, 
+		(SELECT * FROM studio_filter WHERE address = #{address}) f
+		WHERE s.stu_id = f.stu_id;
+	</select>
+	<!-- 카테고리 목록을 가져옴 -->
 	<select id="getCategory" resultType="category">
 		SELECT category_id, category_name FROM studio_category; 	
 	</select>						

@@ -50,12 +50,22 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 		//카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)
 		return sqlSession.selectList(NS+"getCategory");
 	}
-	@Override
+	@Override 
 	public int getStudioId(Studio studio) {
 		//Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
 		return sqlSession.selectOne(NS+"getStudioId", studio);
 	}
-
+	@Override
+	public Studio getStudioByNameAndComId(Studio studio) {
+		//name과 comId로 Studio를 가져옴
+		return sqlSession.selectOne(NS+"getStudioByNameAndComId", studio);
+	}
+	@Override
+	public Studio getStudioByAddrAndComId(Studio studio) {
+		//address와 comId로 Studio를 가져옴
+		return sqlSession.selectOne(NS+"getStudioByAddrAndComId", studio);
+	}
+	
 	@Override
 	public List<Tag> getTags(int stuId) {
 		return sqlSession.selectList(NS+"getTags", stuId);

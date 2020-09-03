@@ -19,10 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.devils.pics.domain.Company;
 
-
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
 public class FileController {
+	
+	/* 파일 업로드 반응값
+	 * 성공했을 경우 => 파일 이름 리턴
+	 * 파일이 존재하지 않을 경우 => 응답하지 않음
+	 * 로그인하지 않았거나 로그인이 풀렸을 경우 => 0 리턴 */
 	
 	/* 싱글 파일 업로드 */
 	@PostMapping("/fileUpload/{subPath}/{comId}")
@@ -32,35 +36,39 @@ public class FileController {
 		/* 업체 아이디 받아오기 */
 		System.out.println("업체 아이디 : " + comId);
 		
-		String fileName = ""; //화면으로 보낼 파일의 이름들
-		
-		/* 파일 경로 설정하기 */
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
-		System.out.println(path);
-		
-		if(file==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
-		
-		else {
-			fileName = file.getOriginalFilename(); //업로드된 파일명
+		if(comId == "undefined") { //로그인하지 않았거나 로그인이 풀렸을 경우
+			return new ResponseEntity(0, HttpStatus.OK);
+		}else { //로그인 되었을 경우
+			String fileName = ""; //화면으로 보낼 파일의 이름들
 			
-			/* 파일 정보 확인 */
-			System.out.println("파일의 사이즈 :: "+file.getSize());
-			System.out.println("업로드된 파일명 :: "+fileName);
-			System.out.println("파일의 파라미터명 :: "+file.getName());
+			/* 파일 경로 설정하기 */
+			String root = request.getSession().getServletContext().getRealPath("/");
+			String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
+			System.out.println(path);
 			
-			/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
-			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
-			int i = fileName.lastIndexOf("."); //파일 확장자 위치
-			fileName = now + "_" + comId + fileName.substring(i, fileName.length());
-			System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
+			if(file==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
 			
-			try {
-				file.transferTo(new File(path+fileName)); //파일 생성
-			} catch (IllegalStateException | IOException e) {
-				//e.printStackTrace();
+			else {
+				fileName = file.getOriginalFilename(); //업로드된 파일명
+				
+				/* 파일 정보 확인 */
+				System.out.println("파일의 사이즈 :: "+file.getSize());
+				System.out.println("업로드된 파일명 :: "+fileName);
+				System.out.println("파일의 파라미터명 :: "+file.getName());
+				
+				/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
+				String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
+				int i = fileName.lastIndexOf("."); //파일 확장자 위치
+				fileName = now + "_" + comId + fileName.substring(i, fileName.length());
+				System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
+				
+				try {
+					file.transferTo(new File(path+fileName)); //파일 생성
+				} catch (IllegalStateException | IOException e) {
+					//e.printStackTrace();
+				}
+				return new ResponseEntity(fileName, HttpStatus.OK);
 			}
-			return new ResponseEntity(fileName, HttpStatus.OK);
 		}
 	}
 	
@@ -72,42 +80,46 @@ public class FileController {
 		/* 업체 아이디 받아오기 */
 		System.out.println("업체 아이디 : " + comId);
 		
-		String fileNames = ""; //화면으로 보낼 파일의 이름들
-		
-		/* 파일 경로 설정하기 */
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
-		System.out.println(path);
-		
-		if(files.size()==0) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
-		else {
-			int count = 0;
-			for(MultipartFile file : files) {
-				String fileName = file.getOriginalFilename(); //업로드된 파일명
-				
-				/* 파일 정보 확인 */
-				System.out.println("파일의 사이즈 :: "+file.getSize());
-				System.out.println("업로드된 파일명 :: "+file.getOriginalFilename());
-				System.out.println("파일의 파라미터명 :: "+file.getName());
-				
-				/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
-				String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
-				int i = fileName.lastIndexOf("."); //파일 확장자 위치
-				fileName = now + "_" + comId + fileName.substring(i, fileName.length());
-				System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
-				
-				fileNames += fileName + ",";
-				
-				try {
-					file.transferTo(new File(path+fileName)); //파일 생성
-				} catch (IllegalStateException | IOException e) {
-					//e.printStackTrace();
-				}
+		if(comId == "undefined") { //로그인하지 않았거나 로그인이 풀렸을 경우
+			return new ResponseEntity(0, HttpStatus.OK);
+		}else { //로그인 되었을 경우
+			String fileNames = ""; //화면으로 보낼 파일의 이름들
+			
+			/* 파일 경로 설정하기 */
+			String root = request.getSession().getServletContext().getRealPath("/");
+			String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
+			System.out.println(path);
+			
+			if(files.size()==0) {
+				return new ResponseEntity(HttpStatus.NO_CONTENT);
 			}
-			fileNames = fileNames.substring(0, fileNames.length()-1);
-			return new ResponseEntity(fileNames, HttpStatus.OK);
-		} 
+			else {
+				int count = 0;
+				for(MultipartFile file : files) {
+					String fileName = file.getOriginalFilename(); //업로드된 파일명
+					
+					/* 파일 정보 확인 */
+					System.out.println("파일의 사이즈 :: "+file.getSize());
+					System.out.println("업로드된 파일명 :: "+file.getOriginalFilename());
+					System.out.println("파일의 파라미터명 :: "+file.getName());
+					
+					/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
+					String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
+					int i = fileName.lastIndexOf("."); //파일 확장자 위치
+					fileName = now + "_" + comId + fileName.substring(i, fileName.length());
+					System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
+					
+					fileNames += fileName + ",";
+					
+					try {
+						file.transferTo(new File(path+fileName)); //파일 생성
+					} catch (IllegalStateException | IOException e) {
+						//e.printStackTrace();
+					}
+				}
+				fileNames = fileNames.substring(0, fileNames.length()-1);
+				return new ResponseEntity(fileNames, HttpStatus.OK);
+			} 
+		}
 	}
 }

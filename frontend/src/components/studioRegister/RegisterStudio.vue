@@ -35,7 +35,7 @@
             <div style="color:#ccc;"><span name="changeArea">0</span><b>/500</b></div>
           </div>
           <div class="col-75">
-            <textarea id="description" name="countLength" v-model="studio.description" @keyup="checkLength($event)"></textarea>
+            <textarea id="description" name="countLength" v-model="studio.description" @keyup="checkLength()"></textarea>
           </div>
         </div>
         <div class="row">
@@ -597,7 +597,16 @@
       <div class="modal-content">
         <span class="close" @click="controlModal('hideModalAgree', 'modalAgree1')" >&times;
         </span>
-        <p>환불 규정 안내에 대한 동의</p>
+        <p style="text-align:center"><b>환불 규정 안내에 대한 동의</b></p><br/>
+        <p>
+          * 100% 환불 : 사용 예정일 5일 전<br/>
+          * 70% 환불 : 사용 예정일 3일 전 ~ 사용 예정일 4일 전<br/>
+          * 환불 불가 : 사용 예정일 ~ 사용 예정일 2일 전<br/><br/>
+          - 촬영일 기준으로 5일 전까지는 취소 및 100% 환불이 가능합니다.<br/>
+          - 촬영일 기준으로 3일 전까지는 취소 및 70% 환불이 가능합니다.<br/>
+          - 촬영일 기준으로 2일 전부터는 취소 및 환불이 불가합니다.<br/>
+          - 호스트 사정에 의해서 취소 발생시 100% 환불이 가능합니다.<br/>
+        </p>
       </div>
     </div>
     <!-- Modal : 개인 정보 제 3자 제공 동의 -->
@@ -605,7 +614,18 @@
       <div class="modal-content">
         <span class="close" @click="controlModal('hideModalAgree', 'modalAgree2')" >&times;
         </span>
-        <p>개인 정보 제 3자 제공 동의</p>
+        <p style="text-align:center"><b>개인 정보 제 3자 제공 동의</b></p><br/>
+        <p>
+          "Pics"에서는 고객님의 예약 서비스 제공 등을 위해 최소한의 개인정보를 수집/제공하고 있습니다.<br/><br/>
+          (1) "Pics"의 개인정보 수집 이용 목적은 다음과 같습니다. 
+          "고객"은 정보 수집/이용 약관에 동의할 수 있으며, 동의하지 않는 경우 예약 서비스 이용에 제한이 있을 수 있습니다.<br/>
+          - 수집/이용 목적 : 위탁 업무 내용(개인 정보의 보유 및 이용 기간)<br/><br/>
+          (2) 회원 정보를 제공받는 자, 제공목적, 제공하는 정보, 보유 및 이용기간은 다음과 같습니다.<br/>
+          - 제공받는 자 : Pics 게스트, 호스트<br/>
+          - 제공 목적 : 공간 예약 서비스 이용계약 이행(서비스 제공, 확인, 이용자 정보 확인)<br/>
+          - 제공하는 정보 : 아이디, 이름, 연락처, 기타 예약에 필요한 정보<br/>
+          - 제공받는 자의 개인정보 보유 및 이용 기간 : 서비스 제공기간(관계법령의 규정에 의하여 보존할 필요가 있는 경우 및 사전 동의를 득한 경우 해당 보유 기간)
+        </p>
       </div>
     </div>
     <!-- Modal : 개인 정보 수집 및 이용 동의 -->
@@ -613,7 +633,23 @@
       <div class="modal-content">
         <span class="close" @click="controlModal('hideModalAgree', 'modalAgree3')" >&times;
         </span>
-        <p>개인 정보 수집 및 이용 동의</p>
+        <p style="text-align:center"><b>개인 정보 수집 및 이용 동의</b></p><br/>
+        <p>
+        Ⅰ. 개인정보의 수집 및 이용 동의서<br/>
+        - 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용하며, 하기 목적 이외의 용도로는 사용되지 않습니다.<br/><br/>
+        ① 개인정보 수집 항목 및 수집·이용 목적<br/>
+        가) 수집 항목 (필수항목)<br/>
+        - 스튜디오 이름, 사진, 주소, 층수, 면적, 운영 시간 등 스튜디오 등록에 기재된 정보 또는 신청자가 제공한 정보<br/>
+        나) 수집 및 이용 목적<br/>
+        - 스튜디오 등록 및 스튜디오 예약 서비스 제공<br/>
+        - 주제 및 기준에 따른 스튜디오 분류 및 데이터 분석<br/><br/>
+        ② 개인정보 보유 및 이용기간<br/>
+        - 수집·이용 동의일로부터 개인정보의 수집·이용목적을 달성할 때까지<br/><br/>
+        ③ 동의거부관리<br/>
+        - 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다. 다만,
+        귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우에 스튜디오 예약 관리 서비스에 있어 불이익이 발생할 수
+        있음을 알려드립니다
+        </p>
       </div>
     </div>
   </div>

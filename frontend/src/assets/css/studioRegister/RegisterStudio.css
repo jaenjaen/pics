@@ -40,7 +40,7 @@
             
             input:focus,
             textarea:focus {
-                border: 2px solid #33A3DC !important;
+                border: 2px solid #000000 !important;
             }
             
             input[type=submit]:hover,
@@ -355,9 +355,10 @@
             .modal-content {
                 background-color: #fefefe;
                 margin: auto;
-                padding: 20px;
+                text-align: left;
+                padding: 30px;
                 border: 1px solid #888;
-                width: 100%;
+                width: 80%;
                 height: 100%;
             }
             /* Modal 닫기 버튼 */

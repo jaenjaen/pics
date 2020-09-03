@@ -96,11 +96,11 @@ const routes = [{
         name: "customeredit",
         component: CustomerEdit
     },
-    {
-        path: "/Map",
-        name: "Map",
-        component: Map
-    }
+    // {
+    //     path: "/Map",
+    //     name: "Map",
+    //     component: Map
+    // }
 ];
 const router = new VueRouter({
     mode: "history",

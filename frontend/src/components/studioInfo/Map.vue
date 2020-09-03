@@ -3,10 +3,10 @@
 </template>
 
 <script>
-//   import Vue from 'vue';
+ import Vue from 'vue';
   import loadScriptOnce from 'load-script-once';
-//   import VueDaumMap from 'vue-daum-map';
-//   Vue.use(VueDaumMap);
+  import VueDaumMap from 'vue-daum-map';
+  Vue.use(VueDaumMap);
 
   const MapTypeId = {
     "ROADMAP": 1,

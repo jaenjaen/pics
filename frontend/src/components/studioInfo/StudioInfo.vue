@@ -141,9 +141,8 @@
 							</div>
 						</div>
               <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
-                <ChartGender>
-                  : Chart Data = GenderData
-                </ChartGender>  
+                <chart-gender :chart-data="datacollection" :options="options"></chart-gender>
+                <!-- <button @click="fillData()">Set Chart</button> -->
               </canvas>
 					</div> 
           </div> 

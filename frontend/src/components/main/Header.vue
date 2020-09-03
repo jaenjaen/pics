@@ -19,7 +19,7 @@
         </div>
       </div>
     </nav>
-    <!-- <Bottom /> -->
+    <Bottom />
   </div>
 </template>
 

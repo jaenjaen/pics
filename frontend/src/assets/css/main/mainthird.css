@@ -25,7 +25,7 @@
     width: 350px;
     height: 250px;
     margin: 10px auto;
-    border: 1px solid #000000;
+    border: 1px solid white;
     position: relative;
 }
 
@@ -36,8 +36,8 @@
 
 img {
     filter: brightness(50%);
-    width: 350px;
-    height: 250px;
+    width: 350px !important;
+    height: 250px !important;
 }
 
 .jb-text {
@@ -53,6 +53,7 @@ img {
 
 p {
     width: 250px;
+    line-height: 35px;
     font-weight: 700;
 }
 
@@ -64,22 +65,26 @@ p {
 
 @media only screen and (max-width: 715px) {
     .jb-wrap {
-        width: 300px;
-        height: 200px;
+        width: 300px !important;
+        height: 200px !important;
     }
     img {
-        width: 300px;
-        height: 200px;
+        width: 300px !important;
+        height: 200px !important;
+    }
+    p {
+        font-size: 20px;
+        line-height: 120%;
     }
 }
 
 @media only screen and (max-width: 615px) {
     .jb-wrap {
-        width: 20vh;
-        height: 20vh;
+        width: 150px !important;
+        height: 150px !important;
     }
     img {
-        width: 20vh;
-        height: 20vh;
+        width: 150px !important;
+        height: 150px !important;
     }
 }

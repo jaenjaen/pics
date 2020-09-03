@@ -6,37 +6,38 @@ import pandas as pd
 import numpy as np
 import time
 
-
+#  원하는 스튜디오 검색 결과페이지 입력하기
 url = "https://hourplace.co.kr/curation/26"
 
+# 자기 os에 맞는 크롬 드라이브 사용하기
 driver = webdriver.Chrome(
-    executable_path="/Users/ryan/Documents/pics_view/python_crawing/webdriver/chromedriver"
+    executable_path="chromedriver"
 )
 
 # url 접속하기
 driver.get(url)
 
-# SCROLL_PAUSE_TIME = 2
-# last_height = driver.execute_script("return document.body.scrollHeight")
+SCROLL_PAUSE_TIME = 2
+last_height = driver.execute_script("return document.body.scrollHeight")
 
-# while True:
-#     # [ 2 ] : 창 높이까지 스크롤
-#     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+while True:
+    # [ 2 ] : 창 높이까지 스크롤
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
-#     # [ 3 ] : 스크롤 후 창이 로딩될때까지 2초를 기다리겠다는 명령어. 로딩이 다되면 바로 넘어감
-#     time.sleep(SCROLL_PAUSE_TIME)
-#     # 한 번에 맨 마지막까지 스크롤되면 아래 리스트가 뜨지 않아서, 마지막을 찍고 조금 창을 올리는 방법으로 리스트가 로딩될 수 있게 함
-#     driver.execute_script("window.scrollTo(0, document.body.scrollHeight-50);")
-#     time.sleep(SCROLL_PAUSE_TIME)
+    # [ 3 ] : 스크롤 후 창이 로딩될때까지 2초를 기다리겠다는 명령어. 로딩이 다되면 바로 넘어감
+    time.sleep(SCROLL_PAUSE_TIME)
+    # 한 번에 맨 마지막까지 스크롤되면 아래 리스트가 뜨지 않아서, 마지막을 찍고 조금 창을 올리는 방법으로 리스트가 로딩될 수 있게 함
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight-50);")
+    time.sleep(SCROLL_PAUSE_TIME)
 
-#     # 스크롤이 된 후의 창 높이를 새로운 높이로 저장
-#     new_height = driver.execute_script("return document.body.scrollHeight")
+    # 스크롤이 된 후의 창 높이를 새로운 높이로 저장
+    new_height = driver.execute_script("return document.body.scrollHeight")
 
-#     # [ 6 ] : 새로운 높이가 이전 높이와 변하지 않았으면 스크롤 종료
-#     if new_height == last_height:
-#         break
+    # [ 6 ] : 새로운 높이가 이전 높이와 변하지 않았으면 스크롤 종료
+    if new_height == last_height:
+        break
 
-#     last_height = new_height
+    last_height = new_height
 
 list_url = []
 list_image = []
@@ -110,8 +111,6 @@ for i in list_url:
     list_rule.append(driver.find_element_by_class_name("desc_detail").text)
 
     num += 1
-    if(num == 2):
-        break
 
 driver.close()
 

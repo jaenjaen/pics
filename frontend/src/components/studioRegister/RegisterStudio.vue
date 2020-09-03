@@ -7,7 +7,10 @@
       <form enctype="multipart/form-data" @submit.prevent="checkLogin">
         <div class="row">
           <div class="col-25">
-            <label for="name">스튜디오 이름</label>
+            <label for="name">
+              스튜디오 이름
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-75">
             <input type="text" id="name" name="name" v-model="studio.name" required />
@@ -15,7 +18,10 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="country">스튜디오 종류</label>
+            <label for="country">
+              스튜디오 종류
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-75">
             <select id="categoryId" name="categoryId" v-model="studio.categoryId" required>
@@ -41,7 +47,10 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="mainImg">대표 사진</label>
+            <label for="mainImg">
+              대표 사진
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
@@ -88,7 +97,10 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="tag">태그</label>
+            <label for="tag">
+              태그
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-25 tag">
             <label id="hashtag1">#</label>
@@ -105,7 +117,10 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="address">주소</label>
+            <label for="address">
+              주소
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-75">
             <!-- 주소 처리 -->
@@ -152,7 +167,10 @@
             <input type="text" id="floor" name="floor" />
           </div>
           <div class="col-25 col-space">
-            <label for="size">면적</label>
+            <label for="size">
+              면적
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-25">
             <div class="outContainer">
@@ -180,7 +198,10 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="unitPrice">시간당 대여료</label>
+            <label for="unitPrice">
+              시간당 대여료
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-25">
             <div class="outContainer">
@@ -189,7 +210,10 @@
             <input type="text" id="unitPrice" name="unitPrice" v-model="studio.studioFilter.unitPrice" required />
           </div>
           <div class="col-25 col-space">
-            <label for="excharge">인원 추가시 1인당 대여료</label>
+            <label for="excharge">
+              1인 추가시 대여료 
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-25">
             <div class="outContainer">
@@ -200,7 +224,10 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="defaultCapacity">기본 인원</label>
+            <label for="defaultCapacity">
+              기본 인원
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-25">
             <div class="outContainer">
@@ -209,7 +236,10 @@
             <input type="text" id="defaultCapacity" name="defaultCapacity" v-model="studio.studioFilter.defaultCapacity" required/>
           </div>
           <div class="col-25 col-space">
-            <label for="maxCapacity">최대 인원</label>
+            <label for="maxCapacity">
+              최대 인원
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-25">
             <div class="outContainer">
@@ -220,7 +250,10 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="">운영 시간</label>
+            <label for="">
+              운영 시간
+              <img src="@/assets/img/upload/required.png" width="20px">
+            </label>
           </div>
           <div class="col-75">
             <div id="dayList">
@@ -524,7 +557,11 @@
           </div>
         </div>
         <div class="row">
-          <p id="agreeTitle" style="padding-top:10px">서비스 동의</p>
+          <p id="agreeTitle" style="padding-top:10px">
+            서비스 동의&nbsp;
+            <img src="@/assets/img/upload/required.png" width="20px">
+          </p>
+          
           <table id="agreeTable" width="100%">
             <tr id="partAgree">
               <td id="checkAgree1">

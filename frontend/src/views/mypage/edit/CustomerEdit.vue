@@ -19,7 +19,7 @@
             ><img
               class="icon"
               src="@/assets/img/register/userEdit.svg"
-            /><span class="hidden">Name</span></label
+            /><span class="hidden">nickname</span></label
           >
           <input
             type="text"

@@ -1,8 +1,8 @@
-// import Bottom from "@/components/main/Bottom.vue";
+import Bottom from "@/components/main/Bottom.vue";
 export default {
     name: "pics_header",
     components: {
-        // Bottom
+        Bottom
     },
     methods: {
         moveToSearch(value) {

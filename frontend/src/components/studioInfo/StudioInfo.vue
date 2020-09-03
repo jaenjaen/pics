@@ -287,19 +287,19 @@
       </article>
     <!-- 모달 모아두기 -->
     <div>
-      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="20%" height="20%" :maxWidth=768>
+      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
         <div id="delBook">
           <p>찜목록에서 제거했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="20%" height="20%" :maxWidth=768>
+      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
         <div id="regBook">
           <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="20%" height="20%" :maxWidth=768>
+      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
         <div id="login-required">
           <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
@@ -318,9 +318,6 @@
     #app {
         width: 100%;
     } 
-}
-.body{
-  background: white;
 }
 .container {
     width: 768px;

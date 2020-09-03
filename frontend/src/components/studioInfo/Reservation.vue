@@ -5,120 +5,108 @@
       <div id="reservation-floating-banner">
         <form method="post" @submit.prevent="addReserve">
           <!-- ============== calender ============== -->
-          <!-- 날짜 -->
-          <div class="row">
-            <div class="col s12 m6">
-              <div class="date-input-field">
-                [대여 시작 일자]
-                <!-- <input
-                  type="date"
-                  id="start_date"
-                  name="start_date"
+          <div class="input-reserve-info-field">
+            <!-- 날짜 -->
+            <div class="date-input-field">
+              <div class="row">
+              <div class="col s12 m6">
+                <strong>예약 시작일</strong>
+                <span class="start-date">
+                  <md-datepicker 
                   v-model="start_date"
-                  required="required"
-                  min="this.today"
-                 />
-                </div> -->
-                <div>
-                  <md-datepicker 
-                  v-model="selectedDate" 
-                  :md-disabled-dates="disabledDates"></md-datepicker>
-                </div>
+                  :md-disabled-dates="disabledDates"
+                  min:today
+                  max:maxDate
+                  ></md-datepicker>
+                </span>
                 <br />
-                <div class="date-input-field">
-                  [대여 종료 일자]
+                <strong>예약 종료일</strong>
+                <span class="end-date">
                   <md-datepicker 
-                  v-model="selectedDate" 
+                  v-model="end_date" 
                   :md-disabled-dates="disabledDates"></md-datepicker>
-                </div>
-                <!-- <input
-                  type="date"
-                  id="end_date"
-                  name="end_date"
-                  v-model="end_date"
-                  required="required"
-                  min="this.start_date"
-                /> -->
+                </span>
+              </div>
               </div>
             </div>
-          </div>
-          <br />
-          <hr />
-          <br />
-          <!-- 시간 -->
-          <div>
-            [시작 시간]
-            <span>
-              <select
-                id="start_time"
-                v-model="start_time"
-                required
-                style="width:50%"
-              >
-                <option disabled value="예약 시작 시간"></option>
-                <option
-                  v-for="time in times"
-                  v-bind:key="time"
-                  required="required"
-                  >{{ times[time - 1] }}</option
-                >
-              </select>
-            </span>
-            <div id="checkSchedule">{{ checkSchedule }}</div>
-            <br /><br />
-            [종료 시간]
-            <span>
-              <select id="end_time" v-model="end_time" style="width:50%">
-                <option disabled value="예약 시작 시간"></option>
-                <option v-for="time in times" v-bind:key="time">{{
-                  times[time - 1]
-                }}</option>
-              </select>
-            </span>
-          </div>
+            <br />
+            <!-- 시간 -->
+            <div class="time-input-field">
+              <md-field class="start-time">
+                <label for="time">예약 시작 시간</label>
+                  <md-select
+                    id="start_time"
+                    v-model="start_time"
+                    required
+                    style="width:45%">
+                  <md-option
+                    required="required"
+                    v-for="time in times"
+                    v-bind:key="time">
+                    {{time}}</md-option>
+                  </md-select>
+                  </md-field>
+                  <br/>
+                  <span id="checkSchedule">{{ checkSchedule }}</span>
+                  <br />
+                  <md-field class="end-time">
+                    <label for="time">예약 종료 시간</label>
+                      <md-select id="end_time" 
+                      v-model="end_time" 
+                      required
+                      style="width:45%"
+                      >
+                      <md-option
+                        required="required"
+                        v-for="time in times"
+                        v-bind:key="time"
+                        >{{ time }}</md-option
+                      >
+                      </md-select>
+              </md-field>
+            </div>
           <br />
           <br />
           <!-- 인원 -->
           <div>
             <table width="70%" align="center">
-              <tr>
+              <tr align="center" >
                 <td>
-                  <button
+                  <md-button
                     id="deletePeopleBtn"
                     @click.prevent="deletePeople()"
                     style="display:inline"
+                    class="md-primary"
                   >
-                    -
-                  </button>
+                  <strong>-</strong>
+                  </md-button>
                 </td>
                 <td>
                   <input
                     type="text"
                     id="totalPeople"
                     name="totalPeople"
-                    width="0.2em"
-                    style="border-radius:10px;"
-                    align-center="true"
                     v-model="total_people"
                   />
                 </td>
-
                 <td>
-                  <button
+                  <md-button
                     id="addPeopleBtn"
                     @click.prevent="addPeople()"
                     style="display:inline"
+                    class="md-primary"
                   >
-                    +
-                  </button>
+                  <strong>+</strong>
+                  </md-button>
                 </td>
               </tr>
             </table>
           </div>
-
+        </div> 
+        <hr width="90%" color="lightgray">
           <!-- 요금 계산 -->
-          <div>
-            <hr />
+          <div class="pricing-field">
+            <vr/>
             <table align="center">
               <tr align="right">
                 <td id="unitPrice">시간 당 비용 :</td>
@@ -141,32 +129,77 @@
             </table>
 
             <div>
-              <input type="submit" align="center" value="예약하기" />
+              <md-button 
+              type="submit" 
+              align="center"
+              class="md-raised md-primary"
+              >예약하기
+              </md-button>
             </div>
           </div>
         </form>
       </div>
     </aside>
+       <!-- 모달 모아두기 -->
+    <div>
+      <modal name="success" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+        <div id="success">
+          <p>예약이 완료 되었습니다.</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
+      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+        <div id="regBook">
+          <p>찜 목록에 등록했습니다</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
+      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+        <div id="login-required">
+          <p>찜 목록에 등록했습니다</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
+    </div>
   </div>
-</template>
+ </template>
 <script scoped src="@/assets/js/studioInfo/Reservation.js"></script>
 
 <style scoped>
 .container {
-  width: 768px;
-  
+  width: 100%;
 }
 aside {
-  margin-left: 5%;
-  border: 1px solid ffff;
+  align-content: center;
 }
+
 #reservation-floating-banner {
   background-color: #ffff;
   /* box-shadow: 5px 9px rgb(196, 194, 194); */
   /* position: absolute; */
   width: 100%;
   padding: 3px 10px;
-  border-radius: 10px;
-  
+}
+.input-reserve-info-field{  
+  width:100%;
+  margin: 5% auto;
+
+}
+.date-input-field{
+  margin-left:10%;
+  width:30%;
+  float:left;
+}
+.time-input-field{
+  width:30%;
+  float:right;
+  margin-right:10%;
+}
+
+#totalPeople{
+  display:block;
+  border-radius:10px;
+  border:1px solid lightgray;
+  text-align:center;
 }
 </style>

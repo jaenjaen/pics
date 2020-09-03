@@ -21,7 +21,7 @@
 	
 	<update id="updateCustomer" parameterType="customer">
 		UPDATE customer 
-		SET nickname = #{nickname}, email = #{email}, tel = #{tel}, img_src= #{imgSrc}
+		SET nickname = #{nickname}, job = #{job}, tel = #{tel}, img_src= #{imgSrc}
 		WHERE cust_id = #{custId}
 	</update>
 	

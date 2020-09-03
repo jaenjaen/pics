@@ -48,6 +48,7 @@ public class CustomerController {
 			customerService.updateCustomer(customer);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}

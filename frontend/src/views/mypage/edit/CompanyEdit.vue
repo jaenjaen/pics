@@ -3,26 +3,14 @@
     <div class="grid">
       <h2>업체 정보 수정</h2>
       <br />
-      <form
-        action=""
-        method="POST"
-        class="form login"
-        @submit.prevent="companyEdit"
-      >
+      <form action="" method="POST" class="form login" @submit.prevent="companyEdit" >
+        
         <div class="form__field">
-          <label for="login__name"
-            ><img
-              class="icon"
-              src="@/assets/img/register/companyName.svg"
-            /><span class="hidden">Name</span></label
-          >
-          <input
-            type="text"
-            v-model="name"
-            class="form__input"
-            :placeholder="name"
-            required
-          />
+          <label for="login__name">
+            <img class="icon" src="@/assets/img/register/companyName.svg" />
+            <span class="hidden">Name</span>
+          </label>
+          <input type= "text" v-model="name" class="form__input" :placeholder="name" required/>
         </div>
 
         <div class="form__field">
@@ -120,17 +108,14 @@
             :placeholder="desc"
           />
         </div>
-
         <div class="form__field">
           <input type="submit" value="Register" />
         </div>
-
-        <p class="text--center">
+      </form>
+    <p class="text--center">
         탈퇴하시겠습니까? &nbsp;&nbsp;<a href="#" class="signout" @click="signout">탈퇴하기</a>
       </p>
-
-      </form>
-      </div>
+  </div>
   </div>
 </template>
 
@@ -152,19 +137,19 @@ export default {
       addrShow: false,
       comId: "",
       tel: "",
-      imgSrc:"",
+      logoImg:"",
       desc:"",
-      max: 13,
+      max: 13
     };
-  },mounted(){
+  },
+  mounted() {
     console.log(company);
     this.name = company.name;
     this.address = company.address;
     this.comId = company.comId;
     this.tel = company.tel;
-    this.imgSrc = company.imgSrc;
+    this.logoImg = company.logoImg;
     this.desc = company.desc;
-
   },
   methods: {
     companyEdit: function() {
@@ -175,21 +160,32 @@ export default {
             comId: this.comId,
             password: this.password,
             address: this.address,
-            tel: this.tel
+            tel: this.tel,
+            logoImg: this.logoImg,
+            description: this.desc
           })
-          .then(response => {
-            this.condata = response.data;
+          .then(res => {
+            console.log(res);
+
+            company.name = this.name;
+            company.password = this.password;
+            company.address = this.address;
+            company.tel = this.tel;
+            company.logoImg = this.logoImg;
+            company.description = this.description;
+
+           sessionStorage.setItem("company",JSON.stringify(company));
+
             alert("회원정보가 수정되었습니다.");
-            //location.href = "http://localhost:9999";
+            //location.href = "http://localhost:9999/mypage";
           })
           .catch(e => {
             console.log(e);
           });
       } else {
         alert("입력한 정보를 다시 한번 확인해주세요.");
-        //console.log(this.idFlag+","+this.pwFlag+","+this.name+","+this.comId+","+this.password+","+this.address+","+this.tel);
       }
-    }, //~companyRegister
+    }, //~companyEdit
     checkPw: function() {
       if (this.password == this.checkpassword) {
         this.pwFlag = true;
@@ -214,7 +210,16 @@ export default {
         if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
       }
   },signout(){
-
+     axios.delete("http://localhost:7777/customer/"+this.custId)
+        .then(res=>{
+          console.log(res)
+          alert("회원탈퇴 되었습니다.");
+          sessionStorage.removeItem("customer");
+          location.href="http://localhost:9999";
+        })
+        .catch(err=>{
+          console.log(err);
+        })
   }
 };
 </script>

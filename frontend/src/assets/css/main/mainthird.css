@@ -33,7 +33,8 @@ img {
     overflow: hidden;
 }
 
-.img:nth-child(1) {
+
+/* .img:nth-child(1) {
     background: url("../../img/studio/10_펍.jpeg");
     width: 350px;
     height: 250px;
@@ -41,7 +42,7 @@ img {
     background-position: center;
     background-size: cover;
     filter: brightness(50%);
-}
+} */
 
 @media only screen and (max-width: 768px) {
     .mainthird {

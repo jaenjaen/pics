@@ -1,24 +1,23 @@
 <template>
-
-  <vue-daum-map
-    :appKey="appKey"
-    :center.sync="center"
-    :level.sync="level"
-    :mapTypeId="mapTypeId"
-    :libraries="libraries"
-    @load="onLoad"
-    style="width:500px;height:400px;"
-  />
+ <vue-daum-map id="daum-map"
+      :appKey="appKey"
+      :center.sync="center"
+      :level.sync="level"
+      :mapTypeId="mapTypeId"
+      :libraries="libraries"
+      @load="onLoad"
+      style="width:500px;height:400px;"/>
 </template>
 
 <script>
-import Vue from 'vue'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
-
+// import Vue from 'vue'
+// import Vuetify from 'vuetify'
+// import 'vuetify/dist/vuetify.min.css'
+import VueDaumMap from 'vue-daum-map'
 Vue.use(Vuetify);
 
 import loadScriptOnce from "load-script-once";
+
 const MapTypeId = {
   ROADMAP: 1,
   NORMAL: 1,
@@ -100,14 +99,14 @@ export default {
       default: undefined
     }
   },
-  data: () => ({
-    appKey: "91cbdca7243fe89cb44e5d61a5aaaf44", // 테스트용 appkey
-    center: { lat: 33.450701, lng: 126.570667 }, // 지도의 중심 좌표
-    level: 3, // 지도의 레벨(확대, 축소 정도),
-    //mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
-    libraries: [], // 추가로 불러올 라이브러리
-    map: null // 지도 객체. 지도가 로드되면 할당됨.
-  }),
+      data: () => ({
+        appKey: '91cbdca7243fe89cb44e5d61a5aaaf44', // 테스트용 appkey
+        center: {lat:33.450701, lng:126.570667}, // 지도의 중심 좌표
+        level: 3, // 지도의 레벨(확대, 축소 정도),
+        mapTypeId: VueDaumMap.MapTypeId.NORMAL, // 맵 타입
+        libraries: [], // 추가로 불러올 라이브러리
+        map: null // 지도 객체. 지도가 로드되면 할당됨.
+    }),
   mounted() {
     loadScriptOnce(
       `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${
@@ -115,11 +114,11 @@ export default {
       }&libraries=${this.libraries.join(",")}`
     )
       .then(() => {
-        // daum.maps.load(() => {
-        //   this.render();
-        //   this.bindEvents();
-        //   this.$emit('load', this.map);
-        // });
+        daum.maps.load(() => {
+          this.render();
+          this.bindEvents();
+          this.$emit('load', this.map);
+        });
       })
       .catch(err => {
         console.error(err);
@@ -149,19 +148,19 @@ export default {
       this.map = map;
     },
     render() {
-      // const options = { //지도를 생성할 때 필요한 기본 옵션
-      //   //center: new daum.maps.LatLng(this.center.lat, this.center.lng), //지도의 중심좌표.
-      //   level: this.level, //지도의 레벨(확대, 축소 정도)
-      //   mapTypeId: this.mapTypeId, //지도 타입
-      //   draggable: this.draggable,
-      //   scrollwheel: this.scrollwheel,
-      //   disableDoubleClick: this.disableDoubleClick,
-      //   disableDoubleClickZoom: this.disableDoubleClickZoom,
-      //   projectionId: this.projectionId,
-      //   tileAnimation: this.tileAnimation,
-      //   keyboardShortcuts: this.keyboardShortcuts
-      // };
-      //this.map = new daum.maps.Map(this.$el, options); //지도 생성 및 객체 리턴
+      const options = { //지도를 생성할 때 필요한 기본 옵션
+        center: new daum.maps.LatLng(this.center.lat, this.center.lng), //지도의 중심좌표.
+        level: this.level, //지도의 레벨(확대, 축소 정도)
+        mapTypeId: this.mapTypeId, //지도 타입
+        draggable: this.draggable,
+        scrollwheel: this.scrollwheel,
+        disableDoubleClick: this.disableDoubleClick,
+        disableDoubleClickZoom: this.disableDoubleClickZoom,
+        projectionId: this.projectionId,
+        tileAnimation: this.tileAnimation,
+        keyboardShortcuts: this.keyboardShortcuts
+      };
+      this.map = new daum.maps.Map(this.$el, options); //지도 생성 및 객체 리턴
     },
     bindEvents() {
       const handlers = {
@@ -172,15 +171,15 @@ export default {
         this.bindEvent(event, handlers[event]);
       }
     },
-    bindEvent(event, handler) {
-      console.log(event + "," + handler);
-      // daum.maps.event.addListener(this.map, event, (...args) => {
-      //   this.$emit(event, args);
-      //   if (typeof handler === 'function') {
-      //     handler();
-      //   }
-      // });
-    },
+    // bindEvent(event, handler) {
+    //   console.log(event + "," + handler);
+    //   daum.maps.event.addListener(this.map, event, (...args) => {
+    //     this.$emit(event, args);
+    //     if (typeof handler === 'function') {
+    //       handler();
+    //     }
+    //   });
+    // },
     onChange() {
       const level = this.map.getLevel();
       const latlng = this.map.getCenter();

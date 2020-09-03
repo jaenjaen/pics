@@ -32,17 +32,19 @@
         <div class="row">
           <div class="col-25">
             <label for="description">스튜디오 소개</label>
+            <div style="color:#ccc;"><span name="changeArea">0</span><b>/500</b></div>
           </div>
           <div class="col-75">
-            <textarea id="description" name="description" v-model="studio.description" ></textarea>
+            <textarea id="description" name="countLength" v-model="studio.description" @keyup="checkLength()"></textarea>
           </div>
         </div>
         <div class="row">
           <div class="col-25">
             <label for="rule">이용 수칙</label>
+            <div style="color:#ccc;"><span name="changeArea">0</span><b>/400</b></div>
           </div>
           <div class="col-75">
-            <textarea id="rule" name="rule" v-model="studio.rule"></textarea>
+            <textarea id="rule" name="countLength" v-model="studio.rule" @keyup="checkLength()"></textarea>
           </div>
         </div>
         <div class="row">

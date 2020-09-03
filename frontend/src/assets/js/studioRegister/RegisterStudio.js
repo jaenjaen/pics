@@ -152,6 +152,31 @@ export default {
             })
     },
     methods: {
+        /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
+        checkLength() {
+            var changeArea = document.getElementsByName('changeArea');
+            var countLength = document.getElementsByName('countLength');
+            for (let i = 0; i < countLength.length; i++) {
+                let value = countLength[i].value;
+                let length = countLength[i].value.length;
+                if (i == 0) { //스튜디오 소개
+                    if (length > 500) {
+                        document.getElementsByName('countLength')[i].value = value.substring(0, 500);
+                        return false;
+                    } else {
+                        changeArea[i].innerHTML = length;
+                    }
+                } else if (i == 1) { //이용 수칙
+                    if (length > 400) {
+                        document.getElementsByName('countLength')[i].value = value.substring(0, 400);
+                        return false;
+                    } else {
+                        changeArea[i].innerHTML = length;
+                    }
+                }
+            }
+        },
+
         /* 파일 업로드 화면단 처리 */
         handleImgFileSelect(fileId, imgId, e) {
             var thisFileId = document.getElementById(fileId);

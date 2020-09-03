@@ -168,6 +168,7 @@ export default {
       address: "",
       tel: "",
       desc:"",
+      imgSrc:"",
       max: 13,
       condata: ""
     };

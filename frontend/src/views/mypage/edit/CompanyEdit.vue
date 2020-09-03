@@ -20,7 +20,7 @@
             type="text"
             v-model="name"
             class="form__input"
-            placeholder="업체 이름"
+            :placeholder="name"
             required
           />
         </div>
@@ -93,7 +93,7 @@
 
         <div class="form__field" >
           <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
-          <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" placeholder="업체 전화번호" required>
+          <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" :placeholder="tel" required>
         </div>
 
         <div class="form__field">
@@ -117,48 +117,60 @@
             type="text"
             v-model="desc"
             class="form__input"
-            placeholder="업체 설명"
+            :placeholder="desc"
           />
         </div>
 
         <div class="form__field">
           <input type="submit" value="Register" />
         </div>
+
+        <p class="text--center">
+        탈퇴하시겠습니까? &nbsp;&nbsp;<a href="#" class="signout" @click="signout">탈퇴하기</a>
+      </p>
+
       </form>
       </div>
-      <br>
-        <p class="text--center">
-        탈퇴하시겠습니까? &nbsp;&nbsp;<ra href="#" class="signout" @click="signout">탈퇴하기</ra>
-      </p>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import axios from "axios";
+var company = JSON.parse(sessionStorage.getItem("company"));
 
 export default {
-  name: "CompanyRegister",
+  name: "CompanyEdit",
   data() {
     return {
+      name: "",
       pwMsg: "",
       pwFlag: false,
-      addrShow: false,
-      name: "",
-      comId: "",
       password: "",
       checkpassword: "",
       address: "",
+      addrShow: false,
+      comId: "",
       tel: "",
+      imgSrc:"",
       desc:"",
       max: 13,
     };
+  },mounted(){
+    console.log(company);
+    this.name = company.name;
+    this.address = company.address;
+    this.comId = company.comId;
+    this.tel = company.tel;
+    this.imgSrc = company.imgSrc;
+    this.desc = company.desc;
+
   },
   methods: {
     companyEdit: function() {
       if (this.pwFlag == true) {
         axios
-          .post("http://localhost:7777/company", {
+          .put("http://localhost:7777/company", {
             name: this.name,
             comId: this.comId,
             password: this.password,
@@ -167,8 +179,8 @@ export default {
           })
           .then(response => {
             this.condata = response.data;
-            alert(this.name + "의 가입을 환영합니다.");
-            location.href = "http://localhost:9999";
+            alert("회원정보가 수정되었습니다.");
+            //location.href = "http://localhost:9999";
           })
           .catch(e => {
             console.log(e);
@@ -201,6 +213,8 @@ export default {
     insertDash(){
         if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
       }
+  },signout(){
+
   }
 };
 </script>

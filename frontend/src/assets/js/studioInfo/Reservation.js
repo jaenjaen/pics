@@ -11,62 +11,20 @@ const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 export default {
     name: "Reservation",
+    // props: {
+    //     stuId: {
+    //         type: String,
+    //         default: ''
+    //     }
+    // },
     data() {
         return {
-            // studio 관련 변수 (GET)
-            studios: {
-                categoryId: 0,
-                name: "",
-                description: "",
-                rule: "",
-                mainImg: "",
-                portImg: "",
-                cadImg: "",
-                floor: 0,
-                studioFilter: {
-                    size: 0,
-                    options: null,
-                    parking: "",
-                    unitPrice: 0,
-                    defaultCapacity: 0,
-                    excharge: 0,
-                    address: "",
-                    maxCapacity: 0
-                },
-                company: {
-                    comId: 0,
-                    name: "",
-                    address: ""
-                },
-                tags: [{
-                    tagId: 0,
-                    tagName: ""
-                }]
-            },
-            //기존 예약 관련 변수 (GET)
-            // checkReservation: [],
-            schedule: {
-                repeatDate: [{
-                    weekDate: "",
-                    time: ""
-                }],
-                exceptionDate: [{
-                    weekDate: "",
-                    time: ""
-                }],
-                reservation: [{
-                    custId: 3,
-                    stuId: 10,
-                    startDate: "",
-                    endDate: "",
-                    totalPrice: 0,
-                    totalPeople: 0
-                }]
-            },
-            customer: {}, //토큰받아오기
-            //새로운 예약 관련 변수(POST)
-            custId: 3,
+            // 기존 정보 변수 (GET)
+            studios: [{}],
+            schedule: {},
+            customer: {},
             stuId: 10,
+            //새로운 예약 관련 변수 (POST)
             start_date: "",
             end_date: "",
             total_people: 1,
@@ -100,17 +58,20 @@ export default {
                 "22",
                 "23"
             ],
+            //예약 로직 관련 변수
             today: new Date(),
-            flag: 0,
+            maxDate: new Date((this.today).getYear(), (this.today).getMonth + 1, (this.today).getDate),
+            disabledDates: [],
+            closedDates: [],
             // 상태 체크 변수
             loading: true,
             errored: false,
-            duplicatedCheck: ""
         };
     },
     mounted() {
+
         axios
-            .get("http://127.0.0.1:7777/studio/info/10")
+            .get("http://127.0.0.1:7777/studio/info/10") // + this.stuId)
             .then(response => {
                 this.studios = response.data;
             })
@@ -120,22 +81,21 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://127.0.0.1:7777/customer/3")
-            .then(response => {
-                this.customer = response.data;
-                // console.log(this.studios);
-            })
-            .catch(error => {
-                console.log(error);
-                this.errored = true;
-            })
-            .finally(() => (this.loading = false));
-
-        axios
-            .get("http://127.0.0.1:7777/studio/schedule/10")
+            .get("http://127.0.0.1:7777/studio/schedule/10") //+ this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 console.log(this.schedule);
+                let repeat_date = [];
+                for (var i = 0; i < (this.schedule.repeatDate).length; i++) {
+                    repeat_date.push(this.schedule.repeatDate[i].weekDate)
+                }
+                let diff = ((this.getMaxDate).getTime - (this.today).getTime) / (1000 * 60 * 60)
+                for (var j = 0; j < diff; j++) { // weekDate를 돌면서
+                    if (repeat_date.indexOf(week[(this.today.getDate() + j).getDay], 0) < 0) { // week에 없으면
+                        console.log("j : " + j + ", week[i] : " + week[j])
+                        this.disabledDates.push(j)
+                    }
+                }
             })
             .catch(error => {
                 console.log(error);
@@ -156,12 +116,15 @@ export default {
         // 수정 필요
         checkSchedule: function() { //예약 불가능한 날짜
             // 시간으로 변환한 날짜
-            var startDayTime = (new Date(this.start_date + " " + this.start_time + ":00:00")).getTime();
-            var endDayTime = (new Date(this.end_date + " " + this.end_time + ":00:00")).getTime();
+            var startDayTime = (new Date(this.start_date + " " + this.start_time + ":00:00")).getTime;
+            var endDayTime = (new Date(this.end_date + " " + this.end_time + ":00:00")).getTime;
             // 요일로 변환한 날짜
             var startDay = (new Date(this.start_date)).getDay();
             var endDay = (new Date(this.end_date)).getDay();
             var msg = "";
+
+            // repeatDate로 가능 불가능 구분
+
             if (this.start_date == "" | this.and_date == "" | this.start_time == "" | this.end_time == "")
                 return msg;
             else {
@@ -170,10 +133,10 @@ export default {
                     //포함안되면 repeat가서 뒤지기
                     console.log("새로 등록할 날짜 및 시간 : " + week[startDay] + "/" + startDayTime +
                         "/end : " + endDayTime + "/" + week[endDay]);
-                    console.log("Exc : " + new Date(this.schedule.exceptionDate[0].startDate).getTime() +
-                        "|" + new Date(this.schedule.exceptionDate[0].endDate).getTime());
-                    if ((new Date(this.schedule.exceptionDate[k].endDate)).getTime() <= startDayTime |
-                        (new Date(this.schedule.exceptionDate[k].startDate)).getTime() >= endDayTime) {
+                    console.log("Exc : " + new Date(this.schedule.exceptionDate[0].startDate).getTime +
+                        "|" + new Date(this.schedule.exceptionDate[0].endDate).getTime);
+                    if ((new Date(this.schedule.exceptionDate[k].endDate)).getTime <= startDayTime |
+                        (new Date(this.schedule.exceptionDate[k].startDate)).getTime >= endDayTime) {
                         for (var i = 0; i < this.schedule.repeatDate.length; i++) {
                             if (this.schedule.repeatDate[i].weekDate == week[startDay]) { //일치하는 요일의 시작 시간 가져오기
                                 console.log("시간 : " + parseInt(this.start_time) + week[startDay] + this.schedule.repeatDate[i].weekDate);
@@ -220,10 +183,10 @@ export default {
         // checkSchedule: function() {
         //     // 시간으로 변환한 날짜
         //     var startDayTime = new Date(
-        //         this.start_date + " " + this.start_time + ":00:00").getTime();
+        //         this.start_date + " " + this.start_time + ":00:00").getTime;
         //     var endDayTime = new Date(
         //         this.end_date + " " + this.end_time + ":00:00"
-        //     ).getTime();
+        //     ).getTime;
 
         //     // 요일로 변환한 날짜
         //     var startDay = new Date(this.start_date).getDay();
@@ -285,8 +248,8 @@ export default {
                 startSplit[0],
                 startSplit[1],
                 startSplit[2]
-            ).getTime();
-            var endDate = new Date(endSplit[0], endSplit[1], endSplit[2]).getTime();
+            ).getTime;
+            var endDate = new Date(endSplit[0], endSplit[1], endSplit[2]).getTime;
             this.difTime = (endDate - startDate) / (60 * 60 * 1000);
             var startTime = parseInt(this.start_time);
             var endTime = parseInt(this.end_time);
@@ -346,22 +309,37 @@ export default {
         },
         addReserve() {
             // 유저 Id 가져오기
-            //2. 예약 중복 확인(일단 토큰에서 유저 id 가져왔다 치고) reservation 변수 설정
-            if (this.total_people > 0 && this.checkSchedule == "") {
-                (this.newReservarion.stuId = 10), // 임의로 삽입
-                (this.newReservarion.custId = 3), //토큰 연결 안되어서 임의로 삽입
-                (this.newReservarion.startDate =
-                    this.start_date + " " + this.start_time),
-                (this.newReservarion.endDate = this.end_date + " " + this.end_time),
-                (this.newReservarion.totalPrice = this.total_price),
-                (this.newReservarion.totalPeople = this.total_people);
-
+            this.customer = JSON.parse(sessionStorage.getItem('customer'));
+            if (this.customer == undefined) this.$modal.show("login-required");
+            else {
                 axios
-                    .post("http://127.0.0.1:7777/studio/reservation", this.newReservarion)
+                    .get("http://127.0.0.1:7777/customer/" + this.customer.custId)
+                    .then(response => {
+                        this.customer = response.data;
+                        // console.log(this.studios);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        this.errored = true;
+                    })
+                    .finally(() => (this.loading = false));
+            }
+            //2. 예약 정보 확인 reservation 변수 설정
+            if (this.total_price > 0 && this.checkSchedule == "") {
+                let reservation = {
+                    stuId: 10, //this.stuId,
+                    custId: this.customer.custId,
+                    customer: this.customer,
+                    startDate: this.start_date + " " + this.start_time,
+                    endDate: this.end_date + " " + this.end_time,
+                    totalPrice: this.total_price,
+                    totalPeople: this.total_people
+                };
+                axios
+                    .post("http://127.0.0.1:7777/studio/reservation", reservation)
                     .then(response => {
                         console.log(response.data);
-                        // alert(response.data + "건 예약이 완료되었습니다. 마이페이지에서 예약 내역을 확인하세요.")
-                        // location.href = "#" //마이페이지 또는.. 현재 예약 페이지 reset
+                        this.$modal.show("success");
                     })
                     .catch(error => {
                         console.log(error + "post에서 에러");
@@ -372,6 +350,7 @@ export default {
                     });
             }
         },
+
         //////////////// ~~~~~ 예약 일정 체크 Method 시작 ~~~~~ ////////////////
         // 1. exception 
         // : 예약할 때 같이 넣어서 ExcpetionDate만 확인해도 예약 가능/불가능 체크 ok       
@@ -381,8 +360,8 @@ export default {
         //         //포함안되면 repeat가서 뒤지기
         //         //날짜 + 시간을 초로 환산 >> 등록하려는 시작일이 기존 예약의 종료시간보다 늦거나 
         //         // 등록하려는 종료일이 기존 예약의 시작시간보다 빠른 경우 기존 예약 및 ExceptionDate에 포함 X
-        //         if ((new Date(this.schedule.exceptionDate[i].endDate).getTime() <= startDayTime) |
-        //             (new Date(this.schedule.exceptionDate[i].startDate).getTime() >= endDayTime)) {
+        //         if ((new Date(this.schedule.exceptionDate[i].endDate).getTime <= startDayTime) |
+        //             (new Date(this.schedule.exceptionDate[i].startDate).getTime >= endDayTime)) {
         //             console.log("checkException if 입니다. exception 일정이 없습니다.");
         //             continue;
         //         } else {

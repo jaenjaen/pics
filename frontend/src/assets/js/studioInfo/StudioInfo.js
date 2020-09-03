@@ -88,8 +88,8 @@ export default {
             .then(response => {
                 this.studios = response.data;
                 //메인 이미지 split
-                this.mainImgList = this.studios[0].mainImg.split(',');
-                this.portImgList = this.studios[0].portImg.split(',');
+                this.mainImgList = (this.studios[0].mainImg).split(',');
+                this.portImgList = (this.studios[0].portImg).split(',');
                 console.log("this.portImgList : " + this.portImgList);
             })
             .catch(error => {

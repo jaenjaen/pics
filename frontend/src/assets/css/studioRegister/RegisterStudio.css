@@ -115,6 +115,32 @@
             .uploadImg:hover {
                 opacity: 0.30;
             }
+            
+            .uploadResetBtn {
+                position: absolute;
+                top: 87%;
+                left: 50%;
+                width: 110%;
+                height: 30%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                background: transparent;
+                background: #aaa;
+                color: #000000;
+                opacity: 0.70;
+                font-weight: bold;
+                font-size: 12px;
+                border: none;
+                border-radius: 0;
+                padding: 0px 0px;
+                display: none;
+            }
+            
+            .uploadResetBtn:hover {
+                background: #000000;
+                color: white;
+                opacity: 1;
+            }
             /* 운영시간 */
             
             #dayList {

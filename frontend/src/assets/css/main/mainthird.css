@@ -61,3 +61,25 @@ p {
         width: 100%;
     }
 }
+
+@media only screen and (max-width: 715px) {
+    .jb-wrap {
+        width: 300px;
+        height: 200px;
+    }
+    img {
+        width: 300px;
+        height: 200px;
+    }
+}
+
+@media only screen and (max-width: 615px) {
+    .jb-wrap {
+        width: 20vh;
+        height: 20vh;
+    }
+    img {
+        width: 20vh;
+        height: 20vh;
+    }
+}

@@ -32,5 +32,5 @@ export default {
         console.log("js file loaded");
         this.renderChart(this.datacollection, this.options)
         console.log("js file loaded : " + this.datacollection);
-    }
+    },
 }

@@ -396,6 +396,7 @@
         .modal-content {
             background-color: #fefefe;
             margin: auto;
+            overflow: auto;
             text-align: left;
             padding: 30px;
             border: 1px solid #888;
@@ -439,7 +440,7 @@
         }
         /* 반응형 : 너비 375px 이하 */
         
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 375px) {
             /* 주소 찾기/닫기 버튼 너비 조정 */
             input[name='address1'] {
                 width: 73%;
@@ -447,5 +448,21 @@
             button#searchAddr,
             button#closeAddr {
                 width: 25%;
+            }
+            /* 업로드 삭제 버튼 글씨 크기 조정 */
+            .uploadResetBtn {
+                font-size: 10px;
+            }
+        }
+        /* 반응형 : 너비 320px 이하 */
+        
+        @media screen and (max-width: 320px) {
+            /* 운영 시간에서 전체선택, 전체해제 영역 한줄 내리기 */
+            span#dayAll {
+                display: block;
+            }
+            /* 서비스 동의 영역 글씨 크기 조정 */
+            table {
+                font-size: 12px;
             }
         }

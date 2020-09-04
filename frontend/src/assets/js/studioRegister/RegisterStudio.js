@@ -37,6 +37,12 @@ export default {
                 },
                 tag: []
             },
+
+            /* 디폴트 이미지 */
+            required: require('@/assets/img/upload/required.png'),
+            preview: require('@/assets/img/upload/preview.png'),
+            port: require('@/assets/img/upload/port.png'),
+
             /* 카테고리 */
             category: [],
 
@@ -139,23 +145,46 @@ export default {
             location.href = "/companyLogin"
         } else {
             this.studio.comId = company.comId;
-            console.log(this.studio.comId); //뽑아낸 comId
+            console.log("comId : " + this.studio.comId); //뽑아낸 comId
         }
     },
     mounted() {
         axios.get('http://127.0.0.1:7777/category')
             .then((response) => {
-                console.log('성공');
                 this.category = JSON.parse(JSON.stringify(response.data));
-                console.log(this.category);
             })
             .catch(() => {
-                console.log('실패');
+                console.log('카테고리 가져오기 실패');
             })
     },
     methods: {
+        /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
+        checkLength() {
+            var changeArea = document.getElementsByName('changeArea');
+            var countLength = document.getElementsByName('countLength');
+            for (let i = 0; i < countLength.length; i++) {
+                let value = countLength[i].value;
+                let length = countLength[i].value.length;
+                if (i == 0) { //스튜디오 소개
+                    if (length > 500) {
+                        document.getElementsByName('countLength')[i].value = value.substring(0, 500);
+                        return false;
+                    } else {
+                        changeArea[i].innerHTML = length;
+                    }
+                } else if (i == 1) { //이용 수칙
+                    if (length > 400) {
+                        document.getElementsByName('countLength')[i].value = value.substring(0, 400);
+                        return false;
+                    } else {
+                        changeArea[i].innerHTML = length;
+                    }
+                }
+            }
+        },
+
         /* 파일 업로드 화면단 처리 */
-        handleImgFileSelect(fileId, imgId, e) {
+        handleImgFileSelect(fileId, imgId, btnId, e) {
             var thisFileId = document.getElementById(fileId);
             var thisImgId = document.getElementById(imgId);
             var files = e.target.files;
@@ -185,8 +214,34 @@ export default {
                             thisImgId.setAttribute("src", e.target.result);
                         }
                         reader.readAsDataURL(f);
+
+                        /* 파일 업로드 리셋 버튼 보이기 */
+                        var uploadBtn = document.getElementById(btnId);
+                        uploadBtn.setAttribute("style", "display: inline-block");
+
                     }) //forEach
             } //if
+        },
+
+        /* 업로드 이미지 삭제 */
+        resetUploadImg(fileId, imgId, btnId, img) {
+            alert("업로드한 이미지를 삭제합니다.");
+
+            /* 파일 업로드된 파일을 삭제해서 리셋시킴 */
+            document.getElementById(fileId).value = '';
+
+            /* 파일 업로드 디폴트 이미지로 바꿈 */
+            var thisImgId = document.getElementById(imgId);
+            if (img === 'preview') {
+                thisImgId.setAttribute("src", require('@/assets/img/upload/preview.png'));
+            } else if (img === 'port') {
+                thisImgId.setAttribute("src", require('@/assets/img/upload/port.png'));
+            }
+
+
+            /* 파일 업로드 리셋 버튼 숨김 */
+            var thisBtnId = document.getElementById(btnId);
+            thisBtnId.setAttribute("style", "display: none");
         },
 
         /* 주소 API를 통해 주소 찾기, 닫기 */
@@ -762,6 +817,20 @@ export default {
             }
         },
 
+        /* 임시저장 */
+        tempSave() {
+            alert("임시저장~");
+        },
+
+        /* 스튜디오 등록 전 로그인 체크 */
+        checkLogin() {
+            if (this.studio.company == '') {
+                alert("기업고객으로 로그인하세요.");
+                //location.href = "/companyLogin";
+            }
+            this.checkStudio();
+        },
+
         /* 스튜디오 등록 전 유효성 검사, 예외 처리, 데이터 바인딩 */
         checkStudio() {
             /* 입력된 태그들을 하나의 string으로 만들고 tag 데이터에 바인딩 */
@@ -790,8 +859,65 @@ export default {
                 this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
             }
 
-            /* 지상/지하 토글 버튼에 맞춰 데이터 바인딩 */
+            /* 숫자 유효성 검사 */
             let floor = document.getElementById('floor').value;
+            let size = document.getElementById('size').value;
+            let unitPrice = document.getElementById('unitPrice').value;
+            let excharge = document.getElementById('excharge').value;
+            let defaultCapacity = document.getElementById('defaultCapacity').value;
+            let maxCapacity = document.getElementById('maxCapacity').value;
+            let parking = document.getElementById('parking').value;
+            let isNumeric = [{
+                check: floor,
+                message: "층수를 1 이상의 정수로 입력하세요."
+            }, {
+                check: size,
+                message: "면적을 1 이상의 숫자로 입력하세요."
+            }, {
+                check: unitPrice,
+                message: "시간당 대여료를 1 이상의 정수로 입력하세요."
+            }, {
+                check: excharge,
+                message: "1인 추가시 대여료를 1 이상의 정수로 입력하세요."
+            }, {
+                check: defaultCapacity,
+                message: "기본 인원을 1 이상의 정수로 입력하세요"
+            }, {
+                check: maxCapacity,
+                message: "최대 인원을 1 이상의 정수로 입력하세요",
+            }, {
+                check: parking,
+                message: "주차 대수를 0 이상의 정수로 입력하세요"
+            }];
+
+            for (let i = 0; i < isNumeric.length; i++) {
+                let temp = Number(isNumeric[i].check);
+                if (i == 1) { //면적
+                    if (isNaN(temp) || temp < 1) {
+                        alert(isNumeric[i].message);
+                        return false;
+                    }
+                } else if (i == isNumeric.length - 1) { //주차대수
+                    if (Number.isInteger(temp) && temp >= 0) {
+                        continue;
+                    } else {
+                        alert(isNumeric[i].message);
+                        return false;
+                    }
+                } else { //층수, 시간당 대여료, 1인 추가시 대여료, 기본 인원, 최대 인원
+                    if (isNumeric[i].check == '') {
+                        continue;
+                    }
+                    if (Number.isInteger(temp) && temp >= 1) {
+                        continue;
+                    } else {
+                        alert(isNumeric[i].message);
+                        return false;
+                    }
+                }
+            }
+
+            /* 지상/지하 토글 버튼에 맞춰 데이터 바인딩 */
             if (this.floorUnit == false) { //지상
                 this.studio.floor = floor;
                 this.floorUnit = true;
@@ -801,7 +927,6 @@ export default {
             }
 
             /* 면적 단위 토글 버튼 상태에 맞춰 데이터 바인딩 */
-            let size = document.getElementById('size').value;
             if (this.sizeUnit == false) { //제곱미터
                 this.studio.studioFilter.size = size;
                 this.sizeUnit = true;
@@ -818,7 +943,6 @@ export default {
 
             /* 주차가능 체크시 주차대수 입력 필수 */
             var parkAble = document.getElementsByName("parkFlag")[1].checked;
-            var parking = document.getElementById("parking").value;
             if (parkAble == true) {
                 if (parking == "") {
                     alert("주차 가능 대수를 입력하세요.");
@@ -874,17 +998,17 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.comId, formData, {
+            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('성공');
+                    console.log('대표사진 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
                     this.studio.mainImg = response.data; //대표사진 파일명 데이터 바인딩
                 })
                 .catch(() => {
-                    console.log('실패');
+                    console.log('대표사진 파일 업로드 응답 실패');
                 })
                 .finally(() => {
                     this.uploadCadImg();
@@ -897,17 +1021,17 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.comId, formData, {
+            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('성공');
+                    console.log('공간도면 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
                     this.studio.cadImg = response.data; //공간도면 파일명 데이터 바인딩
                 })
                 .catch(() => {
-                    console.log('실패');
+                    console.log('공간도면 파일 업로드 응답 실패');
                 })
                 .finally(() => {
                     this.uploadPortImg();
@@ -922,17 +1046,17 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.comId, formData, {
+            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('성공');
+                    console.log('포트폴리오 파일 업로드 응답 성공');
                     console.log('파일명 : ' + response.data);
-                    this.studio.portImg = response.data; //대표사진 파일명 데이터 바인딩
+                    this.studio.portImg = response.data; //포트폴리오 파일명 데이터 바인딩
                 })
                 .catch(() => {
-                    console.log('실패');
+                    console.log('포트폴리오 파일 업로드 응답 실패');
                 })
                 .finally(() => {
                     this.addStudio();
@@ -941,16 +1065,23 @@ export default {
 
         /* 스튜디오 등록 */
         addStudio() {
-            axios.post("http://127.0.0.1:7777/studio", this.studio).then(
-                function(response) {
-                    console.log(response.data);
-                    alert(`등록되셨습니다.`);
-                    //location.href = "/mypage";
-                },
-                function() {
-                    console.log("failed");
-                }
-            );
+            axios.post("http://127.0.0.1:7777/studio", this.studio)
+                .then(
+                    function(response) {
+                        console.log("스튜디오 등록 응답 성공");
+                        console.log(response.data);
+                        if (response.data == '1') {
+                            alert(`스튜디오가 성공적으로 등록되었습니다.`);
+                            //location.href = "/mypage";
+                        } else if (response.data == '-1') {
+                            alert("이미 등록된 스튜디오입니다.");
+                            return false;
+                        }
+                    },
+                    function() {
+                        console.log("스튜디오 등록 응답 실패");
+                    }
+                );
         }
     }
 }

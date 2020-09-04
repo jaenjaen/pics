@@ -136,6 +136,10 @@ public class Studio {
 		this.studioFilter = studioFilter;
 	}
 
+	public String getAddress() {
+		return getStudioFilter().getAddress();
+	}
+	
 	public Company getCompany() {
 		return company;
 	}

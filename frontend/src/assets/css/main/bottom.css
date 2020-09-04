@@ -34,6 +34,9 @@ p {
 }
 
 @media only screen and (max-width: 768px) {
+    .bottom {
+        width: 100%;
+    }
     .container_bottom {
         width: 100%;
     }

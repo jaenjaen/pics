@@ -1,12 +1,11 @@
-   
 <template>
   <div class="container">
       <!-- ==============  메인 이미지 : carousel ============== -->
       <header id="main-images-section">
-        <div class="row" v-for="(studio,index) in studios" v-bind:key="index">
+        <div class="row" v-for="(mainImg,index) in mainImgList" v-bind:key="index">
           <carousel :itmes="1" :loop="true" :autoplay="true" >
             <div>
-               <img  class="item" data-merge="3" :src="imgUrl(studio.mainImg)" width="100%" height="500"/>
+               <img  class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500"/>
             </div>
            </carousel>
          </div> 
@@ -46,9 +45,8 @@
           <!-- 찜하기, 공유하기, 누적 이용자 수 -->
           <span>
           <button class="bookmark-btn" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-            찜
-            <img src="@/assets/img/util/fullheart.svg" v-if="bookmarkCheck>0" alt />
-            <img src="@/assets/img/util/heart.svg" v-else alt width="10%"/>
+            <img src="@/assets/img/util/fullheart.svg" v-if="bookmarkCheck>0" />
+            <img src="@/assets/img/util/heart.svg" v-if="bookmarkCheck==0"/>
           </button>
           </span>          
           <span>
@@ -57,7 +55,7 @@
               <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
           </a> -->
           </span>
-
+  
             <!-- 누적 이용자 수 -->
             <span>
             {{this.accCustomer}}명
@@ -118,17 +116,15 @@
         </div>
         <hr>
         <!-- ============== Portfolio Images ============== -->
-        <table aligh="center" width="100%" height="100px">
-        <tr class="article-portfolio-area"  v-for="(studio,index) in studios" v-bind:key="index">
-          <td style="list-style-type:none"><img :src="imgUrl(studio.portImg)" width="80%" height="400px"/></td><br>
-        </tr>       
+       <table aligh="center" width="100%">
+          <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index">
+            <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
+          </tr>
         </table>
-        
-        <!-- ============== Map ============== -->
+          <!-- ============== Map ============== -->
           <div id="map">
 
           </div>
-        
 
         <hr />
         <!-- ============== Chart & Graph ============== -->
@@ -145,9 +141,8 @@
 							</div>
 						</div>
               <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
-                <ChartGender>
-                  : Chart Data = GenderData
-                </ChartGender>  
+                <chart-gender :chart-data="datacollection" :options="options"></chart-gender>
+                <!-- <button @click="fillData()">Set Chart</button> -->
               </canvas>
 					</div> 
           </div> 
@@ -170,119 +165,141 @@
         
 
         <!-- ============== Review ============== -->
+        <hr>
         <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
+        <h2 align="left">리뷰보기</h2>   
           <div v-for="review in reviews" v-bind:key="review.reviewId">
            <div>
-              <hr>
-              <h4>리뷰보기</h4>
-                <div class="card-content" id="reviews" >
-                  <div>
-                    <!-- <span id="reviewr-img"><img :src="imgUrl(review.costomer.srcImg)"></span>  -->
-                    <!-- <span id="reviewr-email"><strong>{{ review.cusomer.email|emailHide }}</strong></span> -->
-                    <span id="register-date">({{ review.regDate}})</span>
-                  </div>
-                    <!-- 별점 부분 -->
-                    <span id="star"> 별점
-                      <span v-if="review.score > 0 && review.score < 1">
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span v-if="review.score == 1">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span v-if="review.score > 1 && review.score < 2">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span v-if="review.score == 2">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span v-if="review.score > 2 && review.score < 3">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span v-if="review.score == 3">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span v-if="review.score > 3 && review.score < 4">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                      </span>
-                      <span v-if="review.score == 4">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                      </span>
-                      <span v-if="review.score > 4 && review.score < 5">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                      </span>
-                      <span v-if="review.score == 5">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                      </span>              
-                      <span v-if="review.score == 0">
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
+              <div class="card-expansion" id="reviews" >
+                <md-card-media>
+                  <!-- <span id="reviewr-img"><img :src="imgUrl(review.costomer.srcImg)"></span>  -->
+                </md-card-media>
+                <md-card>
+                  <md-card-header>
+                  <!-- <div class="md-subhead" id="register-date">({{ review.cusomer.email}})</div> -->
+                  <div class="md-subhead" id="register-date">({{ review.regDate}})</div>
+                </md-card-header>
+
+                  <!-- <span id="reviewr-email"><strong>{{ review.cusomer.email|emailHide }}</strong></span> -->
+                  <!-- 별점 부분 -->
+                  <span id="star-score"> 별점
+                    <span v-if="review.score > 0 && review.score < 1">
+                      <i class="material-icons" id="icon_filter">star_half</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
                     </span>
-                </div>
-                <div>
-              <div id="content">{{ review.content }}</div>       
-            </div>
-            <div id="no-review" v-if="(reviews+'').length==0"><h3>"아직 등록된 리뷰가 없습니다!"</h3></div>
-            <div id=answer v-if="isNaN(review.answer)">
-                <div>{{ review.answer }}</div>
+                    <span v-if="review.score == 1">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                    </span>
+                    <span v-if="review.score > 1 && review.score < 2">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_half</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                    </span>
+                    <span v-if="review.score == 2">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                    </span>
+                    <span v-if="review.score > 2 && review.score < 3">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_half</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                    </span>
+                    <span v-if="review.score == 3">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                    </span>
+                    <span v-if="review.score > 3 && review.score < 4">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_half</i>
+                      <i class="material-icons" id="icon_filter">star_half</i>
+                    </span>
+                    <span v-if="review.score == 4">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_half</i>
+                    </span>
+                    <span v-if="review.score > 4 && review.score < 5">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star_half</i>
+                    </span>
+                    <span v-if="review.score == 5">
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                      <i class="material-icons" id="icon_filter">star</i>
+                    </span>              
+                    <span v-if="review.score == 0">
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                      <i class="material-icons" id="icon_filter">star_border</i>
+                    </span>
+                  </span>
+                  <hr width="90%">
+                  <div id="review-content">{{ review.content }}</div>
+                    <md-card-expand  v-if="review.answer!=''">
+                      <md-card-actions md-alignment="space-between">
+                        <md-card-expand-trigger>
+                          <md-button class="md-icon-button">
+                            <md-icon>keyboard_arrow_down</md-icon>
+                          </md-button>
+                        </md-card-expand-trigger>
+                      </md-card-actions>
+                      <md-card-expand-content>
+                        <md-card-content id=answer> 
+                            {{ review.answer }}
+                        </md-card-content>
+                      </md-card-expand-content>
+                    </md-card-expand>
+                </md-card>                
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </article>
+          <div id="no-review" v-if="(reviews+'').length==0"><h3>"아직 등록된 리뷰가 없습니다!"</h3></div>
+      </article>
     <!-- 모달 모아두기 -->
     <div>
-      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
         <div id="delBook">
           <p>찜목록에서 제거했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="20%" height="30%" :maxWidth=768>
+      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
         <div id="regBook">
+          <p>찜 목록에 등록했습니다</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
+      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+        <div id="login-required">
           <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
@@ -296,61 +313,49 @@
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
-
 @media screen and (max-width: 768px) {
     #app {
         width: 100%;
     } 
-}
-.body{
-  background: white;
 }
 .container {
     width: 768px;
     margin: auto 20em 0 10em 0;
     
 }
-
 #main-images-section {
     width: 100%;
     margin: auto;
 }
-
 .tag-list {
     padding: 0.5%;
 }
-
 .tabs-field {
     width: 100%;
     height: 50;
 }
-
 .nav-tab {
     margin: 20%;
     list-style-type: none;
     display: inline;
 }
-
 article {
     width: 100%;
     float: left;
     
     margin-bottom: 10em;
 }
-
 #Studio-Filter-Table {
     float:left;
     width: 50%;
     border-top: 2px solid #5a5a5a;
     border-collapse: collapse;
 }
-
 #Studio-Filter-Table td {
     text-align: right;
     border-bottom: 1.5px solid #bbb5b5;
     padding: 10px;
 }
-
 #map {
     float:left;
     margin-left: 5%;
@@ -362,14 +367,12 @@ article {
   clear: both;
   text-align: left;
 }
-
-
 .tag-btn{
     
     background-color: #029BE0;
     border: none;
     color:#fff;
-    padding: 5px 5px 5px 5px;
+    padding: 5px 7px 5px 7px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -407,10 +410,21 @@ article {
   box-shadow:2px 2px 1.5px lightgray;
 }
 #answer{
-  border:1px solid lightgray;
-  border-radius:10px;
   padding:2%;
-  box-shadow:2px 2px 1.5px lightgray;
+  /* box-shadow:2px 2px 1.5px lightgray; */
+}
+.card-expansion {
+  width: 100%;
+  padding:2%;
 }
 
+.md-card {
+  width: 100%;
+  margin: 4px;
+  display: inline-block;
+  vertical-align: top;
+}
+#review-content, #star-score{
+  margin:5%;
+}
 </style>

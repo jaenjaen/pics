@@ -30,19 +30,15 @@ public class StudioInfoTest {
 	@Autowired
 	private StudioInfoService service;
 	
-//	public Studio getSample() {
-//		Studio studio = new Studio();
-//		studio.setComId("com1@gmail.com");
-//		studio.setCategoryId(1);
-//		studio.setName("짱조은카페");
-//		studio.setDescription("설명~~");
-//		studio.setRule("규칙");
-//		studio.setMainImg("main.jpg");
-//		studio.setPortImg("port.jpg");
-//		studio.setCadImg("cad.jpg");
-//		studio.setFloor(5);
-//		return studio;
-//	}
+	public Studio getSample() {
+		StudioFilter filter = new StudioFilter();
+		filter.setAddress("서울시 광진구");
+		Studio studio = new Studio();
+		studio.setComId("22@sample.com");
+		studio.setName("pub_name30");
+		studio.setStudioFilter(filter);
+		return studio;
+	}
 	
 	/* Studio 등록 - 단위 테스트 성공 */
 //	@Test
@@ -59,14 +55,17 @@ public class StudioInfoTest {
 //		int stuId = sqlSession.selectOne("StudioInfoMapper.getStudioId", studio);
 //		System.out.println("스튜디오 아이디 : "+stuId);
 //	}
-
-	/* 카테고리 이름으로 카테고리 아이디 찾아오기 - 단위 테스트 성공 */
+	
+	/* Studio로 동일한 Studio 찾아오기 */
 	@Test
-//	public void getCategoryId() {
-//		Category category = new Category(100, "카페");
-//		int categoryId = sqlSession.selectOne("StudioInfoMapper.getCategoryId", category);
-//		System.out.println("카테고리 아이디 : "+categoryId);
-//	}
+	public void getStudio() {
+		Studio studio = getSample();
+		List<Studio> result = sqlSession.selectList("StudioInfoMapper.getStudioByNameAndComId", studio);
+		System.out.println("받아온 studio 1 : "+result);
+		result = sqlSession.selectList("StudioInfoMapper.getStudioByAddrAndComId", studio);
+		System.out.println("받아온 studio 2 : "+result);
+	}
+
 	void contextLoads() {
 		String NS = "StudioInfoMapper.";
 //		System.out.println("====================getStudioInfo====================");

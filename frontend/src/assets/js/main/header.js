@@ -1,6 +1,6 @@
 import Bottom from "@/components/main/Bottom.vue";
 export default {
-    name: "pics-bottom",
+    name: "pics_header",
     components: {
         Bottom
     },

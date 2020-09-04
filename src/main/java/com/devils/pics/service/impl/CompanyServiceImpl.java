@@ -49,7 +49,22 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public int updateCompnay(Company company) throws Exception {
+		Company comDao = companyDAO.loginCompany(company);
+		System.out.println(comDao.getPassword());
+		String password = company.getPassword();
+        String salt = comDao.getSalt();
+        
+        
+        if (comDao.getPassword().equals(saltUtil.encodePassword(salt, password))) {
+        	company.setSalt(salt);
+        	return companyDAO.updateCompnay(company);
+        }
+        else {
+        company.setSalt(saltUtil.genSalt());
+        company.setPassword(saltUtil.encodePassword(company.getSalt(),password));
+        System.out.println(company.getPassword());
 		return companyDAO.updateCompnay(company);
+        }
 	}
 
 	@Override

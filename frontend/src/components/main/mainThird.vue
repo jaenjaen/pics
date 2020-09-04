@@ -2,29 +2,39 @@
   <div class="mainthird">
     <div class="word">컨셉별 촬영장소 찾기</div>
     <div class="img_container">
-      <div class="img">
-        <a href>
-          <div class="img_word">화려한 조명</div>
-          <div></div>
-        </a>
+      <div class="jb-wrap">
+        <div class="jb-image">
+          <img src="@/assets/img/studio/1_조명.jpg" alt />
+        </div>
+        <div class="jb-text">
+          <p>조명 맛집</p>
+        </div>
       </div>
-      <div class="img">
-        <a href>
-          <div>브이로그 감성</div>
-          <div></div>
-        </a>
+      <div class="jb-wrap">
+        <div class="jb-image">
+          <img src="@/assets/img/studio/1_브이로그.jpg" alt />
+        </div>
+        <div class="jb-text">
+          <p>브이로그</p>
+          <p>감성</p>
+        </div>
       </div>
-      <div class="img">
-        <a href>
-          <div>빈티지 정원</div>
-          <div></div>
-        </a>
+      <div class="jb-wrap">
+        <div class="jb-image">
+          <img src="@/assets/img/studio/1_욕실.jpg" alt />
+        </div>
+        <div class="jb-text">
+          <p>감성적인</p>
+          <P>욕실</P>
+        </div>
       </div>
-      <div class="img">
-        <a href>
-          <div>조명 맛집</div>
-          <div></div>
-        </a>
+      <div class="jb-wrap">
+        <div class="jb-image">
+          <img src="@/assets/img/studio/1_클래식.jpg" alt />
+        </div>
+        <div class="jb-text">
+          <p>클래식</p>
+        </div>
       </div>
     </div>
   </div>

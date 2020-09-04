@@ -1,20 +1,19 @@
 .navbar-fixed {
-    line-height: 44px !important;
     z-index: 9999;
+    height: 54px !important;
 }
 
 nav {
     background-color: white !important;
-    height: 44px !important;
+    height: 54px !important;
 }
 
-.nav-wrapper {
+.header_container {
     width: 768px;
-    margin: 0 auto !important;
-}
-
-img {
-    margin-top: 13px !important;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
 #pics_logo {
@@ -23,40 +22,23 @@ img {
 
 #search_icon {
     width: 20px;
-    margin-right: 25px;
 }
 
 #backward {
     width: 20px;
-    float: left;
 }
 
-@media only screen and (min-width: 768px) {
-    nav .navbar-fixed {
-        height: 44px !important;
-        line-height: 44px !important;
-    }
-}
-
-@media only screen and (min-width: 300px) and (max-width: 767px) {
-    nav .navbar-fixed {
-        height: 44px !important;
-        line-height: 44px !important;
-    }
-    .nav-wrapper {
-        width: 100%;
-        margin: 0 auto !important;
-    }
-}
-
-@media only screen and (min-width: 601px) {
+@media all and (min-width: 250px) and (max-width: 768px) {
     .navbar-fixed {
-        height: 44px !important;
+        width: 100% !important;
     }
-}
-
-@media only screen and (max-width: 600px) {
-    .navbar-fixed {
-        height: 44px !important;
+    nav {
+        width: 100% !important;
+    }
+    .header_nav {
+        width: 100% !important;
+    }
+    .header_container {
+        width: 100% !important;
     }
 }

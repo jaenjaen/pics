@@ -6,8 +6,25 @@
 .mypage_card {
     background-color: #fff;
     width: 99%;
+    overflow: scroll;
     margin: auto;
     height: 180px;
-    padding: 1% 0 1% 4%;
+    padding: 1% 0 1% 2%;
     text-align: left;
+}
+
+.mypage_card table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.mypage_card th {
+    background-color: white !important;
+    position: sticky;
+    top: -8px;
+}
+
+.mypage_card td {
+    border-bottom: 1px solid #b5b5b5a9;
 }

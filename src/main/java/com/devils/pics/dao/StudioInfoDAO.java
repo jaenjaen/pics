@@ -15,7 +15,9 @@ public interface StudioInfoDAO {
 	public int registerStudioInfo(Studio studio); //Studio 등록
 	public int registerTag(Tag tag); //Tag 등록
 	public List<Category> getCategory(); //카테고리를 가져옴
-	public int getStudioId(Studio studio); //Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
+	public int getStudioId(Studio studio);//Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
+	public List<Studio> getStudioByNameAndComId(Studio studio); //name, comId로 Studio를 찾아옴
+	public List<Studio> getStudioByAddrAndComId(Studio studio); //addr, comId로 Studio를 찾아옴
 	
 	// 스튜디오 상세조회	
 	public List<Studio> getStudioInfo(int stuId); // Studio DAO에 있는 스튜디오 기본 정보 조회

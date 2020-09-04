@@ -110,20 +110,9 @@
           />
         </modal>
 
-        <div class="form__field">
-          <label for="login__tel"
-            ><img
-              class="icon"
-              src="@/assets/img/register/companyTel.svg"
-            /><span class="hidden">PhoneNumber</span></label
-          >
-          <input
-            type="tel"
-            v-model="tel"
-            class="form__input"
-            placeholder="업체 전화번호"
-            required
-          />
+        <div class="form__field" >
+          <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
+          <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" placeholder="업체 전화번호" required>
         </div>
 
         <div class="form__field">
@@ -134,6 +123,21 @@
             /><span class="hidden">Logo</span></label
           >
           <input type="file" class="form__input" placeholder="업체 로고" />
+        </div>
+
+        <div class="form__field">
+          <label for="login__comId"
+            ><img class="icon" src="@/assets/img/register/description.svg" /><span
+              class="hidden"
+              >description</span
+            ></label
+          >
+          <input
+            type="text"
+            v-model="desc"
+            class="form__input"
+            placeholder="업체 설명"
+          />
         </div>
 
         <div class="form__field">
@@ -163,6 +167,9 @@ export default {
       checkpassword: "",
       address: "",
       tel: "",
+      desc:"",
+      imgSrc:"",
+      max: 13,
       condata: ""
     };
   },
@@ -175,7 +182,8 @@ export default {
             comId: this.comId,
             password: this.password,
             address: this.address,
-            tel: this.tel
+            tel: this.tel,
+            description: this.desc
           })
           .then(response => {
             this.condata = response.data;
@@ -228,7 +236,10 @@ export default {
     },
     editAddr: function() {
       this.$modal.show("postcodeModal");
-    }
+    },
+    insertDash(){
+        if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
+      }
   }
 };
 </script>

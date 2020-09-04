@@ -19,6 +19,7 @@ import Reservation from "../components/studioInfo/Reservation.vue";
 // import Test from "../components/Test.vue";
 import ChartGender from "../components/studioInfo/ChartGender.vue";
 import StudioList from "@/components/search/StudioList.vue";
+import UploadImg from "@/components/predict/uploadImg.vue";
 
 
 Vue.use(VueRouter);
@@ -97,6 +98,10 @@ const routes = [{
         path: "/customeredit",
         name: "customeredit",
         component: CustomerEdit
+    }, {
+        path: "/uploadImg",
+        name: "uploadImg",
+        component: UploadImg
     }
 
 

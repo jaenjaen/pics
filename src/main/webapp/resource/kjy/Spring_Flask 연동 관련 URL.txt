@@ -7,6 +7,14 @@ https://gusrb.tistory.com/47
 3. Flask Restful API 기본 (로그인 예제 등 다른 것들도 풍부)
 https://niceman.tistory.com/191
 
+4. 기본
+https://www.fun-coding.org/flask_basic-2.html
 
+5. colab 모델 읽기/저장
+https://yamalab.tistory.com/80
+https://tutorials.pytorch.kr/beginner/saving_loading_models.html
+
+6. 이미지 데이터 전처리
+https://wordbe.tistory.com/entry/Data-Loading-and-Processing-Tutorial
 
 

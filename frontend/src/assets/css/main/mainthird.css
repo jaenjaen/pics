@@ -34,7 +34,7 @@ img {
 }
 
 .img:nth-child(1) {
-    background: url("../../img/studio/10_펍.jpeg");
+    background: url("../../img/studio/10_펍.jpeg");
     width: 350px;
     height: 250px;
     background-repeat: no-repeat;

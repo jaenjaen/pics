@@ -1,4 +1,5 @@
 import StudioList from "@/components/search/StudioList.vue";
+// import axios from "axios";
 // 요일 변환을 위한 리스트
 const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 // Vue 시작
@@ -96,6 +97,7 @@ export default {
             }
             this.searchList();
         },
+        // 아래부터는 임시 메소드
         login() {
             let cust = {
                 custId: 3,
@@ -107,6 +109,9 @@ export default {
         logout() {
             sessionStorage.removeItem('cust');
             this.filters.session = -1;
+        },
+        test() {
+            this.$router.push("/uploadImg")
         }
     }
 };

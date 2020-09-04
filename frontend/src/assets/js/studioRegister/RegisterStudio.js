@@ -225,7 +225,7 @@ export default {
 
         /* 업로드 이미지 삭제 */
         resetUploadImg(fileId, imgId, btnId, img) {
-            alert("삭제됐다");
+            alert("업로드한 이미지를 삭제합니다.");
 
             /* 파일 업로드된 파일을 삭제해서 리셋시킴 */
             document.getElementById(fileId).value = '';

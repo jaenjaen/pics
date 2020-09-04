@@ -132,12 +132,9 @@
 		WHERE stu_id=#{stuId}
 	</update>
 
-	<delete id="deleteReservations" parameterType="list">							
+	<delete id="deleteReservation" parameterType="int">							
 		Delete FROM reservation
-		WHERE res_id in
- 		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
-		#{reservation.resId}
-		</foreach>
+		WHERE res_id = #{value}
 	</delete>
 
  	<delete id="deleteExceptionDates" parameterType="list">							

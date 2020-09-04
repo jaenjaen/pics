@@ -55,8 +55,8 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	}
 
 	@Override
-	public int DeleteReservations(List<Reservation> reservationList) {
-		return sqlSession.delete(NS+"deleteReservations", reservationList);
+	public int DeleteReservation(int resId) {
+		return sqlSession.delete(NS+"deleteReservation", resId);
 	}
 
 	@Override

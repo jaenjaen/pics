@@ -103,21 +103,15 @@ public class StudioReserveController {
 		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	
-	// 4. reservation,예약 불가능 일자 delete 
-	@DeleteMapping("/studio/reservation")
-	public ResponseEntity DeleteReservation(@RequestBody List<Reservation> reservationLIst) {
-		//등록 시간 삽입
-		long time = System.currentTimeMillis();
-		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-		String resDate = dayTime.format(new Date(time));
-
-		if(studioReserveService.DeleteReservations(reservationLIst)>0) {
-			studioReserveService.DeleteExceptionDates(reservationLIst);
+	// 5. 예약취소
+	@DeleteMapping("/studio/reservation/{resId}")
+	public ResponseEntity DeleteReservation(@PathVariable int resId) {
+		if(studioReserveService.DeleteReservations(resId)!=0) {
 			return new ResponseEntity(HttpStatus.OK);
-		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}else return new ResponseEntity(HttpStatus.NOT_MODIFIED);
 		}
 	
-	//5. 이미 지난 예약
+	//6. 이미 지난 예약
 	@GetMapping("/customer/reservation/expired/{custId}")
 	public ResponseEntity getExpiredReservation(@PathVariable int custId) {
 		resultList = studioReserveService.getExpiredReservation(custId);
@@ -127,7 +121,7 @@ public class StudioReserveController {
 		else return new ResponseEntity(resultList,HttpStatus.OK);
 	}
 	
-	//앞으로 남은 예약
+	//7. 앞으로 남은 예약
 	@GetMapping("/customer/reservation/will/{custId}")
 	public ResponseEntity getWillReservation(@PathVariable int custId) {
 		resultList = studioReserveService.getWillReservation(custId);

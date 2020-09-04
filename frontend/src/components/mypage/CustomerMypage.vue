@@ -10,7 +10,7 @@
         </tr>
         <tr v-for="(reservation, idx) in resvList" :key="reservation">
           <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
-          <td>{{reservation.totalPrice}}원</td> <td><button>결제취소</button></td>
+          <td>{{reservation.totalPrice}}원</td> <td><button @click="deleteResv(reservation.resId)">결제취소</button></td>
         </tr>
       </table>
     </div>
@@ -50,6 +50,7 @@ export default {
       resvList:[],
       reviewList:[],
       custId:session.custId,
+      resId:""
     };
   },
   mounted(){
@@ -64,8 +65,21 @@ export default {
     });
   },
   methods: {
+    deleteResv: function(resId){
+      axios.delete("http://localhost:7777/studio/reservation/"+resId)
+      .then(res=>{
+        if(res != null){
+          alert("예약이 취소되었습니다.");
+          location.reload()
+        }
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+    }
   }
 };
+
 </script>
 
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>

@@ -16,7 +16,7 @@ public interface StudioReserveDAO {
 	public List<Reservation> getReservation(Reservation reservation); // 예약 중복 체크, 예약 이력 불러오기(스튜디오/고객/스튜디오&고객  기준)
 	public int UpdateReservation(Reservation reservation); //예약 내역 업데이트
 	public int UpdateExceptionDate(Reservation reservation); //예약 불가 테이블 업데이트
-	public int DeleteReservations(List<Reservation> reservationList); //예약 내역 업데이트
+	public int DeleteReservation(int resId); //예약 취소
 	public int DeleteExceptionDates(List<Reservation> reservationList); //예약 불가 테이블 업데이트
 	public List<Reservation> getExpiredReservation(int custId); //지난예약
 	public List<Reservation> getWillReservation(int custId);//앞으로 남은 예

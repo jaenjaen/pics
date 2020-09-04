@@ -58,8 +58,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public int DeleteReservations(List<Reservation> reservationList) {
-		return studioReserveDAO.DeleteReservations(reservationList);
+	public int DeleteReservations(int resId) {
+		return studioReserveDAO.DeleteReservation(resId);
 	}
 
 	@Override

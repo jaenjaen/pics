@@ -35,7 +35,12 @@
 		<result property="resDate" column="res_date"/>
 		<result property="totalPeople" column="total_people"/>
 	</resultMap>
-
+	
+	<sql id="select-All-Reservation">
+		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
+		FROM reservation
+	</sql>
+	
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
   	<select id="getExceptionDate" parameterType="int" resultType="exceptionDate">							
 		SELECT exception_id, start_date,end_date 
@@ -50,8 +55,7 @@
 	</select>
 
 	<select id="getReservation" parameterType="reservation" resultType="reservation">							
-		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
-		FROM reservation
+		<include refid="select-All-Reservation"></include>
 		<where>
  			<choose>
 			<!-- 필수적인 예약 요소들이 다 있는지 >> 동일한 예약 있는지 조회-->
@@ -63,8 +67,8 @@
 				cust_id=#{customer.custId} AND stu_id=#{stuId}
 			</when>
 			<!-- 특정 고객의 모든 스튜디오 확인 >> 마이페이지 예약 내역 -->
-			<when  test="customer!=null">
-				cust_id=#{customer.custId}
+			<when  test="custId!=null">
+				cust_id=#{custId}
 			</when>
 			<!-- 특정 스튜디오의 모든 예약내역 확인 -->
 			<when test="stuId!=null">
@@ -129,5 +133,22 @@
 		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
 		date(#{reservation.endDate})
 		</foreach> 
-	</delete>		
+	</delete>
+	
+	
+	<!-- reservation for customer
+		 1. 오늘 이전 날짜 예약
+		 2. 오늘 이후 날짜 예약 -->
+		 
+	<select id="getExpiredReservation" parameterType="int" resultType="reservation">
+		<include refid="select-All-Reservation"></include>
+		where cust_id = #{value}
+		and start_date &lt; now()
+	 </select>
+	 
+	 <select id="getWillReservation" parameterType="int" resultType="reservation">
+	 	<include refid="select-All-Reservation"></include>
+		where cust_id = #{value}
+		and start_date &gt;= now()
+	 </select>
  </mapper> 

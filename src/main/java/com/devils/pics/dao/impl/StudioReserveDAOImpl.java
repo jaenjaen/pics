@@ -64,4 +64,14 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 		return sqlSession.delete(NS+"deleteExceptionDates", reservationList);
 	}
 
+	@Override
+	public List<Reservation> getExpiredReservation(int custId) {
+		return sqlSession.selectList(NS+"getExpiredReservation", custId);
+	}
+
+	@Override
+	public List<Reservation> getWillReservation(int custId) {
+		return sqlSession.selectList(NS+"geWillReservation", custId);
+	}
+
 }

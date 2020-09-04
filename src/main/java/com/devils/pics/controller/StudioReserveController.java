@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,8 @@ public class StudioReserveController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 	
+	private List<Reservation> resultList;
+	
 	// 1. 예약 불가능/가능 날짜 받아서 Schedule로 옮기기
 	@GetMapping("/studio/schedule/{stuId}")
 	public ResponseEntity getSchedule(@PathVariable int stuId) {
@@ -66,7 +69,7 @@ public class StudioReserveController {
 	@GetMapping("/studio/reservation/{stuId}")
 	public ResponseEntity getReservation(@PathVariable int stuId) {
 		Reservation reservation = new Reservation(stuId);
-		List<Reservation> resultList= studioReserveService.getReservation(reservation);
+		resultList= studioReserveService.getReservation(reservation);
 		System.out.println("studioReserveService :"+studioReserveService.getReservation(reservation));
 		if(resultList.isEmpty()) {
 			System.out.println("해당 스튜디오 예약 없음");
@@ -113,6 +116,26 @@ public class StudioReserveController {
 			return new ResponseEntity(HttpStatus.OK);
 		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
+	
+	//5. 이미 지난 예약
+	@GetMapping("/customer/reservation/expired/{custId}")
+	public ResponseEntity getExpiredReservation(@PathVariable int custId) {
+		resultList = studioReserveService.getExpiredReservation(custId);
+		if(resultList.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		else return new ResponseEntity(resultList,HttpStatus.OK);
+	}
+	
+	//앞으로 남은 예약
+	@GetMapping("/customer/reservation/will/{custId}")
+	public ResponseEntity getWillReservation(@PathVariable int custId) {
+		resultList = studioReserveService.getWillReservation(custId);
+		if(resultList.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		else return new ResponseEntity(resultList,HttpStatus.OK);
+	}
 
 	}
 

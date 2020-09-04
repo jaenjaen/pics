@@ -85,10 +85,10 @@ export default {
             addressDetail: "",
 
             /* 지상/지하 */
-            floorUnit: true,
+            floorUnit: false, //지하여부
+            floorNum: '', //층수 절대값
 
             /* 면적 */
-            sizeInput: "",
             sizeUnit: true,
 
             /* 운영시간 */
@@ -190,13 +190,20 @@ export default {
                 document.getElementById('parkAmount').setAttribute('style', 'display:block');
             }
 
-            /*  */
-            document.getElementById('floor').value = tempStudio["floor"];
+            /* 지상/지하와 제곱미터/평을 확인하고 알게 바인딩하고 표시 */
             this.floorUnit = JSON.parse(tempStudio["floorUnit"]);
-            this.changeFloor();
-            this.sizeInput = tempStudio["size"];
             this.sizeUnit = JSON.parse(tempStudio["sizeUnit"]);
-            this.changeSizeUnit();
+            if (this.floorUnit) { //지하
+                document.getElementById('underground').checked = true;
+            }
+            this.floorNum = tempStudio["floor"];
+            if (this.sizeUnit) { //제곱미터
+                document.getElementById('size').value = Number(tempStudio["size"]);
+                this.sizeUnit = false;
+            } else { //평
+                document.getElementById('size').value = (Number(tempStudio["size"]) * 3.305785).toFixed(2);
+                this.sizeUnit = true;
+            }
 
             /* 주소 바인딩 후 화면에 표시
             주소 API를 통해 첫째 주소를 입력했을 경우 상세 주소를 보이게 함  */
@@ -418,25 +425,28 @@ export default {
         },
         /* 층수 - 지상과 지하로 전환하고, DB에는 지하일 경우 음수로 보냄 */
         changeFloor() {
-            if (this.floorUnit == true) { //지상
-                this.floorUnit = false;
-            } else if (this.floorUnit == false) { //지하
+            let underground = document.getElementById('underground');
+            if (underground.checked) { //지하
                 this.floorUnit = true;
+            } else { //지상
+                this.floorUnit = false;
             }
         },
 
         /* 면적 - 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
         changeSizeUnit() {
             let size = document.getElementById('size').value;
-            if (this.sizeUnit == true) { //평->제곱미터
+            if (this.sizeUnit) { //제곱미터->평
                 this.sizeUnit = false;
                 if (size != "") {
-                    this.sizeInput = (size * 3.305785).toFixed(2);
+                    document.getElementById('size').value = (size * 0.3025).toFixed(2);
+                    this.studio.studioFilter.size = size;
                 }
-            } else if (this.sizeUnit == false) { //제곱미터->평
+            } else if (!this.sizeUnit) { //평->제곱미터
                 this.sizeUnit = true;
                 if (size != "") {
-                    this.sizeInput = (size * 0.3025).toFixed(2);
+                    this.studio.studioFilter.size = (size * 3.305785).toFixed(2);
+                    document.getElementById('size').value = this.studio.studioFilter.size;
                 }
             }
         },
@@ -1134,9 +1144,9 @@ export default {
                 "name": this.studio.name,
                 "description": this.studio.description,
                 "rule": this.studio.rule,
-                "floor": document.getElementById('floor').value,
+                "floor": this.floorNum,
                 "floorUnit": this.floorUnit,
-                "size": this.sizeInput,
+                "size": document.getElementById('size').value,
                 "sizeUnit": this.sizeUnit,
                 "options": JSON.stringify(this.option_save),
                 "unitPrice": this.studio.studioFilter.unitPrice,
@@ -1257,20 +1267,16 @@ export default {
 
             /* 지상/지하 토글 버튼에 맞춰 데이터 바인딩 */
             if (this.floorUnit == false) { //지상
-                this.studio.floor = floor;
-                this.floorUnit = true;
+                this.studio.floor = this.floorNum;
             } else if (this.floorUnit == true) { //지하
-                this.studio.floor = floor * (-1);
-                this.floorUnit = false;
+                this.studio.floor = this.floorNum * (-1);
             }
 
             /* 면적 단위 토글 버튼 상태에 맞춰 데이터 바인딩 */
-            if (this.sizeUnit == false) { //제곱미터
+            if (this.sizeUnit == true) { //제곱미터
                 this.studio.studioFilter.size = size;
-                this.sizeUnit = true;
-            } else if (this.sizeUnit == true) { //평
+            } else if (this.sizeUnit == false) { //평
                 this.studio.studioFilter.size = (size * 3.305785).toFixed(2);
-                this.sizeUnit = false;
             }
 
             /* 운영 시간 입력 필수 */

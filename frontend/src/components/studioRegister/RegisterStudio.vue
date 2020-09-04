@@ -168,15 +168,11 @@
           <div class="col-25">
             <label class="inContent">층</label>
             <div class="outContainer">
-                <label id="sizeLabel">
-                  <toggle-button :value="true"
-                              :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
-                              :labels="{checked: '지상', unchecked: '지하'}"
-                              v-model="floorUnit"
-                              @change="changeFloor()"/>
+                <label id="sizeLabel1">
+                  <input type="checkbox" id="underground" @change="changeFloor()"> 지하
                 </label>
             </div>
-            <input type="text" id="floor" name="floor" />
+            <input type="text" id="floor" name="floor" v-model="floorNum"/>
           </div>
           <div class="col-25 col-space">
             <label for="size">
@@ -190,11 +186,10 @@
                 <toggle-button :value="true"
                               :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
                               :labels="{checked: '㎡', unchecked: '평'}"
-                              v-model="sizeUnit"
                               @change="changeSizeUnit()"/>
               </label>
             </div>
-            <input type="text" id="size" name="size" v-model="sizeInput" required />
+            <input type="text" id="size" name="size" required />
           </div>
         </div>
         <div class="row">

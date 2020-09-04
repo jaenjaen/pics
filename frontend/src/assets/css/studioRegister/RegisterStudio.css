@@ -37,7 +37,12 @@
             float: right;
         }
         
-        button#temp {
+        button#reset {
+            margin-right: 10px;
+        }
+        
+        button#temp,
+        button#reset {
             background-color: #747474;
             float: left;
         }
@@ -51,7 +56,8 @@
             background-color: #034EA2;
         }
         
-        button#temp:hover {
+        button#temp:hover,
+        button#reset:hover {
             background-color: #333333;
         }
         

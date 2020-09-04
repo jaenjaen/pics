@@ -9,6 +9,7 @@ import CompanyLogin from "../views/login/CompanyLogin.vue";
 import Mypage from "../views/mypage/Mypage.vue";
 import CompanyEdit from "../views/mypage/edit/CompanyEdit.vue";
 import CustomerEdit from "../views/mypage/edit/CustomerEdit.vue";
+import ReservationList from "../views/mypage/reservation/ReservationList.vue"
 import WishList from "../views/WishList.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
@@ -102,8 +103,11 @@ const routes = [{
         path: "/uploadImg",
         name: "uploadImg",
         component: UploadImg
+    }, {
+        path: "/reservationlist",
+        name: "reservationlist",
+        component: ReservationList
     }
-
 
     // {
     //     path: "/Map",

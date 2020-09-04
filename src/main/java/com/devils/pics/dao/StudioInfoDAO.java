@@ -6,6 +6,8 @@ import com.devils.pics.domain.Customer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.Tag;
@@ -17,7 +19,7 @@ public interface StudioInfoDAO {
 	public List<Category> getCategory(); //카테고리를 가져옴
 	public int getStudioId(Studio studio);//Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
 	public List<Studio> getStudioByNameAndComId(Studio studio); //name, comId로 Studio를 찾아옴
-	public List<Studio> getStudioByAddrAndComId(Studio studio); //addr, comId로 Studio를 찾아옴
+	public List<Studio> getStudioByAddrAndComId(Map map); //addr, comId로 Studio를 찾아옴
 	
 	// 스튜디오 상세조회	
 	public List<Studio> getStudioInfo(int stuId); // Studio DAO에 있는 스튜디오 기본 정보 조회

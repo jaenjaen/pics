@@ -1,7 +1,9 @@
 package com.devils.pics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.Test;
@@ -32,10 +34,10 @@ public class StudioInfoTest {
 	
 	public Studio getSample() {
 		StudioFilter filter = new StudioFilter();
-		filter.setAddress("서울시 광진구");
+		filter.setAddress("서울시 서초구");
 		Studio studio = new Studio();
-		studio.setComId("22@sample.com");
-		studio.setName("pub_name30");
+		studio.setComId("11@sample.com");
+		studio.setName("엔코아스튜디오");
 		studio.setStudioFilter(filter);
 		return studio;
 	}
@@ -62,8 +64,15 @@ public class StudioInfoTest {
 		Studio studio = getSample();
 		List<Studio> result = sqlSession.selectList("StudioInfoMapper.getStudioByNameAndComId", studio);
 		System.out.println("받아온 studio 1 : "+result);
-		result = sqlSession.selectList("StudioInfoMapper.getStudioByAddrAndComId", studio);
+		Map<String, String> map = new HashMap<>();
+		map.put("comId", "11@sample.com");
+		map.put("address", "서울시 서초구");
+		result = sqlSession.selectList("StudioInfoMapper.getStudioByAddrAndComId", map);
 		System.out.println("받아온 studio 2 : "+result);
+		
+		int result2 = sqlSession.insert("StudioInfoMapper.registerStudioInfo", studio);
+		System.out.println(result2);
+		
 	}
 
 	void contextLoads() {

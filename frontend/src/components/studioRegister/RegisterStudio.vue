@@ -603,6 +603,7 @@
           </table>
         </div>
         <div id="submitArea" class="row">
+          <button type="button" id="reset" @click="resetContent()">새로쓰기</button>
           <button type="button" id="temp" @click="tempSave()">임시저장</button>
           <button type="submit" id="register">등록</button>
         </div>

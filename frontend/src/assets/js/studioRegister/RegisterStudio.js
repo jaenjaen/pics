@@ -149,6 +149,7 @@ export default {
         }
     },
     mounted() {
+        /* DB에서 카테고리 가져오기 */
         axios.get('http://127.0.0.1:7777/category')
             .then((response) => {
                 this.category = JSON.parse(JSON.stringify(response.data));
@@ -156,6 +157,36 @@ export default {
             .catch(() => {
                 console.log('카테고리 가져오기 실패');
             })
+
+        /* 임시저장된 내용 불러오기 */
+        if (localStorage.getItem("tempStudio") === null) { //로컬스토리지에 tempStudio 키가 없는 경우
+            return;
+        } else { //로컬스토리지에 tempStudio 키가 존재하는 경우
+            var tempStudio = JSON.parse(localStorage["tempStudio"]);
+            this.studio.categoryId = tempStudio["categoryId"];
+            this.studio.name = tempStudio["name"];
+            this.studio.description = tempStudio["description"];
+            this.studio.rule = tempStudio["rule"];
+            document.getElementById('floor').value = tempStudio["floor"];
+            this.floorUnit = JSON.parse(tempStudio["floorUnit"]);
+            this.sizeInput = tempStudio["size"];
+            this.sizeUnit = JSON.parse(tempStudio["sizeUnit"]);
+            this.option_save = JSON.parse(tempStudio["options"]); //
+            this.studio.studioFilter.unitPrice = tempStudio["unitPrice"];
+            this.studio.studioFilter.excharge = tempStudio["excharge"];
+            this.studio.studioFilter.defaultCapacity = tempStudio["defaultCapacity"];
+            this.studio.studioFilter.maxCapacity = tempStudio["maxCapacity"];
+            this.studio.studioFilter.parking = tempStudio["parking"];
+            this.addressResult.address = tempStudio["address1"]; //
+            this.addressDetail = tempStudio["address2"];
+            this.week.mon = JSON.parse(tempStudio["mon"]); //
+            this.week.tue = JSON.parse(tempStudio["tue"]);
+            this.week.wed = JSON.parse(tempStudio["wed"]);
+            this.week.thu = JSON.parse(tempStudio["thu"]);
+            this.week.fri = JSON.parse(tempStudio["fri"]);
+            this.week.sat = JSON.parse(tempStudio["sat"]);
+            this.week.sun = JSON.parse(tempStudio["sun"]);
+        }
     },
     methods: {
         /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
@@ -817,9 +848,48 @@ export default {
             }
         },
 
+        /* 새로쓰기 */
+        resetContent() {
+            let result = confirm('작성하신 내용을 초기화합니다. 진행하시겠습니까?');
+            if (result) {
+                /* 로컬스토리지에 저장된 값들을 비움 */
+                localStorage.removeItem("tempStudio");
+                alert('스튜디오 등록을 새로 작성해주세요.');
+                location.reload(); //새로고침
+            } else {
+                return;
+            }
+        },
+
         /* 임시저장 */
         tempSave() {
-            alert("임시저장~");
+            alert("작성하신 내용이 임시저장 되었습니다.");
+            let tempStudio = {
+                "categoryId": this.studio.categoryId,
+                "name": this.studio.name,
+                "description": this.studio.description,
+                "rule": this.studio.rule,
+                "floor": document.getElementById('floor').value,
+                "floorUnit": this.floorUnit,
+                "size": this.sizeInput,
+                "sizeUnit": this.sizeUnit,
+                "options": JSON.stringify(this.option_save),
+                "unitPrice": this.studio.studioFilter.unitPrice,
+                "excharge": this.studio.studioFilter.excharge,
+                "defaultCapacity": this.studio.studioFilter.defaultCapacity,
+                "maxCapacity": this.studio.studioFilter.maxCapacity,
+                "parking": this.studio.studioFilter.parking,
+                "address1": this.addressResult.address,
+                "address2": this.addressDetail,
+                "mon": JSON.stringify(this.week.mon),
+                "tue": JSON.stringify(this.week.tue),
+                "wed": JSON.stringify(this.week.wed),
+                "thu": JSON.stringify(this.week.thu),
+                "fri": JSON.stringify(this.week.fri),
+                "sat": JSON.stringify(this.week.sat),
+                "sun": JSON.stringify(this.week.sun)
+            };
+            localStorage["tempStudio"] = JSON.stringify(tempStudio);
         },
 
         /* 스튜디오 등록 전 로그인 체크 */

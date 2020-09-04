@@ -36,10 +36,30 @@
 		<result property="totalPeople" column="total_people"/>
 	</resultMap>
 	
-	<sql id="select-All-Reservation">
-		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
-		FROM reservation
-	</sql>
+	<resultMap type="reservation" id="resv-stuRM">
+		<result property="resId" column="res_id"/>
+		<result property="stuId" column="stu_id"/>
+		<result property="custId" column="cust_id"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="resDate" column="res_date"/>
+		<result property="totalPeople" column="total_people"/>
+		
+		<association property="studio" javaType="studio">
+			<result property="comId" column="com_id"/>
+			<result property="categoryId" column="category_id"/>
+			<result property="name" column="name"/>
+			<result property="description" column="description"/>
+			<result property="rule" column="rule"/>
+			<result property="mainImg" column="main_img"/>
+			<result property="portImg" column="port_img"/>
+			<result property="cadImg" column="cad_img"/>
+			<result property="floor" column="floor"/>
+			
+		</association>
+	</resultMap>
+
 	
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
   	<select id="getExceptionDate" parameterType="int" resultType="exceptionDate">							
@@ -55,7 +75,8 @@
 	</select>
 
 	<select id="getReservation" parameterType="reservation" resultType="reservation">							
-		<include refid="select-All-Reservation"></include>
+		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
+		FROM reservation
 		<where>
  			<choose>
 			<!-- 필수적인 예약 요소들이 다 있는지 >> 동일한 예약 있는지 조회-->
@@ -140,15 +161,21 @@
 		 1. 오늘 이전 날짜 예약
 		 2. 오늘 이후 날짜 예약 -->
 		 
-	<select id="getExpiredReservation" parameterType="int" resultType="reservation">
-		<include refid="select-All-Reservation"></include>
+	<select id="getExpiredReservation" parameterType="int" resultMap="resv-stuRM">
+		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
+				,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		FROM reservation r,studio s
 		where cust_id = #{value}
 		and start_date &lt; now()
+		and s.stu_id =r.stu_id;
 	 </select>
 	 
-	 <select id="getWillReservation" parameterType="int" resultType="reservation">
-	 	<include refid="select-All-Reservation"></include>
+	 <select id="getWillReservation" parameterType="int" resultMap="resv-stuRM">
+	 	SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
+				,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		FROM reservation r,studio s
 		where cust_id = #{value}
 		and start_date &gt;= now()
+		and s.stu_id =r.stu_id;
 	 </select>
  </mapper> 

@@ -1,7 +1,9 @@
 package com.devils.pics.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -65,9 +67,13 @@ public class StudioRegisterController {
 
 				String comId = studio.getComId();
 				System.out.println("comId : " + comId);
+				
 				/* 이미 존재하는 studio인지 검사 
 				 * comId, name이 같거나 comId, address가 같은 스튜디오이면 등록 방지 */
-				boolean isExist = studioInfoService.isExistStudio(studio);
+				Map map = new HashMap<>();
+				map.put("comId", comId);
+				map.put("address", studioFilter.getAddress());
+				boolean isExist = studioInfoService.isExistStudio(studio, map);
 				System.out.println("이미 존재하는 스튜디오입니까? "+isExist);
 				if(isExist == true) { //이미 존재하는 스튜디오일 경우
 					return new ResponseEntity(-1, HttpStatus.OK);
@@ -105,7 +111,7 @@ public class StudioRegisterController {
 				}
 
 			}catch(RuntimeException e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 			return new ResponseEntity(1, HttpStatus.OK);
 		}

@@ -1,3 +1,4 @@
+
 <template>
   <div class="container" id="reserveStudio">
     <aside v-for="(studio, index) in studios" v-bind:key="index">
@@ -13,20 +14,15 @@
                 <span class="start-date">
                   <md-datepicker 
                   v-model="start_date"
-                  :md-model-type="String"
-                  :md-immediately="true"
-                  :disable-passed-days="true"
+                  format="YYYY-MM-DD"
                   ></md-datepicker>
                 </span>
-                
                 <br />
                 <strong>예약 종료일</strong>
                 <span class="end-date">
                   <md-datepicker 
-                  v-model="end_date"
-                  :md-model-type="String"
-                  :md-immediately="true"
-                  :disable-passed-days="true"
+                  v-model="end_date" 
+                 format="YYYY-MM-DD"
                   ></md-datepicker>
                 </span>
               </div>
@@ -34,41 +30,41 @@
             </div>
             <br />
             <!-- 시간 -->
-            <md-field class="time-input-field">
-              <div class="start-time">
-                <label for="end-time">예약 시작 시간</label>
+            <div class="md-layout-item">
+            <div class="time-input-field">
+              <md-field class="start-time">
+                <label for="time">예약 시작 시간</label>
                   <md-select
                     id="start_time"
                     v-model="start_time"
                     required
-                    >
+                    style="width:45%">
                   <md-option
                     required="required"
                     v-for="(time,index) in times"
-                    v-bind:key="index"
-                    :value="time"
-                    >
-                    {{time}}</md-option>
+                    v-bind:key="index">
+                    {{times[parseInt(time)-1]}}</md-option>
                   </md-select>
-              </div>
-            </md-field>
-            <md-field class="time-input-field">
-              <div class="end-time">
-                <label for="end-time">예약 종료 시간</label>
-                <md-select id="end_time" 
-                  v-model="end_time" 
-                  required
-                  >
-                    <md-option
-                      required="required"
-                      v-for="(time,index) in times"
-                      v-bind:key="index"
-                      :value="time"
-                      >{{time}}</md-option>
+              </md-field>
+            
+                  <br/>
+                  <span id="checkSchedule">{{ checkSchedule }}</span>
+                  <br />
+              <md-field class="end-time">
+                <label for="time">예약 종료 시간</label>
+                  <md-select id="end_time" 
+                    v-model="end_time" 
+                    required
+                    style="width:45%">
+                      <md-option
+                        required="required"
+                        v-for="(time,index) in times"
+                        v-bind:key="index"
+                        >{{times[parseInt(time)-1]}}</md-option>
                   </md-select>
-              </div>
-            </md-field>
-          <span id="checkSchedule">{{ checkSchedule }}</span>
+              </md-field>
+            </div>
+          </div>
           <br />
           <br />
           <!-- 인원 -->
@@ -109,15 +105,15 @@
         </div> 
         <hr width="90%" color="lightgray">
           <!-- 요금 계산 -->
-          <div class="pricing-field" >
-           
-            <table align="center"  v-for="(studio, index) in studios" v-bind:key="index">
+          <div class="pricing-field">
+            <hr/>
+            <table align="center" v-for="(studio, index) in studios" v-bind:key="index">
               <tr align="right">
                 <td id="unitPrice">시간 당 비용 :</td>
-                <td>{{ studio.studioFilter.unitPrice | currency }} 원</td>
+                <td>{{ studio.studioFilter.unitprice | currency }} 원</td>
                 <td></td>
               </tr>
-              <tr align="right" >
+              <tr align="right">
                 <td id="unitPrice">인원 추가 비용 :</td>
                 <td>{{ studio.studioFilter.excharge | currency }} 원</td>
                 <td></td>
@@ -125,7 +121,9 @@
               <tr align="right">
                 <td id="totalPrice">총금액 :</td>
                 <td>
-                    <!-- {{ totalPriceCalculate | currency }} 원 -->
+                  <span id="total_price"
+                    >{{ totalPriceCalculate | currency }} 원</span
+                  >
                 </td>
               </tr>
             </table>
@@ -150,23 +148,25 @@
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
+      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+        <div id="regBook">
+          <p>찜 목록에 등록했습니다</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
       <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
         <div id="login-required">
-          <p>로그인 먼저 진행해 주세요</p>
+          <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
     </div>
   </div>
  </template>
-
 <script scoped src="@/assets/js/studioInfo/Reservation.js"></script>
-<!-- <style scoped  src='vue-material/dist/vue-material.min.css'></style>
-<style scoped  src='vue-material/dist/theme/default.css'></style> -->
-
+<style scoped src='vue-material/dist/vue-material.min.css'></style>
+<style scoped src='vue-material/dist/theme/default.css'></style>
 <style scoped>
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
-
 .container {
   width: 100%;
 }

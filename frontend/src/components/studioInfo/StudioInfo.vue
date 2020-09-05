@@ -129,21 +129,22 @@
         <hr />
         <!-- ============== Chart & Graph ============== -->
         <div class="article-Chart-area" border="2">
-          <div style="width:30%;heigth:20%">
+          <div style="width:500px;heigth:500px">
            <!--   도넛 그래프 -->
 					 <div id="canvas-holder" style="width:100%">
 						<div class="chartjs-size-monitor">
 							<div class="chartjs-size-monitor-expand">
-								<div class="785"></div>
+								<div class=""></div>
 							</div>
 							<div class="chartjs-size-monitor-shrink">
 								<div class=""></div>
 							</div>
 						</div>
-                <Doughnut
-                  :chartdata="datacollection"
-                  :options="options"></Doughnut>
-      			</div> 
+              <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
+                <chart-gender :chart-data="datacollection" :options="options"></chart-gender>
+                <!-- <button @click="fillData()">Set Chart</button> -->
+              </canvas>
+					</div> 
           </div> 
         </div>
         		
@@ -309,9 +310,8 @@
 
 
 <script src="@/assets/js/studioInfo/StudioInfo.js"></script>
-
-<!-- <style scoped  src='vue-material/dist/vue-material.min.css'></style>
-<style scoped  src='vue-material/dist/theme/default.css'></style> -->
+<style scoped src='vue-material/dist/vue-material.min.css'></style>
+<style scoped src='vue-material/dist/theme/default.css'></style>
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 @media screen and (max-width: 768px) {

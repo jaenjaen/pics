@@ -1,11 +1,9 @@
 import axios from "axios";
-import Vue from "vue";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
-import { ToggleButton } from 'vue-js-toggle-button' //https://www.npmjs.com/package/vue-js-toggle-button
 import { VueDaumPostcode } from "vue-daum-postcode";
 
-Vue.component('ToggleButton', ToggleButton)
+
 
 export default {
     components: { vueMultiSelect, VueDaumPostcode },
@@ -23,7 +21,7 @@ export default {
                 cadImg: "",
                 floor: "",
                 studioFilter: {
-                    size: "",
+                    size: "", //제곱미터일 때의 값만 들어감
                     options: null,
                     parking: "",
                     unitPrice: "",
@@ -89,7 +87,8 @@ export default {
             floorNum: '', //층수 절대값
 
             /* 면적 */
-            sizeUnit: true,
+            sizeUnit: false,
+            sizeValue: '', //제곱미터 또는 평일 때 면적 값
 
             /* 운영시간 */
             week: {
@@ -195,15 +194,16 @@ export default {
             this.sizeUnit = JSON.parse(tempStudio["sizeUnit"]);
             if (this.floorUnit) { //지하
                 document.getElementById('underground').checked = true;
+            } else { //지상
+                document.getElementById('underground').checked = false;
             }
             this.floorNum = tempStudio["floor"];
-            if (this.sizeUnit) { //제곱미터
-                document.getElementById('size').value = Number(tempStudio["size"]);
-                this.sizeUnit = false;
+            if (this.sizeUnit) { //평
+                document.getElementById('pyoung').checked = true;
             } else { //평
-                document.getElementById('size').value = (Number(tempStudio["size"]) * 3.305785).toFixed(2);
-                this.sizeUnit = true;
+                document.getElementById('pyoung').checked = false;
             }
+            this.sizeValue = tempStudio["size"];
 
             /* 주소 바인딩 후 화면에 표시
             주소 API를 통해 첫째 주소를 입력했을 경우 상세 주소를 보이게 함  */
@@ -435,19 +435,13 @@ export default {
 
         /* 면적 - 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
         changeSizeUnit() {
-            let size = document.getElementById('size').value;
-            if (this.sizeUnit) { //제곱미터->평
-                this.sizeUnit = false;
-                if (size != "") {
-                    document.getElementById('size').value = (size * 0.3025).toFixed(2);
-                    this.studio.studioFilter.size = size;
-                }
-            } else if (!this.sizeUnit) { //평->제곱미터
+            let pyoung = document.getElementById('pyoung');
+            if (pyoung.checked) {
                 this.sizeUnit = true;
-                if (size != "") {
-                    this.studio.studioFilter.size = (size * 3.305785).toFixed(2);
-                    document.getElementById('size').value = this.studio.studioFilter.size;
-                }
+                this.sizeValue = (this.sizeValue * 0.3025).toFixed(2);
+            } else {
+                this.sizeUnit = false;
+                this.sizeValue = (this.sizeValue * 3.305785).toFixed(2);
             }
         },
 
@@ -1273,11 +1267,12 @@ export default {
             }
 
             /* 면적 단위 토글 버튼 상태에 맞춰 데이터 바인딩 */
-            if (this.sizeUnit == true) { //제곱미터
+            if (!this.sizeUnit) { //제곱미터
                 this.studio.studioFilter.size = size;
-            } else if (this.sizeUnit == false) { //평
+            } else { //평
                 this.studio.studioFilter.size = (size * 3.305785).toFixed(2);
             }
+
 
             /* 운영 시간 입력 필수 */
             if (this.studio.schedule.repeatDate.length < 1) {

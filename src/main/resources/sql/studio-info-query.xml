@@ -30,7 +30,7 @@
 		<association property="company" javaType="company">
 			<id property="comId" column="com_id" />
 				<result property="comId" column="com_id"/>
-				<result property="name" column="name"/>
+				<result property="name" column="comName"/>
 				<result property="address" column="address"/>
 				<result property="password" column="password"/>
 				<result property="tel" column="tel" />
@@ -83,7 +83,7 @@
 		SELECT 					
 		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor,
 		ctg.category_id,ctg.category_name,
-		com.name,com.logo_img,
+		com.name comName,com.logo_img,
 		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity
   		FROM studio s
 		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id

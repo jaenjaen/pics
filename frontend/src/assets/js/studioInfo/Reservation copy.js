@@ -1,8 +1,8 @@
 import axios from "axios";
 import Vue from 'vue';
 import VueMaterial from 'vue-material';
-// import 'vue-material/dist/vue-material.min.css';
-// import 'vue-material/dist/theme/default.css';
+import 'vue-material/dist/vue-material.min.css';
+import 'vue-material/dist/theme/default.css';
 
 Vue.use(VueMaterial)
 
@@ -17,10 +17,10 @@ export default {
     //         default: ''
     //     }
     // },
-    props: ["studios"],
     data() {
         return {
             // 기존 정보 변수 (GET)
+            studios: [{}],
             schedule: {},
             customer: {},
             stuId: 10,
@@ -69,6 +69,17 @@ export default {
         };
     },
     mounted() {
+
+        axios
+            .get("http://127.0.0.1:7777/studio/info/10") // + this.stuId)
+            .then(response => {
+                this.studios = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+                this.errored = true;
+            })
+            .finally(() => (this.loading = false));
         axios
             .get("http://127.0.0.1:7777/studio/schedule/10") //+ this.stuId)
             .then(response => {

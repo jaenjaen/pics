@@ -119,7 +119,7 @@ export default {
         getImgUrl(url) {
             return require("@/assets/img/studio/" + url);
         },
-        // 찜 추가/제거
+        // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거
         async setBookMark(index, stuId, $event) {
             try {
                 this.doBookMark = false;

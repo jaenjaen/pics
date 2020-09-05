@@ -141,7 +141,7 @@
 							</div>
 						</div>
               <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
-                <!-- <chart-gender :chart-data="datacollection" :options="studios[0].studioFilters.options"></chart-gender> -->
+                <chart-gender :chart-data="datacollection" :options="options"></chart-gender>
                 <!-- <button @click="fillData()">Set Chart</button> -->
               </canvas>
 					</div> 
@@ -310,9 +310,6 @@
 
 
 <script src="@/assets/js/studioInfo/StudioInfo.js"></script>
-
-<style scoped src ="vue-material/dist/vue-material.min.css"></style>
-<style scoped src ="vue-material/dist/theme/default.css"></style>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");

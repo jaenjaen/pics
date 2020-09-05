@@ -3,10 +3,10 @@ import Vue from 'vue'
 import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
 import VModal from 'vue-js-modal'
-// import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/vue-material.min.css'
 import VueMaterial from 'vue-material'
-// import 'vue-material/dist/vue-material.min.css'
-// import 'vue-material/dist/theme/default.css'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
 
 import Reservation from "@/components/studioInfo/Reservation.vue"
 // import Doughnut from "@/assets/js/studioInfo/GenderChart.js"
@@ -30,7 +30,7 @@ export default {
         return {
             // studio 관련 변수 (GET)
             customer: {},
-            studios: [{
+            studios: {
                 categoryId: 0,
                 name: "",
                 description: "",
@@ -54,7 +54,7 @@ export default {
                     name: "",
                     address: ""
                 }
-            }],
+            },
             tags: [{
                 tagId: 0,
                 tagName: ""

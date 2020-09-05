@@ -32,15 +32,22 @@ public class StudioInfoTest {
 	@Autowired
 	private StudioInfoService service;
 	
-	public Studio getSample() {
-		StudioFilter filter = new StudioFilter();
-		filter.setAddress("서울시 서초구");
-		Studio studio = new Studio();
-		studio.setComId("11@sample.com");
-		studio.setName("엔코아스튜디오");
-		studio.setStudioFilter(filter);
-		return studio;
+	@Test
+	public void getStudioInfo() {
+		String NS = "StudioInfoMapper.";
+		Studio std = sqlSession.selectOne(NS+"getStudioInfo",10);
+		System.out.println(std);
 	}
+	
+//	public Studio getSample() {
+//		StudioFilter filter = new StudioFilter();
+//		filter.setAddress("서울시 서초구");
+//		Studio studio = new Studio();
+//		studio.setComId("11@sample.com");
+//		studio.setName("엔코아스튜디오");
+//		studio.setStudioFilter(filter);
+//		return studio;
+//	}
 	
 	/* Studio 등록 - 단위 테스트 성공 */
 //	@Test
@@ -59,24 +66,24 @@ public class StudioInfoTest {
 //	}
 	
 	/* Studio로 동일한 Studio 찾아오기 */
-	@Test
-	public void getStudio() {
-		Studio studio = getSample();
-		List<Studio> result = sqlSession.selectList("StudioInfoMapper.getStudioByNameAndComId", studio);
-		System.out.println("받아온 studio 1 : "+result);
-		Map<String, String> map = new HashMap<>();
-		map.put("comId", "11@sample.com");
-		map.put("address", "서울시 서초구");
-		result = sqlSession.selectList("StudioInfoMapper.getStudioByAddrAndComId", map);
-		System.out.println("받아온 studio 2 : "+result);
-		
-		int result2 = sqlSession.insert("StudioInfoMapper.registerStudioInfo", studio);
-		System.out.println(result2);
-		
-	}
+//	@Test
+//	public void getStudio() {
+//		Studio studio = getSample();
+//		List<Studio> result = sqlSession.selectList("StudioInfoMapper.getStudioByNameAndComId", studio);
+//		System.out.println("받아온 studio 1 : "+result);
+//		Map<String, String> map = new HashMap<>();
+//		map.put("comId", "11@sample.com");
+//		map.put("address", "서울시 서초구");
+//		result = sqlSession.selectList("StudioInfoMapper.getStudioByAddrAndComId", map);
+//		System.out.println("받아온 studio 2 : "+result);
+//		
+//		int result2 = sqlSession.insert("StudioInfoMapper.registerStudioInfo", studio);
+//		System.out.println(result2);
+//		
+//	}
 
-	void contextLoads() {
-		String NS = "StudioInfoMapper.";
+//	void contextLoads() {
+//		String NS = "StudioInfoMapper.";
 //		System.out.println("====================getStudioInfo====================");
 //		try {
 //		List<Studio> studioVO=sqlSession.selectList(NS+"getStudioInfo",1);
@@ -146,5 +153,7 @@ public class StudioInfoTest {
 //			if(customerList.get(i).getGender()=='F') count++;
 //		}	
 //		System.out.println(count+"|"+customerList.size());
-	}
+//	}
+	
+	
 }

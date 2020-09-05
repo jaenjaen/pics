@@ -44,11 +44,11 @@
           <div>
           <!-- 찜하기, 공유하기, 누적 이용자 수 -->
           <span>
-          <button class="bookmark-btn" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-            <img src="@/assets/img/util/fullheart.svg" v-if="bookmarkCheck>0" />
-            <img src="@/assets/img/util/heart.svg" v-if="bookmarkCheck==0"/>
-          </button>
-          </span>          
+            <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
+              <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
+              <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
+            </span>
+            </span>          
           <span>
           <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
             <i class="material-icons">share</i>
@@ -58,7 +58,7 @@
   
             <!-- 누적 이용자 수 -->
             <span>
-            {{this.accCustomer}}명
+            누적사용자 수 : {{this.accCustomer}}명
             </span>
           </div>        
         </section>
@@ -314,6 +314,7 @@
 
 <script src="@/assets/js/studioInfo/StudioInfo.js"></script>
 
+<style scoped src="material-design-icons/iconfont/material-icons.css"></style> 
 <style scoped src ="vue-material/dist/vue-material.min.css"></style>
 <style scoped src ="vue-material/dist/theme/default.css"></style>
 

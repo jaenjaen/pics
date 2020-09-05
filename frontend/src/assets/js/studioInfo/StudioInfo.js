@@ -59,7 +59,7 @@ export default {
                 tagId: 0,
                 tagName: ""
             }],
-            bookmarkCheck: 0, //북마크 id값 받은 변수
+            isBooked: false, //북마크 id값 받았는지 나타내는 변수
             reviews: [{}],
             accCustomer: 0,
 
@@ -147,16 +147,17 @@ export default {
         console.log("this.reviews[0].reviewId : " + this.reviews[0].reviewId);
         if (this.customer != undefined) {
             axios
-                .get("http://127.0.0.1:7777/studio/getBookmark/" + this.customer.custId + "/" + this.stuId)
-                .then(response => (this.bookmarkCheck = response.data))
+                .get("http://127.0.0.1:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
+                .then(response => {
+                    this.isBooked = Number(response.data.bookId);
+                })
                 .catch(error => {
                     console.log(error);
                     this.errored = true;
                 })
                 .finally(() => (this.loading = false));
-            console.log("this.bookmarkCheck : " + this.bookmarkCheck);
+            console.log("this.isBooked : " + this.isBooked);
         }
-
         console.log("ccc");
         axios
             .get("http://127.0.0.1:7777/studio/genderRatio/10")
@@ -229,22 +230,18 @@ export default {
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },
-        bookmarkChange() {
-            if (this.customer != undefined) {
-                if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
-                    axios
-                        .delete("http://127.0.0.1:7777/bookmark/" + this.bookmarkCheck)
-                        .then(() => {
-                            this.bookmarkCheck = 0;
-                            this.$modal.show("delBook");
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            this.errored = true;
-                        })
-                        .finally(() => (this.loading = false));
-                } else { //찜한적 없다면 찜 목록 등록
-                    let bookmark = {
+        // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거
+        async setBookMark() {
+            try {
+                const bookmark = await axios.get("http://127.0.0.1:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
+                if (bookmark.data) { //찜목록에 있다면
+                    await axios.delete("http://127.0.0.1:7777/bookmark/" + bookmark.data.bookId);
+                    // alert(deleteStatus.data); // 에러 페이지용
+                    this.$modal.show("delBook");
+                    this.isBooked = false;
+                    $event.target.src = require("@/assets/img/util/heart.svg")
+                } else { // 찜목록에 없다면
+                    let regBookmark = {
                         studio: {
                             stuId: this.stuId
                         },
@@ -252,19 +249,14 @@ export default {
                             custId: this.customer.custId
                         }
                     };
-                    axios
-                        .post("http://127.0.0.1:7777/bookmark/", bookmark)
-                        .then(() => {
-                            this.$modal.show("regBook");
-                        })
-                        .catch(error => {
-                            console.log(error);
-                            this.errored = true;
-                        })
-                        .finally(() => (this.loading = false));
+                    await axios.post("http://127.0.0.1:7777/bookmark", regBookmark);
+                    // alert(insertStatus.data); // 에러 페이지용
+                    this.$modal.show("regBook");
+                    this.isBooked = true;
+                    $event.target.src = require("@/assets/img/util/fullheart.svg");
                 }
-            } else {
-                this.$modal.show("login-required");
+            } catch (error) {
+                console.error(error);
             }
         },
         isEmpty(value) {

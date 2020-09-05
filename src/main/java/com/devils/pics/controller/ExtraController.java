@@ -53,6 +53,7 @@ public class ExtraController {
 	@GetMapping("/bookmark/custId/{custId}/stuId/{stuId}")
 	public ResponseEntity getBookmark(@PathVariable int custId, @PathVariable int stuId) {
 		try {
+			System.out.println(custId+", "+stuId);
 			HashMap<String, Integer> ids = new HashMap<String, Integer>();
 			ids.put("custId", custId);
 			ids.put("stuId", stuId);

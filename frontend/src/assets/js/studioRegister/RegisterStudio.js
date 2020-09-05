@@ -35,50 +35,20 @@ export default {
                 tag: []
             },
 
+            /* 이미지 경로 */
+            mainRoute: 'http://localhost:7777/upload/main/',
+            cadRoute: 'http://localhost:7777/upload/cad/',
+            portRoute: 'http://localhost:7777/upload/port/',
+
             /* 디폴트 이미지 */
-            required: require('@/assets/img/upload/required.png'),
-            preview: require('@/assets/img/upload/preview.png'),
-            port: require('@/assets/img/upload/port.png'),
+            required: 'http://localhost:7777/upload/default/required.png',
+            preview: 'http://localhost:7777/upload/default/preview.png',
+            port: 'http://localhost:7777/upload/default/port.png',
 
             /* 카테고리 */
             category: [],
 
-            /* 주소 API */
-            addressResult: {
-                postcode: "",
-                postcode1: "",
-                postcode2: "",
-                postcodeSeq: "",
-                zonecode: "",
-                address: "",
-                addressEnglish: "",
-                addressType: "",
-                bcode: "",
-                bname: "",
-                bname1: "",
-                bname2: "",
-                sido: "",
-                sigungu: "",
-                sigunguCode: "",
-                userLanguageType: "",
-                query: "",
-                buildingName: "",
-                buildingCode: "",
-                apartment: "",
-                jibunAddress: "",
-                jibunAddressEnglish: "",
-                roadAddress: "",
-                roadAddressEnglish: "",
-                autoRoadAddress: "",
-                autoRoadAddressEnglish: "",
-                autoJibunAddress: "",
-                autoJibunAddressEnglish: "",
-                userSelectedType: "",
-                noSelected: "",
-                hname: "",
-                roadnameCode: "",
-                roadname: ""
-            },
+            /* 주소 */
             address1: "",
             address2: "",
 

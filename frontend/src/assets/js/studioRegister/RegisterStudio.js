@@ -42,7 +42,8 @@ export default {
 
             /* 디폴트 이미지 */
             required: 'http://localhost:7777/upload/default/required.png',
-            preview: 'http://localhost:7777/upload/default/preview.png',
+            main: 'http://localhost:7777/upload/default/main.png',
+            cad: 'http://localhost:7777/upload/default/cad.png',
             port: 'http://localhost:7777/upload/default/port.png',
 
             /* 카테고리 */
@@ -356,8 +357,10 @@ export default {
 
             /* 파일 업로드 디폴트 이미지로 바꿈 */
             var thisImgId = document.getElementById(imgId);
-            if (img === 'preview') {
-                thisImgId.setAttribute("src", this.preview);
+            if (img === 'main') {
+                thisImgId.setAttribute("src", this.main);
+            } else if (img === 'cad') {
+                thisImgId.setAttribute("src", this.cad);
             } else if (img === 'port') {
                 thisImgId.setAttribute("src", this.port);
             }

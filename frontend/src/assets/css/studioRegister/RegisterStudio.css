@@ -305,13 +305,8 @@
         }
         
         button#closeAddr,
-        #addressAPI,
         input[name='address2'] {
             display: none;
-        }
-        
-        #addressAPI {
-            height: 100%;
         }
         /* 층수, 시간당 대여료, 인원 추가시 1인당 대여료, 
         기본 인원, 최대 인원, 주차 가능 대수의 단위를 input 안에 넣음 */
@@ -543,6 +538,7 @@
             float: right;
             font-size: 28px;
             font-weight: bold;
+            margin-bottom: 30px;
         }
         
         .close:hover,
@@ -585,6 +581,43 @@
             /* 업로드 삭제 버튼 글씨 크기 조정 */
             .uploadResetBtn {
                 font-size: 10px;
+            }
+            /* 반응형 : 너비 500px 이하 */
+            @media screen and (max-width: 500px) {
+                /* 모달 너비 조정 */
+                .modal {
+                    padding-top: 50px;
+                    padding-bottom: 30px;
+                }
+                .modal-content {
+                    width: 100%
+                }
+                .modal-addr-content {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                }
+                .container {
+                    padding-bottom: 20%;
+                }
+            }
+        }
+        /* 반응형 : 너비 500px 이하 */
+        
+        @media screen and (max-width: 500px) {
+            /* 모달 너비 조정 */
+            .modal {
+                padding-top: 50px;
+                padding-bottom: 30px;
+            }
+            .modal-content {
+                width: 100%
+            }
+            .modal-addr-content {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .container {
+                padding-bottom: 20%;
             }
         }
         /* 반응형 : 너비 320px 이하 */

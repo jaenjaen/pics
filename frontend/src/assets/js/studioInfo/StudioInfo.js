@@ -239,7 +239,7 @@ export default {
                     // alert(deleteStatus.data); // 에러 페이지용
                     this.$modal.show("delBook");
                     this.isBooked = false;
-                    $event.target.src = require("@/assets/img/util/heart.svg")
+                    //$event.target.src = require("@/assets/img/util/heart.svg")
                 } else { // 찜목록에 없다면
                     let regBookmark = {
                         studio: {
@@ -253,7 +253,7 @@ export default {
                     // alert(insertStatus.data); // 에러 페이지용
                     this.$modal.show("regBook");
                     this.isBooked = true;
-                    $event.target.src = require("@/assets/img/util/fullheart.svg");
+                    //$event.target.src = require("@/assets/img/util/fullheart.svg");
                 }
             } catch (error) {
                 console.error(error);

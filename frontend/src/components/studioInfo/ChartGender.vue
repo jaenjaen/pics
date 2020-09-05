@@ -86,7 +86,8 @@ export default {
         }
       }
       this.$set(this.datacollection.datasets[0].data,0,this.female);
-      this.$set(this.datacollection.datasets[0].data,1,this.total);      },
+      this.$set(this.datacollection.datasets[0].data,1,this.total);      }
+      ,
     }
 }
     // },
@@ -136,7 +137,7 @@ export default {
 
 </script>
 <style scoped>
-.col-md-4{
+/* .col-md-4{
   width:33%;
-}
+} */
 </style>

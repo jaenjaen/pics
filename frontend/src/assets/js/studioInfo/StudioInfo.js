@@ -24,7 +24,7 @@ export default {
         stuId: {
             type: String,
             default: ''
-        }
+        },
     },
     data: function() {
         return {
@@ -72,30 +72,30 @@ export default {
             portImgList: [],
 
             // Chart & Graph 변수
-            female: 2,
-            total: 1,
-            datacollection: {
-                labels: ['Female', 'Male'],
-                datasets: [{
-                    label: "Gender Ratio",
-                    backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
-                    data: [0, 0]
-                }]
-            },
-            options: {
-                responsive: true,
-                legend: {
-                    position: "top"
-                },
-                title: {
-                    display: true,
-                    text: "Gender Ratio"
-                },
-                animation: {
-                    animateScale: true
-                }
-                // }
-            }
+            // female: 2,
+            // total: 1,
+            // datacollection: {
+            //     labels: ['Female', 'Male'],
+            //     datasets: [{
+            //         label: "Gender Ratio",
+            //         backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
+            //         data: [0, 0]
+            //     }]
+            // },
+            // options: {
+            //     responsive: true,
+            //     legend: {
+            //         position: "top"
+            //     },
+            //     title: {
+            //         display: true,
+            //         text: "Gender Ratio"
+            //     },
+            //     animation: {
+            //         animateScale: true
+            //     }
+            //     // }
+            // }
         };
     },
 

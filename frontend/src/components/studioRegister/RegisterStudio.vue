@@ -35,7 +35,7 @@
             <div style="color:#ccc;"><span name="changeArea">0</span><b>/500</b></div>
           </div>
           <div class="col-75">
-            <textarea id="description" name="countLength" v-model="studio.description" @keyup="checkLength()"></textarea>
+            <textarea id="description" name="countLength" v-model="studio.description" @keyup="checkLength(event)"></textarea>
           </div>
         </div>
         <div class="row">

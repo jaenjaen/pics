@@ -18,9 +18,9 @@
         
         #searchBorder {
             width: 90%;
-            padding: 1.3em 0.2em 1.1em 0.2em;
+            padding: 1.3em 0.25em 1.163em 0.22em;
             border: 1px solid #33a3dc;
-            border-radius: 1.2em;
+            border-radius: 1.47em;
             background: linear-gradient(45deg, #33a3dc, #034ea2);
         }
         
@@ -30,7 +30,7 @@
             height: 3.2em;
             padding-left: 2em;
             background-color: white !important;
-            border-radius: 1em;
+            border-radius: 1.25em;
             cursor: pointer;
         }
         

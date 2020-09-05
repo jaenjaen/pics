@@ -1,9 +1,12 @@
 <template>
   <div class="container" id="chart-gender">
-    <Doughnut
-      :chartdata="datacollection"
-      :options="options"></Doughnut>
-      <button @click="fillData()">Set Chart</button>
+    <div class="col-md-4">
+      <Doughnut
+        style="height:auto; width:auto;"
+        :chartdata="datacollection"
+        :options="options"></Doughnut>
+
+    </div>
   </div>
 </template>
 
@@ -43,32 +46,47 @@ export default {
      }
   }),
     mounted() {
-        console.log("ccc");
-        axios
-        .get("http://127.0.0.1:7777/studio/genderRatio/10")
-        .then(response => {
-          this.customers = response.data;
-          var customer = this.customers;
-          this.total = customer.length;
-          // var female=0;
-          for (var i = 0; i < this.total; i++) {
-          if (this.customers[i].gender == "F") {
-            //여자 수만큼 세기
-            this.female+=1;
-          }
+        console.log("aaa");
+    axios
+      .get("http://127.0.0.1:7777/studio/genderRatio/10")
+      .then(response => {
+        this.customers = response.data;
+        var customer = this.customers;
+        this.total = customer.length;
+        // var female=0;
+        for (var i = 0; i < this.total; i++) {
+        if (this.customers[i].gender == "F") {
+          //여자 수만큼 세기
+          this.female+=1;
         }
-      })
+      }
         this.fillData();
+        
+        this.renderChart(this.datacollection, this.options);
+        console.log("bbb");
+      })
+      .catch(error => {
+        console.log(error);
+        this.errored = true;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     },
     methods:{
       fillData(){
-        console.log(this.female,this.total);
-        this.$set(this.datacollection.datasets[0].data,0,this.female);
-        this.$set(this.datacollection.datasets[0].data,1,this.total);
-        // this.datacollection.datasets[0].data=this.female;
-        // this.datacollection.datasets[1].data=this.total
-        console.log(this.datacollection.datasets[0].data+": Last");
-      },
+       console.log("ccc");
+      var customer = this.customers;
+      this.total =customer.length;
+      this.female=0;
+      for (var i = 0; i < this.total; i++) {
+        if (this.customers[i].gender == "F") {
+        //여자 수만큼 세기
+          this.female++;
+        }
+      }
+      this.$set(this.datacollection.datasets[0].data,0,this.female);
+      this.$set(this.datacollection.datasets[0].data,1,this.total);      },
     }
 }
     // },
@@ -117,3 +135,8 @@ export default {
   // }
 
 </script>
+<style scoped>
+.col-md-4{
+  width:33%;
+}
+</style>

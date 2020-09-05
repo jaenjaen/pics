@@ -6,7 +6,7 @@ export default {
             datacollection: {
                 labels: ['Female', 'Male'],
                 datasets: [{
-                    label: "Age Ratio",
+                    label: "Gender Ratio",
                     backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
                     data: [10, 1]
                 }]

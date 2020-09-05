@@ -78,7 +78,9 @@
             margin: 0 auto;
             border-radius: 5px;
             background-color: white;
-            padding: 20px;
+            padding-left: 5%;
+            padding-right: 5%;
+            padding-bottom: 50px;
         }
         
         .col-25 {

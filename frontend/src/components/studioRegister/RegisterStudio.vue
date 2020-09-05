@@ -44,7 +44,7 @@
             <div style="color:#ccc;"><span name="changeArea">0</span><b>/400</b></div>
           </div>
           <div class="col-75">
-            <textarea id="rule" name="countLength" v-model="studio.rule" @keyup="checkLength()"></textarea>
+            <textarea id="rule" name="countLength" v-model="studio.rule" @keyup="checkLength(event)"></textarea>
           </div>
         </div>
         <div class="row">
@@ -134,31 +134,27 @@
               <img :src="required" width="20px">
             </label>
           </div>
-          <div class="col-75">
+          <div class="col-75" style="margin-top:10px;margin-bottom:7px;">
             <!-- 주소 처리 -->
-            <input type="text" id="address1" name="address1" :value="addressResult.address" disabled />
-            <button type="button" id="searchAddr" @click="controlAddress('showAddress')">찾기</button>
-            <button type="button" id="closeAddr" @click="controlAddress('hideAddress')">닫기</button>
-            <p>
-              <vue-daum-postcode 
-              id = "addressAPI"
-              @complete="addressResult = $event"
-              :animation="true"
-              :no-shorthand="true"
-              :no-auto-mapping="true"
-              :please-read-guide="3"
-              :please-read-guide-timer="2"
-              :max-suggest-items="3"
-              :show-more-h-name="true"
-              :hide-map-btn="false"
-              :hide-eng-btn="true"
-              :always-show-eng-addr="false"
-              :zonecode-only="true" 
-              />
-            </p><br/>
-            <p>
-              <input placeholder="상세주소를 작성하세요." type="text" id="address2" name="address2" v-model="addressDetail" />
-            </p>
+            <input type="text" id="address1" name="address1" :value="address1" disabled />
+            <button type="button" id="searchAddr"  @click="controlModal('showModal', 'modalAddr')">찾기</button><br/>
+            <div id="modalAddr" class="modal">
+              <div class="modal-content modal-addr-content">
+                <span class="close" @click="controlModal('hideModal', 'modalAddr')" >&times;
+                </span>
+                <div id = "addressArea">
+                  <vue-daum-postcode 
+                    id = "addressAPI"
+                    @complete="onComplete"
+                    :hide-map-btn="false"
+                    :hide-eng-btn="true"
+                    :always-show-eng-addr="false"
+                    :zonecode-only="true" 
+                  />
+                </div>
+              </div>
+            </div>
+            <input placeholder="상세주소를 작성하세요." type="text" id="address2" name="address2" v-model="address2" />
           </div>
         </div>
         <div class="row">
@@ -577,15 +573,15 @@
             <tr id="partAgree">
               <td id="checkAgree1">
                 <input type="checkbox" name="checkAgree[]" value="0" @change="controlAgree('partCheck')" />&nbsp;
-                <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree1')" >환불 규정 안내에 대한 동의</a>
+                <a href="javascript:;" @click="controlModal('showModal', 'modalAgree1')" >환불 규정 안내에 대한 동의</a>
               </td>
               <td id="checkAgree2">
                 <input type="checkbox" name="checkAgree[]" value="1" @change="controlAgree('partCheck')" />&nbsp;
-                <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree2')" >개인 정보 제 3자 제공 동의</a>
+                <a href="javascript:;" @click="controlModal('showModal', 'modalAgree2')" >개인 정보 제 3자 제공 동의</a>
               </td>
               <td id="checkAgree3">
                 <input type="checkbox" name="checkAgree[]" value="2" @change="controlAgree('partCheck')" />&nbsp;
-                <a href="javascript:;" @click="controlModal('showModalAgree', 'modalAgree3')" >개인 정보 수집 및 이용 동의</a>
+                <a href="javascript:;" @click="controlModal('showModal', 'modalAgree3')" >개인 정보 수집 및 이용 동의</a>
               </td>
             </tr>
             <tr>
@@ -606,7 +602,7 @@
     <!-- Modal : 환불 규정 안내에 대한 동의 -->
     <div id="modalAgree1" class="modal">
       <div class="modal-content">
-        <span class="close" @click="controlModal('hideModalAgree', 'modalAgree1')" >&times;
+        <span class="close" @click="controlModal('hideModal', 'modalAgree1')" >&times;
         </span>
         <p style="text-align:center"><b>환불 규정 안내에 대한 동의</b></p><br/>
         <p>
@@ -623,7 +619,7 @@
     <!-- Modal : 개인 정보 제 3자 제공 동의 -->
     <div id="modalAgree2" class="modal">
       <div class="modal-content">
-        <span class="close" @click="controlModal('hideModalAgree', 'modalAgree2')" >&times;
+        <span class="close" @click="controlModal('hideModal', 'modalAgree2')" >&times;
         </span>
         <p style="text-align:center"><b>개인 정보 제 3자 제공 동의</b></p><br/>
         <p>
@@ -642,7 +638,7 @@
     <!-- Modal : 개인 정보 수집 및 이용 동의 -->
     <div id="modalAgree3" class="modal">
       <div class="modal-content">
-        <span class="close" @click="controlModal('hideModalAgree', 'modalAgree3')" >&times;
+        <span class="close" @click="controlModal('hideModal', 'modalAgree3')" >&times;
         </span>
         <p style="text-align:center"><b>개인 정보 수집 및 이용 동의</b></p><br/>
         <p>

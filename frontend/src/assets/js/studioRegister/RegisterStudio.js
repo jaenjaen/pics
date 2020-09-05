@@ -3,8 +3,6 @@ import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu
 import "vue-multi-select/dist/lib/vue-multi-select.css";
 import { VueDaumPostcode } from "vue-daum-postcode";
 
-
-
 export default {
     components: { vueMultiSelect, VueDaumPostcode },
     data() {
@@ -313,7 +311,7 @@ export default {
     },
     methods: {
         /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
-        checkLength(event) {
+        checkLength() {
             var changeArea = document.getElementsByName('changeArea');
             var countLength = document.getElementsByName('countLength');
             for (let i = 0; i < countLength.length; i++) {

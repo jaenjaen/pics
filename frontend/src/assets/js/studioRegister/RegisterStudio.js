@@ -357,9 +357,9 @@ export default {
             /* 파일 업로드 디폴트 이미지로 바꿈 */
             var thisImgId = document.getElementById(imgId);
             if (img === 'preview') {
-                thisImgId.setAttribute("src", require('@/assets/img/upload/preview.png'));
+                thisImgId.setAttribute("src", this.preview);
             } else if (img === 'port') {
-                thisImgId.setAttribute("src", require('@/assets/img/upload/port.png'));
+                thisImgId.setAttribute("src", this.port);
             }
 
 

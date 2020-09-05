@@ -6,6 +6,8 @@ import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.Tag;
 
 import java.util.List;
+import java.util.Map;
+
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 
@@ -21,7 +23,7 @@ public interface StudioInfoService {
 	public int registerStudioInfo(Studio studio); //Studio 등록
 	public int registerTag(Tag tag); //Tag 등록
 	public List<Category> getCategory(); //카테고리 이름으로 Studio에 등록할 category_id(select value값으로 대체 가능할 듯)
-	public boolean isExistStudio(Studio studio); //중복 등록 방지를 위해 이미 존재하는 스튜디오인지 검사함
+	public boolean isExistStudio(Studio studio, Map map); //중복 등록 방지를 위해 이미 존재하는 스튜디오인지 검사함
 	public int getStudioId(Studio studio); //Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
 	
 	// 스튜디오 chart & graph

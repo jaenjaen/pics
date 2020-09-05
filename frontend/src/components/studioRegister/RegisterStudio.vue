@@ -168,15 +168,12 @@
           <div class="col-25">
             <label class="inContent">층</label>
             <div class="outContainer">
-                <label id="sizeLabel">
-                  <toggle-button :value="true"
-                              :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
-                              :labels="{checked: '지상', unchecked: '지하'}"
-                              v-model="floorUnit"
-                              @change="changeFloor()"/>
+                <label class="sizeLabel">
+                  <input class="tgl tgl-flip" id="underground" @change="changeFloor()" type="checkbox"/>
+                  <label class="tgl-btn" data-tg-off="지상" data-tg-on="지하" for="underground"></label>
                 </label>
             </div>
-            <input type="text" id="floor" name="floor" />
+            <input type="text" id="floor" name="floor" v-model="floorNum"/>
           </div>
           <div class="col-25 col-space">
             <label for="size">
@@ -186,15 +183,12 @@
           </div>
           <div class="col-25">
             <div class="outContainer">
-              <label id="sizeLabel">
-                <toggle-button :value="true"
-                              :color="{checked:'#33A3DC', unchecked:'#034EA2'}"
-                              :labels="{checked: '㎡', unchecked: '평'}"
-                              v-model="sizeUnit"
-                              @change="changeSizeUnit()"/>
+              <label class="sizeLabel">
+                <input class="tgl tgl-flip" id="pyoung" @change="changeSizeUnit()" type="checkbox"/>
+                <label class="tgl-btn" data-tg-off="㎡" data-tg-on="평" for="pyoung"></label>
               </label>
             </div>
-            <input type="text" id="size" name="size" v-model="sizeInput" required />
+            <input type="text" id="size" name="size" v-model="sizeValue" required />
           </div>
         </div>
         <div class="row">
@@ -603,6 +597,7 @@
           </table>
         </div>
         <div id="submitArea" class="row">
+          <button type="button" id="reset" @click="resetContent()">새로쓰기</button>
           <button type="button" id="temp" @click="tempSave()">임시저장</button>
           <button type="submit" id="register">등록</button>
         </div>

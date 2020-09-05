@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,8 @@ public class StudioReserveController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 	
+	private List<Reservation> resultList;
+	
 	// 1. 예약 불가능/가능 날짜 받아서 Schedule로 옮기기
 	@GetMapping("/studio/schedule/{stuId}")
 	public ResponseEntity getSchedule(@PathVariable int stuId) {
@@ -66,7 +69,7 @@ public class StudioReserveController {
 	@GetMapping("/studio/reservation/{stuId}")
 	public ResponseEntity getReservation(@PathVariable int stuId) {
 		Reservation reservation = new Reservation(stuId);
-		List<Reservation> resultList= studioReserveService.getReservation(reservation);
+		resultList= studioReserveService.getReservation(reservation);
 		System.out.println("studioReserveService :"+studioReserveService.getReservation(reservation));
 		if(resultList.isEmpty()) {
 			System.out.println("해당 스튜디오 예약 없음");
@@ -100,19 +103,33 @@ public class StudioReserveController {
 		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	
-	// 4. reservation,예약 불가능 일자 delete 
-	@DeleteMapping("/studio/reservation")
-	public ResponseEntity DeleteReservation(@RequestBody List<Reservation> reservationLIst) {
-		//등록 시간 삽입
-		long time = System.currentTimeMillis();
-		SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-		String resDate = dayTime.format(new Date(time));
-
-		if(studioReserveService.DeleteReservations(reservationLIst)>0) {
-			studioReserveService.DeleteExceptionDates(reservationLIst);
+	// 5. 예약취소
+	@DeleteMapping("/studio/reservation/{resId}")
+	public ResponseEntity DeleteReservation(@PathVariable int resId) {
+		if(studioReserveService.DeleteReservations(resId)!=0) {
 			return new ResponseEntity(HttpStatus.OK);
-		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}else return new ResponseEntity(HttpStatus.NOT_MODIFIED);
 		}
+	
+	//6. 이미 지난 예약
+	@GetMapping("/customer/reservation/expired/{custId}")
+	public ResponseEntity getExpiredReservation(@PathVariable int custId) {
+		resultList = studioReserveService.getExpiredReservation(custId);
+		if(resultList.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		else return new ResponseEntity(resultList,HttpStatus.OK);
+	}
+	
+	//7. 앞으로 남은 예약
+	@GetMapping("/customer/reservation/will/{custId}")
+	public ResponseEntity getWillReservation(@PathVariable int custId) {
+		resultList = studioReserveService.getWillReservation(custId);
+		if(resultList.isEmpty()) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		else return new ResponseEntity(resultList,HttpStatus.OK);
+	}
 
 	}
 

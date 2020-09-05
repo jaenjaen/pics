@@ -1,6 +1,8 @@
 package com.devils.pics.dao.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -61,9 +63,9 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 		return sqlSession.selectList(NS+"getStudioByNameAndComId", studio);
 	}
 	@Override
-	public List<Studio> getStudioByAddrAndComId(Studio studio) {
+	public List<Studio> getStudioByAddrAndComId(Map map) {
 		//address와 comId로 Studio를 가져옴
-		return sqlSession.selectList(NS+"getStudioByAddrAndComId", studio);
+		return sqlSession.selectList(NS+"getStudioByAddrAndComId", map);
 	}
 	
 	@Override

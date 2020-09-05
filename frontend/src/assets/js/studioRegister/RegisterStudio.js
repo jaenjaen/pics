@@ -1,11 +1,9 @@
 import axios from "axios";
-import Vue from "vue";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
-import { ToggleButton } from 'vue-js-toggle-button' //https://www.npmjs.com/package/vue-js-toggle-button
 import { VueDaumPostcode } from "vue-daum-postcode";
 
-Vue.component('ToggleButton', ToggleButton)
+
 
 export default {
     components: { vueMultiSelect, VueDaumPostcode },
@@ -23,7 +21,7 @@ export default {
                 cadImg: "",
                 floor: "",
                 studioFilter: {
-                    size: "",
+                    size: "", //제곱미터일 때의 값만 들어감
                     options: null,
                     parking: "",
                     unitPrice: "",
@@ -85,11 +83,12 @@ export default {
             addressDetail: "",
 
             /* 지상/지하 */
-            floorUnit: true,
+            floorUnit: false, //지하여부
+            floorNum: '', //층수 절대값
 
             /* 면적 */
-            sizeInput: "",
-            sizeUnit: true,
+            sizeUnit: false,
+            sizeValue: '', //제곱미터 또는 평일 때 면적 값
 
             /* 운영시간 */
             week: {
@@ -149,6 +148,7 @@ export default {
         }
     },
     mounted() {
+        /* DB에서 카테고리 가져오기 */
         axios.get('http://127.0.0.1:7777/category')
             .then((response) => {
                 this.category = JSON.parse(JSON.stringify(response.data));
@@ -156,6 +156,160 @@ export default {
             .catch(() => {
                 console.log('카테고리 가져오기 실패');
             })
+
+        /* 임시저장된 내용 불러오기 */
+        if (localStorage.getItem("tempStudio") === null) { //로컬스토리지에 tempStudio 키가 없는 경우
+            return;
+        } else { //로컬스토리지에 tempStudio 키가 존재하는 경우
+            var tempStudio = JSON.parse(localStorage["tempStudio"]);
+
+            /* 아래의 값들을 불러와서 바인딩하면 화면에 뿌려짐 */
+            this.studio.categoryId = tempStudio["categoryId"]; //카테고리 종류(에 해당되는 번호)
+            this.studio.name = tempStudio["name"]; //카테고리 이름
+            this.studio.description = tempStudio["description"]; //카테고리 소개
+            this.studio.rule = tempStudio["rule"]; //이용 수칙
+            this.option_save = JSON.parse(tempStudio["options"]); //장비 및 옵션
+            this.studio.studioFilter.unitPrice = tempStudio["unitPrice"]; //시간당 대여료
+            this.studio.studioFilter.excharge = tempStudio["excharge"]; //1인 추가시 대여료
+            this.studio.studioFilter.defaultCapacity = tempStudio["defaultCapacity"]; //기본 인원
+            this.studio.studioFilter.maxCapacity = tempStudio["maxCapacity"]; //최대 인원
+
+            /* 태그 값들을 불러와서 바인딩하고 화면에 뿌림 */
+            document.getElementsByName('tag')[0].value = tempStudio["tag0"];
+            document.getElementsByName('tag')[1].value = tempStudio["tag1"];
+            document.getElementsByName('tag')[2].value = tempStudio["tag2"];
+
+            /* 주차 가능 대수를 바인딩함.
+            주차 가능 대수 = 0 일 때, 주차 가능 불가에 체크(기본)
+            주차 가능 대수 > 0 일 때, 주차 가능에 체크하고 주차 가능 대수 보이기 */
+            let parkingCount = Number(tempStudio["parking"]);
+            this.studio.studioFilter.parking = parkingCount;
+            if (parkingCount > 0) {
+                document.getElementsByName('parkFlag')[1].checked = true;
+                document.getElementById('parkAmount').setAttribute('style', 'display:block');
+            }
+
+            /* 지상/지하와 제곱미터/평을 확인하고 알게 바인딩하고 표시 */
+            this.floorUnit = JSON.parse(tempStudio["floorUnit"]);
+            this.sizeUnit = JSON.parse(tempStudio["sizeUnit"]);
+            if (this.floorUnit) { //지하
+                document.getElementById('underground').checked = true;
+            } else { //지상
+                document.getElementById('underground').checked = false;
+            }
+            this.floorNum = tempStudio["floor"];
+            if (this.sizeUnit) { //평
+                document.getElementById('pyoung').checked = true;
+            } else { //평
+                document.getElementById('pyoung').checked = false;
+            }
+            this.sizeValue = tempStudio["size"];
+
+            /* 주소 바인딩 후 화면에 표시
+            주소 API를 통해 첫째 주소를 입력했을 경우 상세 주소를 보이게 함  */
+            this.addressResult.address = tempStudio["address1"];
+            if (this.addressResult.address != '') {
+                this.addressDetail = tempStudio["address2"];
+                document.getElementById('address2').setAttribute('style', 'display:block');
+            }
+
+            /* 저장된 운영 시간을 각각 바인딩하고 화면에 표시함 */
+            this.week.mon = JSON.parse(tempStudio["mon"]);
+            this.week.tue = JSON.parse(tempStudio["tue"]);
+            this.week.wed = JSON.parse(tempStudio["wed"]);
+            this.week.thu = JSON.parse(tempStudio["thu"]);
+            this.week.fri = JSON.parse(tempStudio["fri"]);
+            this.week.sat = JSON.parse(tempStudio["sat"]);
+            this.week.sun = JSON.parse(tempStudio["sun"]);
+
+            let dayCount = [0, 0, 0, 0, 0, 0, 0]; //요일별 체크된 시간 수
+            let dayList = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']; //요일 이름
+
+            for (let i = 0; i < 24; i++) { //요일에 따른 체크, 선택, 보임
+                if (this.week.mon[i] > 0) {
+                    document.getElementById('monTime')[i].selected = true; //해당되는 시간 select option 선택
+                    document.getElementById('monTd').setAttribute('style', 'display:inline-block'); //월요일 시간표 보임
+                    document.getElementById('mon').checked = true; //월요일에 체크
+                    dayCount[0]++; //월요일이 체크된 시간 수
+                }
+                if (this.week.tue[i] > 0) {
+                    document.getElementById('tueTime')[i].selected = true;
+                    document.getElementById('tueTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('tue').checked = true;
+                    dayCount[1]++;
+                }
+                if (this.week.wed[i] > 0) {
+                    document.getElementById('wedTime')[i].selected = true;
+                    document.getElementById('wedTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('wed').checked = true;
+                    dayCount[2]++;
+                }
+                if (this.week.thu[i] > 0) {
+                    document.getElementById('thuTime')[i].selected = true;
+                    document.getElementById('thuTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('thu').checked = true;
+                    dayCount[3]++;
+                }
+                if (this.week.fri[i] > 0) {
+                    document.getElementById('friTime')[i].selected = true;
+                    document.getElementById('friTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('fri').checked = true;
+                    dayCount[4]++;
+                }
+                if (this.week.sat[i] > 0) {
+                    document.getElementById('satTime')[i].selected = true;
+                    document.getElementById('satTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('sat').checked = true;
+                    dayCount[5]++;
+                }
+                if (this.week.sun[i] > 0) {
+                    document.getElementById('sunTime')[i].selected = true;
+                    document.getElementById('sunTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('sun').checked = true;
+                    dayCount[6]++;
+                }
+            }
+
+            let allDay = true;
+            for (let i = 0; i < 7; i++) {
+                if (dayCount[i] == 0) { //해당 요일에 시간이 하나도 선택되지 않았을 경우
+                    allDay = false;
+                } else { //해당 요일에 시간이 선택되었을 경우
+                    this.selectTime(dayList[i]);
+                }
+            }
+            if (allDay == true) { //모든 요일에 선택된 시간이 있을 경우
+                this.selectDay('all');
+            }
+
+            for (let i = 0; i < 7; i++) { //특정 요일에서 모든 시간을 선택했을 경우
+                if (dayCount[i] == 24) {
+                    switch (i) {
+                        case 0:
+                            this.selectAllTime('select', 'monTime', 'noneMonTime', 'allMonTime', 'noneMonTimeCheck');
+                            break;
+                        case 1:
+                            this.selectAllTime('select', 'tueTime', 'noneTueTime', 'allTueTime', 'noneTueTimeCheck');
+                            break;
+                        case 2:
+                            this.selectAllTime('select', 'wedTime', 'noneWedTime', 'allWedTime', 'noneWedTimeCheck');
+                            break;
+                        case 3:
+                            this.selectAllTime('select', 'thuTime', 'noneThuTime', 'allThuTime', 'noneThuTimeCheck');
+                            break;
+                        case 4:
+                            this.selectAllTime('select', 'friTime', 'noneFriTime', 'allFriTime', 'noneFriTimeCheck');
+                            break;
+                        case 5:
+                            this.selectAllTime('select', 'satTime', 'noneSatTime', 'allSatTime', 'noneSatTimeCheck');
+                            break;
+                        case 6:
+                            this.selectAllTime('select', 'sunTime', 'noneSunTime', 'allSunTime', 'noneSunTimeCheck');
+                            break;
+                    }
+                }
+            }
+        }
     },
     methods: {
         /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
@@ -271,26 +425,23 @@ export default {
         },
         /* 층수 - 지상과 지하로 전환하고, DB에는 지하일 경우 음수로 보냄 */
         changeFloor() {
-            if (this.floorUnit == true) { //지상
-                this.floorUnit = false;
-            } else if (this.floorUnit == false) { //지하
+            let underground = document.getElementById('underground');
+            if (underground.checked) { //지하
                 this.floorUnit = true;
+            } else { //지상
+                this.floorUnit = false;
             }
         },
 
         /* 면적 - 평과 제곱미터를 서로 전환하고, DB에는 제곱미터로 보냄 */
         changeSizeUnit() {
-            let size = document.getElementById('size').value;
-            if (this.sizeUnit == true) { //평->제곱미터
-                this.sizeUnit = false;
-                if (size != "") {
-                    this.sizeInput = (size * 3.305785).toFixed(2);
-                }
-            } else if (this.sizeUnit == false) { //제곱미터->평
+            let pyoung = document.getElementById('pyoung');
+            if (pyoung.checked) {
                 this.sizeUnit = true;
-                if (size != "") {
-                    this.sizeInput = (size * 0.3025).toFixed(2);
-                }
+                this.sizeValue = (this.sizeValue * 0.3025).toFixed(2);
+            } else {
+                this.sizeUnit = false;
+                this.sizeValue = (this.sizeValue * 3.305785).toFixed(2);
             }
         },
 
@@ -335,6 +486,15 @@ export default {
 
                 //모든 요일의 데이터 바인딩 초기화
                 this.studio.schedule.repeatDate = [];
+                for (let i = 0; i < 24; i++) {
+                    this.week.mon[i] = 0;
+                    this.week.tue[i] = 0;
+                    this.week.wed[i] = 0;
+                    this.week.thu[i] = 0;
+                    this.week.fri[i] = 0;
+                    this.week.sat[i] = 0;
+                    this.week.sun[i] = 0;
+                }
 
                 dayNo.setAttribute('style', 'display:none');
                 dayAll.setAttribute('style', 'display:inline-block');
@@ -363,6 +523,43 @@ export default {
                         if (arr[i].weekDate == dayName) {
                             this.studio.schedule.repeatDate.splice(i, 1);
                         }
+                    }
+                    switch (dayName) {
+                        case 'mon':
+                            for (let i = 0; i < 24; i++) {
+                                this.week.mon[i] = 0;
+                            }
+                            break;
+                        case 'tue':
+                            for (let i = 0; i < 24; i++) {
+                                this.week.tue[i] = 0;
+                            }
+                            break;
+                        case 'wed':
+                            for (let i = 0; i < 24; i++) {
+                                this.week.wed[i] = 0;
+                            }
+                            break;
+                        case 'thu':
+                            for (let i = 0; i < 24; i++) {
+                                this.week.thu[i] = 0;
+                            }
+                            break;
+                        case 'fri':
+                            for (let i = 0; i < 24; i++) {
+                                this.week.fri[i] = 0;
+                            }
+                            break;
+                        case 'sat':
+                            for (let i = 0; i < 24; i++) {
+                                this.week.sat[i] = 0;
+                            }
+                            break;
+                        case 'sun':
+                            for (let i = 0; i < 24; i++) {
+                                this.week.sun[i] = 0;
+                            }
+                            break;
                     }
                 }
                 dayNo.setAttribute('style', 'display:none');
@@ -396,6 +593,43 @@ export default {
                     weekDate: dayName,
                     time: "0-24"
                 });
+                switch (dayName) {
+                    case 'mon':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.mon[i] = 1;
+                        }
+                        break;
+                    case 'tue':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.tue[i] = 1;
+                        }
+                        break;
+                    case 'wed':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.wed[i] = 1;
+                        }
+                        break;
+                    case 'thu':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.thu[i] = 1;
+                        }
+                        break;
+                    case 'fri':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.fri[i] = 1;
+                        }
+                        break;
+                    case 'sat':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.sat[i] = 1;
+                        }
+                        break;
+                    case 'sun':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.sun[i] = 1;
+                        }
+                        break;
+                }
             }
             if (command == 'deselect') { //하루 시간 전체해제
                 for (let i = 0; i < thisTime.length; i++) {
@@ -405,6 +639,43 @@ export default {
 
                 /* 운영 시간 데이터 초기화 */
                 this.studio.schedule.repeatDate = [];
+                switch (dayName) {
+                    case 'mon':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.mon[i] = 0;
+                        }
+                        break;
+                    case 'tue':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.tue[i] = 0;
+                        }
+                        break;
+                    case 'wed':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.wed[i] = 0;
+                        }
+                        break;
+                    case 'thu':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.thu[i] = 0;
+                        }
+                        break;
+                    case 'fri':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.fri[i] = 0;
+                        }
+                        break;
+                    case 'sat':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.sat[i] = 0;
+                        }
+                        break;
+                    case 'sun':
+                        for (let i = 0; i < 24; i++) {
+                            this.week.sun[i] = 0;
+                        }
+                        break;
+                }
             }
             thisVisible.setAttribute('style', 'display:block');
             thisUnvisible.setAttribute('style', 'display:none');
@@ -420,6 +691,7 @@ export default {
             let end = -1;
 
             let temp = '';
+            let tempResult = '';
 
             /* 운영시간 데이터 초기화 */
             let arr = this.studio.schedule.repeatDate;
@@ -753,11 +1025,38 @@ export default {
                     break;
             }
 
+            tempResult = temp.slice(0, temp.length - 1);
+
             this.studio.schedule.repeatDate.push({
                 weekDate: thisDay,
-                time: temp.slice(0, temp.length - 1)
+                time: tempResult
             }); //가장 끝에 있는 ,를 제거해서 운영 시간 데이터에 바인딩함
 
+            if (tempResult == '0-24') {
+                switch (thisDay) {
+                    case 'mon':
+                        this.selectAllTime('select', 'monTime', 'noneMonTime', 'allMonTime', 'noneMonTimeCheck');
+                        break;
+                    case 'tue':
+                        this.selectAllTime('select', 'tueTime', 'noneTueTime', 'allTueTime', 'noneTueTimeCheck');
+                        break;
+                    case 'wed':
+                        this.selectAllTime('select', 'wedTime', 'noneWedTime', 'allWedTime', 'noneWedTimeCheck');
+                        break;
+                    case 'thu':
+                        this.selectAllTime('select', 'thuTime', 'noneThuTime', 'allThuTime', 'noneThuTimeCheck');
+                        break;
+                    case 'fri':
+                        this.selectAllTime('select', 'friTime', 'noneFriTime', 'allFriTime', 'noneFriTimeCheck');
+                        break;
+                    case 'sat':
+                        this.selectAllTime('select', 'satTime', 'noneSatTime', 'allSatTime', 'noneSatTimeCheck');
+                        break;
+                    case 'sun':
+                        this.selectAllTime('select', 'sunTime', 'noneSunTime', 'allSunTime', 'noneSunTimeCheck');
+                        break;
+                }
+            }
         },
 
         /* 주차 가능, 주차 불가 체크에 따른 화면 표기 */
@@ -773,6 +1072,7 @@ export default {
                 document
                     .getElementById("parkAmount")
                     .setAttribute("style", "display: none;");
+                this.studio.studioFilter.parking = 0;
             }
         },
 
@@ -817,9 +1117,51 @@ export default {
             }
         },
 
+        /* 새로쓰기 */
+        resetContent() {
+            let result = confirm('작성하신 내용을 초기화합니다. 진행하시겠습니까?');
+            if (result) {
+                /* 로컬스토리지에 저장된 값들을 비움 */
+                localStorage.removeItem("tempStudio");
+                alert('스튜디오 등록을 새로 작성해주세요.');
+                location.reload(); //새로고침
+            } else {
+                return;
+            }
+        },
+
         /* 임시저장 */
         tempSave() {
-            alert("임시저장~");
+            alert("작성하신 내용이 임시저장 되었습니다.");
+            let tempStudio = {
+                "categoryId": this.studio.categoryId,
+                "name": this.studio.name,
+                "description": this.studio.description,
+                "rule": this.studio.rule,
+                "floor": this.floorNum,
+                "floorUnit": this.floorUnit,
+                "size": document.getElementById('size').value,
+                "sizeUnit": this.sizeUnit,
+                "options": JSON.stringify(this.option_save),
+                "unitPrice": this.studio.studioFilter.unitPrice,
+                "excharge": this.studio.studioFilter.excharge,
+                "defaultCapacity": this.studio.studioFilter.defaultCapacity,
+                "maxCapacity": this.studio.studioFilter.maxCapacity,
+                "parking": this.studio.studioFilter.parking,
+                "address1": this.addressResult.address,
+                "address2": this.addressDetail,
+                "mon": JSON.stringify(this.week.mon),
+                "tue": JSON.stringify(this.week.tue),
+                "wed": JSON.stringify(this.week.wed),
+                "thu": JSON.stringify(this.week.thu),
+                "fri": JSON.stringify(this.week.fri),
+                "sat": JSON.stringify(this.week.sat),
+                "sun": JSON.stringify(this.week.sun),
+                "tag0": document.getElementsByName('tag')[0].value,
+                "tag1": document.getElementsByName('tag')[1].value,
+                "tag2": document.getElementsByName('tag')[2].value
+            };
+            localStorage["tempStudio"] = JSON.stringify(tempStudio);
         },
 
         /* 스튜디오 등록 전 로그인 체크 */
@@ -919,21 +1261,18 @@ export default {
 
             /* 지상/지하 토글 버튼에 맞춰 데이터 바인딩 */
             if (this.floorUnit == false) { //지상
-                this.studio.floor = floor;
-                this.floorUnit = true;
+                this.studio.floor = this.floorNum;
             } else if (this.floorUnit == true) { //지하
-                this.studio.floor = floor * (-1);
-                this.floorUnit = false;
+                this.studio.floor = this.floorNum * (-1);
             }
 
             /* 면적 단위 토글 버튼 상태에 맞춰 데이터 바인딩 */
-            if (this.sizeUnit == false) { //제곱미터
+            if (!this.sizeUnit) { //제곱미터
                 this.studio.studioFilter.size = size;
-                this.sizeUnit = true;
-            } else if (this.sizeUnit == true) { //평
+            } else { //평
                 this.studio.studioFilter.size = (size * 3.305785).toFixed(2);
-                this.sizeUnit = false;
             }
+
 
             /* 운영 시간 입력 필수 */
             if (this.studio.schedule.repeatDate.length < 1) {

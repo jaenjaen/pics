@@ -1,21 +1,16 @@
 <template>
   <div class="mypage_container">
     <MypageNametag :customerMode="true" />
-    <MypageGap categoryName="예약내역 >" cateogryURL="#"/>
+    <MypageGap categoryName="예약내역 >" cateogryURL="http://localhost:9999/reservationlist"/>
     <!-- 예약내역-->
     <div class="mypage_card">
        <table>
          <tr>
           <th>예약번호</th> <th>예약일자</th> <th>예약업체</th> <th>예약인원</th> <th>결제금액</th> <th>결제취소</th>
         </tr>
-        <tr>
-          <td>0</td> <td>2020-09-03 18:00 <br> ~ <br> 2020-09-03 20:00</td> <td>나잇나잇</td> <td>3</td> <td>3,000,000 원</td> <td><button>결제취소</button></td>
-        </tr>
-        <tr>
-          <td>0</td> <td>2020-09-03 18:00 <br> ~ <br> 2020-09-03 20:00</td> <td>나잇나잇</td> <td>3</td> <td>3,000,000 원</td> <td><button>결제취소</button></td>
-        </tr>
-        <tr>
-          <td>0</td> <td>2020-09-03 18:00 <br> ~ <br> 2020-09-03 20:00</td> <td>나잇나잇</td> <td>3</td> <td>3,000,000 원</td> <td><button>결제취소</button></td>
+        <tr v-for="(reservation, idx) in resvList" :key="reservation">
+          <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
+          <td>{{reservation.totalPrice}}원</td> <td><button @click="deleteResv(reservation.resId)">결제취소</button></td>
         </tr>
       </table>
     </div>
@@ -39,11 +34,11 @@
 </template>
 
 <script>
-// @ is an alias to /src
-//import axios from "axios";
+import axios from "axios";
 import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
 
+var session = JSON.parse(sessionStorage.getItem("customer"));
 export default {
   name: "customerMypage",
   components: {
@@ -52,13 +47,39 @@ export default {
   },
   data() {
     return {
-      reservationList:[],
-      reviewList:[]
+      resvList:[],
+      reviewList:[],
+      custId:session.custId,
+      resId:""
     };
   },
+  mounted(){
+    axios.get("http://localhost:7777/customer/reservation/will/"+this.custId)
+    .then(res =>{
+      this.resvList = res.data;
+      console.log(this.resvList);
+
+    })
+    .catch(err =>{
+      console.log(err);
+    });
+  },
   methods: {
+    deleteResv: function(resId){
+      axios.delete("http://localhost:7777/studio/reservation/"+resId)
+      .then(res=>{
+        if(res != null){
+          alert("예약이 취소되었습니다.");
+          location.reload()
+        }
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+    }
   }
 };
+
 </script>
 
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>

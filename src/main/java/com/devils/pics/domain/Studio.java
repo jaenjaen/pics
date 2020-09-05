@@ -135,10 +135,6 @@ public class Studio {
 	public void setStudioFilter(StudioFilter studioFilter) {
 		this.studioFilter = studioFilter;
 	}
-
-	public String getAddress() {
-		return getStudioFilter().getAddress();
-	}
 	
 	public Company getCompany() {
 		return company;

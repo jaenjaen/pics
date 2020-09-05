@@ -58,12 +58,24 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public int DeleteReservations(List<Reservation> reservationList) {
-		return studioReserveDAO.DeleteReservations(reservationList);
+	public int DeleteReservations(int resId) {
+		return studioReserveDAO.DeleteReservation(resId);
 	}
 
 	@Override
 	public int DeleteExceptionDates(List<Reservation> reservationList) {
 		return studioReserveDAO.DeleteExceptionDates(reservationList);
 	}
+
+	@Override
+	public List<Reservation> getExpiredReservation(int custId) {
+		return studioReserveDAO.getExpiredReservation(custId);
+	}
+
+	@Override
+	public List<Reservation> getWillReservation(int custId) {
+		return studioReserveDAO.getWillReservation(custId);
+	}
+	
+	
 }

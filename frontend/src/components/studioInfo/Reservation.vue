@@ -13,8 +13,10 @@
                 <strong>예약 시작일</strong>
                 <span class="start-date">
                   <md-datepicker 
-                  v-model="start_date"
-                  format="YYYY-MM-DD"
+                  v-model="start_date" 
+                 :md-model-type="String"
+                  :md-immediately="true"
+                  :disable-passed-days="true"
                   ></md-datepicker>
                 </span>
                 <br />
@@ -22,7 +24,9 @@
                 <span class="end-date">
                   <md-datepicker 
                   v-model="end_date" 
-                 format="YYYY-MM-DD"
+                 :md-model-type="String"
+                  :md-immediately="true"
+                  :disable-passed-days="true"
                   ></md-datepicker>
                 </span>
               </div>
@@ -34,21 +38,19 @@
             <div class="time-input-field">
               <md-field class="start-time">
                 <label for="time">예약 시작 시간</label>
-                  <md-select
-                    id="start_time"
-                    v-model="start_time"
+                  <md-select id="start_time" 
+                    v-model="start_time" 
                     required
                     style="width:45%">
-                  <md-option
-                    required="required"
-                    v-for="(time,index) in times"
-                    v-bind:key="index">
-                    {{times[parseInt(time)-1]}}</md-option>
+                      <md-option
+                        required="required"
+                        v-for="(time,index) in times"
+                        v-bind:key="index"
+                        :value="parseInt(time)"
+                        >{{time}}시</md-option>
                   </md-select>
-              </md-field>
-            
+              </md-field>            
                   <br/>
-                  <span id="checkSchedule">{{ checkSchedule }}</span>
                   <br />
               <md-field class="end-time">
                 <label for="time">예약 종료 시간</label>
@@ -60,11 +62,13 @@
                         required="required"
                         v-for="(time,index) in times"
                         v-bind:key="index"
-                        >{{times[parseInt(time)-1]}}</md-option>
+                        :value="parseInt(time)"
+                        >{{time}}시</md-option>
                   </md-select>
               </md-field>
             </div>
           </div>
+          <span>{{msg}}</span>
           <br />
           <br />
           <!-- 인원 -->
@@ -148,12 +152,6 @@
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
-        <div id="regBook">
-          <p>찜 목록에 등록했습니다</p>
-          <button class="btn-small" @click="closePop()">확인</button>
-        </div>
-      </modal>
       <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
         <div id="login-required">
           <p>찜 목록에 등록했습니다</p>
@@ -164,7 +162,8 @@
   </div>
  </template>
 <script scoped src="@/assets/js/studioInfo/Reservation.js"></script>
-
+<!-- <style scoped src='vue-material/dist/vue-material.min.css'></style>
+<style scoped src='vue-material/dist/theme/default.css'></style> -->
 <style scoped>
 .container {
   width: 100%;

@@ -2,6 +2,7 @@ import axios from "axios";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
 import { VueDaumPostcode } from "vue-daum-postcode";
+import 'vue-material/dist/vue-material.min.css';
 
 export default {
     components: { vueMultiSelect, VueDaumPostcode },

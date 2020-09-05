@@ -1,17 +1,23 @@
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
+@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
+@media screen and (max-width: 768px) {
+    #app {
+        width: 100%;
+    }
+}
+
 .container {
     width: 768px;
-    margin: auto 3em 0 10em 0;
-    background-color: azure;
+    margin: auto 20em 0 10em 0;
 }
 
 #main-images-section {
-    width: 768px;
+    width: 100%;
     margin: auto;
 }
 
 .tag-list {
-    padding: 3px;
+    padding: 0.5%;
 }
 
 .tabs-field {
@@ -28,38 +34,101 @@
 article {
     width: 100%;
     float: left;
-    border: 1px solid gray;
     margin-bottom: 10em;
 }
 
 #Studio-Filter-Table {
-    width: 30%;
-    border-top: 1px solid #444444;
+    float: left;
+    width: 50%;
+    border-top: 2px solid #5a5a5a;
     border-collapse: collapse;
 }
 
 #Studio-Filter-Table td {
     text-align: right;
-    border-bottom: 1px solid #444444;
+    border-bottom: 1.5px solid #bbb5b5;
     padding: 10px;
 }
 
 #map {
+    float: left;
+    margin-left: 5%;
     width: 40%;
     height: 40%;
     border: 1px solid green;
 }
 
-#Studio-Filter-Table tr td {
-    border: 1px solid gray;
-    text-align: right;
+.article-Description-area {
+    clear: both;
+    text-align: left;
 }
 
-.carousel-inner img {
+.tag-btn {
+    background-color: #029BE0;
+    border: none;
+    color: #fff;
+    padding: 5px 7px 5px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.tag-btn:hover {
+    background-color: white;
+    color: #029BE0;
+    border: 1.5px solid lightgray;
+}
+
+.article-review-area {
+    text-align: left;
+}
+
+.card-content {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 2%;
+    box-shadow: 2px 2px 1.5px lightgray;
+}
+
+#reviewr-img {
+    width: 10px;
+    height: 10px;
+}
+
+#reviewr-email {
+    color: lightgray;
+}
+
+#no-review {
+    align-content: center;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 2%;
+    box-shadow: 2px 2px 1.5px lightgray;
+}
+
+#answer {
+    padding: 2%;
+    /* box-shadow:2px 2px 1.5px lightgray; */
+}
+
+.card-expansion {
     width: 100%;
-    height: 550px;
+    padding: 2%;
 }
 
-.tagBtn {
-    display: inline;
+.md-card {
+    width: 100%;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#review-content,
+#star-score {
+    margin: 5%;
 }

@@ -35,51 +35,22 @@ export default {
                 tag: []
             },
 
+            /* 이미지 경로 */
+            mainRoute: 'http://localhost:7777/upload/main/',
+            cadRoute: 'http://localhost:7777/upload/cad/',
+            portRoute: 'http://localhost:7777/upload/port/',
+
             /* 디폴트 이미지 */
-            required: require('@/assets/img/upload/required.png'),
-            preview: require('@/assets/img/upload/preview.png'),
-            port: require('@/assets/img/upload/port.png'),
+            required: 'http://localhost:7777/upload/default/required.png',
+            preview: 'http://localhost:7777/upload/default/preview.png',
+            port: 'http://localhost:7777/upload/default/port.png',
 
             /* 카테고리 */
             category: [],
 
-            /* 주소 API */
-            addressResult: {
-                postcode: "",
-                postcode1: "",
-                postcode2: "",
-                postcodeSeq: "",
-                zonecode: "",
-                address: "",
-                addressEnglish: "",
-                addressType: "",
-                bcode: "",
-                bname: "",
-                bname1: "",
-                bname2: "",
-                sido: "",
-                sigungu: "",
-                sigunguCode: "",
-                userLanguageType: "",
-                query: "",
-                buildingName: "",
-                buildingCode: "",
-                apartment: "",
-                jibunAddress: "",
-                jibunAddressEnglish: "",
-                roadAddress: "",
-                roadAddressEnglish: "",
-                autoRoadAddress: "",
-                autoRoadAddressEnglish: "",
-                autoJibunAddress: "",
-                autoJibunAddressEnglish: "",
-                userSelectedType: "",
-                noSelected: "",
-                hname: "",
-                roadnameCode: "",
-                roadname: ""
-            },
-            addressDetail: "",
+            /* 주소 */
+            address1: "",
+            address2: "",
 
             /* 지상/지하 */
             floorUnit: false, //지하여부
@@ -206,9 +177,9 @@ export default {
 
             /* 주소 바인딩 후 화면에 표시
             주소 API를 통해 첫째 주소를 입력했을 경우 상세 주소를 보이게 함  */
-            this.addressResult.address = tempStudio["address1"];
-            if (this.addressResult.address != '') {
-                this.addressDetail = tempStudio["address2"];
+            this.address1 = tempStudio["address1"];
+            if (this.address1 != '') {
+                this.address2 = tempStudio["address2"];
                 document.getElementById('address2').setAttribute('style', 'display:block');
             }
 
@@ -397,31 +368,29 @@ export default {
             thisBtnId.setAttribute("style", "display: none");
         },
 
-        /* 주소 API를 통해 주소 찾기, 닫기 */
-        controlAddress(cmd) {
-            let api = document.getElementById("addressAPI");
-            let address2 = document.getElementById("address2");
-            let searchAddr = document.getElementById("searchAddr");
-            let closeAddr = document.getElementById("closeAddr");
-            if (cmd == "showAddress") {
-                api.style.display = "block";
-                address2.style.display = "none";
-                address2.value = "";
-                closeAddr.style.display = "block";
-                searchAddr.style.display = "none";
-            }
-            if (cmd == "hideAddress") {
-                if (this.addressResult.address == '') {
-                    alert("주소를 선택하세요");
-                    return false;
+        /* 주소 Modal, 동의 Modal 보이기, 닫기 */
+        controlModal(cmd, modalId) {
+            let modal = document.getElementById(modalId);
+            if (cmd == "showModal") {
+                modal.style.display = "block";
+                if (modalId == 'modalAddr') {
+                    let temp = document.getElementById("addressAPI").childNodes[0]
+                    temp.setAttribute('style', 'height: 455px');
                 }
-                api.style.display = "none";
-                address2.style.display = "block";
-                address2.focus();
-                searchAddr.style.display = "block";
-                closeAddr.style.display = "none";
+            }
+            if (cmd == "hideModal") {
+                modal.style.display = "none";
             }
         },
+
+        /* 주소를 선택하면 창이 닫히고, 상세주소가 보이게 함 */
+        onComplete(data) {
+            this.address1 = data.address;
+            document.getElementById('modalAddr').style.display = "none";
+            this.address2 = ""; //상세주소 리셋
+            document.getElementById("address2").style.display = "block";
+        },
+
         /* 층수 - 지상과 지하로 전환하고, DB에는 지하일 경우 음수로 보냄 */
         changeFloor() {
             let underground = document.getElementById('underground');
@@ -1075,17 +1044,6 @@ export default {
             }
         },
 
-        /* 동의 Modal 보이기, 닫기 */
-        controlModal(cmd, modalId) {
-            let modal = document.getElementById(modalId);
-            if (cmd == "showModalAgree") {
-                modal.style.display = "block";
-            }
-            if (cmd == "hideModalAgree") {
-                modal.style.display = "none";
-            }
-        },
-
         /* 부분동의 체크, 전체동의 체크 처리 */
         controlAgree(control) {
             let agrees = document.getElementsByName("checkAgree[]");
@@ -1147,8 +1105,8 @@ export default {
                 "defaultCapacity": this.studio.studioFilter.defaultCapacity,
                 "maxCapacity": this.studio.studioFilter.maxCapacity,
                 "parking": this.studio.studioFilter.parking,
-                "address1": this.addressResult.address,
-                "address2": this.addressDetail,
+                "address1": this.address1,
+                "address2": this.address2,
                 "mon": JSON.stringify(this.week.mon),
                 "tue": JSON.stringify(this.week.tue),
                 "wed": JSON.stringify(this.week.wed),
@@ -1190,14 +1148,14 @@ export default {
             }
 
             /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
-            if (this.addressResult.address == '') {
+            if (this.address1 == '') {
                 alert("주소를 선택하세요");
                 return false;
-            } else if (this.addressDetail == '') {
+            } else if (this.address2 == '') {
                 alert("상세주소를 입력하세요");
                 return false;
             } else {
-                this.studio.studioFilter.address = this.addressResult.address + " " + this.addressDetail;
+                this.studio.studioFilter.address = this.address1 + " " + this.address2;
             }
 
             /* 숫자 유효성 검사 */

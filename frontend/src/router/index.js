@@ -13,7 +13,7 @@ import ReservationList from "../views/mypage/reservation/ReservationList.vue"
 import WishList from "../views/WishList.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
-import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
+import FileRoute from "@/components/studioRegister/FileRoute.vue";
 import StudioInfo from "../components/studioInfo/StudioInfo.vue";
 import Reservation from "../components/studioInfo/Reservation.vue";
 // import Map from "../components/Map.vue";
@@ -50,9 +50,9 @@ const routes = [{
         name: "registerStudio",
         component: RegisterStudio
     }, {
-        path: "/registerStudioSuccess",
-        name: "registerStudioSuccess",
-        component: RegisterStudioSuccess
+        path: "/fileRoute",
+        name: "fileRoute",
+        component: FileRoute
     }, {
         path: "/companyRegister",
         name: "companyRegister",

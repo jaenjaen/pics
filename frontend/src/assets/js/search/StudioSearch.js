@@ -99,11 +99,11 @@ export default {
         },
         // 아래부터는 임시 메소드
         login() {
-            let cust = {
+            let customer = {
                 custId: 3,
             }
-            sessionStorage.setItem('cust', JSON.stringify(cust));
-            var sessionTemp = sessionStorage.getItem('cust');
+            sessionStorage.setItem('customer', JSON.stringify(customer));
+            var sessionTemp = sessionStorage.getItem('customer');
             this.filters.session = JSON.parse(sessionTemp).custId;
         },
         logout() {

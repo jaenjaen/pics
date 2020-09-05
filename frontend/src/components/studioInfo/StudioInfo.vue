@@ -44,11 +44,11 @@
           <div>
           <!-- 찜하기, 공유하기, 누적 이용자 수 -->
           <span>
-          <button class="bookmark-btn" @click.prevent="bookmarkChange()" :v-model="bookmarkCheck">
-            <img src="@/assets/img/util/fullheart.svg" v-if="bookmarkCheck>0" />
-            <img src="@/assets/img/util/heart.svg" v-if="bookmarkCheck==0"/>
-          </button>
-          </span>          
+            <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
+              <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
+              <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
+            </span>
+            </span>          
           <span>
           <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
             <i class="material-icons">share</i>
@@ -58,7 +58,7 @@
   
             <!-- 누적 이용자 수 -->
             <span>
-            {{this.accCustomer}}명
+            누적사용자 수 : {{this.accCustomer}}명
             </span>
           </div>        
         </section>
@@ -80,7 +80,7 @@
                 </tr>
                 <tr>
                   <td>옵션</td>
-                  <td>{{studio.options}}</td>
+                  <td>{{studio.studioFilter.options}}</td>
                 </tr>
                 <tr>
                   <td>주차</td>
@@ -313,124 +313,5 @@
 
 
 <script src="@/assets/js/studioInfo/StudioInfo.js"></script>
+<style scoped src="@/assets/css/studioInfo/StudioInfo.css"></style>
 
-<style scoped src ="vue-material/dist/vue-material.min.css"></style>
-<style scoped src ="vue-material/dist/theme/default.css"></style>
-
-<style scoped>
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
-@media screen and (max-width: 768px) {
-    #app {
-        width: 100%;
-    } 
-}
-.container {
-    width: 768px;
-    margin: auto 20em 0 10em 0;
-    
-}
-#main-images-section {
-    width: 100%;
-    margin: auto;
-}
-.tag-list {
-    padding: 0.5%;
-}
-.tabs-field {
-    width: 100%;
-    height: 50;
-}
-.nav-tab {
-    margin: 20%;
-    list-style-type: none;
-    display: inline;
-}
-article {
-    width: 100%;
-    float: left;
-    
-    margin-bottom: 10em;
-}
-#Studio-Filter-Table {
-    float:left;
-    width: 50%;
-    border-top: 2px solid #5a5a5a;
-    border-collapse: collapse;
-}
-#Studio-Filter-Table td {
-    text-align: right;
-    border-bottom: 1.5px solid #bbb5b5;
-    padding: 10px;
-}
-#map {
-    float:left;
-    margin-left: 5%;
-    width: 40%;
-    height: 40%;
-    border: 1px solid green;
-}
-.article-Description-area{
-  clear: both;
-  text-align: left;
-}
-.tag-btn{
-    
-    background-color: #029BE0;
-    border: none;
-    color:#fff;
-    padding: 5px 7px 5px 7px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    margin: 4px;
-    cursor: pointer;
-    border-radius:5px;
-}
-.tag-btn:hover {
-    background-color: white;
-    color:#029BE0;
-    border:1.5px solid lightgray;
-}
-.article-review-area{
-  text-align: left;
-}
-.card-content{
-  border:1px solid lightgray;
-  border-radius:10px;
-  padding:2%;
-  box-shadow:2px 2px 1.5px lightgray;
-}
-#reviewr-img{
-  width:10px;
-  height:10px;
-}
-#reviewr-email{
-  color:lightgray;
-}
-#no-review{
-  align-content: center;
-  border:1px solid lightgray;
-  border-radius:10px;
-  padding:2%;
-  box-shadow:2px 2px 1.5px lightgray;
-}
-#answer{
-  padding:2%;
-  /* box-shadow:2px 2px 1.5px lightgray; */
-}
-.card-expansion {
-  width: 100%;
-  padding:2%;
-}
-
-.md-card {
-  width: 100%;
-  margin: 4px;
-  display: inline-block;
-  vertical-align: top;
-}
-#review-content, #star-score{
-  margin:5%;
-}
-</style>

@@ -1,7 +1,13 @@
 <template>
     <div class="publicSpace">
         <div id="month_header">
-            <img src="@/assets/img/util/backward.svg"><span>{{month}}</span><img src="@/assets/img/util/forward.svg">
+            <img src="@/assets/img/util/backward.svg"><span>
+                <vue-monthly-picker
+                v-model="month"
+                dateFormat="MM월"
+                :clearOption="false">
+                </vue-monthly-picker>
+                </span><img src="@/assets/img/util/forward.svg">
         </div>
         <div class="list_table">
             <table>
@@ -19,13 +25,19 @@
 
 <script>
 import axios from "axios";
+import VueMonthlyPicker from 'vue-monthly-picker'
+
+let today = new Date();
 
 export default {
     name:"ReservationList",
+    components:{
+        VueMonthlyPicker
+    },
     data(){
         return{
             custId: JSON.parse(sessionStorage.getItem("customer")).custId,
-            month:"9월",
+            month:today+"",
             resvList:[],
         }
     },

@@ -1,77 +1,121 @@
 <template>
   <div class="app">
-      층수 <input type="text" id="floor"><br/>
-      면적 <input type="text" id="size"><br/>
-      시간당 대여료 <input type="text" id="unitPrice"><br/>
-      1인 추가시 대여료 <input type="text" id="excharge"><br/>
-      기본 인원 <input type="text" id="defaultCapacity"><br/>
-      최대 인원 <input type="text" id="maxCapacity"><br/>
-      주차 대수 <input type="text" id="parking"><br/>
-      <button @click="checkNumber">클릭</button>
+    <input class="tgl tgl-flip" id="cb5" @change="checkFlip" type="checkbox"/>
+    <label class="tgl-btn" data-tg-off="㎡" data-tg-on="평" for="cb5"></label>
   </div>
 </template>
 <script>
 export default {
   data(){
-    return{
-
+    return {
     }
   },
   methods: {
-    checkNumber(){
-            let floor = document.getElementById('floor').value;
-            let size = document.getElementById('size').value;
-            let unitPrice = document.getElementById('unitPrice').value;
-            let excharge = document.getElementById('excharge').value;
-            let defaultCapacity = document.getElementById('defaultCapacity').value;
-            let maxCapacity = document.getElementById('maxCapacity').value;
-            let parking = document.getElementById('parking').value;
-            let isNumeric = [{
-                check: size,
-                message: "면적을 1 이상의 숫자로 입력하세요."
-            }, {
-                check: parking,
-                message: "주차 대수를 0 이상의 정수로 입력하세요"
-            }, {
-                check: floor,
-                message: "층수를 1 이상의 정수로 입력하세요."
-            }, {
-                check: unitPrice,
-                message: "시간당 대여료를 1 이상의 정수로 입력하세요."
-            }, {
-                check: excharge,
-                message: "1인 추가시 대여료를 1 이상의 정수로 입력하세요."
-            }, {
-                check: defaultCapacity,
-                message: "기본 인원을 1 이상의 정수로 입력하세요"
-            }, {
-                check: maxCapacity,
-                message: "최대 인원을 1 이상의 정수로 입력하세요",
-            }];
-            for(let i=0; i<isNumeric.length; i++){
-              let temp = Number(isNumeric[i].check);
-              if(i == 0){ //면적
-                if(isNaN(temp) || temp < 1){
-                  alert(isNumeric[i].message);
-                  return false;
-                }
-              }else if(i == 1){ //주차대수
-                if(Number.isInteger(temp) && temp >= 0){
-                  continue;
-                }else{
-                alert(isNumeric[i].message);
-                return false;
-                }
-              }else{ //층수, 시간당 대여료, 1인 추가시 대여료, 기본 인원, 최대 인원
-                if(Number.isInteger(temp) && temp >= 1){
-                  continue;
-                }else{
-                alert(isNumeric[i].message);
-                return false;
-                }
-              }
-            }
-        }
+    checkFlip(){
+      let check = document.getElementById('cb5');
+      if(check.checked){ //평
+        alert("지금 평이당");
+      }else{ //제곱미터
+        alert("지금 제곱미터당");
+      }
     }
   }
+}
 </script>
+<style scoped>
+.tgl {
+  display: none;
+}
+.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
+  box-sizing: border-box;
+}
+.tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl + .tgl-btn::-moz-selection {
+  background: none;
+}
+.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
+  background: none;
+}
+.tgl + .tgl-btn {
+  outline: 0;
+  display: block;
+  width: 4em;
+  height: 2em;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
+  position: relative;
+  display: block;
+  content: "";
+  width: 50%;
+  height: 100%;
+}
+.tgl + .tgl-btn:after {
+  left: 0;
+}
+.tgl + .tgl-btn:before {
+  display: none;
+}
+.tgl:checked + .tgl-btn:after {
+  left: 50%;
+}
+
+.tgl-flip + .tgl-btn {
+  padding: 2px;
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+  font-family: sans-serif;
+  -webkit-perspective: 100px;
+          perspective: 100px;
+}
+.tgl-flip + .tgl-btn:after, .tgl-flip + .tgl-btn:before {
+  display: inline-block;
+  -webkit-transition: all .4s ease;
+  transition: all .4s ease;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  line-height: 2em;
+  font-weight: bold;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border-radius: 4px;
+}
+.tgl-flip + .tgl-btn:after {
+  content: attr(data-tg-on);
+  background: #034EA2;
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+.tgl-flip + .tgl-btn:before {
+  background: #33A3DC;
+  content: attr(data-tg-off);
+}
+.tgl-flip + .tgl-btn:active:before {
+  -webkit-transform: rotateY(-20deg);
+          transform: rotateY(-20deg);
+}
+.tgl-flip:checked + .tgl-btn:before {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+.tgl-flip:checked + .tgl-btn:after {
+  -webkit-transform: rotateY(0);
+          transform: rotateY(0);
+  left: 0;
+  background: #034EA2;
+}
+.tgl-flip:checked + .tgl-btn:active:after {
+  -webkit-transform: rotateY(20deg);
+          transform: rotateY(20deg);
+}
+
+</style>

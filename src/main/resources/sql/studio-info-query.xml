@@ -149,7 +149,7 @@
 	<insert id="registerStudioInfo" parameterType="studio">
 		INSERT 
 		INTO studio (com_id, category_id, name, description, rule, main_img, port_img, cad_img, floor) 
-		VALUES(#{comId}, #{categoryId}, #{name}, #{description}, #{rule}, #{mainImg}, #{portImg}, #{cadImg}, #{floor});
+		VALUES((SELECT com_id FROM company WHERE com_id = #{comId}), #{categoryId}, #{name}, #{description}, #{rule}, #{mainImg}, #{portImg}, #{cadImg}, #{floor});
 	</insert>
 	<!-- 태그 등록 -->
 	<insert id="registerTag" parameterType="tag">
@@ -166,7 +166,7 @@
 		SELECT * FROM studio WHERE name = #{name} AND com_id = #{comId};
 	</select>
 	<!-- address, comId로 studio를 가져옴 -->
-	<select id="getStudioByAddrAndComId" resultMap="studioInfoRM">
+	<select id="getStudioByAddrAndComId" parameterType="hashMap" resultMap="studioInfoRM">
 		SELECT *
 		FROM 
 		(SELECT * FROM studio WHERE com_id = #{comId}) s, 

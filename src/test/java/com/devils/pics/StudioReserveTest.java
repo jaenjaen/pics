@@ -40,8 +40,8 @@ class StudioReserveTest {
 	void contextLoads() throws Exception {	
 
 		String NS = "StudioReserveMapper.";
-		Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
-		Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
+		// Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
+		// Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
 
 //		System.out.println("==================== getExceptionDate ====================");
 //		try {
@@ -55,8 +55,8 @@ class StudioReserveTest {
 
 //		System.out.println("==================== Reserve ====================");
 //		
-		Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
-				"2020-08-21", 150000,"2020-08-11", 7);
+		//Reservation reservation =new Reservation(1, 13, customer, studio, "2020-08-19", 
+		//		"2020-08-21", 150000,"2020-08-11", 7);
 //		System.out.println(customer);
 //		System.out.println(studio);
 //		System.out.println(reservation);
@@ -66,7 +66,7 @@ class StudioReserveTest {
 //		}catch (NullPointerException e) {System.out.println("등록 과정에 문제가 있나봐!!!");}
 
 //		System.out.println("==================== getReservations ====================");
-		List<Reservation> resInfo=new ArrayList<Reservation>();
+		//List<Reservation> resInfo=new ArrayList<Reservation>();
 //		resInfo.setResId(1);;
 //		resInfo.setCustomer(customer);
 //		resInfo.setStuId(studio.getStuId());
@@ -79,7 +79,7 @@ class StudioReserveTest {
 //		resInfo.add(new Reservation(4));
 //		resInfo.add(new Reservation(5));
 //		System.out.println(resInfo);
-		List<Reservation> reserveVO = sqlSession.selectList(NS+"getReservation");
+		//List<Reservation> reserveVO = sqlSession.selectList(NS+"getReservation");
 //		for(Reservation re : reserveVO )
 //			System.out.println(re );
 		
@@ -158,11 +158,30 @@ class StudioReserveTest {
 //			System.out.println(reserveService.AddexceptionDates(reservation));
 //		}catch (NullPointerException e) {System.out.println("exptionDate에 등록");}
 
-		System.out.println("==================== reserve ====================");
-		try {
-			System.out.println(reserveService.AddReservation(reservation));
-		}catch (NullPointerException e) {System.out.println("예약에 실패했습니다.");}
-
+//		System.out.println("==================== reserve ====================");
+//		try {
+//			System.out.println(reserveService.AddReservation(reservation));
+//		}catch (NullPointerException e) {System.out.println("예약에 실패했습니다.");}
 		
+//		System.out.println("==================== getReservation of Customer====================");
+//		Reservation r = new Reservation();
+//		r.setCustId(15);
+//		
+//		List<Reservation> reserveVO = sqlSession.selectList(NS+"getReservation",r);
+//		for(Reservation re : reserveVO )
+//			System.out.println(re);
+
+//		System.out.println("==================== getExpiredReservation====================");
+//		
+//		List<Reservation> reserveVO = sqlSession.selectList(NS+"getExpiredReservation",15);
+//		for(Reservation re : reserveVO )
+//			System.out.println(re);
+		
+//		System.out.println("==================== getWillReservation====================");
+//		
+//		List<Reservation> reserveVO = sqlSession.selectList(NS+"getWillReservation",15);
+//		for(Reservation re : reserveVO )
+//			System.out.println(re);
+			
 	}
 }

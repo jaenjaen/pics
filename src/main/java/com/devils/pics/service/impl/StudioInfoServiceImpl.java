@@ -1,6 +1,8 @@
 package com.devils.pics.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.devils.pics.dao.StudioInfoDAO;
@@ -37,11 +39,11 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 	}
 	
 	@Override
-	public boolean isExistStudio(Studio studio) {
+	public boolean isExistStudio(Studio studio, Map map) {
 		/* 중복 등록을 막기 위해 DB상에 이미 존재하는 스튜디오인지 검사함 */
 		List<Studio> studio1 = studioInfoDao.getStudioByNameAndComId(studio); //name과 comId로 찾음
 		System.out.println(studio1);
-		List<Studio> studio2 = studioInfoDao.getStudioByAddrAndComId(studio); //address와 comId로 찾음
+		List<Studio> studio2 = studioInfoDao.getStudioByAddrAndComId(map); //address와 comId로 찾음
 		System.out.println(studio2);
 		if(studio1.size() < 1 && studio2.size() < 1) { //이미 존재하는 스튜디오가 아니라면
 			return false;

@@ -1,4 +1,3 @@
-
 <template>
   <div class="container" id="reserveStudio">
     <aside v-for="(studio, index) in studios" v-bind:key="index">
@@ -162,43 +161,4 @@
   </div>
  </template>
 <script scoped src="@/assets/js/studioInfo/Reservation.js"></script>
-<!-- <style scoped src='vue-material/dist/vue-material.min.css'></style>
-<style scoped src='vue-material/dist/theme/default.css'></style> -->
-<style scoped>
-.container {
-  width: 100%;
-}
-aside {
-  align-content: center;
-}
-
-#reservation-floating-banner {
-  background-color: #ffff;
-  /* box-shadow: 5px 9px rgb(196, 194, 194); */
-  /* position: absolute; */
-  width: 100%;
-  padding: 3px 10px;
-}
-.input-reserve-info-field{  
-  width:100%;
-  margin: 5% auto;
-
-}
-.date-input-field{
-  margin-left:10%;
-  width:30%;
-  float:left;
-}
-.time-input-field{
-  width:30%;
-  float:right;
-  margin-right:10%;
-}
-
-#totalPeople{
-  display:block;
-  border-radius:10px;
-  border:1px solid lightgray;
-  text-align:center;
-}
-</style>
+<style scoped src="@/assets/css/studioInfo/reservation.css"></style>

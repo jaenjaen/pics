@@ -248,7 +248,7 @@ export default {
                     .finally(() => (this.loading = false));
             }
             //2. 예약 정보 확인 reservation 변수 설정
-            if (this.total_price > 0 && this.checkSchedule == "") {
+            if (this.total_price > 0 && this.msg == "") {
                 let reservation = {
                     stuId: 10, //this.stuId,
                     custId: this.customer.custId,

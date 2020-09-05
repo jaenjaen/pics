@@ -129,7 +129,7 @@
         <hr />
         <!-- ============== Chart & Graph ============== -->
         <div class="article-Chart-area" border="2">
-          <div style="width:500px;heigth:500px">
+          <div style="width:30%;heigth:20%">
            <!--   도넛 그래프 -->
 					 <div id="canvas-holder" style="width:100%">
 						<div class="chartjs-size-monitor">
@@ -141,7 +141,9 @@
 							</div>
 						</div>
               <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
-                <chart-gender :chart-data="datacollection" :options="options"></chart-gender>
+                  <Doughnut
+                  :chartdata="datacollection"
+                  :options="options"></Doughnut>
                 <!-- <button @click="fillData()">Set Chart</button> -->
               </canvas>
 					</div> 

@@ -131,6 +131,7 @@ export default {
             }
         },
         totalPriceCalculate: function() {
+            this.msg = "";
             // 1. 일자 >> 시간대로 변경
             var startDay = this.transDate(this.start_date);
             var endDay = this.transDate(this.end_date);
@@ -149,19 +150,15 @@ export default {
                 if (this.start_date != "" && this.checkOpenDate() == 0) {
                     this.start_date = "";
                     this.msg = "시작일이 비영업일 입니다.";
-                    alert(this.msg);
                 }
                 if (this.end_date != "" && this.checkCloseDate() == 0) {
                     this.end_date = "";
                     this.msg = "종료일이 영업일이 아닙니다.";
-                    alert(this.msg);
                 }
                 if (this.startDayTime < new Date() && this.start_date != "") {
                     this.start_date = this.today;
                     startTime = this.start_date;
                     this.msg = "대여 시작일은 현재 날짜 이후로 가능합니다.";
-                    alert(this.msg);
-
                 }
                 if (startDay > endDay && this.end_date != "") {
                     alert("대여 종료일을 시작일 이후로 설정하세요.");
@@ -172,12 +169,11 @@ export default {
             if (this.start_time < 25 | this.end_time < 25) {
                 if (this.checkOpenTime(startTime) != 1 & this.start_time < 25) {
                     this.msg = "시작 시간이 영업 외 시간 입니다.";
-                    alert(this.msg);
                     this.start_time = "";
+
                 }
                 if (this.checkCloseTime(endTime) != 1 && this.end_time < 25) {
                     this.msg = "종료 시간이 영업 외 시간 입니다.";
-                    alert(this.msg);
                     this.end_time = "";
                 }
                 if (this.difTime == 0) {
@@ -221,14 +217,14 @@ export default {
     methods: {
         deletePeople() {
             if (this.total_people > 1) this.total_people--;
-            else alert("최소 1명 이상 선택해주세요.");
+            else this.msg = "최소 1명 이상 선택해야 합니다.";
         },
         addPeople() {
             if (
                 this.total_people < parseInt(this.studios[0].studioFilter.maxCapacity)
             )
                 this.total_people++;
-            else alert("최대 인원을 초과했습니다.");
+            else this.msg = "최대 인원을 초과했습니다.";
         },
         addReserve() {
             // 유저 Id 가져오기

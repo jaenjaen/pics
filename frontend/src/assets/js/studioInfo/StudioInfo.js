@@ -69,30 +69,28 @@ export default {
             portImgList: [],
 
             // Chart & Graph 변수
-            // female: 2,
-            // total: 1,
-            // datacollection: {
-            //     labels: ['Female', 'Male'],
-            //     datasets: [{
-            //         label: "Gender Ratio",
-            //         backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
-            //         data: [0, 0]
-            //     }]
-            // },
-            // options: {
-            //     responsive: true,
-            //     legend: {
-            //         position: "top"
-            //     },
-            //     title: {
-            //         display: true,
-            //         text: "Gender Ratio"
-            //     },
-            //     animation: {
-            //         animateScale: true
-            //     }
-            //     // }
-            // }
+            datacollection: {
+                labels: ['Female', 'Male'],
+                datasets: [{
+                    label: "Gender Ratio",
+                    backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
+                    data: [0, 0]
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: "top"
+                },
+                title: {
+                    display: true,
+                    text: "Gender Ratio"
+                },
+                animation: {
+                    animateScale: true
+                }
+                // }
+            }
         };
     },
 
@@ -200,29 +198,29 @@ export default {
             this.$set(this.datacollection.datasets[0].data, 1, this.total);
             console.log(this.datacollection.datasets[0].data + ": Last");
         },
-        // getGenderData() {
-        //     axios
-        //         .get("http://127.0.0.1:7777/studio/genderRatio/" + this.stuId)
-        //         .then(response => {
-        //             this.result = response.data;
-        //             this.total = this.result.length;
-        //             this.female = 0;
-        //             // console.log("result : " + this.result + ", this.total : " + this.total)
-        //             // var female=0;
-        //             for (var i = 0; i < this.result.length; i++) {
-        //                 if (this.result[i].gender == "F") {
-        //                     //여자 수만큼 세기
-        //                     this.female += 1;
-        //                 }
-        //             }
-        //             return [this.female, this.total];
-        //             // console.log("aaa1");
-        //             // this.$set(this.datacollection.datasets[0].data, 0, this.female);
-        //             // this.$set(this.datacollection.datasets[0].data, 1, this.total);
-        //             // this.filltData()
-        //             // console.log("aaa2");
-        //         })
-        // },
+        getGenderData() {
+            axios
+                .get("http://127.0.0.1:7777/studio/genderRatio/" + this.stuId)
+                .then(response => {
+                    this.result = response.data;
+                    this.total = this.result.length;
+                    this.female = 0;
+                    // console.log("result : " + this.result + ", this.total : " + this.total)
+                    // var female=0;
+                    for (var i = 0; i < this.result.length; i++) {
+                        if (this.result[i].gender == "F") {
+                            //여자 수만큼 세기
+                            this.female += 1;
+                        }
+                    }
+                    return [this.female, this.total];
+                    // console.log("aaa1");
+                    // this.$set(this.datacollection.datasets[0].data, 0, this.female);
+                    // this.$set(this.datacollection.datasets[0].data, 1, this.total);
+                    // this.filltData()
+                    // console.log("aaa2");
+                })
+        },
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },
@@ -275,21 +273,5 @@ export default {
             this.$modal.hide("regBook");
             this.$modal.hide("login-required");
         }
-
-
-
-        ////////////////////////////// Chart & Graph Methods //////////////////////////////
-        // chartData: function() {
-        //     var customer = this.customers;
-        //     this.total = customer.length;
-        //     this.female = 0;
-        //     for (var i = 0; i < this.total; i++) {
-        //         if (this.customers[i].gender == "F") {
-        //             this.female++;
-        //         }
-        //     }
-        //     this.$set(this.datacollection.datasets[0].data, 0, this.female);
-        //     this.$set(this.datacollection.datasets[0].data, 1, this.total);
-        // }
     }
 };

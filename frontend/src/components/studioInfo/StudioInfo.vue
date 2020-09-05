@@ -141,9 +141,7 @@
 							</div>
 						</div>
               <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
-                  <Doughnut
-                  :chartdata="datacollection"
-                  :options="options"></Doughnut>
+                <Doughnut :chart-data="datacollection" :options="options"></Doughnut>
                 <!-- <button @click="fillData()">Set Chart</button> -->
               </canvas>
 					</div> 

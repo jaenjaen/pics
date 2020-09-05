@@ -3,7 +3,6 @@ import Vue from 'vue'
 import carousel from "vue-owl-carousel"; //캐러셀
 import "materialize-css";
 import VModal from 'vue-js-modal'
-import 'vue-material/dist/vue-material.min.css'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'

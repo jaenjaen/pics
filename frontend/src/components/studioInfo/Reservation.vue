@@ -164,7 +164,8 @@
   </div>
  </template>
 <script scoped src="@/assets/js/studioInfo/Reservation.js"></script>
-
+<style scoped src='vue-material/dist/vue-material.min.css'></style>
+<style scoped src='vue-material/dist/theme/default.css'></style>
 <style scoped>
 .container {
   width: 100%;

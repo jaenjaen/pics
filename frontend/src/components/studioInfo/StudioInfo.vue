@@ -310,7 +310,8 @@
 
 
 <script src="@/assets/js/studioInfo/StudioInfo.js"></script>
-
+<style scoped src='vue-material/dist/vue-material.min.css'></style>
+<style scoped src='vue-material/dist/theme/default.css'></style>
 <style scoped>
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 @media screen and (max-width: 768px) {

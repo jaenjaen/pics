@@ -17,4 +17,7 @@ https://tutorials.pytorch.kr/beginner/saving_loading_models.html
 6. 이미지 데이터 전처리
 https://wordbe.tistory.com/entry/Data-Loading-and-Processing-Tutorial
 
+7. 이미지 DataLoader로 받기
+https://data-panic.tistory.com/13
+
 

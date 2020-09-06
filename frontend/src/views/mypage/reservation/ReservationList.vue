@@ -27,6 +27,9 @@
           <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
           <td>{{reservation.totalPrice}}원</td>
         </tr>
+        <tr v-if="emptyFlag">
+          <td colspan="5"><br>해당 월의 예약이 존재하지 않습니다.</td>
+        </tr>
       </table>
     </div>
   </div>
@@ -48,6 +51,7 @@ export default {
       custId: JSON.parse(sessionStorage.getItem("customer")).custId,
       month: today + "",
       resvList: [],
+      emptyFlag: false
     };
   },
   mounted() {
@@ -66,14 +70,21 @@ export default {
   },
   methods:{
     changeMonth(){
+      var monthList = [4,6,9,11];
       var yyyy = new Date(this.month).getFullYear();
       var mm = new Date(this.month).getMonth()+1;
       var startDate = yyyy+"-"+mm+"-"+1;
-      var endDate = yyyy+"-"+mm+"-"+30;
+      var endDate = "";
+
+      if(mm == 2) endDate = yyyy+"-"+mm+"-"+28;
+      else if(monthList.indexOf(mm)>=0) endDate = yyyy+"-"+mm+"-"+30;
+      else endDate = yyyy+"-"+mm+"-"+31;
       console.log(startDate+" and "+endDate);
       axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
       .then(res=>{
         this.resvList = res.data;
+        console.log(res.data);
+        if(res.data == "") this.emptyFlag =true;
       })
       .catch(err=>{
         console.log(err);

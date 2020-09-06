@@ -54,16 +54,40 @@
                 </div>
                 </div>
             </div>
+            <div class='chat-message chat-message-sender'>
+                <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user2.jpg' />
+                <div class='chat-message-wrapper'>
+                <div class='chat-message-content'>
+                    <p>Awesome! See you later! : )</p>
+                </div>
+                <div class='chat-details'>
+                    <span class='chat-message-localization font-size-small'>My Address</span>
+                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                </div>
+                </div>
+            </div>
+            <div class='chat-message chat-message-sender'>
+                <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user2.jpg' />
+                <div class='chat-message-wrapper'>
+                <div class='chat-message-content'>
+                    <p>Awesome! See you later! : )</p>
+                </div>
+                <div class='chat-details'>
+                    <span class='chat-message-localization font-size-small'>My Address</span>
+                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                </div>
+                </div>
+            </div>
             </div>
             <footer>
                 <span>
-                    첨부파일
+                    <img src="http://localhost:7777/upload/default/add.png" width="20px" height="20px">
                 </span>
                 <span>
                     <input type="text" id="word" name="word">
                 </span>
                 <span>
-                    보내기
+                    <img src="http://localhost:7777/upload/default/send.png" width="20px" height="20px">
                 </span>
             </footer>
         </div>
@@ -81,6 +105,9 @@
   font-weight: 300;
   outline: none;
   box-sizing: border-box;
+}
+#app {
+    padding: 50px;
 }
 .padding {
   padding: 20px;
@@ -208,11 +235,12 @@
   color: #bbb;
 }
 footer{
+    display: block;
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 80%;
-    height: 250px;
+    width: 100%;
+    height: 110px;
     padding: 15px 0;
     margin: 0 auto;
     text-align: center;

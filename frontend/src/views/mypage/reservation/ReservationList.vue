@@ -1,7 +1,7 @@
 <template>
   <div class="publicSpace">
     <div id="month_header">
-      <button >
+      <button @click="beforeMonth">
         <img src="@/assets/img/util/backward.svg">
       </button>
       <span>
@@ -14,7 +14,7 @@
           @selected="changeMonth()">
         </vue-monthly-picker>
       </span>
-      <button>
+      <button @click="afterMonth">
         <img src="@/assets/img/util/forward.svg">
       </button>
     </div>
@@ -40,6 +40,7 @@ import axios from "axios";
 import VueMonthlyPicker from 'vue-monthly-picker'
 
 let today = new Date();
+let monthList = [4,6,9,11];
 
 export default {
   name: "ReservationList",
@@ -70,26 +71,87 @@ export default {
   },
   methods:{
     changeMonth(){
-      var monthList = [4,6,9,11];
       var yyyy = new Date(this.month).getFullYear();
       var mm = new Date(this.month).getMonth()+1;
       var startDate = yyyy+"-"+mm+"-"+1;
       var endDate = "";
-
       if(mm == 2) endDate = yyyy+"-"+mm+"-"+28;
       else if(monthList.indexOf(mm)>=0) endDate = yyyy+"-"+mm+"-"+30;
       else endDate = yyyy+"-"+mm+"-"+31;
       console.log(startDate+" and "+endDate);
+      
       axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
       .then(res=>{
         this.resvList = res.data;
+        this.emptyFlag =false;
         console.log(res.data);
         if(res.data == "") this.emptyFlag =true;
       })
       .catch(err=>{
         console.log(err);
       });
-    }
+    },
+    beforeMonth(){
+      var startDate = "";
+      var endDate = "";
+      //console.log(this.month);//2020-6
+      if(this.month == today+""){
+        this.month = today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate();
+        startDate = today.getFullYear()+"-"+today.getMonth()+"-"+1;
+        if(today.getMonth() == 2) endDate = today.getFullYear()+"-"+today.getMonth()+"-"+28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = today.getFullYear()+"-"+today.getMonth()+"-"+30;
+        else endDate = today.getFullYear()+"-"+today.getMonth()+"-"+31;
+      }
+      else {
+        var tmpDate = new Date(this.month);
+        this.month = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+tmpDate.getDate();
+        startDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+1;
+        if(today.getMonth() == 2) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+30;
+        else endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+31;
+        }
+      axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
+      .then(res=>{
+        this.resvList = res.data;
+        this.emptyFlag =false;
+        console.log(res.data);
+        if(res.data == "") this.emptyFlag =true;
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+    },//~beforeMonth
+    afterMonth(){
+      var startDate = "";
+      var endDate = "";
+      //console.log(this.month);//2020-6
+      if(this.month == today+""){
+        this.month = today.getFullYear()+"-"+today.getMonth()+2+"-"+today.getDate();
+        startDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+1;
+        if(today.getMonth() == 2) endDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+30;
+        else endDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+31;
+      }
+      else {
+        var tmpDate = new Date(this.month);
+        this.month = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+tmpDate.getDate();
+        startDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+1;
+        if(today.getMonth()+1 == 2) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+28;
+        else if(monthList.indexOf(today.getMonth()+1)>=0) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+30;
+        else endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+31;
+        }
+      axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
+      .then(res=>{
+        this.resvList = res.data;
+        this.emptyFlag =false;
+        console.log(res.data);
+        if(res.data == "") this.emptyFlag =true;
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+
+    }//~aftermonth
   }
 };
 </script>

@@ -177,11 +177,11 @@ class StudioReserveTest {
 //		for(Reservation re : reserveVO )
 //			System.out.println(re);
 		
-//		System.out.println("==================== getWillReservation====================");
-//		
-//		List<Reservation> reserveVO = sqlSession.selectList(NS+"getWillReservation",15);
-//		for(Reservation re : reserveVO )
-//			System.out.println(re);
+		System.out.println("==================== getWillReservation====================");
+		
+		List<Reservation> reserveVO = sqlSession.selectList(NS+"getWillReservation",15);
+		for(Reservation re : reserveVO )
+			System.out.println(re);
 		
 //		System.out.println("==================== getMonthReservation====================");
 //		Reservation r = new Reservation();

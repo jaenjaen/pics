@@ -103,15 +103,16 @@ public class StudioInfoController {
 			}
 		}
 	
-//	@GetMapping("/studio/genderRatio/{stuId}")
-//	public ResponseEntity genderRatio(@PathVariable int stuId) {	
-//		try {
-//			List<Customer> customerList=studioInfoService.genderRatio(stuId);
-//		return new ResponseEntity(customerList,HttpStatus.OK);
-//		}catch (NullPointerException e) {
-//			return new ResponseEntity(HttpStatus.NO_CONTENT);
-//		}
-//	}
+	@GetMapping("/studio/genderRatio/{stuId}")
+	public ResponseEntity genderRatio(@PathVariable int stuId) {	
+		try {
+			List<Customer> customers=studioInfoService.genderRatio(stuId);
+			System.out.println(customers);
+		return new ResponseEntity(customers,HttpStatus.OK);
+		}catch (NullPointerException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
 }
 
 

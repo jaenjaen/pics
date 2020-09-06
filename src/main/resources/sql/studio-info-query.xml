@@ -56,7 +56,6 @@
 			<result property="custId" column="cust_id"/>
 			<result property="apiId" column="api_id"/>
 			<result property="gender" column="gender"/>
-			<result property="age" column="age"/>
 			<result property="job" column="job" />
 			<result property="funnel" column="funnel"/>
 			<result property="email" column="email" />
@@ -97,7 +96,7 @@
  	<select id="getStudioReviews" parameterType="int" resultMap="reviewRM">
 		SELECT
 		re.review_id,re.score, re.content, re.img, re.reg_date, re.answer,
-		c.cust_id,c.api_id,c.gender,c.age,c.job,c.funnel,c.email,c.tel,c.api_key,c.img_src,
+		c.cust_id,c.api_id,c.gender,c.job,c.funnel,c.email,c.tel,c.api_key,c.img_src,
 		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
 		FROM review re 
 		JOIN customer c ON re.cust_Id=c.cust_Id
@@ -129,7 +128,7 @@
 		</if>
 	</select>		
 
-	<!-- <select id="genderRatio" parameterType="int" resultType="customer">
+	 <select id="genderRatio" parameterType="int" resultType="customer">
 		SELECT c.cust_id,c.gender
 		FROM reservation res JOIN customer c ON c.cust_id=res.cust_id
 		WHERE res.stu_id=${value}
@@ -137,13 +136,7 @@
 	</select>
 	
 
-	<select id="ageRatio" parameterType="int" resultType="int">
-		SELECT c.age-mod(c.age,10) ages ,count(distinct(c.cust_id)) cnt
-		FROM reservation res JOIN customer c ON c.cust_id=res.cust_id
-		WHERE res.stu_id=${value}
-		GROUP BY ages
-	</select> -->
-	
+
 	<!--  ================== 스튜디오 공간 등록 관련 쿼리 ========================  -->
 	<!-- 스튜디오 등록 -->
 	<insert id="registerStudioInfo" parameterType="studio">

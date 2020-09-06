@@ -5,7 +5,6 @@ public class Customer {
 	private int apiId;
 	private String nickname;
 	private String gender;
-	private int age;
 	private String job;
 	private String funnel;
 	private String email;
@@ -15,13 +14,12 @@ public class Customer {
 	
 	public Customer() {}
 	
-	public Customer(int custId, int apiId, String nickname, String gender, int age, String job, String funnel,
+	public Customer(int custId, int apiId, String nickname, String gender, String job, String funnel,
 			String email, String tel, String apiKey, String imgSrc) {
 		this.custId = custId;
 		this.apiId = apiId;
 		this.nickname = nickname;
 		this.gender = gender;
-		this.age = age;
 		this.job = job;
 		this.funnel = funnel;
 		this.email = email;
@@ -60,14 +58,6 @@ public class Customer {
 
 	public void setGender(String gender) {
 		this.gender = gender;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
 	}
 
 	public String getJob() {
@@ -121,7 +111,7 @@ public class Customer {
 	@Override
 	public String toString() {
 		return "Customer [custId=" + custId + ", apiId=" + apiId + ", nickname=" + nickname + ", gender=" + gender
-				+ ", age=" + age + ", job=" + job + ", funnel=" + funnel + ", email=" + email + ", tel=" + tel
+				+ ", job=" + job + ", funnel=" + funnel + ", email=" + email + ", tel=" + tel
 				+ ", apiKey=" + apiKey + ", imgSrc=" + imgSrc + "]";
 	}		
 }

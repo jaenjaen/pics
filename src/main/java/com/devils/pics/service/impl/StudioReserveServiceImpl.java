@@ -76,6 +76,11 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	public List<Reservation> getWillReservation(int custId) {
 		return studioReserveDAO.getWillReservation(custId);
 	}
+
+	@Override
+	public List<Reservation> getMonthReservation(Reservation reservation) {
+		return studioReserveDAO.getMonthReservation(reservation);
+	}
 	
 	
 }

@@ -1,18 +1,20 @@
 <template>
   <div class="publicSpace">
     <div id="month_header">
-      <button @click="beforeMonth()">
+      <button >
         <img src="@/assets/img/util/backward.svg">
       </button>
       <span>
         <vue-monthly-picker
           v-model="month"
+          vlaue="month"
           dateFormat="MM월"
           :clearOption="false"
-          alignment="center">
+          alignment="center"
+          @selected="changeMonth()">
         </vue-monthly-picker>
       </span>
-      <button @click="afterMonth()">
+      <button>
         <img src="@/assets/img/util/forward.svg">
       </button>
     </div>
@@ -45,7 +47,7 @@ export default {
     return {
       custId: JSON.parse(sessionStorage.getItem("customer")).custId,
       month: today + "",
-      resvList: []
+      resvList: [],
     };
   },
   mounted() {
@@ -63,22 +65,19 @@ export default {
       });
   },
   methods:{
-    beforeMonth() {
-      if(this.month == today+""){
-      this.month = today.getMonth()+"";
-      }
-      else{
-        this.month = Number(this.month)-1+"";
-      }
-    },
-    afterMonth(){
-      if(this.month == today+""){
-      console.log(today.getMonth()+2);
-      this.month = String(new Date(this.month).getMonth()+2);
-      }
-      else{
-        this.month = Number(this.month)+1+"";
-      }
+    changeMonth(){
+      var yyyy = new Date(this.month).getFullYear();
+      var mm = new Date(this.month).getMonth()+1;
+      var startDate = yyyy+"-"+mm+"-"+1;
+      var endDate = yyyy+"-"+mm+"-"+30;
+      console.log(startDate+" and "+endDate);
+      axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
+      .then(res=>{
+        this.resvList = res.data;
+      })
+      .catch(err=>{
+        console.log(err);
+      });
     }
   }
 };

@@ -42,6 +42,10 @@ export default {
         }
     },
     mounted(){
+        if(sessionStorage.getItem("customer")==null){
+            alert("로그인 후 접근 가능합니다.");
+            location.href = "http://localhost:9999/customerlogin";
+        }
         axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId)
         .then(res=>{
             console.log(res.data);

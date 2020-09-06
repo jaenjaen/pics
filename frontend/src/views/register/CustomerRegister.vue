@@ -10,7 +10,7 @@
         </div>
 
         <div class="form__field" >
-          <label for="login__tel"><img class="icon" src="@/assets/img/register/gender.svg"><span class="hidden">gender</span></label>
+          <label for="login__tel"><img class="icon" src="@/assets/img/register/gender.svg"><span class="hidden">PhoneNumber</span></label>
           <input type="radio" id="M" value="M" v-model="picked"> <label for="M">남성</label> 
           <br> 
           <input type="radio" id="F" value="F" v-model="picked"> <label for="W">여성</label>
@@ -109,6 +109,7 @@ export default {
    background-color: #F5F5F5;
  }
   input[type='radio']{
-    margin-top:8%;
+    margin: auto;
+    width:25px;
   }
 </style>

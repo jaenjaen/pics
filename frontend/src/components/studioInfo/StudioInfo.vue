@@ -31,13 +31,13 @@
         </div>
         <br>
           <!-- 타이틀 -->
-        <div class="section-title-field" v-for="(studio,index) in studios" v-bind:key="index">
+        <div class="section-title-field" v-for="studio in studios" v-bind:key="studio.stuId">
           <div class="studio-name">
-            <h2> {{ studio.name }}</h2>
+            <h2> {{ studios[0].name }}</h2>
           </div>
           <div id="company-of-studio">
                 <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
-                <span>{{studio.company.name}}</span>
+                <!-- <span>{{studio.company.name}}</span> -->
             </div>
           </div> 
           <br>
@@ -70,13 +70,13 @@
         <!-- ============== Studio Filter ============== -->
       <hr>
       <article>
-          <div class="article-Filterstudiormation-area" >
-            <div v-for="(studio,index) in studios" v-bind:key="index">
+          <div class="article-studioFilter-information-area" >
+            <div v-for="studio in studios" v-bind:key="studio.stuId"> 
               <table id="Studio-Filter-Table">
                 <tr>
                   <td>넓이</td>
                   <td>{{ studio.studioFilter.size}}m<sup>2</sup>
-                  ({{ studio.studioFilter.size |sizeUnit}}/평)</td>
+                  ({{ studios.studioFilter.size |sizeUnit}}/평)</td>
                 </tr>
                 <tr>
                   <td>옵션</td>
@@ -128,37 +128,29 @@
 
         <hr />
         <!-- ============== Chart & Graph ============== -->
+        <!-- ===== 시간대별 예약 차트 ===== -->
         <div class="article-Chart-area" border="2">
           <div style="width:30%;heigth:20%">
-           <!--   도넛 그래프 -->
-            <!-- <canvas id="doughnut-chart-area" width="30%" height="200" class="chartjs-render-monitor"> -->
               <template>
-                <div id="chart-gender" width="70px" height="70px">
-                  <Doughnut 
-                    :chartdata="datacollection"
-                    :options="options"></Doughnut>
-                    <!-- <button @click="fillData()">Set Chart</button> -->
-                </div>
-              </template>
-            <!-- </canvas> -->
+              <div id="time-chart" width="70px" height="70px">
+                  <Bar 
+                  :chartdata=datacollection
+                  :options=options></Bar>
+              </div>
+              </template>            
+					</div> 
+        		
+				 	 <!-- ===== 요일별 예약 차트 ===== -->
+          <div style="width:30%;heigth:20%">
+              <template>
+              <div id="day-gender" width="70px" height="70px">
+                  <Bar 
+                  :chartdata=datacollection
+                  :options=options></Bar>
+              </div>
+              </template>            
 					</div> 
         </div>
-        		
-				 	 <!-- 히스토그램 연령대 -->
-					<!-- <div id="canvas-holder" style="width:100%">
-              <div class="chartjs-size-monitor">
-                <div class="chartjs-size-monitor-expand">
-                  <div class=""></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink">
-                  <div class=""></div>
-                </div>
-              </div>
-              <p></p>
-              <canvas id="hist-canvas" style="display: block; height: 30%; width: 100%;" width="100%" height="100%" class="chartjs-render-monitor"></canvas>
-            </div>
-          </div> -->
-        
 
         <!-- ============== Review ============== -->
         <hr>
@@ -282,19 +274,19 @@
       </article>
     <!-- 모달 모아두기 -->
     <div>
-      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal id="delBook" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="delBook">
           <p>찜목록에서 제거했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal id="regBook" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="regBook">
           <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal id="login-required" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="login-required">
           <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>

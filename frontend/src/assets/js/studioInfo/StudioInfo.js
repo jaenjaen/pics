@@ -4,20 +4,19 @@ import carousel from "vue-owl-carousel"; //캐러셀
 import VModal from 'vue-js-modal'
 import VueMaterial from 'vue-material'
 import Reservation from "@/components/studioInfo/Reservation.vue"
-
+import Bar from "@/assets/js/studioInfo/TimeChart.js";
+// import Bar from "@/assets/js/studioInfo/DayChart.js";
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
 // import Map from "@/components/studioInfo/Map.vue"
-import Doughnut from "@/assets/js/studioInfo/GenderChart.js";
 
-Vue.use(VueMaterial)
 Vue.use(VueMaterial)
 Vue.use(VModal);
 
 export default {
     name: "studio-info",
-    components: { carousel, Reservation, Doughnut },
+    components: { carousel, Reservation, Bar },
     props: {
         stuId: {
             type: String,
@@ -104,8 +103,14 @@ export default {
             .then(response => {
                 this.studios = response.data;
                 //메인 이미지 split
-                this.mainImgList = (this.studios[0].mainImg).split(',');
-                this.portImgList = (this.studios[0].portImg).split(',');
+                let mainImgSplit = (this.studios[0].mainImg).split(',');
+                let portImgSplit = (this.studios[0].mainImg).split(',')
+                for (let i = 0; i < 10; i++) {
+                    this.mainImgList.push(mainImgSplit[i]);
+                }
+                for (let i = 0; i < 4; i++) {
+                    this.portImgList.push(portImgSplit[i]);
+                }
                 console.log("this.portImgList : " + this.portImgList);
             })
             .catch(error => {

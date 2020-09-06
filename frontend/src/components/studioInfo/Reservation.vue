@@ -40,7 +40,7 @@
                   <md-select id="start_time" 
                     v-model="start_time" 
                     required
-                    style="width:45%">
+                    style="width:30%">
                       <md-option
                         required="required"
                         v-for="(time,index) in times"
@@ -56,7 +56,7 @@
                   <md-select id="end_time" 
                     v-model="end_time" 
                     required
-                    style="width:45%">
+                    style="width:30%">
                       <md-option
                         required="required"
                         v-for="(time,index) in times"
@@ -142,18 +142,37 @@
           </div>
         </form>
       </div>
+      <hr>
+      <div class="reservation-Information-area">
+          <div>
+            <div v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
+              <table id="Studio-Filter-Table">
+                <thead>
+                  <th>요일</th>
+                  <th>영업 시간</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{repeate.weekDate}}</td>
+                    <td>{{repeate.time}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
     </aside>
        <!-- 모달 모아두기 -->
     <div>
-      <modal name="success" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal name="success" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="success">
           <p>예약이 완료 되었습니다.</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="login-required">
-          <p>찜 목록에 등록했습니다</p>
+          <p>로그인 먼저 진행해주세요.</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>

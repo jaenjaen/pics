@@ -11,7 +11,6 @@ import CompanyEdit from "../views/mypage/edit/CompanyEdit.vue";
 import CustomerEdit from "../views/mypage/edit/CustomerEdit.vue";
 import ReservationList from "../views/mypage/reservation/ReservationList.vue"
 import WishList from "../views/WishList.vue";
-// import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import FileRoute from "@/components/studioRegister/FileRoute.vue";
 import StudioInfo from "../components/studioInfo/StudioInfo.vue";
@@ -21,6 +20,8 @@ import Reservation from "../components/studioInfo/Reservation.vue";
 import ChartGender from "../components/studioInfo/ChartGender.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
+import Chat from "@/components/chat/Chat.vue";
+import ChatShow from "@/components/chat/ChatShow.vue";
 
 
 Vue.use(VueRouter);
@@ -107,6 +108,14 @@ const routes = [{
         path: "/reservationlist",
         name: "reservationlist",
         component: ReservationList
+    }, {
+        path: "/chat",
+        name: "chat",
+        component: Chat
+    }, {
+        path: "/chatShow",
+        name: "chatShow",
+        component: ChatShow
     }
 
     // {

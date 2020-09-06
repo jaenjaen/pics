@@ -13,6 +13,14 @@
     font-weight: bold;
 }
 
+#month_header button {
+    border: none;
+    background: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
 .list_table table {
     width: 98%;
     margin: auto;
@@ -29,4 +37,9 @@
 
 .list_table td {
     border-bottom: 1px solid #b5b5b5a9;
+}
+
+.vue-monthly-picker {
+    width: 100px;
+    display: table-row;
 }

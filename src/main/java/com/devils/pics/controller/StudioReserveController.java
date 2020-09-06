@@ -130,6 +130,25 @@ public class StudioReserveController {
 		}
 		else return new ResponseEntity(resultList,HttpStatus.OK);
 	}
+	
+	//8.n월의 지난 예약
+	@GetMapping("/customer/reservation/expired/{custId}/{startDate}/{endDate}")
+	public ResponseEntity getMonthReservation(@PathVariable int custId, @PathVariable String startDate, @PathVariable String endDate) {
+		Reservation reservation = new Reservation();
+		reservation.setCustId(custId);
+		reservation.setStartDate(startDate);
+		reservation.setEndDate(endDate);
+		
+		try{
+			resultList = studioReserveService.getMonthReservation(reservation);
+			if(resultList.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
+			else return new ResponseEntity(resultList,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 
 	}
 

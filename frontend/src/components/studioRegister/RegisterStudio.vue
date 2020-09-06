@@ -4,7 +4,7 @@
     <div class="container">
       <h2>스튜디오 등록</h2>
       <br />
-      <form enctype="multipart/form-data" @submit.prevent="checkLogin">
+      <section>
         <div class="row">
           <div class="col-25">
             <label for="name">
@@ -515,6 +515,7 @@
           <div class="col-75">
             <div>
               <vue-multi-select
+                id="multi"
                 ref="multiSelect"
                 v-model="option_save"
                 search
@@ -595,9 +596,9 @@
         <div id="submitArea" class="row">
           <button type="button" id="reset" @click="resetContent()">새로쓰기</button>
           <button type="button" id="temp" @click="tempSave()">임시저장</button>
-          <button type="submit" id="register">등록</button>
+          <button type="submit" id="register" @click="checkLogin()">등록</button>
         </div>
-      </form>
+      </section>
     </div>
     <!-- Modal : 환불 규정 안내에 대한 동의 -->
     <div id="modalAgree1" class="modal">

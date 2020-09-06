@@ -119,6 +119,9 @@ export default {
         }
     },
     mounted() {
+        document.getElementById('multi').childNodes[0].setAttribute('style', 'width:100%; height:45px');
+        document.getElementById('multi').childNodes[1].setAttribute('style', 'width:100%;');
+
         /* DB에서 카테고리 가져오기 */
         axios.get('http://127.0.0.1:7777/category')
             .then((response) => {

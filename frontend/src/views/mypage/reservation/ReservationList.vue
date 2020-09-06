@@ -1,18 +1,20 @@
 <template>
   <div class="publicSpace">
     <div id="month_header">
-      <button @click="beforeMonth()">
+      <button @click="beforeMonth">
         <img src="@/assets/img/util/backward.svg">
       </button>
       <span>
         <vue-monthly-picker
           v-model="month"
+          vlaue="month"
           dateFormat="MM월"
           :clearOption="false"
-          alignment="center">
+          alignment="center"
+          @selected="changeMonth()">
         </vue-monthly-picker>
       </span>
-      <button @click="afterMonth()">
+      <button @click="afterMonth">
         <img src="@/assets/img/util/forward.svg">
       </button>
     </div>
@@ -25,6 +27,9 @@
           <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
           <td>{{reservation.totalPrice}}원</td>
         </tr>
+        <tr v-if="emptyFlag">
+          <td colspan="5"><br>해당 월의 예약이 존재하지 않습니다.</td>
+        </tr>
       </table>
     </div>
   </div>
@@ -35,6 +40,7 @@ import axios from "axios";
 import VueMonthlyPicker from 'vue-monthly-picker'
 
 let today = new Date();
+let monthList = [4,6,9,11];
 
 export default {
   name: "ReservationList",
@@ -45,7 +51,8 @@ export default {
     return {
       custId: JSON.parse(sessionStorage.getItem("customer")).custId,
       month: today + "",
-      resvList: []
+      resvList: [],
+      emptyFlag: false
     };
   },
   mounted() {
@@ -63,23 +70,88 @@ export default {
       });
   },
   methods:{
-    beforeMonth() {
-      if(this.month == today+""){
-      this.month = today.getMonth()+"";
-      }
-      else{
-        this.month = Number(this.month)-1+"";
-      }
+    changeMonth(){
+      var yyyy = new Date(this.month).getFullYear();
+      var mm = new Date(this.month).getMonth()+1;
+      var startDate = yyyy+"-"+mm+"-"+1;
+      var endDate = "";
+      if(mm == 2) endDate = yyyy+"-"+mm+"-"+28;
+      else if(monthList.indexOf(mm)>=0) endDate = yyyy+"-"+mm+"-"+30;
+      else endDate = yyyy+"-"+mm+"-"+31;
+      console.log(startDate+" and "+endDate);
+      
+      axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
+      .then(res=>{
+        this.resvList = res.data;
+        this.emptyFlag =false;
+        console.log(res.data);
+        if(res.data == "") this.emptyFlag =true;
+      })
+      .catch(err=>{
+        console.log(err);
+      });
     },
-    afterMonth(){
+    beforeMonth(){
+      var startDate = "";
+      var endDate = "";
+      //console.log(this.month);//2020-6
       if(this.month == today+""){
-      console.log(today.getMonth()+2);
-      this.month = String(new Date(this.month).getMonth()+2);
+        this.month = today.getFullYear()+"-"+today.getMonth()+"-"+today.getDate();
+        startDate = today.getFullYear()+"-"+today.getMonth()+"-"+1;
+        if(today.getMonth() == 2) endDate = today.getFullYear()+"-"+today.getMonth()+"-"+28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = today.getFullYear()+"-"+today.getMonth()+"-"+30;
+        else endDate = today.getFullYear()+"-"+today.getMonth()+"-"+31;
       }
-      else{
-        this.month = Number(this.month)+1+"";
+      else {
+        var tmpDate = new Date(this.month);
+        this.month = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+tmpDate.getDate();
+        startDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+1;
+        if(today.getMonth() == 2) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+30;
+        else endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+31;
+        }
+      axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
+      .then(res=>{
+        this.resvList = res.data;
+        this.emptyFlag =false;
+        console.log(res.data);
+        if(res.data == "") this.emptyFlag =true;
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+    },//~beforeMonth
+    afterMonth(){
+      var startDate = "";
+      var endDate = "";
+      //console.log(this.month);//2020-6
+      if(this.month == today+""){
+        this.month = today.getFullYear()+"-"+today.getMonth()+2+"-"+today.getDate();
+        startDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+1;
+        if(today.getMonth() == 2) endDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+30;
+        else endDate = today.getFullYear()+"-"+today.getMonth()+2+"-"+31;
       }
-    }
+      else {
+        var tmpDate = new Date(this.month);
+        this.month = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+tmpDate.getDate();
+        startDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+1;
+        if(today.getMonth()+1 == 2) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+28;
+        else if(monthList.indexOf(today.getMonth()+1)>=0) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+30;
+        else endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+1+"-"+31;
+        }
+      axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
+      .then(res=>{
+        this.resvList = res.data;
+        this.emptyFlag =false;
+        console.log(res.data);
+        if(res.data == "") this.emptyFlag =true;
+      })
+      .catch(err=>{
+        console.log(err);
+      });
+
+    }//~aftermonth
   }
 };
 </script>

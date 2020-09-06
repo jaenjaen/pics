@@ -20,4 +20,5 @@ public interface StudioReserveService {
 	public int DeleteExceptionDates(List<Reservation> reservationList); //예약 불가 테이블 업데이트\
 	public List<Reservation> getExpiredReservation(int custId); //지난예약
 	public List<Reservation> getWillReservation(int custId);//앞으로 남은 예약
+	public List<Reservation> getMonthReservation(Reservation reservation);//지난 예약중 n월의예약
 }

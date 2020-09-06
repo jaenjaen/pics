@@ -74,4 +74,9 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 		return sqlSession.selectList(NS+"getWillReservation", custId);
 	}
 
+	@Override
+	public List<Reservation> getMonthReservation(Reservation reservation) {
+		return sqlSession.selectList(NS+"getMonthReservation", reservation);
+	}
+
 }

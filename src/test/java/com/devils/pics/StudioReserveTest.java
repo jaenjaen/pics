@@ -172,14 +172,23 @@ class StudioReserveTest {
 //			System.out.println(re);
 
 //		System.out.println("==================== getExpiredReservation====================");
-//		
+		
 //		List<Reservation> reserveVO = sqlSession.selectList(NS+"getExpiredReservation",15);
 //		for(Reservation re : reserveVO )
 //			System.out.println(re);
 		
-//		System.out.println("==================== getWillReservation====================");
-//		
-//		List<Reservation> reserveVO = sqlSession.selectList(NS+"getWillReservation",15);
+		System.out.println("==================== getWillReservation====================");
+		
+		List<Reservation> reserveVO = sqlSession.selectList(NS+"getWillReservation",15);
+		for(Reservation re : reserveVO )
+			System.out.println(re);
+		
+//		System.out.println("==================== getMonthReservation====================");
+//		Reservation r = new Reservation();
+//		r.setCustId(15);
+//		r.setStartDate("2020-09-01");
+//		r.setEndDate("2020-09-30");
+//		List<Reservation> reserveVO = sqlSession.selectList(NS+"getMonthReservation",r);
 //		for(Reservation re : reserveVO )
 //			System.out.println(re);
 			

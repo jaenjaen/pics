@@ -59,7 +59,12 @@
 			
 		</association>
 	</resultMap>
-
+	
+	<sql id="select-reservation-studio">
+		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
+				,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		FROM reservation r,studio s
+	</sql>
 	
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
   	<select id="getExceptionDate" parameterType="int" resultType="exceptionDate">							
@@ -156,23 +161,29 @@
 	
 	<!-- reservation for customer
 		 1. 오늘 이전 날짜 예약
-		 2. 오늘 이후 날짜 예약 -->
-		 
+		 2. 오늘 이후 날짜 예약 
+		 3. 월별 예약-->
+	
+	
 	<select id="getExpiredReservation" parameterType="int" resultMap="resv-stuRM">
-		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
-				,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
-		FROM reservation r,studio s
+		<include refid="select-reservation-studio"/>
 		where cust_id = #{value}
+		and s.stu_id =r.stu_id
 		and start_date &lt; now()
-		and s.stu_id =r.stu_id;
 	 </select>
 	 
 	 <select id="getWillReservation" parameterType="int" resultMap="resv-stuRM">
-	 	SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
-				,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
-		FROM reservation r,studio s
+	 	<include refid="select-reservation-studio"/>
 		where cust_id = #{value}
+		and s.stu_id =r.stu_id
 		and start_date &gt;= now()
-		and s.stu_id =r.stu_id;
+	 </select>
+	 
+	 <select id="getMonthReservation" parameterType="reservation" resultMap="resv-stuRM">
+	 	<include refid="select-reservation-studio"/>
+		where cust_id = #{custId}
+		and s.stu_id =r.stu_id
+	 	and start_date &lt; now()
+	 	and start_date between #{startDate} and #{endDate}
 	 </select>
  </mapper> 

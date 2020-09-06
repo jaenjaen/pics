@@ -131,21 +131,17 @@
         <div class="article-Chart-area" border="2">
           <div style="width:30%;heigth:20%">
            <!--   도넛 그래프 -->
-					 <div id="canvas-holder" style="width:100%">
-						<div class="chartjs-size-monitor">
-							<div class="chartjs-size-monitor-expand">
-								<div class=""></div>
-							</div>
-							<div class="chartjs-size-monitor-shrink">
-								<div class=""></div>
-							</div>
-						</div>
-              <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
-                <Doughnut :chart-data="datacollection" :options="options"></Doughnut>
-                <!-- <button @click="fillData()">Set Chart</button> -->
-              </canvas>
+            <!-- <canvas id="doughnut-chart-area" width="30%" height="200" class="chartjs-render-monitor"> -->
+              <template>
+                <div id="chart-gender" width="70px" height="70px">
+                  <Doughnut 
+                    :chartdata="datacollection"
+                    :options="options"></Doughnut>
+                    <!-- <button @click="fillData()">Set Chart</button> -->
+                </div>
+              </template>
+            <!-- </canvas> -->
 					</div> 
-          </div> 
         </div>
         		
 				 	 <!-- 히스토그램 연령대 -->

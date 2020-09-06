@@ -146,5 +146,7 @@ public class StudioInfoTest {
 //			if(customerList.get(i).getGender()=='F') count++;
 //		}	
 //		System.out.println(count+"|"+customerList.size());
+	
+
 	}
 }

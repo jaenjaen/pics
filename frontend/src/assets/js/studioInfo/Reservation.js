@@ -288,7 +288,7 @@ export default {
                 return resultDate;
             }
         },
-        transDay(date) {
+        transWeekDay(date) {
             if (date != null) {
                 let splitDate = date.split('-');
                 let resultDate = (new Date(splitDate[0], splitDate[1], splitDate[2])).getDay();
@@ -296,7 +296,7 @@ export default {
             }
         },
         checkOpenDate() {
-            this.startDay = this.transDay(this.start_date);
+            this.startDay = this.transWeekDay(this.start_date);
             if (this.repeatedDays.indexOf(week[this.startDay], 0) > -1) { //일치하는 요일의 종료 시간 가져오기
                 return 1;
             } else {
@@ -317,7 +317,7 @@ export default {
             return 0;
         },
         checkCloseDate() {
-            this.endDay = this.transDay(this.end_date);
+            this.endDay = this.transWeekDay(this.end_date);
             if (this.repeatedDays.indexOf(week[this.endDay], 0) > -1) { //일치하는 요일의 종료 시간 가져오기
                 console.log("week[this.endDay] : " + week[this.endDay] + "| this.repeatedDays" + this.repeatedDays)
                 return 1;

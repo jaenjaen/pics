@@ -1,5 +1,16 @@
-import { Doughnut } from "vue-chartjs";
+<template>
+  <div class="container" id="chart-gender">
+    <Doughnut
+      :chartdata="datacollection"
+      :options="options"></Doughnut>
+      <!-- <button @click="fillData()">Set Chart</button> -->
+  </div>
+</template>
+
+
+<script>
 import axios from "axios";
+import Doughnut from "@/assets/js/studioInfo/GenderChart.js";
 
 export default {
     extends: Doughnut,
@@ -107,3 +118,4 @@ export default {
         // },
     }
 }
+</script>

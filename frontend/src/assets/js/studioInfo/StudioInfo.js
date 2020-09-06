@@ -4,11 +4,12 @@ import carousel from "vue-owl-carousel"; //캐러셀
 import VModal from 'vue-js-modal'
 import VueMaterial from 'vue-material'
 import Reservation from "@/components/studioInfo/Reservation.vue"
-import Doughnut from "@/assets/js/studioInfo/GenderChart.js"
+
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
 // import Map from "@/components/studioInfo/Map.vue"
+import Doughnut from "@/assets/js/studioInfo/GenderChart.js";
 
 Vue.use(VueMaterial)
 Vue.use(VueMaterial)

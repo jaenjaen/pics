@@ -18,7 +18,7 @@ import StudioInfo from "../components/studioInfo/StudioInfo.vue";
 import Reservation from "../components/studioInfo/Reservation.vue";
 // import Map from "../components/Map.vue";
 // import Test from "../components/Test.vue";
-import ChartGender from "../components/studioInfo/ChartGender.vue";
+import GenderChart from "../components/studioInfo/GenderChart.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 
@@ -84,9 +84,9 @@ const routes = [{
         component: StudioInfo,
         props: true
     }, {
-        path: "/chartgender",
-        name: "chartgender",
-        component: ChartGender
+        path: "/genderchart",
+        name: "genderchart",
+        component: GenderChart
     }, {
         path: "/studioList",
         name: "studioList",
@@ -103,7 +103,8 @@ const routes = [{
         path: "/uploadImg",
         name: "uploadImg",
         component: UploadImg
-    }, {
+    },
+    {
         path: "/reservationlist",
         name: "reservationlist",
         component: ReservationList

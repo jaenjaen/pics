@@ -112,6 +112,18 @@ public class StudioFilterController {
 							break;
 						}// if
 					}//for j
+					Studio tempData = list.get(numList[i]);
+					tempData.setMainImg(tempData.getMainImg().split(",")[0]);
+					if(!tempData.getMainImg().contains("jpg")) {
+						String word = ".jpg";
+						String tempWord= tempData.getMainImg().concat(word);
+						tempData.setMainImg(tempWord);
+					}
+					if(tempData.getMainImg().contains("/")){
+						String tempWord= tempData.getMainImg().replace("/", "");
+						tempData.setMainImg(tempWord);
+					}
+					list.set(numList[i], tempData);
 					
 					sendList.add(list.get(numList[i]));
 				} // for i

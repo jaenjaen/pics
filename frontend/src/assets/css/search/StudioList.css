@@ -248,13 +248,13 @@
         }
         
         #studioContent #nameAddr {
-            font-size: 0.8em;
+            font-size: 0.85em;
             margin-bottom: 2em;
             color: #034ea2;
         }
         
         #studioContent #desc {
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: #737373;
             margin-bottom: 2em;
             white-space: nowrap;
@@ -263,16 +263,48 @@
         }
         
         #studioContent #info {
+            margin-top: 2em;
             font-size: 0.9em;
         }
         
         #studioContent #review {
             margin-top: 0.5em;
-            font-size: 0.8em;
+            font-size: 0.87em;
         }
         
         #studioContent i {
             color: #33a3dc;
+        }
+        
+        #title {
+            font-size: 1.3em !important;
+        }
+        
+        #nameAddr {
+            padding-top: 3px;
+            padding-left: 1px;
+            color: black !important;
+        }
+        
+        #info:not(span) {
+            text-align: right;
+            color: #034ea2;
+            font-size: 1.2em !important;
+            font-weight: bold;
+        }
+        
+        #info>span {
+            color: black;
+            font-size: 0.8em;
+        }
+        
+        #review {
+            float: right;
+        }
+        
+        .container_name {
+            display: flex;
+            justify-content: space-between;
         }
         
         input[type="hidden"] {
@@ -463,34 +495,4 @@
         
         .select-dropdown li.optgroup~li.optgroup-option {
             padding-left: 1rem;
-        }
-        
-        #title {
-            font-size: 1.3em !important;
-        }
-        
-        #nameAddr {
-            padding-top: 3px;
-            padding-left: 3px;
-            color: black !important;
-        }
-        
-        #info {
-            text-align: right;
-            color: #034ea2;
-            font-size: 1.2em !important;
-        }
-        
-        #info>span {
-            color: black;
-            font-size: 0.8em;
-        }
-        
-        #review {
-            float: right;
-        }
-        
-        .container_name {
-            display: flex;
-            justify-content: space-between;
         }

@@ -101,8 +101,12 @@ export default {
         login() {
             let customer = {
                 custId: 3,
+            };
+            let company = {
+                comId: '100@sample.com'
             }
             sessionStorage.setItem('customer', JSON.stringify(customer));
+            sessionStorage.setItem('company', JSON.stringify(company));
             var sessionTemp = sessionStorage.getItem('customer');
             this.filters.session = JSON.parse(sessionTemp).custId;
         },

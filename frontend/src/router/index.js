@@ -16,7 +16,7 @@ import FileRoute from "@/components/studioRegister/FileRoute.vue";
 // import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
 import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
-// import Map from "@/components/studioInfo/Map.vue";
+import Map from "@/components/studioInfo/Map.vue";
 // import Test from "../components/Test.vue";
 // import GenderChart from "../components/studioInfo/GenderChart.vue";
 import StudioList from "@/components/search/StudioList.vue";
@@ -119,12 +119,11 @@ const routes = [{
         path: "/chatShow",
         name: "chatShow",
         component: ChatShow
+    }, {
+        path: "/Map",
+        name: "Map",
+        component: Map
     }
-    // {
-    //     path: "/Map",
-    //     name: "Map",
-    //     component: Map
-    // }
 ];
 const router = new VueRouter({
     mode: "history",

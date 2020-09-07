@@ -84,7 +84,6 @@ export default {
             totalReviewsLength: 0, // 전체 리뷰 데이터 수
             cntReviews: 3, // 화면에 노출할 리뷰 데이터 수 (초기 세팅 = 3)
             dataFull: false, // 전체 데이터보다 많은 데이터 호출 여부
-
         };
     },
 
@@ -137,7 +136,6 @@ export default {
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => {
                 this.reviews = response.data;
-
                 let temp = []
                 for (var i = 0; i < this.cntReviews; i++) {
                     temp.push(this.reviews[i])
@@ -150,7 +148,7 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        console.log("this.reviews[0].reviewId : " + this.reviews[0].reviewId);
+        console.log("this.reviews[0].reviewId : " + this.reviews[0]);
         if (this.customer != undefined) {
             axios
                 .get("http://127.0.0.1:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
@@ -240,7 +238,7 @@ export default {
                     temp.push(this.reviews[i]) // 전체 리뷰에서 노출 리뷰 개수만큼 데이터 추출하여 temp에 저장
                 }
                 this.visibleReview = temp // 전체 리뷰 개수와 노출되는 리뷰 개수가 같으면
-                    // news 객체에 data 배열 업데이트
+                    // review 객체에 data 배열 업데이트
 
             } else {
                 this.dataFull = true // dataFull 객체를 true 상태로 변경

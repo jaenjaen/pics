@@ -4,6 +4,22 @@
       <div id="reservation-floating-banner">
         <form method="post" @submit.prevent="addReserve">
           <!-- ============== calender ============== -->
+          <div class="reservation-Information-area">
+            <div>
+              <table id="Studio-Filter-Table" align="center">
+                <thead>
+                  <th>영업일</th>
+                  <th>영업 시간</th>
+                </thead>
+                <tbody  v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
+                  <tr>
+                    <td>{{repeate.weekDate|dayFilter}}</td>
+                    <td>{{repeate.time|timeFilter}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div class="input-reserve-info-field">
             <!-- 날짜 -->
             <div class="date-input-field">
@@ -16,16 +32,18 @@
                  :md-model-type="String"
                   :md-immediately="true"
                   :disable-passed-days="true"
+                  :value="start_date"
                   ></md-datepicker>
                 </span>
                 <br />
                 <strong>예약 종료일</strong>
                 <span class="end-date">
                   <md-datepicker 
-                  v-model="end_date" 
+                  v-model="end_date"
                  :md-model-type="String"
                   :md-immediately="true"
                   :disable-passed-days="true"
+                  :value="end_date"
                   ></md-datepicker>
                 </span>
               </div>
@@ -109,7 +127,6 @@
         <hr width="90%" color="lightgray">
           <!-- 요금 계산 -->
           <div class="pricing-field">
-            <hr/>
             <table align="center" v-for="studio in studios" v-bind:key="studio.stuId">
               <tr align="right">
                 <td id="unitPrice">시간 당 비용 :</td>
@@ -130,9 +147,9 @@
                 </td>
               </tr>
             </table>
-
             <div>
               <md-button 
+              id="reservation-btn"
               type="submit" 
               align="center"
               class="md-raised md-primary"
@@ -143,24 +160,6 @@
         </form>
       </div>
       <hr>
-      <div class="reservation-Information-area">
-          <div>
-            <div v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
-              <table id="Studio-Filter-Table">
-                <thead>
-                  <th>요일</th>
-                  <th>영업 시간</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{repeate.weekDate}}</td>
-                    <td>{{repeate.time}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
     </aside>
        <!-- 모달 모아두기 -->
     <div>

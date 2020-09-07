@@ -1,4 +1,5 @@
 import Chat from "@/components/chat/Chat.vue";
+
 export default {
     components: { Chat },
     methods: {

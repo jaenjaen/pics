@@ -32,6 +32,14 @@
         </tr>
       </table>
       <modal name="reviewModal" :height="455">
+        <div id="star_rating"></div>
+        <div class="reviewcontent">
+          <form>
+          <intput type="textarea"/>
+          <input type="file"/>
+          <input type="submit" value="리뷰작성"/>
+          </form>
+        </div>
       </modal>
     </div>
   </div>

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devils.pics.domain.Studio;
+import com.devils.pics.domain.StudioFilter;
+import com.devils.pics.domain.Tag;
 import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.util.SearchCon;
 
@@ -134,4 +136,4 @@ public class StudioFilterController {
 				return new ResponseEntity(HttpStatus.NO_CONTENT);
 			}
 		}
-}
+		}

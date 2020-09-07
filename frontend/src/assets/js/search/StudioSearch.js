@@ -39,14 +39,12 @@ export default {
         this.$refs.cataSelect.value = this.filters.categoryId // 필터 창의 카테고리에 해당 값 표시
             // 카테고리 설정해서 이동했으면 바로 리스트 창으로
         if (this.filters.categoryId.match('컨셉')) {
-            alert("1...." + this.filters.categoryId.split('.')[0])
-            this.filters.searchTag = this.filters.categoryId.split('.')[1];
-            alert("2...." + this.filters.searchTag)
+
+            this.filters.searchTag = '#' + this.filters.categoryId.split('.')[1];
             this.filters.categoryId = '';
-            alert("3...." + this.filters.categoryId)
             this.setFilter()
         } else if (this.filters.categoryId > 0) {
-            alert("카테고리 실행")
+
             this.setFilter()
         }
         //로그인 세션 정보 받기

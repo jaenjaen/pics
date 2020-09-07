@@ -14,6 +14,7 @@
 		<result property="answer" column="answer"/>
 		
 		<association property="studio" javaType="studio">
+			<result property="stuId" column="stu_id"/>
 			<result property="comId" column="com_id"/>
 			<result property="categoryId" column="category_id"/>
 			<result property="name" column="name"/>
@@ -65,7 +66,7 @@
 	<!--getCustomer Review -->
 	<select id="getCustomerReivews" parameterType="int" resultMap="review-stuRM">
 		SELECT r.review_id,r.cust_id,r.stu_id,r.res_id,score,r.content,img,r.reg_date,r.answer,
-			   s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+			   s.stu_id,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
 		FROM review r, studio s
 		WHERE cust_id = #{value}
 		AND s.stu_id = r.stu_id
@@ -78,4 +79,8 @@
 		WHERE res_id = #{value}
 	</select>
 	
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM review
+		WHERE review_id = #{value}
+	</delete>
 </mapper>

@@ -31,14 +31,14 @@
     <div class="mypage_card">
       <table>
          <tr>
-          <th>번호</th> <th>예약업체</th> <th>리뷰내용</th> <th>별점</th> <th>리뷰삭제</th>
+          <th>번호</th> <th>예약업체</th> <th>리뷰내용</th> <th>평점</th> <th>리뷰삭제</th>
         </tr>
         <tr>
           <td colspan="6" v-if="rvFlag"> 작성한 리뷰가 없습니다.</td>
         </tr>
         <tr v-for="(review, idx) in reviewList" :key="review">
-          <td>{{idx+1}}</td> <td>{{review.studio.name}}</td> <td>{{review.content}}</td> 
-          <td>{{review.score}}점</td> <td><button @click="writeRivew(reviewId)">리뷰삭제</button></td>
+          <td>{{idx+1}}</td> <td><router-link :to="{name:'studioInfo', params: {stuId:review.studio.stuId}}">{{review.studio.name}}</router-link></td> <td style="width:300px; text-align:left;">{{review.content}}</td> 
+          <td>{{review.score}}점</td> <td><button @click="deleteReview(review.reviewId)">리뷰삭제</button></td>
         </tr>
       </table>
     </div>

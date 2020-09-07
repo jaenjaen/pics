@@ -58,8 +58,19 @@ export default {
                     console.log(err);
                 })
         },
-        writeRivew: function() {
-            console.log("clicked")
+        deleteReview: function(reviewId) {
+            axios.delete("http://localhost:7777/review/" + reviewId)
+                .then(res => {
+                    if (res.data != null) {
+                        alert("리뷰가 삭제되었습니다.");
+                        location.reload()
+                    } else {
+                        alert("다시 시도해주세요.");
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         }
     }
 };

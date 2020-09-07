@@ -3,6 +3,7 @@ package com.devils.pics.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -93,6 +94,27 @@ public class ExtraController {
 			
 			return new ResponseEntity(reviews,HttpStatus.OK);
 		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/review/check/{resId}")
+	public ResponseEntity checkReviews(@PathVariable int resId) {
+		try {
+			int flag = extraService.checkReviews(resId);
+			return new ResponseEntity(flag,HttpStatus.OK);
+		}catch (Exception e){
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@DeleteMapping("/review/{reviewId}")
+	public ResponseEntity deleteReview(@PathVariable int reviewId) {
+		try {
+			int flag = extraService.deleteReview(reviewId);
+			if(flag>0) return new ResponseEntity(flag,HttpStatus.OK);
+			else return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+		}catch (Exception e){
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}

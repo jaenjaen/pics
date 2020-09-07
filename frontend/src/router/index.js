@@ -14,9 +14,9 @@ import WishList from "../views/WishList.vue";
 // import RegisterStudio from "../components/RegisterStudio.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
-import StudioInfo from "../components/studioInfo/StudioInfo.vue";
-import Reservation from "../components/studioInfo/Reservation.vue";
-// import Map from "../components/Map.vue";
+import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
+import Reservation from "@/components/studioInfo/Reservation.vue";
+// import Map from "@/components/studioInfo/Map.vue";
 // import Test from "../components/Test.vue";
 // import GenderChart from "../components/studioInfo/GenderChart.vue";
 import StudioList from "@/components/search/StudioList.vue";
@@ -110,8 +110,7 @@ const routes = [{
         path: "/reservationlist",
         name: "reservationlist",
         component: ReservationList
-    }
-
+    },
     // {
     //     path: "/Map",
     //     name: "Map",

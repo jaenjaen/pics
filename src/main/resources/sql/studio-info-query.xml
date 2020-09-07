@@ -7,6 +7,7 @@
 	<resultMap type="studio" id="studioInfoRM">							
 		<result property="stuId" column="stu_id"/>			
 		<result property="comId" column="com_id"/>
+		<result property="name" column="name"/>
 		<result property="categoryId" column="category_id"/>
 		<result property="name" column="name"/>
 		<result property="description" column="description"/>
@@ -15,6 +16,8 @@
 		<result property="portImg" column="port_img"/>
 		<result property="cadImg" column="cad_img"/>
 		<result property="floor" column="floor"/>
+		<result column="avg_score" property="avgScore" />
+		<result column="count_review" property="countReview" />
 		<association property="studioFilter" javaType="studioFilter">
 			<id property="stuId" column="stu_id"/>
 				<result property="filterId" column="filter_id" />
@@ -83,12 +86,14 @@
 		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor,
 		ctg.category_id,ctg.category_name,
 		com.name,com.logo_img,
-		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity
-  		FROM studio s
+		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity,
+		avg(re.score) avg_score, count(re.review_id) count_review
+		FROM studio s
 		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id
 		LEFT JOIN company com ON s.com_id=com.com_id
 		LEFT JOIN studio_filter sf ON s.stu_id=sf.stu_id
- 		<if test="'${value}'!=null">
+		LEFT JOIN review re ON s.stu_id=re.stu_id
+		<if test="'${value}'!=null">
 		WHERE s.stu_id=${value};
 		</if>
 	</select>							

@@ -23,11 +23,12 @@ export default {
             default: ''
         },
     },
+    event: 'studios',
     data: function() {
         return {
             // studio 관련 변수 (GET)
             customer: {},
-            studios: {
+            studios: [{
                 categoryId: 0,
                 name: "",
                 description: "",
@@ -39,7 +40,7 @@ export default {
                 studioFilter: {
                     size: 0,
                     options: null,
-                    parking: "",
+                    parking: 0,
                     unitPrice: 0,
                     defaultCapacity: 0,
                     excharge: 0,
@@ -51,13 +52,13 @@ export default {
                     name: "",
                     address: ""
                 }
-            },
+            }],
             tags: [{
                 tagId: 0,
                 tagName: ""
             }],
             bookmarkCheck: 0, //북마크 id값 받은 변수
-            reviews: [{}],
+
             accCustomer: 0,
 
             // 상태 체크 변수
@@ -68,29 +69,17 @@ export default {
             mainImgList: [],
             portImgList: [],
 
-            // Chart & Graph 변수
-            datacollection: {
-                labels: ['Female', 'Male'],
-                datasets: [{
-                    label: "Gender Ratio",
-                    backgroundColor: ["rgba(245, 99, 132, 1)", "rgba(56, 162, 235, 1)"],
-                    data: [0, 0]
-                }]
-            },
-            options: {
-                responsive: true,
-                legend: {
-                    position: "top"
-                },
-                title: {
-                    display: true,
-                    text: "Gender Ratio"
-                },
-                animation: {
-                    animateScale: true
-                }
-                // }
-            }
+            // Chart
+            datacollection: null,
+            options: null,
+
+            // 리뷰 페이징 변수
+            reviews: [{}], // 전체 리뷰 데이터
+            visibleReview: {}, // 화면에 노출되는 리뷰 데이터
+            totalReviewsLength: 0, // 전체 리뷰 데이터 수
+            cntReviews: 3, // 화면에 노출할 리뷰 데이터 수 (초기 세팅 = 3)
+            dataFull: false, // 전체 데이터보다 많은 데이터 호출 여부
+
         };
     },
 
@@ -102,6 +91,8 @@ export default {
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
+                console.log(this.studios);
+                // this.$emit('studios', this.studios);
                 //메인 이미지 split
                 let mainImgSplit = (this.studios[0].mainImg).split(',');
                 let portImgSplit = (this.studios[0].mainImg).split(',')
@@ -139,7 +130,16 @@ export default {
         console.log("this.accCustomer : " + this.accCustomer);
         axios
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
-            .then(response => (this.reviews = response.data))
+            .then(response => {
+                this.reviews = response.data;
+
+                let temp = []
+                for (var i = 0; i < this.cntReviews; i++) {
+                    temp.push(this.reviews[i])
+                }
+                this.visibleReview = temp
+                this.cntReviews = (this.reviews).length
+            })
             .catch(error => {
                 console.log(error);
                 this.errored = true;
@@ -157,23 +157,6 @@ export default {
                 .finally(() => (this.loading = false));
             console.log("this.bookmarkCheck : " + this.bookmarkCheck);
         }
-
-        console.log("ccc");
-        axios
-            .get("http://127.0.0.1:7777/studio/genderRatio/10")
-            .then(response => {
-                this.genderRation = response.data;
-                var genderRation = this.genderRation;
-                this.total = genderRation.length;
-                // var female=0;
-                for (var i = 0; i < this.total; i++) {
-                    if (this.customers[i].gender == "F") {
-                        //여자 수만큼 세기
-                        this.female += 1;
-                    }
-                }
-            })
-        this.fillData();
     },
     filters: {
         currency: function(value) { // 숫자를 금액 형식으로
@@ -198,38 +181,9 @@ export default {
     },
     ////////////////////////////// Methods //////////////////////////////
     methods: {
-        fillData() {
-            console.log(this.female, this.total);
-            this.$set(this.datacollection.datasets[0].data, 0, this.female);
-            this.$set(this.datacollection.datasets[0].data, 1, this.total);
-            console.log(this.datacollection.datasets[0].data + ": Last");
-        },
-        getGenderData() {
-            axios
-                .get("http://127.0.0.1:7777/studio/genderRatio/" + this.stuId)
-                .then(response => {
-                    this.result = response.data;
-                    this.total = this.result.length;
-                    this.female = 0;
-                    // console.log("result : " + this.result + ", this.total : " + this.total)
-                    // var female=0;
-                    for (var i = 0; i < this.result.length; i++) {
-                        if (this.result[i].gender == "F") {
-                            //여자 수만큼 세기
-                            this.female += 1;
-                        }
-                    }
-                    return [this.female, this.total];
-                    // console.log("aaa1");
-                    // this.$set(this.datacollection.datasets[0].data, 0, this.female);
-                    // this.$set(this.datacollection.datasets[0].data, 1, this.total);
-                    // this.filltData()
-                    // console.log("aaa2");
-                })
-        },
-        imgUrl(imgName) {
-            return require("@/assets/img/studio/" + imgName);
-        },
+        // imgUrl(imgName) {
+        //     return require("@/assets/img/studio/" + imgName);
+        // },
         bookmarkChange() {
             if (this.customer != undefined) {
                 if (this.bookmarkCheck != 0) { //찜한적 있다면 찜 목록 해제 
@@ -278,6 +232,22 @@ export default {
             this.$modal.hide("delBook");
             this.$modal.hide("regBook");
             this.$modal.hide("login-required");
+        },
+        appendReviews() {
+            // 전체 리뷰 개수보다 노출되는 리뷰 개수가 작은 경우
+            if (this.cntReviews < this.totalReviewsLength) {
+                this.cntReviews += 3 // 노출 리뷰 개수 3개 증가
+                let temp = []
+                for (var i = 0; i < this.cntReviews; i++) {
+                    temp.push(this.reviews[i]) // 전체 리뷰에서 노출 리뷰 개수만큼 데이터 추출하여 temp에 저장
+                }
+                this.visibleReview = temp // 전체 리뷰 개수와 노출되는 리뷰 개수가 같으면
+                    // news 객체에 data 배열 업데이트
+
+            } else {
+                this.dataFull = true // dataFull 객체를 true 상태로 변경
+                alert('List items are fully loaded!') // 모든 데이터 출력 알림
+            }
         }
     }
 };

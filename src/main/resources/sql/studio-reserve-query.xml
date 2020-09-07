@@ -24,17 +24,6 @@
 	-->
 
 <mapper namespace="StudioReserveMapper">
-
- 	<resultMap type="reservation" id="reservationRM">
-		<result property="resId" column="res_id"/>
-		<result property="stuId" column="stu_id"/>
-		<result property="custId" column="cust_id"/>
-		<result property="startDate" column="start_date"/>
-		<result property="endDate" column="end_date"/>
-		<result property="totalPrice" column="total_price"/>
-		<result property="resDate" column="res_date"/>
-		<result property="totalPeople" column="total_people"/>
-	</resultMap>
 	
 	<resultMap type="reservation" id="resv-stuRM">
 		<result property="resId" column="res_id"/>
@@ -78,29 +67,29 @@
 		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
 		FROM reservation
 		WHERE stu_id=#{stuId}
-		<!-- <where>
+		<where>
  			<choose>
-			필수적인 예약 요소들이 다 있는지 >> 동일한 예약 있는지 조회
+			<!-- 필수적인 예약 요소들이 다 있는지 >> 동일한 예약 있는지 조회 -->
 			<when  test="customer!=null and stuId!=null and startDate!=null and endDate!=null">
 				cust_id=#{customer.custId} AND stu_id=#{stuId} AND start_date=#{startDate} AND end_date=#{endDate}
 			</when>
-			특정 고객이 특정 스튜디오 예약한 적 있는지 확인 >> 고객 찜 리스트
+			<!-- 특정 고객이 특정 스튜디오 예약한 적 있는지 확인 >> 고객 찜 리스트 -->
 			<when  test="customer!=null and stuId!=null">
 				cust_id=#{customer.custId} AND stu_id=#{stuId}
 			</when>
-			특정 고객의 모든 스튜디오 확인 >> 마이페이지 예약 내역
+			<!-- 특정 고객의 모든 스튜디오 확인 >> 마이페이지 예약 내역 -->
 			<when  test="custId!=null">
 				cust_id=#{custId}
 			</when>
-			특정 스튜디오의 모든 예약내역 확인
+			<!-- 특정 스튜디오의 모든 예약내역 확인 -->
 			<when test="stuId!=null">
 				stu_id=#{stuId}
 			</when>			
-			조건이 없다면 모든 예약 내역 가져오기
+			<!-- 조건이 없다면 모든 예약 내역 가져오기 -->
 			<otherwise>				
  			</otherwise>
 			</choose>
-		</where> --> 
+		</where> 
 	</select>
 	
 	<!-- ================== 2. 예약하기 ================== -->

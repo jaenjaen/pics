@@ -110,10 +110,10 @@
           <!-- 요금 계산 -->
           <div class="pricing-field">
             <hr/>
-            <table align="center" v-for="(studio, index) in studios" v-bind:key="index">
+            <table align="center" v-for="studio in studios" v-bind:key="studio.stuId">
               <tr align="right">
                 <td id="unitPrice">시간 당 비용 :</td>
-                <td>{{ studio.studioFilter.unitprice | currency }} 원</td>
+                <td>{{ studio.studioFilter.unitPrice | currency }} 원</td>
                 <td></td>
               </tr>
               <tr align="right">

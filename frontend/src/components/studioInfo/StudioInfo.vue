@@ -5,7 +5,7 @@
         <div class="row" v-for="(mainImg,index) in mainImgList" v-bind:key="index">
           <carousel :itmes="1" :loop="true" :autoplay="true" >
             <div>
-               <img  class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500"/>
+               <!-- <img  class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500"/> -->
             </div>
            </carousel>
          </div> 
@@ -31,7 +31,7 @@
         </div>
         <br>
           <!-- 타이틀 -->
-        <div class="section-title-field" v-for="(studio,index) in studios" v-bind:key="index">
+        <div class="section-title-field" v-for="studio in studios" v-bind:key="studio.stuId">
           <div class="studio-name">
             <h2> {{ studio.name }}</h2>
           </div>
@@ -57,8 +57,9 @@
           </span>
   
             <!-- 누적 이용자 수 -->
+            <br>
             <span>
-            누적사용자 수 : {{this.accCustomer}}명
+            스튜디오를 이용한 사람 총 {{this.accCustomer}}명
             </span>
           </div>        
         </section>
@@ -70,14 +71,14 @@
         <!-- ============== Studio Filter ============== -->
       <hr>
       <article>
-          <div class="article-Filterstudiormation-area" >
-            <div v-for="(studio,index) in studios" v-bind:key="index">
+          <div class="article-studioFilter-information-area" >
+            <div v-for="studio in studios" v-bind:key="studio.stuId"> 
               <table id="Studio-Filter-Table">
-                <tr>
+                <!-- <tr>
                   <td>넓이</td>
                   <td>{{ studio.studioFilter.size}}m<sup>2</sup>
-                  ({{ studio.studioFilter.size |sizeUnit}}/평)</td>
-                </tr>
+                  ({{ studios.studioFilter.size |sizeUnit}}/평)</td>
+                </tr> -->
                 <tr>
                   <td>옵션</td>
                   <td>{{studio.studioFilter.options}}</td>
@@ -117,9 +118,9 @@
         <hr>
         <!-- ============== Portfolio Images ============== -->
        <table aligh="center" width="100%">
-          <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index">
+          <!-- <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index"> -->
             <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
-          </tr>
+          <!-- </tr> -->
         </table>
           <!-- ============== Map ============== -->
           <div id="map">
@@ -128,44 +129,25 @@
 
         <hr />
         <!-- ============== Chart & Graph ============== -->
-        <div class="article-Chart-area" border="2">
-          <div style="width:30%;heigth:20%">
-           <!--   도넛 그래프 -->
-					 <div id="canvas-holder" style="width:100%">
-						<div class="chartjs-size-monitor">
-							<div class="chartjs-size-monitor-expand">
-								<div class=""></div>
-							</div>
-							<div class="chartjs-size-monitor-shrink">
-								<div class=""></div>
-							</div>
-						</div>
-              <canvas id="doughnut-chart-area" width="80%" height="400" class="chartjs-render-monitor"> -->
-                <!-- <chart-gender :chart-data="datacollection" :options="studios[0].studioFilters.options"></chart-gender> -->
-                  <Doughnut
-                  :chartdata="datacollection"
-                  :options="options"></Doughnut>
-                <!-- <button @click="fillData()">Set Chart</button> -->
-              </canvas>
-					</div> 
-          </div> 
-        </div>
-        		
-				 	 <!-- 히스토그램 연령대 -->
-					<!-- <div id="canvas-holder" style="width:100%">
-              <div class="chartjs-size-monitor">
-                <div class="chartjs-size-monitor-expand">
-                  <div class=""></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink">
-                  <div class=""></div>
-                </div>
+        <!-- ===== 시간대별 예약 차트 ===== -->
+        <div class="article-Chart-area">
+          <div id=time-chart style="width:40%;heigth:70px">
+              <div class="chart">
+                  <Bar 
+                  :chartdata=datacollection
+                  :options=options></Bar>
               </div>
-              <p></p>
-              <canvas id="hist-canvas" style="display: block; height: 30%; width: 100%;" width="100%" height="100%" class="chartjs-render-monitor"></canvas>
-            </div>
-          </div> -->
-        
+					</div> 
+        		
+				 	 <!-- ===== 요일별 예약 차트 ===== -->
+          <div id=day-chart style="width:40%;heigth:70px">
+              <div class="chart">
+                  <Bar 
+                  :chartdata=datacollection
+                  :options=options></Bar>
+              </div>
+					</div> 
+        </div>
 
         <!-- ============== Review ============== -->
         <hr>
@@ -179,11 +161,11 @@
                 </md-card-media>
                 <md-card>
                   <md-card-header>
-                  <!-- <div class="md-subhead" id="register-date">({{ review.cusomer.email}})</div> -->
+                  <!-- <div class="md-subhead" id="register-date">({{ review.customer.email}})</div> -->
                   <div class="md-subhead" id="register-date">({{ review.regDate}})</div>
                 </md-card-header>
 
-                  <!-- <span id="reviewr-email"><strong>{{ review.cusomer.email|emailHide }}</strong></span> -->
+                  <!-- <span id="reviewr-email"><strong>{{ review.customer.email|emailHide }}</strong></span> -->
                   <!-- 별점 부분 -->
                   <span id="star-score"> 별점
                     <span v-if="review.score > 0 && review.score < 1">
@@ -282,6 +264,13 @@
                     </md-card-expand>
                 </md-card>                
               </div>
+              <div id="more-review" v-if="(reviews).length>3">
+                <a href="#" 
+                @click.prevent="appendReviews()" 
+                :disabled="this.dataFull === true" 
+                :class="{disabled : dataFull}"
+                >더보기</a>
+              </div>
             </div>
           </div>
         </div>
@@ -289,19 +278,19 @@
       </article>
     <!-- 모달 모아두기 -->
     <div>
-      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal name="delBook" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="delBook">
           <p>찜목록에서 제거했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal name="regBook" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="regBook">
           <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="login-required">
           <p>찜 목록에 등록했습니다</p>
           <button class="btn-small" @click="closePop()">확인</button>

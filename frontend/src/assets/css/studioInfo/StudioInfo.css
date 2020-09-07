@@ -132,3 +132,13 @@ article {
 #star-score {
     margin: 5%;
 }
+
+#time-chart {
+    float: left;
+    margin: 5%;
+}
+
+#day-chart {
+    float: left;
+    margin: 5%;
+}

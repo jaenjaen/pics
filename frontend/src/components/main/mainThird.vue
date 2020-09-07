@@ -2,7 +2,7 @@
   <div class="mainthird">
     <div class="word">컨셉별 촬영장소 찾기</div>
     <div class="img_container">
-      <div class="jb-wrap">
+      <div class="jb-wrap" @click.prevent="moveToSearch('컨셉.조명')">
         <div class="jb-image">
           <img src="@/assets/img/studio/1_조명.jpg" alt />
         </div>
@@ -10,7 +10,7 @@
           <p>조명 맛집</p>
         </div>
       </div>
-      <div class="jb-wrap">
+      <div class="jb-wrap" @click.prevent="moveToSearch('컨셉.vlog')">
         <div class="jb-image">
           <img src="@/assets/img/studio/1_브이로그.jpg" alt />
         </div>
@@ -19,7 +19,7 @@
           <p>감성</p>
         </div>
       </div>
-      <div class="jb-wrap">
+      <div class="jb-wrap" @click.prevent="moveToSearch('컨셉.욕실')">
         <div class="jb-image">
           <img src="@/assets/img/studio/1_욕실.jpg" alt />
         </div>
@@ -28,7 +28,7 @@
           <P>욕실</P>
         </div>
       </div>
-      <div class="jb-wrap">
+      <div class="jb-wrap" @click.prevent="moveToSearch('컨셉.클래식')">
         <div class="jb-image">
           <img src="@/assets/img/studio/1_클래식.jpg" alt />
         </div>

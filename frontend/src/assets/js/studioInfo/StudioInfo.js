@@ -63,7 +63,6 @@ export default {
                 tagName: ""
             }],
             isBooked: false, //북마크 id값 받았는지 나타내는 변수
-            reviews: [{}],
 
             accCustomer: 0,
 

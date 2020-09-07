@@ -94,20 +94,30 @@ export default {
     beforeMonth() {
       var startDate = "";
       var endDate = "";
+      var mm = 12;
       //console.log(this.month);//2020-6
       if (this.month == today + "") {
-        this.month = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
-        startDate = today.getFullYear() + "-" + today.getMonth() + "-" + 1;
-        if (today.getMonth() == 2) endDate = today.getFullYear() + "-" + today.getMonth() + "-" + 28;
+        if(today.getMonth() == 0) {today = new Date((today.getFullYear()-1)+"-"+12+"-"+today.getDate());
+        console.log(today);}
+        else mm = today.getMonth()
+
+        this.month = today.getFullYear() + "-" + mm + "-" + today.getDate();
+        startDate = today.getFullYear() + "-" + mm + "-" + 1;
+        if (today.getMonth() == 2) endDate = today.getFullYear() + "-" + mm + "-" + 28;
         else if (monthList.indexOf(today.getMonth()) >= 0) endDate = today.getFullYear() + "-" + today.getMonth() + "-" + 30;
         else endDate = today.getFullYear() + "-" + today.getMonth() + "-" + 31;
       } else {
         var tmpDate = new Date(this.month);
-        this.month = tmpDate.getFullYear() + "-" + tmpDate.getMonth() + "-" + tmpDate.getDate();
-        startDate = tmpDate.getFullYear() + "-" + tmpDate.getMonth() + "-" + 1;
-        if (today.getMonth() == 2) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+28;
-        else if(monthList.indexOf(today.getMonth())>=0) endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+30;
-        else endDate = tmpDate.getFullYear()+"-"+tmpDate.getMonth()+"-"+31;
+        console.log(tmpDate.getMonth());
+        if(tmpDate.getMonth() == 0) {tmpDate = new Date((tmpDate.getFullYear()-1)+"-"+12+"-"+tmpDate.getDate());
+        console.log(tmpDate);}
+        else mm = tmpDate.getMonth();
+
+        this.month = tmpDate.getFullYear() + "-" + mm + "-" + tmpDate.getDate();
+        startDate = tmpDate.getFullYear() + "-" + mm + "-" + 1;
+        if (today.getMonth() == 2) endDate = tmpDate.getFullYear() + "-" + mm +"-"+ 28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = tmpDate.getFullYear() + "-" + mm + "-"+30;
+        else endDate = tmpDate.getFullYear() + "-" + mm + "-" + 31;
         }
       axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
       .then(res=>{
@@ -123,27 +133,32 @@ export default {
     afterMonth(){
       var startDate = "";
       var endDate = "";
+      var mm = 1;
       //console.log(this.month);//2020-6
       if (this.month == today+""){
-        if(today.getMonth() == 10) console.log("aaa");
-        this.month = today.getFullYear()+"-"+(today.getMonth()+2)+"-"+today.getDate();
-        startDate = today.getFullYear()+"-"+(today.getMonth()+2)+"-"+1;
+        if(today.getMonth() == 11) {today = new Date((today.getFullYear()+1)+"-"+1+"-"+today.getDate());
+        console.log(today);}
+        else mm = today.getMonth()+2
 
-        if(today.getMonth() == 2) endDate = today.getFullYear()+"-"+(today.getMonth()+2)+"-"+28;
-        else if(monthList.indexOf(today.getMonth())>=0) endDate = today.getFullYear()+"-"+(today.getMonth()+2)+"-"+30;
-        else endDate = today.getFullYear()+"-"+(today.getMonth()+2)+"-"+31;
+        this.month = today.getFullYear()+"-"+mm+"-"+today.getDate();
+        startDate = today.getFullYear()+"-"+mm+"-"+1;
+
+        if(today.getMonth() == 2) endDate = today.getFullYear()+"-"+mm+"-"+28;
+        else if(monthList.indexOf(today.getMonth())>=0) endDate = today.getFullYear()+"-"+mm+"-"+30;
+        else endDate = today.getFullYear()+"-"+mm +"-"+31;
       }
       else {
         var tmpDate = new Date(this.month);
-        if(tmpDate.getMonth() == 11) {tmpDate = new Date((tmpDate.getFullYear()+1)+"-"+tmpDate.setMonth(1)+"-"+tmpDate.getDate());
+        if(tmpDate.getMonth() == 11) {tmpDate = new Date((tmpDate.getFullYear()+1)+"-"+1+"-"+tmpDate.getDate());
         console.log(tmpDate);}
-        this.month = tmpDate.getFullYear()+"-"+(tmpDate.getMonth()+2)+"-"+tmpDate.getDate();
+        else mm = tmpDate.getMonth()+2
+        this.month = tmpDate.getFullYear()+"-"+mm+"-"+tmpDate.getDate();
 
-        startDate = tmpDate.getFullYear()+"-"+(tmpDate.getMonth()+2)+"-"+1;
+        startDate = tmpDate.getFullYear()+"-"+mm+"-"+1;
 
-        if(today.getMonth()+1 == 2) endDate = tmpDate.getFullYear()+"-"+(tmpDate.getMonth()+2)+"-"+28;
-        else if(monthList.indexOf(today.getMonth()+1)>=0) endDate = tmpDate.getFullYear()+"-"+(tmpDate.getMonth()+2)+"-"+30;
-        else endDate = tmpDate.getFullYear()+"-"+(tmpDate.getMonth()+2)+"-"+31;
+        if(today.getMonth()+1 == 2) endDate = tmpDate.getFullYear()+"-"+mm+"-"+28;
+        else if(monthList.indexOf(today.getMonth()+1)>=0) endDate = tmpDate.getFullYear()+"-"+mm+"-"+30;
+        else endDate = tmpDate.getFullYear()+"-"+mm+"-"+31;
         }
       axios.get("http://localhost:7777/customer/reservation/expired/"+this.custId+"/"+startDate+"/"+endDate)
       .then(res=>{

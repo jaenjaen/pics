@@ -25,9 +25,9 @@ public class ExtraTest {
 	@Test
 	void contextLoads() {
 		
-		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
-		Date time = new Date();
-		String time1 = format1.format(time);
+//		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+//		Date time = new Date();
+//		String time1 = format1.format(time);
 		
 		
 		  //Bookmark b = new Bookmark(); b.setCustomer(c); b.setStudio(s);
@@ -50,16 +50,17 @@ public class ExtraTest {
 		 * System.out.println("result : "+result);
 		 */
 		
-//		List<Review> reviewList = sqlSession.selectList(NS+"getCustomerReivews",1);
+//		List<Review> reviewList = sqlSession.selectList(NS+"getCustomerReivews",15);
 //		for(Review r:reviewList) {
 //			System.out.println(r);
 //		}
 		
-		HashMap<String, Integer> ids = new HashMap<String, Integer>();
-		ids.put("custId", 3);
-		ids.put("stuId", 10);
-		Bookmark b = sqlSession.selectOne(NS+"getBookId",ids);
-		System.out.println(b);
+//		HashMap<String, Integer> ids = new HashMap<String, Integer>();
+//		ids.put("custId", 3);
+//		ids.put("stuId", 10);
+//		Bookmark b = sqlSession.selectOne(NS+"getBookId",ids);
+//		System.out.println(b);
+	
 		 
 	}
 }

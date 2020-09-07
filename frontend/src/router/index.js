@@ -13,16 +13,16 @@ import ReservationList from "../views/mypage/reservation/ReservationList.vue"
 import WishList from "../views/WishList.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import FileRoute from "@/components/studioRegister/FileRoute.vue";
-import StudioInfo from "../components/studioInfo/StudioInfo.vue";
-import Reservation from "../components/studioInfo/Reservation.vue";
-// import Map from "../components/Map.vue";
+// import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
+import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
+import Reservation from "@/components/studioInfo/Reservation.vue";
+// import Map from "@/components/studioInfo/Map.vue";
 // import Test from "../components/Test.vue";
-import ChartGender from "../components/studioInfo/ChartGender.vue";
+// import GenderChart from "../components/studioInfo/GenderChart.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
-
 
 Vue.use(VueRouter);
 const routes = [{
@@ -84,11 +84,13 @@ const routes = [{
         name: "studioInfo",
         component: StudioInfo,
         props: true
-    }, {
-        path: "/chartgender",
-        name: "chartgender",
-        component: ChartGender
-    }, {
+    },
+    // {
+    //     path: "/genderchart",
+    //     name: "genderchart",
+    //     component: GenderChart
+    // }, 
+    {
         path: "/studioList",
         name: "studioList",
         component: StudioList
@@ -104,7 +106,8 @@ const routes = [{
         path: "/uploadImg",
         name: "uploadImg",
         component: UploadImg
-    }, {
+    },
+    {
         path: "/reservationlist",
         name: "reservationlist",
         component: ReservationList
@@ -117,7 +120,6 @@ const routes = [{
         name: "chatShow",
         component: ChatShow
     }
-
     // {
     //     path: "/Map",
     //     name: "Map",

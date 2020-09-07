@@ -40,7 +40,7 @@
                   <md-select id="start_time" 
                     v-model="start_time" 
                     required
-                    style="width:45%">
+                    style="width:30%">
                       <md-option
                         required="required"
                         v-for="(time,index) in times"
@@ -56,7 +56,7 @@
                   <md-select id="end_time" 
                     v-model="end_time" 
                     required
-                    style="width:45%">
+                    style="width:30%">
                       <md-option
                         required="required"
                         v-for="(time,index) in times"
@@ -110,10 +110,10 @@
           <!-- 요금 계산 -->
           <div class="pricing-field">
             <hr/>
-            <table align="center" v-for="(studio, index) in studios" v-bind:key="index">
+            <table align="center" v-for="studio in studios" v-bind:key="studio.stuId">
               <tr align="right">
                 <td id="unitPrice">시간 당 비용 :</td>
-                <td>{{ studio.studioFilter.unitprice | currency }} 원</td>
+                <td>{{ studio.studioFilter.unitPrice | currency }} 원</td>
                 <td></td>
               </tr>
               <tr align="right">
@@ -142,18 +142,37 @@
           </div>
         </form>
       </div>
+      <hr>
+      <div class="reservation-Information-area">
+          <div>
+            <div v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
+              <table id="Studio-Filter-Table">
+                <thead>
+                  <th>요일</th>
+                  <th>영업 시간</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{repeate.weekDate}}</td>
+                    <td>{{repeate.time}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
     </aside>
        <!-- 모달 모아두기 -->
     <div>
-      <modal name="success" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal name="success" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="success">
           <p>예약이 완료 되었습니다.</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
-      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
+      <modal name="login-required" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
         <div id="login-required">
-          <p>찜 목록에 등록했습니다</p>
+          <p>로그인 먼저 진행해주세요.</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>

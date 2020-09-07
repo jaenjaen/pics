@@ -1,0 +1,9 @@
+export default {
+    name: "mainthird",
+    methods: {
+        moveToSearch(value) {
+            // alert(value)
+            this.$router.push("/studioSearch/" + value);
+        }
+    }
+};

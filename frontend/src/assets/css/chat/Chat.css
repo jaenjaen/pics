@@ -1,335 +1,351 @@
-        @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300);
-        * {
-            padding: 0;
-            margin: 0;
-            border: 0;
-            color: #888;
-            font-family: "Source Sans Pro", sans-serif;
-            font-weight: 300;
-            outline: none;
-            box-sizing: border-box;
-        }
-        
-        #app {
-            /* 부모요소에 height 100% 부여 */
-            height: 100%;
-            padding-bottom: 110px;
-            margin-top: 50px;
-        }
-        
-        header {
-            width: 50%;
-            padding: 10px;
-            /* position 고정 */
-            position: fixed;
-            margin: 0 auto;
-            left: 0;
-            right: 0;
-            background-color: #5D5D5D;
-            /* 우선적으로 보이게 함 */
-            z-index: 3;
-        }
-        
-        header div {
-            display: inline-block;
-            width: 100%;
-            font-size: 18px;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .padding {
-            padding: 20px;
-        }
-        
-        .font-size-small {
-            font-size: 0.7rem;
-        }
-        
-        .chat-wrapper {
-            width: 100%;
-            padding-top: 50px;
-            display: table;
-            overflow: auto;
-        }
-        
-        .chat-wrapper:before {
-            content: " ";
-            display: block;
-        }
-        
-        .chat-wrapper .chat-content {
-            background-color: #fff;
-        }
-        
-        .chat-wrapper .chat-image {
-            float: left;
-            border-radius: 50%;
-        }
-        
-        .chat-wrapper .chat-image.chat-image-default {
-            width: 30px;
-            height: 30px;
-        }
-        
-        .chat-wrapper .chat-message {
-            margin-bottom: 20px;
-            width: 100%;
-            display: table;
-            overflow: auto;
-        }
-        
-        .chat-wrapper .chat-message:before {
-            content: " ";
-            display: block;
-        }
-        
-        .chat-wrapper .chat-message:last-of-type {
-            margin-bottom: 0;
-        }
-        
-        .chat-wrapper .chat-message .chat-message-wrapper {
-            max-width: 70%;
-            display: table;
-            margin: 0 20px;
-            position: relative;
-        }
-        
-        .chat-wrapper .chat-message .chat-message-wrapper:before {
-            content: " ";
-            display: block;
-            width: 0;
-            height: 0;
-            border: 12px solid transparent;
-            top: 10px;
-            position: absolute;
-            z-index: 2;
-        }
-        
-        .chat-wrapper .chat-message .chat-message-wrapper p {
-            padding: 10px 20px;
-            color: #fff;
-            border-top: 1px solid;
-        }
-        
-        .chat-wrapper .chat-message .chat-message-wrapper p:first-of-type {
-            border-top: 0 !important;
-        }
-        
-        .chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper,
-        .chat-wrapper .chat-message.chat-message-recipient .chat-message-content {
-            float: left;
-        }
-        
-        .chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper:before {
-            left: -20px;
-            border-right-color: #91D98A;
-        }
-        
-        .chat-wrapper .chat-message.chat-message-recipient p {
-            background-color: #91D98A;
-            border-top-color: #7dc576;
-        }
-        
-        .chat-wrapper .chat-message.chat-message-sender .chat-message-wrapper,
-        .chat-wrapper .chat-message.chat-message-sender .chat-message-content {
-            float: right;
-        }
-        
-        .chat-wrapper .chat-message.chat-message-sender .chat-message-wrapper:before {
-            right: -20px;
-            border-left-color: #33A3DC;
-        }
-        
-        .chat-wrapper .chat-message.chat-message-sender p {
-            background: #33A3DC;
-            border-top-color: white;
-        }
-        
-        .chat-wrapper .chat-message.chat-message-sender img {
-            float: right;
-        }
-        
-        .chat-wrapper .chat-message .chat-message-content {
-            display: table;
-            overflow: auto;
-            border-radius: 4px;
-        }
-        
-        .chat-wrapper .chat-message .chat-message-content:before {
-            content: " ";
-            display: block;
-        }
-        
-        .chat-wrapper .chat-message .chat-details {
-            clear: both;
-            width: 100%;
-            display: table;
-            overflow: auto;
-        }
-        
-        .chat-wrapper .chat-message .chat-details:before {
-            content: " ";
-            display: block;
-        }
-        
-        .chat-wrapper .chat-message .chat-details span {
-            margin-right: 4px;
-            color: #bbb;
-        }
-        
-        footer {
-            height: 140px;
-            /* position 고정 */
-            position: fixed;
-            /* 하단 위치 */
-            bottom: 0;
-            left: 0;
-            right: 0;
-            /* 가운데 정렬 */
-            text-align: center;
-            /* 영역이 겹칠 때 우선적으로 보여줌 */
-            z-index: 3;
-        }
-        
-        footer div {
-            width: 49.9%;
-            padding-top: 0.5%;
-            padding-bottom: 2.5%;
-        }
-        
-        input[type=text] {
-            width: 80%;
-            padding: 8px;
-            margin: 0 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: vertical;
-        }
-        /* Modal 전체 */
-        
-        #uploadModal {
-            display: none;
-            position: fixed;
-            z-index: 4;
-            padding-top: 200px;
-            padding-bottom: 80px;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-        /* Modal 내용 */
-        
-        #uploadContent {
-            background-color: #fefefe;
-            margin: auto;
-            overflow: auto;
-            text-align: center;
-            padding: 30px;
-            border: 1px solid #888;
-            width: 50%;
-            height: 70%;
-        }
-        /* Modal 닫기 버튼 */
-        
-        #closeUpload {
-            position: fixed;
-            color: #aaaaaa;
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 50px;
-            left: 68%;
-            right: 32%;
-        }
-        
-        #closeUpload:hover,
-        #closeUpload:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
-        #chatFileName {
-            width: 50%;
-            margin-right: 5px;
-        }
-        
-        button {
-            font-size: 14px;
-            color: white;
-            padding: 9px 14px;
-            margin-top: 15px;
-            margin-right: 5px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        
-        button#uploadBtn {
-            background: #33A3DC;
-        }
-        
-        button#uploadBtn:hover {
-            background: #034EA2;
-        }
-        
-        button#removeBtn {
-            background-color: #747474;
-        }
-        
-        button#removeBtn:hover {
-            background-color: #333333;
-        }
-        
-        button#sendBtn {
-            background-color: #DB5D55;
-        }
-        
-        button#sendBtn:hover {
-            background-color: #BD1004;
-        }
-        /* 반응형 : 너비 920px 이하 */
-        
-        @media screen and (max-width:920px) {
-            footer div {
-                width: 49.8%;
-                padding-bottom: 3%;
-            }
-        }
-        /* 반응형 : 너비 675px 이하 */
-        
-        @media screen and (max-width: 675px) {
-            header {
-                width: 100%;
-            }
-            header div {
-                font-size: 14px;
-            }
-            footer {
-                width: 100%;
-                height: 100px;
-            }
-            footer div {
-                width: 100%;
-                padding-bottom: 4%;
-            }
-            input[type=text] {
-                width: 70%;
-            }
-            /* 업로드  모달 너비 조정 */
-            #uploadContent {
-                width: 100%;
-                padding-left: 10px;
-                padding-top: 10px;
-                padding-right: 0;
-                padding-bottom: 30px;
-            }
-            #closeUpload {
-                left: 90%;
-                right: 10%;
-            }
-        }
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:300);
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    color: #888;
+    font-family: "Source Sans Pro", sans-serif;
+    font-weight: 300;
+    outline: none;
+    box-sizing: border-box;
+}
+
+#app {
+    /* 부모요소에 height 100% 부여 */
+    height: 100%;
+    padding-bottom: 110px;
+    margin-top: 50px;
+}
+
+header {
+    width: 50%;
+    padding: 10px;
+    /* position 고정 */
+    position: fixed;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    background-color: #5D5D5D;
+    /* 우선적으로 보이게 함 */
+    z-index: 3;
+}
+
+header div {
+    display: inline-block;
+    width: 100%;
+}
+
+header span {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.padding {
+    padding: 20px;
+}
+
+.font-size-small {
+    font-size: 0.7rem;
+}
+
+.chat-wrapper {
+    width: 100%;
+    padding-top: 50px;
+    display: table;
+    overflow: auto;
+}
+
+.chat-wrapper:before {
+    content: " ";
+    display: block;
+}
+
+.chat-wrapper .chat-content {
+    background-color: #fff;
+}
+
+.chat-wrapper .chat-image {
+    float: left;
+    border-radius: 50%;
+}
+
+.chat-wrapper .chat-image.chat-image-default {
+    width: 30px;
+    height: 30px;
+}
+
+.chat-wrapper .chat-message {
+    margin-bottom: 20px;
+    width: 100%;
+    display: table;
+    overflow: auto;
+}
+
+.chat-wrapper .chat-message:before {
+    content: " ";
+    display: block;
+}
+
+.chat-wrapper .chat-message:last-of-type {
+    margin-bottom: 0;
+}
+
+.chat-wrapper .chat-message .chat-message-wrapper {
+    max-width: 70%;
+    display: table;
+    margin: 0 20px;
+    position: relative;
+}
+
+.chat-wrapper .chat-message .chat-message-wrapper:before {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border: 12px solid transparent;
+    top: 10px;
+    position: absolute;
+    z-index: 2;
+}
+
+.chat-wrapper .chat-message .chat-message-wrapper p {
+    padding: 10px 20px;
+    color: #fff;
+    border-top: 1px solid;
+}
+
+.chat-wrapper .chat-message .chat-message-wrapper p:first-of-type {
+    border-top: 0 !important;
+}
+
+.chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper,
+.chat-wrapper .chat-message.chat-message-recipient .chat-message-content {
+    float: left;
+}
+
+.chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper:before {
+    left: -20px;
+    border-right-color: #91D98A;
+}
+
+.chat-wrapper .chat-message.chat-message-recipient p {
+    background-color: #91D98A;
+    border-top-color: #7dc576;
+}
+
+.chat-wrapper .chat-message.chat-message-sender .chat-message-wrapper,
+.chat-wrapper .chat-message.chat-message-sender .chat-message-content {
+    float: right;
+}
+
+.chat-wrapper .chat-message.chat-message-sender .chat-message-wrapper:before {
+    right: -20px;
+    border-left-color: #33A3DC;
+}
+
+.chat-wrapper .chat-message.chat-message-sender p {
+    background: #33A3DC;
+    border-top-color: white;
+}
+
+.chat-wrapper .chat-message.chat-message-sender img {
+    float: right;
+}
+
+.chat-wrapper .chat-message .chat-message-content {
+    display: table;
+    overflow: auto;
+    border-radius: 4px;
+}
+
+.chat-wrapper .chat-message .chat-message-content:before {
+    content: " ";
+    display: block;
+}
+
+.chat-wrapper .chat-message .chat-details {
+    clear: both;
+    width: 100%;
+    display: table;
+    overflow: auto;
+}
+
+.chat-wrapper .chat-message .chat-details:before {
+    content: " ";
+    display: block;
+}
+
+.chat-wrapper .chat-message .chat-details span {
+    margin-right: 4px;
+    color: #bbb;
+}
+
+footer {
+    height: 140px;
+    /* position 고정 */
+    position: fixed;
+    /* 하단 위치 */
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* 가운데 정렬 */
+    text-align: center;
+    /* 영역이 겹칠 때 우선적으로 보여줌 */
+    z-index: 3;
+}
+
+footer div {
+    width: 49.9%;
+    padding-top: 0.5%;
+    padding-bottom: 2.5%;
+}
+
+input[type=text] {
+    width: 80%;
+    padding: 8px;
+    margin: 0 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+
+/* Modal 전체 */
+
+#uploadModal {
+    display: none;
+    position: fixed;
+    z-index: 4;
+    padding-top: 200px;
+    padding-bottom: 80px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+/* Modal 내용 */
+
+#uploadContent {
+    background-color: #fefefe;
+    margin: auto;
+    overflow: auto;
+    text-align: center;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 50%;
+    height: 80%;
+    overflow: auto;
+}
+
+
+/* Modal 닫기 버튼 */
+
+#closeUpload {
+    position: fixed;
+    color: #aaaaaa;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 50px;
+    left: 68%;
+    right: 32%;
+}
+
+#closeUpload:hover,
+#closeUpload:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#chatFileName {
+    width: 50%;
+    margin-right: 5px;
+}
+
+button {
+    font-size: 14px;
+    color: white;
+    padding: 9px 14px;
+    margin-top: 15px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button#uploadBtn {
+    background: #33A3DC;
+}
+
+button#uploadBtn:hover {
+    background: #034EA2;
+}
+
+button#removeBtn {
+    background-color: #747474;
+}
+
+button#removeBtn:hover {
+    background-color: #333333;
+}
+
+button#sendBtn {
+    background-color: #DB5D55;
+}
+
+button#sendBtn:hover {
+    background-color: #BD1004;
+}
+
+
+/* 반응형 : 너비 920px 이하 */
+
+@media screen and (max-width:920px) {
+    footer div {
+        width: 49.7%;
+        padding-bottom: 3%;
+    }
+    input[type=text] {
+        width: 70%;
+    }
+}
+
+
+/* 반응형 : 너비 675px 이하 */
+
+@media screen and (max-width: 675px) {
+    header {
+        width: 100%;
+    }
+    header span {
+        font-size: 14px;
+    }
+    footer {
+        width: 100%;
+        height: 100px;
+    }
+    footer div {
+        width: 100%;
+        padding-bottom: 4%;
+    }
+    /* 업로드  모달 너비 조정 */
+    #uploadContent {
+        width: 100%;
+        padding-left: 10px;
+        padding-top: 10px;
+        padding-right: 0;
+        padding-bottom: 30px;
+    }
+    #closeUpload {
+        left: 90%;
+        right: 10%;
+    }
+}

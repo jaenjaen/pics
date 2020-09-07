@@ -1,20 +1,19 @@
-<script>
-    var wrapper = document.getElementById("chat-wrapper");
-    wrapper.scrollTop = wrapper.scrollHeight;
-</script>
 <script scoped src="@/assets/js/chat/Chat.js"></script>
 <template>
     <div id="app">
         <!-- Header : 채팅하는 대상 -->
         <header>
-            <div>닉네임</div>
+            <div>
+                <img id="profile" src="http://localhost:7777/upload/default/user.png" width="25px" height="25px">
+                <span>닉네임</span>
+            </div>
         </header>
 
         <!-- 채팅 본문 : 대화 내용 -->
         <div id="chat-wrapper" class='chat-wrapper'>
             <div class='chat-message padding'>
               <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user1.jpg' />
+                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Sushi tonight?</p>
@@ -26,7 +25,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user2.jpg' />
+                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Pizza?</p>
@@ -41,7 +40,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user1.jpg' />
+                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
 
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
@@ -54,7 +53,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user2.jpg' />
+                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Awesome! See you later! : )</p>
@@ -66,7 +65,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user2.jpg' />
+                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Awesome! See you later! : )</p>
@@ -78,7 +77,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://www.michaelmammoliti.com/_projects/chat/_media/img/user2.jpg' />
+                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Awesome! See you later! : )</p>

@@ -32,7 +32,7 @@
     #closeChat {
         position: fixed;
         padding: 10px;
-        color: #aaaaaa;
+        color: white;
         font-size: 28px;
         font-weight: bold;
         left: 72%;
@@ -42,7 +42,7 @@
     
     #closeChat:hover,
     #closeChat:focus {
-        color: #000;
+        color: #33A3DC;
         text-decoration: none;
         cursor: pointer;
     }

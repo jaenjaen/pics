@@ -52,7 +52,20 @@ public class StudioFilterController {
 			System.out.println("list size : "+list.size());
 			System.out.println("4.--------------------------");
 			System.out.println("list sample : "+list.get(0));
-			for(Studio std : list) System.out.println(std);
+			for(Studio std : list) {
+				String oneMainImg =std.getMainImg().split(",")[0];
+				std.setMainImg(oneMainImg);
+				
+				if(!oneMainImg.contains("jpg")) {
+					String word1= std.getMainImg().concat(".jpg");
+					std.setMainImg(word1);
+				}
+				if(oneMainImg.contains("/")){
+					String word2= std.getMainImg().replace("/", "");
+					std.setMainImg(word2);
+				}
+				System.out.println(std);
+			}
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

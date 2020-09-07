@@ -48,5 +48,15 @@ public class ExtraServiceImpl implements ExtraService {
 		return extraDao.getCustomerReivews(custId);
 	}
 
+	@Override
+	public int checkReviews(int resId) throws Exception {
+		return extraDao.checkReviews(resId);
+	}
+
+	@Override
+	public int deleteReview(int reviewId) throws Exception {
+		return extraDao.deleteReview(reviewId);
+	}
+
 	
 }

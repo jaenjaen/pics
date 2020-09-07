@@ -23,7 +23,7 @@
         <tr>
           <th>예약번호</th> <th>예약일자</th> <th>예약업체</th> <th>예약인원</th> <th>결제금액</th> <th>리뷰쓰기</th>
         </tr>
-        <tr v-for="(review, idx) in reviewList" :key="review">
+        <tr v-for="(reservation, idx) in resvList" :key="reservation">
           <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
           <td>{{reservation.totalPrice}}원</td> <td><button @click="showModal">리뷰쓰기</button></td>
         </tr>

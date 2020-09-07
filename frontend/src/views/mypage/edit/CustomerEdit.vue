@@ -91,7 +91,8 @@ export default {
           job: this.job
         })
          .then(res => {
-           console.log(res);
+           //console.log(res);
+           if(res !=null){
            customer.custId = this.custId;
            customer.imgSrc = this.imgSrc;
            customer.nickname = this.nickname;
@@ -101,6 +102,7 @@ export default {
            //console.log(customer);
            alert("정보가 수정되었습니다.");
            location.href="http://localhost:9999/mypage";
+           }
            })
         .catch(e => {
           console.log(e)
@@ -112,10 +114,11 @@ export default {
       signout :function(){
         axios.delete("http://localhost:7777/customer/"+this.custId)
         .then(res=>{
-          console.log(res)
-          alert("회원탈퇴 되었습니다.");
-          sessionStorage.removeItem("customer");
-          location.href="http://localhost:9999";
+            if(res!=null){
+            alert("회원탈퇴 되었습니다.");
+            sessionStorage.removeItem("customer");
+            location.href="http://localhost:9999";
+          }
         })
         .catch(err=>{
           console.log(err);

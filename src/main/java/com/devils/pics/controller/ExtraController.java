@@ -80,7 +80,6 @@ public class ExtraController {
 	@PostMapping("/review")
 	public ResponseEntity writeReview(@RequestBody Review review) {
 		try {
-			System.out.println(review);
 			int n = extraService.writeReview(review);
 			return new ResponseEntity(HttpStatus.OK);
 		} catch (Exception e) {

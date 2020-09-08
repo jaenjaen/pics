@@ -29,10 +29,10 @@
 }
 
 .list_table th {
-    background-color: white !important;
+    background-color: #E5EDF5 !important;
     position: sticky;
     top: -8px;
-    height: 50px;
+    height: 45px;
 }
 
 .list_table td {

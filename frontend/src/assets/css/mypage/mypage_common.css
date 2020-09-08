@@ -9,7 +9,6 @@
     overflow: scroll;
     margin: auto;
     height: 180px;
-    padding: 1% 0 1% 2%;
     text-align: left;
 }
 
@@ -20,17 +19,17 @@
 }
 
 .mypage_card th {
-    background-color: white !important;
+    background-color: #E5EDF5 !important;
+    height: 30px;
     position: sticky;
     top: -8px;
 }
 
 .mypage_card td {
     padding: 10px 0 10px 0;
-    word-break: break-all;
-    overflow: hidden;
     border-bottom: 1px solid #b5b5b5a9;
-    text-overflow: ellipsis;
+    height: 30px;
+    overflow: hidden;
 }
 
 .list_btn {

@@ -1,13 +1,15 @@
 import axios from "axios";
 import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
+import Inquiry from "@/components/mypage/Inquiry.vue";
 
 var session = JSON.parse(sessionStorage.getItem("customer"));
 export default {
     name: "customerMypage",
     components: {
         MypageNametag,
-        MypageGap
+        MypageGap,
+        Inquiry
     },
     data() {
         return {

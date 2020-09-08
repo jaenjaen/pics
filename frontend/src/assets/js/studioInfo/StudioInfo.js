@@ -236,7 +236,6 @@ export default {
             // 전체 리뷰 개수보다 노출되는 리뷰 개수가 작은 경우
             if (this.cntReviews < this.allReviewLength) {
                 this.cntReviews += 3; // 노출 리뷰 개수 3개 증가
-
                 let temp = []
                 for (var i = 0; i < this.cntReviews; i++) {
                     temp.push(this.reviews[i]); // 전체 리뷰에서 노출 리뷰 개수만큼 데이터 추출하여 temp에 저장
@@ -246,7 +245,7 @@ export default {
 
             } else {
                 this.dataFull = true; // dataFull 객체를 true 상태로 변경
-                alert('List items are fully loaded!'); // 모든 데이터 출력 알림
+                alert('마지막 리뷰입니다.'); // 모든 데이터 출력 알림
             }
         }
     }

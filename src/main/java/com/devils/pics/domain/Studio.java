@@ -2,6 +2,8 @@ package com.devils.pics.domain;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.type.Alias;
+
 public class Studio { 
 	private int stuId;
 	private String comId;

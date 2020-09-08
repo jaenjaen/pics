@@ -71,6 +71,11 @@ public class CompanyServiceImpl implements CompanyService {
 	public Company getCompany(Company company) throws Exception {
 		return companyDAO.getCompany(company);
 	}
+
+	@Override
+	public Company getCompanyInfo(String comId) throws Exception {
+		return companyDAO.getCompanyInfo(comId);
+	}
 	
 	
 }

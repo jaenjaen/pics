@@ -60,9 +60,7 @@ export default {
                 this.reservationLength = reservation.length;
                 this.reservation = this.schedule.reservation;
                 this.chartData(this.reservation);
-                console.log(JSON.stringify(this.datacollection));
                 this.renderChart(this.datacollection, this.options);
-                console.log("ccc");
             })
             .catch(error => {
                 console.log(error);
@@ -88,9 +86,7 @@ export default {
                 for (let j = 0; j < diff % 7; j++) {
                     let tomorrow = new Date(startDay.getFullYear(), startDay.getMonth(), startDay.getDate() + 1)
                     let tomorrowDay = tomorrow.getDay()
-                    console.log("| tomorrow: " + tomorrowDay);
                     this.dayCount[tomorrowDay] += 1;
-                    console.log("|this.dayCount: " + this.dayCount);
                 }
             }
             for (let i = 0; i < 7; i++) {

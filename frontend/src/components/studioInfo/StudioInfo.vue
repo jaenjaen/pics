@@ -32,7 +32,7 @@
         <br>
         <span  id="accCustomer">
         누적 이용자 총 <b>{{accCustomer}}</b>명
-        </span>
+        </span><br>
         <!-- 스튜디오 평점 -->
         <span id="avgScore">
         평점 <b>{{studios[0].avgScore}}</b>점
@@ -71,7 +71,7 @@
         <Reservation width="70%"></Reservation>
       </div>
         <!-- ============== Studio Filter ============== -->
-      <hr>
+
       <article>
           <div class="article-studioFilter-information-area" >
             <div v-for="studio in studios" v-bind:key="studio.stuId"> 

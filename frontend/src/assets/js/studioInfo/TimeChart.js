@@ -44,18 +44,14 @@ export default {
         }
     },
     mounted() {
-        console.log("aaa");
         axios
             .get("http://127.0.0.1:7777/studio/reservation/10")
             .then(response => {
                 this.reservation = response.data;
                 var reservation = this.reservation;
                 this.reservationLength = reservation.length;
-                console.log()
                 this.chartData(this.reservation);
-                console.log(JSON.stringify(this.datacollection));
                 this.renderChart(this.datacollection, this.options);
-                console.log("bbb");
             })
             .catch(error => {
                 console.log(error);
@@ -70,7 +66,6 @@ export default {
             for (let i = 0; i < this.reservationLength; i++) {
                 let startTime = parseInt((new Date(this.reservation[i].startDate)).getHours());
                 let endTime = parseInt((new Date(this.reservation[i].endDate)).getHours());
-                console.log(endTime);
                 for (let j = startTime; j < endTime; j++) {
                     this.timeCount[j] += 1;
                 }

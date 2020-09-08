@@ -44,7 +44,7 @@
 		SELECT
 		s.stu_id, s.com_id, s.name, s.description, s.main_img,
 		c.category_id, c.category_name,
-		com.name com_name,
+		com.comI_id,com.name com_name,
 		r.weekday,
 		e.start_date, e.end_date,
 		t.tag_name,

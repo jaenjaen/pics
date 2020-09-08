@@ -36,33 +36,32 @@
             <h1> {{ studio.name }}</h1>
           </div>
           <div id="company-of-studio">
-                <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
-                <span>{{studio.company.name}}</span>
-            </div>
-          </div> 
+              <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
+              <span>{{studio.company.name}}</span>
+          </div>
           <br>
           <div>
-          <!-- 찜하기, 공유하기, 누적 이용자 수 -->
-          <span>
-            <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
-              <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
-              <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
-            </span>
+            <!-- 찜하기, 공유하기, 누적 이용자 수 -->
+            <span>
+              <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
+                <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
+                <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
+              </span>
             </span>          
-          <span>
-          <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-            <i class="material-icons">share</i>
-              <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
-          </a> -->
-          </span>
-  
+            <span>
+              <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
+                <i class="material-icons">share</i>
+                  <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
+              </a> -->
+            </span>
             <!-- 누적 이용자 수 -->
             <br>
             <span>
-            스튜디오를 이용한 사람 총 {{this.accCustomer}}명
+            스튜디오를 이용한 사람 총 {{accCustomer}}명
             </span>
-          </div>        
-        </section>
+          </div>
+        </div>        
+      </section>
       <hr/>  
         <!-- ============== Reservation ============== -->
       <div class =article-Filterstudiormation-map-area>
@@ -131,27 +130,27 @@
         <!-- ============== Chart & Graph ============== -->
         <!-- ===== 시간대별 예약 차트 ===== -->
         <div class="article-Chart-area">
-          <div id=time-chart style="width:40%;heigth:70px">
+          <div id=time-chart style="width:30%;">
               <div class="chart">
-                  <Bar 
+                  <TimeChart 
                   :chartdata=datacollection
-                  :options=options></Bar>
+                  :options=options></TimeChart>
               </div>
 					</div> 
         		
 				 	 <!-- ===== 요일별 예약 차트 ===== -->
-          <div id=day-chart style="width:40%;heigth:70px">
+          <div id=day-chart style="width:30%;">
               <div class="chart">
-                  <Bar 
+                  <DayChart 
                   :chartdata=datacollection
-                  :options=options></Bar>
+                  :options=options></DayChart>
               </div>
 					</div> 
         </div>
 
         <!-- ============== Review ============== -->
-        <hr>
         <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
+        <hr>
         <h2 align="left">리뷰보기</h2>   
           <div v-for="(review,index) in uncoveredReview" v-bind:key="index">
            <div>

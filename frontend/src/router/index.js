@@ -18,7 +18,6 @@ import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
 import Map from "@/components/studioInfo/Map.vue";
 // import Test from "../components/Test.vue";
-// import GenderChart from "../components/studioInfo/GenderChart.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
@@ -52,11 +51,13 @@ const routes = [{
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
-    }, {
+    },
+    {
         path: "/fileRoute",
         name: "fileRoute",
         component: FileRoute
-    }, {
+    },
+    {
         path: "/companyRegister",
         name: "companyRegister",
         component: CompanyRegister
@@ -87,24 +88,22 @@ const routes = [{
         component: StudioInfo,
         props: true
     },
-    // {
-    //     path: "/genderchart",
-    //     name: "genderchart",
-    //     component: GenderChart
-    // }, 
     {
         path: "/studioList",
         name: "studioList",
         component: StudioList
-    }, {
+    },
+    {
         path: "/companyedit",
         name: "companyedit",
         component: CompanyEdit
-    }, {
+    },
+    {
         path: "/customeredit",
         name: "customeredit",
         component: CustomerEdit
-    }, {
+    },
+    {
         path: "/uploadImg",
         name: "uploadImg",
         component: UploadImg
@@ -113,19 +112,23 @@ const routes = [{
         path: "/reservationlist",
         name: "reservationlist",
         component: ReservationList
-    }, {
+    },
+    {
         path: "/chat",
         name: "chat",
         component: Chat
-    }, {
+    },
+    {
         path: "/chatShow",
         name: "chatShow",
         component: ChatShow
-    }, {
+    },
+    {
         path: "/companyInfo/:comId",
         name: "companyInfo",
         component: CompanyInfo
-    }, {
+    },
+    {
         path: "/Map",
         name: "Map",
         component: Map

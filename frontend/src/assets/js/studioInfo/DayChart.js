@@ -1,13 +1,14 @@
 import { Bar } from "vue-chartjs";
 import axios from "axios";
 
-const week = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 export default {
+    name: "DayChart",
     extends: Bar,
     data() {
         return {
-            reservatedLength: 0,
-            repeatDateLength: 0,
+            reservationLength: 0,
+            schedule: {},
+            reservation: [{}],
             dayCount: new Array(0, 0, 0, 0, 0, 0, 0),
             datacollection: {
                 datasets: [{
@@ -21,7 +22,7 @@ export default {
                         "rgba(245, 99, 132, 6)",
                         "rgba(245, 99, 132, 7)"
                     ],
-                    label: "Reservation Count per Time"
+                    label: "Reservation per Day"
                 }],
                 labels: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
             },
@@ -45,7 +46,7 @@ export default {
                     display: true
                 },
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: true
             }
         }
     },
@@ -57,14 +58,11 @@ export default {
                 this.schedule = response.data;
                 var reservation = this.schedule.reservation;
                 this.reservationLength = reservation.length;
-                var repeatDate = this.schedule.repeatDate;
-                this.repeatDateLength = repeatDate.length;
-
-                console.log()
+                this.reservation = this.schedule.reservation;
                 this.chartData(this.reservation);
                 console.log(JSON.stringify(this.datacollection));
                 this.renderChart(this.datacollection, this.options);
-                console.log("bbb");
+                console.log("ccc");
             })
             .catch(error => {
                 console.log(error);
@@ -80,27 +78,24 @@ export default {
             for (let i = 0; i < this.reservationLength; i++) {
                 let startDay = (new Date(this.reservation[i].startDate));
                 let endDay = (new Date(this.reservation[i].endDate));
-                let diff = (startDay.getTime() - endDay.getTime()) / (1000 * 60 * 60);
-
-                // 예약 시작일의 요일 숫자로 구함
-                // 요일숫자 % 7
-                console.log(endTime);
-                for (let j = startDay; j < diff % 7; j++) {
-                    // if () {
-
-                    // }
+                let diff = (endDay.getTime() - startDay.getTime()) / (1000 * 60 * 60 * 24);
+                // 예약 시작일의 요일 숫자로 구함 요일숫자 % 7
+                if (diff >= 7) {
+                    for (let i = 0; i < 7; i++) {
+                        this.dayCount[i] += Math.floor(diff / 7)
+                    }
+                }
+                for (let j = 0; j < diff % 7; j++) {
+                    let tomorrow = new Date(startDay.getFullYear(), startDay.getMonth(), startDay.getDate() + 1)
+                    let tomorrowDay = tomorrow.getDay()
+                    console.log("| tomorrow: " + tomorrowDay);
+                    this.dayCount[tomorrowDay] += 1;
+                    console.log("|this.dayCount: " + this.dayCount);
                 }
             }
-            for (let i = 0; i < 24; i++) {
-                this.$set(this.datacollection.datasets[0].data, i, this.timeCount[i]);
+            for (let i = 0; i < 7; i++) {
+                this.$set(this.datacollection.datasets[0].data, i, this.dayCount[i]);
             }
         }
     },
-    transDate(date, diff) {
-        let startDate = new Date((new Date(date)).getFullYear, (new Date(date)).getMonth, (new Date(date)).getDate);
-        let nextDate = tempDay.setDate(startDate.getDate() + i);
-        return nextDate.getDay();
-
-    }
-
 }

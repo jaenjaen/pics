@@ -8,8 +8,8 @@ import VueMaterial from 'vue-material'
 // import 'vue-material/dist/theme/default.css'
 
 import Reservation from "@/components/studioInfo/Reservation.vue"
-import Bar from "@/assets/js/studioInfo/TimeChart.js";
-// import Bar from "@/assets/js/studioInfo/DayChart.js";
+import TimeChart from "@/assets/js/studioInfo/TimeChart.js";
+import DayChart from "@/assets/js/studioInfo/DayChart.js";
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
@@ -21,7 +21,7 @@ Vue.use(VModal);
 
 export default {
     name: "studio-info",
-    components: { carousel, Reservation, Bar },
+    components: { carousel, Reservation, TimeChart, DayChart },
     props: {
         stuId: {
             type: String,
@@ -96,14 +96,14 @@ export default {
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
-                // this.$emit('studios', this.studios);
-                //메인 이미지 split
+
+                // 메인 이미지 split
                 let mainImgSplit = (this.studios[0].mainImg).split(',');
-                let portImgSplit = (this.studios[0].mainImg).split(',')
-                for (let i = 0; i < 10; i++) {
+                let portImgSplit = (this.studios[0].mainImg).split(',');
+                for (let i = 0; i < mainImgSplit.letngth; i++) {
                     this.mainImgList.push(mainImgSplit[i]);
                 }
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < this.portImgList.letngth; i++) {
                     this.portImgList.push(portImgSplit[i]);
                 }
                 console.log("this.portImgList : " + this.portImgList);
@@ -189,6 +189,7 @@ export default {
     ////////////////////////////// Methods //////////////////////////////
     methods: {
         imgUrl(imgName) {
+            console.log(imgName);
             return require("@/assets/img/studio/" + imgName);
         },
         // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거

@@ -1,8 +1,9 @@
-import { Bar } from "vue-chartjs";
+import { Line } from "vue-chartjs";
 import axios from "axios";
 
 export default {
-    extends: Bar,
+    name: "TimeChart",
+    extends: Line,
     data() {
         return {
             reservatedLength: 0,
@@ -10,8 +11,11 @@ export default {
             datacollection: {
                 datasets: [{
                     data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                    backgroundColor: "rgba(245, 99, 132, 1)",
-                    label: "Reservation Count per Time"
+                    pointBorderColor: "#029BE0",
+                    borderColor: '#029BE0',
+                    fill: false,
+                    pointBackgroundColor: 'white',
+                    label: "Reservation per Time"
                 }],
                 labels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
             },
@@ -22,7 +26,7 @@ export default {
                             beginAtZero: true
                         },
                         gridLines: {
-                            display: true
+                            display: false
                         }
                     }],
                     xAxes: [{
@@ -35,7 +39,7 @@ export default {
                     display: true
                 },
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: true,
             }
         }
     },

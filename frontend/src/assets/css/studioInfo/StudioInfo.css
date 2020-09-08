@@ -127,6 +127,10 @@ article {
     vertical-align: top;
 }
 
+.article-review-area {
+    clear: both;
+}
+
 #review-content,
 #star-score {
     margin: 2% 5% 1% 5%;
@@ -134,10 +138,10 @@ article {
 
 #time-chart {
     float: left;
-    margin: 5%;
+    margin: 2% 5% 2% 10%;
 }
 
 #day-chart {
-    float: left;
-    margin: 5%;
+    float: right;
+    margin: 2% 10% 2% 5%;
 }

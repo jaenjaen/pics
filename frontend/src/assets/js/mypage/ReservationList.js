@@ -1,5 +1,6 @@
 import axios from "axios";
 import VueMonthlyPicker from 'vue-monthly-picker'
+import StarRating from 'vue-star-rating';
 
 let today = new Date();
 let monthList = [4, 6, 9, 11];
@@ -7,14 +8,18 @@ let monthList = [4, 6, 9, 11];
 export default {
     name: "ReservationList",
     components: {
-        VueMonthlyPicker
+        VueMonthlyPicker,
+        StarRating
     },
     data() {
         return {
             custId: JSON.parse(sessionStorage.getItem("customer")).custId,
             month: today + "",
             resvList: [],
-            emptyFlag: false
+            emptyFlag: false,
+            review: "",
+            rating: 0,
+            studioName: "",
         };
     },
     mounted() {
@@ -136,8 +141,17 @@ export default {
                 });
 
         }, //~aftermonth
-        showModal: function() {
-            this.$modal.show("reviewModal");
+        showModal: function(resId, studioName) {
+            axios.get("http://localhost:7777/review/check/" + resId)
+                .then(res => {
+                    if (res.data < 1) {
+                        this.$modal.show("reviewModal");
+                        this.studioName = studioName;
+                    } else alert("이미 작성한 리뷰입니다.");
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         },
     }
 };

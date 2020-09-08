@@ -134,7 +134,6 @@ public class StudioReserveController {
 	//8.n월의 지난 예약
 	@GetMapping("/customer/reservation/expired/{custId}/{startDate}/{endDate}")
 	public ResponseEntity getMonthReservation(@PathVariable int custId, @PathVariable String startDate, @PathVariable String endDate) {
-		System.out.println(custId+","+startDate+","+endDate);
 		Reservation reservation = new Reservation();
 		reservation.setCustId(custId);
 		reservation.setStartDate(startDate);

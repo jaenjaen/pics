@@ -20,6 +20,8 @@ export default {
             review: "",
             rating: 0,
             studioName: "",
+            stuId: 0,
+            filename: "이미지 업로드",
         };
     },
     mounted() {
@@ -30,6 +32,7 @@ export default {
         axios
             .get("http://localhost:7777/customer/reservation/expired/" + this.custId)
             .then(res => {
+                console.log(res.data);
                 this.resvList = res.data;
             })
             .catch(err => {
@@ -141,7 +144,9 @@ export default {
                 });
 
         }, //~aftermonth
-        showModal: function(resId, studioName) {
+        showModal: function(resId, studioName, stuId) {
+            this.stuId = stuId;
+
             axios.get("http://localhost:7777/review/check/" + resId)
                 .then(res => {
                     if (res.data < 1) {
@@ -152,6 +157,10 @@ export default {
                 .catch(err => {
                     console.log(err);
                 })
-        },
+        }, //~showModal
+        writingReview: function() {
+            console.log(this.rating);
+        }
+
     }
 };

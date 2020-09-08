@@ -71,7 +71,7 @@
 
 .reviewcontent textarea {
     width: 90%;
-    height: 225px;
+    height: 200px;
     background-color: #f5f5f5;
     border: none;
     border-radius: 10px;
@@ -80,6 +80,68 @@
     resize: none;
 }
 
-.reviewcontent input[type="file"] {
+.reviewcontent :focus {
+    outline: none;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #fff;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #029BE0;
+    cursor: pointer;
+    border: 1px solid #029BE0;
+    border-radius: .25em;
+    -webkit-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+}
+
+.filebox label:hover {
+    background-color: #fff;
+    color: #029BE0;
+    border: 1px solid #029BE0;
+}
+
+.filebox label:active {
+    background-color: #fff;
+    color: #029BE0;
+    border: 1px solid #029BE0;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.filebox input[type="text"] {
+    width: 75%;
+    border-bottom: 2px solid #029BE0;
+    margin-right: 15px;
+}
+
+.reviewcontent input[type='submit'] {
     width: 90%;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #33A3DC;
+    color: #eee;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 15px 0 15px 0;
+}
+
+.reviewcontent input[type='submit']:focus,
+.reviewcontent input[type='submit']:hover {
+    background-color: #fff;
+    color: #029BE0;
+    border: 1px solid #029BE0;
 }

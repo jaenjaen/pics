@@ -130,7 +130,6 @@ const routes = [{
         name: "Map",
         component: Map
     }
-
 ];
 const router = new VueRouter({
     mode: "history",

@@ -1,9 +1,12 @@
 package com.devils.pics.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Company {
 	private String comId;
+	private List<Studio> studioList;
+	private List<StudioFilter> studioFilter;
 	private String name;
 	private String address;
 	private String password;
@@ -16,10 +19,12 @@ public class Company {
 		super();
 	}
 
-	public Company(String comId, String name, String address, String password, String tel, String description,
-			String logoImg, String salt) {
+	public Company(String comId, List<Studio> studioList, List<StudioFilter> studioFilter, String name, String address,
+			String password, String tel, String description, String logoImg, String salt) {
 		super();
 		this.comId = comId;
+		this.studioList = studioList;
+		this.studioFilter = studioFilter;
 		this.name = name;
 		this.address = address;
 		this.password = password;
@@ -35,6 +40,22 @@ public class Company {
 
 	public void setComId(String comId) {
 		this.comId = comId;
+	}
+
+	public List<Studio> getStudioList() {
+		return studioList;
+	}
+
+	public void setStudioList(List<Studio> studioList) {
+		this.studioList = studioList;
+	}
+
+	public List<StudioFilter> getStudioFilter() {
+		return studioFilter;
+	}
+
+	public void setStudioFilter(List<StudioFilter> studioFilter) {
+		this.studioFilter = studioFilter;
 	}
 
 	public String getName() {
@@ -95,7 +116,10 @@ public class Company {
 
 	@Override
 	public String toString() {
-		return "Company [comId=" + comId + ", name=" + name + ", address=" + address + ", password=" + password
-				+ ", tel=" + tel + ", description=" + description + ", logoImg=" + logoImg + ", salt=" + salt + "]";
+		return "Company [comId=" + comId + ", studioList=" + studioList + ", studioFilter=" + studioFilter + ", name="
+				+ name + ", address=" + address + ", password=" + password + ", tel=" + tel + ", description="
+				+ description + ", logoImg=" + logoImg + ", salt=" + salt + "]";
 	}
+
+	
 }

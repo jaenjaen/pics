@@ -1,17 +1,21 @@
+import axios from "axios";
+
 export default {
     name: 'company_info',
-    props: ['comId'],
     data() {
         return {
-            comId: this.comId
+            comId: this.$route.params
         }
     },
     mounted() {
-        alert(this.comId)
-    },
-    methods: {
-        temp() {
-            alert(this.comId)
-        }
+
+        axios
+            .get("http://localhost:7777/studio/popular")
+            .then(response => (this.studio_infos = response.data))
+            .catch(error => {
+                console.log(error);
+                this.errored = true;
+            })
+            .finally(() => (this.loading = false));
     },
 }

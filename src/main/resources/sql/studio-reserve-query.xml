@@ -34,7 +34,6 @@
 		<result property="totalPrice" column="total_price"/>
 		<result property="resDate" column="res_date"/>
 		<result property="totalPeople" column="total_people"/>
-		
 		<association property="studio" javaType="studio">
 			<result property="comId" column="com_id"/>
 			<result property="categoryId" column="category_id"/>

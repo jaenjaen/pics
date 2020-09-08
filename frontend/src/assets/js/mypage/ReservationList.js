@@ -17,11 +17,13 @@ export default {
             month: today + "",
             resvList: [],
             emptyFlag: false,
-            review: "",
+            content: "",
             rating: 0,
             studioName: "",
             stuId: 0,
+            resId: 0,
             filename: "이미지 업로드",
+            max: 100,
         };
     },
     mounted() {
@@ -146,7 +148,7 @@ export default {
         }, //~aftermonth
         showModal: function(resId, studioName, stuId) {
             this.stuId = stuId;
-
+            this.resId = resId;
             axios.get("http://localhost:7777/review/check/" + resId)
                 .then(res => {
                     if (res.data < 1) {
@@ -159,8 +161,24 @@ export default {
                 })
         }, //~showModal
         writingReview: function() {
-            console.log(this.rating);
+            axios.post("http://localhost:7777/review", {
+                customer: {
+                    custId: this.custId
+                },
+                studio: {
+                    stuId: this.stuId
+                },
+                resId: this.resId,
+                score: this.rating,
+                content: this.content,
+                img: ""
+            }).then(res => {
+                console.log(res.data);
+                alert("리뷰 작성이 완료되었습니다.");
+                location.reload();
+            }).catch(err => {
+                console.log(err);
+            })
         }
-
     }
-};
+}

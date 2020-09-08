@@ -25,7 +25,7 @@
         </tr>
         <tr v-for="(reservation, idx) in resvList" :key="reservation">
           <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
-          <td>{{reservation.totalPrice}}원</td> <td><button class="list_btn" @click="showModal(reservation.resId,reservation.studio.name)">리뷰쓰기</button></td>
+          <td>{{reservation.totalPrice}}원</td> <td><button class="list_btn" @click="showModal(reservation.resId, reservation.studio.name, reservation.stuId)">리뷰쓰기</button></td>
         </tr>
         <tr v-if="emptyFlag">
           <td colspan="6"><br>해당 월의 예약이 존재하지 않습니다.</td>
@@ -43,10 +43,14 @@
           ></star-rating>
         </div>
         <div class="reviewcontent">
-          <form>
-            <textarea v-model="review" placeholder="리뷰를 작성해주세요."></textarea>
-            <input type="file"/><br>
-            <input class="list_btn" type="submit" value="리뷰작성"/>
+          <form @submit.prevent>
+            <textarea v-model="content" placeholder="리뷰를 작성해주세요 100자까지 작성 가능합니다" :maxlength="max"></textarea>
+            <div class="filebox">
+              <input type="text" :placeholder="filename" disabled>
+              <label for="ex_file">업로드</label>
+              <input type="file" id="ex_file">
+            </div>
+            <input @click="writingReview" type="submit" value="리뷰작성"/>
           </form>
         </div>
       </modal>

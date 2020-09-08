@@ -80,8 +80,8 @@ export default {
 
             // 리뷰 페이징 변수
             reviews: [{}], // 전체 리뷰 데이터
-            visibleReview: {}, // 화면에 노출되는 리뷰 데이터
-            totalReviewsLength: 0, // 전체 리뷰 데이터 수
+            uncoveredReview: {}, // 화면에 노출되는 리뷰 데이터
+            allReviewLength: 0, // 전체 리뷰 데이터 수
             cntReviews: 3, // 화면에 노출할 리뷰 데이터 수 (초기 세팅 = 3)
             dataFull: false, // 전체 데이터보다 많은 데이터 호출 여부
         };
@@ -139,9 +139,11 @@ export default {
                 let temp = []
                 for (var i = 0; i < this.cntReviews; i++) {
                     temp.push(this.reviews[i])
+                    console.log("temp : " + this.reviews[i]);
                 }
-                this.visibleReview = temp
-                this.cntReviews = (this.reviews).length
+                this.uncoveredReview = temp
+
+                this.allReviewLength = (this.reviews).length
             })
             .catch(error => {
                 console.log(error);
@@ -231,18 +233,19 @@ export default {
         },
         appendReviews() {
             // 전체 리뷰 개수보다 노출되는 리뷰 개수가 작은 경우
-            if (this.cntReviews < this.totalReviewsLength) {
-                this.cntReviews += 3 // 노출 리뷰 개수 3개 증가
+            if (this.cntReviews < this.allReviewLength) {
+                this.cntReviews += 3; // 노출 리뷰 개수 3개 증가
+
                 let temp = []
                 for (var i = 0; i < this.cntReviews; i++) {
-                    temp.push(this.reviews[i]) // 전체 리뷰에서 노출 리뷰 개수만큼 데이터 추출하여 temp에 저장
+                    temp.push(this.reviews[i]); // 전체 리뷰에서 노출 리뷰 개수만큼 데이터 추출하여 temp에 저장
                 }
-                this.visibleReview = temp // 전체 리뷰 개수와 노출되는 리뷰 개수가 같으면
-                    // review 객체에 data 배열 업데이트
+                this.uncoveredReview = temp; // 전체 리뷰 개수와 노출되는 리뷰 개수가 같으면
+                // review 객체에 data 배열 업데이트
 
             } else {
-                this.dataFull = true // dataFull 객체를 true 상태로 변경
-                alert('List items are fully loaded!') // 모든 데이터 출력 알림
+                this.dataFull = true; // dataFull 객체를 true 상태로 변경
+                alert('List items are fully loaded!'); // 모든 데이터 출력 알림
             }
         }
     }

@@ -52,7 +52,7 @@
 		<result property="score" column="score"/>
 		<result property="content" column="content" />
 		<result property="img" column="img"/>
-		<result property="regDate" column="regDate"/>
+		<result property="regDate" column="reg_Date"/>
 		<result property="answer" column="answer" />
 		<association property="customer" javaType="customer">
 			<id property="custId" column="cust_id" />
@@ -104,11 +104,9 @@
 		c.cust_id,c.api_id,c.gender,c.job,c.funnel,c.email,c.tel,c.api_key,c.img_src,
 		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
 		FROM review re 
-		JOIN customer c ON re.cust_Id=c.cust_Id
-		JOIN studio s ON re.stu_Id=s.stu_Id
-		<if test="'${value}'!=null">
+		LEFT JOIN studio s ON re.stu_Id=s.stu_Id
+		LEFT JOIN customer c ON re.cust_Id=c.cust_Id
 		WHERE re.stu_Id=${value}
-		</if>
 	</select>
 
 	<select id="getAccCustomer" parameterType="int" resultType="int">							

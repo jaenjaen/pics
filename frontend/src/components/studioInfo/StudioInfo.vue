@@ -5,7 +5,7 @@
         <div class="row" v-for="(mainImg,index) in mainImgList" v-bind:key="index">
           <carousel :itmes="1" :loop="true" :autoplay="true" >
             <div>
-               <img  class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500"/>
+               <!-- <img  class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500"/> -->
             </div>
            </carousel>
          </div> 
@@ -153,7 +153,7 @@
         <hr>
         <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
         <h2 align="left">리뷰보기</h2>   
-          <div v-for="review in reviews" v-bind:key="review.reviewId">
+          <div v-for="(review,index) in uncoveredReview" v-bind:key="index">
            <div>
               <div class="card-expansion" id="reviews" >
                 <md-card-media>
@@ -161,8 +161,8 @@
                 </md-card-media>
                 <md-card>
                   <md-card-header>
-                  <!-- <div class="md-subhead" id="register-date">{{ review.customer.email}}</div> -->
-                  <div class="md-subhead" id="register-date">({{ review.regDate}})</div>
+                  <div class="md-subhead" id="register-date">{{ review.customer.email}}</div>
+                  <!-- <div class="md-subhead" id="register-date">({{ review.regDate}})</div> -->
                 </md-card-header>
 
                   <!-- <span id="reviewr-email"><strong>{{ review.customer.email|emailHide }}</strong></span> -->
@@ -232,11 +232,13 @@
             </div>
             </div>
             <div id="more-review" v-if="(reviews).length>3">
-                <a 
-                @click.prevent="appendReviews()" 
+              <button 
+                type="button"
+                @click="appendReviews()"
                 :disabled="dataFull === true" 
                 :class="{disabled : dataFull}"
-                >더보기</a>
+                >더보기
+              </button>
             </div>
           </div>
           <div id="no-review" v-if="(reviews+'').length==0"><h3>"아직 등록된 리뷰가 없습니다!"</h3></div>

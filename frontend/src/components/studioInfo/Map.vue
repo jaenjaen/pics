@@ -1,4 +1,3 @@
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91cbdca7243fe89cb44e5d61a5aaaf44"></script>
 <template>
  <!-- <div id="map"></div> -->
  <vue-daum-map
@@ -10,6 +9,7 @@
       @load="onLoad"
        style="width:500px;height:400px;"/>
 </template>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91cbdca7243fe89cb44e5d61a5aaaf44"></script>
 <script>
 import VueDaumMap from 'vue-daum-map';
 // import loadScriptOnce from 'load-script-once';
@@ -87,14 +87,16 @@ import VueDaumMap from 'vue-daum-map';
         default: null
       },
     },
-    data: () => ({
-        // appKey: '0e41243b4bb80fef37c1383bd1bdcb7c', // 테스트용 appkey
-        // center: {lat:37.4797302, lng:126.9237447}, // 지도의 중심 좌표
-        // libraries:["services","clusterer","drawing"],
-        // level: 3, // 지도의 레벨(확대, 축소 정도),
-        // mapTypeId:1, // 맵 타입
-        // map: null // 지도 객체. 지도가 로드되면 할당됨.
-    }),
+    data(){
+      return {
+        appKey: '0e41243b4bb80fef37c1383bd1bdcb7c', // 테스트용 appkey
+        center: {lat:37.4797302, lng:126.9237447}, // 지도의 중심 좌표
+        libraries:["services","clusterer","drawing"],
+        level: 3, // 지도의 레벨(확대, 축소 정도),
+        mapTypeId:1, // 맵 타입
+        map: null // 지도 객체. 지도가 로드되면 할당됨.
+      }
+    },
     mounted () {
         loadScriptOnce(`//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0e41243b4bb80fef37c1383bd1bdcb7c&libraries=services,clusterer,drawing`)
         .then(() => {

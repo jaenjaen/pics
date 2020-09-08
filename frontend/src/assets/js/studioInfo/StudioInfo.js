@@ -2,26 +2,21 @@ import axios from "axios"; //axios
 import Vue from 'vue'
 import carousel from "vue-owl-carousel"; //캐러셀
 import VModal from 'vue-js-modal'
-// import 'vue-material/dist/vue-material.min.css'
 import VueMaterial from 'vue-material'
-// import 'vue-material/dist/vue-material.min.css'
-// import 'vue-material/dist/theme/default.css'
-
 import Reservation from "@/components/studioInfo/Reservation.vue"
 import TimeChart from "@/assets/js/studioInfo/TimeChart.js";
 import DayChart from "@/assets/js/studioInfo/DayChart.js";
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
-
-// import Map from "@/components/studioInfo/Map.vue"
+import Map from "@/components/studioInfo/Map.vue"
 
 Vue.use(VueMaterial)
 Vue.use(VModal);
 
 export default {
     name: "studio-info",
-    components: { carousel, Reservation, TimeChart, DayChart },
+    components: { carousel, Reservation, TimeChart, DayChart, Map },
     props: {
         stuId: {
             type: String,

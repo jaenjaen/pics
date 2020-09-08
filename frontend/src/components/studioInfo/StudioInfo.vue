@@ -30,14 +30,22 @@
             </span>
         </div>
         <br>
-          <!-- 타이틀 -->
+        <span  id="accCustomer">
+        누적 이용자 총 <b>{{accCustomer}}</b>명
+        </span>
+        <!-- 스튜디오 평점 -->
+        <span id="avgScore">
+        평점 <b>{{studios[0].avgScore}}</b>점
+        </span>
+        <!-- 타이틀 -->
         <div class="section-title-field" v-for="studio in studios" v-bind:key="studio.stuId">
-          <div class="studio-name">
-            <h1> {{ studio.name }}</h1>
-          </div>
-          <div id="company-of-studio">
-              <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
-              <span>{{studio.company.name}}</span>
+        <!-- 누적 이용자 수 -->
+        <div class="studio-name">
+          <h1> {{ studio.name }}</h1>
+        </div>
+        <div id="company-of-studio">
+          <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
+          <span>{{studio.company.name}}</span>
           </div>
           <br>
           <div>
@@ -53,11 +61,6 @@
                 <i class="material-icons">share</i>
                   <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
               </a> -->
-            </span>
-            <!-- 누적 이용자 수 -->
-            <br>
-            <span>
-            스튜디오를 이용한 사람 총 {{accCustomer}}명
             </span>
           </div>
         </div>        
@@ -100,7 +103,20 @@
               </table>
             </div>
           </div>
-          
+
+           <!-- ============== Map ============== -->
+          <div class="article-map-field">
+            <Map>
+                <vue-daum-map
+                :appKey="appKey"
+                  :center.sync="center"
+                  :level.sync="level"
+                  :mapTypeId="mapTypeId"
+                  :libraries="libraries"
+                  @load="onLoad"
+                />
+            </Map>
+          </div>
         <!-- ============== Description ============== -->
              
         <div class="article-Description-area"  v-for="(studio,index) in studios" v-bind:key="index">
@@ -121,10 +137,6 @@
             <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
           <!-- </tr> -->
         </table>
-          <!-- ============== Map ============== -->
-          <div id="map">
-
-          </div>
 
         <hr />
         <!-- ============== Chart & Graph ============== -->

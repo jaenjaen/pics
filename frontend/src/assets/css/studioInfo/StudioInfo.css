@@ -24,6 +24,11 @@
     height: 50;
 }
 
+#accCustomer,
+#avgScore {
+    text-shadow: -0.5px 0 blue, 0 1px blue, 1px 0 blue, 0 -1px blue;
+}
+
 .nav-tab {
     margin: 20%;
     list-style-type: none;
@@ -47,14 +52,20 @@ article {
     text-align: right;
     border-bottom: 1.5px solid #bbb5b5;
     padding: 10px;
+    float: left;
 }
 
-#map {
+.article-map-field {
     float: left;
     margin-left: 5%;
     width: 40%;
-    height: 40%;
+    height: 30%;
     border: 1px solid green;
+}
+
+Map {
+    width: 80%;
+    height: 100px;
 }
 
 .article-Description-area {
@@ -80,6 +91,18 @@ article {
     background-color: white;
     color: #029BE0;
     border: 1.5px solid lightgray;
+}
+
+#accCustomer,
+#avgScore {
+    font-size: 0.95em;
+    color: #029BE0;
+}
+
+#avgScore:hover,
+#accCustomer:hover {
+    font-size: 1em;
+    color: #029BE0;
 }
 
 .article-review-area {

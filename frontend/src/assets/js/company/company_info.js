@@ -7,11 +7,11 @@ export default {
         }
     },
     mounted() {
-        alert(comId)
+        alert(this.comId)
     },
     methods: {
         temp() {
-            alert(comId)
+            alert(this.comId)
         }
     },
 }

@@ -97,4 +97,4 @@ export default {
   }
 };
 </script>
-<style src="@/assets/css/login/CompanyLogin.css"></style>
+<style scoped src="@/assets/css/login/CompanyLogin.css"></style>

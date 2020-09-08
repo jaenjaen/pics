@@ -122,9 +122,10 @@ const routes = [{
         name: "chatShow",
         component: ChatShow
     }, {
-        path: "/companyInfo/:comId",
-        name: "companyInfo",
-        component: CompanyInfo
+        path: "/companyInfo/:receiveComId",
+        name: "companyinfo",
+        component: CompanyInfo,
+
     }
 
 

@@ -52,6 +52,9 @@ export default {
             }
 
         },
+        moveToComInfo(value) {
+            this.$router.push("/studioInfo/" + value);
+        }
     },
     filters: {
         demical: function(value) {

@@ -17,7 +17,7 @@
       >
         <a href v-for="(studio,index) in studio_infos" :key="index">
           <div class="row">
-            <div class="card">
+            <div class="card" @click.prevent="moveToComInfo(studio.stuId)">
               <div class="card-image">
                 <img :src="getImgUrl(studio.mainImg)" />
               </div>

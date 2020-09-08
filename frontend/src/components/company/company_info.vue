@@ -1,5 +1,7 @@
 <template>
-  <div>{{comId}}</div>
+  <div>
+    <h1>company_info 들어왔다.</h1>
+  </div>
 </template>
 
 <script src="@/assets/js/company/company_info.js"></script>

@@ -84,7 +84,6 @@ public class CompanyController {
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
-		
 	}
 	
 	@PutMapping("/company")
@@ -103,6 +102,19 @@ public class CompanyController {
 		try {
 			companyService.deleteCompany(comId);
 			return new ResponseEntity(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/companyifo/{comId}")
+	public ResponseEntity getCompanyinfo(@PathVariable String comId) {
+		try {
+			Company company = new Company();
+			company.setComId(comId);
+			
+			Company comp = companyService.getCompany(company);
+			 return new ResponseEntity(comp,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}

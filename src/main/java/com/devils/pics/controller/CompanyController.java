@@ -110,10 +110,7 @@ public class CompanyController {
 	@GetMapping("/companyifo/{comId}")
 	public ResponseEntity getCompanyinfo(@PathVariable String comId) {
 		try {
-			Company company = new Company();
-			company.setComId(comId);
-			
-			Company comp = companyService.getCompany(company);
+			Company comp = companyService.getCompanyInfo(comId);
 			 return new ResponseEntity(comp,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);

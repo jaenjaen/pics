@@ -23,6 +23,8 @@ import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
+import CompanyInfo from "@/components/company/company_info.vue"
+
 
 Vue.use(VueRouter);
 const routes = [{
@@ -119,7 +121,14 @@ const routes = [{
         path: "/chatShow",
         name: "chatShow",
         component: ChatShow
+    }, {
+        path: "/companyInfo/:comId",
+        name: "companyInfo",
+        component: CompanyInfo
     }
+
+
+
     // {
     //     path: "/Map",
     //     name: "Map",

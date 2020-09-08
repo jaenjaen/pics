@@ -8,40 +8,14 @@
     </div>
     <MypageGap categoryName="스튜디오 관리 +" cateogryURL="http://localhost:9999/registerStudio"/>
     <!-- 문의 내역-->
-    <div class="mypage_card"> 
-       <p> 내가가진 스튜디오1</p>
-       <p> 내가가진 스튜디오2</p>
-       <p> 내가가진 스튜디오3</p>
-       <p> 내가가진 스튜디오4</p>
+    <div class="mypage_card">
+       <p>슷휴디오 관리</p>
     </div>
     <MypageGap categoryName="문의내역 >" cateogryURL="#"/>
     <!-- 리뷰 -->
-    <div class="mypage_card">
-       <p>문의 내역 만들어놓기~</p>
-    </div>
+    <Inquiry :customerMode="false"/>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-//import axios from "axios";
-import MypageNametag from "@/components/mypage/MypageNametag.vue";
-import MypageGap from "@/components/mypage/MypageGap.vue";
-
-export default {
-  name: "CompanyMypage",
-  components: {
-    MypageNametag,
-    MypageGap
-  },
-  data() {
-    return {
-      
-    };
-  },
-  methods: {
-  }
-};
-</script>
-
+<script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>

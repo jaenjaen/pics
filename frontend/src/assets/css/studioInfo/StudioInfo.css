@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
-@import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 @media screen and (max-width: 768px) {
     #app {
         width: 100%;
@@ -130,7 +129,7 @@ article {
 
 #review-content,
 #star-score {
-    margin: 5%;
+    margin: 2% 5% 1% 5%;
 }
 
 #time-chart {

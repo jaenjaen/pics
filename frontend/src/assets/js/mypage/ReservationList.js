@@ -61,7 +61,7 @@ export default {
             if (this.month == today + "") {
                 if (today.getMonth() == 0) {
                     today = new Date((today.getFullYear() - 1) + "-" + 12 + "-" + today.getDate());
-                    console.log(today);
+                    //console.log(today);
                 } else mm = today.getMonth()
 
                 this.month = today.getFullYear() + "-" + mm + "-" + today.getDate();
@@ -71,17 +71,16 @@ export default {
                 else endDate = today.getFullYear() + "-" + today.getMonth() + "-" + 31;
             } else {
                 var tmpDate = new Date(this.month);
-                console.log(tmpDate.getMonth());
                 if (tmpDate.getMonth() == 0) {
                     tmpDate = new Date((tmpDate.getFullYear() - 1) + "-" + 12 + "-" + tmpDate.getDate());
-                    console.log(tmpDate);
                 } else mm = tmpDate.getMonth();
 
                 this.month = tmpDate.getFullYear() + "-" + mm + "-" + tmpDate.getDate();
                 startDate = tmpDate.getFullYear() + "-" + mm + "-" + 1;
-                if (today.getMonth() == 2) endDate = tmpDate.getFullYear() + "-" + mm + "-" + 28;
-                else if (monthList.indexOf(today.getMonth()) >= 0) endDate = tmpDate.getFullYear() + "-" + mm + "-" + 30;
+                if (tmpDate.getMonth() == 2) endDate = tmpDate.getFullYear() + "-" + mm + "-" + 28;
+                else if (monthList.indexOf(tmpDate.getMonth()) >= 0) endDate = tmpDate.getFullYear() + "-" + mm + "-" + 30;
                 else endDate = tmpDate.getFullYear() + "-" + mm + "-" + 31;
+                console.log(startDate + "," + endDate);
             }
             axios.get("http://localhost:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
                 .then(res => {

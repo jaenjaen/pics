@@ -173,7 +173,7 @@
 	 	<include refid="select-reservation-studio"/>
 		where cust_id = #{custId}
 		and s.stu_id =r.stu_id
-	 	and start_date &lt; now()
 	 	and start_date between #{startDate} and #{endDate}
+	 	and start_date &lt; now()
 	 </select>
  </mapper> 

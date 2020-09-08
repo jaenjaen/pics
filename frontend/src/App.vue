@@ -25,12 +25,10 @@ export default {
 }
 html{
   height:100%;
-  overflow:hidden;
 }
 
 body {
   height:100%;
-  overflow:hidden;
   background: #f5f5f5 !important;
 }
 #app {

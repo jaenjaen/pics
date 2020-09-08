@@ -13,7 +13,7 @@
         </tr>
         <tr v-for="(reservation, idx) in resvList" :key="reservation">
           <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
-          <td>{{reservation.totalPrice}}원</td> <td><button @click="deleteResv(reservation.resId)">결제취소</button></td>
+          <td>{{reservation.totalPrice}}원</td> <td><button class="list_btn" @click="deleteResv(reservation.resId)">결제취소</button></td>
         </tr>
       </table>
     </div>
@@ -38,7 +38,7 @@
         </tr>
         <tr v-for="(review, idx) in reviewList" :key="review">
           <td>{{idx+1}}</td> <td><router-link :to="{name:'studioInfo', params: {stuId:review.studio.stuId}}">{{review.studio.name}}</router-link></td> <td style="width:300px; text-align:left;">{{review.content}}</td> 
-          <td>{{review.score}}점</td> <td><button @click="deleteReview(review.reviewId)">리뷰삭제</button></td>
+          <td>{{review.score}}점</td> <td><button class="list_btn" @click="deleteReview(review.reviewId)">리뷰삭제</button></td>
         </tr>
       </table>
     </div>

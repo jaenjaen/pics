@@ -25,10 +25,10 @@
         </tr>
         <tr v-for="(reservation, idx) in resvList" :key="reservation">
           <td>{{idx+1}}</td> <td>{{reservation.startDate}} <br> ~ <br>{{reservation.endDate}}</td> <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
-          <td>{{reservation.totalPrice}}원</td> <td><button @click="showModal(reservation.resId)">리뷰쓰기</button></td>
+          <td>{{reservation.totalPrice}}원</td> <td><button class="list_btn" @click="showModal(reservation.resId)">리뷰쓰기</button></td>
         </tr>
         <tr v-if="emptyFlag">
-          <td colspan="5"><br>해당 월의 예약이 존재하지 않습니다.</td>
+          <td colspan="6"><br>해당 월의 예약이 존재하지 않습니다.</td>
         </tr>
       </table>
       <modal name="reviewModal" :height="455">

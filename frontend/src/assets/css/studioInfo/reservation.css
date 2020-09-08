@@ -14,21 +14,38 @@ aside {
     padding: 3px 10px;
 }
 
+.reservation-Information-area {
+    float: left;
+    width: 20%;
+    margin: 10% 5% 5% 7%;
+    align-content: center;
+}
+
+#Studio-Filter-Table tr {
+    border-bottom: 1.5px solid #bbb5b5;
+    padding: 10px;
+}
+
+#Studio-Filter-Table tr td {
+    text-align: center;
+}
+
 .input-reserve-info-field {
-    width: 100%;
-    margin: 5% auto;
+    width: 60%;
+    float: right;
+    margin: 5% 7% 5% 0%;
 }
 
 .date-input-field {
-    margin-left: 10%;
-    width: 30%;
+    margin-left: 5%;
+    width: 35%;
     float: left;
 }
 
 .time-input-field {
     width: 30%;
     float: right;
-    margin-right: 10%;
+    margin-right: 5%;
 }
 
 #totalPeople {
@@ -36,4 +53,8 @@ aside {
     border-radius: 10px;
     border: 1px solid lightgray;
     text-align: center;
+}
+
+#reservation-btn {
+    margin: 5% auto;
 }

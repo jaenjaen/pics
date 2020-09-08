@@ -147,7 +147,11 @@ export default {
 };
 </script>
 
+<style scoped src="@/assets/css/login/CompanyLogin.css"></style>
 <style scoped>
+html, body{
+  overflow: hidden;
+  }
 
 #google-signin-btn-0{
   display:inline-block;

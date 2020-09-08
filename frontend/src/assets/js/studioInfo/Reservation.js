@@ -4,24 +4,48 @@ import VueMaterial from 'vue-material';
 //import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
-Vue.use(VueMaterial)
-
+Vue.use(VueMaterial);
 // 요일 변환을 위한 리스트
 const week = ["fri", "sat", "sun", "mon", "tue", "wed", "thu"];
 
 export default {
     name: "Reservation",
-    props: ["studios"],
     Props: {
         "md-disabled-dates": [],
         "md-model-type": String,
         "md-immediately": true,
         "v-model": String,
+
     },
 
     data() {
         return {
             // 기존 정보 변수 (GET)
+            studios: [{
+                categoryId: 0,
+                name: "",
+                description: "",
+                rule: "",
+                mainImg: "",
+                portImg: "",
+                cadImg: "",
+                floor: 0,
+                studioFilter: {
+                    size: 0,
+                    options: null,
+                    parking: 0,
+                    unitPrice: 0,
+                    defaultCapacity: 0,
+                    excharge: 0,
+                    address: "",
+                    maxCapacity: 0
+                },
+                company: {
+                    comId: 0,
+                    name: "",
+                    address: ""
+                }
+            }],
             schedule: {},
             customer: {},
             stuId: 10,
@@ -80,6 +104,18 @@ export default {
     },
     mounted() {
         axios
+            .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+            .then(response => {
+                this.studios = response.data;
+                console.log(this.studios);
+            })
+            .catch(error => {
+                console.log(error);
+                this.errored = true;
+            })
+            .finally(() => (this.loading = false));
+
+        axios
             .get("http://127.0.0.1:7777/studio/schedule/10") //+ this.stuId)
             .then(response => {
                 this.schedule = response.data;
@@ -90,11 +126,6 @@ export default {
                 for (let i = 0; i < this.repeatedLength; i++) {
                     this.repeatedDays.push(this.repeated[i].weekDate);
                 }
-                // let repeat_date = [];
-                // for (var i = 0; i < (this.schedule.repeatDate).length; i++) {
-                //     repeat_date.push(this.schedule.repeatDate[i].weekDate)
-                // }
-
             })
             .catch(error => {
                 console.log(error);
@@ -109,6 +140,28 @@ export default {
         currency: function(value) {
             if (!isNaN(value)) return value.toLocaleString();
             else return 0;
+        },
+        dayFilter: function(value) {
+            switch (value) {
+                case "mon":
+                    return "월"
+                case "tue":
+                    return "화"
+                case "wed":
+                    return "수"
+                case "thu":
+                    return "목"
+                case "fri":
+                    return "금"
+                case "sat":
+                    return "토"
+                default:
+                    return "일"
+            }
+        },
+        timeFilter(value) {
+            let valueSplit = value.split('-');
+            return valueSplit[0] + "시 ~ " + valueSplit[1];
         }
     },
     computed: {
@@ -122,9 +175,12 @@ export default {
         },
         totalPriceCalculate: function() {
             this.msg = "";
-            // 1. 일자 >> 시간대로 변경
-            this.startDay = this.transDate(this.start_date);
-            this.endDay = this.transDate(this.end_date);
+            // 1. 날짜 변환
+            // 일자 >> 시간대로 변경
+            this.startDay = this.transWeekDay(this.start_date);
+            this.endDay = this.transWeekDay(this.end_date);
+            // this.startDate = this.transTime(this.start_date);
+            // this.endDate = this.transTime(this.end_date);
             this.startDayTime = this.transTime(this.start_date, this.start_time);
             this.endDayTime = this.transTime(this.end_date, this.end_time);
             this.start_idx = this.repeatedDays.indexOf(week[this.startDay], 0);
@@ -135,25 +191,26 @@ export default {
 
 
             // 3. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후
+            // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인, 
 
             if (this.start_date != "" | this.end_date != "") {
-                if (this.start_date != "" && this.checkCloseDate(this.startDay) == 0) {
+                if (this.start_date != "" & this.checkCloseDate(this.startDay) == 0) {
                     this.start_date = "";
                     this.msg = "시작일이 비영업일 입니다.";
                 }
-                if (this.end_date != "" && this.checkCloseDate(this.endDay) == 0) {
+                if (this.end_date != "" & this.checkCloseDate(this.endDay) == 0) {
                     this.end_date = "";
                     this.msg = "종료일이 영업일이 아닙니다.";
                 }
-                if (this.startDayTime < new Date() && this.start_date != "") {
+                if (this.startDayTime < this.today.getTime & this.start_date != "") {
                     this.start_date = this.today;
                     startTime = this.start_date;
                     this.msg = "대여 시작일은 현재 날짜 이후로 가능합니다.";
                 }
-                if (this.startDay > this.endDay && this.end_date != "") {
+                if (this.startDate > this.endDate & this.end_date != "") {
                     alert("대여 종료일을 시작일 이후로 설정하세요.");
                     this.end_date = this.start_date;
-                    this.endDayTime = this.startDayTime;
+                    this.endDate = this.startDate;
                 }
             }
             if (this.start_time < 25 | this.end_time < 25) {
@@ -264,50 +321,26 @@ export default {
             this.$modal.hide("login-required");
         },
         transTime(date, time) {
-            if (date != null & time != null) {
-                let resultDate = (new Date(date));
-                // console.log(resultDate + " : resultDate");
+            if (time != null) {
+                let splitDate = date.toString().split('-');
+                let resultDate = (new Date(splitDate[0], splitDate[1], splitDate[2]));
                 resultDate.setHours(resultDate.getHours() + parseInt(time));
+                console.log("transTime resultDate : " + resultDate + "| date : " + date);
                 return resultDate.getTime();
-            }
-        },
-        transDate(date) {
-            if (date != null) {
-                let splitDate = date.split('-');
+            } else if (date != null) {
+                let splitDate = date.toString().split('-');
                 let resultDate = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
                 return resultDate;
             }
         },
         transWeekDay(date) {
             if (date != null) {
-                let splitDate = date.split('-');
+                let splitDate = date.toString().split('-');
                 let resultDate = (new Date(splitDate[0], splitDate[1], splitDate[2])).getDay();
                 return resultDate;
             }
         },
-        // checkOpenDate() {
-        //     this.startDay = this.transWeekDay(this.start_date);
-        //     if (this.repeatedDays.indexOf(week[this.startDay], 0) > -1) { //일치하는 요일의 종료 시간 가져오기
-        //         return 1;
-        //     } else {
-        //         return 0;
-        //     }
-        // },
-        // checkOpenTime() {
-        //     for (let i = 0; i < this.repeatedLength; i++) {
-        //         console.log("openopen Time " + parseInt(this.repeated[i].time.split('-')[0]) + ", 내가 선택 " + this.start_time);
-        //         console.log("openend Time " + parseInt(this.repeated[i].time.split('-')[1]) + ", 내가 선택 " + this.end_time);
-        //         if (this.repeated[i].weekDate == week[this.startDay]) {
-        //             if ((parseInt(this.start_time) >= parseInt(this.repeated[i].time.split('-')[0])) &
-        //                 (parseInt(this.start_time) < parseInt(this.repeated[i].time.split('-')[1]))) {
-        //                 return 1;
-        //             }
-        //         }
-        //     }
-        //     return 0;
-        // },
         checkCloseDate(date) {
-            // this.endDay = this.transWeekDay(this.end_date);
             if (this.repeatedDays.indexOf(week[date], 0) > -1) { //일치하는 요일의 종료 시간 가져오기
                 console.log("week[this.endDay] : " + week[date] + "| this.repeatedDays" + this.repeatedDays)
                 return 1;
@@ -318,11 +351,7 @@ export default {
         checkCloseTime(time) {
             console.log(time);
             for (let i = 0; i < this.repeatedLength; i++) {
-                // console.log("end open Time " + this.repeated[i].weekDate + parseInt(this.repeated[i].time.split('-')[0]) + ", 내가 선택 " + this.start_time);
-                // console.log("end open Time " + parseInt(this.repeated[i].time.split('-')[1]) + ", 내가 선택 " + this.end_time);
                 if (this.repeated[i].weekDate == week[this.endDay]) {
-                    // console.log("parseInt(this.end_time) > parseInt(this.repeated[i].time.split('-')[0]) : " +
-                    //     parseInt(this.end_time) + "|" + parseInt(this.repeated[i].time.split('-')[0]))
                     if ((time > parseInt(this.repeated[i].time.split('-')[0])) &
                         (time <= parseInt(this.repeated[i].time.split('-')[1]))) {
                         return 1;

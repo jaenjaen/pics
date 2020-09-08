@@ -34,7 +34,6 @@
 		<result property="totalPrice" column="total_price"/>
 		<result property="resDate" column="res_date"/>
 		<result property="totalPeople" column="total_people"/>
-		
 		<association property="studio" javaType="studio">
 			<result property="comId" column="com_id"/>
 			<result property="categoryId" column="category_id"/>
@@ -173,7 +172,7 @@
 	 	<include refid="select-reservation-studio"/>
 		where cust_id = #{custId}
 		and s.stu_id =r.stu_id
-	 	and start_date &lt; now()
 	 	and start_date between #{startDate} and #{endDate}
+	 	and start_date &lt; now()
 	 </select>
  </mapper> 

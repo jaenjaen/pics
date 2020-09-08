@@ -32,7 +32,6 @@ public class StudioFilterController {
 	public ResponseEntity searchStudio(){
 		try {
 			List<Studio> list = studioFilterService.searchStudio();
-			System.out.println("list sample : "+list.get(0));
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -44,6 +43,7 @@ public class StudioFilterController {
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
 			System.out.println("/studio/search/"+filters+"들어옴 ");
+
 			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
 			for(Studio std : list) {
 				String oneMainImg =std.getMainImg().split(",")[0];
@@ -57,7 +57,6 @@ public class StudioFilterController {
 					String word2= std.getMainImg().replace("/", "");
 					std.setMainImg(word2);
 				}
-				System.out.println(std);
 			}
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {

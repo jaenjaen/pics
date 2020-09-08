@@ -663,3 +663,5 @@
   </div>
 </template>
 <script scoped src="@/assets/js/studioRegister/RegisterStudio.js"></script>
+
+<style scoped src="vue-material/dist/vue-material.min.css"></style>

@@ -33,7 +33,7 @@
           <!-- 타이틀 -->
         <div class="section-title-field" v-for="studio in studios" v-bind:key="studio.stuId">
           <div class="studio-name">
-            <h2> {{ studio.name }}</h2>
+            <h1> {{ studio.name }}</h1>
           </div>
           <div id="company-of-studio">
                 <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
@@ -66,7 +66,7 @@
       <hr/>  
         <!-- ============== Reservation ============== -->
       <div class =article-Filterstudiormation-map-area>
-        <Reservation></Reservation>
+        <Reservation width="70%"></Reservation>
       </div>
         <!-- ============== Studio Filter ============== -->
       <hr>
@@ -74,11 +74,11 @@
           <div class="article-studioFilter-information-area" >
             <div v-for="studio in studios" v-bind:key="studio.stuId"> 
               <table id="Studio-Filter-Table">
-                <!-- <tr>
+                <tr>
                   <td>넓이</td>
-                  <td>{{ studio.studioFilter.size}}m<sup>2</sup>
-                  ({{ studios.studioFilter.size |sizeUnit}}/평)</td>
-                </tr> -->
+                  <!-- <td>{{ studio.studioFilter.size}}m<sup>2</sup>
+                  ({{ studios.studioFilter.size |sizeUnit}}/평)</td> -->
+                </tr>
                 <tr>
                   <td>옵션</td>
                   <td>{{studio.studioFilter.options}}</td>
@@ -153,7 +153,7 @@
         <hr>
         <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
         <h2 align="left">리뷰보기</h2>   
-          <div v-for="review in reviews" v-bind:key="review.reviewId">
+          <div v-for="(review,index) in uncoveredReview" v-bind:key="index">
            <div>
               <div class="card-expansion" id="reviews" >
                 <md-card-media>
@@ -161,15 +161,15 @@
                 </md-card-media>
                 <md-card>
                   <md-card-header>
-                  <!-- <div class="md-subhead" id="register-date">({{ review.customer.email}})</div> -->
-                  <div class="md-subhead" id="register-date">({{ review.regDate}})</div>
+                  <div class="md-subhead" id="register-date">{{ review.customer.email}}</div>
+                  <!-- <div class="md-subhead" id="register-date">({{ review.regDate}})</div> -->
                 </md-card-header>
 
                   <!-- <span id="reviewr-email"><strong>{{ review.customer.email|emailHide }}</strong></span> -->
                   <!-- 별점 부분 -->
                   <span id="star-score"> 별점
-                    <span v-if="review.score > 0 && review.score < 1">
-                      <i class="material-icons" id="icon_filter">star_half</i>
+                    <span v-if="review.score == 0">
+                      <i class="material-icons" id="icon_filter">star_border</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
@@ -182,24 +182,10 @@
                       <i class="material-icons" id="icon_filter">star_border</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
                     </span>
-                    <span v-if="review.score > 1 && review.score < 2">
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star_half</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                    </span>
                     <span v-if="review.score == 2">
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                    </span>
-                    <span v-if="review.score > 2 && review.score < 3">
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star_half</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
                     </span>
@@ -210,21 +196,7 @@
                       <i class="material-icons" id="icon_filter">star_border</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
                     </span>
-                    <span v-if="review.score > 3 && review.score < 4">
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star_half</i>
-                      <i class="material-icons" id="icon_filter">star_half</i>
-                    </span>
                     <span v-if="review.score == 4">
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star</i>
-                      <i class="material-icons" id="icon_filter">star_half</i>
-                    </span>
-                    <span v-if="review.score > 4 && review.score < 5">
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star</i>
@@ -238,42 +210,37 @@
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star</i>
                     </span>              
-                    <span v-if="review.score == 0">
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                      <i class="material-icons" id="icon_filter">star_border</i>
-                    </span>
+                    <hr width="90%">
+                    <div id="review-content">{{ review.content }}</div>
                   </span>
-                  <hr width="90%">
-                  <div id="review-content">{{ review.content }}</div>
-                    <md-card-expand  v-if="review.answer!=''">
-                      <md-card-actions md-alignment="space-between">
-                        <md-card-expand-trigger>
-                          <md-button class="md-icon-button">
-                            <md-icon>keyboard_arrow_down</md-icon>
-                          </md-button>
-                        </md-card-expand-trigger>
-                      </md-card-actions>
-                      <md-card-expand-content>
-                        <md-card-content id=answer> 
-                            {{ review.answer }}
-                        </md-card-content>
-                      </md-card-expand-content>
-                    </md-card-expand>
+                  <md-card-expand  v-if="review.answer!=''">
+                    <md-card-actions md-alignment="space-between">
+                      <md-card-expand-trigger>
+                        <md-button class="md-icon-button">
+                          <md-icon>keyboard_arrow_down</md-icon>
+                        </md-button>
+                      </md-card-expand-trigger>
+                    </md-card-actions>
+                    <md-card-expand-content>
+                      <md-card-content id=answer> 
+                          {{ review.answer }}
+                      </md-card-content>
+                    </md-card-expand-content>
+                  </md-card-expand>
                 </md-card>                
               </div>
-              <div id="more-review" v-if="(reviews).length>3">
-                <a href="#" 
-                @click.prevent="appendReviews()" 
-                :disabled="this.dataFull === true" 
+            </div>
+            </div>
+            <div id="more-review" v-if="(reviews).length>3">
+              <button 
+                type="button"
+                @click="appendReviews()"
+                :disabled="dataFull === true" 
                 :class="{disabled : dataFull}"
-                >더보기</a>
-              </div>
+                >더보기
+              </button>
             </div>
           </div>
-        </div>
           <div id="no-review" v-if="(reviews+'').length==0"><h3>"아직 등록된 리뷰가 없습니다!"</h3></div>
       </article>
     <!-- 모달 모아두기 -->

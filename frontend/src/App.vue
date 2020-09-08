@@ -23,7 +23,12 @@ export default {
   font-family: "Nanum Gothic";
   src: url("./assets/font/NanumGothic-Regular.ttf");
 }
+html{
+  height:100%;
+}
+
 body {
+  height:100%;
   background: #f5f5f5 !important;
 }
 #app {

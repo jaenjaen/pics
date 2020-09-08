@@ -5,6 +5,13 @@
             }
         }
         
+        .md-body-1,
+        .md-body-2,
+        body *:not(i) {
+            font-size: unset !important;
+            line-height: unset !important;
+        }
+        
         #searchStudio {
             width: 768px;
             margin: auto;
@@ -221,7 +228,7 @@
             background: linear-gradient(135deg, #33a3dc, #034ea2) !important;
         }
         /* Select Field
-   ========================================================================== */
+========================================================================== */
         
         select {
             display: inline-block !important;

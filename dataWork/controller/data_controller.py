@@ -56,3 +56,10 @@ def predict(img,path):
         
     return str(predicted.numpy()[0])
 
+
+
+# In[1]:
+
+
+get_ipython().system('jupyter nbconvert --to script data_controller.ipynb ')
+

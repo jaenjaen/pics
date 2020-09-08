@@ -4,6 +4,30 @@
 
 <mapper namespace="ExtraMapper">
 	
+	<resultMap type="review" id="review-stuRM">
+		<result property="reviewId" column="review_id"/>
+		<result property="resId" column="res_id"/>
+		<result property="score" column="score"/>
+		<result property="content" column="content"/>
+		<result property="img" column="img"/>
+		<result property="regDate" column="regDate"/>
+		<result property="answer" column="answer"/>
+		
+		<association property="studio" javaType="studio">
+			<result property="stuId" column="stu_id"/>
+			<result property="comId" column="com_id"/>
+			<result property="categoryId" column="category_id"/>
+			<result property="name" column="name"/>
+			<result property="description" column="description"/>
+			<result property="rule" column="rule"/>
+			<result property="mainImg" column="main_img"/>
+			<result property="portImg" column="port_img"/>
+			<result property="cadImg" column="cad_img"/>
+			<result property="floor" column="floor"/>
+			
+		</association>
+	</resultMap>
+	
 	<!-- Bookmark -->
 	<insert id="addBookmark" parameterType="bookmark">
 		INSERT INTO bookmark (stu_id,cust_id) 
@@ -40,10 +64,23 @@
 	</insert>
 	
 	<!--getCustomer Review -->
-	<select id="getCustomerReivews" parameterType="int" resultType="review">
-		SELECT review_id,cust_id,stu_id,score,content,img,reg_date,answer
-		FROM review
+	<select id="getCustomerReivews" parameterType="int" resultMap="review-stuRM">
+		SELECT r.review_id,r.cust_id,r.stu_id,r.res_id,score,r.content,img,r.reg_date,r.answer,
+			   s.stu_id,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		FROM review r, studio s
 		WHERE cust_id = #{value}
+		AND s.stu_id = r.stu_id
 	</select>
 	
+	<!-- check reivew write -->
+	<select id="checkReviews" parameterType="int" resultType="int">
+		SELECT COUNT(review_id)
+		FROM review
+		WHERE res_id = #{value}
+	</select>
+	
+	<delete id="deleteReview" parameterType="int">
+		DELETE FROM review
+		WHERE review_id = #{value}
+	</delete>
 </mapper>

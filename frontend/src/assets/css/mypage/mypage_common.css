@@ -26,5 +26,9 @@
 }
 
 .mypage_card td {
+    padding: 10px 0 10px 0;
+    word-break: break-all;
+    overflow: hidden;
     border-bottom: 1px solid #b5b5b5a9;
+    text-overflow: ellipsis;
 }

@@ -1,0 +1,79 @@
+    /* Modal 전체 */
+    
+    #chatModal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 80px;
+        padding-bottom: 80px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    /* Modal 내용 */
+    
+    #chatContent {
+        background-color: #fefefe;
+        margin: auto;
+        overflow: auto;
+        text-align: left;
+        padding: 30px;
+        padding-top: 0;
+        border: 1px solid #888;
+        width: 50%;
+        height: 100%;
+    }
+    /* Modal 닫기 버튼 */
+    
+    #closeChat {
+        position: fixed;
+        padding: 10px;
+        color: white;
+        font-size: 28px;
+        font-weight: bold;
+        left: 72%;
+        right: 28%;
+        z-index: 4;
+    }
+    
+    #closeChat:hover,
+    #closeChat:focus {
+        color: #33A3DC;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    #chatArea {
+        margin-left: 10px;
+        padding-bottom: 30px;
+    }
+    
+    @media screen and (max-width: 1000px) {
+        #closeChat {
+            left: 70%;
+            right: 30%;
+        }
+    }
+    /* 반응형 : 너비 675px 이하 */
+    
+    @media screen and (max-width: 675px) {
+        /* 모달 너비 조정 */
+        #chatModal {
+            padding-top: 50px;
+            padding-bottom: 30px;
+        }
+        #chatContent {
+            width: 100%;
+            padding-top: 3px;
+            padding-right: 0;
+            padding-bottom: 30px;
+        }
+        #closeChat {
+            left: 90%;
+            right: 10%;
+        }
+    }

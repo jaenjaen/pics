@@ -44,4 +44,12 @@ public class ExtraDAOImpl implements ExtraDAO {
 	public List<Review> getCustomerReivews(int custId) throws Exception {
 		return sqlSession.selectList(NS+"getCustomerReivews",custId);
 	}
+	@Override
+	public int checkReviews(int resId) throws Exception {
+		return sqlSession.selectOne(NS+"checkReviews",resId);
+	}
+	@Override
+	public int deleteReview(int reviewId) throws Exception {
+		return sqlSession.delete(NS+"deleteReview",reviewId);
+	}
 }

@@ -15,6 +15,7 @@
 	<!-- 필터 검색 결과를 위한 RM (Tag 제외) -->
 	<resultMap type="studio" id="studioRM">
 		<id column="stu_id" property="stuId"/>
+		<result column="com_id" property="comId" />
 		<result column="name" property="name" />
 		<result column="description" property="description" />
 		<result column="main_img" property="mainImg" />
@@ -41,7 +42,7 @@
 	<!-- 필요없는 컬럼 지우기 :: 프론트 검사 이후 -->
 	<sql id="Select-J-Studio-Category-filter-tag-review">
 		SELECT
-		s.stu_id, s.name, s.description, s.main_img,
+		s.stu_id, s.com_id, s.name, s.description, s.main_img,
 		c.category_id, c.category_name,
 		com.name com_name,
 		r.weekday,

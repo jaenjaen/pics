@@ -17,13 +17,13 @@ export default {
             logoImg: "",
             logoName: "업체 이미지",
             desc: "",
-            max: 13
+            max: 13,
         };
     },
     mounted() {
         if (company == null) {
             alert("로그인 후 이용 가능합니다.")
-            location.href("http://localhost:9999/customerlogin");
+            location.href = "http://localhost:9999/customerlogin";
         }
         this.name = company.name;
         this.address = company.address;
@@ -33,6 +33,7 @@ export default {
         this.desc = company.desc;
     },
     methods: {
+
         companyEdit: function() {
             if (this.pwFlag == true) {
                 axios
@@ -58,7 +59,7 @@ export default {
                         sessionStorage.setItem("company", JSON.stringify(company));
 
                         alert("회원정보가 수정되었습니다.");
-                        //location.href = "http://localhost:9999/mypage";
+                        location.href = "http://localhost:9999/mypage";
                     })
                     .catch(e => {
                         console.log(e);
@@ -77,21 +78,29 @@ export default {
                 this.pwMsg = "<p style='color:red;'>입력하신 비밀번호와 다릅니다.</p>";
                 this.pwFlag = false;
             }
+
+
         }, //~checkPw
         /* 주소 모달 띄우기 */
         showModal: function() {
             this.$modal.show("postcodeModal");
         },
+
+
         /* 주소 검색완 */
         onComplete(data) {
             this.address = data.address;
             this.addrShow = true;
             this.$modal.hide("postcodeModal");
         },
+
+
         /* 주소 변경 */
         editAddr: function() {
             this.$modal.show("postcodeModal");
         },
+
+
         /* 전화번호 - 넣기 */
         insertDash() {
             if (this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel + "-";
@@ -110,5 +119,5 @@ export default {
                     console.log(err);
                 })
         }
-    }
+    },
 };

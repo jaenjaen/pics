@@ -23,6 +23,8 @@ export default {
         };
     },
     methods: {
+
+        /* 회원가입 */
         companyRegister: function() {
             if (this.idFlag == true && this.pwFlag == true) {
                 axios
@@ -47,6 +49,8 @@ export default {
                 //console.log(this.idFlag+","+this.pwFlag+","+this.name+","+this.comId+","+this.password+","+this.address+","+this.tel);
             }
         }, //~companyRegister
+
+        /*메일 중복 검사*/
         checkEmail: function() {
             axios
                 .get("http://localhost:7777/company/" + this.comId)
@@ -66,6 +70,8 @@ export default {
                     console.log(e);
                 });
         }, //~checkEmail
+
+        /*바밀번호 검사*/
         checkPw: function() {
             if (this.password == this.checkpassword) {
                 this.pwFlag = true;
@@ -75,19 +81,29 @@ export default {
                 this.pwFlag = false;
             }
         }, //~checkPw
+
+        /*우편번호 모달*/
         showModal: function() {
             this.$modal.show("postcodeModal");
         },
+
+        /*모달 닫기*/
         onComplete(data) {
             this.address = data.address;
             this.addrShow = true;
             this.$modal.hide("postcodeModal");
         },
+
+        /*우편번호 수정*/
         editAddr: function() {
             this.$modal.show("postcodeModal");
         },
+
+        /*전화번호 - 추가*/
         insertDash() {
             if (this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel + "-"
-        }
+        },
+
+        /* 이미지 업로드 관리 */
     }
 };

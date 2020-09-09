@@ -123,7 +123,7 @@
             /><span class="hidden">Logo</span></label
           >
            <input type="text" class="form_input" :placeholder="logoName" style="width:55%;" disabled/>
-          <input type="file" class="form__input" id="logo_upload"/>
+          <input type="file" class="form__input" id="logo_upload" @change="fileUpload()"/>
           <label class="upload_label" for="logo_upload">업로드</label>
         </div>
 
@@ -151,4 +151,4 @@
 </template>
 
 <script scoped src="@/assets/js/register/CompanyRegister.js" ></script>
-<style scoped src="@/assets/css/login/CompanyLogin.css"></style>
+<style scoped src="@/assets/css/mypage/edit/CompanyEdit.css"></style>

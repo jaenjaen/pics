@@ -85,7 +85,7 @@
         </div>
 
         <div class="form__field">
-          <label class="nomal_label"  for="login__logImg"
+          <label class="nomal_label" for="login__logImg"
             ><img
               class="icon"
               src="@/assets/img/register/companyLogo.svg"

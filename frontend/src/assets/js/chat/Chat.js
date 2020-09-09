@@ -7,6 +7,8 @@ export default {
                 listHover: 'http://localhost:7777/upload/default/listHover.png',
                 back: 'http://localhost:7777/upload/default/back.png',
                 backHover: 'http://localhost:7777/upload/default/backHover.png',
+                search: 'http://localhost:7777/upload/default/search.png',
+                searchHover: 'http://localhost:7777/upload/default/searchHover.png',
                 user: 'http://localhost:7777/upload/default/user.png',
                 add: 'http://localhost:7777/upload/default/add.png',
                 send: 'http://localhost:7777/upload/default/send.png'
@@ -55,6 +57,17 @@ export default {
             }
         },
 
+        /* 채팅 상대를 클릭하면 채팅을 가져옴 */
+        getChatByUser(event) {
+            let nickname = event.target.childNodes[1].innerHTML;
+            alert(nickname);
+        },
+        /* 프로필 사진을 클릭하면 Modal로 크게 봄 */
+        showBiggerImg(event) {
+            let imgSrc = event.target.src;
+            alert(imgSrc);
+            this.controlModal('show', 'expandImgModal');
+        },
         sendMsg() {
             alert("메세지전송");
         }

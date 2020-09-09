@@ -9,7 +9,7 @@
           <div class="col-25">
             <label for="name">
               스튜디오 이름
-              <img :src="required" width="20px">
+              <img :src="required" width="20px" maxlength="45">
             </label>
           </div>
           <div class="col-75">
@@ -35,7 +35,7 @@
             <div style="color:#ccc;"><span name="changeArea">0</span><b>/500</b></div>
           </div>
           <div class="col-75">
-            <textarea id="description" name="countLength" v-model="studio.description" @keyup="checkLength()"></textarea>
+            <textarea id="description" name="countLength" v-model="studio.description" @keyup="checkLength()" maxlength="500"></textarea>
           </div>
         </div>
         <div class="row">
@@ -44,7 +44,7 @@
             <div style="color:#ccc;"><span name="changeArea">0</span><b>/400</b></div>
           </div>
           <div class="col-75">
-            <textarea id="rule" name="countLength" v-model="studio.rule" @keyup="checkLength()"></textarea>
+            <textarea id="rule" name="countLength" v-model="studio.rule" @keyup="checkLength()" maxlength="400"></textarea>
           </div>
         </div>
         <div class="row">

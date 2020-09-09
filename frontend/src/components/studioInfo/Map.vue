@@ -1,5 +1,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91cbdca7243fe89cb44e5d61a5aaaf44&libraries=services,clusterer,drawing"></script>
 <template>
+<div>
     <vue-daum-map
     :appKey="appKey"
       :center.sync="center"

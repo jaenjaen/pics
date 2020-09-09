@@ -1,12 +1,12 @@
 <template>
-  <div class="publicSpace">
+  <div class="publicSpace" style="height:100vh;">
     <div class="grid">
       <h2>업체 정보 수정</h2>
       <br />
       <form action="" method="POST" class="form login" @submit.prevent="companyEdit" >
         
         <div class="form__field">
-          <label for="login__name">
+          <label class="nomal_label" for="login__name">
             <img class="icon" src="@/assets/img/register/companyName.svg" />
             <span class="hidden">Name</span>
           </label>
@@ -14,7 +14,7 @@
         </div>
 
         <div class="form__field">
-          <label for="login__password"
+          <label class="nomal_label" for="login__password"
             ><img class="icon" src="@/assets/img/login/loginPw.svg" /><span
               class="hidden"
               >Password</span
@@ -29,7 +29,7 @@
           />
         </div>
         <div class="form__field">
-          <label for="login__password"
+          <label class="nomal_label"  for="login__password"
             ><img class="icon" src="@/assets/img/login/loginPw.svg" /><span
               class="hidden"
               >Password</span
@@ -49,7 +49,7 @@
 
         <div class="form__field">
           <label for="login__address"
-            ><img
+            class="nomal_label"  ><img
               class="icon"
               src="@/assets/img/register/companyAddr.svg"
             /><span class="hidden">Address</span></label
@@ -80,22 +80,24 @@
         </modal>
 
         <div class="form__field" >
-          <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
+          <label class="nomal_label"  for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
           <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" :placeholder="tel" required>
         </div>
 
         <div class="form__field">
-          <label for="login__logImg"
+          <label class="nomal_label"  for="login__logImg"
             ><img
               class="icon"
               src="@/assets/img/register/companyLogo.svg"
             /><span class="hidden">Logo</span></label
           >
-          <input type="file" class="form__input" placeholder="업체 로고" />
+          <input type="text" class="form_input" :placeholder="logoName" style="width:55%;" disalbed/>
+          <input type="file" class="form__input" id="logo_upload"/>
+          <label class="upload_label" for="logo_upload">업로드</label>
         </div>
 
         <div class="form__field">
-          <label for="login__comId"
+          <label class="nomal_label"  for="login__desc"
             ><img class="icon" src="@/assets/img/register/description.svg" /><span
               class="hidden"
               >description</span
@@ -109,10 +111,10 @@
           />
         </div>
         <div class="form__field">
-          <input type="submit" value="Register" />
+          <input type="submit" value="Modify" />
         </div>
         <p class="text--center">
-        탈퇴하시겠습니까? <a href="#" @click="signout"> 탈퇴하기</a>
+        탈퇴하시겠습니까? <a href="#" class="signout" @click="signout"> 탈퇴하기</a>
       </p>
 
       </form>
@@ -120,108 +122,5 @@
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import axios from "axios";
-var company = JSON.parse(sessionStorage.getItem("company"));
-
-export default {
-  name: "CompanyEdit",
-  data() {
-    return {
-      name: "",
-      pwMsg: "",
-      pwFlag: false,
-      password: "",
-      checkpassword: "",
-      address: "",
-      addrShow: false,
-      comId: "",
-      tel: "",
-      logoImg:"",
-      desc:"",
-      max: 13
-    };
-  },
-  mounted() {
-    console.log(company);
-    this.name = company.name;
-    this.address = company.address;
-    this.comId = company.comId;
-    this.tel = company.tel;
-    this.logoImg = company.logoImg;
-    this.desc = company.desc;
-  },
-  methods: {
-    companyEdit: function() {
-      if (this.pwFlag == true) {
-        axios
-          .put("http://localhost:7777/company", {
-            name: this.name,
-            comId: this.comId,
-            password: this.password,
-            address: this.address,
-            tel: this.tel,
-            logoImg: this.logoImg,
-            description: this.desc
-          })
-          .then(res => {
-            console.log(res);
-
-            company.name = this.name;
-            company.password = this.password;
-            company.address = this.address;
-            company.tel = this.tel;
-            company.logoImg = this.logoImg;
-            company.description = this.description;
-
-           sessionStorage.setItem("company",JSON.stringify(company));
-
-            alert("회원정보가 수정되었습니다.");
-            //location.href = "http://localhost:9999/mypage";
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } else {
-        alert("입력한 정보를 다시 한번 확인해주세요.");
-      }
-    }, //~companyEdit
-    checkPw: function() {
-      if (this.password == this.checkpassword) {
-        this.pwFlag = true;
-        this.pwMsg = "";
-      } else {
-        this.pwMsg = "<p style='color:red;'>입력하신 비밀번호와 다릅니다.</p>";
-        this.pwFlag = false;
-      }
-    }, //~checkPw
-    showModal: function() {
-      this.$modal.show("postcodeModal");
-    },
-    onComplete(data) {
-      this.address = data.address;
-      this.addrShow = true;
-      this.$modal.hide("postcodeModal");
-    },
-    editAddr: function() {
-      this.$modal.show("postcodeModal");
-    },
-    insertDash(){
-      if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-";
-  },signout(){
-     axios.delete("http://localhost:7777/company/"+this.comId)
-        .then(res=>{
-          console.log(res)
-          alert("회원탈퇴 되었습니다.");
-          sessionStorage.removeItem("company");
-          location.href="http://localhost:9999";
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-    }
-  }
-};
-</script>
-<style scpoed src="@/assets/css/login/CompanyLogin.css"></style>
+<script scoped src="@/assets/js/mypage/edit/CompanyEdit.js"></script>
+<style scoped src="@/assets/css/mypage/edit/CompanyEdit.css"></style>

@@ -131,13 +131,17 @@
                 </select>
                 <div id="studioSearch">
                     <input type="text" class="inputArea">
-                    <img :src="defaultImg.search" width="20px" height="20px">
+                    <img id="search" :src="defaultImg.search" 
+                    width="20px" height="20px" 
+                    @mouseover="controlListImg('mouseover', 'search')" 
+                    @mouseout="controlListImg('mouseout', 'search')"
+                    @click="searchUserByName($event)">
                 </div>
             </div>
             <div id="chatListContent">
-                <p @click="getChatByUser($event)">
-                    <img class="profile" :src="defaultImg.user" @click="showBiggerImg($event)">
-                    <span>리스트1</span>
+                <p>
+                    <img class="profile" src="http://localhost:7777/upload/default/user.png" @click="showBiggerImg($event)">
+                    <span id="userName" @click="getChatByUser($event)">리스트1</span>
                 </p>
                 <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
                 <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
@@ -189,6 +193,9 @@
         <section id="expandImgModal">
             <div id="expandImgContent">
                 <div id="closeUpload" @click="controlModal('hide', 'expandImgModal')">&times;</div><br/><br/>
+                <div id="biggerContainer">
+                    <img id="biggerProfile" src="">
+                </div>
             </div>
         </section>
     </div>

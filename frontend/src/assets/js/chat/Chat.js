@@ -26,6 +26,9 @@ export default {
                     case 'back':
                         document.getElementById(obj).setAttribute('src', this.defaultImg.backHover);
                         break;
+                    case 'search':
+                        document.getElementById(obj).setAttribute('src', this.defaultImg.searchHover);
+                        break;
                 }
 
             } else if (cmd == 'mouseout') {
@@ -35,6 +38,9 @@ export default {
                         break;
                     case 'back':
                         document.getElementById(obj).setAttribute('src', this.defaultImg.back);
+                        break;
+                    case 'search':
+                        document.getElementById(obj).setAttribute('src', this.defaultImg.search);
                         break;
                 }
             }
@@ -57,15 +63,21 @@ export default {
             }
         },
 
+        /* 이름으로 채팅 상대를 검색함 */
+        searchUserByName(event) {
+            let nickname = event.target.previousSibling.value;
+            alert(nickname);
+        },
+
         /* 채팅 상대를 클릭하면 채팅을 가져옴 */
         getChatByUser(event) {
-            let nickname = event.target.childNodes[1].innerHTML;
+            let nickname = event.target.innerHTML;
             alert(nickname);
         },
         /* 프로필 사진을 클릭하면 Modal로 크게 봄 */
         showBiggerImg(event) {
             let imgSrc = event.target.src;
-            alert(imgSrc);
+            document.getElementById('biggerProfile').setAttribute('src', imgSrc);
             this.controlModal('show', 'expandImgModal');
         },
         sendMsg() {

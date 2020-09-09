@@ -109,6 +109,7 @@ public class CompanyController {
 	
 	@GetMapping("/companyifo/{comId}")
 	public ResponseEntity getCompanyinfo(@PathVariable String comId) {
+		System.out.println(comId+"로 검색 시작");
 		try {
 			Company comp = companyService.getCompanyInfo(comId);
 			 return new ResponseEntity(comp,HttpStatus.OK);

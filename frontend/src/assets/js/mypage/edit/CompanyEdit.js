@@ -123,6 +123,46 @@ export default {
                     })
             }
         },
+        /*이미지 업로드 관리 */
+        onFileChange(fileId, e) {
+            var files = e.target.files || e.dataTransfer.files;
+            var inputBox = document.getElementById(fileId);
+            var maxSize = 5 * 1024 * 1000;
+            var imgPath = [];
+
+            //이미지가 있을 경우만 삭제
+            if (this.logoImg != "") this.deleteImg();
+
+            //용량제한
+            if (files.size > maxSize) {
+                alert("파일용량 5MB을 초과하였습니다.");
+                return false;
+            }
+
+            imgPath = inputBox.value.split("\\");
+            this.logoName = imgPath[2];
+
+            this.uploadLogoImg();
+        }, //~onfileChange
+
+        /* 프로필 사진 수정 업로드 */
+        uploadLogoImg() {
+            var data = new FormData();
+            var file = this.$refs.logoImg.files[0];
+            data.append('file', file);
+
+            axios.post('http://localhost:7777/fileUpload/company/' + this.comId, data, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                })
+                .then(res => {
+                    console.log(res);
+                    this.logoImg = "http://localhost:7777/upload/company/" + res.data;
+                    console.log(this.logoImg);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }, //~uploadImg
 
         /*기존 로고 이미지 삭제 */
         deleteImg() {

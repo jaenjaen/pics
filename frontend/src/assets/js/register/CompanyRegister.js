@@ -137,9 +137,9 @@ export default {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 })
                 .then(res => {
-                    console.log(res);
+                    //console.log(res);
                     this.imgSrc = "http://localhost:7777/upload/company/" + res.data;
-                    console.log(this.imgSrc);
+                    //console.log(this.imgSrc);
                 })
                 .catch(err => {
                     console.log(err);

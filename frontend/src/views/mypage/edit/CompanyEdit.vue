@@ -92,8 +92,8 @@
             /><span class="hidden">Logo</span></label
           >
           <input type="text" class="form_input" :placeholder="logoName" style="width:55%;" disabled/>
-          <input type="file" class="form__input" id="logo_upload"/>
-          <label class="upload_label" for="logo_upload">업로드</label>
+          <input type="file" class="form__input" id="edit_logo" accept="image/*"  ref="logoImg" @change="onFileChange('edit_logo',$event)"/>
+          <label class="upload_label" for="edit_logo">업로드</label>
         </div>
 
         <div class="form__field">

@@ -91,7 +91,7 @@
               src="@/assets/img/register/companyLogo.svg"
             /><span class="hidden">Logo</span></label
           >
-          <input type="text" class="form_input" :placeholder="logoName" style="width:55%;" disalbed/>
+          <input type="text" class="form_input" :placeholder="logoName" style="width:55%;" disabled/>
           <input type="file" class="form__input" id="logo_upload"/>
           <label class="upload_label" for="logo_upload">업로드</label>
         </div>

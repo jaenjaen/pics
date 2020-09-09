@@ -1,6 +1,7 @@
 import axios from "axios";
 var company = JSON.parse(sessionStorage.getItem("company"));
 
+
 export default {
     name: "CompanyEdit",
     data() {
@@ -30,6 +31,7 @@ export default {
         this.comId = company.comId;
         this.tel = company.tel;
         this.logoImg = company.logoImg;
+        this.logoName = company.logoImg.split("/")[5];
         this.desc = company.desc;
     },
     methods: {
@@ -108,16 +110,31 @@ export default {
 
         /*회원탈퇴 */
         signout() {
-            axios.delete("http://localhost:7777/company/" + this.comId)
-                .then(res => {
-                    console.log(res)
-                    alert("회원탈퇴 되었습니다.");
-                    sessionStorage.removeItem("company");
-                    location.href = "http://localhost:9999";
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+            this.deleteImg(); {
+                axios.delete("http://localhost:7777/company/" + this.comId)
+                    .then(res => {
+                        console.log(res)
+                        alert("회원탈퇴 되었습니다.");
+                        sessionStorage.removeItem("company");
+                        location.href = "http://localhost:9999";
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        },
+
+        /*기존 로고 이미지 삭제 */
+        deleteImg() {
+            if (this.logoImg != "") {
+                axios.delete("http://localhost:7777/filedelte/company/" + this.logoName)
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
         }
     },
 };

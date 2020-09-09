@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,8 @@ import com.devils.pics.domain.Company;
 public class FileController {
 	
 	private String fileSeparator = File.separator;
+	private String root;
+	private String path;
 
 	/* 파일 업로드 반응값
 	 * 성공했을 경우 => 파일 이름 리턴
@@ -40,8 +43,8 @@ public class FileController {
 		String fileName = ""; //화면으로 보낼 파일의 이름들
 
 		/* 파일 경로 설정하기 */
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root + "upload" + fileSeparator + subPath + fileSeparator; //공통 파일 경로
+		root = request.getSession().getServletContext().getRealPath("/");
+		path = root + "upload" + fileSeparator + subPath + fileSeparator; //공통 파일 경로
 		System.out.println(path);
 
 		if(file==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -82,8 +85,8 @@ public class FileController {
 		String fileNames = ""; //화면으로 보낼 파일의 이름들
 
 		/* 파일 경로 설정하기 */
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root + "upload"+fileSeparator+ subPath + fileSeparator; //공통 파일 경로
+		root = request.getSession().getServletContext().getRealPath("/");
+		path = root + "upload"+fileSeparator+ subPath + fileSeparator; //공통 파일 경로
 		System.out.println(path);
 
 		if(files.size()==0) {
@@ -117,5 +120,24 @@ public class FileController {
 			return new ResponseEntity(fileNames, HttpStatus.OK);
 
 		}
+	}
+	
+	
+	@DeleteMapping("/filedelte/{subPath}/{imgSrc}")
+	public ResponseEntity deleteFile(@PathVariable String subPath,@PathVariable String imgSrc, HttpServletRequest request) {
+		
+		/* 파일 경로 설정하기 */
+		root = request.getSession().getServletContext().getRealPath("/");
+		path = root + "upload"+fileSeparator+ subPath + fileSeparator; //공통 파일 경로
+		//System.out.println(path);
+		
+		File file = new File(path+imgSrc);
+		//System.out.println(path+imgSrc);
+		
+		if(file.exists()) {
+			if(file.delete()) return new ResponseEntity("OK",HttpStatus.OK);
+			else return new ResponseEntity("FAIL",HttpStatus.NOT_MODIFIED);
+		}
+		else return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 }

@@ -2,7 +2,7 @@
 <template>
 <div id="container">
     <!-- 로드뷰 영역 입니다 -->
-    <!-- <div id="rvWrapper" v-if="mapTypeId==VueDaumMap.MapTypeId.ROADMAP">
+    <!--
         <vue-daum-map
             id="roadview" 
             :appKey="appKey"
@@ -14,9 +14,9 @@
             style="width:100%;height:500px;">
             </vue-daum-map>
         <div id="close" title="로드뷰닫기" onclick="closeRoadview()"><span class="img"></span></div>
-    </div> -->
+     -->
     <!-- 지도를 표시할 div 입니다 -->
-    <div id="mapWrapper" v-if="mapTypeId==VueDaumMap.MapTypeId.NORMAL">
+    
         <vue-daum-map
             :appKey="appKey"
             :center.sync="center"
@@ -27,7 +27,7 @@
             style="width:100%;height:500px;">
             </vue-daum-map>
         <div id="roadviewControl" onclick="setRoadviewRoad()"></div>
-    </div>
+    
  </div>
     
 </template>

@@ -6,7 +6,6 @@
     <img :src="portRoute+'20200906000006408_1234@admin.com.jpg'"><br/>
   </div>
 </template>
-
 <script>
 export default {
   data(){

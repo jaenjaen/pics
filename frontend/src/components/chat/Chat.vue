@@ -3,9 +3,19 @@
     <div id="app">
         <!-- Header : 채팅하는 대상 -->
         <header>
-            <div>
-                <img id="profile" src="http://localhost:7777/upload/default/user.png" width="25px" height="25px">
-                <span>닉네임</span>
+            <div id="chatHeader">
+                <a href="javascript:;" @click="controlModal('show', 'chatListModal')">
+                    <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
+                </a>
+                <span id="otherNickname">상대방 닉네임</span>
+                <img id="otherProfile" class="profile" :src="defaultImg.user">
+            </div>
+            <div id="chatListHeader">
+                <a href="javascript:;" @click="controlModal('hide', 'chatListModal')">
+                    <img id="back" :src="defaultImg.back" @mouseover="controlListImg('mouseover', 'back')" @mouseout="controlListImg('mouseout', 'back')">
+                </a>
+                <span id="myNickname">내 닉네임</span>
+                <img id="myProfile" class="profile" :src="defaultImg.user">
             </div>
         </header>
 
@@ -13,7 +23,7 @@
         <div id="chat-wrapper" class='chat-wrapper'>
             <div class='chat-message padding'>
               <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
+                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Sushi tonight?</p>
@@ -25,7 +35,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
+                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Pizza?</p>
@@ -40,7 +50,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
+                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
 
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
@@ -53,7 +63,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
+                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Awesome! See you later! : )</p>
@@ -65,7 +75,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
+                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Awesome! See you later! : )</p>
@@ -77,7 +87,7 @@
                   </div>
               </div>
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default' src='http://localhost:7777/upload/default/user.png' />
+                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
                   <div class='chat-message-wrapper'>
                   <div class='chat-message-content'>
                       <p>Awesome! See you later! : )</p>
@@ -95,8 +105,8 @@
         <footer>
           <div style="background:white; display:inline-block;">
             <span>
-              <a href="javascript:;" @click="showUploadModal">
-                <img src="http://localhost:7777/upload/default/add.png" width="30px" height="30px">
+              <a href="javascript:;" @click="controlModal('show', 'uploadModal')">
+                <img :src="defaultImg.add" width="30px" height="30px">
               </a>
             </span>
             <span>
@@ -104,16 +114,59 @@
             </span>
             <span>
                 <a href="javascript:;" @click="sendMsg">
-                  <img src="http://localhost:7777/upload/default/send.png" width="30px" height="30px">
+                  <img :src="defaultImg.send" width="30px" height="30px">
                 </a>
             </span>
           </div>
         </footer>
 
+        <!-- Modal : 채팅 목록 -->
+        <section id="chatListModal">
+            <select id="studioList">
+                <option>전체</option>
+                <option>스튜디오1</option>
+                <option>스튜디오2</option>
+                <option>스튜디오3</option>
+            </select>
+            <div id="chatListContent">
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+            </div>
+        </section>
+
         <!-- Modal : 파일 업로드 -->
-        <div id="uploadModal" style="display:none;">
+        <section id="uploadModal">
             <div id="uploadContent">
-                <div id="closeUpload" @click="hideUploadModal">&times;</div><br/><br/>
+                <div id="closeUpload" @click="controlModal('hide', 'uploadModal')">&times;</div><br/><br/>
                 <p style="font-size:18px;">파일 첨부</p>
                 <input type="file" id="chatFileUpload" style="display:none;"><br/>
                 <input type="text" id="chatFileName" disabled>
@@ -121,7 +174,7 @@
                 <button id="removeBtn">삭제</button><br/>
                 <button id="sendBtn">전송</button>
             </div>
-        </div>
+        </section>
     </div>
 </template>
 <style scoped src="@/assets/css/chat/Chat.css"></style>

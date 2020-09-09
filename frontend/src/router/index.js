@@ -13,18 +13,16 @@ import ReservationList from "../views/mypage/reservation/ReservationList.vue"
 import WishList from "../views/WishList.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import FileRoute from "@/components/studioRegister/FileRoute.vue";
-// import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
 import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
 import Map from "@/components/studioInfo/Map.vue";
 import MapCopy from "@/components/studioInfo/Map copy.vue";
-// import Test from "../components/Test.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
 import CompanyInfo from "@/components/company/company_info.vue"
-
+import ChatTest from "@/components/chat/ChatTest.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -123,8 +121,11 @@ const routes = [{
         path: "/chatShow",
         name: "chatShow",
         component: ChatShow
-    },
-    {
+    }, {
+        path: "/chatTest",
+        name: "chatTest",
+        component: ChatTest
+    }, {
         path: "/companyInfo/:comId",
         name: "companyInfo",
         component: CompanyInfo

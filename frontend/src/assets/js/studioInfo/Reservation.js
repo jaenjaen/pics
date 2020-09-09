@@ -179,8 +179,9 @@ export default {
             // 일자 >> 시간대로 변경
             this.startDay = this.transWeekDay(this.start_date);
             this.endDay = this.transWeekDay(this.end_date);
-            // this.startDate = this.transTime(this.start_date);
-            // this.endDate = this.transTime(this.end_date);
+            this.startDate = this.transTime(this.start_date);
+            this.endDate = this.transTime(this.end_date);
+            var todayTime = this.transTime(this.today.getFullYear() + "-" + this.today.getMonth() + "-" + this.today.getDate());
             this.startDayTime = this.transTime(this.start_date, this.start_time);
             this.endDayTime = this.transTime(this.end_date, this.end_time);
             this.start_idx = this.repeatedDays.indexOf(week[this.startDay], 0);
@@ -202,7 +203,8 @@ export default {
                     this.end_date = "";
                     this.msg = "종료일이 영업일이 아닙니다.";
                 }
-                if (this.startDayTime < this.today.getTime & this.start_date != "") {
+                if (this.startDate < todayTime & this.start_date != "") {
+                    alert(this.transTime(new Date()))
                     this.start_date = this.today;
                     startTime = this.start_date;
                     this.msg = "대여 시작일은 현재 날짜 이후로 가능합니다.";
@@ -282,7 +284,6 @@ export default {
                     .get("http://127.0.0.1:7777/customer/" + this.customer.custId)
                     .then(response => {
                         this.customer = response.data;
-                        // console.log(this.studios);
                     })
                     .catch(error => {
                         console.log(error);
@@ -322,34 +323,31 @@ export default {
         },
         transTime(date, time) {
             if (time != null) {
-                let splitDate = date.toString().split('-');
+                let splitDate = date.split('-');
                 let resultDate = (new Date(splitDate[0], splitDate[1], splitDate[2]));
-                resultDate.setHours(resultDate.getHours() + parseInt(time));
-                console.log("transTime resultDate : " + resultDate + "| date : " + date);
-                return resultDate.getTime();
+                let resultDateTime = resultDate.getTime() + parseInt(time) * (1000 * 60 * 60);
+                return resultDateTime;
             } else if (date != null) {
                 let splitDate = date.toString().split('-');
-                let resultDate = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
-                return resultDate;
+                let resultDateTime = (new Date(splitDate[0], splitDate[1], splitDate[2])).getTime();
+                return resultDateTime;
             }
         },
         transWeekDay(date) {
             if (date != null) {
-                let splitDate = date.toString().split('-');
+                let splitDate = date.split('-');
                 let resultDate = (new Date(splitDate[0], splitDate[1], splitDate[2])).getDay();
                 return resultDate;
             }
         },
         checkCloseDate(date) {
             if (this.repeatedDays.indexOf(week[date], 0) > -1) { //일치하는 요일의 종료 시간 가져오기
-                console.log("week[this.endDay] : " + week[date] + "| this.repeatedDays" + this.repeatedDays)
                 return 1;
             } else {
                 return 0;
             }
         },
         checkCloseTime(time) {
-            console.log(time);
             for (let i = 0; i < this.repeatedLength; i++) {
                 if (this.repeated[i].weekDate == week[this.endDay]) {
                     if ((time > parseInt(this.repeated[i].time.split('-')[0])) &
@@ -369,14 +367,11 @@ export default {
                 var exc_startOnlyTime = (this.schedule.exceptionDate[i].startDate).split(' ')[1];
                 var exc_endOnlyDate = (this.schedule.exceptionDate[i].endDate).split(' ')[0];
                 var exc_endOnlyTime = (this.schedule.exceptionDate[i].endDate).split(' ')[1];
-                console.log("여기~~~!!!!" + (this.schedule.exceptionDate[i].startDate).split(' ')[0]);
                 var exc_startDate = this.transTime(exc_startOnlyDate, exc_startOnlyTime);
                 var exc_endDate = this.transTime(exc_endOnlyDate, exc_endOnlyTime);
                 if ((exc_startDate <= this.startDayTime) | (exc_endDate >= this.endDayTime)) {
-                    console.log("if 예외 일자" + exc_startDate + "|" + this.startDayTime);
                     continue;
                 } else {
-                    console.log("elese 예외 일자" + (new Date(this.schedule.exceptionDate[i].endDate).getTime + "|" + this.startDayTime));
                     return 0;
                 }
             }

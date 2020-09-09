@@ -116,15 +116,15 @@
           </div>
           <div class="col-25 tag">
             <label id="hashtag1">#</label>
-            <input type="text" name="tag" style="text-indent:10px;" />
+            <input type="text" name="tag" maxlength="45" style="text-indent:10px;" />
           </div>
           <div class="col-25 tag">
             <label id="hashtag2">#</label>
-            <input type="text" name="tag" style="text-indent:10px;" />
+            <input type="text" name="tag" maxlength="45" style="text-indent:10px;" />
           </div>
           <div class="col-25 tag">
             <label id="hashtag3">#</label>
-            <input type="text" name="tag" style="text-indent:10px;" />
+            <input type="text" name="tag" maxlength="45" style="text-indent:10px;" />
           </div>
         </div>
         <div class="row">
@@ -154,7 +154,7 @@
                 </div>
               </div>
             </div>
-            <input placeholder="상세주소를 작성하세요." type="text" id="address2" name="address2" v-model="address2" />
+            <input placeholder="상세주소를 작성하세요." type="text" id="address2" name="address2" v-model="address2" :maxlength="remainAddr" />
           </div>
         </div>
         <div class="row">
@@ -169,7 +169,7 @@
                   <label class="tgl-btn" data-tg-off="지상" data-tg-on="지하" for="underground"></label>
                 </label>
             </div>
-            <input type="text" id="floor" name="floor" v-model="floorNum"/>
+            <input type="text" id="floor" name="floor" v-model="floorNum"  maxlength="4"/>
           </div>
           <div class="col-25 col-space">
             <label for="size">
@@ -184,7 +184,7 @@
                 <label class="tgl-btn" data-tg-off="㎡" data-tg-on="평" for="pyoung"></label>
               </label>
             </div>
-            <input type="text" id="size" name="size" v-model="sizeValue" required />
+            <input type="text" id="size" name="size" v-model="sizeValue" maxlength="8" required />
           </div>
         </div>
         <div class="row">
@@ -210,7 +210,7 @@
             <div class="outContainer">
               <label class="inContent">원</label>
             </div>
-            <input type="text" id="unitPrice" name="unitPrice" v-model="studio.studioFilter.unitPrice" required />
+            <input type="text" id="unitPrice" name="unitPrice" v-model="studio.studioFilter.unitPrice" maxlength="10" required />
           </div>
           <div class="col-25 col-space">
             <label for="excharge">
@@ -222,7 +222,7 @@
             <div class="outContainer">
               <label class="inContent">원</label>
             </div>
-            <input type="text" id="excharge" name="excharge" v-model="studio.studioFilter.excharge" required />
+            <input type="text" id="excharge" name="excharge" v-model="studio.studioFilter.excharge" maxlength="10" required />
           </div>
         </div>
         <div class="row">
@@ -236,7 +236,7 @@
             <div class="outContainer">
               <label class="inContent">명</label>
             </div>
-            <input type="text" id="defaultCapacity" name="defaultCapacity" v-model="studio.studioFilter.defaultCapacity" required/>
+            <input type="text" id="defaultCapacity" name="defaultCapacity" v-model="studio.studioFilter.defaultCapacity" maxlength="5" required/>
           </div>
           <div class="col-25 col-space">
             <label for="maxCapacity">
@@ -248,7 +248,7 @@
             <div class="outContainer">
               <label class="inContent">명</label>
             </div>
-            <input type="text" id="maxCapacity" name="maxCapacity" v-model="studio.studioFilter.maxCapacity" required />
+            <input type="text" id="maxCapacity" name="maxCapacity" v-model="studio.studioFilter.maxCapacity" maxlength="5" required />
           </div>
         </div>
         <div class="row">

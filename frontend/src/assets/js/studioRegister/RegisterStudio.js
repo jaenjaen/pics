@@ -52,6 +52,7 @@ export default {
             /* 주소 */
             address1: "",
             address2: "",
+            remainAddr: 44,
 
             /* 지상/지하 */
             floorUnit: false, //지하여부
@@ -392,6 +393,7 @@ export default {
         /* 주소를 선택하면 창이 닫히고, 상세주소가 보이게 함 */
         onComplete(data) {
             this.address1 = data.address;
+            this.remainAddr = 44 - this.address1.length; //남은 주소 글자수를 바인딩
             document.getElementById('modalAddr').style.display = "none";
             this.address2 = ""; //상세주소 리셋
             document.getElementById("address2").style.display = "block";

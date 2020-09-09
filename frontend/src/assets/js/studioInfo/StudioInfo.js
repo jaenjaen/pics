@@ -22,6 +22,16 @@ export default {
             type: String,
             default: ''
         },
+        center: {
+            lat: {
+                type: String,
+                default: ''
+            },
+            lng: {
+                type: String,
+                default: ''
+            }
+        }
     },
     event: 'studios',
     data: function() {
@@ -242,6 +252,9 @@ export default {
                 this.dataFull = true; // dataFull 객체를 true 상태로 변경
                 alert('마지막 리뷰입니다.'); // 모든 데이터 출력 알림
             }
+        },
+        roadView() {
+            window.open("https://map.kakao.com/link/roadview/37.5571792,126.919226"); //+ this.center.lat + this.center.lng;
         }
     }
 };

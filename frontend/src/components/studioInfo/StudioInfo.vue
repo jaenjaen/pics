@@ -46,9 +46,6 @@
         <div id="company-of-studio">
           <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
           <span>{{studio.company.name}}</span>
-          </div>
-          <br>
-          <div>
             <!-- 찜하기, 공유하기, 누적 이용자 수 -->
             <span>
               <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
@@ -62,16 +59,12 @@
                   <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
               </a> -->
             </span>
-          </div>
+          </div>    
         </div>        
       </section>
       <hr/>  
-        <!-- ============== Reservation ============== -->
-      <div class =article-Filterstudiormation-map-area>
-        <Reservation width="70%"></Reservation>
-      </div>
+ 
         <!-- ============== Studio Filter ============== -->
-
       <article>
           <div class="article-studioFilter-information-area" >
             <div v-for="studio in studios" v-bind:key="studio.stuId"> 
@@ -115,30 +108,40 @@
                   :libraries="libraries"
                   @load="onLoad"
                 />
+              <br>
+              
             </Map>
+            <!-- <button @click="roadView()" >로드뷰 보기</button> -->
           </div>
+          
+          <!-- ============== Reservation ============== -->
+          
+          <div class =article-Filterstudiormation-map-area>
+          <hr>
+            <Reservation width="70%"></Reservation>
+          </div>
+
         <!-- ============== Description ============== -->
              
         <div class="article-Description-area"  v-for="(studio,index) in studios" v-bind:key="index">
-           <hr/>  
+           <hr>  
           <div class="studio-rule">
           <h4>Studio 이용 수칙</h4>
-          <p>{{ studio.rule }}</p>
+            <p>{{ studio.rule }}</p>
           </div>
           <div>
-          <h4>Studio 소개글</h4>
-          <p>{{ studio.description }}</p>
+            <h4>Studio 소개글</h4>
+            <p>{{ studio.description }}</p>
           </div>
         </div>
         <hr>
         <!-- ============== Portfolio Images ============== -->
-       <table aligh="center" width="100%">
-          <!-- <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index"> -->
-            <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
-          <!-- </tr> -->
+        <table aligh="center" width="100%">
+            <!-- <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index"> -->
+              <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
+            <!-- </tr> -->
         </table>
-
-        <hr />
+        <hr>
         <!-- ============== Chart & Graph ============== -->
         <!-- ===== 시간대별 예약 차트 ===== -->
         <div class="article-Chart-area">
@@ -221,7 +224,7 @@
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star</i>
                     </span>              
-                    <hr width="90%">
+                    <hr>
                     <div id="review-content">{{ review.content }}</div>
                   </span>
                   <md-card-expand  v-if="review.answer!=''">

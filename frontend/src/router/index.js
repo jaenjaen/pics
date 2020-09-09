@@ -23,6 +23,7 @@ import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
+import ChatTest from "@/components/chat/ChatTest.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -119,6 +120,10 @@ const routes = [{
         path: "/chatShow",
         name: "chatShow",
         component: ChatShow
+    }, {
+        path: "/chatTest",
+        name: "chatTest",
+        component: ChatTest
     }
     // {
     //     path: "/Map",

@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <h1>company_info 들어왔다.</h1>
+  <div class="info_container">
+    <div class="base_info">
+      <p class="name">{{company.name}}</p>
+      <img class="logoImg" :src="com_imgUrl(company.logoImg)" />
+      <div>
+        <p>{{company.description}}</p>
+      </div>
+    </div>
+    <div class="host_info">
+      <p>호스트 공간</p>
+    </div>
   </div>
 </template>
 

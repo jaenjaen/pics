@@ -1,0 +1,28 @@
+.info_container {
+    width: 768px;
+    display: flex;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background-color: yellowgreen;
+    align-items: stretch;
+}
+
+.base_info {
+    flex: 1 1 0;
+    margin: 40px;
+}
+
+.name {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.logoImg {
+    width: 100px;
+}
+
+.host_info {
+    flex: 2 2 0;
+    background-color: red;
+}

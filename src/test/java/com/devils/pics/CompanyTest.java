@@ -49,8 +49,8 @@ public class CompanyTest {
 		
 		//sqlSession.delete(ns+"deleteCompany","66@sample.com");
 		
-		Company cp = sqlSession.selectOne(ns+"getCompanyInfo", "66@sample.com");
+		Company cp = sqlSession.selectOne(ns+"getCompanyInfo", "11@sample.com");
 //		List<Studio> st  = sqlSession.selectList(ns+"getStudio", "66@sample.com");
-		System.out.println(cp.getStudioFilterList());
+		System.out.println(cp.getName());
 	}
 }

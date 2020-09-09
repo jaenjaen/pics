@@ -110,7 +110,7 @@
               </a>
             </span>
             <span>
-                <input type="text" id="word" name="word">
+                <input type="text" id="word" class="inputArea" name="word">
             </span>
             <span>
                 <a href="javascript:;" @click="sendMsg">
@@ -122,14 +122,23 @@
 
         <!-- Modal : 채팅 목록 -->
         <section id="chatListModal">
-            <select id="studioList">
-                <option>전체</option>
-                <option>스튜디오1</option>
-                <option>스튜디오2</option>
-                <option>스튜디오3</option>
-            </select>
+            <div id="studioList">
+                <select id="studioSelect">
+                    <option>전체</option>
+                    <option>스튜디오1</option>
+                    <option>스튜디오2</option>
+                    <option>스튜디오3</option>
+                </select>
+                <div id="studioSearch">
+                    <input type="text" class="inputArea">
+                    <img :src="defaultImg.search" width="20px" height="20px">
+                </div>
+            </div>
             <div id="chatListContent">
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
+                <p @click="getChatByUser($event)">
+                    <img class="profile" :src="defaultImg.user" @click="showBiggerImg($event)">
+                    <span>리스트1</span>
+                </p>
                 <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
                 <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
                 <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
@@ -169,10 +178,17 @@
                 <div id="closeUpload" @click="controlModal('hide', 'uploadModal')">&times;</div><br/><br/>
                 <p style="font-size:18px;">파일 첨부</p>
                 <input type="file" id="chatFileUpload" style="display:none;"><br/>
-                <input type="text" id="chatFileName" disabled>
-                <button id="uploadBtn" onclick="document.getElementById('chatFileUpload').click()">찾기</button>
-                <button id="removeBtn">삭제</button><br/>
-                <button id="sendBtn">전송</button>
+                <input type="text" id="chatFileName" class="inputArea" disabled>
+                <button id="uploadBtn" class="btn" onclick="document.getElementById('chatFileUpload').click()">찾기</button>
+                <button id="removeBtn" class="btn">삭제</button><br/>
+                <button id="sendBtn" class="btn">전송</button>
+            </div>
+        </section>
+
+        <!-- Modal : 이미지 확대 -->
+        <section id="expandImgModal">
+            <div id="expandImgContent">
+                <div id="closeUpload" @click="controlModal('hide', 'expandImgModal')">&times;</div><br/><br/>
             </div>
         </section>
     </div>

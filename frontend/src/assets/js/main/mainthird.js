@@ -6,7 +6,7 @@ export default {
             this.$router.push("/studioSearch/" + value);
         },
         moveTocompanyinfo(value) {
-            alert(value)
+            // alert(value)
             this.$router.push('companyInfo/' + value);
         }
     }

@@ -29,7 +29,7 @@ export default {
         getImgUrl(url) {
             let newUrl = url.split(",")[0]
             console.log(newUrl)
-            return "../../img/studio/" + newUrl;
+            return require("@/assets/img/studio/" + newUrl);
         },
 
     },

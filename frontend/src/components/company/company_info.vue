@@ -12,7 +12,15 @@
     <div class="host_info">
       <p class="word">호스트 공간</p>
       <div class="carousel">
-        <carousel :items="3" :margin="5" :loop="true" :center="true" :nav="false" :dots="false">
+        <carousel
+          :items="3"
+          :margin="5"
+          :loop="true"
+          :center="true"
+          :nav="false"
+          :dots="false"
+          :autoplay="true"
+        >
           <a href v-for="(studio,index) in company.studioList" :key="index">
             <div class="card">
               <div class="card-image">

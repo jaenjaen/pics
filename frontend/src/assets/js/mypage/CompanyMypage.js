@@ -13,8 +13,13 @@ export default {
     },
     data() {
         return {
+            studioList: [],
+            studioFlag: true
 
         };
+    },
+    mounted() {
+
     },
     methods: {}
 };

@@ -107,6 +107,7 @@ public class CompanyController {
 		}
 	}
 	
+	/** 보유 스튜디오가 담겨 studio 객체 반환*/ 
 	@GetMapping("/companyifo/{comId}")
 	public ResponseEntity getCompanyinfo(@PathVariable String comId) {
 		System.out.println(comId+"로 검색 시작");
@@ -116,5 +117,10 @@ public class CompanyController {
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
+	}
+	
+	@GetMapping("/company/studios/{comId}")
+	public ResponseEntity getStudios(@PathVariable String comId) {
+		return null;
 	}
 }

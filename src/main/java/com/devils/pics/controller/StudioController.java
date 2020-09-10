@@ -25,7 +25,7 @@ import com.devils.pics.service.StudioInfoService;
 
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
-public class StudioRegisterController {
+public class StudioController {
 
 	@Autowired
 	private ScheduleService scheduleService;

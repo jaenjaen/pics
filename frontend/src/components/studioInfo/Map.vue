@@ -8,14 +8,14 @@
       :mapTypeId="mapTypeId"
       :libraries="libraries"
       @load="onLoad"
+      
       @maptypeid_changed="maptypeid_changed"
       style="width:100%;height:250px;"/>
     <button id="roadView" @click="roadView()">로드뷰</button>
     </div>
-
 </template>
 <script>
-import VueDaumMap from 'vue-daum-map'
+import VueDaumMap from "vue-daum-map";
 export default {
     name: "Map",
     data: () => ({
@@ -71,6 +71,7 @@ export default {
     },
         
 }
+
 </script>
 <style scoped>
 #map{

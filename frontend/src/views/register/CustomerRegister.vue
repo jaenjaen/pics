@@ -39,68 +39,8 @@
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import axios from "axios";
-
-export default {
-  name: "CustomerRegister",
-  data(){
-    return {
-      apiId: -1,
-      apiKey: "",
-      imgSrc: "",
-      nickname: "",
-      email: "",
-      tel: "",
-      job: "",
-      funnel: "",
-      max: 13,
-      picked:""
-      }
-  },mounted(){
-    var apiData = JSON.parse(sessionStorage.getItem("apiData"));
-    console.log(apiData);
-    this.apiId = apiData.apiId;
-    this.apiKey = apiData.apiKey;
-    this.imgSrc = apiData.imgSrc;
-    this.nickname = apiData.nickname;
-    this.email = apiData.email;
-    console.log(this.apiId+","+this.apiKey+","+this.imgSrc+","+this.nickname+","+this.email);
-
-  }
-  ,methods:{
-    customerRegister: function(){
-        axios
-        .post('http://localhost:7777/customer',{
-          apiId: this.apiId,
-          apiKey: this.apiKey,
-          imgSrc: this.imgSrc,
-          nickname: this.nickname,
-          email: this.email,
-          tel: this.tel,
-          job: this.job,
-          funnel: this.funnel,
-          gender: this.picked
-        })
-         .then(response => {
-           this.condata = response.data
-           sessionStorage.removeItem("apiData")
-           alert(this.nickname+" 님의 가입을 환영합니다.");
-           location.href="http://localhost:9999"
-           })
-        .catch(e => {
-          console.log(e)
-        })
-      },
-      insertDash(){
-        if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
-      }
-  }
-}
-
-</script>
-<style scpoed src="@/assets/css/login/CompanyLogin.css"></style>
+<script scoped src="@/assets/js/register/CustomerRegister.js"></script>
+<style scoped src="@/assets/css/login/CompanyLogin.css"></style>
 <style scoped>
  .form__field select{
    width: 248px;

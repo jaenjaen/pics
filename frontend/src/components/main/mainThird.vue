@@ -2,7 +2,7 @@
   <div class="mainthird">
     <div class="word">컨셉별 촬영장소 찾기</div>
     <div class="img_container">
-      <div class="jb-wrap" @click.prevent="moveTocompanyinfo('55@sample.com')">
+      <div class="jb-wrap" @click.prevent="moveTocompanyinfo('11@sample.com')">
         <div class="jb-image">
           <img src="@/assets/img/studio/1_조명.jpg" alt />
         </div>

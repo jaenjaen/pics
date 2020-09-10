@@ -5,17 +5,19 @@
       <form action="" method="POST" class="form login" @submit.prevent="customerEdit">
 
         <div class="form__field">
-          <label for="login__logImg"
+          <label class="nomal_label" for="login__logImg"
             ><img
               class="icon"
               src="@/assets/img/register/companyLogo.svg"
             /><span class="hidden">Logo</span></label
           >
-          <input type="file" class="form__input" />
+          <input type="text" class="form_input" :placeholder="imgName" style="width:55%;" disabled/>
+          <input type="file" class="form__input" id="edit_pic" accept="image/*"  ref="profileImg" @change="onFileChange('edit_pic',$event)"/>
+          <label class="upload_label" for="edit_pic">업로드</label>
         </div>
 
         <div class="form__field">
-          <label for="login__name"
+          <label class="nomal_label" for="login__name"
             ><img
               class="icon"
               src="@/assets/img/register/userEdit.svg"
@@ -31,12 +33,12 @@
         </div>
 
         <div class="form__field" >
-          <label for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
+          <label class="nomal_label" for="login__tel"><img class="icon" src="@/assets/img/register/companyTel.svg"><span class="hidden">PhoneNumber</span></label>
           <input type="tel" v-model="tel" class="form__input" @keyup="insertDash" :maxlength="max" :placeholder="tel" required>
         </div>
 
         <div class="form__field" >
-          <label for="login_job"><img class="icon" src="@/assets/img/register/job.svg"><span class="hidden">Job</span></label>
+          <label class="nomal_label" for="login_job"><img class="icon" src="@/assets/img/register/job.svg"><span class="hidden">Job</span></label>
           <select name="job" v-model="job">
             <option value="" disabled selected>직업을 선택 해주세요.</option>
             <option value="photographer">포토그래퍼</option>
@@ -56,79 +58,8 @@
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import axios from "axios";
-var customer = JSON.parse(sessionStorage.getItem("customer"));
-
-export default {
-  name: "CustomerEdit",
-  data(){
-    return {
-      custId:-1,
-      nickname:"",
-      imgSr:"",
-      tel:"",
-      job:"",
-      max: 13,
-      }
-  },mounted(){
-    console.log(customer);
-    this.custId = customer.custId;
-    this.imgSrc = customer.imgSrc;
-    this.nickname = customer.nickname;
-    this.tel = customer.tel;
-    this.job = customer.job;
-  }
-  ,methods:{
-    customerEdit: function(){
-        axios
-        .put('http://localhost:7777/customer',{
-          custId: this.custId,
-          imgSrc: this.imgSrc,
-          nickname: this.nickname,
-          tel: this.tel,
-          job: this.job
-        })
-         .then(res => {
-           //console.log(res);
-           if(res !=null){
-           customer.custId = this.custId;
-           customer.imgSrc = this.imgSrc;
-           customer.nickname = this.nickname;
-           customer.tel = this.tel;
-           customer.job = this.job;
-           sessionStorage.setItem("customer",JSON.stringify(customer));
-           //console.log(customer);
-           alert("정보가 수정되었습니다.");
-           location.href="http://localhost:9999/mypage";
-           }
-           })
-        .catch(e => {
-          console.log(e)
-        })
-      },
-      insertDash(){
-        if(this.tel.length == 3 || this.tel.length == 8) this.tel = this.tel+"-"
-      },
-      signout :function(){
-        axios.delete("http://localhost:7777/customer/"+this.custId)
-        .then(res=>{
-            if(res!=null){
-            alert("회원탈퇴 되었습니다.");
-            sessionStorage.removeItem("customer");
-            location.href="http://localhost:9999";
-          }
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-    }
-  }
-}
-
-</script>
-<style scpoed src="@/assets/css/login/CompanyLogin.css"></style>
+<script scoped src="@/assets/js/mypage/edit/CustomerEdit.js"> </script>
+<style scoped src="@/assets/css/mypage/edit/CompanyEdit.css"></style>
 <style scoped>
  .form__field select{
    width: 248px;

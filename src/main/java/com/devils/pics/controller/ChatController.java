@@ -12,18 +12,18 @@ import com.devils.pics.domain.Chat;
 @RestController
 public class ChatController {
 	
-//	@MessageMapping("/receive") //receive를 메세지를 받을 endpoing로 설정
-//	@SendTo("/send") //send로 메세지를 반환
-//	public ResponseEntity ChatHandler(@RequestBody Map map) {
-//		int sender = chat.getSender();
-//		int custId = chat.getCustId();
-//		int stuId = chat.getStuId();
-//		
-//		if(sender == custId) { //보낸 사람이 고객일 경우
-//			
-//		}
-//		else if(sender == stuId) { //보낸 사람이 스튜디오일 경우
-//			
-//		}
-//	}
+	@MessageMapping("/receive") //receive를 메세지를 받을 endpoing로 설정
+	@SendTo("/send") //send로 메세지를 반환
+	public Chat ChatHandler(@RequestBody Chat chat) {
+		int sender = chat.getSender();
+		String word = chat.getWord();
+		System.out.println("보낸이 : "+sender);
+		System.out.println("내용 : "+word);
+		
+		Chat result = new Chat();
+		result.setSender(sender);
+		result.setWord(word);
+		
+		return result;
+	}
 }

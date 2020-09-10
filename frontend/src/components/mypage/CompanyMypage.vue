@@ -17,8 +17,9 @@
           <td colspan="4" v-if="studioFlag"> 소유한 스튜디오가 없습니다.<br><a href="http://localhost:9999/registerStudio"> 새로운 스튜디오 추가하기 </a></td>
         </tr>
         <tr v-for="(studio) in studioList" :key="studio">
-          <td>{{studio.category.categoryName}}</td> <td><router-link :to="{name:'studioInfo', params: {stuId:studio.stuId}}">{{studio.name}}</router-link></td> <td>{{studio.studioFilter.address}}</td>
-          <td><button class="list_btn" @click="studioEdit(studio.stuId)">수정</button></td>
+          <td style="width:10%">{{studio.category.categoryName}}</td> <td style="width:35%;"><router-link :to="{name:'studioInfo', params: {stuId:studio.stuId}}">{{studio.name}}</router-link></td> 
+          <td>{{studio.studioFilter.address}}</td>
+          <td style="width:15%"><router-link :to="{name:'studioEdit', params: {stuId:studio.stuId}}"><button class="list_btn">수정</button></router-link></td>
         </tr>
       </table>
     </div>

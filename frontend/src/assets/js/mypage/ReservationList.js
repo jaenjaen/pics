@@ -23,6 +23,7 @@ export default {
             stuId: 0,
             resId: 0,
             filename: "이미지 업로드",
+            img: "",
             max: 100,
         };
     },
@@ -42,6 +43,8 @@ export default {
             });
     },
     methods: {
+
+        /*피커에 따른 데이터 로드*/
         changeMonth() {
             var yyyy = new Date(this.month).getFullYear();
             var mm = new Date(this.month).getMonth() + 1;
@@ -63,6 +66,8 @@ export default {
                     console.log(err);
                 });
         },
+
+        /*이전달 데이터 로드*/
         beforeMonth() {
             var startDate = "";
             var endDate = "";
@@ -103,6 +108,8 @@ export default {
                     console.log(err);
                 });
         }, //~beforeMonth
+
+        /*다음달 데이터 로드*/
         afterMonth() {
             var startDate = "";
             var endDate = "";
@@ -146,6 +153,8 @@ export default {
                 });
 
         }, //~aftermonth
+
+        /* 리뷰모달 */
         showModal: function(resId, studioName, stuId) {
             this.stuId = stuId;
             this.resId = resId;
@@ -160,6 +169,8 @@ export default {
                     console.log(err);
                 })
         }, //~showModal
+
+        /* 리뷰쓰기 */
         writingReview: function() {
             axios.post("http://localhost:7777/review", {
                 customer: {
@@ -171,7 +182,7 @@ export default {
                 resId: this.resId,
                 score: this.rating,
                 content: this.content,
-                img: ""
+                img: this.img
             }).then(res => {
                 console.log(res.data);
                 alert("리뷰 작성이 완료되었습니다.");
@@ -179,6 +190,45 @@ export default {
             }).catch(err => {
                 console.log(err);
             })
-        }
+        }, //~writingReview
+
+        /*이미지 업로드 관리 */
+        onFileChange(fileId, e) {
+            var files = e.target.files || e.dataTransfer.files;
+            var inputBox = document.getElementById(fileId);
+            var maxSize = 5 * 1024 * 1000;
+            var imgPath = [];
+
+            //용량제한
+            if (files.size > maxSize) {
+                alert("파일용량 5MB을 초과하였습니다.");
+                return false;
+            }
+
+            imgPath = inputBox.value.split("\\");
+            this.filename = imgPath[2];
+
+            this.uploadLogoImg();
+        }, //~onfileChange
+
+        /* 리뷰이미지 사진 업로드 */
+        uploadLogoImg() {
+            var data = new FormData();
+            var file = this.$refs.reviewImg.files[0];
+            data.append('file', file);
+
+            axios.post('http://localhost:7777/fileUpload/review/' + this.custId, data, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                })
+                .then(res => {
+                    console.log(res);
+                    this.img = "http://localhost:7777/upload/review/" + res.data;
+                    console.log(this.img);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        },
+
     }
 }

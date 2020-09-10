@@ -116,12 +116,17 @@ export default {
             location.href = "/companyLogin"
         } else {
             this.studio.comId = company.comId;
-            console.log("comId : " + this.studio.comId); //뽑아낸 comId
+            //console.log("comId : " + this.studio.comId); //뽑아낸 comId
         }
     },
     mounted() {
+        /* 라이브러리 충돌로 인해 적용되지 않는 CSS 해결 */
         document.getElementById('multi').childNodes[0].setAttribute('style', 'width:100%; height:45px');
         document.getElementById('multi').childNodes[1].setAttribute('style', 'width:100%;');
+        let uploadImg = document.getElementsByClassName('uploadImg');
+        for (let i = 0; i < uploadImg.length; i++) { //모든 img 태그에 걸려있는 height:auto; 해결
+            uploadImg[i].setAttribute('style', 'height:100%');
+        }
 
         /* DB에서 카테고리 가져오기 */
         axios.get('http://127.0.0.1:7777/category')

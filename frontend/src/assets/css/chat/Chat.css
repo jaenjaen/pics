@@ -62,7 +62,8 @@
                 height: 20px;
             }
             
-            .profile {
+            .profile,
+            #search {
                 cursor: pointer;
             }
             /* 본문 스타일 */

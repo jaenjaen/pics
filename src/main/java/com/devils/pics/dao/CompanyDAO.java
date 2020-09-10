@@ -8,5 +8,6 @@ public interface CompanyDAO {
 	Company loginCompany(Company company) throws Exception;
 	int deleteCompany (String comId) throws Exception;
 	int updateCompnay (Company company) throws Exception;
+	Company getCompanyInfo(String comId)throws Exception;
 }
 

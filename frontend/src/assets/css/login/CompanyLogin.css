@@ -2,6 +2,7 @@
     background-color: #ffffff;
     margin: auto;
     width: 768px;
+    height: 90vh;
     text-align: center;
     padding: 1% 0 71px 0;
 }
@@ -54,17 +55,6 @@
 }
 
 .register a:focus,
-a:hover {
-    text-decoration: underline;
-}
-
-.signout {
-    color: #9e5353;
-    outline: 0;
-    text-decoration: none;
-}
-
-.signout a:focus,
 a:hover {
     text-decoration: underline;
 }
@@ -133,8 +123,6 @@ input[type='submit'] {
 
 .login input {
     background-color: #F5F5F5;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
 }
 
 .login input:focus,
@@ -155,6 +143,8 @@ input[type='submit'] {
 }
 
 .login input[type='button'] {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
     background-color: #33A3DC;
     color: #eee;
     text-transform: uppercase;
@@ -163,4 +153,8 @@ input[type='submit'] {
 .login input[type='button']:focus,
 .login input[type='button']:hover {
     background-color: #034EA2;
+}
+
+.login input[type="file"] {
+    display: none;
 }

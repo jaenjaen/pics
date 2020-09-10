@@ -13,18 +13,16 @@ import ReservationList from "../views/mypage/reservation/ReservationList.vue"
 import WishList from "../views/WishList.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import FileRoute from "@/components/studioRegister/FileRoute.vue";
-// import RegisterStudioSuccess from "@/components/studioRegister/RegisterStudioSuccess.vue";
 import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
 import Map from "@/components/studioInfo/Map.vue";
-// import Test from "../components/Test.vue";
-// import GenderChart from "../components/studioInfo/GenderChart.vue";
+import MapCopy from "@/components/studioInfo/Map copy.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
 import CompanyInfo from "@/components/company/company_info.vue"
-
+import ChatTest from "@/components/chat/ChatTest.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -52,11 +50,13 @@ const routes = [{
         path: "/registerStudio",
         name: "registerStudio",
         component: RegisterStudio
-    }, {
+    },
+    {
         path: "/fileRoute",
         name: "fileRoute",
         component: FileRoute
-    }, {
+    },
+    {
         path: "/companyRegister",
         name: "companyRegister",
         component: CompanyRegister
@@ -87,24 +87,22 @@ const routes = [{
         component: StudioInfo,
         props: true
     },
-    // {
-    //     path: "/genderchart",
-    //     name: "genderchart",
-    //     component: GenderChart
-    // }, 
     {
         path: "/studioList",
         name: "studioList",
         component: StudioList
-    }, {
+    },
+    {
         path: "/companyedit",
         name: "companyedit",
         component: CompanyEdit
-    }, {
+    },
+    {
         path: "/customeredit",
         name: "customeredit",
         component: CustomerEdit
-    }, {
+    },
+    {
         path: "/uploadImg",
         name: "uploadImg",
         component: UploadImg
@@ -113,22 +111,34 @@ const routes = [{
         path: "/reservationlist",
         name: "reservationlist",
         component: ReservationList
-    }, {
+    },
+    {
         path: "/chat",
         name: "chat",
         component: Chat
-    }, {
+    },
+    {
         path: "/chatShow",
         name: "chatShow",
         component: ChatShow
     }, {
+        path: "/chatTest",
+        name: "chatTest",
+        component: ChatTest
+    }, {
         path: "/companyInfo/:comId",
         name: "companyInfo",
         component: CompanyInfo
-    }, {
+    },
+    {
         path: "/Map",
         name: "Map",
         component: Map
+    },
+    {
+        path: "/mapCopy",
+        name: "mapcopy",
+        component: MapCopy
     }
 ];
 const router = new VueRouter({

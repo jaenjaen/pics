@@ -41,4 +41,8 @@ public class CompanyDAOImpl implements CompanyDAO {
 		return session.selectOne(ns+"getCompany",company);
 	}
 
+	@Override
+	public Company getCompanyInfo(String comId) throws Exception {
+		return session.selectOne(ns+"getCompanyInfo",comId);	}
+
 }

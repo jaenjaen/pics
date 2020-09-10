@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,24 +23,28 @@ import com.devils.pics.domain.Company;
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
 public class FileController {
+	
+	private String fileSeparator = File.separator;
+	private String root;
+	private String path;
 
 	/* 파일 업로드 반응값
 	 * 성공했을 경우 => 파일 이름 리턴
 	 * 파일이 존재하지 않을 경우 => 응답하지 않음 */
 
 	/* 싱글 파일 업로드 */
-	@PostMapping("/fileUpload/{subPath}/{comId}")
+	@PostMapping("/fileUpload/{subPath}/{id}")
 	public ResponseEntity uploadImage(@RequestBody MultipartFile file, 
-			@PathVariable String subPath, @PathVariable String comId,
+			@PathVariable String subPath, @PathVariable String id,
 			HttpServletRequest request) {		
 		/* 업체 아이디 받아오기 */
-		System.out.println("업체 아이디 : " + comId);
+		System.out.println("업체 아이디 : " + id);
 
 		String fileName = ""; //화면으로 보낼 파일의 이름들
 
 		/* 파일 경로 설정하기 */
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
+		root = request.getSession().getServletContext().getRealPath("/");
+		path = root + "upload" + fileSeparator + subPath + fileSeparator; //공통 파일 경로
 		System.out.println(path);
 
 		if(file==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -55,13 +60,13 @@ public class FileController {
 			/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
 			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
 			int i = fileName.lastIndexOf("."); //파일 확장자 위치
-			fileName = now + "_" + comId + fileName.substring(i, fileName.length());
+			fileName = now + "_" + id + fileName.substring(i, fileName.length());
 			System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
 
 			try {
 				file.transferTo(new File(path+fileName)); //파일 생성
 			} catch (IllegalStateException | IOException e) {
-				//e.printStackTrace();
+				e.printStackTrace();
 			}
 			return new ResponseEntity(fileName, HttpStatus.OK);
 
@@ -80,8 +85,8 @@ public class FileController {
 		String fileNames = ""; //화면으로 보낼 파일의 이름들
 
 		/* 파일 경로 설정하기 */
-		String root = request.getSession().getServletContext().getRealPath("/");
-		String path = root + "upload\\" + subPath + "\\"; //공통 파일 경로
+		root = request.getSession().getServletContext().getRealPath("/");
+		path = root + "upload"+fileSeparator+ subPath + fileSeparator; //공통 파일 경로
 		System.out.println(path);
 
 		if(files.size()==0) {
@@ -115,5 +120,24 @@ public class FileController {
 			return new ResponseEntity(fileNames, HttpStatus.OK);
 
 		}
+	}
+	
+	
+	@DeleteMapping("/filedelte/{subPath}/{imgSrc}")
+	public ResponseEntity deleteFile(@PathVariable String subPath,@PathVariable String imgSrc, HttpServletRequest request) {
+		
+		/* 파일 경로 설정하기 */
+		root = request.getSession().getServletContext().getRealPath("/");
+		path = root + "upload"+fileSeparator+ subPath + fileSeparator; //공통 파일 경로
+		//System.out.println(path);
+		
+		File file = new File(path+imgSrc);
+		//System.out.println(path+imgSrc);
+		
+		if(file.exists()) {
+			if(file.delete()) return new ResponseEntity("OK",HttpStatus.OK);
+			else return new ResponseEntity("FAIL",HttpStatus.NOT_MODIFIED);
+		}
+		else return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 }

@@ -2,31 +2,36 @@ import axios from "axios"; //axios
 import Vue from 'vue'
 import carousel from "vue-owl-carousel"; //캐러셀
 import VModal from 'vue-js-modal'
-// import 'vue-material/dist/vue-material.min.css'
 import VueMaterial from 'vue-material'
-// import 'vue-material/dist/vue-material.min.css'
-// import 'vue-material/dist/theme/default.css'
-
 import Reservation from "@/components/studioInfo/Reservation.vue"
-import Bar from "@/assets/js/studioInfo/TimeChart.js";
-// import Bar from "@/assets/js/studioInfo/DayChart.js";
+import TimeChart from "@/assets/js/studioInfo/TimeChart.js";
+import DayChart from "@/assets/js/studioInfo/DayChart.js";
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
-
-// import Map from "@/components/studioInfo/Map.vue"
+import Map from "@/components/studioInfo/Map.vue"
 
 Vue.use(VueMaterial)
 Vue.use(VModal);
 
 export default {
     name: "studio-info",
-    components: { carousel, Reservation, Bar },
+    components: { carousel, Reservation, TimeChart, DayChart, Map },
     props: {
         stuId: {
             type: String,
             default: ''
         },
+        center: {
+            lat: {
+                type: String,
+                default: ''
+            },
+            lng: {
+                type: String,
+                default: ''
+            }
+        }
     },
     event: 'studios',
     data: function() {
@@ -96,14 +101,14 @@ export default {
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
-                // this.$emit('studios', this.studios);
-                //메인 이미지 split
+
+                // 메인 이미지 split
                 let mainImgSplit = (this.studios[0].mainImg).split(',');
-                let portImgSplit = (this.studios[0].mainImg).split(',')
-                for (let i = 0; i < 10; i++) {
+                let portImgSplit = (this.studios[0].mainImg).split(',');
+                for (let i = 0; i < mainImgSplit.letngth; i++) {
                     this.mainImgList.push(mainImgSplit[i]);
                 }
-                for (let i = 0; i < 4; i++) {
+                for (let i = 0; i < this.portImgList.letngth; i++) {
                     this.portImgList.push(portImgSplit[i]);
                 }
                 console.log("this.portImgList : " + this.portImgList);
@@ -189,6 +194,7 @@ export default {
     ////////////////////////////// Methods //////////////////////////////
     methods: {
         imgUrl(imgName) {
+            console.log(imgName);
             return require("@/assets/img/studio/" + imgName);
         },
         // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거
@@ -235,7 +241,6 @@ export default {
             // 전체 리뷰 개수보다 노출되는 리뷰 개수가 작은 경우
             if (this.cntReviews < this.allReviewLength) {
                 this.cntReviews += 3; // 노출 리뷰 개수 3개 증가
-
                 let temp = []
                 for (var i = 0; i < this.cntReviews; i++) {
                     temp.push(this.reviews[i]); // 전체 리뷰에서 노출 리뷰 개수만큼 데이터 추출하여 temp에 저장
@@ -245,8 +250,11 @@ export default {
 
             } else {
                 this.dataFull = true; // dataFull 객체를 true 상태로 변경
-                alert('List items are fully loaded!'); // 모든 데이터 출력 알림
+                alert('마지막 리뷰입니다.'); // 모든 데이터 출력 알림
             }
+        },
+        roadView() {
+            window.open("https://map.kakao.com/link/roadview/37.5571792,126.919226"); //+ this.center.lat + this.center.lng;
         }
     }
 };

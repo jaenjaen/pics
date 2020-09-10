@@ -8,11 +8,16 @@
 .container {
     width: 768px;
     margin: auto 20em 0 10em 0;
+    background-color: #fff;
 }
 
 #main-images-section {
     width: 100%;
     margin: auto;
+}
+
+section {
+    margin: 2% 3% 2% 3%;
 }
 
 .tag-list {
@@ -38,26 +43,37 @@ article {
 
 #Studio-Filter-Table {
     float: left;
-    width: 50%;
+    width: 45%;
     border-top: 2px solid #5a5a5a;
+    border-bottom: 2px solid #5a5a5a;
     border-collapse: collapse;
+    margin: 2% 2% 2% 3%;
 }
 
 #Studio-Filter-Table td {
     text-align: right;
     border-bottom: 1.5px solid #bbb5b5;
     padding: 10px;
+    float: left;
 }
 
-#map {
-    float: left;
-    margin-left: 5%;
+.article-map-field {
+    float: right;
+    margin: 2% 3% 2% 2%;
     width: 40%;
-    height: 40%;
-    border: 1px solid green;
+    height: 30%;
+    text-align: center;
+}
+
+#roadView {
+    background-color: white;
+    color: #029BE0;
+    border: 1px solid #029BE0;
+    border-radius: 5px;
 }
 
 .article-Description-area {
+    margin: 2% 2% 2% 3%;
     clear: both;
     text-align: left;
 }
@@ -82,8 +98,24 @@ article {
     border: 1.5px solid lightgray;
 }
 
+#accCustomer,
+#avgScore {
+    font-size: 0.95em;
+}
+
+#accCustomer b,
+#avgScore b {
+    color: #029BE0;
+}
+
+#avgScore:hover,
+#accCustomer:hover {
+    font-size: 1em;
+}
+
 .article-review-area {
     text-align: left;
+    margin: 2% 2% 2% 3%;
 }
 
 .card-content {
@@ -127,6 +159,10 @@ article {
     vertical-align: top;
 }
 
+.article-review-area {
+    clear: both;
+}
+
 #review-content,
 #star-score {
     margin: 2% 5% 1% 5%;
@@ -134,10 +170,15 @@ article {
 
 #time-chart {
     float: left;
-    margin: 5%;
+    margin: 2% 5% 2% 10%;
 }
 
 #day-chart {
-    float: left;
-    margin: 5%;
+    float: right;
+    margin: 2% 10% 2% 5%;
+}
+
+hr {
+    width: 95%;
+    color: lightgray
 }

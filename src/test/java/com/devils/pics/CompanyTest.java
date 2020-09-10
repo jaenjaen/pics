@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devils.pics.domain.Company;
+import com.devils.pics.domain.Studio;
 
 @SpringBootTest
 public class CompanyTest {
@@ -47,5 +48,9 @@ public class CompanyTest {
 //		System.out.println(c2return);
 		
 		//sqlSession.delete(ns+"deleteCompany","66@sample.com");
+		
+		Company cp = sqlSession.selectOne(ns+"getCompanyInfo", "11@sample.com");
+//		List<Studio> st  = sqlSession.selectList(ns+"getStudio", "66@sample.com");
+		System.out.println(cp.getName());
 	}
 }

@@ -30,46 +30,41 @@
             </span>
         </div>
         <br>
-          <!-- 타이틀 -->
+        <span  id="accCustomer">
+        누적 이용자 총 <b>{{accCustomer}}</b>명
+        </span><br>
+        <!-- 스튜디오 평점 -->
+        <span id="avgScore">
+        평점 <b>{{studios[0].avgScore}}</b>점
+        </span>
+        <!-- 타이틀 -->
         <div class="section-title-field" v-for="studio in studios" v-bind:key="studio.stuId">
-          <div class="studio-name">
-            <h1> {{ studio.name }}</h1>
-          </div>
-          <div id="company-of-studio">
-                <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
-                <span>{{studio.company.name}}</span>
-            </div>
-          </div> 
-          <br>
-          <div>
-          <!-- 찜하기, 공유하기, 누적 이용자 수 -->
-          <span>
-            <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
-              <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
-              <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
-            </span>
-            </span>          
-          <span>
-          <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-            <i class="material-icons">share</i>
-              <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
-          </a> -->
-          </span>
-  
-            <!-- 누적 이용자 수 -->
-            <br>
+        <!-- 누적 이용자 수 -->
+        <div class="studio-name">
+          <h1> {{ studio.name }}</h1>
+        </div>
+        <div id="company-of-studio">
+          <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
+          <span>{{studio.company.name}}</span>
+            <!-- 찜하기, 공유하기, 누적 이용자 수 -->
             <span>
-            스튜디오를 이용한 사람 총 {{this.accCustomer}}명
+              <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
+                <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
+                <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
+              </span>
+            </span>          
+            <span>
+              <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
+                <i class="material-icons">share</i>
+                  <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
+              </a> -->
             </span>
-          </div>        
-        </section>
+          </div>    
+        </div>        
+      </section>
       <hr/>  
-        <!-- ============== Reservation ============== -->
-      <div class =article-Filterstudiormation-map-area>
-        <Reservation width="70%"></Reservation>
-      </div>
+ 
         <!-- ============== Studio Filter ============== -->
-      <hr>
       <article>
           <div class="article-studioFilter-information-area" >
             <div v-for="studio in studios" v-bind:key="studio.stuId"> 
@@ -101,57 +96,76 @@
               </table>
             </div>
           </div>
+
+           <!-- ============== Map ============== -->
+          <div class="article-map-field">
+            <Map>
+                <vue-daum-map
+                :appKey="appKey"
+                  :center.sync="center"
+                  :level.sync="level"
+                  :mapTypeId="mapTypeId"
+                  :libraries="libraries"
+                  @load="onLoad"
+                />
+              <br>
+              
+            </Map>
+            <!-- <button @click="roadView()" >로드뷰 보기</button> -->
+          </div>
           
+          <!-- ============== Reservation ============== -->
+          
+          <div class =article-Filterstudiormation-map-area>
+          <hr>
+            <Reservation width="70%"></Reservation>
+          </div>
+
         <!-- ============== Description ============== -->
              
         <div class="article-Description-area"  v-for="(studio,index) in studios" v-bind:key="index">
-           <hr/>  
+           <hr>  
           <div class="studio-rule">
           <h4>Studio 이용 수칙</h4>
-          <p>{{ studio.rule }}</p>
+            <p>{{ studio.rule }}</p>
           </div>
           <div>
-          <h4>Studio 소개글</h4>
-          <p>{{ studio.description }}</p>
+            <h4>Studio 소개글</h4>
+            <p>{{ studio.description }}</p>
           </div>
         </div>
         <hr>
         <!-- ============== Portfolio Images ============== -->
-       <table aligh="center" width="100%">
-          <!-- <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index"> -->
-            <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
-          <!-- </tr> -->
+        <table aligh="center" width="100%">
+            <!-- <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index"> -->
+              <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
+            <!-- </tr> -->
         </table>
-          <!-- ============== Map ============== -->
-          <div id="map">
-
-          </div>
-
-        <hr />
+        <hr>
         <!-- ============== Chart & Graph ============== -->
         <!-- ===== 시간대별 예약 차트 ===== -->
         <div class="article-Chart-area">
-          <div id=time-chart style="width:40%;heigth:70px">
+          <div id=time-chart style="width:30%;">
               <div class="chart">
-                  <Bar 
+                  <TimeChart 
                   :chartdata=datacollection
-                  :options=options></Bar>
+                  :options=options></TimeChart>
               </div>
 					</div> 
         		
 				 	 <!-- ===== 요일별 예약 차트 ===== -->
-          <div id=day-chart style="width:40%;heigth:70px">
+          <div id=day-chart style="width:30%;">
               <div class="chart">
-                  <Bar 
+                  <DayChart 
                   :chartdata=datacollection
-                  :options=options></Bar>
+                  :options=options></DayChart>
               </div>
 					</div> 
         </div>
 
         <!-- ============== Review ============== -->
-        <hr>
         <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
+        <hr>
         <h2 align="left">리뷰보기</h2>   
           <div v-for="(review,index) in uncoveredReview" v-bind:key="index">
            <div>
@@ -210,7 +224,7 @@
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star</i>
                     </span>              
-                    <hr width="90%">
+                    <hr>
                     <div id="review-content">{{ review.content }}</div>
                   </span>
                   <md-card-expand  v-if="review.answer!=''">

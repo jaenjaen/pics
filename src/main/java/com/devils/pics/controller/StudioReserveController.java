@@ -1,15 +1,10 @@
 package com.devils.pics.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.ExceptionDate;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Reservation;
 import com.devils.pics.domain.Schedule;
-import com.devils.pics.domain.Studio;
-import com.devils.pics.service.StudioInfoService;
 import com.devils.pics.service.StudioReserveService;
 
 /* 예약하기 flow
@@ -40,8 +31,7 @@ import com.devils.pics.service.StudioReserveService;
 public class StudioReserveController {
 	@Autowired
 	private StudioReserveService studioReserveService;	
-	@Autowired
-	private StudioInfoService studioInfoService;
+
 	
 	private List<Reservation> resultList;
 	
@@ -60,7 +50,6 @@ public class StudioReserveController {
 			schedule.setReservation(reservation);
 			return new ResponseEntity(schedule,HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
@@ -70,12 +59,9 @@ public class StudioReserveController {
 	public ResponseEntity getReservation(@PathVariable int stuId) {
 		Reservation reservation = new Reservation(stuId);
 		resultList= studioReserveService.getReservation(reservation);
-		System.out.println("studioReserveService :"+studioReserveService.getReservation(reservation));
 		if(resultList.isEmpty()) {
-			System.out.println("해당 스튜디오 예약 없음");
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}else { 
-			System.out.println("해당 스튜디오 예약 있음");
 			return new ResponseEntity(resultList,HttpStatus.OK);
 			}
 	}
@@ -84,10 +70,9 @@ public class StudioReserveController {
 	@PostMapping("/studio/reservation")
 	public ResponseEntity AddReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
-		System.out.println("reservation : "+reservation);
+		
 		int result=studioReserveService.AddReservation(reservation);
 		if(result==1){
-			System.out.println(result);
 			studioReserveService.AddExceptionDates(reservation);
 			return new ResponseEntity(result,HttpStatus.OK);
 		}else return new ResponseEntity(0,HttpStatus.NO_CONTENT);

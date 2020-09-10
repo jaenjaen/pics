@@ -47,7 +47,7 @@
 		</association>	
 	</resultMap>
  		
- 	<resultMap type="review" id="reviewRM">
+ 	 <resultMap type="review" id="reviewRM">
 		<result property="reviewId" column="review_id" />
 		<result property="score" column="score"/>
 		<result property="content" column="content" />
@@ -85,8 +85,8 @@
 		SELECT 					
 		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor,
 		ctg.category_id,ctg.category_name,
-		com.name,com.logo_img,
-		sf.filter_id,sf.size,sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity,
+		com.com_id,com.name,com.logo_img,
+		sf.filter_id, sf.size, sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity,sf.stu_id,
 		avg(re.score) avg_score, count(re.review_id) count_review
 		FROM studio s
 		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id
@@ -130,15 +130,6 @@
 		WHERE stu_id=${value}	
 		</if>
 	</select>		
-
-	 <select id="genderRatio" parameterType="int" resultType="customer">
-		SELECT c.cust_id,c.gender
-		FROM reservation res JOIN customer c ON c.cust_id=res.cust_id
-		WHERE res.stu_id=${value}
-		GROUP BY res.cust_id
-	</select>
-	
-
 
 	<!--  ================== 스튜디오 공간 등록 관련 쿼리 ========================  -->
 	<!-- 스튜디오 등록 -->

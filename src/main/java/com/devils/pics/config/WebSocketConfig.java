@@ -1,4 +1,4 @@
-package com.devils.pics.util.security;
+package com.devils.pics.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

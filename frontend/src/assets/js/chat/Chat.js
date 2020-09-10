@@ -54,8 +54,9 @@ export default {
             if (customer != null) { //개인고객으로 로그인했을 경우
                 this.sendData.customer = customer;
                 console.log(this.sendData.customer);
-            } else if (company != null) { //
-                console.log(company);
+            } else if (company != null) { //기업고객으로 로그인했을 경우
+                this.sendData.company = company;
+                console.log(this.sendData.company);
             }
             /* 이전 대화 내역 불러오기 */
             this.getPrevMsg();

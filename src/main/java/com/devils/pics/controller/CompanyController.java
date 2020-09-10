@@ -119,8 +119,5 @@ public class CompanyController {
 		}
 	}
 	
-	@GetMapping("/company/studios/{comId}")
-	public ResponseEntity getStudios(@PathVariable String comId) {
-		return null;
-	}
+
 }

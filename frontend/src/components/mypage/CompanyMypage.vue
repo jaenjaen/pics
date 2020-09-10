@@ -11,14 +11,14 @@
     <div class="mypage_card">
        <table>
          <tr>
-          <th>스튜디오 종류</th> <th>스튜디오 이름</th> <th>스튜디오 위치</th> <th>스튜디오 수정</th>
+          <th>종류</th> <th>스튜디오 이름</th> <th>스튜디오 위치</th> <th>스튜디오 수정</th>
         </tr>
         <tr>
           <td colspan="4" v-if="studioFlag"> 소유한 스튜디오가 없습니다.<br><a href="http://localhost:9999/registerStudio"> 새로운 스튜디오 추가하기 </a></td>
         </tr>
         <tr v-for="(studio) in studioList" :key="studio">
-          <td>{{studio.name}}</td> <td>{{studio.name}}</td> <td>{{studio.location}}</td>
-          <td><button class="list_btn" @click="studioEdit(studio.stuId)">스튜디오 수정</button></td>
+          <td>{{studio.category.categoryName}}</td> <td><router-link :to="{name:'studioInfo', params: {stuId:studio.stuId}}">{{studio.name}}</router-link></td> <td>{{studio.studioFilter.address}}</td>
+          <td><button class="list_btn" @click="studioEdit(studio.stuId)">수정</button></td>
         </tr>
       </table>
     </div>

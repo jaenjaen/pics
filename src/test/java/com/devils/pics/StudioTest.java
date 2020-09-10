@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.devils.pics.domain.Company;
 import com.devils.pics.domain.Studio;
 
 @SpringBootTest
@@ -23,11 +22,11 @@ public class StudioTest {
 		String ns = "StudioMapper.";
 		
 		/** comId로 보유 스튜디오 받아오기*/
-		List<Studio> s = sqlSession.selectList(ns+"getStudios","1234@admin.com");
-	
-		for (Studio stu:s) {
-			System.out.println(stu);
-		}
+//		List<Studio> s = sqlSession.selectList(ns+"getStudios","1234@admin.com");
+//	
+//		for (Studio stu:s) {
+//			System.out.println(stu);
+//		}
 		
 		
 	}

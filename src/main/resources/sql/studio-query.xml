@@ -8,24 +8,26 @@
 		<id column="stu_id" property="stuId"/>
 		<result column="com_id" property="comId" />
 		<result column="name" property="name" />
-		<result column="description" property="description" />
 		<result column="main_img" property="mainImg" />
-		<result column="avg" property="avgScore" />
-		<result column="cntRev" property="countReview"/>
 		<association property="category" javaType="category">
 			<result column="category_name" property="categoryName" />
 		</association>
-		<association property="studioFilter"
-			javaType="studioFilter">
-			<result column="unit_price" property="unitPrice" />
+		<association property="studioFilter" javaType="studioFilter">
 			<result column="address" property="address"/>
 		</association>
 	</resultMap>
 	 
-	<select id="getStudios" parameterType="String" resultType="studio">
-		SELECT *
-		FROM studio
-		where com_id = #{value}
+	<select id="getStudiosBycomId" parameterType="String" resultMap ="studioRM">
+		select s.stu_id, c.category_name,s.main_img ,s.name, f.address
+		from studio s, studio_filter f, studio_category c
+		where s.com_id = #{value}
+		and f.stu_id = s.stu_id
+		and c.category_id = s.category_id;
 	</select>
+	
+	<delete id="deleteStudio" parameterType="int">
+	DELTE FROM studio
+	WHERE stu_id = #{value}
+	</delete>
 	
  </mapper> 

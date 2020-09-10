@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 @import url("https://fonts.googleapis.com/css?family=Nanum+Gothic");
 @media screen and (max-width: 768px) {
     #app {
         width: 100%;
+        background-color: #fff;
     }
 }
 
@@ -27,6 +29,10 @@ section {
 .tabs-field {
     width: 100%;
     height: 50;
+}
+
+#studio-name {
+    display: inline;
 }
 
 .nav-tab {
@@ -113,7 +119,7 @@ article {
     font-size: 1em;
 }
 
-.article-review-area {
+.nav-review-area {
     text-align: left;
     margin: 2% 2% 2% 3%;
 }
@@ -150,6 +156,7 @@ article {
 .card-expansion {
     width: 100%;
     padding: 2%;
+    text-align: left;
 }
 
 .md-card {
@@ -161,6 +168,16 @@ article {
 
 .article-review-area {
     clear: both;
+    margin: 2% 2% 2% 3%;
+}
+
+#reviewTitle {
+    display: inline;
+}
+
+#countReview {
+    color: lightgray;
+    font-size: small;
 }
 
 #review-content,

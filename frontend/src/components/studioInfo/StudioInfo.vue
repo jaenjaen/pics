@@ -5,7 +5,7 @@
         <div class="row" v-for="(mainImg,index) in mainImgList" v-bind:key="index">
           <carousel :itmes="1" :loop="true" :autoplay="true" >
             <div>
-               <!-- <img  class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500"/> -->
+               <img  class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500"/>
             </div>
            </carousel>
          </div> 
@@ -41,28 +41,27 @@
         <div class="section-title-field" v-for="studio in studios" v-bind:key="studio.stuId">
         <!-- 누적 이용자 수 -->
         <div class="studio-name">
-          <h1> {{ studio.name }}</h1>
+          <h1 id="studio-name"> {{ studio.name }}</h1> &nbsp;&nbsp;
+            <!-- 찜하기, 공유하기, 누적 이용자 수 -->
+            <span>
+              <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer!=null">
+                <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
+                <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
+              </span>&nbsp;&nbsp;
+            </span>          
+            <span>
+              <a class="waves-effect waves-light btn-small" @click="shareUrl()">
+                <i class="material-icons">share</i>
+              </a>
+            </span>          
         </div>
         <div id="company-of-studio">
           <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
           <span>{{studio.company.name}}</span>
-            <!-- 찜하기, 공유하기, 누적 이용자 수 -->
-            <span>
-              <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer">
-                <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
-                <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
-              </span>
-            </span>          
-            <span>
-              <!-- <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-                <i class="material-icons">share</i>
-                  <img src="//developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_small.png" width="10%"/> 
-              </a> -->
-            </span>
           </div>    
         </div>        
       </section>
-      <hr/>  
+      <hr>  
  
         <!-- ============== Studio Filter ============== -->
       <article>
@@ -162,11 +161,11 @@
               </div>
 					</div> 
         </div>
-
-        <!-- ============== Review ============== -->
-        <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
         <hr>
-        <h2 align="left">리뷰보기</h2>   
+        <!-- ============== Review ============== -->
+        <div id="no-review" v-if="(reviews+'').length<=0"><h3>"아직 등록된 리뷰가 없습니다!"</h3></div>
+        <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
+        <h2 id="reviewTitle" align="left">리뷰보기</h2> <span id="countReview">(총 {{studios[0].countReview}}개의 리뷰)</span>
           <div v-for="(review,index) in uncoveredReview" v-bind:key="index">
            <div>
               <div class="card-expansion" id="reviews" >
@@ -181,7 +180,7 @@
 
                   <!-- <span id="reviewr-email"><strong>{{ review.customer.email|emailHide }}</strong></span> -->
                   <!-- 별점 부분 -->
-                  <span id="star-score"> 별점
+                  <span id="star-score">
                     <span v-if="review.score == 0">
                       <i class="material-icons" id="icon_filter">star_border</i>
                       <i class="material-icons" id="icon_filter">star_border</i>
@@ -255,7 +254,6 @@
               </button>
             </div>
           </div>
-          <div id="no-review" v-if="(reviews+'').length==0"><h3>"아직 등록된 리뷰가 없습니다!"</h3></div>
       </article>
     <!-- 모달 모아두기 -->
     <div>

@@ -177,19 +177,20 @@ export default {
             this.msg = "";
             // 1. 날짜 변환
             // 일자 >> 시간대로 변경
-            this.startDay = this.transWeekDay(this.start_date);
-            this.endDay = this.transWeekDay(this.end_date);
-            this.startDate = this.transTime(this.start_date);
-            this.endDate = this.transTime(this.end_date);
-            var todayTime = this.transTime(this.today.getFullYear() + "-" + this.today.getMonth() + "-" + this.today.getDate());
-            this.startDayTime = this.transTime(this.start_date, this.start_time);
-            this.endDayTime = this.transTime(this.end_date, this.end_time);
-            this.start_idx = this.repeatedDays.indexOf(week[this.startDay], 0);
-            this.end_idx = this.repeatedDays.indexOf(week[this.endDay], 0);
-            var startTime = parseInt(this.start_time);
-            var endTime = parseInt(this.end_time);
-            this.difTime = (this.endDayTime - this.startDayTime) / (1000 * 60 * 60);
-
+            if (this.start_date != "" | this.end_date != "") {
+                this.startDay = this.transWeekDay(this.start_date);
+                this.endDay = this.transWeekDay(this.end_date);
+                this.startDate = this.transTime(this.start_date);
+                this.endDate = this.transTime(this.end_date);
+                var todayTime = this.transTime(this.today.getFullYear() + "-" + this.today.getMonth() + "-" + this.today.getDate());
+                this.startDayTime = this.transTime(this.start_date, this.start_time);
+                this.endDayTime = this.transTime(this.end_date, this.end_time);
+                this.start_idx = this.repeatedDays.indexOf(week[this.startDay], 0);
+                this.end_idx = this.repeatedDays.indexOf(week[this.endDay], 0);
+                var startTime = parseInt(this.start_time);
+                var endTime = parseInt(this.end_time);
+                this.difTime = (this.endDayTime - this.startDayTime) / (1000 * 60 * 60);
+            }
 
             // 3. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후
             // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인, 

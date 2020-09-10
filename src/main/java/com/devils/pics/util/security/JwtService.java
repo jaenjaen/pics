@@ -45,7 +45,7 @@ public class JwtService {
 		
 		//serialize
 		String jwt = builder.compact();
-		System.out.println("토큰발행: "+jwt);
+		//System.out.println("토큰발행: "+jwt);
 	
 		return jwt;
 	}

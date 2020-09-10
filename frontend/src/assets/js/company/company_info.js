@@ -3,15 +3,15 @@ export default {
     props: ['comId'],
     data() {
         return {
-            comId: this.comId
+            // comId: this.comId
         }
     },
     mounted() {
-        alert(comId)
+        // alert(comId)
     },
     methods: {
         temp() {
-            alert(comId)
+            // alert(comId)
         }
     },
 }

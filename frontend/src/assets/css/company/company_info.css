@@ -74,10 +74,44 @@
 }
 
 .card-content {
-    padding: 0 !important;
+    padding: 15px !important;
     height: 150px;
+}
+
+.card-content>.name {
+    font-size: 18px;
+    text-align: left;
+    font-weight: 700;
+}
+
+.category>div {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 15px;
+}
+
+.category>div>p:nth-child(1) {
+    font-size: 12px;
+}
+
+.category>div>p:nth-child(2) {
+    font-size: 13px;
 }
 
 img {
     height: 200px;
+}
+
+#review {
+    padding-top: 20px;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+#icon_filter {
+    color: #33a3dc;
+}
+
+.price {
+    font-size: 17px;
 }

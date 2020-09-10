@@ -1,4 +1,4 @@
-package com.devils.pics.config;
+package com.devils.pics.util.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
@@ -17,7 +17,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	}
 	
 	/* connection을 맺을 때 CORS 허용 */
+	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/").setAllowedOrigins("*").withSockJS();
+		registry.addEndpoint("/webSocket").setAllowedOrigins("*").withSockJS();
 	}
 }

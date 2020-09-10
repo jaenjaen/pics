@@ -46,10 +46,25 @@ export default {
   },
 
   created() {
-    /* 이전 대화 내역 불러오기 */
-    this.getPrevMsg();
-    /* vue가 생성되면 소켓 연결 시도 */
-    this.connect();
+    /* 로그인 확인 */
+    var customer = JSON.parse(sessionStorage.getItem("customer")); //개인고객
+    var company = JSON.parse(sessionStorage.getItem("company")); //기업고객
+    if(customer === null && company === null){
+        alert("로그인한 회원만 이용 가능합니다.");
+        location.href = "/customerLogin"
+    } else{
+        if(customer != null){ //개인고객으로 로그인했을 경우
+            this.sendData.customer = customer;
+            console.log(this.sendData.customer);
+        }else if(company != null){ //
+            console.log(company);
+        }
+        /* 이전 대화 내역 불러오기 */
+        this.getPrevMsg();
+
+        /* vue가 생성되면 소켓 연결 시도 */
+        this.connect();
+    }
   },
 
   methods: {
@@ -60,7 +75,7 @@ export default {
 
       /* 웹소켓 연결 */
       connect() {
-        const serverURL = "http://localhost:7777"
+        const serverURL = "http://localhost:7777/webSocket"
         let socket = new SockJS(serverURL);
         this.stompClient = Stomp.over(socket);
         console.log(`소켓 연결 시도... 서버 주소: ${serverURL}`)

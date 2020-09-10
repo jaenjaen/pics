@@ -1,6 +1,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=91cbdca7243fe89cb44e5d61a5aaaf44&libraries=services,clusterer,drawing"></script>
 <template>
-    <div id="map">
+    <div id="map">   
     <vue-daum-map
       :appKey="appKey"
       :center.sync="center"
@@ -8,14 +8,14 @@
       :mapTypeId="mapTypeId"
       :libraries="libraries"
       @load="onLoad"
-      
-      @maptypeid_changed="maptypeid_changed"
       style="width:100%;height:250px;"/>
     <button id="roadView" @click="roadView()">로드뷰</button>
     </div>
 </template>
 <script>
 import VueDaumMap from "vue-daum-map";
+import axios from "axios"; //axios
+
 export default {
     name: "Map",
     data: () => ({
@@ -27,7 +27,7 @@ export default {
         map: null // 지도 객체. 지도가 로드되면 할당됨.
     }),
     components: {
-        VueDaumMap
+        VueDaumMap,axios
     },
     methods: {
         onLoad (map) {// 지도가 로드 완료되면 load 이벤트 발생
@@ -58,16 +58,16 @@ export default {
         }
     },
     mounted() {  
-        // axios
-        // .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
-        // .then(response => {
-        //     this.studios = response.data;
-        // })
-        // .catch(error => {
-        //     console.log(error);
-        //     this.errored = true;
-        // })
-        // .finally(() => (this.loading = false));
+        axios
+        .get("http://127.0.0.1:7777/studio/info/10")// + this.stuId)
+        .then(response => {
+            this.studios = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+            this.errored = true;
+        })
+        .finally(() => (this.loading = false));
     },
         
 }
@@ -78,6 +78,7 @@ export default {
     align-content: center;
 }
 #roadView {
+    display: block;
     float: right;
     margin: 10px auto;
     font-size: 1.3em;
@@ -87,7 +88,6 @@ export default {
     padding: 5px 7px 5px 7px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
     font-size: 15px;
     cursor: pointer;
     border-radius: 5px;

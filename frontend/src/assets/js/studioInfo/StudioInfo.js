@@ -22,6 +22,26 @@ export default {
             type: String,
             default: ''
         },
+        appKey: {
+            type: String,
+            default: ''
+        },
+        level: {
+            type: Number,
+            default: 3
+        },
+        mapTypeId: {
+            type: {},
+            default: null
+        },
+        libraries: {
+            type: Array,
+            default: () => []
+        },
+        map: {
+            type: {},
+            default: null
+        },
         center: {
             lat: {
                 type: String,
@@ -31,7 +51,7 @@ export default {
                 type: String,
                 default: ''
             }
-        }
+        },
     },
     event: 'studios',
     data: function() {
@@ -111,7 +131,7 @@ export default {
                 for (let i = 0; i < this.portImgList.letngth; i++) {
                     this.portImgList.push(portImgSplit[i]);
                 }
-                console.log("this.portImgList : " + this.portImgList);
+                console.log("this.mainImgList : " + this.mainImgList);
             })
             .catch(error => {
                 console.log(error);
@@ -147,7 +167,6 @@ export default {
                     console.log("temp : " + this.reviews[i]);
                 }
                 this.uncoveredReview = temp
-
                 this.allReviewLength = (this.reviews).length
             })
             .catch(error => {
@@ -226,12 +245,6 @@ export default {
                 console.error(error);
             }
         },
-        isEmpty(value) {
-            if (value == "" || value == null || value == undefined || (value != null &&
-                    typeof value == "object" && !Object.keys(value).length)) {
-                return true
-            } else return false
-        },
         closePop() {
             this.$modal.hide("delBook");
             this.$modal.hide("regBook");
@@ -255,6 +268,14 @@ export default {
         },
         roadView() {
             window.open("https://map.kakao.com/link/roadview/37.5571792,126.919226"); //+ this.center.lat + this.center.lng;
+        },
+        onLoad(map) { // 지도가 로드 완료되면 load 이벤트 발생
+            this.map = map
+
+        },
+        emitStudios() {
+            this.$emit('studios', this.studios);
         }
+
     }
-};
+}

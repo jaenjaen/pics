@@ -16,7 +16,6 @@ import FileRoute from "@/components/studioRegister/FileRoute.vue";
 import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
 import Map from "@/components/studioInfo/Map.vue";
-import MapCopy from "@/components/studioInfo/Map copy.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
@@ -135,11 +134,6 @@ const routes = [{
         name: "Map",
         component: Map
     },
-    {
-        path: "/mapCopy",
-        name: "mapcopy",
-        component: MapCopy
-    }
 ];
 const router = new VueRouter({
     mode: "history",

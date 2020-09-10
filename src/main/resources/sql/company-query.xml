@@ -49,6 +49,8 @@
 			<result property="portImg" column="port_img"/>
 			<result property="cadImg" column="cad_img"/>
 			<result property="floor" column="floor"/>
+			<result column="avg_score" property="avgScore" />
+			<result column="count_review" property="countReview" />
 			<association property="studioFilter" javaType="studioFilter">
 				<id property="stuId" column="stu_id"/>
 				<result property="filterId" column="filter_id" />

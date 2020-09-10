@@ -7,21 +7,21 @@
 
 	<resultMap type="company" id="companyInfo">	
 		<result property="comId" column="com_id"/>
-		<result property="name" column="name"/>
+		<result property="name" column="cp_name"/>
 		<result property="address" column="address"/>
 		<result property="password" column="password"/>
 		<result property="tel" column="tel" />
-		<result property="description" column="description"/>
+		<result property="description" column="cp_description"/>
 		<result property="logoImg" column="logo_img" />
 		<result property="salt" column="salt" />
 		<collection property="studioList" ofType="studio">
 			<id property="stuId" column="stu_id"/>
 			<result property="stuId" column="stu_id"/>
 			<result property="comId" column="com_id"/>
-			<result property="name" column="name"/>
+			<result property="name" column="st_name"/>
 			<result property="categoryId" column="category_id"/>
 			<result property="name" column="name"/>
-			<result property="description" column="description"/>
+			<result property="description" column="st_description"/>
 			<result property="rule" column="rule"/>			
 			<result property="mainImg" column="main_img"/>
 			<result property="portImg" column="port_img"/>
@@ -75,12 +75,14 @@
 
 	<!--고객 정보 및 스튜디오 모두 불러오기-->
 	<select id="getCompanyInfo" parameterType="string" resultMap="companyInfo">
-		SELECT cp.com_id, cp.name, cp.address, cp.password, cp.tel, cp.description, cp.logo_img, cp.salt, 
-		st.stu_id,st.name, st.category_id, st.description, st.rule, st.main_img, st.port_img, st.cad_img, st.floor , 
-		stf.size, stf.options, stf.parking, stf.unit_price, stf.default_capacity, stf.excharge, stf.address, stf.max_capacity 
+		SELECT cp.com_id, cp.name as cp_name, cp.address, cp.password, cp.tel, cp.description as cp_description, cp.logo_img, cp.salt, 
+		st.stu_id,st.name as st_name , st.category_id, st.description as st_description, st.rule, st.main_img, st.port_img, st.cad_img, st.floor , 
+		stf.size, stf.options, stf.parking, stf.unit_price, stf.default_capacity, stf.excharge, stf.address, stf.max_capacity,
+		re.avg_score , re.count_review
 		from company as cp 
 		join studio as st on cp.com_id = st.com_id 
 		join studio_filter as stf on st.stu_id = stf.stu_id 
+		left outer join (select stu_id,avg(score) avg_score, count(review_id) count_review from review group by stu_id) as re on st.stu_id = re.stu_id
 		where cp.com_id= #{value}
 	</select>
 </mapper>

@@ -48,6 +48,7 @@ export default {
 
     },
     methods: {
+        /* 예약 취소 */
         deleteResv: function(resId) {
             axios.delete("http://localhost:7777/studio/reservation/" + resId)
                 .then(res => {
@@ -60,6 +61,8 @@ export default {
                     console.log(err);
                 })
         },
+
+        /* 리뷰 삭제 */
         deleteReview: function(reviewId) {
             axios.delete("http://localhost:7777/review/" + reviewId)
                 .then(res => {

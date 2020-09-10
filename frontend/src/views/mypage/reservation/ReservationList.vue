@@ -47,8 +47,8 @@
             <textarea v-model="content" placeholder="리뷰를 작성해주세요 100자까지 작성 가능합니다" :maxlength="max"></textarea>
             <div class="filebox">
               <input type="text" :placeholder="filename" disabled>
-              <label for="ex_file">업로드</label>
-              <input type="file" id="ex_file">
+              <label for="review_img">업로드</label>
+              <input type="file" id="review_img" accept="image/*"  ref="reviewImg" @change="onFileChange('review_img',$event)">
             </div>
             <input @click="writingReview" type="submit" value="리뷰작성"/>
           </form>

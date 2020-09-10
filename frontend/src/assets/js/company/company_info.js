@@ -28,8 +28,8 @@ export default {
         },
         getImgUrl(url) {
             let newUrl = url.split(",")[0]
-                // alert(this.newUrl)
-            return require("@/assets/img/studio/" + newUrl);
+            console.log(newUrl)
+            return "../../img/studio/" + newUrl;
         },
 
     },
@@ -66,5 +66,20 @@ export default {
             let num = new Number(value);
             return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
         },
+        //평점에 0.0 식으로 표시하는 필터
+        demical: function(value) {
+            let num = new Number(value);
+            if (num == 0) return 0;
+            return num.toFixed(1);
+        },
+        forSpace(value) {
+            let forSpace = value.replaceAll("_", " ").split(" ");
+            if (forSpace[1] == null) {
+                forSpace[1] = ""
+            }
+            forSpace = forSpace[0] + " " + forSpace[1];
+
+            return forSpace
+        }
     }
 }

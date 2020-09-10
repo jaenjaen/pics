@@ -96,6 +96,7 @@
 		<if test="'${value}'!=null">
 		WHERE s.stu_id=${value};
 		</if>
+		
 	</select>							
 
  	<select id="getStudioReviews" parameterType="int" resultMap="reviewRM">

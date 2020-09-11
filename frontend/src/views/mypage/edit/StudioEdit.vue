@@ -1,4 +1,4 @@
-<style scoped src="@/assets/css/studioRegister/RegisterStudio.css"></style>
+<style scoped src="@/assets/css/mypage/edit/StudioEdit.css"></style>
 <template>
   <div id="app">
     <div class="container">
@@ -9,22 +9,20 @@
           <div class="col-25">
             <label for="name">
               스튜디오 이름
-              <img :src="required" width="20px" maxlength="45">
             </label>
           </div>
           <div class="col-75">
-            <input type="text" id="name" name="name" v-model="studio.name" required />
+            <input type="text" id="name" name="name" :placeholder="studio.name" disabled/>
           </div>
         </div>
         <div class="row">
           <div class="col-25">
             <label for="country">
               스튜디오 종류
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75">
-            <select id="categoryId" name="categoryId" v-model="studio.categoryId" required>
+            <select id="categoryId" name="categoryId" v-model="studio.categoryId" disabled>
               <option v-for="(category, index) in category" :key="index" :value="category.categoryId">{{category.categoryName}}</option>
             </select>
           </div>
@@ -566,7 +564,7 @@
         </div>
         <div id="submitArea" class="row">
           <button type="button" id="reset" @click="resetContent()">새로쓰기</button>
-          <button type="button" id="temp" @click="tempSave()">임시저장</button>
+           <button type="button" id="delete" @click="deleteStudio()">스튜디오 삭제</button>
           <button type="submit" id="register" @click="checkLogin()">등록</button>
         </div>
       </section>

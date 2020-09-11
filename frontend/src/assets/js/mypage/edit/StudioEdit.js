@@ -4,14 +4,16 @@ import "vue-multi-select/dist/lib/vue-multi-select.css";
 import { VueDaumPostcode } from "vue-daum-postcode";
 import 'vue-material/dist/vue-material.min.css';
 
+var session = JSON.parse(sessionStorage.getItem("company"));
+var link = (window.location.href).split("/")[4];
 export default {
     components: { vueMultiSelect, VueDaumPostcode },
     data() {
         return {
             /* Back으로 보낼 studio 데이터 */
             studio: {
-                comId: "",
-                stuId: "",
+                comId: session.comId,
+                stuId: link[4],
                 categoryId: "",
                 name: "",
                 description: "",
@@ -48,7 +50,7 @@ export default {
             port: 'http://localhost:7777/upload/default/port.png',
 
             /* 카테고리 */
-            category: [],
+            category: "",
 
             /* 주소 */
             address1: "",
@@ -111,7 +113,7 @@ export default {
     created() {
         /* 기업고객일 경우에만 스튜디오 등록 화면 볼 수 있고, 
                아닌 경우에는 기업고객 로그인 페이지로 이동 */
-        var company = JSON.parse(sessionStorage.getItem("company"));
+        var company = session;
         if (company === null) {
             alert("기업고객으로 로그인하세요.");
             location.href = "/companyLogin"
@@ -128,17 +130,34 @@ export default {
         for (let i = 0; i < uploadImg.length; i++) { //모든 img 태그에 걸려있는 height:auto; 해결
             uploadImg[i].setAttribute('style', 'height:100%');
         }
-
-        /* DB에서 카테고리 가져오기 */
-        axios.get('http://127.0.0.1:7777/category')
-            .then((response) => {
-                this.category = JSON.parse(JSON.stringify(response.data));
-            })
-            .catch(() => {
-                console.log('카테고리 가져오기 실패');
-            })
-
         /*DB에서 기존 정보 불러오기*/
+        axios.get("http://localhost:7777/studio/edit/" + link)
+            .then(res => {
+                var data = res.data;
+                console.log(data);
+                this.category = data.category.categoryName;
+                this.studio.name = data.name;
+                this.studio.description = data.description;
+                this.studio.rule = data.rule;
+                this.studio.mainImg = data.mainImg;
+                this.studio.portImg = data.portImg;
+                this.studio.cadImg = data.cadImg;
+                this.studio.floor = data.floor;
+                this.studio.studioFilter.size = data.studioFilter.size;
+                this.studio.studioFilter.options = data.studioFilter.options;
+                this.studio.studioFilter.parking = data.studioFilter.parking;
+                this.studio.studioFilter.unitPrice = data.studioFilter.unitPrice;
+                this.studio.studioFilter.defaultCapacity = data.studioFilter.defaultCapacity;
+                this.studio.studioFilter.excharge = data.studioFilter.excharge;
+                this.address1 = data.studioFilter.address;
+                this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
+                this.studio.schedule.repeatDate = data.schedule.repeatDate;
+                this.studio.tag = data.tag;
+                console.log(this.studio);
+            })
+            .catch(err => {
+                console.log(err);
+            })
     },
     methods: {
         /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
@@ -1187,7 +1206,7 @@ export default {
                 });
         },
 
-        /* 스튜디오 등록 */
+        /* 스튜디오 업데이트 */
         addStudio() {
             axios.post("http://127.0.0.1:7777/studio", this.studio)
                 .then(

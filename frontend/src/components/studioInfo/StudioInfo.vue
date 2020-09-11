@@ -9,7 +9,6 @@
           <div id="chatContent">
               <div id="closeChat" @click="hideChatModal" >&times;</div>
               <Chat id="chatArea" :stuIdData="stuId" :custIdData="customer.custId" />    
-              <!-- <Chat id="chatArea" customerMode="true" />     -->
           </div>
       </div>
 

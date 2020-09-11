@@ -134,11 +134,6 @@ const routes = [{
         path: "/Map",
         name: "Map",
         component: Map
-    },
-    {
-        path: "/mapCopy",
-        name: "mapcopy",
-        component: MapCopy
     }, {
         path: "/studioEdit/:comId",
         name: "studioEdit",

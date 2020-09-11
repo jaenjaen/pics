@@ -44,7 +44,13 @@ public class ChatController {
 	public ResponseEntity getRecentComChat(@PathVariable String comId) {
 		try {
 			List<Map<String, String>> recentComChat = chatService.getRecentComChat(comId);
-			return new ResponseEntity(recentComChat, HttpStatus.OK);
+			System.out.println(recentComChat);
+			if(recentComChat.size()>0) {
+				return new ResponseEntity(recentComChat, HttpStatus.OK);
+			}else { //해당되는 대화가 없을 경우
+				return new ResponseEntity(-1, HttpStatus.OK);
+			}
+			
 		} catch (Exception e) {
 			//e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

@@ -78,11 +78,11 @@ export default {
 
         /* 채팅 접속시 설정 */
         this.setChat();
-
-        this.getRecentComChat();
     },
 
     mounted() {
+        //this.getRecentComChat();
+
         /* 이전 대화 내역 불러오기 */
         this.getPrevMsg();
     },
@@ -109,9 +109,11 @@ export default {
         getRecentComChat() {
             axios.get('http://127.0.0.1:7777/recentComChat/' + company.comId)
                 .then((response) => {
-                    console.log('company 최근 대화 가져오기 성공');
-                    this.recentComChat = response.data;
-                    console.log(this.recentComChat);
+                    if (response.data != -1) {
+                        console.log('company 최근 대화 가져오기 성공');
+                        this.recentComChat = response.data;
+                        console.log(this.recentComChat);
+                    }
                 })
                 .catch(() => {
                     console.log('company 최근 대화 가져오기 실패');
@@ -238,7 +240,7 @@ export default {
         },
         sendMsg() {
             alert("메세지전송");
-            this.setChat();
+            this.setChat(); //stuId, chatId 바인딩됨
         }
     },
 }

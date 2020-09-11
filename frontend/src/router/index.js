@@ -10,7 +10,7 @@ import Mypage from "../views/mypage/Mypage.vue";
 import CompanyEdit from "../views/mypage/edit/CompanyEdit.vue";
 import CustomerEdit from "../views/mypage/edit/CustomerEdit.vue";
 import ReservationList from "../views/mypage/reservation/ReservationList.vue"
-import WishList from "../views/WishList.vue";
+import WishList from "../views/mypage/WishList.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
 import FileRoute from "@/components/studioRegister/FileRoute.vue";
 import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
@@ -72,7 +72,7 @@ const routes = [{
         component: Mypage
     },
     {
-        path: "/wishlist",
+        path: "/wishlist/:stuid",
         name: "wishlist",
         component: WishList
     },

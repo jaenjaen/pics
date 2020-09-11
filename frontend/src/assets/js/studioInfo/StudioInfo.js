@@ -216,8 +216,13 @@ export default {
     methods: {
         /* 문의 영역 시작 */
         showChatMoal: function() {
-            let chatModal = document.getElementById('chatModal');
-            chatModal.setAttribute('style', 'display:block;');
+            if (this.customer === null) {
+                alert("로그인한 회원만 이용 가능합니다.");
+                location.href = "/customerLogin"
+            } else {
+                let chatModal = document.getElementById('chatModal');
+                chatModal.setAttribute('style', 'display:block;');
+            }
         },
         hideChatModal: function() {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');

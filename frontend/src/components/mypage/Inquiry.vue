@@ -4,10 +4,10 @@
         <div v-if="customerMode"> 
         <table>
             <tr>
-                <th>스튜디오</th> <th colspan="2">문의 내용</th>
+                <th>스튜디오</th> <th colspan="2">답변 내용</th> <th>문의날짜</th>
             </tr>
             <tr v-if="inquiryFlag">
-                <td colspan="3" > 문의내역이 없습니다. </td>
+                <td colspan="4" > 문의내역이 없습니다. </td>
             </tr>
             <tr v-else>
                 <td>스튜디오이미지 / 스튜디오 이름</td> <td> 문의내용 샬라샬라 </td><td> 문의날짜</td>
@@ -22,13 +22,13 @@
         <div v-if="!customerMode"> 
             <table>
             <tr>
-                <th>문의 고객</th> <th colspan="2">문의 내용</th>
+                <th>스튜디오</th> <th>문의 고객</th> <th>문의 내용</th> <th>문의날짜</th>
             </tr>
             <tr tr v-if="inquiryFlag">
-                <td colspan="3"> 문의내역이 없습니다. </td>
+                <td colspan="4"> 문의내역이 없습니다. </td>
             </tr>
             <tr v-else>
-                <td>고객이미지 / 고객닉네임</td> <td> 문의내용 샬라샬라 </td><td> 문의날짜</td>
+                <td>스튜디오 이름</td><td>고객이미지 / 고객닉네임</td> <td> 문의내용 샬라샬라 </td><td> 문의날짜</td>
             <!-- <tr v-for="(inquiry) in inquiryList" :key="inquiry">
                 <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
                 <td>{{reservation.totalPrice}}원</td>-->

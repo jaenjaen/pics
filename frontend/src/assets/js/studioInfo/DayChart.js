@@ -1,11 +1,14 @@
 import { Bar } from "vue-chartjs";
 import axios from "axios";
+// import Vue from 'vue'
+// var eventBus = new Vue();
 
 export default {
     name: "DayChart",
     extends: Bar,
     data() {
         return {
+            stuId: 0,
             reservationLength: 0,
             schedule: {},
             reservation: [{}],
@@ -50,10 +53,15 @@ export default {
             }
         }
     },
+    props: ["stuIdData"],
+    created: function() {
+        console.log("Props로 데이터 받음~~!! 여긴 DayChart");
+        this.stuId = this.stuIdData;
+    },
     mounted() {
         console.log("aaa");
         axios
-            .get("http://127.0.0.1:7777/studio/schedule/10")
+            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 var reservation = this.schedule.reservation;

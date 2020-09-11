@@ -10,50 +10,20 @@ import Map from "@/components/studioInfo/Map.vue"
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
-import Map from "@/components/studioInfo/Map.vue"
 import Chat from "@/components/chat/Chat.vue"; //문의
+import Clipboard from 'v-clipboard'
 
+Vue.use(Clipboard)
 Vue.use(VueMaterial)
 Vue.use(VModal);
-var eventBus = new Vue();
+// var eventBus = new Vue();
 export default {
     name: "studio-info",
     components: { carousel, Reservation, TimeChart, DayChart, Map, Chat },
     props: {
         stuId: {
-            type: String,
-            default: ''
-        },
-        // 지도 관련 변수
-        appKey: {
-            type: String,
-            default: ''
-        },
-        level: {
             type: Number,
-            default: 3
-        },
-        mapTypeId: {
-            type: {},
-            default: null
-        },
-        libraries: {
-            type: Array,
-            default: () => []
-        },
-        map: {
-            type: {},
-            default: null
-        },
-        center: {
-            lat: {
-                type: String,
-                default: ''
-            },
-            lng: {
-                type: String,
-                default: ''
-            }
+            default: 10,
         },
     },
     event: 'studios',
@@ -114,11 +84,11 @@ export default {
             dataFull: false, // 전체 데이터보다 많은 데이터 호출 여부
         };
     },
-
     async mounted() { //async mount로 비동기 처리
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
         console.log("this.stuId : " + this.stuId);
+
         axios
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
@@ -135,6 +105,7 @@ export default {
                     this.portImgList.push(portImgSplit[i]);
                 }
                 console.log("this.mainImgList : " + this.mainImgList);
+                this.emitStudios(); //customer Id emit
             })
             .catch(error => {
                 console.log(error);
@@ -213,6 +184,12 @@ export default {
             }
         },
     },
+    computed: {
+        getUrl: function() {
+            var link = (document.location.href).split("#");
+            return link[0];
+        }
+    },
     ////////////////////////////// Methods //////////////////////////////
     methods: {
         /* 문의 영역 시작 */
@@ -285,13 +262,14 @@ export default {
         },
         onLoad(map) {
             this.map = map
+        },
+        // 링크 공유 관련 메서드
+        clipboardSuccessHandler() {
+            alert('페이지 링크를 복사했습니다.')
+        },
 
-        },
-        emitStudios() {
-            eventBus.$emit('stuId', this.stuId);
-        },
-        emitCustomer() {
-            eventBus.$emit('customter', this.customter);
+        clipboardErrorHandler() {
+            alert('페이지 링크를 복사하지 못했습니다.\n직접 링크를 복사해주세요.')
         }
     }
 }

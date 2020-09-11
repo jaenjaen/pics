@@ -7,11 +7,10 @@ import Reservation from "@/components/studioInfo/Reservation.vue"
 import TimeChart from "@/assets/js/studioInfo/TimeChart.js";
 import DayChart from "@/assets/js/studioInfo/DayChart.js";
 import Map from "@/components/studioInfo/Map.vue"
+import Chat from "@/components/chat/Chat.vue"; //문의
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
-import Map from "@/components/studioInfo/Map.vue"
-import Chat from "@/components/chat/Chat.vue"; //문의
 
 Vue.use(VueMaterial)
 Vue.use(VModal);

@@ -321,15 +321,15 @@
         
         .inContent {
             color: grey;
-            margin-top: 2px;
+            margin-top: -2px;
             position: absolute;
             font-size: 16px;
         }
         /* 면적 토글을 input 안에 넣음 */
         
         .sizeLabel {
-            margin-top: -5px;
-            margin-left: -40px;
+            margin-top: -7px;
+            margin-left: -35px;
             position: absolute;
             font-size: 16px;
         }
@@ -372,7 +372,7 @@
         .tgl+.tgl-btn {
             outline: 0;
             display: block;
-            width: 4em;
+            width: 3.5em;
             height: 2em;
             position: relative;
             cursor: pointer;

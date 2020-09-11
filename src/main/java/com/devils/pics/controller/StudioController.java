@@ -134,7 +134,7 @@ public class StudioController {
 		}
 	}
 	
-	@GetMapping("/studio/edit/{sutId}")
+	@GetMapping("/studio/edit/{stuId}")
 	public ResponseEntity getStudio(@PathVariable int stuId) {
 		Schedule schedule = new Schedule();
 		

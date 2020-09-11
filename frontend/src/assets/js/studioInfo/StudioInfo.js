@@ -10,13 +10,14 @@ import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
 import Map from "@/components/studioInfo/Map.vue"
+import Chat from "@/components/chat/Chat.vue"; //문의
 
 Vue.use(VueMaterial)
 Vue.use(VModal);
 
 export default {
     name: "studio-info",
-    components: { carousel, Reservation, TimeChart, DayChart, Map },
+    components: { carousel, Reservation, TimeChart, DayChart, Map, Chat },
     props: {
         stuId: {
             type: String,
@@ -193,6 +194,16 @@ export default {
     },
     ////////////////////////////// Methods //////////////////////////////
     methods: {
+        /* 문의 영역 시작 */
+        showChatMoal: function() {
+            let chatModal = document.getElementById('chatModal');
+            chatModal.setAttribute('style', 'display:block;');
+        },
+        hideChatModal: function() {
+            document.getElementById('chatModal').setAttribute('style', 'display:none;');
+        },
+        /* 문의 영역 끝 */
+
         imgUrl(imgName) {
             console.log(imgName);
             return require("@/assets/img/studio/" + imgName);

@@ -21,7 +21,7 @@
 		<mapper resource="sql/company-query.xml"/>
 	 	<mapper resource="sql/studio-reserve-query.xml"/>
 	 	<mapper resource="sql/studio-query.xml"/>
-		
+	 	<mapper resource="sql/chat-query.xml"/>
 	</mappers>
 </configuration>
 

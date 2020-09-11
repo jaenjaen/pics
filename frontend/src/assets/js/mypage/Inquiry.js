@@ -32,6 +32,7 @@ export default {
                     this.custId = idVal;
                     //this.stuId='';
                 }
+                this.$refs.chat.setChat();
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
             }

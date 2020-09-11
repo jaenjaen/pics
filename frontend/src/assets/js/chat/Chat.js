@@ -22,9 +22,6 @@ export default {
                 add: 'http://localhost:7777/upload/default/add.png',
                 send: 'http://localhost:7777/upload/default/send.png'
             },
-            sender: "",
-            word: "",
-            recvList: [],
             chat: {
                 chatId: '',
                 custId: '',
@@ -43,7 +40,14 @@ export default {
                 name: '',
                 logoImg: '',
                 studioList: []
-            }
+            },
+
+            /* 업체 최근 대화 */
+            recentComChat: [],
+
+            sender: "",
+            word: "",
+            recvList: [],
         }
     },
 
@@ -59,15 +63,26 @@ export default {
         } else if (company != null) { //기업고객으로 로그인했을 경우
             this.company = company;
             console.log(this.company);
+
+            /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
+            axios.get('http://127.0.0.1:7777/companyifo/' + company.comId)
+                .then((response) => {
+                    console.log('company 정보 가져오기 성공');
+                    this.company = response.data; //company 데이터에 바인딩
+                    console.log(this.company);
+                })
+                .catch(() => {
+                    console.log('company 정보 가져오기 실패');
+                })
         }
 
         /* 채팅 접속시 설정 */
         this.setChat();
+
+        this.getRecentComChat();
     },
 
     mounted() {
-
-
         /* 이전 대화 내역 불러오기 */
         this.getPrevMsg();
     },
@@ -87,18 +102,20 @@ export default {
             } else if (company != null) { //기업고객으로 로그인했을 경우
                 this.chat.sender = 1; //보내는 이 : 기업
                 console.log(this.chat);
-
-                /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
-                axios.get('http://127.0.0.1:7777/companyifo/' + company.comId)
-                    .then((response) => {
-                        console.log('company 정보 가져오기 성공');
-                        this.company = response.data; //company 데이터에 바인딩
-                        console.log(this.company);
-                    })
-                    .catch(() => {
-                        console.log('company 정보 가져오기 실패');
-                    })
             }
+        },
+
+        /* 업체의 스튜디오 및 고객별 최근 수신 대화 */
+        getRecentComChat() {
+            axios.get('http://127.0.0.1:7777/recentComChat/' + company.comId)
+                .then((response) => {
+                    console.log('company 최근 대화 가져오기 성공');
+                    this.recentComChat = response.data;
+                    console.log(this.recentComChat);
+                })
+                .catch(() => {
+                    console.log('company 최근 대화 가져오기 실패');
+                })
         },
 
         /* 이전 대화 내역 */
@@ -221,7 +238,7 @@ export default {
         },
         sendMsg() {
             alert("메세지전송");
-            this.setId();
+            this.setChat();
         }
     },
 }

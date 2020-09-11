@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ChatMapper">	
+	<resultMap type="HashMap" id="recentComChat">
+		<result column="comId" property="comId" />
+		<result column="comName" property="comName" />
+		<result column="comLogo" property="comLogo" />
+		<result column="stuId" property="stuId" />
+		<result column="stuName" property="stuName" />
+		<result column="custId" property="custId" />
+		<result column="custName" property="custName" />
+		<result column="custLogo" property="custLogo" />
+		<result column="chatId" property="chatId" />
+		<result column="word" property="word" />
+		<result column="dateTime" property="dateTime" />
+		<result column="sender" property="sender" />
+	</resultMap>
+
+	<!-- 업체의 스튜디오 및 고객별 최근 수신 대화  -->
+	<select id="getRecentComChat" parameterType="string" resultMap="recentComChat">
+		SELECT 
+		company.com_id comId, company.name comName, company.logo_img comLogo, 
+		studio.stu_id stuId, studio.name stuName, 
+		customer.cust_id custId, customer.nickname custName, customer.img_src custLogo,
+		chat.chat_id chatId, chat.word word, chat.date_time dateTime, chat.sender sender
+		FROM
+			(SELECT * FROM company) company,
+			(SELECT * FROM customer) customer,
+			(SELECT * FROM studio) studio,
+			(SELECT * 
+			FROM chat
+			WHERE date_time 
+				IN (SELECT MAX(date_time) 
+					FROM chat 
+					WHERE sender = 0
+					GROUP BY cust_id, stu_id)
+			ORDER BY date_time DESC) chat
+		WHERE 
+		company.com_id=#{comId} 
+		AND studio.stu_id=chat.stu_id 
+		AND customer.cust_id=chat.cust_id;
+	</select>
+</mapper>

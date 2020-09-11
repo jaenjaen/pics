@@ -8,6 +8,7 @@ var company = JSON.parse(sessionStorage.getItem("company")); //기업고객
 
 export default {
     name: 'chat',
+    props: ['stuIdData', 'custIdData'],
     data() {
         return {
             defaultImg: {
@@ -47,14 +48,19 @@ export default {
     },
 
     created() {
-        /* 로그인 확인 */
-        if (customer === null && company === null) {
-            alert("로그인한 회원만 이용 가능합니다.");
-            location.href = "/customerLogin"
-        } else {
-            /* vue가 생성되면 소켓 연결 시도 */
-            this.connect();
+        this.chat.stuId = this.stuIdData;
+        this.chat.custId = this.custIdData;
+
+        if (this.chat.stuId === undefined) {
+            console.log(this.chat.custId)
+            console.log('stuId 정의 안됨');
         }
+        if (this.chat.custId === undefined) {
+            console.log(this.chat.stuId)
+            console.log('custId 정의 안됨');
+        }
+        /* vue가 생성되면 소켓 연결 시도 */
+        this.connect();
     },
 
     mounted() {

@@ -8,7 +8,7 @@
         <div id="chatModal" style="display:none;">
             <div id="chatContent">
                 <div id="closeChat" @click="hideChatModal" >&times;</div>
-                <Chat id="chatArea" customerMode="true" />
+                <Chat id="chatArea" :stuIdData="stuId" />
                 
             </div>
         </div>

@@ -76,7 +76,6 @@
         </div>        
       </section>
       <hr>  
- 
         <!-- ============== Studio Filter ============== -->
       <article>
           <div class="article-studioFilter-information-area" >
@@ -186,11 +185,9 @@
                 </md-card-media>
                 <md-card>
                   <md-card-header>
-                  <div class="md-subhead" id="register-date">{{ review.customer.email}}</div>
-                  <!-- <div class="md-subhead" id="register-date">({{ review.regDate}})</div> -->
+                  <span class="md-subhead" id="reviewr-email"><strong>{{ review.customer.email|emailHide }}</strong></span>
+                  <span class="md-subhead" id="register-date">({{ review.regDate}})</span>
                 </md-card-header>
-
-                  <!-- <span id="reviewr-email"><strong>{{ review.customer.email|emailHide }}</strong></span> -->
                   <!-- 별점 부분 -->
                   <span id="star-score">
                     <span v-if="review.score == 0">
@@ -235,9 +232,9 @@
                       <i class="material-icons" id="icon_filter">star</i>
                       <i class="material-icons" id="icon_filter">star</i>
                     </span>              
-                    <hr>
-                    <div id="review-content">{{ review.content }}</div>
                   </span>
+                    <hr>
+                  <div id="review-content">{{ review.content }}</div>
                   <md-card-expand  v-if="review.answer!=''">
                     <md-card-actions md-alignment="space-between">
                       <md-card-expand-trigger>

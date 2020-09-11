@@ -4,6 +4,7 @@ import VueMaterial from 'vue-material';
 //import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
+var eventBus = new Vue();
 Vue.use(VueMaterial);
 // 요일 변환을 위한 리스트
 const week = ["fri", "sat", "sun", "mon", "tue", "wed", "thu"];
@@ -102,6 +103,14 @@ export default {
             errored: false,
         };
     },
+    created: function() {
+        eventBus.$on('studios', function(studioId) {
+            this.stuId = studioId;
+        });
+        eventBus.$on('customter', function(customter) {
+            this.customter = customter;
+        });
+    },
     mounted() {
         axios
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
@@ -115,7 +124,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://127.0.0.1:7777/studio/schedule/10") //+ this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 this.exceptionLength = (this.schedule.exceptionDate).length;
@@ -381,4 +390,5 @@ export default {
             return 1;
         }
     }
+
 }

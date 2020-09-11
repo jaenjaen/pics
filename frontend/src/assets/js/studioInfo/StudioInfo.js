@@ -6,14 +6,15 @@ import VueMaterial from 'vue-material'
 import Reservation from "@/components/studioInfo/Reservation.vue"
 import TimeChart from "@/assets/js/studioInfo/TimeChart.js";
 import DayChart from "@/assets/js/studioInfo/DayChart.js";
+import Map from "@/components/studioInfo/Map.vue"
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
-import Map from "@/components/studioInfo/Map.vue"
+
 
 Vue.use(VueMaterial)
 Vue.use(VModal);
-
+var eventBus = new Vue();
 export default {
     name: "studio-info",
     components: { carousel, Reservation, TimeChart, DayChart, Map },
@@ -276,8 +277,10 @@ export default {
 
         },
         emitStudios() {
-            this.$emit('studios', this.studios);
+            eventBus.$emit('stuId', this.stuId);
+        },
+        emitCustomer() {
+            eventBus.$emit('customter', this.customter);
         }
-
     }
 }

@@ -136,10 +136,6 @@ const routes = [{
         component: Map
     },
     {
-        path: "/mapCopy",
-        name: "mapcopy",
-        component: MapCopy
-    }, {
         path: "/studioEdit/:comId",
         name: "studioEdit",
         component: StudioEdit

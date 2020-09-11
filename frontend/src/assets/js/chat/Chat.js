@@ -52,8 +52,7 @@ export default {
         this.connect();
 
         /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
-        this.chat.stuId = this.stuIdData;
-        this.chat.custId = this.custIdData;
+        this.setId();
     },
 
     mounted() {
@@ -88,6 +87,15 @@ export default {
     },
 
     methods: {
+        setId() {
+            console.log("스튜디오 아이디 및 고객 아이디");
+            /* 스튜디오 아이디와 고객 아이디 바인딩 */
+            this.chat.stuId = this.stuIdData;
+            this.chat.custId = this.custIdData;
+            console.log(this.chat.stuId);
+            console.log(this.chat.custId);
+        },
+
         /* 이전 대화 내역 */
         getPrevMsg() {
             console.log("이전 메세지 가져오기 메소드 첨부");
@@ -208,6 +216,7 @@ export default {
         },
         sendMsg() {
             alert("메세지전송");
+            this.setId();
         }
     },
 }

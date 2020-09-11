@@ -4,10 +4,10 @@
         <div v-if="customerMode"> 
         <table>
             <tr>
-                <th>스튜디오</th> <th colspan="2">답변 내용</th> <th>문의날짜</th>
+                <th @click="showChatMoal('stuId', 30)">스튜디오</th> <th>답변 내용</th> <th>문의날짜</th>
             </tr>
             <tr v-if="inquiryFlag">
-                <td colspan="4" > 문의내역이 없습니다. </td>
+                <td colspan="3"> 문의내역이 없습니다. </td>
             </tr>
             <tr v-else>
                 <td>스튜디오이미지 / 스튜디오 이름</td> <td> 문의내용 샬라샬라 </td><td> 문의날짜</td>
@@ -22,7 +22,7 @@
         <div v-if="!customerMode"> 
             <table>
             <tr>
-                <th>스튜디오</th> <th>문의 고객</th> <th>문의 내용</th> <th>문의날짜</th>
+                <th @click="showChatMoal('custId', 40)">스튜디오</th> <th>문의 고객</th> <th>문의 내용</th> <th>문의날짜</th>
             </tr>
             <tr tr v-if="inquiryFlag">
                 <td colspan="4"> 문의내역이 없습니다. </td>
@@ -35,9 +35,18 @@
             </tr>
         </table>
         </div>
+        <!-- Chat Modal 영역 -->
+        <div id="chatModal" style="display:none;">
+            <div id="chatContent">
+                <div id="closeChat" @click="hideChatModal()" >&times;</div>
+                <Chat id="chatArea" :stuIdData="stuId" :custIdData="custId" />
+                
+            </div>
+        </div>
     </div>
 </template>
 
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
+<style scoped src="@/assets/css/chat/ChatShow.css"></style>
 <script scoped src="@/assets/js/mypage/Inquiry.js"> </script>
 

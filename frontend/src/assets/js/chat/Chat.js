@@ -48,32 +48,24 @@ export default {
     },
 
     created() {
-        this.chat.stuId = this.stuIdData;
-        this.chat.custId = this.custIdData;
-
-        if (this.chat.stuId === undefined) {
-            console.log(this.chat.custId)
-            console.log('stuId 정의 안됨');
-        }
-        if (this.chat.custId === undefined) {
-            console.log(this.chat.stuId)
-            console.log('custId 정의 안됨');
-        }
         /* vue가 생성되면 소켓 연결 시도 */
         this.connect();
+
+        /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
+        this.setId();
     },
 
     mounted() {
-        if (customer != null) { //개인고객으로 로그인했을 경우
+        if (this.custIdData === undefined && customer != null) { //개인고객으로 로그인했을 경우
             this.chat.sender = 0; //보내는 이 : 개인
             this.chat.custId = customer.custId;
             console.log(this.chat);
             this.customer = customer; //customer 데이터에 바인딩
             console.log(this.customer);
 
-        } else if (company != null) { //기업고객으로 로그인했을 경우
+        } else if (this.stuIdData === undefined && company != null) { //기업고객으로 로그인했을 경우
             this.chat.sender = 1; //보내는 이 : 기업
-            this.chat.comId = company.comId;
+            //this.chat.comId = company.comId;
             console.log(this.chat);
             this.company = company;
             console.log(this.company);
@@ -95,6 +87,15 @@ export default {
     },
 
     methods: {
+        setId() {
+            console.log("스튜디오 아이디 및 고객 아이디");
+            /* 스튜디오 아이디와 고객 아이디 바인딩 */
+            this.chat.stuId = this.stuIdData;
+            this.chat.custId = this.custIdData;
+            console.log(this.chat.stuId);
+            console.log(this.chat.custId);
+        },
+
         /* 이전 대화 내역 */
         getPrevMsg() {
             console.log("이전 메세지 가져오기 메소드 첨부");
@@ -215,6 +216,7 @@ export default {
         },
         sendMsg() {
             alert("메세지전송");
+            this.setId();
         }
     },
 }

@@ -104,6 +104,27 @@ article {
     border: 1.5px solid lightgray;
 }
 
+
+/* 문의 버튼 CSS */
+
+.chat-btn {
+    background-color: white;
+    color: #029BE0;
+    border: 1.5px solid lightgray;
+    padding: 5px 7px 5px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.chat-btn:hover {
+    background-color: #029BE0;
+    color: white;
+}
+
 #accCustomer,
 #avgScore {
     font-size: 0.95em;

@@ -1,5 +1,17 @@
+<!-- Chat Modal 관련 외부 CSS 영역 -->
+<style scoped src="@/assets/css/chat/ChatShow.css"></style>
+
 <template>
   <div class="container">
+
+      <!-- Chat Modal 영역 -->
+      <div id="chatModal" style="display:none;">
+          <div id="chatContent">
+              <div id="closeChat" @click="hideChatModal" >&times;</div>
+              <Chat id="chatArea" customerMode="true" />    
+          </div>
+      </div>
+
       <!-- ==============  메인 이미지 : carousel ============== -->
       <header id="main-images-section">
         <div class="row" v-for="(mainImg,index) in mainImgList" v-bind:key="index">
@@ -41,7 +53,9 @@
         <div class="section-title-field" v-for="studio in studios" v-bind:key="studio.stuId">
         <!-- 누적 이용자 수 -->
         <div class="studio-name">
-          <h1 id="studio-name"> {{ studio.name }}</h1> &nbsp;&nbsp;
+          <h1 id="studio-name"> {{ studio.name }} 
+            <button class="chat-btn" @click="showChatMoal">문의</button> <!-- 문의 클릭 이벤트 -->
+          </h1>
             <!-- 찜하기, 공유하기, 누적 이용자 수 -->
             <span>
               <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer!=null">
@@ -280,4 +294,3 @@
 
 <script src="@/assets/js/studioInfo/StudioInfo.js"></script>
 <style scoped src="@/assets/css/studioInfo/StudioInfo.css"></style>
-

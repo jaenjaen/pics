@@ -53,6 +53,14 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 	   </dependency>
 	   
+	   <!-- maven-resources-plugin -->
+		<dependency>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-resources-plugin</artifactId>
+		    <version>3.1.0</version>
+		</dependency>
+	   
+	   
 	   <!-- sql -->
 	   <dependency>
 			<groupId>mysql</groupId>

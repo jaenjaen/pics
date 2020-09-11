@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,10 +23,11 @@ import com.devils.pics.domain.Tag;
 import com.devils.pics.service.ScheduleService;
 import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.service.StudioInfoService;
+import com.devils.pics.service.StudioService;
 
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
-public class StudioRegisterController {
+public class StudioController {
 
 	@Autowired
 	private ScheduleService scheduleService;
@@ -35,6 +37,9 @@ public class StudioRegisterController {
 
 	@Autowired
 	private StudioInfoService studioInfoService;
+	
+	@Autowired
+	private StudioService studioService;
 
 	/* 카테고리 목록을 화면으로 보냄 */
 	@GetMapping("/category")
@@ -114,6 +119,17 @@ public class StudioRegisterController {
 				e.printStackTrace();
 			}
 			return new ResponseEntity(1, HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/studio/{comId}")
+	public ResponseEntity getStudiosBycomId(@PathVariable String comId) {
+		try {
+			List<Studio> studios = studioService.getStudiosBycomId(comId);
+			return new ResponseEntity(studios,HttpStatus.OK);
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
 

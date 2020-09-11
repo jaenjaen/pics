@@ -3,30 +3,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="CompanyMapper">	
-	<insert id="registerCompany" parameterType="company">
-		INSERT INTO company(com_id,name,address,password,tel,logo_img,salt)
-		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg},#{salt})
-	</insert>
-	
-	<select id="getCompany" parameterType="company" resultType="company">
-		SELECT com_id, name, address, password, tel, description, logo_img, salt
-		FROM company
-		<if test="comId !=null">
-			WHERE com_id = #{comId}
-		</if>
-	</select>
-	
-	<update id="updateCompany" parameterType="company">
-		UPDATE company SET name=#{name}, address=#{address}, password= #{password},
-							tel=#{tel},description = #{description},logo_img =#{logoImg},salt =#{salt}
-		WHERE com_id = #{comId}
-	</update>
-	
-	<delete id="deleteCompany" parameterType="string">
-		DELETE FROM company
-		WHERE com_id = #{value}
-	</delete>
-	
+
+
 	<resultMap type="company" id="companyInfo">	
 		<result property="comId" column="com_id"/>
 		<result property="name" column="cp_name"/>
@@ -67,7 +45,35 @@
 		
 	</resultMap>
 	
+	<!-- 고객 회원가입 -->
+	<insert id="registerCompany" parameterType="company">
+		INSERT INTO company(com_id,name,address,password,tel,logo_img,salt)
+		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg},#{salt})
+	</insert>
+	
+	<!--고객 정보 가져오기 -->
+	<select id="getCompany" parameterType="company" resultType="company">
+		SELECT com_id, name, address, password, tel, description, logo_img, salt
+		FROM company
+		<if test="comId !=null">
+			WHERE com_id = #{comId}
+		</if>
+	</select>
+	
+	<!--고객 정보 수정 -->
+	<update id="updateCompany" parameterType="company">
+		UPDATE company SET name=#{name}, address=#{address}, password= #{password},
+							tel=#{tel},description = #{description},logo_img =#{logoImg},salt =#{salt}
+		WHERE com_id = #{comId}
+	</update>
+	
+	<!--고객 탈퇴 -->
+	<delete id="deleteCompany" parameterType="string">
+		DELETE FROM company
+		WHERE com_id = #{value}
+	</delete>
 
+	<!--고객 정보 및 스튜디오 모두 불러오기-->
 	<select id="getCompanyInfo" parameterType="string" resultMap="companyInfo">
 		SELECT cp.com_id, cp.name as cp_name, cp.address, cp.password, cp.tel, cp.description as cp_description, cp.logo_img, cp.salt, 
 		st.stu_id,st.name as st_name , st.category_id, st.description as st_description, st.rule, st.main_img, st.port_img, st.cad_img, st.floor , 
@@ -78,10 +84,5 @@
 		join studio_filter as stf on st.stu_id = stf.stu_id 
 		left outer join (select stu_id,avg(score) avg_score, count(review_id) count_review from review group by stu_id) as re on st.stu_id = re.stu_id
 		where cp.com_id= #{value}
-	</select>	
-	
-	
-	
-	
-	
+	</select>
 </mapper>

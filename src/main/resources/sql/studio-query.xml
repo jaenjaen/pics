@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="StudioMapper">
+	
+	<resultMap type="studio" id="studioRM">
+		<id column="stu_id" property="stuId"/>
+		<result column="com_id" property="comId" />
+		<result column="name" property="name" />
+		<result column="main_img" property="mainImg" />
+		<association property="category" javaType="category">
+			<result column="category_name" property="categoryName" />
+		</association>
+		<association property="studioFilter" javaType="studioFilter">
+			<result column="address" property="address"/>
+		</association>
+	</resultMap>
+	 
+	<select id="getStudiosBycomId" parameterType="String" resultMap ="studioRM">
+		select s.stu_id, c.category_name,s.main_img ,s.name, f.address
+		from studio s, studio_filter f, studio_category c
+		where s.com_id = #{value}
+		and f.stu_id = s.stu_id
+		and c.category_id = s.category_id;
+	</select>
+	
+	<delete id="deleteStudio" parameterType="int">
+	DELTE FROM studio
+	WHERE stu_id = #{value}
+	</delete>
+	
+ </mapper> 

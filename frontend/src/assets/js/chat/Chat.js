@@ -1,5 +1,10 @@
+import axios from "axios";
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
+
+/* 로그인 확인을 위한 세션 정의 */
+var customer = JSON.parse(sessionStorage.getItem("customer")); //개인고객
+var company = JSON.parse(sessionStorage.getItem("company")); //기업고객
 
 export default {
     name: 'chat',
@@ -19,51 +24,68 @@ export default {
             sender: "",
             word: "",
             recvList: [],
-            sendData: {
-                chat: {
-                    chatId: '',
-                    custId: '',
-                    stuId: '',
-                    word: '',
-                    dateTime: '',
-                    sender: ''
-                },
-                customer: {
-                    custId: '',
-                    nickname: '',
-                    imgSrc: ''
-                },
-                company: {
-                    comId: '',
-                    name: '',
-                    logoImg: '',
-                    studioList: []
-                }
+            chat: {
+                chatId: '',
+                custId: '',
+                stuId: '',
+                word: '',
+                dateTime: '',
+                sender: '' //보내는 사람이 개인이면 0, 기업이면 1
+            },
+            customer: {
+                custId: '',
+                nickname: '',
+                imgSrc: ''
+            },
+            company: {
+                comId: '',
+                name: '',
+                logoImg: '',
+                studioList: []
             }
         }
     },
 
     created() {
         /* 로그인 확인 */
-        var customer = JSON.parse(sessionStorage.getItem("customer")); //개인고객
-        var company = JSON.parse(sessionStorage.getItem("company")); //기업고객
         if (customer === null && company === null) {
             alert("로그인한 회원만 이용 가능합니다.");
             location.href = "/customerLogin"
         } else {
-            if (customer != null) { //개인고객으로 로그인했을 경우
-                this.sendData.customer = customer;
-                console.log(this.sendData.customer);
-            } else if (company != null) { //기업고객으로 로그인했을 경우
-                this.sendData.company = company;
-                console.log(this.sendData.company);
-            }
-            /* 이전 대화 내역 불러오기 */
-            this.getPrevMsg();
-
             /* vue가 생성되면 소켓 연결 시도 */
             this.connect();
         }
+    },
+
+    mounted() {
+        if (customer != null) { //개인고객으로 로그인했을 경우
+            this.chat.sender = 0; //보내는 이 : 개인
+            this.chat.custId = customer.custId;
+            console.log(this.chat);
+            this.customer = customer; //customer 데이터에 바인딩
+            console.log(this.customer);
+
+        } else if (company != null) { //기업고객으로 로그인했을 경우
+            this.chat.sender = 1; //보내는 이 : 기업
+            this.chat.comId = company.comId;
+            console.log(this.chat);
+            this.company = company;
+            console.log(this.company);
+
+            /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
+            axios.get('http://127.0.0.1:7777/companyifo/' + company.comId)
+                .then((response) => {
+                    console.log('company 정보 가져오기 성공');
+                    this.company = response.data; //company 데이터에 바인딩
+                    console.log(this.company);
+                })
+                .catch(() => {
+                    console.log('company 정보 가져오기 실패');
+                })
+        }
+
+        /* 이전 대화 내역 불러오기 */
+        this.getPrevMsg();
     },
 
     methods: {

@@ -271,11 +271,11 @@ export default {
         },
         // 링크 공유 관련 메서드
         clipboardSuccessHandler() {
-            alert('페이지 링크를 복사했습니다.')
+            this.$modal.show("copy-link-success");
         },
 
         clipboardErrorHandler() {
-            alert('페이지 링크를 복사하지 못했습니다.\n직접 링크를 복사해주세요.')
+            this.$modal.show("copy-link-error");
         }
     }
 }

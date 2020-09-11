@@ -37,6 +37,38 @@ section {
     padding: 0.5%;
 }
 
+.tag-btn {
+    background-color: #029BE0;
+    border: none;
+    color: #fff;
+    padding: 5px 7px 5px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.section-bookmark-share-field {
+    float: right;
+    margin: 4px;
+}
+
+#share-btn {
+    border: lightgray;
+    border-radius: 100%;
+    background-color: none;
+    size: 0.7em;
+}
+
+.tag-btn:hover {
+    background-color: white;
+    color: #029BE0;
+    border: 1.5px solid lightgray;
+}
+
 #accCustomer,
 #avgScore {
     font-size: 0.95em;
@@ -165,7 +197,7 @@ article {
     display: table-cell;
 }
 
-#star-score {
+#material-icons {
     margin: 2% 5% 1% 5%;
     display: table-cell;
     size: 0.5em;

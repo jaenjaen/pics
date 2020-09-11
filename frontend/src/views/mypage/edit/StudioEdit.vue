@@ -2,7 +2,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <h2>스튜디오 등록</h2>
+      <h2>스튜디오 수정</h2>
       <br />
       <section>
         <div class="row">
@@ -22,8 +22,8 @@
             </label>
           </div>
           <div class="col-75">
-            <select id="categoryId" name="categoryId" v-model="studio.categoryId" disabled>
-              <option v-for="(category, index) in category" :key="index" :value="category.categoryId">{{category.categoryName}}</option>
+            <select id="categoryId" name="categoryId" disabled>
+              <option>{{categoryme}}</option>
             </select>
           </div>
         </div>
@@ -571,6 +571,6 @@
     </div>
   </div>
 </template>
-<script scoped src="@/assets/js/studioRegister/RegisterStudio.js"></script>
+<script scoped src="@/assets/js/mypage/edit/StudioEdit.js"></script>
 
 <style scoped src="vue-material/dist/vue-material.min.css"></style>

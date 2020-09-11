@@ -28,6 +28,9 @@ public class StudioTest {
 //			System.out.println(stu);
 //		}
 		
+		/* 하나의 스튜디오 정보 얻어오기 */
+//		Studio s = sqlSession.selectOne(ns+"getStudio",1154);
+//		System.out.println(s);
 		
 	}
 }

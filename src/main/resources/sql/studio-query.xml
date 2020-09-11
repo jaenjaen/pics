@@ -4,7 +4,39 @@
 
 <mapper namespace="StudioMapper">
 	
+	<!--  스튜디오 수정용 -->
 	<resultMap type="studio" id="studioRM">
+		<result property="stuId" column="stu_id"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<result property="rule" column="rule"/>
+		<result property="mainImg" column="main_img"/>
+		<result property="portImg" column="port_img"/>
+		<result property="cadImg" column="cad_img"/>
+		<result property="floor" column="floor"/>
+		<association property="studioFilter" javaType="studioFilter">
+			<id property="filterId" column="filter_id"/>
+			<result property="size" column="size"/>
+			<result property="options" column="options"/>
+			<result property="parking" column="parking"/>
+			<result property="unitPrice" column="unit_price"/>
+			<result property="defaultCapacity" column="default_capacity"/>
+			<result property="excharge" column="excharge"/>
+			<result property="address" column="address"/>
+			<result property="maxCapacity" column="max_capacity"/>
+		</association>
+		<association property="category" javaType="category">
+			<result property="categoryName" column="category_name"/>
+		</association>
+		<collection property="tag" ofType="tag">
+			<id property="tagId" column="tag_id"/>
+			<result property="tagName" column="tag_name"/>
+		</collection>
+	</resultMap>
+	
+	<!-- 마이페이지 리스트 -->
+	<resultMap type="studio" id="studioListRM">
 		<id column="stu_id" property="stuId"/>
 		<result column="com_id" property="comId" />
 		<result column="name" property="name" />
@@ -17,12 +49,23 @@
 		</association>
 	</resultMap>
 	 
-	<select id="getStudiosBycomId" parameterType="String" resultMap ="studioRM">
+	<select id="getStudiosBycomId" parameterType="String" resultMap ="studioListRM">
 		select s.stu_id, c.category_name,s.main_img ,s.name, f.address
 		from studio s, studio_filter f, studio_category c
 		where s.com_id = #{value}
 		and f.stu_id = s.stu_id
 		and c.category_id = s.category_id;
+	</select>
+	
+	<select id="getStudio" parameterType="int" resultMap="studioRM">
+		SELECT s.stu_id, s.category_id, s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+				,f.filter_id,f.size,f.options,f.parking,f.unit_price,f.default_capacity,f.excharge,f.address,f.max_capacity
+        	,c.category_name,t.tag_id,t.tag_name
+		FROM studio s, studio_filter f, studio_category c,tag t
+		WHERE f.stu_id = s.stu_id
+		AND c.category_id = s.category_id
+		AND t.stu_id = s.stu_id
+		AND s.stu_id = #{value};
 	</select>
 	
 	<delete id="deleteStudio" parameterType="int">

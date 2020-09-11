@@ -58,6 +58,7 @@ export default {
             console.log(this.sendData.customer);
         }else if(company != null){ //
             console.log(company);
+            
         }
         /* 이전 대화 내역 불러오기 */
         this.getPrevMsg();

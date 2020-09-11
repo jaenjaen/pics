@@ -22,6 +22,7 @@ export default {
             type: String,
             default: ''
         },
+        // 지도 관련 변수
         appKey: {
             type: String,
             default: ''
@@ -266,10 +267,11 @@ export default {
                 alert('마지막 리뷰입니다.'); // 모든 데이터 출력 알림
             }
         },
+        // 지도 관련 메서드
         roadView() {
             window.open("https://map.kakao.com/link/roadview/37.5571792,126.919226"); //+ this.center.lat + this.center.lng;
         },
-        onLoad(map) { // 지도가 로드 완료되면 load 이벤트 발생
+        onLoad(map) {
             this.map = map
 
         },

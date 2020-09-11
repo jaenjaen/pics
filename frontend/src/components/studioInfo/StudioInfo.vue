@@ -108,9 +108,7 @@
                   @load="onLoad"
                 />
               <br>
-              
             </Map>
-            <!-- <button @click="roadView()" >로드뷰 보기</button> -->
           </div>
           
           <!-- ============== Reservation ============== -->

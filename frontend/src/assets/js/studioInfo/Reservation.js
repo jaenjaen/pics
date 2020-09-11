@@ -114,7 +114,6 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-
         axios
             .get("http://127.0.0.1:7777/studio/schedule/10") //+ this.stuId)
             .then(response => {
@@ -177,7 +176,7 @@ export default {
             this.msg = "";
             // 1. 날짜 변환
             // 일자 >> 시간대로 변경
-            if (this.start_date != "" | this.end_date != "") {
+            if (this.start_date != "" | this.end_date != "" | this.start_time != "" | this.end_time != "") {
                 this.startDay = this.transWeekDay(this.start_date);
                 this.endDay = this.transWeekDay(this.end_date);
                 this.startDate = this.transTime(this.start_date);
@@ -195,21 +194,24 @@ export default {
             // 3. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후
             // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인, 
 
-            if (this.start_date != "" | this.end_date != "") {
-                if (this.start_date != "" & this.checkCloseDate(this.startDay) == 0) {
-                    this.start_date = "";
-                    this.msg = "시작일이 비영업일 입니다.";
-                }
-                if (this.end_date != "" & this.checkCloseDate(this.endDay) == 0) {
-                    this.end_date = "";
-                    this.msg = "종료일이 영업일이 아닙니다.";
-                }
+            if (this.start_date != "") {
                 if (this.startDate < todayTime & this.start_date != "") {
                     alert(this.transTime(new Date()))
                     this.start_date = this.today;
                     startTime = this.start_date;
                     this.msg = "대여 시작일은 현재 날짜 이후로 가능합니다.";
                 }
+                if (this.start_date != "" & this.checkCloseDate(this.startDay) == 0) {
+                    this.start_date = "";
+                    this.msg = "시작일이 비영업일 입니다.";
+                }
+            }
+            if (this.end_date != "") {
+                if (this.end_date != "" & this.checkCloseDate(this.endDay) == 0) {
+                    this.end_date = "";
+                    this.msg = "종료일이 영업일이 아닙니다.";
+                }
+
                 if (this.startDate > this.endDate & this.end_date != "") {
                     alert("대여 종료일을 시작일 이후로 설정하세요.");
                     this.end_date = this.start_date;

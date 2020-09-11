@@ -9,6 +9,7 @@
           <div id="chatContent">
               <div id="closeChat" @click="hideChatModal" >&times;</div>
               <Chat id="chatArea" :stuIdData="stuId" :custIdData="customer.custId" />    
+              <!-- <Chat id="chatArea" customerMode="true" />     -->
           </div>
       </div>
 
@@ -41,14 +42,14 @@
               <button class="tag-btn"><span>#</span>{{tag.tagName}}</button>
             </span>
                       <!-- 찜하기, 공유하기, 누적 이용자 수 -->
-            <span>
+            <span class="section-bookmark-share-field">
               <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer!=null">
                 <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
                 <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
               </span>&nbsp;&nbsp;
             </span>          
             <span>
-              <button 
+              <button id="share-btn"
               v-clipboard="getUrl"
               v-clipboard:success="clipboardSuccessHandler"
               v-clipboard:error="clipboardErrorHandler"> 

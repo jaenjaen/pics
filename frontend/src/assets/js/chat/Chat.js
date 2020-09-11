@@ -51,49 +51,54 @@ export default {
         /* vue가 생성되면 소켓 연결 시도 */
         this.connect();
 
-        /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
-        this.setId();
-    },
-
-    mounted() {
-        if (this.custIdData === undefined && customer != null) { //개인고객으로 로그인했을 경우
-            this.chat.sender = 0; //보내는 이 : 개인
-            this.chat.custId = customer.custId;
-            console.log(this.chat);
+        /* 세션에 있는 정보를 data에 바인딩 */
+        if (customer != null) { //개인고객으로 로그인했을 경우
             this.customer = customer; //customer 데이터에 바인딩
             console.log(this.customer);
 
-        } else if (this.stuIdData === undefined && company != null) { //기업고객으로 로그인했을 경우
-            this.chat.sender = 1; //보내는 이 : 기업
-            //this.chat.comId = company.comId;
-            console.log(this.chat);
+        } else if (company != null) { //기업고객으로 로그인했을 경우
             this.company = company;
             console.log(this.company);
-
-            /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
-            axios.get('http://127.0.0.1:7777/companyifo/' + company.comId)
-                .then((response) => {
-                    console.log('company 정보 가져오기 성공');
-                    this.company = response.data; //company 데이터에 바인딩
-                    console.log(this.company);
-                })
-                .catch(() => {
-                    console.log('company 정보 가져오기 실패');
-                })
         }
+
+        /* 채팅 접속시 설정 */
+        this.setChat();
+    },
+
+    mounted() {
+
 
         /* 이전 대화 내역 불러오기 */
         this.getPrevMsg();
     },
 
     methods: {
-        setId() {
-            console.log("스튜디오 아이디 및 고객 아이디");
-            /* 스튜디오 아이디와 고객 아이디 바인딩 */
-            this.chat.stuId = this.stuIdData;
-            this.chat.custId = this.custIdData;
-            console.log(this.chat.stuId);
-            console.log(this.chat.custId);
+        /* 채팅 접속시 설정 */
+        setChat() {
+            /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
+            this.chat.stuId = this.stuIdData; //개인고객, 기업고객이 채팅할 때 필요한 스튜디오 아이디
+            this.chat.custId = this.custIdData; //기업고객이 채팅할 때 필요한 고객 아이디
+
+            if (customer != null) { //개인고객으로 로그인했을 경우
+                this.chat.sender = 0; //보내는 이 : 개인
+                this.chat.custId = customer.custId;
+                console.log(this.chat);
+
+            } else if (company != null) { //기업고객으로 로그인했을 경우
+                this.chat.sender = 1; //보내는 이 : 기업
+                console.log(this.chat);
+
+                /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
+                axios.get('http://127.0.0.1:7777/companyifo/' + company.comId)
+                    .then((response) => {
+                        console.log('company 정보 가져오기 성공');
+                        this.company = response.data; //company 데이터에 바인딩
+                        console.log(this.company);
+                    })
+                    .catch(() => {
+                        console.log('company 정보 가져오기 실패');
+                    })
+            }
         },
 
         /* 이전 대화 내역 */

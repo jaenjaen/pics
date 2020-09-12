@@ -242,13 +242,11 @@ export default {
                     // this.msg = "시작 시간이 영업 외 시간 입니다.";
                     alert("시작 시간이 영업 외 시간 입니다.");
                     this.start_time = "";
-                    startTime = this.start_time;
                 }
                 if (this.checkCloseTime(endTime) != 1 && endTime < 25) {
                     // this.msg = "종료 시간이 영업 외 시간 입니다.";
                     alert("종료 시간이 영업 외 시간 입니다.");
                     this.end_time = "";
-                    endTime = this.end_time;
                 }
                 if (this.difTime == 0) {
                     //하루 예약이면 시작시간 < 종료시간

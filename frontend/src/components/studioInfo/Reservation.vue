@@ -13,7 +13,7 @@
                 </thead>
                 <tbody  v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
                   <tr>
-                    <td>{{repeate.weekDate|dayFilter}}</td>
+                    <td>{{repeate.weekday|dayFilter}}</td>
                     <td>{{repeate.time|timeFilter}}</td>
                   </tr>
                 </tbody>
@@ -87,7 +87,7 @@
               </md-field>
             </div>
           </div>
-          <span>{{msg}}</span>
+          <!-- <span>{{msg}}</span> -->
           <br />
           <br />
           <!-- 인원 -->

@@ -29,12 +29,13 @@
             </tr>
             <tr v-else v-for="(chat) in recentComChat" :key="chat">
                 <td>{{chat.stuName}}</td>
-                <td @click="showChatMoal($event)">
-                    {{chat.custName}}
+                <td>{{chat.custName}}</td> 
+                <td @click="showChatMoal($event)" class="linkToChatModal">
+                    {{chat.word}}
                     <span style="display:none;">{{chat.stuId}}</span>
                     <span style="display:none;">{{chat.custId}}</span>
-                </td> 
-                <td>{{chat.word}}</td><td>{{chat.dateTime}}</td>
+                </td>
+                <td>{{chat.dateTime | showOnlyDate}}</td>
             </tr>
         </table>
         </div>

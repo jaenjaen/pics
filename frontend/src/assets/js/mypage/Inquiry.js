@@ -35,8 +35,17 @@ export default {
                 console.log('company 최근 대화 가져오기 실패');
             })
     },
+    filters: {
+        /* 문의 날짜를 연/월/일로 분할함 */
+        showOnlyDate(value) {
+            for (let i = 0; i < value.length; i++) {
+                if (value[i] === ' ') {
+                    return value.substring(0, i);
+                }
+            }
+        }
+    },
     methods: {
-
         /* 문의 영역 Modal 보임 */
         showChatMoal: function(event) {
             if (customer === null && company === null) {

@@ -51,3 +51,12 @@
     border: none;
     color: #fff;
 }
+
+.linkToChatModal {
+    color: #448aff;
+    cursor: pointer;
+}
+
+.linkToChatModal:hover {
+    text-decoration: underline;
+}

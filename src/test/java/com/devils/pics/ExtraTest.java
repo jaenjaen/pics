@@ -54,12 +54,15 @@ public class ExtraTest {
 //		for(Review r:reviewList) {
 //			System.out.println(r);
 //		}
-		
+//		
 //		HashMap<String, Integer> ids = new HashMap<String, Integer>();
 //		ids.put("custId", 3);
 //		ids.put("stuId", 10);
 //		Bookmark b = sqlSession.selectOne(NS+"getBookId",ids);
 //		System.out.println(b);
+		
+	
+		System.out.println(sqlSession.selectList(NS+"bookmarkList",3));
 	
 		 
 	}

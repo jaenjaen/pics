@@ -88,7 +88,6 @@ export default {
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
         console.log("this.stuId : " + this.stuId);
-
         axios
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
@@ -105,7 +104,6 @@ export default {
                     this.portImgList.push(portImgSplit[i]);
                 }
                 console.log("this.mainImgList : " + this.mainImgList);
-                this.emitStudios(); //customer Id emit
             })
             .catch(error => {
                 console.log(error);
@@ -131,14 +129,13 @@ export default {
             })
             .finally(() => (this.loading = false));
         console.log("this.accCustomer : " + this.accCustomer);
-        axios
+        await axios
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => {
                 this.reviews = response.data;
                 let temp = []
                 for (var i = 0; i < this.cntReviews; i++) {
-                    temp.push(this.reviews[i])
-                    console.log("temp : " + this.reviews[i]);
+                    temp.push(this.reviews[i]);
                 }
                 this.uncoveredReview = temp
                 this.allReviewLength = (this.reviews).length
@@ -148,7 +145,6 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        console.log("this.reviews[0].reviewId : " + this.reviews[0]);
         if (this.customer != undefined) {
             axios
                 .get("http://127.0.0.1:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
@@ -172,7 +168,7 @@ export default {
             if (value) return "주차 가능";
             else return "주차 불가";
         },
-        sizeUnit(size) { //m^2 >> 평 단위
+        sizeUnit(size) { // m^2 : 평 단위
             return (size * 0.3025).toFixed(1);
         },
         emailHide(value) { //이메일 아이디 가리기
@@ -207,7 +203,6 @@ export default {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
         },
         /* 문의 영역 끝 */
-
         imgUrl(imgName) {
             console.log(imgName);
             return require("@/assets/img/studio/" + imgName);
@@ -221,7 +216,7 @@ export default {
                     // alert(deleteStatus.data); // 에러 페이지용
                     this.$modal.show("delBook");
                     this.isBooked = false;
-                    //$event.target.src = require("@/assets/img/util/heart.svg")
+                    // $event.target.src = require("@/assets/img/util/heart.svg")
                 } else { // 찜목록에 없다면
                     let regBookmark = {
                         studio: {
@@ -235,7 +230,7 @@ export default {
                     // alert(insertStatus.data); // 에러 페이지용
                     this.$modal.show("regBook");
                     this.isBooked = true;
-                    //$event.target.src = require("@/assets/img/util/fullheart.svg");
+                    // $event.target.src = require("@/assets/img/util/fullheart.svg");
                 }
             } catch (error) {
                 console.error(error);
@@ -245,6 +240,8 @@ export default {
             this.$modal.hide("delBook");
             this.$modal.hide("regBook");
             this.$modal.hide("login-required");
+            this.$modal.hide("copy-link-success");
+            this.$modal.hide("copy-link-error");
         },
         appendReviews() {
             // 전체 리뷰 개수보다 노출되는 리뷰 개수가 작은 경우
@@ -256,7 +253,6 @@ export default {
                 }
                 this.uncoveredReview = temp; // 전체 리뷰 개수와 노출되는 리뷰 개수가 같으면
                 // review 객체에 data 배열 업데이트
-
             } else {
                 this.dataFull = true; // dataFull 객체를 true 상태로 변경
                 alert('마지막 리뷰입니다.'); // 모든 데이터 출력 알림

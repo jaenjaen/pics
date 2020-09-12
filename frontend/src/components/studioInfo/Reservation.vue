@@ -57,7 +57,7 @@
             <div class="time-input-field">
               <md-field class="start-time">
                 <label for="time">예약 시작 시간</label>
-                  <md-select id="start_time" 
+                  <md-select
                     v-model="start_time" 
                     required
                     style="width:30%">
@@ -73,7 +73,7 @@
                   <br />
               <md-field class="end-time">
                 <label for="time">예약 종료 시간</label>
-                  <md-select id="end_time" 
+                  <md-select
                     v-model="end_time" 
                     required
                     style="width:30%">

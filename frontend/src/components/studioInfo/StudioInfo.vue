@@ -40,11 +40,11 @@
         <span id="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
             <button class="tag-btn"><span>#</span>{{tag.tagName}}</button>
           </span>
-                    <!-- 찜하기, 공유하기, 누적 이용자 수 -->
+          <!-- 찜하기, 공유하기, 누적 이용자 수 -->
           <span class="section-bookmark-share-field">
             <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer!=null">
-              <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
-              <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
+              <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="24em" height="24em" />
+              <img src="@/assets/img/util/heart.svg" v-else width="24em" height="24em"/>
             </span>&nbsp;&nbsp;
           </span>          
           <span>
@@ -81,32 +81,32 @@
     <hr>  
       <!-- ============== Studio Filter ============== -->
     <article>
-        <div class="article-studioFilter-information-area" >
+        <div class="article-studioFilter-information-area">
           <div v-for="studio in studios" v-bind:key="studio.stuId"> 
             <table id="Studio-Filter-Table">
               <tr>
-                <td>넓이</td>
-                <!-- <td>{{ studio.studioFilter.size}}m<sup>2</sup>
-                ({{ studios.studioFilter.size |sizeUnit}}/평)</td> -->
+                <td><b>넓이</b></td>
+                <td>{{ studio.studioFilter.size}}m<sup>2</sup>
+                ({{ studio.studioFilter.size |sizeUnit}}/평)</td>
               </tr>
               <tr>
-                <td>옵션</td>
+                <td><b>옵션</b></td>
                 <td>{{studio.studioFilter.options}}</td>
               </tr>
               <tr>
-                <td>주차</td>
+                <td><b>주차</b></td>
                 <td>{{studio.studioFilter.parking|parking}}</td>
               </tr>
               <tr>
-                <td>수용 인원</td>
+                <td><b>수용 인원</b></td>
                 <td>
                   기본 {{studio.studioFilter.defaultCapacity}} 명 ~ 최대
                   {{ studio.studioFilter.maxCapacity }} 명
                 </td>
               </tr>
               <tr>
-                <td>인원 초과 시 추가비용</td>
-                <td>{{studio.studioFilter.excharge|currency}}</td>
+                <td><b>인원 초과 시 추가비용</b></td>
+                <td>{{studio.studioFilter.excharge|currency}}원</td>
               </tr>
             </table>
           </div>
@@ -177,54 +177,55 @@
               </md-card-media>
               <md-card>
                 <md-card-header>
-                <span class="md-subhead" id="reviewr-email"><strong>{{ review.customer.email|emailHide }}</strong></span>
-                <span class="md-subhead" id="register-date">({{ review.regDate}})</span>
-              </md-card-header>
+                <span class="md-subhead" id="reviewr-email">
+                  <strong>{{ review.customer.email|emailHide }}</strong>
+                  ({{ review.regDate}})</span>
                 <!-- 별점 부분 -->
-                <span id="star-score">
-                  <span v-if="review.score == 0">
+                <div id="star-score">
+                  <span  class="md-subhead" v-if="review.score == 0">
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                   </span>
-                  <span v-if="review.score == 1">
+                  <span  class="md-subhead" v-if="review.score == 1">
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                   </span>
-                  <span v-if="review.score == 2">
+                  <span  class="md-subhead" v-if="review.score == 2">
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                   </span>
-                  <span v-if="review.score == 3">
+                  <span  class="md-subhead" v-if="review.score == 3">
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                     <i class="material-icons" id="icon_filter">star_border</i>
                   </span>
-                  <span v-if="review.score == 4">
+                  <span  class="md-subhead" v-if="review.score == 4">
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star_half</i>
                   </span>
-                  <span v-if="review.score == 5">
+                  <span  class="md-subhead" v-if="review.score == 5">
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                     <i class="material-icons" id="icon_filter">star</i>
                   </span>              
-                </span>
+                </div>
+              </md-card-header>
                   <hr>
                 <div id="review-content">{{ review.content }}</div>
                 <md-card-expand  v-if="review.answer!=''">
@@ -276,13 +277,13 @@
         <button class="btn-small" @click="closePop()">확인</button>
       </div>
     </modal>
-    <modal name="copy-link-success" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
+    <modal name="copy-link-success" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
       <div id="copy-link-success">
         <p>페이지 URL주소가 복사되었습니다</p>
         <button class="btn-small" @click="closePop()">확인</button>
       </div>
     </modal>
-    <modal name="copy-link-error" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
+    <modal name="copy-link-error" adaptive="adaptive" resizable="resizable" width="30%" height="15%" :maxWidth=768>
       <div id="copy-link-error">
         <p>페이지 URL주소를 복사할 수 없습니다. 주소창에서 직접 복사를 시도하십시오.</p>
         <button class="btn-small" @click="closePop()">확인</button>

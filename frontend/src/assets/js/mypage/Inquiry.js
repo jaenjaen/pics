@@ -17,29 +17,44 @@ export default {
             inquiryFlag: true,
             inquiryList: [],
 
-            /* 업체 최근 대화 */
-            recentComChat: [],
+            /* 최근 대화 */
+            recentChat: [],
         }
     },
     mounted() {
-        axios.get('http://127.0.0.1:7777/recentComChat/' + company.comId)
-            .then((response) => {
-                if (response.data != -1) {
-                    console.log('company 최근 대화 가져오기 성공');
-                    this.recentComChat = response.data;
-                    console.log(this.recentComChat);
-                    this.inquiryFlag = false;
-                }
-            })
-            .catch(() => {
-                console.log('company 최근 대화 가져오기 실패');
-            })
+        if (customer != null) {
+            axios.get('http://127.0.0.1:7777/recentChat/cust/' + customer.custId)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('customer 최근 대화 가져오기 성공');
+                        this.recentChat = response.data;
+                        console.log(this.recentChat);
+                        this.inquiryFlag = false;
+                    }
+                })
+                .catch(() => {
+                    console.log('customer 최근 대화 가져오기 실패');
+                })
+        } else if (company != null) {
+            axios.get('http://127.0.0.1:7777/recentChat/com/' + company.comId)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('company 최근 대화 가져오기 성공');
+                        this.recentChat = response.data;
+                        console.log(this.recentChat);
+                        this.inquiryFlag = false;
+                    }
+                })
+                .catch(() => {
+                    console.log('company 최근 대화 가져오기 실패');
+                })
+        }
     },
     filters: {
-        /* 스튜디오 이름과 고객 닉네임, 문의 내용 글자수를 20자까지만 화면에 보여줌 */
+        /* 스튜디오 이름과 고객 닉네임, 문의 내용 글자수를 15자까지만 화면에 보여줌 */
         showLimitedContent(value) {
-            if (value.length > 20) {
-                return value.substring(0, 20) + "... ";
+            if (value.length > 15) {
+                return value.substring(0, 15) + "... ";
             } else {
                 return value;
             }

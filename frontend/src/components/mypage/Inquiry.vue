@@ -4,16 +4,19 @@
         <div v-if="customerMode"> 
         <table>
             <tr>
-                <th @click="showChatMoal($event)">스튜디오</th> <th>답변 내용</th> <th>문의날짜</th>
+                <th>스튜디오(업체명)</th> <th>답변 내용</th> <th>문의날짜</th>
             </tr>
             <tr v-if="inquiryFlag">
                 <td colspan="3"> 문의내역이 없습니다. </td>
             </tr>
-            <tr v-else>
-                <td>스튜디오이미지 / 스튜디오 이름</td> <td> 문의내용 샬라샬라 </td><td> 문의날짜</td>
-            <!-- <tr v-for="(inquiry) in inquiryList" :key="inquiry">
-                <td>{{reservation.studio.name}}</td> <td>{{reservation.totalPeople}}</td> 
-                <td>{{reservation.totalPrice}}원</td> -->
+            <tr v-else v-for="(chat) in recentChat" :key="chat">
+                <td>{{chat.stuName | showLimitedContent}}({{chat.comName | showLimitedContent}})</td>
+                <td @click="showChatMoal($event)" class="linkToChatModal">
+                    {{chat.word | showLimitedContent}}
+                    <span style="display:none;">{{chat.stuId}}</span>
+                    <span style="display:none;">{{chat.custId}}</span>
+                </td>
+                <td>{{chat.dateTime | showOnlyDate}}</td>
             </tr>
         </table>
         </div>
@@ -27,7 +30,7 @@
             <tr tr v-if="inquiryFlag">
                 <td colspan="4"> 문의내역이 없습니다. </td>
             </tr>
-            <tr v-else v-for="(chat) in recentComChat" :key="chat">
+            <tr v-else v-for="(chat) in recentChat" :key="chat">
                 <td>{{chat.stuName | showLimitedContent}}</td>
                 <td>{{chat.custName | showLimitedContent}}</td> 
                 <td @click="showChatMoal($event)" class="linkToChatModal">
@@ -47,7 +50,6 @@
                 :stuIdData="stuId" 
                 :custIdData="custId" 
                 ref="chat" />
-                
             </div>
         </div>
     </div>

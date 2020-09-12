@@ -20,5 +20,10 @@ public class ChatServiceImpl implements ChatService {
 	public List<Map<String, String>> getRecentComChat(String comId) throws Exception {
 		return chatDao.getRecentComChat(comId);
 	}
+	
+	/* 고객의 스튜디오별 최근 수신 대화  */
+	public List<Map<String, String>> getRecentCustChat(String custId) throws Exception{
+		return chatDao.getRecentCustChat(custId);
+	}
 
 }

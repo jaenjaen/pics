@@ -1,5 +1,6 @@
 package com.devils.pics.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -40,13 +41,20 @@ public class ChatController {
 	}
 	
 	/* 업체의 스튜디오 및 고객별 최근 수신 대화  */
-	@GetMapping("/recentComChat/{comId}")
-	public ResponseEntity getRecentComChat(@PathVariable String comId) {
+	@GetMapping("/recentChat/{member}/{id}")
+	public ResponseEntity getRecentComChat(@PathVariable String member, @PathVariable String id) {
+		List<Map<String, String>> recentChat = new ArrayList<>();
 		try {
-			List<Map<String, String>> recentComChat = chatService.getRecentComChat(comId);
-			System.out.println(recentComChat);
-			if(recentComChat.size()>0) {
-				return new ResponseEntity(recentComChat, HttpStatus.OK);
+			if(member.equals("com")) {
+				recentChat = chatService.getRecentComChat(id);
+				System.out.println(recentChat);
+			}else if(member.equals("cust")) {
+				recentChat = chatService.getRecentCustChat(id);
+				System.out.println(recentChat);
+			}
+			
+			if(recentChat.size()>0) {
+				return new ResponseEntity(recentChat, HttpStatus.OK);
 			}else { //해당되는 대화가 없을 경우
 				return new ResponseEntity(-1, HttpStatus.OK);
 			}

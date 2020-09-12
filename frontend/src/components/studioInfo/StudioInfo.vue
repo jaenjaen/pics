@@ -8,7 +8,7 @@
       <div id="chatModal" style="display:none;">
           <div id="chatContent">
               <div id="closeChat" @click="hideChatModal" >&times;</div>
-              <Chat id="chatArea" customerMode="true" />    
+              <Chat id="chatArea" :stuIdData="stuId" ref="chat"/>    
           </div>
       </div>
 
@@ -40,6 +40,21 @@
           <span id="tag-list" v-for="tag in tags" v-bind:key="tag.tagId">
               <button class="tag-btn"><span>#</span>{{tag.tagName}}</button>
             </span>
+                      <!-- 찜하기, 공유하기, 누적 이용자 수 -->
+            <span class="section-bookmark-share-field">
+              <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer!=null">
+                <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
+                <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
+              </span>&nbsp;&nbsp;
+            </span>          
+            <span>
+              <button id="share-btn"
+              v-clipboard="getUrl"
+              v-clipboard:success="clipboardSuccessHandler"
+              v-clipboard:error="clipboardErrorHandler"> 
+                <i class="material-icons">share</i>
+              </button>
+            </span>          
         </div>
         <br>
         <span  id="accCustomer">
@@ -56,18 +71,6 @@
           <h1 id="studio-name"> {{ studio.name }} 
             <button class="chat-btn" @click="showChatMoal">문의</button> <!-- 문의 클릭 이벤트 -->
           </h1>
-            <!-- 찜하기, 공유하기, 누적 이용자 수 -->
-            <span>
-              <span class="bookmark-btn" @click.prevent="setBookMark()" v-if="customer!=null">
-                <img src="@/assets/img/util/fullheart.svg" v-if="isBooked" width="20em" height="24em" />
-                <img src="@/assets/img/util/heart.svg" v-else width="20em" height="24em"/>
-              </span>&nbsp;&nbsp;
-            </span>          
-            <span>
-              <a class="waves-effect waves-light btn-small" @click="shareUrl()">
-                <i class="material-icons">share</i>
-              </a>
-            </span>          
         </div>
         <div id="company-of-studio">
           <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
@@ -111,16 +114,7 @@
 
            <!-- ============== Map ============== -->
           <div class="article-map-field">
-            <Map>
-                <vue-daum-map
-                :appKey="appKey"
-                  :center.sync="center"
-                  :level.sync="level"
-                  :mapTypeId="mapTypeId"
-                  :libraries="libraries"
-                  @load="onLoad"
-                />
-              <br>
+            <Map id="Map" :stuIdData="stuId">
             </Map>
           </div>
           
@@ -128,7 +122,7 @@
           
           <div class =article-Filterstudiormation-map-area>
           <hr>
-            <Reservation width="70%"></Reservation>
+            <Reservation width="70%" :stuIdData="stuId" :custData="customer"></Reservation>
           </div>
 
         <!-- ============== Description ============== -->
@@ -158,8 +152,7 @@
           <div id=time-chart style="width:30%;">
               <div class="chart">
                   <TimeChart 
-                  :chartdata=datacollection
-                  :options=options></TimeChart>
+                  :stuIdData="stuId"></TimeChart>
               </div>
 					</div> 
         		
@@ -167,8 +160,7 @@
           <div id=day-chart style="width:30%;">
               <div class="chart">
                   <DayChart 
-                  :chartdata=datacollection
-                  :options=options></DayChart>
+                 :stuIdData="stuId"></DayChart>
               </div>
 					</div> 
         </div>
@@ -284,10 +276,22 @@
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
+      <modal name="copy-link-success" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
+        <div id="copy-link-success">
+          <p>페이지 URL주소가 복사되었습니다</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
+      <modal name="copy-link-error" adaptive="adaptive" resizable="resizable" width="25%" height="15%" :maxWidth=768>
+        <div id="copy-link-error">
+          <p>페이지 URL주소를 복사할 수 없습니다. 주소창에서 직접 복사를 시도하십시오.</p>
+          <button class="btn-small" @click="closePop()">확인</button>
+        </div>
+      </modal>
     </div>
   </div>
 </template>
 
 
-<script src="@/assets/js/studioInfo/StudioInfo.js"></script>
+<script scoped src="@/assets/js/studioInfo/StudioInfo.js"></script>
 <style scoped src="@/assets/css/studioInfo/StudioInfo.css"></style>

@@ -8,6 +8,7 @@ var company = JSON.parse(sessionStorage.getItem("company")); //기업고객
 
 export default {
     name: 'chat',
+    props: ['stuIdData', 'custIdData'],
     data() {
         return {
             defaultImg: {
@@ -21,9 +22,6 @@ export default {
                 add: 'http://localhost:7777/upload/default/add.png',
                 send: 'http://localhost:7777/upload/default/send.png'
             },
-            sender: "",
-            word: "",
-            recvList: [],
             chat: {
                 chatId: '',
                 custId: '',
@@ -42,33 +40,27 @@ export default {
                 name: '',
                 logoImg: '',
                 studioList: []
-            }
+            },
+
+            /* 업체 최근 대화 */
+            recentComChat: [],
+
+            sender: "",
+            word: "",
+            recvList: [],
         }
     },
 
     created() {
-        /* 로그인 확인 */
-        if (customer === null && company === null) {
-            alert("로그인한 회원만 이용 가능합니다.");
-            location.href = "/customerLogin"
-        } else {
-            /* vue가 생성되면 소켓 연결 시도 */
-            this.connect();
-        }
-    },
+        /* vue가 생성되면 소켓 연결 시도 */
+        this.connect();
 
-    mounted() {
+        /* 세션에 있는 정보를 data에 바인딩 */
         if (customer != null) { //개인고객으로 로그인했을 경우
-            this.chat.sender = 0; //보내는 이 : 개인
-            this.chat.custId = customer.custId;
-            console.log(this.chat);
             this.customer = customer; //customer 데이터에 바인딩
             console.log(this.customer);
 
         } else if (company != null) { //기업고객으로 로그인했을 경우
-            this.chat.sender = 1; //보내는 이 : 기업
-            this.chat.comId = company.comId;
-            console.log(this.chat);
             this.company = company;
             console.log(this.company);
 
@@ -84,11 +76,50 @@ export default {
                 })
         }
 
+        /* 채팅 접속시 설정 */
+        this.setChat();
+    },
+
+    mounted() {
+        //this.getRecentComChat();
+
         /* 이전 대화 내역 불러오기 */
         this.getPrevMsg();
     },
 
     methods: {
+        /* 채팅 접속시 설정 */
+        setChat() {
+            /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
+            this.chat.stuId = this.stuIdData; //개인고객, 기업고객이 채팅할 때 필요한 스튜디오 아이디
+            this.chat.custId = this.custIdData; //기업고객이 채팅할 때 필요한 고객 아이디
+
+            if (customer != null) { //개인고객으로 로그인했을 경우
+                this.chat.sender = 0; //보내는 이 : 개인
+                this.chat.custId = customer.custId;
+                console.log(this.chat);
+
+            } else if (company != null) { //기업고객으로 로그인했을 경우
+                this.chat.sender = 1; //보내는 이 : 기업
+                console.log(this.chat);
+            }
+        },
+
+        /* 업체의 스튜디오 및 고객별 최근 수신 대화 */
+        getRecentComChat() {
+            axios.get('http://127.0.0.1:7777/recentComChat/' + company.comId)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('company 최근 대화 가져오기 성공');
+                        this.recentComChat = response.data;
+                        console.log(this.recentComChat);
+                    }
+                })
+                .catch(() => {
+                    console.log('company 최근 대화 가져오기 실패');
+                })
+        },
+
         /* 이전 대화 내역 */
         getPrevMsg() {
             console.log("이전 메세지 가져오기 메소드 첨부");
@@ -209,6 +240,7 @@ export default {
         },
         sendMsg() {
             alert("메세지전송");
+            this.setChat(); //stuId, chatId 바인딩됨
         }
     },
 }

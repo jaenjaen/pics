@@ -1,15 +1,59 @@
-//import axios from "axios";
+import axios from "axios";
+import Chat from "@/components/chat/Chat.vue"; //문의
+
+var customer = JSON.parse(sessionStorage.getItem("customer")); //개인고객
+var company = JSON.parse(sessionStorage.getItem("company")); //기업고객
 
 export default {
     name: "Inquiry",
+    components: { Chat },
     props: {
         customerMode: Boolean
     },
     data() {
         return {
+            stuId: '',
+            custId: '',
             inquiryFlag: true,
             inquiryList: [],
 
+            /* 업체 최근 대화 */
+            recentComChat: [],
         }
     },
+    mounted() {
+        axios.get('http://127.0.0.1:7777/recentComChat/' + company.comId)
+            .then((response) => {
+                if (response.data != -1) {
+                    console.log('company 최근 대화 가져오기 성공');
+                    this.recentComChat = response.data;
+                    console.log(this.recentComChat);
+                    this.inquiryFlag = false;
+                }
+            })
+            .catch(() => {
+                console.log('company 최근 대화 가져오기 실패');
+            })
+    },
+    methods: {
+
+        /* 문의 영역 Modal 보임 */
+        showChatMoal: function(event) {
+            if (customer === null && company === null) {
+                alert("로그인한 회원만 이용 가능합니다.");
+                location.href = "/customerLogin"
+            } else {
+                this.stuId = event.target.childNodes[1].innerHTML;
+                this.custId = event.target.childNodes[2].innerHTML;
+                this.$refs.chat.setChat();
+                let chatModal = document.getElementById('chatModal');
+                chatModal.setAttribute('style', 'display:block;');
+            }
+        },
+
+        /* 문의 영역 Modal 숨김 */
+        hideChatModal: function() {
+            document.getElementById('chatModal').setAttribute('style', 'display:none;');
+        },
+    }
 }

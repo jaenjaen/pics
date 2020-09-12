@@ -1,31 +1,29 @@
-<style scoped src="@/assets/css/studioRegister/RegisterStudio.css"></style>
+<style scoped src="@/assets/css/mypage/edit/StudioEdit.css"></style>
 <template>
   <div id="app">
     <div class="container">
-      <h2>스튜디오 등록</h2>
+      <h2>스튜디오 수정</h2>
       <br />
       <section>
         <div class="row">
           <div class="col-25">
             <label for="name">
               스튜디오 이름
-              <img :src="required" width="20px" maxlength="45">
             </label>
           </div>
           <div class="col-75">
-            <input type="text" id="name" name="name" v-model="studio.name" required />
+            <input type="text" id="name" name="name" :placeholder="studio.name" disabled/>
           </div>
         </div>
         <div class="row">
           <div class="col-25">
             <label for="country">
               스튜디오 종류
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75">
-            <select id="categoryId" name="categoryId" v-model="studio.categoryId" required>
-              <option v-for="(category, index) in category" :key="index" :value="category.categoryId">{{category.categoryName}}</option>
+            <select id="categoryId" name="categoryId" disabled>
+              <option>{{categoryme}}</option>
             </select>
           </div>
         </div>
@@ -566,13 +564,13 @@
         </div>
         <div id="submitArea" class="row">
           <button type="button" id="reset" @click="resetContent()">새로쓰기</button>
-          <button type="button" id="temp" @click="tempSave()">임시저장</button>
+           <button type="button" id="delete" @click="deleteStudio()">스튜디오 삭제</button>
           <button type="submit" id="register" @click="checkLogin()">등록</button>
         </div>
       </section>
     </div>
   </div>
 </template>
-<script scoped src="@/assets/js/studioRegister/RegisterStudio.js"></script>
+<script scoped src="@/assets/js/mypage/edit/StudioEdit.js"></script>
 
 <style scoped src="vue-material/dist/vue-material.min.css"></style>

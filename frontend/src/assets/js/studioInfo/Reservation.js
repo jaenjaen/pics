@@ -1,26 +1,20 @@
 import axios from "axios";
 import Vue from 'vue';
-import VueMaterial from 'vue-material';
-//import 'vue-material/dist/vue-material.min.css';
+import VueMaterial, { MdCard } from 'vue-material';
+import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
-var eventBus = new Vue();
+// var eventBus = new Vue();
 Vue.use(VueMaterial);
 // 요일 변환을 위한 리스트
 const week = ["fri", "sat", "sun", "mon", "tue", "wed", "thu"];
 
 export default {
     name: "Reservation",
-    Props: {
-        "md-disabled-dates": [],
-        "md-model-type": String,
-        "md-immediately": true,
-        "v-model": String,
-
-    },
-
+    component: [MdCard],
     data() {
         return {
+            stuId: 0,
             // 기존 정보 변수 (GET)
             studios: [{
                 categoryId: 0,
@@ -49,7 +43,6 @@ export default {
             }],
             schedule: {},
             customer: {},
-            stuId: 10,
             //새로운 예약 관련 변수 (POST)
             start_date: "",
             end_date: "",
@@ -103,17 +96,22 @@ export default {
             errored: false,
         };
     },
-    created: function() {
-        eventBus.$on('studios', function(studioId) {
-            this.stuId = studioId;
-        });
-        eventBus.$on('customter', function(customter) {
-            this.customter = customter;
-        });
-    },
+    Props: [
+        "md-disabled-dates",
+        "md-model-type",
+        "md-immediately",
+        "v-model",
+        "stuIdData"
+    ],
+    // created() {
+    //     this.stuId = this.stuIdData;
+    //     this.customer = this.custData;
+    //     console.log(this.stuId + "|" + this.custId + "Props로 데이터 받음~~!! 여긴 Reservation");
+    // },
     mounted() {
+        this.customer = JSON.parse(sessionStorage.getItem('customer'));
         axios
-            .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/info/10") // + this.stuId)
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
@@ -124,7 +122,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 this.exceptionLength = (this.schedule.exceptionDate).length;

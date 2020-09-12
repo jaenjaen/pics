@@ -135,7 +135,7 @@ const routes = [{
         name: "Map",
         component: Map
     }, {
-        path: "/studioEdit/:comId",
+        path: "/studioEdit/:stuId",
         name: "studioEdit",
         component: StudioEdit
     }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devils.pics.domain.Category;
 import com.devils.pics.domain.RepeatDate;
+import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.domain.Tag;
@@ -129,6 +130,23 @@ public class StudioController {
 			return new ResponseEntity(studios,HttpStatus.OK);
 		} catch (Exception e) {
 			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@GetMapping("/studio/edit/{stuId}")
+	public ResponseEntity getStudio(@PathVariable int stuId) {
+		Schedule schedule = new Schedule();
+		
+		try {
+			schedule.setRepeatDate((ArrayList<RepeatDate>) scheduleService.getRepeatDateByStuId(stuId));
+			Studio studio = studioService.getStudio(stuId);
+			studio.setSchedule(schedule);
+			System.out.println(studio);
+			
+			return new ResponseEntity(studio,HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}

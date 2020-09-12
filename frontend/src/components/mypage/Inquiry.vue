@@ -35,7 +35,7 @@
                     <span style="display:none;">{{chat.stuId}}</span>
                     <span style="display:none;">{{chat.custId}}</span>
                 </td>
-                <td>{{chat.dateTime}}</td>
+                <td>{{chat.dateTime | showOnlyDate}}</td>
             </tr>
         </table>
         </div>

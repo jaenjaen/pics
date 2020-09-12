@@ -1,5 +1,5 @@
 <template>
-  <div class="publicSpace">
+  <div id="reservation_container">
     <div id="month_header">
       <button @click="beforeMonth">
         <img src="@/assets/img/util/backward.svg">

@@ -1,6 +1,7 @@
 package com.devils.pics.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,9 +40,28 @@ public class ChatController {
 		
 		return result;
 	}
+
+	/* 이제까지의 해당되는 스튜디오, 고객의 대화 모두를 가져옴 */
+	@GetMapping("/chat/prev/{stuId}/{custId}")
+	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {
+		try {
+			Map map = new HashMap();
+			map.put("stuId", stuId);
+			map.put("custId", custId);
+			List<Chat> list = chatService.getPrevAllChat(map);
+			if(list.size()>0) {
+				return new ResponseEntity(list, HttpStatus.OK);
+			}else { //해당되는 대화가 없을 경우
+				return new ResponseEntity(-1, HttpStatus.OK);
+			}
+		}catch(Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
 	
 	/* 업체의 스튜디오 및 고객별 최근 수신 대화  */
-	@GetMapping("/recentChat/{member}/{id}")
+	@GetMapping("/chat/recent/{member}/{id}")
 	public ResponseEntity getRecentComChat(@PathVariable String member, @PathVariable String id) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
 		try {

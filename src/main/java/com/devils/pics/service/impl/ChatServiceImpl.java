@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.devils.pics.dao.ChatDAO;
+import com.devils.pics.domain.Chat;
 import com.devils.pics.service.ChatService;
 
 @Repository
@@ -14,6 +15,12 @@ public class ChatServiceImpl implements ChatService {
 
 	@Autowired
 	private ChatDAO chatDao;
+	
+	/* 해당되는 스튜디오, 고객의 모든 대화를 가져옴 */
+	@Override
+	public List<Chat> getPrevAllChat(Map map) throws Exception {
+		return chatDao.getPrevAllChat(map);
+	}
 	
 	/* 업체의 스튜디오 및 고객별 최근 수신 대화  */
 	@Override

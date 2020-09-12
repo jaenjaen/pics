@@ -23,7 +23,7 @@ export default {
     },
     mounted() {
         if (customer != null) {
-            axios.get('http://127.0.0.1:7777/recentChat/cust/' + customer.custId)
+            axios.get('http://127.0.0.1:7777/chat/recent/cust/' + customer.custId)
                 .then((response) => {
                     if (response.data != -1) {
                         console.log('customer 최근 대화 가져오기 성공');
@@ -36,7 +36,7 @@ export default {
                     console.log('customer 최근 대화 가져오기 실패');
                 })
         } else if (company != null) {
-            axios.get('http://127.0.0.1:7777/recentChat/com/' + company.comId)
+            axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId)
                 .then((response) => {
                     if (response.data != -1) {
                         console.log('company 최근 대화 가져오기 성공');
@@ -81,9 +81,10 @@ export default {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"
             } else {
+                this.$refs.chat.setChat();
+                this.$refs.chat.getPrevAllChat();
                 this.stuId = event.target.childNodes[1].innerHTML;
                 this.custId = event.target.childNodes[2].innerHTML;
-                this.$refs.chat.setChat();
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
             }

@@ -46,6 +46,9 @@ export default {
             /* 업체 최근 대화 */
             recentChat: [],
 
+            /* 이전 대화 내역 */
+            prevAllChat: [],
+
             sender: "",
             word: "",
             recvList: [],
@@ -77,7 +80,8 @@ export default {
                     console.log('company 정보 가져오기 실패');
                 })
 
-            this.getRecentComChat(); //업체의 최근 수신 대화를 가져옴
+            /* 업체의 최근 수신 대화를 가져옴 */
+            this.getRecentComChat();
 
         }
     },
@@ -87,7 +91,7 @@ export default {
         this.setChat();
 
         /* 이전 대화 내역 불러오기 */
-        this.getPrevMsg();
+        this.getPrevAllChat();
     },
 
     methods: {
@@ -100,17 +104,19 @@ export default {
             if (customer != null) { //개인고객으로 로그인했을 경우
                 this.chat.sender = 0; //보내는 이 : 개인
                 this.chat.custId = customer.custId;
+                console.log("chat 데이터 세팅 완료/sender=1");
                 console.log(this.chat);
 
             } else if (company != null) { //기업고객으로 로그인했을 경우
                 this.chat.sender = 1; //보내는 이 : 기업
+                console.log("chat 데이터 세팅 완료/sender=0");
                 console.log(this.chat);
             }
         },
 
         /* 고객의 스튜디오별 최근 수신 대화 */
         getRecentCustChat() {
-            axios.get('http://127.0.0.1:7777/recentChat/cust/' + customer.custId)
+            axios.get('http://127.0.0.1:7777/chat/recent/cust/' + customer.custId)
                 .then((response) => {
                     if (response.data != -1) {
                         console.log('customer 최근 대화 가져오기 성공');
@@ -126,7 +132,7 @@ export default {
 
         /* 업체의 스튜디오 및 고객별 최근 수신 대화 */
         getRecentComChat() {
-            axios.get('http://127.0.0.1:7777/recentComChat/' + company.comId)
+            axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId)
                 .then((response) => {
                     if (response.data != -1) {
                         console.log('company 최근 대화 가져오기 성공');
@@ -140,8 +146,18 @@ export default {
         },
 
         /* 이전 대화 내역 */
-        getPrevMsg() {
-            console.log("이전 메세지 가져오기 메소드 첨부");
+        getPrevAllChat() {
+            axios.get('http://127.0.0.1:7777/chat/prev/' + 1153 + '/' + 20)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('이전 대화 내역 가져오기 성공');
+                        this.prevAllChat = response.data;
+                        console.log(this.prevAllChat);
+                    }
+                })
+                .catch(() => {
+                    console.log('company 최근 대화 가져오기 실패');
+                })
         },
 
         /* 웹소켓 연결 */

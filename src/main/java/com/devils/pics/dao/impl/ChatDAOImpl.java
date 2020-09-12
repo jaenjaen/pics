@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.devils.pics.dao.ChatDAO;
+import com.devils.pics.domain.Chat;
 
 @Repository
 public class ChatDAOImpl implements ChatDAO {
@@ -16,6 +17,11 @@ public class ChatDAOImpl implements ChatDAO {
 	private SqlSession sqlSession;
 	private final String ns = "ChatMapper.";
 
+	/* 해당되는 스튜디오, 고객의 대화를 가져옴 */
+	public List<Chat> getPrevAllChat(Map map) throws Exception{
+		return sqlSession.selectList(ns+"getPrevAllChat", map);
+	}
+	
 	/* 업체의 스튜디오 및 고객별 최근 수신 대화  */
 	@Override
 	public List<Map<String, String>> getRecentComChat(String comId) throws Exception {

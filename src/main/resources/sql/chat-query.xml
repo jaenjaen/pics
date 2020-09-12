@@ -17,6 +17,13 @@
 		<result column="dateTime" property="dateTime" />
 		<result column="sender" property="sender" />
 	</resultMap>
+	
+	<!-- 해당되는 스튜디오, 고객의 대화를 가져옴 -->
+	<select id="getPrevAllChat" parameterType="hashMap" resultType="chat">
+		SELECT * 
+		FROM chat 
+		WHERE cust_id=#{custId} AND stu_id=#{stuId};
+	</select>
 
 	<!-- 업체의 스튜디오 및 고객별 최근 수신 대화  -->
 	<select id="getRecentComChat" parameterType="string" resultMap="recentChat">

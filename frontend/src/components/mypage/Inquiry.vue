@@ -28,10 +28,10 @@
                 <td colspan="4"> 문의내역이 없습니다. </td>
             </tr>
             <tr v-else v-for="(chat) in recentComChat" :key="chat">
-                <td>{{chat.stuName}}</td>
-                <td>{{chat.custName}}</td> 
+                <td>{{chat.stuName | showLimitedContent}}</td>
+                <td>{{chat.custName | showLimitedContent}}</td> 
                 <td @click="showChatMoal($event)" class="linkToChatModal">
-                    {{chat.word}}
+                    {{chat.word | showLimitedContent}}
                     <span style="display:none;">{{chat.stuId}}</span>
                     <span style="display:none;">{{chat.custId}}</span>
                 </td>

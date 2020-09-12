@@ -36,6 +36,15 @@ export default {
             })
     },
     filters: {
+        /* 스튜디오 이름과 고객 닉네임, 문의 내용 글자수를 20자까지만 화면에 보여줌 */
+        showLimitedContent(value) {
+            if (value.length > 20) {
+                return value.substring(0, 20) + "... ";
+            } else {
+                return value;
+            }
+
+        },
         /* 문의 날짜를 연/월/일로 분할함 */
         showOnlyDate(value) {
             for (let i = 0; i < value.length; i++) {

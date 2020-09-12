@@ -58,5 +58,25 @@ public class ExtraServiceImpl implements ExtraService {
 		return extraDao.deleteReview(reviewId);
 	}
 
+	@Override
+	public List<Studio> getBookmarkList(int custId) throws Exception {
+		List<Studio> list = extraDao.getBookmarkList(custId);
+		
+		for(Studio std : list) {
+			String oneMainImg =std.getMainImg().split(",")[0];
+			std.setMainImg(oneMainImg);
+			
+			if(!oneMainImg.contains("jpg")) {
+				String word1= std.getMainImg().concat(".jpg");
+				std.setMainImg(word1);
+			}
+			if(oneMainImg.contains("/")){
+				String word2= std.getMainImg().replace("/", "");
+				std.setMainImg(word2);
+			}
+		}
+		return list;
+	}
+
 	
 }

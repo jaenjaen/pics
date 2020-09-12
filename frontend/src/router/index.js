@@ -72,8 +72,8 @@ const routes = [{
         component: Mypage
     },
     {
-        path: "/wishlist/:stuid",
-        name: "wishlist",
+        path: "/wishlist/:custId",
+        name: "wishList",
         component: WishList
     },
     {

@@ -28,6 +28,18 @@
 		</association>
 	</resultMap>
 	
+	
+	<resultMap type="studio" id="bookmarkListRM">
+		<result property="stuId" column="stu_id"/>
+		<result property="categoryId" column="category_id"/>
+		<result property="name" column="name"/>
+		<result property="mainImg" column="main_img"/>
+		<association property="studioFilter" javaType="studioFilter">
+			<result property="unitPrice" column="unit_price"/>
+			<result property="address" column="address"/>			
+		</association>
+	</resultMap>
+	
 	<!-- Bookmark -->
 	<insert id="addBookmark" parameterType="bookmark">
 		INSERT INTO bookmark (stu_id,cust_id) 
@@ -83,4 +95,13 @@
 		DELETE FROM review
 		WHERE review_id = #{value}
 	</delete>
+	
+	<select id="bookmarkList" parameterType="int" resultMap="bookmarkListRM">
+		select st.stu_id, st.category_id, st.name, st.main_img,
+		stf.unit_price, stf.address
+		from studio as st join studio_filter as stf on st.stu_id= stf.stu_id
+    	where st.stu_id in (select stu_id from bookmark where cust_id=#{value})
+	</select>
+	
+	
 </mapper>

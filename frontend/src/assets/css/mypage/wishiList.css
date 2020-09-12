@@ -1,0 +1,68 @@
+.whish_container {
+    width: 768px;
+    margin: 0 auto;
+    padding-bottom: 51px;
+    background-color: #fff;
+}
+
+.title {
+    margin: 0;
+    padding: 20px 0px;
+    font-size: 25px;
+    font-weight: 700;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.card {
+    display: flex;
+    height: 300px;
+}
+
+.card,
+.card-image {
+    border-radius: 10px;
+}
+
+img {
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.card-image,
+img {
+    width: 450px;
+    height: 300px !important;
+}
+
+.card-content {
+    padding-top: 40px !important;
+    width: 318px;
+    color: black;
+}
+
+.name {
+    text-align: left;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.category div p {
+    text-align: left;
+    padding-top: 15px;
+}
+
+#price {
+    padding-top: 80px;
+    text-align: right;
+}
+
+.price {
+    font-size: 25px;
+    font-weight: 600;
+    color: #33a3dc;
+}
+
+#review {
+    padding: 30px;
+}

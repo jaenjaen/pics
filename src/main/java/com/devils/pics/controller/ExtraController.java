@@ -120,4 +120,15 @@ public class ExtraController {
 		}
 	}
 	
+	@GetMapping("/bookmarklist/{custId}")
+	public ResponseEntity getBookmarkList(@PathVariable int custId) {
+		try {
+			List<Studio> list= extraService.getBookmarkList(custId);
+			
+			return new ResponseEntity(list,HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 }

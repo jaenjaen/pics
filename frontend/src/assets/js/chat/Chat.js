@@ -78,14 +78,13 @@ export default {
                 })
 
             this.getRecentComChat(); //업체의 최근 수신 대화를 가져옴
-        }
 
-        /* 채팅 접속시 설정 */
-        this.setChat();
+        }
     },
 
     mounted() {
-        //this.getRecentComChat();
+        /* 채팅 접속시 설정 */
+        this.setChat();
 
         /* 이전 대화 내역 불러오기 */
         this.getPrevMsg();

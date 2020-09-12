@@ -9,14 +9,14 @@
             <tr v-if="inquiryFlag">
                 <td colspan="3"> 문의내역이 없습니다. </td>
             </tr>
-            <tr v-else v-for="(chat) in recentChat" :key="chat">
-                <td>{{chat.stuName | showLimitedContent}}({{chat.comName | showLimitedContent}})</td>
+            <tr v-else v-for="(custChat) in recentChat" :key="custChat">
+                <td>{{custChat.stuName | showLimitedContent}}({{custChat.comName | showLimitedContent}})</td>
                 <td @click="showChatMoal($event)" class="linkToChatModal">
-                    {{chat.word | showLimitedContent}}
-                    <span style="display:none;">{{chat.stuId}}</span>
-                    <span style="display:none;">{{chat.custId}}</span>
+                    {{custChat.word | showLimitedContent}}
+                    <span style="display:none;">{{custChat.stuId}}</span>
+                    <span style="display:none;">{{custChat.custId}}</span>
                 </td>
-                <td>{{chat.dateTime | showOnlyDate}}</td>
+                <td>{{custChat.dateTime | showOnlyDate}}</td>
             </tr>
         </table>
         </div>
@@ -30,15 +30,15 @@
             <tr tr v-if="inquiryFlag">
                 <td colspan="4"> 문의내역이 없습니다. </td>
             </tr>
-            <tr v-else v-for="(chat) in recentChat" :key="chat">
-                <td>{{chat.stuName | showLimitedContent}}</td>
-                <td>{{chat.custName | showLimitedContent}}</td> 
+            <tr v-else v-for="(comChat) in recentChat" :key="comChat">
+                <td>{{comChat.stuName | showLimitedContent}}</td>
+                <td>{{comChat.custName | showLimitedContent}}</td> 
                 <td @click="showChatMoal($event)" class="linkToChatModal">
-                    {{chat.word | showLimitedContent}}
-                    <span style="display:none;">{{chat.stuId}}</span>
-                    <span style="display:none;">{{chat.custId}}</span>
+                    {{comChat.word | showLimitedContent}}
+                    <span style="display:none;">{{comChat.stuId}}</span>
+                    <span style="display:none;">{{comChat.custId}}</span>
                 </td>
-                <td>{{chat.dateTime | showOnlyDate}}</td>
+                <td>{{comChat.dateTime | showOnlyDate}}</td>
             </tr>
         </table>
         </div>

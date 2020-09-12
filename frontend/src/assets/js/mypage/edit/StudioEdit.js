@@ -107,7 +107,12 @@ export default {
             tagCount: 0,
 
             /* 동의 체크 개수 - 3개 모두 동의 */
-            agreeCount: 0
+            agreeCount: 0,
+
+            /*placeholder용 */
+            tag1: "",
+            tag2: "",
+            tag3: "",
         };
     },
     created() {
@@ -149,10 +154,19 @@ export default {
                 this.studio.studioFilter.unitPrice = data.studioFilter.unitPrice;
                 this.studio.studioFilter.defaultCapacity = data.studioFilter.defaultCapacity;
                 this.studio.studioFilter.excharge = data.studioFilter.excharge;
-                this.address1 = data.studioFilter.address;
+                this.studio.studioFilter.address = data.studioFilter.address;
                 this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
-                this.studio.tag = data.tag;
+                this.tag = data.tag
+
+                /* placeholder용 */
+                this.floorNum = data.floor;
+                this.sizeValue = data.studioFilter.size;
+                this.address1 = data.studioFilter.address;
+
+                this.tag1 = data.tag[0].tagName;
+                this.tag2 = data.tag[1].tagName;
+                this.tag3 = data.tag[2].tagName;
                 console.log(this.studio);
             })
             .catch(err => {

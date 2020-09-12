@@ -23,7 +23,7 @@
           </div>
           <div class="col-75">
             <select id="categoryId" name="categoryId" disabled>
-              <option>{{categoryme}}</option>
+              <option>{{category}}</option>
             </select>
           </div>
         </div>
@@ -114,15 +114,15 @@
           </div>
           <div class="col-25 tag">
             <label id="hashtag1">#</label>
-            <input type="text" name="tag" maxlength="45" style="text-indent:10px;" />
+            <input type="text" name="tag" maxlength="45" :placeholder="tag1" style="text-indent:10px;" />
           </div>
           <div class="col-25 tag">
             <label id="hashtag2">#</label>
-            <input type="text" name="tag" maxlength="45" style="text-indent:10px;" />
+            <input type="text" name="tag" maxlength="45" :placeholder="tag2" style="text-indent:10px;" />
           </div>
           <div class="col-25 tag">
             <label id="hashtag3">#</label>
-            <input type="text" name="tag" maxlength="45" style="text-indent:10px;" />
+            <input type="text" name="tag" maxlength="45" :placeholder="tag3" style="text-indent:10px;" />
           </div>
         </div>
         <div class="row">
@@ -160,7 +160,7 @@
             <label for="floor">층수</label>
           </div>
           <div class="col-25">
-            <label class="inContent">층</label>
+            <label class="inContent" :placeholder="studio.floor">층</label>
             <div class="outContainer">
                 <label class="sizeLabel">
                   <input class="tgl tgl-flip" id="underground" @change="changeFloor()" type="checkbox"/>
@@ -564,7 +564,7 @@
         </div>
         <div id="submitArea" class="row">
           <button type="button" id="reset" @click="resetContent()">새로쓰기</button>
-           <button type="button" id="delete" @click="deleteStudio()">스튜디오 삭제</button>
+          <button type="button" id="delete" @click="deleteStudio()">스튜디오 삭제</button>
           <button type="submit" id="register" @click="checkLogin()">등록</button>
         </div>
       </section>

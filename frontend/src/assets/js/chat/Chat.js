@@ -44,7 +44,7 @@ export default {
             },
 
             /* 업체 최근 대화 */
-            recentComChat: [],
+            recentChat: [],
 
             sender: "",
             word: "",
@@ -56,13 +56,14 @@ export default {
         /* vue가 생성되면 소켓 연결 시도 */
         this.connect();
 
-        /* 세션에 있는 정보를 data에 바인딩 */
         if (customer != null) { //개인고객으로 로그인했을 경우
-            this.customer = customer; //customer 데이터에 바인딩
+            this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
             console.log(this.customer);
 
+            this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
+
         } else if (company != null) { //기업고객으로 로그인했을 경우
-            this.company = company;
+            this.company = company; //세션에 있는 업체 정보를 company 데이터에 바인딩
             console.log(this.company);
 
             /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
@@ -75,6 +76,8 @@ export default {
                 .catch(() => {
                     console.log('company 정보 가져오기 실패');
                 })
+
+            this.getRecentComChat(); //업체의 최근 수신 대화를 가져옴
         }
 
         /* 채팅 접속시 설정 */
@@ -104,6 +107,22 @@ export default {
                 this.chat.sender = 1; //보내는 이 : 기업
                 console.log(this.chat);
             }
+        },
+
+        /* 고객의 스튜디오별 최근 수신 대화 */
+        getRecentCustChat() {
+            axios.get('http://127.0.0.1:7777/recentChat/cust/' + customer.custId)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('customer 최근 대화 가져오기 성공');
+                        this.recentChat = response.data;
+                        console.log(this.recentChat);
+                        this.inquiryFlag = false;
+                    }
+                })
+                .catch(() => {
+                    console.log('customer 최근 대화 가져오기 실패');
+                })
         },
 
         /* 업체의 스튜디오 및 고객별 최근 수신 대화 */

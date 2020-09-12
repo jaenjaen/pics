@@ -22,6 +22,7 @@ export default {
                 add: 'http://localhost:7777/upload/default/add.png',
                 send: 'http://localhost:7777/upload/default/send.png'
             },
+            chatListFlag: false,
             chat: {
                 chatId: '',
                 custId: '',
@@ -211,12 +212,14 @@ export default {
                 if (obj == 'chatListModal') {
                     document.getElementById('chatListHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatHeader').setAttribute('style', 'display:none;');
+                    document.getElementById('chat-wrapper').setAttribute('style', 'display:none;');
                 }
             } else if (cmd == 'hide') {
                 document.getElementById(obj).setAttribute('style', 'display:none;');
                 if (obj == 'chatListModal') {
                     document.getElementById('chatHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatListHeader').setAttribute('style', 'display:none;');
+                    document.getElementById('chat-wrapper').setAttribute('style', 'display:block;');
                 }
             }
         },

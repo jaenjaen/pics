@@ -17,7 +17,7 @@
         </tr>
       </table>
     </div>
-    <MypageGap categoryName="문의내역" cateogryURL="#"/>
+    <MypageGap categoryName="문의내역" cateogryURL="/chatShow"/>
     <!-- 문의 내역-->
     <Inquiry :customerMode="true"/>
     <MypageGap categoryName="스튜디오 리뷰" cateogryURL="#"/>

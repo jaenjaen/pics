@@ -70,6 +70,11 @@ export default {
         }
     },
     methods: {
+        /* 전체 문의 내역 확인 */
+        showAllChat() {
+            this.$refs.chat.controlModal('show', 'chatListModal');
+        },
+
         /* 문의 영역 Modal 보임 */
         showChatMoal: function(event) {
             if (customer === null && company === null) {

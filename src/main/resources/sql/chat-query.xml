@@ -24,7 +24,7 @@
 		comId, comName, comLogo, 
 		cs.stuId, stuName, 
 		custId, custName, custLogo, 
-		chatId, word, dateTime
+		chatId, word, DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime
 		FROM
 			(SELECT 
 			c.com_id comId, c.name comName, c.logo_img comLogo,

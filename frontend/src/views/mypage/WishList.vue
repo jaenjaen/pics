@@ -1,8 +1,8 @@
 <template>
   <div class="whish_container">
     <p class="title">찜 리스트 (*^ω^*)</p>
-    <a href v-for="(studio,index) in studios" :key="index">
-      <div class="card">
+    <a v-for="(studio,index) in studios" :key="index">
+      <div class="card" @click.prevent="ToInfo(studio.stuId)">
         <div class="card-image">
           <img :src="getImgUrl(studio.mainImg)" />
         </div>
@@ -13,14 +13,7 @@
               <img
                 id="fullheart"
                 src="@/assets/img/util/fullheart.svg"
-                @click.prevent="removeBookmark()"
-                v-show="!heartShow"
-              />
-              <img
-                id="heart"
-                src="@/assets/img/util/heart.svg"
-                @click.prevent="putBookmark()"
-                v-show="heartShow"
+                @click.prevent="removeBookmark(studio.bookmark[0].bookId)"
               />
             </div>
           </div>

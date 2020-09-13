@@ -37,12 +37,15 @@ img {
 }
 
 .card-content {
-    padding-top: 40px !important;
+    padding-top: 20px !important;
     width: 318px;
     color: black;
 }
 
 .name {
+    width: 270px;
+    height: 70px;
+    overflow: hidden;
     text-align: left;
     display: flex;
     justify-content: space-between;
@@ -64,7 +67,7 @@ img {
 }
 
 #price {
-    padding-top: 80px;
+    padding-top: 60px;
     text-align: right;
 }
 

@@ -68,6 +68,7 @@ public class ExtraController {
 	
 	@DeleteMapping("/bookmark/{bookId}")
 	public ResponseEntity deleteBookmark(@PathVariable int bookId) {
+		System.out.println("deleteBookmark 호출됬다. ");
 		try {
 			int n= extraService.deleteBookmark(bookId);
 			

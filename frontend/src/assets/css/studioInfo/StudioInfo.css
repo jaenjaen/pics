@@ -53,14 +53,18 @@ section {
 
 .section-bookmark-share-field {
     float: right;
-    margin: 4px;
+    margin-right: 3%;
+    margin-top: 9px;
 }
 
 #share-btn {
-    border: lightgray;
+    float: right;
+    border: white;
     border-radius: 100%;
-    background-color: none;
-    size: 0.7em;
+    background-color: white;
+    size: 0.5em;
+    margin-right: 1%;
+    margin-top: 7px;
 }
 
 .tag-btn:hover {
@@ -139,8 +143,7 @@ article {
 #Studio-Filter-Table td {
     text-align: right;
     border-bottom: 1.5px solid #bbb5b5;
-    padding: 10px;
-    float: left;
+    padding: 10px 10px 10px 10px;
 }
 
 .article-map-field {
@@ -197,11 +200,14 @@ article {
     display: table-cell;
 }
 
+.star-score {
+    margin: 3px auto;
+}
+
 #material-icons {
-    margin: 2% 5% 1% 5%;
     display: table-cell;
-    size: 0.5em;
-    color: #029BE0;
+    width: 7px;
+    height: 7px;
 }
 
 #review-content {
@@ -244,8 +250,14 @@ article {
 }
 
 #countReview {
-    color: lightgray;
+    float: left;
+    color: gray;
     font-size: small;
+}
+
+#more-review {
+    text-align: right;
+    margin: 2% 2% 2% 3%;
 }
 
 hr {

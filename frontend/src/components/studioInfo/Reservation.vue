@@ -13,7 +13,7 @@
                 </thead>
                 <tbody  v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
                   <tr>
-                    <td>{{repeate.weekDate|dayFilter}}</td>
+                    <td>{{repeate.weekday|dayFilter}}</td>
                     <td>{{repeate.time|timeFilter}}</td>
                   </tr>
                 </tbody>
@@ -27,7 +27,8 @@
               <div class="col s12 m6">
                 <strong>예약 시작일</strong>
                 <span class="start-date">
-                  <md-datepicker 
+                  <md-datepicker
+                  id="start_date"
                   v-model="start_date" 
                  :md-model-type="String"
                   :md-immediately="true"
@@ -39,6 +40,7 @@
                 <strong>예약 종료일</strong>
                 <span class="end-date">
                   <md-datepicker 
+                  id="end_date"
                   v-model="end_date"
                  :md-model-type="String"
                   :md-immediately="true"
@@ -55,7 +57,7 @@
             <div class="time-input-field">
               <md-field class="start-time">
                 <label for="time">예약 시작 시간</label>
-                  <md-select id="start_time" 
+                  <md-select
                     v-model="start_time" 
                     required
                     style="width:30%">
@@ -71,7 +73,7 @@
                   <br />
               <md-field class="end-time">
                 <label for="time">예약 종료 시간</label>
-                  <md-select id="end_time" 
+                  <md-select
                     v-model="end_time" 
                     required
                     style="width:30%">
@@ -85,7 +87,7 @@
               </md-field>
             </div>
           </div>
-          <span>{{msg}}</span>
+          <!-- <span>{{msg}}</span> -->
           <br />
           <br />
           <!-- 인원 -->

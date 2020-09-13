@@ -43,14 +43,13 @@
 			<result property="mainImg" column="main_img"/>
 			<result property="portImg" column="port_img"/>
 			<result property="cadImg" column="cad_img"/>
-			<result property="floor" column="floor"/>
-			
+			<result property="floor" column="floor"/>		
 		</association>
 	</resultMap>
 	
 	<sql id="select-reservation-studio">
 		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
-				,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
 		FROM reservation r,studio s
 	</sql>
 	
@@ -62,7 +61,7 @@
 	</select>
 
 	<select id="getRepeatDate" parameterType="int" resultType="repeatDate">							
-		SELECT rep.repeat_id,rep.weekday weekDate, rep.time
+		SELECT rep.repeat_id,rep.weekday, rep.time
 		FROM repeat_date rep
 		WHERE rep.stu_id=${value}
 	</select>

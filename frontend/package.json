@@ -28,6 +28,7 @@
         "sockjs-client": "^1.5.0",
         "update": "^0.7.4",
         "v-clipboard": "^2.2.3",
+        "v-gantt-chart": "^1.5.0",
         "vue": "^2.6.11",
         "vue-carousel": "^0.18.0",
         "vue-chartjs": "^3.5.1",

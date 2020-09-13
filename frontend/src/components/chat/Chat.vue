@@ -7,7 +7,7 @@
                 <a href="javascript:;" @click="controlModal('show', 'chatListModal')">
                     <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
                 </a>
-                <span id="otherNickname">상대방 닉네임</span>
+                <span id="otherNickname">{{chat.stuId}}</span>
                 <img id="otherProfile" class="profile" :src="defaultImg.user">
             </div>
             <div id="chatListHeader">

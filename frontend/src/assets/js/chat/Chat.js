@@ -43,7 +43,7 @@ export default {
                 studioList: []
             },
 
-            /* 업체 최근 대화 */
+            /* 최근 대화 */
             recentChat: [],
 
             /* 이전 대화 내역 */
@@ -147,7 +147,7 @@ export default {
 
         /* 이전 대화 내역 */
         getPrevAllChat() {
-            axios.get('http://127.0.0.1:7777/chat/prev/' + 1153 + '/' + 20)
+            axios.get('http://127.0.0.1:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId)
                 .then((response) => {
                     if (response.data != -1) {
                         console.log('이전 대화 내역 가져오기 성공');
@@ -159,6 +159,8 @@ export default {
                     console.log('company 최근 대화 가져오기 실패');
                 })
         },
+
+        /*  */
 
         /* 웹소켓 연결 */
         connect() {

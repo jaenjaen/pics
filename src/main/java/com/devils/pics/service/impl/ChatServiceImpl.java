@@ -32,5 +32,28 @@ public class ChatServiceImpl implements ChatService {
 	public List<Map<String, String>> getRecentCustChat(String custId) throws Exception{
 		return chatDao.getRecentCustChat(custId);
 	}
-
+	
+	/* RecentComChat에서 현재 대화 중인 고객 인덱스 뽑아오기 */
+	public int getPresentCustIndex(String comId, String custId) throws Exception {
+		int index = -1;
+		List<Map<String, String>> list = getRecentComChat(comId);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).get("custId").equals(custId)) {
+				index = i;
+			}
+		}
+		return index;
+	}
+	
+	/* RecentCustChat에서 현재 대화 중인 스튜디오 인덱스 뽑아오기 */
+	public int getPresentStuIndex(String custId, String stuId) throws Exception {
+		int index = -1;
+		List<Map<String, String>> list = getRecentCustChat(custId);
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).get("stuId").equals(stuId)) {
+				index = i;
+			}
+		}
+		return index;
+	}
 }

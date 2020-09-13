@@ -8,7 +8,21 @@
         </div>
         <div class="card-content">
           <div>
-            <div class="name">{{studio.name | forSpace}}</div>
+            <div class="name">
+              <h5>{{studio.name | forSpace}}</h5>
+              <img
+                id="fullheart"
+                src="@/assets/img/util/fullheart.svg"
+                @click.prevent="removeBookmark()"
+                v-show="!heartShow"
+              />
+              <img
+                id="heart"
+                src="@/assets/img/util/heart.svg"
+                @click.prevent="putBookmark()"
+                v-show="heartShow"
+              />
+            </div>
           </div>
 
           <div class="category">

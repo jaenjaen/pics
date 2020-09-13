@@ -7,6 +7,7 @@ export default {
             custId: this.$route.params.custId,
             studios: [],
             //bookmark 변수
+            heartShow: false
         }
     },
     mounted() {
@@ -19,11 +20,17 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
+
+
+
     },
     methods: {
         getImgUrl(url) {
             return require("@/assets/img/studio/" + url);
         },
+        removeBookmark() {
+
+        }
 
     },
     filters: {

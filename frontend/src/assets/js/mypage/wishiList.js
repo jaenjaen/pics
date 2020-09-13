@@ -7,7 +7,7 @@ export default {
             custId: this.$route.params.custId,
             studios: [],
             //bookmark 변수
-            heartShow: false
+            deleteResponse: ''
         }
     },
     mounted() {
@@ -28,8 +28,21 @@ export default {
         getImgUrl(url) {
             return require("@/assets/img/studio/" + url);
         },
-        removeBookmark() {
+        removeBookmark(bookId) {
+            axios
+                .delete("http://127.0.0.1:7777/bookmark/" + bookId)
+                .then(response => (this.deleteResponse = response.data))
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => (this.loading = false));
+            console.log("북마크 삭제 완료")
+            location.reload();
 
+        },
+        ToInfo(stuId) {
+            this.$router.push("/studioInfo/" + stuId);
         }
 
     },

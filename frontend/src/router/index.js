@@ -85,7 +85,7 @@ const routes = [{
         path: "/studioInfo/:stuId",
         name: "studioInfo",
         component: StudioInfo,
-        props: true
+        // props: true
     },
     {
         path: "/studioList",

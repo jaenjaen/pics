@@ -19,18 +19,20 @@ Vue.use(VModal);
 // var eventBus = new Vue();
 export default {
     name: "studio-info",
-    components: { carousel, Reservation, TimeChart, DayChart, Map, Chat },
-    props: {
-        stuId: {
-            type: Number,
-            default: 10,
-        },
+    components: {
+        carousel,
+        Reservation,
+        TimeChart,
+        DayChart,
+        Map,
+        Chat
     },
     event: 'studios',
     data: function() {
         return {
             // studio 관련 변수 (GET)
             customer: {},
+            stuId: this.$route.params.stuId,
             studios: [{
                 categoryId: 0,
                 name: "",

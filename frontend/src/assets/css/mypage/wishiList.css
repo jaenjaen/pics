@@ -24,15 +24,16 @@
     border-radius: 10px;
 }
 
-img {
-    border-top-left-radius: 10px !important;
-    border-bottom-left-radius: 10px !important;
-}
-
-.card-image,
-img {
+.card-image {
+    overflow: hidden;
     width: 450px;
     height: 300px !important;
+}
+
+img {
+    height: 100% !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
 }
 
 .card-content {
@@ -43,8 +44,18 @@ img {
 
 .name {
     text-align: left;
-    font-size: 30px;
-    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+}
+
+.name h5 {
+    font-weight: 400;
+}
+
+.name img {
+    width: 25px;
+    padding-top: 18px;
+    margin-right: 10px;
 }
 
 .category div p {
@@ -65,4 +76,19 @@ img {
 
 #review {
     padding: 30px;
+}
+
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black !important;
+    text-decoration: none !important;
 }

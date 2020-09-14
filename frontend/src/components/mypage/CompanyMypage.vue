@@ -2,6 +2,7 @@
   <div class="mypage_container">
     <MypageNametag :customerMode="false" />
     <MypageGap categoryName="예약관리" cateogryURL="#"/>
+
     <!-- 예약관리-->
     <div class="mypage_card" style="height:500px;">
       <div id="calendar_header">
@@ -16,29 +17,27 @@
         </button>
         <span>2020.09.13~2020.09.20</span>
         
-        <select>
-          <option value="stu_id">카페로제</option>
-          <option value="stu_id">팩토리바다</option>
-          <option value="stu_id">바다바다</option>
-          <option value="stu_id">로코코_경주</option>
-          <option value="stu_id">후오비_블록체인_커피하우스(달콤커피_논현점)</option>
+        <select v-model="selectedId" @change="getStudioReservation">
+          <option value="" v-if="studioFlag" disabled> 등록된 스튜디오가 없습니다. </option>
+          <option value="" v-if="!studioFlag" disabled> 스튜디오를 선택해주세요. </option>
+          <option v-for="studio in studioList" :key="studio" :value="studio.stuId">
+            {{ studio.name }}
+          </option>
         </select>
 
       </div>
       <calendar style="height:450px;"
       :calendars="calendarList"
         :schedules="scheduleList"
-        :taskView="taskView"
-        :theme="theme"
-        :week="week"
-        :month="month"
-        :disableDblClick="disableDblClick"
-        :isReadOnly="isReadOnly"
-        :useCreationPopup="useCreationPopup"
-        :useDetailPopup="useDetailPopup"
+        :taskView="false"
+        :disableDblClick="true"
+        :isReadOnly="false"
+        :useCreationPopup="true"
+        :useDetailPopup="true"
       /> 
     </div>
     <MypageGap categoryName="스튜디오 관리 +" cateogryURL="http://localhost:9999/registerStudio"/>
+
     <!-- 문의 내역-->
     <div class="mypage_card">
        <table>
@@ -56,6 +55,7 @@
       </table>
     </div>
     <MypageGap categoryName="문의내역" cateogryURL="/chatShow"/>
+
     <!-- 리뷰 -->
     <Inquiry :customerMode="false"/>
   </div>
@@ -63,6 +63,7 @@
 
 <script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
+
 <style scoped src="@/assets/css/mypage/calendar.css"></style>
 
 

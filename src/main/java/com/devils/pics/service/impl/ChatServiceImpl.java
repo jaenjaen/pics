@@ -1,5 +1,7 @@
 package com.devils.pics.service.impl;
 
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -33,27 +35,13 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.getRecentCustChat(custId);
 	}
 	
-	/* RecentComChat에서 현재 대화 중인 고객 인덱스 뽑아오기 */
-	public int getPresentCustIndex(String comId, String custId) throws Exception {
-		int index = -1;
-		List<Map<String, String>> list = getRecentComChat(comId);
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).get("custId").equals(custId)) {
-				index = i;
-			}
-		}
-		return index;
+	/* 고객 기본 정보(아이디, 이름, 프로필 사진) 가져오기 */
+	public Map<String, String> getCustDefaultInfo(String custId) throws Exception {
+		return chatDao.getCustDefaultInfo(custId);
 	}
-	
-	/* RecentCustChat에서 현재 대화 중인 스튜디오 인덱스 뽑아오기 */
-	public int getPresentStuIndex(String custId, String stuId) throws Exception {
-		int index = -1;
-		List<Map<String, String>> list = getRecentCustChat(custId);
-		for(int i=0; i<list.size(); i++) {
-			if(list.get(i).get("stuId").equals(stuId)) {
-				index = i;
-			}
-		}
-		return index;
+
+	/* 스튜디오 기본 정보(스튜디오 아이디, 스튜디오 이름, 회사 아이디, 회사 이름, 회사 프로필 ) 가져오기*/
+	public Map<String, String> getStuDefaultInfo(String stuId) throws Exception {
+		return chatDao.getStuDefaultInfo(stuId);
 	}
 }

@@ -21,8 +21,12 @@ public class ChatTest {
 	
 	@Test
 	void chatTest() throws IOException {
-		List<Map<String, String>> map  = new ArrayList<>();
-		map = sqlSession.selectList(ns+"getRecentComChat", "1234@admin.com");
+		Map<String, String> map = new HashMap();
+		//List<Map<String, String>> map  = new ArrayList<>();
+		//map = sqlSession.selectList(ns+"getRecentComChat", "1234@admin.com");
+		map = sqlSession.selectOne(ns+"getStuDefaultInfo", "1153");
+		System.out.println(map);
+		map = sqlSession.selectOne(ns+"getCustDefaultInfo", "20");
 		System.out.println(map);
 	}
 }

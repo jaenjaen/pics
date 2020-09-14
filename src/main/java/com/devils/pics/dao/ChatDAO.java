@@ -14,4 +14,11 @@ public interface ChatDAO {
 	
 	/* 고객의 스튜디오별 최근 수신 대화  */
 	public List<Map<String, String>> getRecentCustChat(String custId) throws Exception;
+	
+	/* 고객 기본 정보(아이디, 이름, 프로필 사진) 가져오기 */
+	public Map<String, String> getCustDefaultInfo(String custId) throws Exception;
+
+	/* 스튜디오 기본 정보(스튜디오 아이디, 스튜디오 이름, 회사 아이디, 회사 이름, 회사 프로필 ) 가져오기*/
+	public Map<String, String> getStuDefaultInfo(String stuId) throws Exception;
+
 }

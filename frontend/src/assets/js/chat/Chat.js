@@ -22,7 +22,6 @@ export default {
                 add: 'http://localhost:7777/upload/default/add.png',
                 send: 'http://localhost:7777/upload/default/send.png'
             },
-            chatListFlag: false,
             chat: {
                 chatId: '',
                 custId: '',
@@ -49,6 +48,17 @@ export default {
             /* 이전 대화 내역 */
             prevAllChat: [],
 
+            /* 현재 대화 중인 상대방 */
+            presentStu: {},
+            presentCust: {},
+
+            /* 고객/기업모드 여부 */
+            cutomerMode: '',
+
+            /* 프로필 사진 존재 유무 */
+            isExistMyProfile: false,
+            isExistOtherProfile: true,
+
             sender: "",
             word: "",
             recvList: [],
@@ -60,12 +70,14 @@ export default {
         this.connect();
 
         if (customer != null) { //개인고객으로 로그인했을 경우
+            this.cutomerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
             console.log(this.customer);
 
             this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
 
         } else if (company != null) { //기업고객으로 로그인했을 경우
+            this.cutomerMode = false; //고객모드 OFF
             this.company = company; //세션에 있는 업체 정보를 company 데이터에 바인딩
             console.log(this.company);
 
@@ -92,6 +104,17 @@ export default {
 
         /* 이전 대화 내역 불러오기 */
         this.getPrevAllChat();
+    },
+
+    filters: {
+        /* 스튜디오 이름과 고객 닉네임, 문의 내용 글자수를 15자까지만 화면에 보여줌 */
+        showLimitedContent(value) {
+            if (value != undefined && value.length > 15) {
+                return value.substring(0, 15) + "... ";
+            } else {
+                return value;
+            }
+        }
     },
 
     methods: {
@@ -136,8 +159,8 @@ export default {
                 .then((response) => {
                     if (response.data != -1) {
                         console.log('company 최근 대화 가져오기 성공');
-                        this.recentComChat = response.data;
-                        console.log(this.recentComChat);
+                        this.recentChat = response.data;
+                        console.log(this.recentChat);
                     }
                 })
                 .catch(() => {
@@ -160,7 +183,35 @@ export default {
                 })
         },
 
-        /*  */
+        /* 현재 대화 중인 스튜디오 정보 가져오기 */
+        getPresentStu() {
+            axios.get('http://127.0.0.1:7777/chat/info/stu/' + this.chat.stuId)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('현재 대화 중인 Studio 정보 가져오기 성공');
+                        this.presentStu = response.data;
+                        console.log(this.presentStu);
+                    }
+                })
+                .catch(() => {
+                    console.log('현재 대화 중인 Studio 정보 가져오기 실패');
+                })
+        },
+
+        /* 현재 대화 중인 고객 정보 가져오기 */
+        getPresentCust() {
+            axios.get('http://127.0.0.1:7777/chat/info/cust/' + this.chat.custId)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('현재 대화 중인 Customer 정보 가져오기 성공');
+                        this.presentCust = response.data;
+                        console.log(this.presentCust);
+                    }
+                })
+                .catch(() => {
+                    console.log('현재 대화 중인 Customer 정보 가져오기 실패');
+                })
+        },
 
         /* 웹소켓 연결 */
         connect() {

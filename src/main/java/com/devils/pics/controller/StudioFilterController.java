@@ -42,7 +42,7 @@ public class StudioFilterController {
 	@PostMapping("/studio/search/filter")
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
-			System.out.println("/studio/search/"+filters+"들어옴 ");
+			//System.out.println("/studio/search/"+filters+"들어옴 ");
 
 			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
 			for(Studio std : list) {
@@ -105,7 +105,7 @@ public class StudioFilterController {
 	    // 추천 장소 보내주기 
 		@GetMapping("/studio/popular")
 		public ResponseEntity popularStudio(){
-			System.out.println("/studio/popular 들어옴");
+			//System.out.println("/studio/popular 들어옴");
 			try {
 				List<Studio> list = studioFilterService.searchStudio();
 				List<Studio> sendList = new ArrayList<>();

@@ -82,7 +82,6 @@ export default {
                 location.href = "/customerLogin"
             } else {
                 this.$refs.chat.setChat();
-                this.$refs.chat.getPrevAllChat();
                 this.stuId = event.target.childNodes[1].innerHTML;
                 this.custId = event.target.childNodes[2].innerHTML;
                 let chatModal = document.getElementById('chatModal');

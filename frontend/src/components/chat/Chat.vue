@@ -25,85 +25,38 @@
 
         <!-- 채팅 본문 : 대화 내용 -->
         <div id="chat-wrapper" class='chat-wrapper'>
-            <div class='chat-message padding'>
-              <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default profile' :src='presentStu.comLogo' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Sushi tonight?</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='customer.imgSrc' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Pizza?</p>
-                      <p>We had sushi last time!</p>
-                      <p>For me one Vegetariana! Plus some chili oil on it!</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localisation font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
+            <div id="custModeChat" class='chat-message padding'>
+                <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
+                    <!-- 상대방 -->
+                    <div class='chat-message chat-message-recipient'>
+                        <img class='chat-image chat-image-default profile' :src='presentStu.comLogo' />
+                        <div class='chat-message-wrapper'>
+                            <div class='chat-message-content'>
+                                <p>{{prev.word}}</p>
+                            </div><!-- chat-message-content -->
+                            <div class='chat-details'>
+                                <span class='chat-message-localization font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-read-status font-size-small'>- Read</span>
+                            </div><!-- chat-details -->
+                        </div><!-- chat-message-wrapper -->
+                    </div><!-- chat-message-recipient -->
 
-                  </div>
-              </div>
-              <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Done. Delivery takes 5 minutes!</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localisation font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Awesome! See you later! : )</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Awesome! See you later! : )</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Awesome! See you later! : )</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-            </div>
-        </div>
+                    <!-- 나 -->
+                    <div class='chat-message chat-message-sender'>
+                        <img class='chat-image chat-image-default profile' :src='customer.imgSrc' />
+                        <div class='chat-message-wrapper'>
+                            <div class='chat-message-content'>
+                                <p>{{prev.word}}</p>
+                            </div><!-- chat-message-content -->
+                            <div class='chat-details'>
+                                <span class='chat-message-localisation font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-read-status font-size-small'>- Read</span>
+                            </div><!-- chat-details -->
+                        </div><!-- chat-message-wrapper -->
+                    </div><!-- chat-message-sender -->
+                </div><!-- prevChatList -->
+            </div><!-- padding -->
+        </div><!-- chat-wrapper -->
 
         <!-- Modal : 채팅 목록 -->
         <section id="chatListModal">
@@ -122,6 +75,8 @@
                     <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
                     <span id="userName" @click="getChatByUser($event)">
                         {{recent.stuName | showLimitedContent}}({{recent.comName | showLimitedContent}})
+                        <span style="display:none;">{{recent.stuId}}</span>
+                        <span style="display:none;">{{recent.custId}}</span>
                     </span>
                 </p>
             </div>
@@ -151,85 +106,39 @@
 
         <!-- 채팅 본문 : 대화 내용 -->
         <div id="chat-wrapper" class='chat-wrapper'>
-            <div class='chat-message padding'>
-              <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Sushi tonight?</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Pizza?</p>
-                      <p>We had sushi last time!</p>
-                      <p>For me one Vegetariana! Plus some chili oil on it!</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localisation font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
+            <div id="stuModeChat" class='chat-message padding'>
 
-                  </div>
-              </div>
+              <!-- 상대방 -->
               <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
+                  <img class='chat-image chat-image-default profile' :src='company.logoImg' />
+                  <div class='chat-message-wrapper'>
+                    <div class='chat-message-content'>
+                        <p>상대방 보냄</p>
+                    </div><!-- chat-message-content -->
+                    <div class='chat-details'>
+                        <span class='chat-message-localization font-size-small'>My Address</span>
+                        <span class='chat-message-read-status font-size-small'>- Read</span>
+                    </div><!-- chat-details -->
+                  </div><!-- chat-message-wrapper -->
+              </div><!-- chat-message-recipient -->
 
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Done. Delivery takes 5 minutes!</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localisation font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
+              <!-- 나 -->
               <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
+                  <img class='chat-image chat-image-default profile' :src='presentCust.custLogo' />
                   <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Awesome! See you later! : )</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Awesome! See you later! : )</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='defaultImg.user' />
-                  <div class='chat-message-wrapper'>
-                  <div class='chat-message-content'>
-                      <p>Awesome! See you later! : )</p>
-                  </div>
-                  <div class='chat-details'>
-                      <span class='chat-message-localization font-size-small'>My Address</span>
-                      <span class='chat-message-read-status font-size-small'>- Read</span>
-                  </div>
-                  </div>
-              </div>
-            </div>
-        </div>
+                    <div class='chat-message-content'>
+                        <p>내가 보냄</p>
+                        <p>We had sushi last time!</p>
+                        <p>For me one Vegetariana! Plus some chili oil on it!</p>
+                    </div><!-- chat-message-content -->
+                    <div class='chat-details'>
+                        <span class='chat-message-localisation font-size-small'>My Address</span>
+                        <span class='chat-message-read-status font-size-small'>- Read</span>
+                    </div><!-- chat-details -->
+                  </div><!-- chat-message-wrapper -->
+              </div><!-- chat-message-sender -->
+            </div><!-- padding -->
+        </div><!-- chat-wrapper -->
 
         <!-- Modal : 채팅 목록 -->
         <section id="chatListModal">

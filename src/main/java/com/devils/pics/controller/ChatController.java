@@ -94,8 +94,7 @@ public class ChatController {
 		try {
 			if(member.equals("stu")) { //스튜디오 정보 가져오기
 				map = chatService.getStuDefaultInfo(id);
-				System.out.println("성공했당");
-				System.out.println(map);
+				//System.out.println(map);
 			}else if(member.equals("cust")) { //고객 정보 가져오기
 				map = chatService.getCustDefaultInfo(id);
 				//System.out.println(map);

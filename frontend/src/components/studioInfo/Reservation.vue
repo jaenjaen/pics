@@ -65,7 +65,7 @@
                         required="required"
                         v-for="(time,index) in times"
                         v-bind:key="index"
-                        :value="parseInt(time)"
+                        :value="time"
                         >{{time}}시</md-option>
                   </md-select>
               </md-field>            
@@ -81,7 +81,7 @@
                         required="required"
                         v-for="(time,index) in times"
                         v-bind:key="index"
-                        :value="parseInt(time)"
+                        :value="time"
                         >{{time}}시</md-option>
                   </md-select>
               </md-field>

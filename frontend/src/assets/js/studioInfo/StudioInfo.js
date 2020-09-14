@@ -42,6 +42,7 @@ export default {
                 portImg: "",
                 cadImg: "",
                 floor: 0,
+                avgScore: 0,
                 studioFilter: {
                     size: 0,
                     options: null,
@@ -94,25 +95,29 @@ export default {
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
-                console.log(this.studios);
-
                 // 메인 이미지 split
-                let mainImgSplit = (this.studios[0].mainImg).split(',');
-                let portImgSplit = (this.studios[0].mainImg).split(',');
-                for (let i = 0; i < mainImgSplit.letngth; i++) {
-                    this.mainImgList.push(mainImgSplit[i]);
+                if (this.studios[0].mainImg.match(",")) {
+                    let mainImgSplit = (this.studios[0].mainImg).split(',');
+                    let portImgSplit = (this.studios[0].mainImg).split(',');
+                    for (let i = 0; i < mainImgSplit.letngth; i++) {
+                        alert("메인이미지::" + mainImgSplit[i])
+                        this.mainImgList.push(mainImgSplit[i]);
+                    }
+                    for (let i = 0; i < this.portImgList.letngth; i++) {
+                        this.portImgList.push(portImgSplit[i]);
+                    }
+                    console.log("this.mainImgList : " + this.mainImgList);
+                } else {
+                    this.mainImgList.push(this.studios[0].mainImg)
                 }
-                for (let i = 0; i < this.portImgList.letngth; i++) {
-                    this.portImgList.push(portImgSplit[i]);
-                }
-                console.log("this.mainImgList : " + this.mainImgList);
+
+
             })
             .catch(error => {
                 console.log(error);
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-
         axios
             .get("http://127.0.0.1:7777/studio/tags/" + this.stuId)
             .then(response => (this.tags = response.data))
@@ -162,9 +167,9 @@ export default {
         }
     },
     filters: {
-        currency: function(value) { // 숫자를 금액 형식으로
-            if (!isNaN(value)) return value.toLocaleString();
-            else return 0;
+        currency: function(value) {
+            let num = new Number(value);
+            return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
         },
         parking: function(value) {
             if (value) return "주차 가능";

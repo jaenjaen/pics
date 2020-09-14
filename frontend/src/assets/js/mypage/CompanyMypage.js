@@ -6,8 +6,12 @@ import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
 import Inquiry from "@/components/mypage/Inquiry.vue";
 import Axios from "axios";
+import moment from 'moment';
 
 var session = JSON.parse(sessionStorage.getItem("company"));
+
+/* setting week*/
+moment.locale('ko'); //set Korean Time
 
 /* calendar tag */
 let calendarList = [{
@@ -54,7 +58,8 @@ export default {
         MypageNametag,
         MypageGap,
         Inquiry,
-        'calendar': Calendar
+        'calendar': Calendar,
+        moment
     },
     data() {
         return {
@@ -64,7 +69,8 @@ export default {
             selectedId: "",
 
             /*calendar header */
-            thisWeek: "",
+            startWeek: moment().startOf('week').format('L'),
+            endWeek: moment().endOf('week').format('L'),
 
             /*Calendar index*/
             calendarList,
@@ -84,6 +90,32 @@ export default {
     methods: {
         getStudioReservation: function() {
             alert(this.selectedId);
+        },
+
+        /* 지난주로 */
+        prevWeek: function() {
+            this.$refs.studioCalendar.invoke('prev');
+            this.changeFormat(this.$refs.studioCalendar.invoke('getDateRangeStart'), this.$refs.studioCalendar.invoke('getDateRangeEnd'));
+            //alert(this.$refs.studioCalendar.invoke('getDate').toDate()); check date
+        },
+
+        /* 이번주로 */
+        moveToday: function() {
+            this.$refs.studioCalendar.invoke('today');
+            this.changeFormat(this.$refs.studioCalendar.invoke('getDateRangeStart'), this.$refs.studioCalendar.invoke('getDateRangeEnd'));
+        },
+
+        /* 다음주로 */
+        nextWeek: function() {
+            this.$refs.studioCalendar.invoke('next');
+            this.changeFormat(this.$refs.studioCalendar.invoke('getDateRangeStart'), this.$refs.studioCalendar.invoke('getDateRangeEnd'));
+        },
+
+        /* 날짜 변환용 */
+        changeFormat: function(start, end) {
+            this.startWeek = moment(start.toUTCString()).format('L');
+            this.endWeek = moment(end.toUTCString()).format('L');
+
         },
     }
 };

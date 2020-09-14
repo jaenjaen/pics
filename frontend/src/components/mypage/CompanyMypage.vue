@@ -6,16 +6,16 @@
     <!-- 예약관리-->
     <div class="mypage_card" style="height:500px;">
       <div id="calendar_header">
-        <button class="arrow_btn">
+        <button class="arrow_btn" @click="prevWeek">
           <img src="@/assets/img/util/backward.svg">
         </button>
 
-        <button class="today_btn">today</button>
+        <button class="today_btn" @click="moveToday">today</button>
 
-        <button class="arrow_btn">
+        <button class="arrow_btn" @click="nextWeek">
           <img src="@/assets/img/util/forward.svg">
         </button>
-        <span>2020.09.13~2020.09.20</span>
+      <span><p style="display:inline;">{{startWeek}}~{{endWeek}}</p></span>
         
         <select v-model="selectedId" @change="getStudioReservation">
           <option value="" v-if="studioFlag" disabled> 등록된 스튜디오가 없습니다. </option>
@@ -26,8 +26,9 @@
         </select>
 
       </div>
-      <calendar style="height:450px;"
-      :calendars="calendarList"
+      <calendar ref="studioCalendar"
+        style="height:450px;"
+        :calendars="calendarList"
         :schedules="scheduleList"
         :taskView="false"
         :disableDblClick="true"

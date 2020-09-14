@@ -244,6 +244,22 @@ export default {
         },
     },
     methods: {
+        setTime(date) {
+            if (date != null) {
+                for (let i = 0; i < this.repeatedLength; i++) {
+                    if (this.repeated[i].weekDay == week[parseInt(date)]) {
+                        let openTime = parseInt(this.repeated[i].time.split('-')[0]);
+                        let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
+                        let t = 0
+                        for (let j = 0; j < (closeTime - openTime) + 1; j++) {
+                            t = openTime + j
+                            this.times.push(t);
+                        }
+                        return this.times
+                    }
+                }
+            }
+        },
         deletePeople() {
             if (this.total_people > 1) this.total_people--;
             else this.msg = "최소 1명 이상 선택해야 합니다.";
@@ -326,22 +342,6 @@ export default {
                     return 1;
                 } else {
                     return 0;
-                }
-            }
-        },
-        setTime(date) {
-            if (date != null) {
-                for (let i = 0; i < this.repeatedLength; i++) {
-                    if (this.repeated[i].weekDay == week[parseInt(date)]) {
-                        let openTime = parseInt(this.repeated[i].time.split('-')[0]);
-                        let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
-                        let t = 0
-                        for (let j = 0; j < (closeTime - openTime) + 1; j++) {
-                            t = openTime + j
-                            this.times.push(t);
-                        }
-                        return this.times
-                    }
                 }
             }
         },

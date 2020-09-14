@@ -4,7 +4,7 @@ import VueMaterial, { MdCard } from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
-// var eventBus = new Vue();
+
 Vue.use(VueMaterial);
 // 요일 변환을 위한 리스트
 const week = ["fri", "sat", "sun", "mon", "tue", "wed", "thu"];
@@ -51,7 +51,8 @@ export default {
             start_time: 25,
             end_time: 25,
             difTime: 0,
-            times: [],
+            startTimes: [],
+            endTimes: [],
             //예약 로직 관련 변수
             today: new Date(),
             exceptionLength: 0,
@@ -174,13 +175,12 @@ export default {
             // 3. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후
             // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인
             if (this.start_date != "") {
-                this.setTime(this.startDay);
-                console.log("this.startDay : " + this.startDay);
+                this.startTimes = this.setTime(this.startDay);
                 if (this.startDate < todayTime) {
-                    alert("대여 시작일은 현재 날짜 이후로 가능합니다.");
+                    alert("대여 종료일을 오늘 이후로 선택하세요.");
                     this.start_date = this.today.getFullYear + "-" + (this.today.getMonth + 1) + "-" + this.today.getDate;
                 } else if (this.checkCloseDate(this.startDay) == 0) {
-                    this.msg = "시작일이 비영업일 입니다.";
+                    alert("시작일이 비영업일 입니다.");
                     for (var i = 0; i < week.length; i++) {
                         let nextDate = new Date(this.startDate + (i * 1000 * 60 * 60 * 24));
                         let nextDay = nextDate.getFullYear() + "-" + nextDate.getMonth() + "-" + (nextDate.getDate());
@@ -193,8 +193,7 @@ export default {
                 }
             }
             if (this.end_date != "") {
-                this.setTime(this.endDay);
-
+                this.endTimes = this.setTime(this.endDay);
                 if (this.checkCloseDate(this.endDay) == 0) {
                     alert("종료일이 영업일이 아닙니다.");
                     this.end_date = "yyyy-MM-dd"
@@ -213,13 +212,21 @@ export default {
                     this.endDate = this.startDate;
                 }
             }
-            if (this.difTime == 0 & (this.start_time < 25 | this.end_time < 25)) {
-                //하루 예약이면 시작시간 < 종료시간
-                if ((startTime * endTime > 0) & (startTime >= endTime)) {
+            if (startTime < 25 | endTime < 25) {
+                if (startTime >= endTime & this.difTime == 0) { //하루 예약이면 시작시간 < 종료시간
                     alert("대여 종료시간은 시작시간 이후로 설정하세요.");
                     this.end_time = this.start_time + 1;
-                    endTime = parseInt(this.start_time) + 1;
+                    if (this.startTimes[0] == endTime) {
+                        console.log("this.startTimes[0] : " + this.startTimes[0] + ", endTime : " + endTime)
+                        alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
+                        this.end_time = this.startTimes[1];
+                    }
+                    if (this.endTimes[-1] == startTime) {
+                        alert("대여 종료시간을 오픈 시간 이후로 설정하세요. : " + this.endTimes[-1]);
+                        this.start_time = this.endTimes[-2];
+                    }
                 }
+
             }
             if (this.start_date != "" & this.end_date != "" & this.start_time != 0 & this.end_time != 0) {
                 if (this.checkException() == 0) {
@@ -230,7 +237,7 @@ export default {
             }
             //4. 시간대 반영
             var total_price = 0;
-            if (startTime >= endTime) this.difTime -= endTime - startTime;
+            if (startTime >= endTime) this.difTime -= (endTime - startTime);
             else this.difTime += endTime - startTime;
             // 4. 총 요금
             if (this.total_people > this.studios[0].studioFilter.defaultCapacity) {
@@ -249,22 +256,6 @@ export default {
         },
     },
     methods: {
-        setTime(date) {
-            if (date != null) {
-                for (let i = 0; i < this.repeatedLength; i++) {
-                    if (this.repeated[i].weekday == week[parseInt(date)]) {
-                        let openTime = parseInt(this.repeated[i].time.split('-')[0]);
-                        let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
-                        let t = 0
-                        for (let j = 0; j < (closeTime - openTime) + 1; j++) {
-                            t = openTime + j
-                            this.times.push(t);
-                        }
-                        return this.times;
-                    } else continue
-                }
-            }
-        },
         deletePeople() {
             if (this.total_people > 1) this.total_people--;
             else this.msg = "최소 1명 이상 선택해야 합니다.";
@@ -347,6 +338,23 @@ export default {
                     return 1;
                 } else {
                     return 0;
+                }
+            }
+        },
+        setTime(date) {
+            if (date != null) {
+                for (let i = 0; i < this.repeatedLength; i++) {
+                    if (this.repeated[i].weekday == week[parseInt(date)]) {
+                        let openTime = parseInt(this.repeated[i].time.split('-')[0]);
+                        let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
+                        let times = []
+                        let t = 0;
+                        for (let j = 0; j < (closeTime - openTime) + 1; j++) {
+                            t = j + openTime
+                            times.push(t);
+                        }
+                        return times;
+                    } else continue
                 }
             }
         },

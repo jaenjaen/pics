@@ -26,7 +26,16 @@
 
       </div>
       <calendar style="height:450px;"
-      :taskView="false"
+      :calendars="calendarList"
+        :schedules="scheduleList"
+        :taskView="taskView"
+        :theme="theme"
+        :week="week"
+        :month="month"
+        :disableDblClick="disableDblClick"
+        :isReadOnly="isReadOnly"
+        :useCreationPopup="useCreationPopup"
+        :useDetailPopup="useDetailPopup"
       /> 
     </div>
     <MypageGap categoryName="스튜디오 관리 +" cateogryURL="http://localhost:9999/registerStudio"/>
@@ -55,3 +64,5 @@
 <script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
 <style scoped src="@/assets/css/mypage/calendar.css"></style>
+
+

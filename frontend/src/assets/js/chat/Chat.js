@@ -54,10 +54,6 @@ export default {
             /* 고객/기업모드 여부 */
             cutomerMode: '',
 
-            /* 프로필 사진 존재 유무 */
-            isExistMyProfile: false,
-            isExistOtherProfile: true,
-
             /* 보낸 이 여부 */
             senderDisplay: '',
 
@@ -69,12 +65,13 @@ export default {
 
     created() {
         /* vue가 생성되면 소켓 연결 시도 */
-        this.connect();
+        //this.connect();
 
         if (customer != null) { //개인고객으로 로그인했을 경우
             this.cutomerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
             console.log(this.customer);
+            this.chat.custId = this.customer.custId; //세션에서 custId를 chat에 바인딩
 
             this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
 
@@ -97,11 +94,6 @@ export default {
                     console.log('company 정보 가져오기 실패');
                 })
         }
-    },
-
-    mounted() {
-        /* 채팅 접속시 설정 */
-        this.setChat(this.chat.stuId, this.chat.custId);
     },
 
     filters: {
@@ -180,6 +172,21 @@ export default {
                 })
         },
 
+        /* 스튜디오의 고객별 최근 수신 대화 */
+        getRecentStuChat(stuId) {
+            axios.get('http://127.0.0.1:7777/chat/recent/stu/' + stuId)
+                .then((response) => {
+                    if (response.data != -1) {
+                        console.log('studio 최근 대화 가져오기 성공');
+                        this.recentChat = response.data;
+                        console.log(this.recentChat);
+                    }
+                })
+                .catch(() => {
+                    console.log('studio 최근 대화 가져오기 실패');
+                })
+        },
+
         /* 현재 대화 중인 스튜디오 정보 가져오기 */
         getPresentStu() {
             axios.get('http://127.0.0.1:7777/chat/info/stu/' + this.chat.stuId)
@@ -254,6 +261,39 @@ export default {
                             custModeChat.childNodes[i - 1].childNodes[0].childNodes[1].childNodes[1].setAttribute('style', 'display:none');
                         } else if (prevAllChat[i].sender == 0) {
                             custModeChat.childNodes[i - 1].childNodes[1].childNodes[1].childNodes[1].setAttribute('style', 'display:none');
+                        }
+                    }
+                }
+            }
+        },
+
+        /* StuoMode : 이전 대화 내역 화면에 출력하기 */
+        printPrevAllChatInStuMode() {
+            let stuModeChat = document.getElementById('stuModeChat');
+            let prevAllChat = this.prevAllChat
+
+            /* 이전 기록 초기화 */
+            for (let i = 0; i < prevAllChat.length; i++) {
+                stuModeChat.childNodes[i].childNodes[1].setAttribute('style', 'display:block');
+                stuModeChat.childNodes[i].childNodes[0].setAttribute('style', 'display:block');
+                stuModeChat.childNodes[i].childNodes[0].childNodes[1].childNodes[1].setAttribute('style', 'display:block');
+                stuModeChat.childNodes[i].childNodes[1].childNodes[1].childNodes[1].setAttribute('style', 'display:block');
+            }
+
+            for (let i = 0; i < prevAllChat.length; i++) {
+                if (prevAllChat[i].sender == 1) { //스튜디오가 보냈을 경우
+                    stuModeChat.childNodes[i].childNodes[0].setAttribute('style', 'display:none');
+                } else if (prevAllChat[i].sender == 0) { //고객이 보냈을 경우
+                    stuModeChat.childNodes[i].childNodes[1].setAttribute('style', 'display:none');
+                }
+                if (i > 0 && prevAllChat[i].sender === prevAllChat[i - 1].sender) {
+                    let before = stuModeChat.childNodes[i - 1].childNodes[1].childNodes[1].childNodes[1].childNodes[0].innerHTML;
+                    let after = stuModeChat.childNodes[i].childNodes[1].childNodes[1].childNodes[1].childNodes[0].innerHTML
+                    if (before === after) {
+                        if (prevAllChat[i].sender == 1) {
+                            stuModeChat.childNodes[i - 1].childNodes[1].childNodes[1].childNodes[1].setAttribute('style', 'display:none');
+                        } else if (prevAllChat[i].sender == 0) {
+                            stuModeChat.childNodes[i - 1].childNodes[0].childNodes[1].childNodes[1].setAttribute('style', 'display:none');
                         }
                     }
                 }
@@ -352,6 +392,20 @@ export default {
                 if (obj == 'chatListModal') {
                     document.getElementById('chatHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatListHeader').setAttribute('style', 'display:none;');
+                }
+            }
+        },
+
+        /* 스튜디오 옵션 변경시 */
+        changeStudio(event) {
+            let studio = event.target.childNodes;
+            if (studio[0].selected) { //전체 선택
+                this.getRecentComChat();
+            }
+            for (let i = 1; i < studio.length; i++) {
+                if (studio[i].selected) {
+                    let stuId = studio[i].childNodes[1].value;
+                    this.getRecentStuChat(stuId);
                 }
             }
         },

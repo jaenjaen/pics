@@ -69,6 +69,25 @@
 		ORDER BY cuh.dateTime DESC;
 	</select>
 	
+	<!-- 스튜디오의 고객별 최근 수신 대화  -->
+	<select id="getRecentStuChat" parameterType="string" resultMap="recentChat">
+		SELECT
+		cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+		st.stu_id stuId, st.name stuName,
+		ch.chat_id chatId, ch.word word, ch.date_time dateTime, ch.sender sender
+		FROM
+			(SELECT * FROM customer) cu,
+			(SELECT * FROM studio) st,
+			(SELECT * FROM chat
+			WHERE date_time 
+			IN (SELECT MAX(date_time) 
+				FROM chat 
+			    WHERE sender = 0 AND stu_id = #{stuId}
+			    GROUP BY cust_id)) ch
+		WHERE ch.stu_id = st.stu_id AND ch.cust_id = cu.cust_id
+		ORDER BY dateTime DESC;
+	</select>
+	
 	<!-- 고객의 스튜디오별 최근 수신 대화  -->
 	<select id="getRecentCustChat" parameterType="string" resultMap="recentChat">
 		SELECT

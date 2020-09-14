@@ -28,6 +28,12 @@ public class ChatDAOImpl implements ChatDAO {
 		return sqlSession.selectList(ns+"getRecentComChat", comId);
 	}
 	
+	/* 스튜디오의 고객별 최근 수신 대화  */
+	@Override
+	public List<Map<String, String>> getRecentStuChat(String stuId) throws Exception {
+		return sqlSession.selectList(ns+"getRecentStuChat", stuId);
+	}
+	
 	/* 고객의 스튜디오별 최근 수신 대화  */
 	@Override
 	public List<Map<String, String>> getRecentCustChat(String custId) throws Exception{

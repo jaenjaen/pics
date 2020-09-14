@@ -83,6 +83,8 @@ export default {
             } else {
                 this.stuId = event.target.childNodes[1].innerHTML;
                 this.custId = event.target.childNodes[2].innerHTML;
+                console.log("stuId : " + this.stuId);
+                console.log("custId : " + this.custId);
                 this.$refs.chat.setChat(this.stuId, this.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');

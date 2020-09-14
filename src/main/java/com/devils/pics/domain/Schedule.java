@@ -8,19 +8,20 @@ public class Schedule {
 	private ArrayList<RepeatDate> repeatDate;
 	private ArrayList<ExceptionDate> exceptionDate;
 	private List<Reservation> reservation;
+	private String weekStart;
+	private String weekEnd;
 	
+	public Schedule() {}
+
 	public Schedule(int stuId, ArrayList<RepeatDate> repeatDate, ArrayList<ExceptionDate> exceptionDate,
-			List<Reservation> reservation) {
+			List<Reservation> reservation, String weekStart, String weekEnd) {
 		this.stuId = stuId;
 		this.repeatDate = repeatDate;
 		this.exceptionDate = exceptionDate;
 		this.reservation = reservation;
+		this.weekStart = weekStart;
+		this.weekEnd = weekEnd;
 	}
-
-	public Schedule(int stuId) {
-		this.stuId = stuId;
-	}
-	public Schedule() {}
 
 	public int getStuId() {
 		return stuId;
@@ -54,10 +55,25 @@ public class Schedule {
 		this.reservation = reservation;
 	}
 
+	public String getWeekStart() {
+		return weekStart;
+	}
+
+	public void setWeekStart(String weekStart) {
+		this.weekStart = weekStart;
+	}
+
+	public String getWeekEnd() {
+		return weekEnd;
+	}
+
+	public void setWeekEnd(String weekEnd) {
+		this.weekEnd = weekEnd;
+	}
+
 	@Override
 	public String toString() {
 		return "Schedule [stuId=" + stuId + ", repeatDate=" + repeatDate + ", exceptionDate=" + exceptionDate
-				+ ", reservation=" + reservation + "]";
+				+ ", reservation=" + reservation + ", weekStart=" + weekStart + ", weekEnd=" + weekEnd + "]";
 	}
-	
 }

@@ -11,8 +11,7 @@
                     <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
                 </a>
                 <span id="otherNickname">{{presentStu.stuName | showLimitedContent}}</span>
-                <img v-if="isExistOtherProfile" id="otherProfile" class="profile" :src="presentStu.comLogo">
-                <img v-else id="otherProfile" class="profile" :src="defaultImg.user">
+                <img id="otherProfile" class="profile" :src="presentStu.comLogo">
             </div>
             <div id="chatListHeader">
                 <a href="javascript:;" @click="controlModal('hide', 'chatListModal')">
@@ -27,6 +26,7 @@
         <div id="chat-wrapper" class='chat-wrapper'>
             <div id="custModeChat" class='chat-message padding'>
                 <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
+
                     <!-- 상대방 -->
                     <div class='chat-message chat-message-recipient'>
                         <img class='chat-image chat-image-default profile' :src='presentStu.comLogo' />
@@ -54,6 +54,7 @@
                             </div><!-- chat-details -->
                         </div><!-- chat-message-wrapper -->
                     </div><!-- chat-message-sender -->
+
                 </div><!-- prevChatList -->
             </div><!-- padding -->
         </div><!-- chat-wrapper -->
@@ -74,7 +75,7 @@
                 <p v-for="(recent, index) in recentChat" :key="index">
                     <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
                     <span id="userName" @click="getChatByUser($event)">
-                        {{recent.stuName | showLimitedContent}}({{recent.comName | showLimitedContent}})
+                        {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
                         <span style="display:none;">{{recent.stuId}}</span>
                         <span style="display:none;">{{recent.custId}}</span>
                     </span>
@@ -92,62 +93,64 @@
                 <a href="javascript:;" @click="controlModal('show', 'chatListModal')">
                     <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
                 </a>
-                <span id="otherNickname">{{presentCust.custName}}</span>
-                <img id="otherProfile" class="profile" :src="defaultImg.user">
+                <span id="otherNickname">{{presentCust.custName | showLimitedContent}}</span>
+                <img id="otherProfile" class="profile" :src="presentCust.custLogo">
             </div>
             <div id="chatListHeader">
                 <a href="javascript:;" @click="controlModal('hide', 'chatListModal')">
                     <img id="back" :src="defaultImg.back" @mouseover="controlListImg('mouseover', 'back')" @mouseout="controlListImg('mouseout', 'back')">
                 </a>
-                <span id="myNickname">{{company.nickname}}</span>
-                <img id="myProfile" class="profile" :src="defaultImg.user">
+                <span id="myNickname">{{company.name | showLimitedContent}}</span>
+                <img id="myProfile" class="profile" :src="company.logoImg">
             </div>
         </header>
 
         <!-- 채팅 본문 : 대화 내용 -->
         <div id="chat-wrapper" class='chat-wrapper'>
             <div id="stuModeChat" class='chat-message padding'>
+                <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
 
-              <!-- 상대방 -->
-              <div class='chat-message chat-message-recipient'>
-                  <img class='chat-image chat-image-default profile' :src='company.logoImg' />
-                  <div class='chat-message-wrapper'>
-                    <div class='chat-message-content'>
-                        <p>상대방 보냄</p>
-                    </div><!-- chat-message-content -->
-                    <div class='chat-details'>
-                        <span class='chat-message-localization font-size-small'>My Address</span>
-                        <span class='chat-message-read-status font-size-small'>- Read</span>
-                    </div><!-- chat-details -->
-                  </div><!-- chat-message-wrapper -->
-              </div><!-- chat-message-recipient -->
+                    <!-- 상대방 -->
+                    <div class='chat-message chat-message-recipient'>
+                        <img class='chat-image chat-image-default profile' :src='presentCust.custLogo' />
+                        <div class='chat-message-wrapper'>
+                            <div class='chat-message-content'>
+                                <p>{{prev.word}}</p>
+                            </div><!-- chat-message-content -->
+                            <div class='chat-details'>
+                                <span class='chat-message-localization font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-read-status font-size-small'>- Read</span>
+                            </div><!-- chat-details -->
+                        </div><!-- chat-message-wrapper -->
+                    </div><!-- chat-message-recipient -->
 
-              <!-- 나 -->
-              <div class='chat-message chat-message-sender'>
-                  <img class='chat-image chat-image-default profile' :src='presentCust.custLogo' />
-                  <div class='chat-message-wrapper'>
-                    <div class='chat-message-content'>
-                        <p>내가 보냄</p>
-                        <p>We had sushi last time!</p>
-                        <p>For me one Vegetariana! Plus some chili oil on it!</p>
-                    </div><!-- chat-message-content -->
-                    <div class='chat-details'>
-                        <span class='chat-message-localisation font-size-small'>My Address</span>
-                        <span class='chat-message-read-status font-size-small'>- Read</span>
-                    </div><!-- chat-details -->
-                  </div><!-- chat-message-wrapper -->
-              </div><!-- chat-message-sender -->
+                    <!-- 나 -->
+                    <div class='chat-message chat-message-sender'>
+                        <img class='chat-image chat-image-default profile' :src='company.logoImg' />
+                        <div class='chat-message-wrapper'>
+                            <div class='chat-message-content'>
+                                <p>{{prev.word}}</p>
+                            </div><!-- chat-message-content -->
+                            <div class='chat-details'>
+                                <span class='chat-message-localisation font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-read-status font-size-small'>- Read</span>
+                            </div><!-- chat-details -->
+                        </div><!-- chat-message-wrapper -->
+                    </div><!-- chat-message-sender -->
+
+              </div><!-- prevChatList -->
             </div><!-- padding -->
         </div><!-- chat-wrapper -->
 
         <!-- Modal : 채팅 목록 -->
         <section id="chatListModal">
             <div id="studioList">
-                <select id="studioSelect">
-                    <option>전체</option>
-                    <option>스튜디오1</option>
-                    <option>스튜디오2</option>
-                    <option>스튜디오3</option>
+                <select id="studioSelect" @change="changeStudio($event)">
+                    <option>스튜디오 전체</option>
+                    <option v-for="(stuList, index) in company.studioList" :key="index">
+                        {{stuList.name}}
+                        <input type="hidden" :value="stuList.stuId">
+                    </option>
                 </select>
                 <div id="studioSearch">
                     <input type="text" class="inputArea">
@@ -159,40 +162,14 @@
                 </div>
             </div>
             <div id="chatListContent">
-                <p>
+                <p v-for="(recent, index) in recentChat" :key="index">
                     <img class="profile" src="http://localhost:7777/upload/default/user.png" @click="showBiggerImg($event)">
-                    <span id="userName" @click="getChatByUser($event)">리스트1</span>
+                    <span id="userName" @click="getChatByUser($event)">
+                        {{recent.stuName | showLimitedContent}} | {{recent.custName | showLimitedContent}}
+                        <span style="display:none;">{{recent.stuId}}</span>
+                        <span style="display:none;">{{recent.custId}}</span>
+                    </span>
                 </p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
-                <p><img class="profile" :src="defaultImg.user"><span>리스트1</span></p>
             </div>
         </section>
     </div>

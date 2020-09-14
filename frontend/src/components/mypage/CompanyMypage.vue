@@ -20,7 +20,7 @@
         <select v-model="selectedId" @change="getStudioReservation">
           <option value="" v-if="studioFlag" disabled> 등록된 스튜디오가 없습니다. </option>
           <option value="" v-if="!studioFlag" disabled> 스튜디오를 선택해주세요. </option>
-          <option v-for="studio in studioList" :key="studio" :value="studio.stuId">
+          <option v-for="(studio, index) in studioList" :key="index" :value="studio.stuId">
             {{ studio.name }}
           </option>
         </select>

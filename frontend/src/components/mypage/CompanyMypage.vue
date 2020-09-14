@@ -3,8 +3,31 @@
     <MypageNametag :customerMode="false" />
     <MypageGap categoryName="예약관리" cateogryURL="#"/>
     <!-- 예약관리-->
-    <div class="mypage_card">
-      <p>ㅇㅖ약고나리</p>
+    <div class="mypage_card" style="height:500px;">
+      <div id="calendar_header">
+        <button class="arrow_btn">
+          <img src="@/assets/img/util/backward.svg">
+        </button>
+
+        <button class="today_btn">today</button>
+
+        <button class="arrow_btn">
+          <img src="@/assets/img/util/forward.svg">
+        </button>
+        <span>2020.09.13~2020.09.20</span>
+        
+        <select>
+          <option value="stu_id">카페로제</option>
+          <option value="stu_id">팩토리바다</option>
+          <option value="stu_id">바다바다</option>
+          <option value="stu_id">로코코_경주</option>
+          <option value="stu_id">후오비_블록체인_커피하우스(달콤커피_논현점)</option>
+        </select>
+
+      </div>
+      <calendar style="height:450px;"
+      :taskView="false"
+      /> 
     </div>
     <MypageGap categoryName="스튜디오 관리 +" cateogryURL="http://localhost:9999/registerStudio"/>
     <!-- 문의 내역-->
@@ -31,3 +54,4 @@
 
 <script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
+<style scoped src="@/assets/css/mypage/calendar.css"></style>

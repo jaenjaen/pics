@@ -1,9 +1,10 @@
-// @ is an alias to /src
-//import axios from "axios";
+import 'tui-calendar/dist/tui-calendar.css'
+import { Calendar } from '@toast-ui/vue-calendar'
 import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
 import Inquiry from "@/components/mypage/Inquiry.vue";
 import Axios from "axios";
+
 
 var session = JSON.parse(sessionStorage.getItem("company"));
 export default {
@@ -11,7 +12,8 @@ export default {
     components: {
         MypageNametag,
         MypageGap,
-        Inquiry
+        Inquiry,
+        'calendar': Calendar
     },
     data() {
         return {
@@ -30,7 +32,7 @@ export default {
                 this.studioFlag = false;
             }).catch(err => {
                 console.log(err);
-            })
+            });
     },
     methods: {}
 };

@@ -157,6 +157,7 @@ export default {
                 this.studio.studioFilter.address = data.studioFilter.address;
                 this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
+                console.log(this.studio.schedule.repeatDate);
                 this.tag = data.tag
 
                 /* placeholder용 */
@@ -548,6 +549,7 @@ export default {
         selectTime(day) {
             let thisDay = day.substring(0, 3);
             let thisDayTime = document.getElementById(day);
+
 
             let first = -1;
             let start = -1;

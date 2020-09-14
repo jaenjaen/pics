@@ -49,7 +49,6 @@
           <div class="col-25">
             <label for="mainImg">
               대표 사진
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75 uploadTotal">
@@ -109,7 +108,6 @@
           <div class="col-25">
             <label for="tag">
               태그
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25 tag">
@@ -129,7 +127,6 @@
           <div class="col-25">
             <label for="address">
               주소
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75" style="margin-top:10px;margin-bottom:7px;">
@@ -172,7 +169,6 @@
           <div class="col-25 col-space">
             <label for="size">
               면적
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -201,7 +197,6 @@
           <div class="col-25">
             <label for="unitPrice">
               시간당 대여료
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -213,7 +208,6 @@
           <div class="col-25 col-space">
             <label for="excharge">
               1인 추가시 대여료 
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -227,7 +221,6 @@
           <div class="col-25">
             <label for="defaultCapacity">
               기본 인원
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -239,7 +232,6 @@
           <div class="col-25 col-space">
             <label for="maxCapacity">
               최대 인원
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-25">
@@ -253,7 +245,6 @@
           <div class="col-25">
             <label for="">
               운영 시간
-              <img :src="required" width="20px">
             </label>
           </div>
           <div class="col-75">

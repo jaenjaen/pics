@@ -30,9 +30,9 @@
                   <md-datepicker
                   id="start_date"
                   v-model="start_date" 
-                 :md-model-type="String"
+                  :md-model-type="String"
                   :md-immediately="true"
-                  :disable-passed-days="true"
+                  :md-disabled-dates="disabledDates"
                   :value="start_date"
                   ></md-datepicker>
                 </span>
@@ -42,9 +42,9 @@
                   <md-datepicker 
                   id="end_date"
                   v-model="end_date"
-                 :md-model-type="String"
+                  :md-model-type="String"
                   :md-immediately="true"
-                  :disable-passed-days="true"
+                  :md-disabled-dates="disabledDates"
                   :value="end_date"
                   ></md-datepicker>
                 </span>
@@ -63,10 +63,10 @@
                     style="width:30%">
                       <md-option
                         required="required"
-                        v-for="(time,index) in times"
+                        v-for="(startTime,index) in startTimes"
                         v-bind:key="index"
-                        :value="time"
-                        >{{time}}시</md-option>
+                        :value="startTime"
+                        >{{startTime}}시</md-option>
                   </md-select>
               </md-field>            
                   <br/>
@@ -79,15 +79,14 @@
                     style="width:30%">
                       <md-option
                         required="required"
-                        v-for="(time,index) in times"
+                        v-for="(endTime,index) in endTimes"
                         v-bind:key="index"
-                        :value="time"
-                        >{{time}}시</md-option>
+                        :value="endTime"
+                        >{{endTime}}시</md-option>
                   </md-select>
               </md-field>
             </div>
           </div>
-          <!-- <span>{{msg}}</span> -->
           <br />
           <br />
           <!-- 인원 -->

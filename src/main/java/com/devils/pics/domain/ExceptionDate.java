@@ -12,6 +12,12 @@ public class ExceptionDate {
 		this.endDate = endDate;
 		this.stuId = stuId;
 	}
+	public ExceptionDate(String startDate, String endDate, int stuId) {
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.stuId = stuId;
+	}
+
 	public ExceptionDate() {}
 	
 	public int getExceptionId() {

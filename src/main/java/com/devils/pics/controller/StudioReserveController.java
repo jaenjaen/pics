@@ -43,7 +43,7 @@ public class StudioReserveController {
 			Schedule schedule=new Schedule();
 			ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(stuId); 
 			ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);
-			List<Reservation> reservation=studioReserveService.getReservation( new Reservation(stuId));
+			List<Reservation> reservation=studioReserveService.getReservation(new Reservation(stuId));
 			schedule.setStuId(stuId);
 			schedule.setExceptionDate(exceptionDate);
 			schedule.setRepeatDate(repeatDate);
@@ -69,23 +69,25 @@ public class StudioReserveController {
 	// 3. reservation 테이블에 추가, 예약 일자 
 	@PostMapping("/studio/reservation")
 	public ResponseEntity AddReservation(@RequestBody Reservation reservation) {
-		//등록 시간 삽입
-		
+		//등록 시간 삽입		
+		try{
 		int result=studioReserveService.AddReservation(reservation);
-		if(result==1){
-			studioReserveService.AddExceptionDates(reservation);
 			return new ResponseEntity(result,HttpStatus.OK);
-		}else return new ResponseEntity(0,HttpStatus.NO_CONTENT);
+		}catch(Exception e) {
+			return new ResponseEntity(0,HttpStatus.NO_CONTENT);
 		}
+	}
 	
 	// 4. reservation,예약 불가능 일자 update 
 	@PutMapping("/studio/reservation")
 	public ResponseEntity UpdateReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
-		if(studioReserveService.UpdateReservation(reservation)==1) {
-			studioReserveService.UpdateExceptionDate(reservation);
+		try{
+			studioReserveService.UpdateReservation(reservation);
 			return new ResponseEntity(HttpStatus.OK);
-		}else return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}catch(Exception e) { 
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
 		}
 	
 	// 5. 예약취소
@@ -95,6 +97,41 @@ public class StudioReserveController {
 			return new ResponseEntity(HttpStatus.OK);
 		}else return new ResponseEntity(HttpStatus.NOT_MODIFIED);
 		}
+
+	// 3. Exception 테이블에 추가, 예약 일자 
+	@PostMapping("/studio/exceptionDate")
+	public ResponseEntity AddExceptionDates(@RequestBody ExceptionDate exceptionDate) {
+		try{
+		int result=studioReserveService.AddExceptionDates(exceptionDate);
+			return new ResponseEntity(result,HttpStatus.OK);
+		}catch(Exception e) {
+			return new ResponseEntity(0,HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	// 4. Exception 예약 불가능 일자 update 
+	@PutMapping("/studio/exceptionDate")
+	public ResponseEntity UpdateExceptionDate(@RequestBody ExceptionDate exceptionDate) {
+		//등록 시간 삽입
+		try{
+			studioReserveService.UpdateExceptionDate(exceptionDate);
+			return new ResponseEntity(HttpStatus.OK);
+		}catch(Exception e) { 
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
+		}
+	
+	// 5. Exception 삭제
+	@DeleteMapping("/studio/exceptionDate/{exceptionDateList}")
+	public ResponseEntity DeleteExceptionDates(@PathVariable List<ExceptionDate> exceptionDateList) {
+		try{
+			studioReserveService.DeleteExceptionDates(exceptionDateList);
+			return new ResponseEntity(HttpStatus.OK);
+		}catch(Exception e) {  
+			return new ResponseEntity(HttpStatus.NOT_MODIFIED);
+			}
+		}
+	
 	
 	//6. 이미 지난 예약
 	@GetMapping("/customer/reservation/expired/{custId}")

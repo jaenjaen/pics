@@ -38,8 +38,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public int AddExceptionDates(Reservation reservation) {
-		return studioReserveDAO.AddExceptionDates(reservation);
+	public int AddExceptionDates(ExceptionDate exceptionDate) {
+		return studioReserveDAO.AddExceptionDates(exceptionDate);
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public int UpdateExceptionDate(Reservation reservation) {
-		return studioReserveDAO.UpdateExceptionDate(reservation);
+	public int UpdateExceptionDate(ExceptionDate exceptionDate) {
+		return studioReserveDAO.UpdateExceptionDate(exceptionDate);
 	}
 
 	@Override
@@ -63,8 +63,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public int DeleteExceptionDates(List<Reservation> reservationList) {
-		return studioReserveDAO.DeleteExceptionDates(reservationList);
+	public int DeleteExceptionDates(List<ExceptionDate> exceptionDateList) {
+		return studioReserveDAO.DeleteExceptionDates(exceptionDateList);
 	}
 
 	@Override

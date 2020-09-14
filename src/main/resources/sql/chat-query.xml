@@ -32,9 +32,9 @@
 		<result column="custLogo" property="custLogo" />
 	</resultMap>
 	
-	<!-- 해당되는 스튜디오, 고객의 대화를 가져옴 -->
+	<!-- 보내는 이(고객/기업)에 따라 해당되는 스튜디오, 고객의 대화를 가져옴 -->
 	<select id="getPrevAllChat" parameterType="hashMap" resultType="chat">
-		SELECT * 
+		SELECT chat_id, cust_id, word, DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, stu_id, sender 
 		FROM chat 
 		WHERE cust_id=#{custId} AND stu_id=#{stuId};
 	</select>
@@ -101,16 +101,16 @@
 	
 	<!-- 고객 기본 정보(아이디, 이름, 프로필 사진) 가져오기 -->
 	<select id="getStuDefaultInfo" parameterType="string" resultMap="stuDefaultInfo">
-	SELECT s.stu_id stuId, s.name stuName, c.com_id comId, c.name comName, c.logo_img comLogo
-	FROM company c, 
-	(SELECT * FROM studio WHERE stu_id = #{stuId}) s
-	WHERE c.com_id = s.com_id;
+		SELECT s.stu_id stuId, s.name stuName, c.com_id comId, c.name comName, c.logo_img comLogo
+		FROM company c, 
+		(SELECT * FROM studio WHERE stu_id = #{stuId}) s
+		WHERE c.com_id = s.com_id;
 	</select>
 	
 	<!-- 스튜디오 기본 정보(스튜디오 아이디, 스튜디오 이름, 회사 아이디, 회사 이름, 회사 프로필 ) 가져오기 -->
 	<select id="getCustDefaultInfo" parameterType="string" resultMap="custDefaultInfo">
-	SELECT cust_id custId, nickname custName, img_src custLogo 
-	FROM customer 
-	WHERE cust_id = #{custId};
+		SELECT cust_id custId, nickname custName, img_src custLogo 
+		FROM customer 
+		WHERE cust_id = #{custId};
 	</select>
 </mapper>

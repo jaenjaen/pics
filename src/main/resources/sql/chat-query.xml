@@ -17,6 +17,27 @@
 		<result column="dateTime" property="dateTime" />
 		<result column="sender" property="sender" />
 	</resultMap>
+	
+	<resultMap type="HashMap" id="stuDefaultInfo">
+		<result column="comId" property="comId" />
+		<result column="comName" property="comName" />
+		<result column="comLogo" property="comLogo" />
+		<result column="stuId" property="stuId" />
+		<result column="stuName" property="stuName" />
+	</resultMap>
+	
+	<resultMap type="HashMap" id="custDefaultInfo">
+		<result column="custId" property="custId" />
+		<result column="custName" property="custName" />
+		<result column="custLogo" property="custLogo" />
+	</resultMap>
+	
+	<!-- 해당되는 스튜디오, 고객의 대화를 가져옴 -->
+	<select id="getPrevAllChat" parameterType="hashMap" resultType="chat">
+		SELECT * 
+		FROM chat 
+		WHERE cust_id=#{custId} AND stu_id=#{stuId};
+	</select>
 
 	<!-- 업체의 스튜디오 및 고객별 최근 수신 대화  -->
 	<select id="getRecentComChat" parameterType="string" resultMap="recentChat">
@@ -76,5 +97,20 @@
 			WHERE cu.cust_id=ch.cust_id) cuh
 		WHERE cs.stuId = cuh.stuId
 		ORDER BY cuh.dateTime DESC;
+	</select>
+	
+	<!-- 고객 기본 정보(아이디, 이름, 프로필 사진) 가져오기 -->
+	<select id="getStuDefaultInfo" parameterType="string" resultMap="stuDefaultInfo">
+	SELECT s.stu_id stuId, s.name stuName, c.com_id comId, c.name comName, c.logo_img comLogo
+	FROM company c, 
+	(SELECT * FROM studio WHERE stu_id = #{stuId}) s
+	WHERE c.com_id = s.com_id;
+	</select>
+	
+	<!-- 스튜디오 기본 정보(스튜디오 아이디, 스튜디오 이름, 회사 아이디, 회사 이름, 회사 프로필 ) 가져오기 -->
+	<select id="getCustDefaultInfo" parameterType="string" resultMap="custDefaultInfo">
+	SELECT cust_id custId, nickname custName, img_src custLogo 
+	FROM customer 
+	WHERE cust_id = #{custId};
 	</select>
 </mapper>

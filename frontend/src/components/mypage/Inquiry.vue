@@ -9,7 +9,7 @@
             <tr v-if="inquiryFlag">
                 <td colspan="3"> 문의내역이 없습니다. </td>
             </tr>
-            <tr v-else v-for="(custChat) in recentChat" :key="custChat">
+            <tr v-else v-for="(custChat, index) in recentChat" :key="index">
                 <td>{{custChat.stuName | showLimitedContent}}({{custChat.comName | showLimitedContent}})</td>
                 <td @click="showChatMoal($event)" class="linkToChatModal">
                     {{custChat.word | showLimitedContent}}
@@ -30,7 +30,7 @@
             <tr tr v-if="inquiryFlag">
                 <td colspan="4"> 문의내역이 없습니다. </td>
             </tr>
-            <tr v-else v-for="(comChat) in recentChat" :key="comChat">
+            <tr v-else v-for="(comChat, index) in recentChat" :key="index">
                 <td>{{comChat.stuName | showLimitedContent}}</td>
                 <td>{{comChat.custName | showLimitedContent}}</td> 
                 <td @click="showChatMoal($event)" class="linkToChatModal">

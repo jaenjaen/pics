@@ -30,7 +30,7 @@
                   <md-datepicker
                   id="start_date"
                   v-model="start_date" 
-                 :md-model-type="String"
+                  :md-model-type="String"
                   :md-immediately="true"
                   :disable-passed-days="true"
                   :value="start_date"
@@ -42,7 +42,7 @@
                   <md-datepicker 
                   id="end_date"
                   v-model="end_date"
-                 :md-model-type="String"
+                  :md-model-type="String"
                   :md-immediately="true"
                   :disable-passed-days="true"
                   :value="end_date"
@@ -87,7 +87,6 @@
               </md-field>
             </div>
           </div>
-          <!-- <span>{{msg}}</span> -->
           <br />
           <br />
           <!-- 인원 -->

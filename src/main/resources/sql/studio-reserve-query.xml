@@ -69,7 +69,9 @@
 	<select id="getReservation" parameterType="reservation" resultType="reservation">							
 		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
 		FROM reservation
-		WHERE stu_id=#{stuId}
+		<if test="stuId!=null">
+			WHERE stu_id=#{stuId}
+		</if>
 	</select>
 	
 	<!-- ================== 2. 예약하기 ================== -->

@@ -43,7 +43,7 @@ public class StudioReserveController {
 			Schedule schedule=new Schedule();
 			ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(stuId); 
 			ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);
-			List<Reservation> reservation=studioReserveService.getReservation( new Reservation(stuId));
+			List<Reservation> reservation=studioReserveService.getReservation(new Reservation(stuId));
 			schedule.setStuId(stuId);
 			schedule.setExceptionDate(exceptionDate);
 			schedule.setRepeatDate(repeatDate);
@@ -111,7 +111,7 @@ public class StudioReserveController {
 	
 	// 4. Exception 예약 불가능 일자 update 
 	@PutMapping("/studio/exceptionDate")
-	public ResponseEntity UpdateE(@RequestBody ExceptionDate exceptionDate) {
+	public ResponseEntity UpdateExceptionDate(@RequestBody ExceptionDate exceptionDate) {
 		//등록 시간 삽입
 		try{
 			studioReserveService.UpdateExceptionDate(exceptionDate);
@@ -122,7 +122,7 @@ public class StudioReserveController {
 		}
 	
 	// 5. Exception 삭제
-	@DeleteMapping("/studio/exceptionDate}")
+	@DeleteMapping("/studio/exceptionDate/{exceptionDateList}")
 	public ResponseEntity DeleteExceptionDates(@PathVariable List<ExceptionDate> exceptionDateList) {
 		try{
 			studioReserveService.DeleteExceptionDates(exceptionDateList);

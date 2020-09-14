@@ -56,6 +56,7 @@ export default {
             today: new Date(),
             exceptionLength: 0,
             repeatedLength: 0,
+            reservationLength: 0,
             repeated: {},
             repeatedDays: [],
             // //1) 초로 환산한 날짜
@@ -97,8 +98,10 @@ export default {
                 this.schedule = response.data;
                 var exceptionDate = (response.data.exceptionDate);
                 var repeatDate = (response.data.repeatDate);
+                var reservation = (response.data.reservation);
                 this.exceptionLength = exceptionDate.length;
                 this.repeatedLength = repeatDate.length;
+                this.reservationLength = reservation.length;
                 this.repeated = this.schedule.repeatDate;
                 for (let i = 0; i < this.repeatedLength; i++) {
                     this.repeatedDays.push(this.repeated[i].weekday);
@@ -172,6 +175,7 @@ export default {
             // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인
             if (this.start_date != "") {
                 this.setTime(this.startDay);
+                console.log("this.startDay : " + this.startDay);
                 if (this.startDate < todayTime) {
                     alert("대여 시작일은 현재 날짜 이후로 가능합니다.");
                     this.start_date = this.today.getFullYear + "-" + (this.today.getMonth + 1) + "-" + this.today.getDate;
@@ -190,6 +194,7 @@ export default {
             }
             if (this.end_date != "") {
                 this.setTime(this.endDay);
+
                 if (this.checkCloseDate(this.endDay) == 0) {
                     alert("종료일이 영업일이 아닙니다.");
                     this.end_date = "yyyy-MM-dd"
@@ -247,7 +252,7 @@ export default {
         setTime(date) {
             if (date != null) {
                 for (let i = 0; i < this.repeatedLength; i++) {
-                    if (this.repeated[i].weekDay == week[parseInt(date)]) {
+                    if (this.repeated[i].weekday == week[parseInt(date)]) {
                         let openTime = parseInt(this.repeated[i].time.split('-')[0]);
                         let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
                         let t = 0
@@ -255,8 +260,8 @@ export default {
                             t = openTime + j
                             this.times.push(t);
                         }
-                        return this.times
-                    }
+                        return this.times;
+                    } else continue
                 }
             }
         },

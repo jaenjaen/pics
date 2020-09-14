@@ -1,14 +1,21 @@
 <template>
   <div class="whish_container">
     <p class="title">찜 리스트 (*^ω^*)</p>
-    <a href v-for="(studio,index) in studios" :key="index">
-      <div class="card">
+    <a v-for="(studio,index) in studios" :key="index">
+      <div class="card" @click.prevent="ToInfo(studio.stuId)">
         <div class="card-image">
           <img :src="getImgUrl(studio.mainImg)" />
         </div>
         <div class="card-content">
           <div>
-            <div class="name">{{studio.name | forSpace}}</div>
+            <div class="name">
+              <h5>{{studio.name | forSpace}}</h5>
+              <img
+                id="fullheart"
+                src="@/assets/img/util/fullheart.svg"
+                @click.prevent="removeBookmark(studio.bookmark[0].bookId)"
+              />
+            </div>
           </div>
 
           <div class="category">

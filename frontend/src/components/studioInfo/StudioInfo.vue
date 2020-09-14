@@ -69,12 +69,12 @@
       <!-- 누적 이용자 수 -->
       <div class="studio-name">
         <h1 id="studio-name"> {{ studio.name }} 
-          <button class="chat-btn" @click="showChatMoal">문의</button> <!-- 문의 클릭 이벤트 -->
         </h1>
       </div>
       <div id="company-of-studio">
-        <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
+        <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px" v-if="studio.company.logoImg"/></span>
         <span>{{studio.company.name}}</span>
+        <button class="chat-btn" @click="showChatMoal">문의</button> <!-- 문의 클릭 이벤트 -->
         </div>    
       </div>        
     </section>

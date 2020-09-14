@@ -121,7 +121,6 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        console.log("this.tags : " + this.tags);
         axios
             .get("http://127.0.0.1:7777/studio/accCustomer/" + this.stuId)
             .then(response => (this.accCustomer = response.data))
@@ -130,7 +129,6 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        console.log("this.accCustomer : " + this.accCustomer);
         await axios
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => {

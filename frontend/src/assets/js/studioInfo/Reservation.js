@@ -51,32 +51,7 @@ export default {
             start_time: 25,
             end_time: 25,
             difTime: 0,
-            times: [
-                "00",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-                "17",
-                "18",
-                "19",
-                "20",
-                "21",
-                "22",
-                "23"
-            ],
+            times: [],
             //예약 로직 관련 변수
             today: new Date(),
             exceptionLength: 0,
@@ -103,11 +78,6 @@ export default {
         "v-model",
         "stuIdData"
     ],
-    // created() {
-    //     this.stuId = this.stuIdData;
-    //     this.customer = this.custData;
-    //     console.log(this.stuId + "|" + this.custId + "Props로 데이터 받음~~!! 여긴 Reservation");
-    // },
     mounted() {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
         axios
@@ -125,8 +95,10 @@ export default {
             .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
             .then(response => {
                 this.schedule = response.data;
-                this.exceptionLength = (this.schedule.exceptionDate).length;
-                this.repeatedLength = (this.schedule.repeatDate).length;
+                var exceptionDate = (response.data.exceptionDate);
+                var repeatDate = (response.data.repeatDate);
+                this.exceptionLength = exceptionDate.length;
+                this.repeatedLength = repeatDate.length;
                 this.repeated = this.schedule.repeatDate;
                 for (let i = 0; i < this.repeatedLength; i++) {
                     this.repeatedDays.push(this.repeated[i].weekday);
@@ -187,8 +159,6 @@ export default {
                 this.endDay = this.transWeekDay(this.end_date);
                 this.startDate = this.transTime(this.start_date);
                 this.endDate = this.transTime(this.end_date);
-                console.log("this.startDay : " + this.startDay + ",this.start_date : " + this.start_date);
-                console.log("this.startDate : " + this.startDate);
                 var todayTime = this.transTime(this.today.getFullYear() + "-" + (this.today.getMonth() + 1) + "-" + this.today.getDate());
                 this.startDayTime = this.transTime(this.start_date, this.start_time);
                 this.endDayTime = this.transTime(this.end_date, this.end_time);
@@ -198,10 +168,10 @@ export default {
                 var endTime = parseInt(this.end_time);
                 this.difTime = (this.endDayTime - this.startDayTime) / (1000 * 60 * 60);
             }
-
             // 3. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후
             // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인
             if (this.start_date != "") {
+                this.setTime(this.startDay);
                 if (this.startDate < todayTime) {
                     alert("대여 시작일은 현재 날짜 이후로 가능합니다.");
                     this.start_date = this.today.getFullYear + "-" + (this.today.getMonth + 1) + "-" + this.today.getDate;
@@ -219,6 +189,7 @@ export default {
                 }
             }
             if (this.end_date != "") {
+                this.setTime(this.endDay);
                 if (this.checkCloseDate(this.endDay) == 0) {
                     alert("종료일이 영업일이 아닙니다.");
                     this.end_date = "yyyy-MM-dd"
@@ -237,24 +208,12 @@ export default {
                     this.endDate = this.startDate;
                 }
             }
-            if (this.start_time < 25 | this.end_time < 25) {
-                if (this.checkCloseTime(startTime) != 1 & startTime < 25) {
-                    // this.msg = "시작 시간이 영업 외 시간 입니다.";
-                    alert("시작 시간이 영업 외 시간 입니다.");
-                    this.start_time = "";
-                }
-                if (this.checkCloseTime(endTime) != 1 && endTime < 25) {
-                    // this.msg = "종료 시간이 영업 외 시간 입니다.";
-                    alert("종료 시간이 영업 외 시간 입니다.");
-                    this.end_time = "";
-                }
-                if (this.difTime == 0) {
-                    //하루 예약이면 시작시간 < 종료시간
-                    if ((startTime * endTime > 0) & (startTime >= endTime)) {
-                        alert("대여 종료시간은 시작시간 이후로 설정하세요.");
-                        this.end_time = this.start_time + 1;
-                        endTime = parseInt(this.start_time) + 1;
-                    }
+            if (this.difTime == 0 & (this.start_time < 25 | this.end_time < 25)) {
+                //하루 예약이면 시작시간 < 종료시간
+                if ((startTime * endTime > 0) & (startTime >= endTime)) {
+                    alert("대여 종료시간은 시작시간 이후로 설정하세요.");
+                    this.end_time = this.start_time + 1;
+                    endTime = parseInt(this.start_time) + 1;
                 }
             }
             if (this.start_date != "" & this.end_date != "" & this.start_time != 0 & this.end_time != 0) {
@@ -264,7 +223,6 @@ export default {
                     this.end_time = "";
                 }
             }
-
             //4. 시간대 반영
             var total_price = 0;
             if (startTime >= endTime) this.difTime -= endTime - startTime;
@@ -364,24 +322,27 @@ export default {
         },
         checkCloseDate(date) {
             if (date != null) {
-                if (this.repeatedDays.indexOf(week[date], 0) > -1) { //일치하는 요일의 종료 시간 가져오기
+                if (this.repeatedDays.indexOf(week[date], 0) > -1) { //일치하는 요일의 
                     return 1;
                 } else {
                     return 0;
                 }
             }
         },
-        checkCloseTime(time) {
-            if (time != null) {
+        setTime(date) {
+            if (date != null) {
                 for (let i = 0; i < this.repeatedLength; i++) {
-                    if (this.repeated[i].weekDate == week[this.endDay]) {
-                        if ((time > parseInt(this.repeated[i].time.split('-')[0])) &
-                            (time <= parseInt(this.repeated[i].time.split('-')[1]))) {
-                            return 1;
+                    if (this.repeated[i].weekDay == week[parseInt(date)]) {
+                        let openTime = parseInt(this.repeated[i].time.split('-')[0]);
+                        let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
+                        let t = 0
+                        for (let j = 0; j < (closeTime - openTime) + 1; j++) {
+                            t = openTime + j
+                            this.times.push(t);
                         }
+                        return this.times
                     }
                 }
-                return 0;
             }
         },
         checkException() {

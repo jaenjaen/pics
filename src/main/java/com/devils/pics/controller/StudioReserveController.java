@@ -99,7 +99,7 @@ public class StudioReserveController {
 		}
 
 	// 3. Exception 테이블에 추가, 예약 일자 
-	@PostMapping("/studio/reservation")
+	@PostMapping("/studio/exceptionDate")
 	public ResponseEntity AddExceptionDates(@RequestBody ExceptionDate exceptionDate) {
 		try{
 		int result=studioReserveService.AddExceptionDates(exceptionDate);
@@ -110,7 +110,7 @@ public class StudioReserveController {
 	}
 	
 	// 4. Exception 예약 불가능 일자 update 
-	@PutMapping("/studio/Exception")
+	@PutMapping("/studio/exceptionDate")
 	public ResponseEntity UpdateE(@RequestBody ExceptionDate exceptionDate) {
 		//등록 시간 삽입
 		try{
@@ -122,7 +122,7 @@ public class StudioReserveController {
 		}
 	
 	// 5. Exception 삭제
-	@DeleteMapping("/studio/Exception}")
+	@DeleteMapping("/studio/exceptionDate}")
 	public ResponseEntity DeleteExceptionDates(@PathVariable List<ExceptionDate> exceptionDateList) {
 		try{
 			studioReserveService.DeleteExceptionDates(exceptionDateList);

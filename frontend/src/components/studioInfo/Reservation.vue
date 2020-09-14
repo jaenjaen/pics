@@ -32,7 +32,7 @@
                   v-model="start_date" 
                   :md-model-type="String"
                   :md-immediately="true"
-                  :disable-passed-days="true"
+                  :md-disabled-dates="disabledDates"
                   :value="start_date"
                   ></md-datepicker>
                 </span>
@@ -44,7 +44,7 @@
                   v-model="end_date"
                   :md-model-type="String"
                   :md-immediately="true"
-                  :disable-passed-days="true"
+                  :md-disabled-dates="disabledDates"
                   :value="end_date"
                   ></md-datepicker>
                 </span>

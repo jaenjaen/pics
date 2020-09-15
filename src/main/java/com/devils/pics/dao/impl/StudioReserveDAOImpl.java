@@ -10,6 +10,7 @@ import com.devils.pics.dao.StudioReserveDAO;
 import com.devils.pics.domain.ExceptionDate;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Reservation;
+import com.devils.pics.domain.Schedule;
 import com.devils.pics.domain.Studio;
 
 @Repository
@@ -19,8 +20,8 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	private final String NS = "StudioReserveMapper.";
 
 	@Override
-	public ArrayList<ExceptionDate> getExceptionDate(int stuId) {
-		return (ArrayList) sqlSession.selectList(NS+"getExceptionDate", stuId);
+	public ArrayList<ExceptionDate> getExceptionDate(Schedule schedule) {
+		return (ArrayList) sqlSession.selectList(NS+"getExceptionDate", schedule);
 	}
 
 	@Override
@@ -39,8 +40,8 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	}
 
 	@Override
-	public List<Reservation> getReservation(Reservation reservation) {
-		return sqlSession.selectList(NS+"getReservation", reservation);
+	public List<Reservation> getReservation(Schedule schedule) {
+		return sqlSession.selectList(NS+"getReservation", schedule);
 	}
 
 	@Override

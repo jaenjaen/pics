@@ -9,6 +9,7 @@ import com.devils.pics.dao.StudioReserveDAO;
 import com.devils.pics.domain.ExceptionDate;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Reservation;
+import com.devils.pics.domain.Schedule;
 import com.devils.pics.service.StudioReserveService;
 
 @Service
@@ -17,19 +18,13 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	private StudioReserveDAO studioReserveDAO;
 
 	@Override
-	public ArrayList<ExceptionDate> getExceptionDate(int stuId) {
-		List<ExceptionDate> exceptionDateList =new ArrayList<ExceptionDate>();
-		for(ExceptionDate ex: studioReserveDAO.getExceptionDate(stuId))
-			exceptionDateList .add(ex);
-		return (ArrayList<ExceptionDate>) exceptionDateList;
+	public ArrayList<ExceptionDate> getExceptionDate(Schedule schedule) {
+		return studioReserveDAO.getExceptionDate(schedule);
 	}
 
 	@Override
 	public ArrayList<RepeatDate> getRepeatDate(int stuId) {
-		List<RepeatDate> repeatDateList =new ArrayList<RepeatDate>();
-		for(RepeatDate rep: studioReserveDAO.getRepeatDate(stuId))
-			repeatDateList.add(rep);
-		return (ArrayList<RepeatDate>) repeatDateList;
+		return studioReserveDAO.getRepeatDate(stuId);
 	}
 
 	@Override
@@ -43,8 +38,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public List<Reservation> getReservation(Reservation reservation) {
-		return studioReserveDAO.getReservation(reservation);
+	public List<Reservation> getReservation(Schedule schedule) {
+		return studioReserveDAO.getReservation(schedule);
 	}
 
 	@Override
@@ -65,6 +60,14 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	@Override
 	public int DeleteExceptionDates(List<ExceptionDate> exceptionDateList) {
 		return studioReserveDAO.DeleteExceptionDates(exceptionDateList);
+	}
+	
+	@Override
+	public Schedule getSchedule(Schedule schedule) {
+		Schedule scheduleDTO = schedule;
+		scheduleDTO.setExceptionDate(studioReserveDAO.getExceptionDate(schedule));
+		scheduleDTO.setReservation(studioReserveDAO.getReservation(schedule));
+		return scheduleDTO;
 	}
 
 	@Override

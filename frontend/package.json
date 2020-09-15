@@ -25,6 +25,7 @@
         "map": "^1.0.1",
         "material-design-icons": "^3.0.1",
         "materialize-css": "^1.0.0",
+        "nativescript-vue": "^2.8.1",
         "sockjs-client": "^1.5.0",
         "update": "^0.7.4",
         "v-clipboard": "^2.2.3",

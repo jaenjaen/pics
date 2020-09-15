@@ -15,15 +15,26 @@ aside {
 }
 
 .reservation-Information-area {
-    float: left;
-    width: 20%;
-    margin: 10% 5% 5% 7%;
-    align-content: center;
+    border-right: 1px solid black;
+    padding-right: 10px;
+}
+
+#Studio-Filter-Table {
+    font-size: 20px;
+    height: 250px;
+}
+
+#Studio-Filter-Table>thead>th {
+    padding-bottom: 15px;
+}
+
+#Studio-Filter-Table>tbody>tr>td {
+    height: 40px;
+    padding: 0 !important;
 }
 
 #Studio-Filter-Table tr {
     border-bottom: 1.5px solid #bbb5b5;
-    padding: 10px;
 }
 
 #Studio-Filter-Table tr td {
@@ -57,4 +68,10 @@ aside {
 
 #reservation-btn {
     margin: 5% auto;
+}
+
+.calender_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

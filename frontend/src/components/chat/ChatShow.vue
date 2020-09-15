@@ -1,15 +1,11 @@
 <template>
     <div id="app">
 
-        <!-- Chat Modal을 띄우는 클릭 이벤트 -->
-        <button @click="showChatMoal">문의</button>
-
         <!-- Chat Modal 영역 -->
-        <div id="chatModal" style="display:none;">
+        <div id="chatModal" style="display:block;">
             <div id="chatContent">
-                <div id="closeChat" @click="hideChatModal" >&times;</div>
-                <Chat id="chatArea" customerMode="true" />
-                
+                <div id="closeChat" @click="goBackToMyPage()" >&times;</div>
+                <Chat id="chatArea" ref="chat" />
             </div>
         </div>
 

@@ -1,11 +1,9 @@
 <template>
   <div class="bottom">
     <div class="container_bottom">
-      <div class="item_bottom">
-        <router-link to="/wishlist">
-          <img src="@/assets/img/header_bottom/marking.svg" alt />
-          <p>찜</p>
-        </router-link>
+      <div class="item_bottom" @click.prevent="toWishiList()">
+        <img src="@/assets/img/header_bottom/marking.svg" alt />
+        <p>찜</p>
       </div>
       <div class="item_bottom">
         <router-link to="/">
@@ -23,7 +21,7 @@
   </div>
 </template>
 
-<script></script>
+<script scoped src="@/assets/js/main/bottom.js"></script>
 
 <style scoped src="@/assets/css/remove_css.css">
 </style>

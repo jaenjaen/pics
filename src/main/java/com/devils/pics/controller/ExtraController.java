@@ -31,9 +31,9 @@ public class ExtraController {
 	@PostMapping("/bookmark")
 	public ResponseEntity addBookmark(@RequestBody Bookmark bookmark) {
 		try {
-			System.out.println(bookmark);
+			//System.out.println(bookmark);
 			int n = extraService.addBookmark(bookmark);
-			System.out.println("상태 매세지 : "+n);
+			//System.out.println("상태 매세지 : "+n);
 			return new ResponseEntity(n,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -54,12 +54,12 @@ public class ExtraController {
 	@GetMapping("/bookmark/custId/{custId}/stuId/{stuId}")
 	public ResponseEntity getBookmark(@PathVariable int custId, @PathVariable int stuId) {
 		try {
-			System.out.println(custId+", "+stuId);
+			//System.out.println(custId+", "+stuId);
 			HashMap<String, Integer> ids = new HashMap<String, Integer>();
 			ids.put("custId", custId);
 			ids.put("stuId", stuId);
 			Bookmark bm = extraService.getBookId(ids);
-			System.out.println("getBookId : "+bm);
+			//System.out.println("getBookId : "+bm);
 			return new ResponseEntity(bm,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -68,6 +68,7 @@ public class ExtraController {
 	
 	@DeleteMapping("/bookmark/{bookId}")
 	public ResponseEntity deleteBookmark(@PathVariable int bookId) {
+		//System.out.println("deleteBookmark 호출됬다. ");
 		try {
 			int n= extraService.deleteBookmark(bookId);
 			
@@ -116,6 +117,17 @@ public class ExtraController {
 			if(flag>0) return new ResponseEntity(flag,HttpStatus.OK);
 			else return new ResponseEntity(HttpStatus.NOT_MODIFIED);
 		}catch (Exception e){
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping("/bookmarklist/{custId}")
+	public ResponseEntity getBookmarkList(@PathVariable int custId) {
+		try {
+			List<Studio> list= extraService.getBookmarkList(custId);
+			
+			return new ResponseEntity(list,HttpStatus.OK);
+		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}

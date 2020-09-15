@@ -10,13 +10,13 @@ import Mypage from "../views/mypage/Mypage.vue";
 import CompanyEdit from "../views/mypage/edit/CompanyEdit.vue";
 import CustomerEdit from "../views/mypage/edit/CustomerEdit.vue";
 import ReservationList from "../views/mypage/reservation/ReservationList.vue"
-import WishList from "../views/WishList.vue";
+import WishList from "../views/mypage/WishList.vue";
 import RegisterStudio from "@/components/studioRegister/RegisterStudio.vue";
+import StudioEdit from "@/views/mypage/edit/StudioEdit.vue";
 import FileRoute from "@/components/studioRegister/FileRoute.vue";
 import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
 import Map from "@/components/studioInfo/Map.vue";
-import MapCopy from "@/components/studioInfo/Map copy.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
@@ -72,8 +72,8 @@ const routes = [{
         component: Mypage
     },
     {
-        path: "/wishlist",
-        name: "wishlist",
+        path: "/wishlist/:custId",
+        name: "wishList",
         component: WishList
     },
     {
@@ -85,7 +85,7 @@ const routes = [{
         path: "/studioInfo/:stuId",
         name: "studioInfo",
         component: StudioInfo,
-        props: true
+        // props: true
     },
     {
         path: "/studioList",
@@ -134,13 +134,13 @@ const routes = [{
         path: "/Map",
         name: "Map",
         component: Map
-    },
-    {
-        path: "/mapCopy",
-        name: "mapcopy",
-        component: MapCopy
+    }, {
+        path: "/studioEdit/:stuId",
+        name: "studioEdit",
+        component: StudioEdit
     }
 ];
+
 const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,

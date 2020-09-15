@@ -1,11 +1,14 @@
 import { Line } from "vue-chartjs";
 import axios from "axios";
+// import Vue from 'vue'
+// var eventBus = new Vue();
 
 export default {
     name: "TimeChart",
     extends: Line,
     data() {
         return {
+            stuId: 0,
             reservatedLength: 0,
             timeCount: new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             datacollection: {
@@ -43,9 +46,14 @@ export default {
             }
         }
     },
+    props: ["stuIdData"],
+    created: function() {
+        this.stuId = this.stuIdData;
+        console.log(this.stuId + "Props로 데이터 받음~~!! 여긴 TimeChart");
+    },
     mounted() {
         axios
-            .get("http://127.0.0.1:7777/studio/reservation/10")
+            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
             .then(response => {
                 this.reservation = response.data;
                 var reservation = this.reservation;

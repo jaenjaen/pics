@@ -1,17 +1,62 @@
 <template>
   <div class="mypage_container">
     <MypageNametag :customerMode="false" />
-    <MypageGap categoryName="예약관리 >" cateogryURL="#"/>
+    <MypageGap categoryName="예약관리" cateogryURL="#"/>
+
     <!-- 예약관리-->
-    <div class="mypage_card">
-      <p>ㅇㅖ약고나리</p>
+    <div class="mypage_card" style="height:500px;">
+      <div id="calendar_header">
+        <button class="arrow_btn" @click="prevWeek">
+          <img src="@/assets/img/util/backward.svg">
+        </button>
+
+        <button class="today_btn" @click="moveToday">today</button>
+
+        <button class="arrow_btn" @click="nextWeek">
+          <img src="@/assets/img/util/forward.svg">
+        </button>
+      <span><p style="display:inline;">{{startWeek}}~{{endWeek}}</p></span>
+        
+        <select v-model="selectedId" @change="getStudioReservation">
+          <option value="" v-if="studioFlag" disabled> 등록된 스튜디오가 없습니다. </option>
+          <option value="" v-if="!studioFlag" disabled> 스튜디오를 선택해주세요. </option>
+          <option v-for="(studio, index) in studioList" :key="index" :value="studio.stuId">
+            {{ studio.name }}
+          </option>
+        </select>
+
+      </div>
+      <calendar ref="studioCalendar"
+        style="height:450px;"
+        :calendars="calendarList"
+        :schedules="scheduleList"
+        :taskView="false"
+        :disableDblClick="true"
+        :isReadOnly="false"
+        :useCreationPopup="true"
+        :useDetailPopup="true"
+      /> 
     </div>
     <MypageGap categoryName="스튜디오 관리 +" cateogryURL="http://localhost:9999/registerStudio"/>
+
     <!-- 문의 내역-->
     <div class="mypage_card">
-       <p>슷휴디오 관리</p>
+       <table>
+         <tr>
+          <th>종류</th> <th>스튜디오 이름</th> <th>스튜디오 위치</th> <th>스튜디오 수정</th>
+        </tr>
+        <tr>
+          <td colspan="4" v-if="studioFlag"> 소유한 스튜디오가 없습니다.<br><a href="http://localhost:9999/registerStudio"> 새로운 스튜디오 추가하기 </a></td>
+        </tr>
+        <tr v-for="(studio, index) in studioList" :key="index">
+          <td style="width:10%">{{studio.category.categoryName}}</td> <td style="width:35%;"><router-link :to="{name:'studioInfo', params: {stuId:studio.stuId}}">{{studio.name}}</router-link></td> 
+          <td>{{studio.studioFilter.address}}</td>
+          <td style="width:15%"><router-link :to="{name:'studioEdit', params: {stuId:studio.stuId}}"><button class="list_btn">수정</button></router-link></td>
+        </tr>
+      </table>
     </div>
-    <MypageGap categoryName="문의내역 >" cateogryURL="#"/>
+    <MypageGap categoryName="문의내역" cateogryURL="/chatShow"/>
+
     <!-- 리뷰 -->
     <Inquiry :customerMode="false"/>
   </div>
@@ -19,3 +64,7 @@
 
 <script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
+
+<style scoped src="@/assets/css/mypage/calendar.css"></style>
+
+

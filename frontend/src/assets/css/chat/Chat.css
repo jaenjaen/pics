@@ -45,15 +45,12 @@
                 color: white;
                 font-weight: bold;
                 vertical-align: middle;
+                margin: 0 4px 0 10px;
             }
             
             #list {
                 width: 23px;
                 height: 20px;
-            }
-            
-            header span {
-                margin: 0 10px;
             }
             
             .profile,
@@ -62,7 +59,8 @@
                 height: 20px;
             }
             
-            .profile {
+            .profile,
+            #search {
                 cursor: pointer;
             }
             /* 본문 스타일 */
@@ -309,8 +307,15 @@
                 overflow: hidden;
             }
             
+            #userName {
+                cursor: pointer;
+            }
+            
             #userName:hover {
                 background-color: #034EA2;
+            }
+            
+            #userName b {
                 cursor: pointer;
             }
             

@@ -43,14 +43,13 @@
 			<result property="mainImg" column="main_img"/>
 			<result property="portImg" column="port_img"/>
 			<result property="cadImg" column="cad_img"/>
-			<result property="floor" column="floor"/>
-			
+			<result property="floor" column="floor"/>		
 		</association>
 	</resultMap>
 	
 	<sql id="select-reservation-studio">
 		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
-				,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
 		FROM reservation r,studio s
 	</sql>
 	
@@ -62,7 +61,7 @@
 	</select>
 
 	<select id="getRepeatDate" parameterType="int" resultType="repeatDate">							
-		SELECT rep.repeat_id,rep.weekday weekDate, rep.time
+		SELECT rep.repeat_id,rep.weekday, rep.time
 		FROM repeat_date rep
 		WHERE rep.stu_id=${value}
 	</select>
@@ -70,7 +69,9 @@
 	<select id="getReservation" parameterType="reservation" resultType="reservation">							
 		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
 		FROM reservation
-		WHERE stu_id=#{stuId}
+		<if test="stuId!=null">
+			WHERE stu_id=#{stuId}
+		</if>
 	</select>
 	
 	<!-- ================== 2. 예약하기 ================== -->
@@ -79,7 +80,7 @@
 		VALUES(#{custId},#{stuId},#{startDate},#{endDate},#{totalPrice},now(),#{totalPeople})
 	</insert> 
 	
- 	<insert id="addExceptionDates" parameterType="reservation">							
+ 	<insert id="addExceptionDates" parameterType="exceptionDate">							
 		INSERT into exception_date(start_date,end_date,stu_id)
 		VALUES (#{startDate},#{endDate},#{stuId})
 	</insert>
@@ -95,7 +96,7 @@
 		WHERE res_id=#{resId}
 	</update>
 
- 	<update id="updateExceptionDate" parameterType="reservation">							
+ 	<update id="updateExceptionDate" parameterType="exceptionDate">							
 		UPDATE exception_date 
 		SET 
 		start_date=#{startDate},
@@ -111,16 +112,16 @@
  	<delete id="deleteExceptionDates" parameterType="list">							
 		Delete FROM exception_date
 		WHERE stu_id in
-		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
-		#{reservation.stuId}
+		<foreach collection="list" item="exception" open="(" close=")" separator=",">
+		#{exception.stuId}
 		</foreach>
 		AND start_date in
-		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
-		date(#{reservation.startDate})
+		<foreach collection="list" item="exception" open="(" close=")" separator=",">
+		date(#{exception.startDate})
 		</foreach>
 		AND end_date in
-		<foreach collection="list" item="reservation" open="(" close=")" separator=",">
-		date(#{reservation.endDate})
+		<foreach collection="list" item="exception" open="(" close=")" separator=",">
+		date(#{exception.endDate})
 		</foreach> 
 	</delete>
 	

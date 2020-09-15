@@ -45,10 +45,10 @@ public class StudioInfoController {
 	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {	
 		try {		
 		List<Studio> studioVO=studioInfoService.getStudioInfo(stuId);		
-		System.out.println(studioVO);
+		//System.out.println(studioVO);
 		return new ResponseEntity<List<Studio>>(studioVO,HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println(e.getMessage()+"찾으시는 스튜디오가 없습니다");
+			//System.out.println(e.getMessage()+"찾으시는 스튜디오가 없습니다");
 			return new ResponseEntity<List<Studio>>(HttpStatus.NO_CONTENT);
 		}
 	}
@@ -57,10 +57,10 @@ public class StudioInfoController {
 	public ResponseEntity getAccCustomer(@PathVariable int stuId) {	
 		try {
 		int accCust=studioInfoService.getAccCustomer(stuId);
-		System.out.println(accCust);
+		//System.out.println(accCust);
 		return new ResponseEntity(accCust,HttpStatus.OK);
 		}catch (NullPointerException e) {
-		System.out.println("아직 해당 스튜디오를 이용한 고객이 없습니다."+e.getMessage());
+		//System.out.println("아직 해당 스튜디오를 이용한 고객이 없습니다."+e.getMessage());
 		return new ResponseEntity("실패",HttpStatus.NO_CONTENT);
 		}
 	}
@@ -95,10 +95,10 @@ public class StudioInfoController {
 	public ResponseEntity<List<Review>> getStudioReviews(@PathVariable int stuId) {	
 		try {
 		List<Review> reviewVO=studioInfoService.getStudioReviews(stuId);
-		System.out.println(reviewVO);
+		//System.out.println(reviewVO);
 		return new ResponseEntity<List<Review>>(reviewVO,HttpStatus.OK);
 		}catch (NullPointerException e) {
-			System.out.println("아직 작성된 스튜디오 리뷰가 없습니다");
+			//System.out.println("아직 작성된 스튜디오 리뷰가 없습니다");
 			return new ResponseEntity<List<Review>>(HttpStatus.NO_CONTENT);
 			}
 		}

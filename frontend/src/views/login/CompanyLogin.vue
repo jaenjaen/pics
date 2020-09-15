@@ -60,41 +60,5 @@
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import LoginHeader from "@/components/LoginHeader.vue";
-import axios from "axios";
-
-export default {
-  name: "customerLogin",
-  components: {
-    LoginHeader
-  },
-  data() {
-    return {
-      comId: "",
-      password: "",
-      rdata: []
-    };
-  },
-  methods: {
-    companyLogin: function() {
-      axios
-        .get(
-          "http://localhost:7777/company/" + this.comId + "/" + this.password
-        )
-        .then(response => {
-          this.rdata = response.data;
-          if (this.rdata != "") {
-            sessionStorage.setItem("company",JSON.stringify(this.rdata));
-            location.href = "http://localhost:9999";
-          }
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
-  }
-};
-</script>
+<script scoped src="@/assets/js/login/CompanyLogin.js"></script>
 <style scoped src="@/assets/css/login/CompanyLogin.css"></style>

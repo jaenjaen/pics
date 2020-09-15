@@ -1,0 +1,97 @@
+.whish_container {
+    width: 768px;
+    margin: 0 auto;
+    padding-bottom: 61px;
+    background-color: #fff;
+}
+
+.title {
+    margin: 0;
+    padding: 20px 0px;
+    font-size: 25px;
+    font-weight: 700;
+    padding-left: 30px;
+    padding-bottom: 10px;
+}
+
+.card {
+    display: flex;
+    height: 300px;
+}
+
+.card,
+.card-image {
+    border-radius: 10px;
+}
+
+.card-image {
+    overflow: hidden;
+    width: 450px;
+    height: 300px !important;
+}
+
+img {
+    height: 100% !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.card-content {
+    padding-top: 20px !important;
+    width: 318px;
+    color: black;
+}
+
+.name {
+    width: 270px;
+    height: 70px;
+    overflow: hidden;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+}
+
+.name h5 {
+    font-weight: 400;
+}
+
+.name img {
+    width: 25px;
+    padding-top: 18px;
+    margin-right: 10px;
+}
+
+.category div p {
+    text-align: left;
+    padding-top: 15px;
+}
+
+#price {
+    padding-top: 60px;
+    text-align: right;
+}
+
+.price {
+    font-size: 25px;
+    font-weight: 600;
+    color: #33a3dc;
+}
+
+#review {
+    padding: 30px;
+}
+
+a:link {
+    color: black;
+    text-decoration: none;
+}
+
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: black !important;
+    text-decoration: none !important;
+}

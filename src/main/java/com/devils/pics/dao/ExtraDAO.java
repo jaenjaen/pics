@@ -16,4 +16,5 @@ public interface ExtraDAO {
 	List<Review> getCustomerReivews(int custId) throws Exception;
 	int checkReviews(int resId) throws Exception;
 	int deleteReview(int reviewId) throws Exception;
+	List<Studio> getBookmarkList(int custId) throws Exception;
 }

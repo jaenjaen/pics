@@ -98,17 +98,22 @@ export default {
                 // 메인 이미지 split
                 if (this.studios[0].mainImg.match(",")) {
                     let mainImgSplit = (this.studios[0].mainImg).split(',');
-                    let portImgSplit = (this.studios[0].mainImg).split(',');
-                    for (let i = 0; i < mainImgSplit.letngth; i++) {
-                        alert("메인이미지::" + mainImgSplit[i])
+                    for (let i = 0; i < Object.keys(mainImgSplit).length; i++) {
                         this.mainImgList.push(mainImgSplit[i]);
-                    }
-                    for (let i = 0; i < this.portImgList.letngth; i++) {
-                        this.portImgList.push(portImgSplit[i]);
                     }
                     console.log("this.mainImgList : " + this.mainImgList);
                 } else {
                     this.mainImgList.push(this.studios[0].mainImg)
+                }
+
+                // 포폴 이미지 자르기 
+                if (this.studios[0].portImg.match(",")) {
+                    let portImgSplit = (this.studios[0].portImg).split(',');
+                    for (let i = 0; i < Object.keys(portImgSplit).length; i++) {
+                        this.portImgList.push(portImgSplit[i]);
+                    }
+                } else {
+                    this.portImgList.push(this.studios[0].portImg)
                 }
 
 
@@ -209,7 +214,7 @@ export default {
         },
         /* 문의 영역 끝 */
         imgUrl(imgName) {
-            console.log(imgName);
+            console.log('imgName' + imgName);
             return require("@/assets/img/studio/" + imgName);
         },
         // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거

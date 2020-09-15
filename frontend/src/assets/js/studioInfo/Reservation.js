@@ -1,6 +1,8 @@
 import axios from "axios";
 import Vue from 'vue';
-import VueMaterial, { MdCard } from 'vue-material';
+import VueMaterial, {
+    MdCard
+} from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
@@ -77,7 +79,7 @@ export default {
             errored: false,
         };
     },
-    Props: [
+    props: [
         "md-disabled-dates",
         "md-model-type",
         "md-immediately",
@@ -87,7 +89,7 @@ export default {
     mounted() {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
         axios
-            .get("http://127.0.0.1:7777/studio/info/10") // + this.stuId)
+            .get("http://127.0.0.1:7777/studio/info/" + this.stuIdData)
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
@@ -98,7 +100,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuIdData)
             .then(response => {
                 this.schedule = response.data;
                 var exceptionDate = (response.data.exceptionDate);
@@ -292,7 +294,7 @@ export default {
             //2. 예약 정보 확인 reservation 변수 설정
             if (this.total_price > 0 && this.msg == "") {
                 let reservation = {
-                    stuId: 10, //this.stuId,
+                    stuId: this.stuIdData,
                     custId: this.customer.custId,
                     customer: this.customer,
                     startDate: this.start_date + " " + this.start_time,

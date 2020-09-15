@@ -71,6 +71,9 @@ public class ChatController {
 			}else if(member.equals("cust")) { //고객으로 로그인 했을 경우
 				recentChat = chatService.getRecentCustChat(id);
 				//System.out.println(recentChat);
+			}else if(member.equals("stu")) { //스튜디오별로 최근 대화를 불러오려고 할 때
+				recentChat = chatService.getRecentStuChat(id);
+				//System.out.println(recentChat);
 			}
 			
 			if(recentChat.size()>0) {
@@ -88,14 +91,11 @@ public class ChatController {
 	/* 채팅 상대 기본 정보 가져오기 */
 	@GetMapping("/chat/info/{member}/{id}")
 	public ResponseEntity getDefaultInfo(@PathVariable String member, @PathVariable String id) {
-		System.out.println(member);
-		System.out.println(id);
 		Map map = new HashMap();
 		try {
 			if(member.equals("stu")) { //스튜디오 정보 가져오기
 				map = chatService.getStuDefaultInfo(id);
-				System.out.println("성공했당");
-				System.out.println(map);
+				//System.out.println(map);
 			}else if(member.equals("cust")) { //고객 정보 가져오기
 				map = chatService.getCustDefaultInfo(id);
 				//System.out.println(map);

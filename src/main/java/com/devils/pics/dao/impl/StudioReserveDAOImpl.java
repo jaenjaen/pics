@@ -34,8 +34,8 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	}
 
 	@Override
-	public int AddExceptionDates(Reservation reservation) {
-		return sqlSession.insert(NS+"addExceptionDates", reservation);
+	public int AddExceptionDates(ExceptionDate exception) {
+		return sqlSession.insert(NS+"addExceptionDates", exception);
 	}
 
 	@Override
@@ -49,9 +49,9 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	}
 
 	@Override
-	public int UpdateExceptionDate(Reservation reservation) {
+	public int UpdateExceptionDate(ExceptionDate exception) {
 		// TODO Auto-generated method stub
-		return sqlSession.update(NS+"updateExceptionDate", reservation);
+		return sqlSession.update(NS+"updateExceptionDate", exception);
 	}
 
 	@Override
@@ -60,8 +60,8 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	}
 
 	@Override
-	public int DeleteExceptionDates(List<Reservation> reservationList) {
-		return sqlSession.delete(NS+"deleteExceptionDates", reservationList);
+	public int DeleteExceptionDates(List<ExceptionDate> exceptionList) {
+		return sqlSession.delete(NS+"deleteExceptionDates", exceptionList);
 	}
 
 	@Override

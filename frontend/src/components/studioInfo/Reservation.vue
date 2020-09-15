@@ -19,6 +19,7 @@
                 </tbody>
               </table>
             </div>
+
             <div class="input-reserve-info-field">
               <!-- 날짜 -->
               <div class="date-input-field">
@@ -59,8 +60,9 @@
                     <md-select v-model="start_time" required style="width:30%">
                       <md-option
                         required="required"
-                        v-for="(time,index) in times"
+                        v-for="(startTime,index) in startTimes"
                         v-bind:key="index"
+
                         :value="parseInt(time)"
                       >{{time}}시</md-option>
                     </md-select>
@@ -72,8 +74,9 @@
                     <md-select v-model="end_time" required style="width:30%">
                       <md-option
                         required="required"
-                        v-for="(time,index) in times"
+                        v-for="(endTime,index) in endTimes"
                         v-bind:key="index"
+
                         :value="parseInt(time)"
                       >{{time}}시</md-option>
                     </md-select>

@@ -4,10 +4,10 @@ import VueMaterial, { MdCard } from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 
-// var eventBus = new Vue();
+
 Vue.use(VueMaterial);
 // 요일 변환을 위한 리스트
-const week = ["fri", "sat", "sun", "mon", "tue", "wed", "thu"];
+const week = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
 export default {
     name: "Reservation",
@@ -51,38 +51,19 @@ export default {
             start_time: 25,
             end_time: 25,
             difTime: 0,
-            times: [
-                "00",
-                "01",
-                "02",
-                "03",
-                "04",
-                "05",
-                "06",
-                "07",
-                "08",
-                "09",
-                "10",
-                "11",
-                "12",
-                "13",
-                "14",
-                "15",
-                "16",
-                "17",
-                "18",
-                "19",
-                "20",
-                "21",
-                "22",
-                "23"
-            ],
+            startTimes: [],
+            endTimes: [],
             //예약 로직 관련 변수
             today: new Date(),
             exceptionLength: 0,
             repeatedLength: 0,
+            reservationLength: 0,
             repeated: {},
             repeatedDays: [],
+            disabledDates: date => {
+                const day = date.getDay()
+                return this.checkCloseDate(day) == 0
+            },
             // //1) 초로 환산한 날짜
             startDayTime: 0,
             endDayTime: 0,
@@ -103,11 +84,6 @@ export default {
         "v-model",
         "stuIdData"
     ],
-    // created() {
-    //     this.stuId = this.stuIdData;
-    //     this.customer = this.custData;
-    //     console.log(this.stuId + "|" + this.custId + "Props로 데이터 받음~~!! 여긴 Reservation");
-    // },
     mounted() {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
         axios
@@ -125,8 +101,12 @@ export default {
             .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
             .then(response => {
                 this.schedule = response.data;
-                this.exceptionLength = (this.schedule.exceptionDate).length;
-                this.repeatedLength = (this.schedule.repeatDate).length;
+                var exceptionDate = (response.data.exceptionDate);
+                var repeatDate = (response.data.repeatDate);
+                var reservation = (response.data.reservation);
+                this.exceptionLength = exceptionDate.length;
+                this.repeatedLength = repeatDate.length;
+                this.reservationLength = reservation.length;
                 this.repeated = this.schedule.repeatDate;
                 for (let i = 0; i < this.repeatedLength; i++) {
                     this.repeatedDays.push(this.repeated[i].weekday);
@@ -187,8 +167,6 @@ export default {
                 this.endDay = this.transWeekDay(this.end_date);
                 this.startDate = this.transTime(this.start_date);
                 this.endDate = this.transTime(this.end_date);
-                console.log("this.startDay : " + this.startDay + ",this.start_date : " + this.start_date);
-                console.log("this.startDate : " + this.startDate);
                 var todayTime = this.transTime(this.today.getFullYear() + "-" + (this.today.getMonth() + 1) + "-" + this.today.getDate());
                 this.startDayTime = this.transTime(this.start_date, this.start_time);
                 this.endDayTime = this.transTime(this.end_date, this.end_time);
@@ -198,64 +176,63 @@ export default {
                 var endTime = parseInt(this.end_time);
                 this.difTime = (this.endDayTime - this.startDayTime) / (1000 * 60 * 60);
             }
-
             // 3. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후
             // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인
             if (this.start_date != "") {
+                this.startTimes = this.setTime(this.startDay);
                 if (this.startDate < todayTime) {
-                    alert("대여 시작일은 현재 날짜 이후로 가능합니다.");
+                    alert("대여 종료일을 오늘 이후로 선택하세요.");
                     this.start_date = this.today.getFullYear + "-" + (this.today.getMonth + 1) + "-" + this.today.getDate;
-                } else if (this.checkCloseDate(this.startDay) == 0) {
-                    this.msg = "시작일이 비영업일 입니다.";
-                    for (var i = 0; i < week.length; i++) {
-                        let nextDate = new Date(this.startDate + (i * 1000 * 60 * 60 * 24));
-                        let nextDay = nextDate.getFullYear() + "-" + nextDate.getMonth() + "-" + (nextDate.getDate());
-                        if (this.checkCloseDate(this.transWeekDay(nextDay)) != 0) {
-                            this.start_date = nextDay;
-                            this.msg = ""; // 현재 날짜 원복
-                            break;
-                        } else continue;
-                    }
                 }
+                // else if (this.checkCloseDate(this.startDay) == 0) {
+                //     alert("시작일이 비영업일 입니다.");
+                //     for (var i = 0; i < week.length; i++) {
+                //         let nextDate = new Date(this.startDate + (i * 1000 * 60 * 60 * 24));
+                //         let nextDay = nextDate.getFullYear() + "-" + nextDate.getMonth() + "-" + (nextDate.getDate());
+                //         if (this.checkCloseDate(this.transWeekDay(nextDay)) != 0) {
+                //             this.start_date = nextDay;
+                //             this.msg = ""; // 현재 날짜 원복
+                //             break;
+                //         } else continue;
+                //     }
+                // }
             }
             if (this.end_date != "") {
-                if (this.checkCloseDate(this.endDay) == 0) {
-                    alert("종료일이 영업일이 아닙니다.");
-                    this.end_date = "yyyy-MM-dd"
-                    for (i = 0; i < week.length; i++) {
-                        let nextDate = new Date(this.endDate + (i * 1000 * 60 * 60 * 24));
-                        let nextDay = nextDate.getFullYear() + "-" + nextDate.getMonth() + "-" + (nextDate.getDate());
-                        if (this.checkCloseDate(this.transWeekDay(nextDay)) != 0) {
-                            this.end_date = nextDay;
-                            this.msg = ""; // 현재 날짜 원복
-                            break;
-                        } else continue;
-                    }
-                } else if (this.startDate > this.endDate) {
+                // this.endTimes = this.setTime(this.endDay);
+                // if (this.checkCloseDate(this.endDay) == 0) {
+                //     alert("종료일이 영업일이 아닙니다.");
+                //     this.end_date = "yyyy-MM-dd"
+                //     for (i = 0; i < week.length; i++) {
+                //         let nextDate = new Date(this.endDate + (i * 1000 * 60 * 60 * 24));
+                //         let nextDay = nextDate.getFullYear() + "-" + nextDate.getMonth() + "-" + (nextDate.getDate());
+                //         if (this.checkCloseDate(this.transWeekDay(nextDay)) != 0) {
+                //             this.end_date = nextDay;
+                //             this.msg = ""; // 현재 날짜 원복
+                //             break;
+                //         } else continue;
+                //     }
+                // }  
+                if (this.startDate > this.endDate) {
                     alert("대여 종료일을 시작일 이후로 설정하세요.");
                     this.end_date = this.start_date;
                     this.endDate = this.startDate;
                 }
             }
-            if (this.start_time < 25 | this.end_time < 25) {
-                if (this.checkCloseTime(startTime) != 1 & startTime < 25) {
-                    // this.msg = "시작 시간이 영업 외 시간 입니다.";
-                    alert("시작 시간이 영업 외 시간 입니다.");
-                    this.start_time = "";
-                }
-                if (this.checkCloseTime(endTime) != 1 && endTime < 25) {
-                    // this.msg = "종료 시간이 영업 외 시간 입니다.";
-                    alert("종료 시간이 영업 외 시간 입니다.");
-                    this.end_time = "";
-                }
-                if (this.difTime == 0) {
-                    //하루 예약이면 시작시간 < 종료시간
-                    if ((startTime * endTime > 0) & (startTime >= endTime)) {
-                        alert("대여 종료시간은 시작시간 이후로 설정하세요.");
-                        this.end_time = this.start_time + 1;
-                        endTime = parseInt(this.start_time) + 1;
+            if (startTime < 25 | endTime < 25) {
+                if (startTime >= endTime & this.difTime == 0) { //하루 예약이면 시작시간 < 종료시간
+                    alert("대여 종료시간은 시작시간 이후로 설정하세요.");
+                    this.end_time = this.start_time + 1;
+                    if (this.startTimes[0] == endTime) {
+                        console.log("this.startTimes[0] : " + this.startTimes[0] + ", endTime : " + endTime)
+                        alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
+                        this.end_time = this.startTimes[1];
+                    }
+                    if (this.endTimes[-1] == startTime) {
+                        alert("대여 종료시간을 오픈 시간 이후로 설정하세요. : " + this.endTimes[-1]);
+                        this.start_time = this.endTimes[-2];
                     }
                 }
+
             }
             if (this.start_date != "" & this.end_date != "" & this.start_time != 0 & this.end_time != 0) {
                 if (this.checkException() == 0) {
@@ -264,10 +241,9 @@ export default {
                     this.end_time = "";
                 }
             }
-
             //4. 시간대 반영
             var total_price = 0;
-            if (startTime >= endTime) this.difTime -= endTime - startTime;
+            if (startTime >= endTime) this.difTime -= (endTime - startTime);
             else this.difTime += endTime - startTime;
             // 4. 총 요금
             if (this.total_people > this.studios[0].studioFilter.defaultCapacity) {
@@ -297,7 +273,7 @@ export default {
                 this.total_people++;
             else this.msg = "최대 인원을 초과했습니다.";
         },
-        addReserve() {
+        async addReserve() {
             // 유저 Id 가져오기
             this.customer = JSON.parse(sessionStorage.getItem('customer'));
             if (this.customer == undefined) this.$modal.show("login-required");
@@ -324,7 +300,7 @@ export default {
                     totalPrice: this.total_price,
                     totalPeople: this.total_people
                 };
-                axios
+                await axios
                     .post("http://127.0.0.1:7777/studio/reservation", reservation)
                     .then(response => {
                         console.log(response.data);
@@ -364,24 +340,28 @@ export default {
         },
         checkCloseDate(date) {
             if (date != null) {
-                if (this.repeatedDays.indexOf(week[date], 0) > -1) { //일치하는 요일의 종료 시간 가져오기
+                if (this.repeatedDays.indexOf(week[date], 0) > -1) { //일치하는 요일의 
                     return 1;
                 } else {
                     return 0;
                 }
             }
         },
-        checkCloseTime(time) {
-            if (time != null) {
+        setTime(date) {
+            if (date != null) {
                 for (let i = 0; i < this.repeatedLength; i++) {
-                    if (this.repeated[i].weekDate == week[this.endDay]) {
-                        if ((time > parseInt(this.repeated[i].time.split('-')[0])) &
-                            (time <= parseInt(this.repeated[i].time.split('-')[1]))) {
-                            return 1;
+                    if (this.repeated[i].weekday == week[parseInt(date)]) {
+                        let openTime = parseInt(this.repeated[i].time.split('-')[0]);
+                        let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
+                        let times = []
+                        let t = 0;
+                        for (let j = 0; j < (closeTime - openTime) + 1; j++) {
+                            t = j + openTime
+                            times.push(t);
                         }
-                    }
+                        return times;
+                    } else continue
                 }
-                return 0;
             }
         },
         checkException() {

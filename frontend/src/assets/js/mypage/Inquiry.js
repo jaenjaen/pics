@@ -81,9 +81,11 @@ export default {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"
             } else {
-                this.$refs.chat.setChat();
                 this.stuId = event.target.childNodes[1].innerHTML;
                 this.custId = event.target.childNodes[2].innerHTML;
+                console.log("stuId : " + this.stuId);
+                console.log("custId : " + this.custId);
+                this.$refs.chat.setChat(this.stuId, this.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
             }

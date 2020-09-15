@@ -5,10 +5,10 @@
   <div class="container">
     <!-- Chat Modal 영역 -->
     <div id="chatModal" style="display:none;">
-      <div id="chatContent">
-        <div id="closeChat" @click="hideChatModal">&times;</div>
-        <Chat id="chatArea" :stuIdData="stuId" ref="chat" />
-      </div>
+        <div id="chatContent">
+            <div id="closeChat" @click="hideChatModal" >&times;</div>
+            <Chat id="chatArea" ref="chat"/>    
+        </div>
     </div>
 
     <!-- ==============  메인 이미지 : carousel ============== -->

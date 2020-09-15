@@ -126,7 +126,6 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        console.log("this.tags : " + this.tags);
         axios
             .get("http://127.0.0.1:7777/studio/accCustomer/" + this.stuId)
             .then(response => (this.accCustomer = response.data))
@@ -135,7 +134,6 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        console.log("this.accCustomer : " + this.accCustomer);
         await axios
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => {
@@ -201,10 +199,7 @@ export default {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"
             } else {
-                this.$refs.chat.setChat();
-                this.$refs.chat.getPresentStu();
-                this.$refs.chat.getRecentCustChat();
-                this.$refs.chat.getPrevAllChat();
+                this.$refs.chat.setChat(this.stuId, this.customer.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
             }

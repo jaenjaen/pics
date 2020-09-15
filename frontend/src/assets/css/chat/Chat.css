@@ -307,8 +307,15 @@
                 overflow: hidden;
             }
             
+            #userName {
+                cursor: pointer;
+            }
+            
             #userName:hover {
                 background-color: #034EA2;
+            }
+            
+            #userName b {
                 cursor: pointer;
             }
             

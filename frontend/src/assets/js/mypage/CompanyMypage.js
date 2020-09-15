@@ -32,25 +32,7 @@ let calendarList = [{
     }
 ]
 
-var scheduleList = [{
-        id: '1',
-        calendarId: '0',
-        title: 'my schedule',
-        category: 'time',
-        dueDateClass: '',
-        start: '2020-09-14T22:30:00+09:00',
-        end: '2020-09-15T02:30:00+09:00'
-    },
-    {
-        id: '2',
-        calendarId: '1',
-        title: 'second schedule',
-        category: 'time',
-        dueDateClass: '',
-        start: '2020-09-16T17:30:00+09:00',
-        end: '2020-09-17T17:31:00+09:00'
-    }
-]
+var scheduleList = []
 
 export default {
     name: "CompanyMypage",
@@ -89,7 +71,44 @@ export default {
     },
     methods: {
         getStudioReservation: function() {
-            alert(this.selectedId);
+            //초기화 안하면 쌓임
+            this.scheduleList = [];
+
+            Axios.get("http://localhost:7777/company/schedule/" + this.selectedId + "/" + this.startWeek + "/" + this.endWeek)
+                .then(res => {
+                    // console.log(res.data);
+                    var data = res.data;
+
+                    /* Exception Date Setting */
+                    for (var i = 0; i < data.exceptionDate.length; i++) {
+                        this.scheduleList.push({
+                            id: data.exceptionDate[i].exceptionId,
+                            calendarId: '1',
+                            title: 'test' + i,
+                            category: 'time',
+                            dueDateClass: '',
+                            start: Date.parse(data.exceptionDate[i].startDate),
+                            end: Date.parse(data.exceptionDate[i].endDate)
+                        });
+
+                        /* Reservation Setting */
+                        for (var j = 0; j < data.reservation.length; j++) {
+                            console.log(j);
+                            this.scheduleList.push({
+                                id: data.reservation[j].resId,
+                                calendarId: '0',
+                                title: data.reservation[j].custId + " ",
+                                category: 'time',
+                                dueDateClass: '',
+                                start: Date.parse(data.reservation[j].startDate),
+                                end: Date.parse(data.reservation[j].endDate)
+                            });
+                        }
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
         },
 
         /* 지난주로 */

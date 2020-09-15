@@ -4,22 +4,8 @@
       <div id="reservation-floating-banner">
         <form method="post" @submit.prevent="addReserve">
           <!-- ============== calender ============== -->
-          <div class="calender_container">
-            <div class="reservation-Information-area">
-              <table id="Studio-Filter-Table" align="center">
-                <thead>
-                  <th>영업일</th>
-                  <th>영업 시간</th>
-                </thead>
-                <tbody v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
-                  <tr>
-                    <td>{{repeate.weekday|dayFilter}}</td>
-                    <td>{{repeate.time|timeFilter}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
 
+          <div class="calender_container">
             <div class="input-reserve-info-field">
               <!-- 날짜 -->
               <div class="date-input-field">
@@ -62,7 +48,6 @@
                         required="required"
                         v-for="(startTime,index) in startTimes"
                         v-bind:key="index"
-
                         :value="parseInt(time)"
                       >{{time}}시</md-option>
                     </md-select>
@@ -76,7 +61,6 @@
                         required="required"
                         v-for="(endTime,index) in endTimes"
                         v-bind:key="index"
-
                         :value="parseInt(time)"
                       >{{time}}시</md-option>
                     </md-select>
@@ -117,35 +101,36 @@
                 </table>
               </div>
             </div>
-          </div>
-          <hr width="90%" color="lightgray" />
-          <!-- 요금 계산 -->
-          <div class="pricing-field">
-            <table align="center" v-for="studio in studios" v-bind:key="studio.stuId">
-              <tr align="right">
-                <td id="unitPrice">시간 당 비용 :</td>
-                <td>{{ studio.studioFilter.unitPrice | currency }} 원</td>
-                <td></td>
-              </tr>
-              <tr align="right">
-                <td id="unitPrice">인원 추가 비용 :</td>
-                <td>{{ studio.studioFilter.excharge | currency }} 원</td>
-                <td></td>
-              </tr>
-              <tr align="right">
-                <td id="totalPrice">총금액 :</td>
-                <td>
-                  <span id="total_price">{{ totalPriceCalculate | currency }} 원</span>
-                </td>
-              </tr>
-            </table>
-            <div>
-              <md-button
-                id="reservation-btn"
-                type="submit"
-                align="center"
-                class="md-raised md-primary"
-              >예약하기</md-button>
+            <!-- 요금 계산 -->
+            <div class="pricing-field">
+              <table align="center" v-for="studio in studios" v-bind:key="studio.stuId">
+                <tr align="right">
+                  <td id="unitPrice">시간 당 비용 :</td>
+                  <td>{{ studio.studioFilter.unitPrice | currency }} 원</td>
+                  <td></td>
+                </tr>
+                <tr align="right">
+                  <td id="unitPrice">인원 추가 비용 :</td>
+                  <td>{{ studio.studioFilter.excharge | currency }} 원</td>
+                  <td></td>
+                </tr>
+                <tr></tr>
+                <tr></tr>
+                <tr align="right">
+                  <td id="totalPrice">총금액 :</td>
+                  <td>
+                    <span id="total_price">{{ totalPriceCalculate | currency }} 원</span>
+                  </td>
+                </tr>
+              </table>
+              <div>
+                <md-button
+                  id="reservation-btn"
+                  type="submit"
+                  align="center"
+                  class="md-raised md-primary"
+                >예약하기</md-button>
+              </div>
             </div>
           </div>
         </form>

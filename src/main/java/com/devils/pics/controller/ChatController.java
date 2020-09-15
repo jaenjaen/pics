@@ -62,11 +62,14 @@ public class ChatController {
 	
 	/* 최근 수신 대화 가져오기(com, studio, cust, chat 정보 추출)  */
 	@GetMapping("/chat/recent/{member}/{id}")
-	public ResponseEntity getRecentComChat(@PathVariable String member, @PathVariable String id) {
+	public ResponseEntity getRecentChat(@PathVariable String member, @PathVariable String id) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
 		try {
 			if(member.equals("com")) { //기업으로 로그인 했을 경우
 				recentChat = chatService.getRecentComChat(id);
+				//System.out.println(recentChat);
+			}else if(member.equals("comNoRepeat")) { //기업으로 로그인했는데 중복 없이 최근 수신 대화를 가져감
+				recentChat = chatService.getRecentComChatNoRpeat(id);
 				//System.out.println(recentChat);
 			}else if(member.equals("cust")) { //고객으로 로그인 했을 경우
 				recentChat = chatService.getRecentCustChat(id);
@@ -75,6 +78,64 @@ public class ChatController {
 				recentChat = chatService.getRecentStuChat(id);
 				//System.out.println(recentChat);
 			}
+			
+			if(recentChat.size()>0) {
+				return new ResponseEntity(recentChat, HttpStatus.OK);
+			}else { //해당되는 대화가 없을 경우
+				return new ResponseEntity(-1, HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	/* 이름으로 검색하면 최근 수신 대화 가져오기(com, studio, cust, chat 정보 추출)  */
+	@GetMapping("/chat/recent/{member}/{id}/{name}")
+	public ResponseEntity getRecentChatByName(@PathVariable String member, @PathVariable String id, @PathVariable String name) {
+		List<Map<String, String>> recentChat = new ArrayList<>();
+		Map map = new HashMap();
+		try {
+			/* 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화  */
+			if(member.equals("com")) { //기업으로 로그인 했을 경우
+				map.put("comId", id);
+				map.put("custName", name);
+				recentChat = chatService.getRecentChatByCustName(map);
+				//System.out.println(recentChat);
+			}
+			/* 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 수신 대화  */
+			else if(member.equals("cust")) { //고객으로 로그인 했을 경우
+				map.put("custId", id);
+				map.put("stuName", name);
+				recentChat = chatService.getRecentChatByStuName(map);
+				//System.out.println(recentChat);
+			}
+			
+			if(recentChat.size()>0) {
+				return new ResponseEntity(recentChat, HttpStatus.OK);
+			}else { //해당되는 대화가 없을 경우
+				return new ResponseEntity(-1, HttpStatus.OK);
+			}
+			
+		} catch (Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	/* 스튜디오 아이디, 고객 이름으로 검색하면 업체의 최근 수신 대화 가져오기
+	 * (com, studio, cust, chat 정보 추출)  */
+	@GetMapping("/chat/recent/com/{comId}/{stuId}/{custName}")
+	public ResponseEntity getRecentChatByStuIdAndCustName(@PathVariable String comId, @PathVariable String stuId, @PathVariable String custName) {
+		List<Map<String, String>> recentChat = new ArrayList<>();
+		Map map = new HashMap();
+		try {
+			map.put("comId", comId);
+			map.put("stuId", stuId);
+			map.put("custName", custName);
+			recentChat = chatService.getRecentChatByStuIdAndCustName(map);
+			System.out.println(recentChat);
 			
 			if(recentChat.size()>0) {
 				return new ResponseEntity(recentChat, HttpStatus.OK);

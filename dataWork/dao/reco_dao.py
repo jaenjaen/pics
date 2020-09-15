@@ -3,7 +3,6 @@
 
 # In[5]:
 
-
 import pymysql
 import pandas as pd
 

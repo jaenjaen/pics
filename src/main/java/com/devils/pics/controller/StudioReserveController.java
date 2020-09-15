@@ -41,10 +41,10 @@ public class StudioReserveController {
 		// 페이지에 있는 studio 정보 & 세션에서 login 정보
 		try {
 			Schedule schedule=new Schedule();
-			ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(stuId); 
-			ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);
-			List<Reservation> reservation=studioReserveService.getReservation(new Reservation(stuId));
 			schedule.setStuId(stuId);
+			ArrayList<ExceptionDate> exceptionDate=studioReserveService.getExceptionDate(schedule); 
+			ArrayList<RepeatDate> repeatDate=studioReserveService.getRepeatDate(stuId);
+			List<Reservation> reservation=studioReserveService.getReservation(schedule);
 			schedule.setExceptionDate(exceptionDate);
 			schedule.setRepeatDate(repeatDate);
 			schedule.setReservation(reservation);
@@ -57,8 +57,9 @@ public class StudioReserveController {
 	//2.getReservation for studio
 	@GetMapping("/studio/reservation/{stuId}")
 	public ResponseEntity getReservation(@PathVariable int stuId) {
-		Reservation reservation = new Reservation(stuId);
-		resultList= studioReserveService.getReservation(reservation);
+		Schedule schedule=new Schedule();
+		schedule.setStuId(stuId);
+		resultList= studioReserveService.getReservation(schedule);
 		if(resultList.isEmpty()) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}else { 
@@ -166,13 +167,31 @@ public class StudioReserveController {
 			if(resultList.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
 			else return new ResponseEntity(resultList,HttpStatus.OK);
 		}catch(Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 		
 	}
-
+	
+	//9. 마이페이지용 exception date / reservation Date 넘기기 (weekStart / weekEnd)
+	@GetMapping("/company/schedule/{stuId}/{weekStart}/{weekEnd}")
+	public ResponseEntity getSchedule(@PathVariable int stuId, @PathVariable String weekStart, @PathVariable String weekEnd) {
+		Schedule schedule = new Schedule();
+		schedule.setStuId(stuId);
+		schedule.setWeekStart(weekStart);
+		schedule.setWeekEnd(weekEnd);
+		
+		try{
+			schedule = studioReserveService.getSchedule(schedule);
+			return new ResponseEntity(schedule,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
 	}
+	
+
+}
 
 
 

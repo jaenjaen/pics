@@ -5,22 +5,28 @@
   <div class="container">
     <!-- Chat Modal 영역 -->
     <div id="chatModal" style="display:none;">
-        <div id="chatContent">
-            <div id="closeChat" @click="hideChatModal" >&times;</div>
-            <Chat id="chatArea" ref="chat"/>    
-        </div>
+      <div id="chatContent">
+        <div id="closeChat" @click="hideChatModal">&times;</div>
+        <Chat id="chatArea" ref="chat" />
+      </div>
     </div>
 
     <!-- ==============  메인 이미지 : carousel ============== -->
-    <header id="main-images-section">
+    <carousel
+      v-if="mainImgList && mainImgList.length"
+      :items="1"
+      :loop="true"
+      :nav="false"
+      :autoplay="true"
+      :dots="false"
+    >
       <div class="row" v-for="(mainImg,index) in mainImgList" v-bind:key="index">
-        <carousel :itmes="1" :loop="true" :autoplay="true">
-          <div>
-            <img class="item" data-merge="3" :src="imgUrl(mainImg)" width="100%" height="500" />
-          </div>
-        </carousel>
+        <div class="card-image">
+          <img :src="imgUrl(mainImg)" />
+        </div>
       </div>
-    </header>
+    </carousel>
+
     <hr />
 
     <nav>
@@ -226,11 +232,22 @@
       </div>
       <hr />
       <!-- ============== Portfolio Images ============== -->
-      <table aligh="center" width="100%">
-        <!-- <tr class="article-portfolio-area"  v-for="(portImg,index) in portImgList" v-bind:key="index"> -->
-        <!-- <td style="list-style-type:none"><img :src="imgUrl(portImg)" width="80%" height="400px"/></td><br> -->
-        <!-- </tr> -->
-      </table>
+      <carousel
+        class="port_carousel"
+        v-if="portImgList && portImgList.length"
+        :items="3"
+        :loop="true"
+        :nav="false"
+        :autoplay="true"
+        :dots="false"
+        :margin="5"
+      >
+        <div class="row" v-for="(portImg,index) in portImgList" v-bind:key="index">
+          <div class="portimage">
+            <img :src="imgUrl(portImg)" />
+          </div>
+        </div>
+      </carousel>
       <hr />
       <!-- ============== Chart & Graph ============== -->
       <!-- ===== 시간대별 예약 차트 ===== -->

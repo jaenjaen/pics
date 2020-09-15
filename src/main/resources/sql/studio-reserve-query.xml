@@ -54,10 +54,13 @@
 	</sql>
 	
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
-  	<select id="getExceptionDate" parameterType="int" resultType="exceptionDate">							
+  	<select id="getExceptionDate" parameterType="schedule" resultType="exceptionDate">							
 		SELECT exception_id, start_date,end_date 
 		FROM exception_date
-		WHERE stu_id=${value}
+		WHERE stu_id=#{stuId}
+		<if test="weekStart!=null and weekEnd!=null">
+		AND start_date between #{weekStart} and #{weekEnd}
+		</if>
 	</select>
 
 	<select id="getRepeatDate" parameterType="int" resultType="repeatDate">							
@@ -66,12 +69,17 @@
 		WHERE rep.stu_id=${value}
 	</select>
 
-	<select id="getReservation" parameterType="reservation" resultType="reservation">							
+	<select id="getReservation" parameterType="schedule" resultType="reservation">							
 		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
 		FROM reservation
-		<if test="stuId!=null">
-			WHERE stu_id=#{stuId}
-		</if>
+		<choose>
+			<when test="stuId!=null">
+				WHERE stu_id=#{stuId}
+			</when>
+			<when test="weekStart!=null and weekEnd!=null">
+				AND start_date between #{weekStart} and #{weekEnd}
+			</when>
+		</choose>
 	</select>
 	
 	<!-- ================== 2. 예약하기 ================== -->

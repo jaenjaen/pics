@@ -14,12 +14,9 @@
     background-color: #fff !important;
 }
 
-
-/* 상단 캐러셀 이미지 영역 */
-
-#main-images-section {
-    width: 100%;
-    margin: auto;
+.card-image,
+.card-image>img {
+    height: 500px;
 }
 
 
@@ -320,4 +317,22 @@ hr {
 
 #material-icons {
     color: #f6f33a;
+}
+
+hr {
+    width: 730px;
+}
+
+.article-Description-area h4 {
+    font-size: 25px;
+}
+
+.port_carousel {
+    width: 720px;
+    margin: 0 auto;
+}
+
+.portimage,
+.portimage>img {
+    height: 200px;
 }

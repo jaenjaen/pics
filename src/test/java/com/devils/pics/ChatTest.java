@@ -22,11 +22,17 @@ public class ChatTest {
 	@Test
 	void chatTest() throws IOException {
 		Map<String, String> map = new HashMap();
-		//List<Map<String, String>> map  = new ArrayList<>();
-		//map = sqlSession.selectList(ns+"getRecentComChat", "1234@admin.com");
-		map = sqlSession.selectOne(ns+"getStuDefaultInfo", "1153");
-		System.out.println(map);
-		map = sqlSession.selectOne(ns+"getCustDefaultInfo", "20");
-		System.out.println(map);
+		List<Map<String, String>> list  = new ArrayList<>();
+		map.put("custId", "20");
+		map.put("stuName", "베어");
+		map.put("comId", "1234@admin.com");
+		map.put("custName", "Yeonhee");
+		map.put("stuId", "1130");
+//		list = sqlSession.selectList(ns+"getRecentChatByStuName", map);
+//		System.out.println(list);
+//		list = sqlSession.selectList(ns+"getRecentChatByCustName", map);
+//		System.out.println(list);
+		list = sqlSession.selectList(ns+"getRecentChatByStuIdAndCustName", map);
+		System.out.println(list);
 	}
 }

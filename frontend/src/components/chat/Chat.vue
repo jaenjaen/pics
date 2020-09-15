@@ -35,7 +35,8 @@
                                 <p>{{prev.word}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
-                                <span class='chat-message-localization font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
+                                <span style="display: none;">{{index}}</span>
                                 <span class='chat-message-read-status font-size-small'>- Read</span>
                             </div><!-- chat-details -->
                         </div><!-- chat-message-wrapper -->
@@ -49,7 +50,7 @@
                                 <p>{{prev.word}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
-                                <span class='chat-message-localisation font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
                                 <span class='chat-message-read-status font-size-small'>- Read</span>
                             </div><!-- chat-details -->
                         </div><!-- chat-message-wrapper -->
@@ -63,12 +64,12 @@
         <section id="chatListModal">
             <div id="studioList" style="height:60px;">
                 <div id="studioSearch">
-                    <input type="text" class="inputArea">
+                    <input type="text" id="searchStuName" placeholder="스튜디오 검색" class="inputArea" @keyup="searchRecentChatByName('cust')">
                     <img id="search" :src="defaultImg.search" 
                     width="20px" height="20px" 
                     @mouseover="controlListImg('mouseover', 'search')" 
                     @mouseout="controlListImg('mouseout', 'search')"
-                    @click="searchUserByName($event)">
+                    @click="searchRecentChatByName('cust')">
                 </div>
             </div>
             <div id="chatListContent" style="padding-top:55px;">
@@ -118,7 +119,8 @@
                                 <p>{{prev.word}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
-                                <span class='chat-message-localization font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-localization font-size-small stu-time'>{{prev.dateTime | showUntilMin}}</span>
+                                <span style="display: none;">{{index}}</span>
                                 <span class='chat-message-read-status font-size-small'>- Read</span>
                             </div><!-- chat-details -->
                         </div><!-- chat-message-wrapper -->
@@ -132,7 +134,8 @@
                                 <p>{{prev.word}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
-                                <span class='chat-message-localisation font-size-small'>{{prev.dateTime | showUntilMin}}</span>
+                                <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>
+                                <span style="display: none;">{{index}}</span>
                                 <span class='chat-message-read-status font-size-small'>- Read</span>
                             </div><!-- chat-details -->
                         </div><!-- chat-message-wrapper -->
@@ -147,25 +150,25 @@
             <div id="studioList">
                 <select id="studioSelect" @change="changeStudio($event)">
                     <option>스튜디오 전체</option>
-                    <option v-for="(stuList, index) in company.studioList" :key="index">
-                        {{stuList.name}}
-                        <input type="hidden" :value="stuList.stuId">
+                    <option v-for="(recent, index) in recentChatNoRepeat" :key="index">
+                        {{recent.stuName}}
+                        <input type="hidden" :value="recent.stuId">
                     </option>
                 </select>
                 <div id="studioSearch">
-                    <input type="text" class="inputArea">
+                    <input type="text" id="searchCustName" placeholder="고객 검색" class="inputArea" @keyup="searchRecentChatByName('com')">
                     <img id="search" :src="defaultImg.search" 
                     width="20px" height="20px" 
                     @mouseover="controlListImg('mouseover', 'search')" 
                     @mouseout="controlListImg('mouseout', 'search')"
-                    @click="searchUserByName($event)">
+                    @click="searchRecentChatByName('com')">
                 </div>
             </div>
             <div id="chatListContent">
                 <p v-for="(recent, index) in recentChat" :key="index">
                     <img class="profile" src="http://localhost:7777/upload/default/user.png" @click="showBiggerImg($event)">
                     <span id="userName" @click="getChatByUser($event)">
-                        {{recent.stuName | showLimitedContent}} | {{recent.custName | showLimitedContent}}
+                        {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
                         <span style="display:none;">{{recent.stuId}}</span>
                         <span style="display:none;">{{recent.custId}}</span>
                     </span>

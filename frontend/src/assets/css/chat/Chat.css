@@ -206,6 +206,10 @@
                 margin-right: 4px;
                 color: #bbb;
             }
+            
+            .chat-message-sender .chat-details {
+                text-align: right;
+            }
             /* 하단 스타일 */
             
             footer {

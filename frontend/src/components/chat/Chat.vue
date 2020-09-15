@@ -28,7 +28,7 @@
                 <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
 
                     <!-- 상대방 -->
-                    <div class='chat-message chat-message-recipient'>
+                    <div class='chat-message chat-message-recipient' v-if="prev.sender == 1">
                         <img class='chat-image chat-image-default profile' :src='presentStu.comLogo' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>
@@ -42,7 +42,7 @@
                     </div><!-- chat-message-recipient -->
 
                     <!-- 나 -->
-                    <div class='chat-message chat-message-sender'>
+                    <div class='chat-message chat-message-sender' v-else>
                         <img class='chat-image chat-image-default profile' :src='customer.imgSrc' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>
@@ -111,7 +111,7 @@
                 <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
 
                     <!-- 상대방 -->
-                    <div class='chat-message chat-message-recipient'>
+                    <div class='chat-message chat-message-recipient' v-if="prev.sender == 0">
                         <img class='chat-image chat-image-default profile' :src='presentCust.custLogo' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>
@@ -125,7 +125,7 @@
                     </div><!-- chat-message-recipient -->
 
                     <!-- 나 -->
-                    <div class='chat-message chat-message-sender'>
+                    <div class='chat-message chat-message-sender' v-else>
                         <img class='chat-image chat-image-default profile' :src='company.logoImg' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>

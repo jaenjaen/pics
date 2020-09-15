@@ -225,46 +225,11 @@ export default {
                         console.log('이전 대화 가져오기 성공');
                         this.prevAllChat = response.data;
                         console.log(this.prevAllChat);
-
-                        this.printPrevAllChatInCustMode();
                     }
                 })
                 .catch(() => {
                     console.log('이전 대화 가져오기 실패');
                 })
-        },
-
-        /* CustoMode : 이전 대화 내역 화면에 출력하기 */
-        printPrevAllChatInCustMode() {
-            let custModeChat = document.getElementById('custModeChat');
-            let prevAllChat = this.prevAllChat
-
-            /* 이전 기록 초기화 */
-            for (let i = 0; i < prevAllChat.length; i++) {
-                custModeChat.childNodes[i].childNodes[1].setAttribute('style', 'display:block');
-                custModeChat.childNodes[i].childNodes[0].setAttribute('style', 'display:block');
-                custModeChat.childNodes[i].childNodes[0].childNodes[1].childNodes[1].setAttribute('style', 'display:block');
-                custModeChat.childNodes[i].childNodes[1].childNodes[1].childNodes[1].setAttribute('style', 'display:block');
-            }
-
-            for (let i = 0; i < prevAllChat.length; i++) {
-                if (prevAllChat[i].sender == 1) { //스튜디오가 보냈을 경우
-                    custModeChat.childNodes[i].childNodes[1].setAttribute('style', 'display:none');
-                } else if (prevAllChat[i].sender == 0) { //고객이 보냈을 경우
-                    custModeChat.childNodes[i].childNodes[0].setAttribute('style', 'display:none');
-                }
-                if (i > 0 && prevAllChat[i].sender === prevAllChat[i - 1].sender) {
-                    let before = custModeChat.childNodes[i - 1].childNodes[1].childNodes[1].childNodes[1].childNodes[0].innerHTML;
-                    let after = custModeChat.childNodes[i].childNodes[1].childNodes[1].childNodes[1].childNodes[0].innerHTML
-                    if (before === after) {
-                        if (prevAllChat[i].sender == 1) {
-                            custModeChat.childNodes[i - 1].childNodes[0].childNodes[1].childNodes[1].setAttribute('style', 'display:none');
-                        } else if (prevAllChat[i].sender == 0) {
-                            custModeChat.childNodes[i - 1].childNodes[1].childNodes[1].childNodes[1].setAttribute('style', 'display:none');
-                        }
-                    }
-                }
-            }
         },
 
         /* StuoMode : 이전 대화 내역 화면에 출력하기 */

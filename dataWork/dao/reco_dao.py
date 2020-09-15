@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[29]:
+# In[36]:
 
 
 import pymysql
@@ -37,4 +37,9 @@ def get_cfsource() :
     df = pd.DataFrame(result)
     return df
 
+
+# In[32]:
+
+
+get_ipython().system('jupyter nbconvert --to script reco_dao.ipynb ')
 

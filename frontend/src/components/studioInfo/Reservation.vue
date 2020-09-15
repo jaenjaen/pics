@@ -4,22 +4,6 @@
       <div id="reservation-floating-banner">
         <form method="post" @submit.prevent="addReserve">
           <!-- ============== calender ============== -->
-          <div class="reservation-Information-area">
-            <div>
-              <table id="Studio-Filter-Table" align="center">
-                <thead>
-                  <th>영업일</th>
-                  <th>영업 시간</th>
-                </thead>
-                <tbody  v-for="(repeate,index) in schedule.repeatDate" v-bind:key="index">
-                  <tr>
-                    <td>{{repeate.weekday|dayFilter}}</td>
-                    <td>{{repeate.time|timeFilter}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
           <div class="input-reserve-info-field">
             <!-- 날짜 -->
             <div class="date-input-field">

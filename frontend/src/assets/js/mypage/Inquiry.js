@@ -67,6 +67,18 @@ export default {
                     return value.substring(0, i);
                 }
             }
+        },
+
+        handleWord(value) {
+            if (value === '') {
+                return '(첨부파일)';
+            } else {
+                if (value.length > 15) {
+                    return value.substring(0, 15) + "... ";
+                } else {
+                    return value;
+                }
+            }
         }
     },
     methods: {

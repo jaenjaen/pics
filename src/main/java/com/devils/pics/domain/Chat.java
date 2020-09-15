@@ -8,22 +8,27 @@ import lombok.Data;
 public class Chat {
 	private int chatId;
 	private int custId;
-	private String word;
-	private String dateTime;
 	private int stuId;
+	private String word;
+	private String dateTime;	
+	private String filePath;
 	private int sender;
-
-	public Chat(int chatId, int custId, String word, String dateTime, int stuId, int sender) {
-		this.chatId = chatId;
-		this.custId = custId;
-		this.word = word;
-		this.dateTime = dateTime;
-		this.stuId = stuId;
-		this.sender = sender;
-	}
+	private int readCheck;
 	
 	public Chat() {}
-
+	public Chat(int chatId, int custId, int stuId, String word, String dateTime, String filePath, int sender,
+			int readCheck) {
+		super();
+		this.chatId = chatId;
+		this.custId = custId;
+		this.stuId = stuId;
+		this.word = word;
+		this.dateTime = dateTime;
+		this.filePath = filePath;
+		this.sender = sender;
+		this.readCheck = readCheck;
+	}
+	
 	public int getChatId() {
 		return chatId;
 	}
@@ -35,6 +40,12 @@ public class Chat {
 	}
 	public void setCustId(int custId) {
 		this.custId = custId;
+	}
+	public int getStuId() {
+		return stuId;
+	}
+	public void setStuId(int stuId) {
+		this.stuId = stuId;
 	}
 	public String getWord() {
 		return word;
@@ -48,11 +59,11 @@ public class Chat {
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
-	public int getStuId() {
-		return stuId;
+	public String getFilePath() {
+		return filePath;
 	}
-	public void setStuId(int stuId) {
-		this.stuId = stuId;
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	public int getSender() {
 		return sender;
@@ -60,9 +71,16 @@ public class Chat {
 	public void setSender(int sender) {
 		this.sender = sender;
 	}
+	public int getReadCheck() {
+		return readCheck;
+	}
+	public void setReadCheck(int readCheck) {
+		this.readCheck = readCheck;
+	}
+	
 	@Override
 	public String toString() {
-		return "Chat [chatId=" + chatId + ", custId=" + custId + ", word=" + word + ", dateTime=" + dateTime
-				+ ", stuId=" + stuId + ", sender=" + sender + "]";
+		return "Chat [chatId=" + chatId + ", custId=" + custId + ", stuId=" + stuId + ", word=" + word + ", dateTime="
+				+ dateTime + ", filePath=" + filePath + ", sender=" + sender + ", readCheck=" + readCheck + "]";
 	}
 }

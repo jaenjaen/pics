@@ -4,7 +4,7 @@
         <div v-if="customerMode"> 
         <table>
             <tr>
-                <th>스튜디오(업체명)</th> <th>답변 내용</th> <th>문의날짜</th>
+                <th>스튜디오(업체명)</th> <th>내용</th> <th>날짜</th>
             </tr>
             <tr v-if="inquiryFlag">
                 <td colspan="3"> 문의내역이 없습니다. </td>
@@ -12,7 +12,7 @@
             <tr v-else v-for="(custChat, index) in recentChat" :key="index">
                 <td>{{custChat.stuName | showLimitedContent}}({{custChat.comName | showLimitedContent}})</td>
                 <td @click="showChatMoal($event)" class="linkToChatModal">
-                    {{custChat.word | showLimitedContent}}
+                    {{custChat.word | handleWord}}
                     <span style="display:none;">{{custChat.stuId}}</span>
                     <span style="display:none;">{{custChat.custId}}</span>
                 </td>
@@ -25,7 +25,7 @@
         <div v-if="!customerMode"> 
             <table>
             <tr>
-                <th>스튜디오</th> <th>문의 고객</th> <th>문의 내용</th> <th>문의날짜</th>
+                <th>스튜디오</th> <th>문의 고객</th> <th>내용</th> <th>날짜</th>
             </tr>
             <tr tr v-if="inquiryFlag">
                 <td colspan="4"> 문의내역이 없습니다. </td>
@@ -34,7 +34,7 @@
                 <td>{{comChat.stuName | showLimitedContent}}</td>
                 <td>{{comChat.custName | showLimitedContent}}</td> 
                 <td @click="showChatMoal($event)" class="linkToChatModal">
-                    {{comChat.word | showLimitedContent}}
+                    {{comChat.word | handleWord}}
                     <span style="display:none;">{{comChat.stuId}}</span>
                     <span style="display:none;">{{comChat.custId}}</span>
                 </td>

@@ -10,6 +10,7 @@ export default {
     name: 'chat',
     data() {
         return {
+            chatRoute: 'http://localhost:7777/upload/chat/',
             defaultImg: {
                 list: 'http://localhost:7777/upload/default/list.png',
                 listHover: 'http://localhost:7777/upload/default/listHover.png',
@@ -26,8 +27,10 @@ export default {
                 custId: '',
                 stuId: '',
                 word: '',
+                filePath: '',
                 dateTime: '',
-                sender: '' //보내는 사람이 개인이면 0, 기업이면 1
+                sender: '', //보내는 사람이 개인이면 0, 기업이면 1
+                readCheck: '' //읽었으면 1, 읽지 않았으면 0
             },
             customer: {
                 custId: '',
@@ -53,23 +56,13 @@ export default {
             presentCust: {},
 
             /* 고객/기업모드 여부 */
-            cutomerMode: '',
-
-            /* 보낸 이 여부 */
-            senderDisplay: '',
-
-            sender: "",
-            word: "",
-            recvList: [],
+            customerMode: '',
         }
     },
 
     created() {
-        /* vue가 생성되면 소켓 연결 시도 */
-        //this.connect();
-
         if (customer != null) { //개인고객으로 로그인했을 경우
-            this.cutomerMode = true; //고객모드 ON
+            this.customerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
             console.log(this.customer);
             this.chat.custId = this.customer.custId; //세션에서 custId를 chat에 바인딩
@@ -77,7 +70,7 @@ export default {
             this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
 
         } else if (company != null) { //기업고객으로 로그인했을 경우
-            this.cutomerMode = false; //고객모드 OFF
+            this.customerMode = false; //고객모드 OFF
             this.company = company; //세션에 있는 업체 정보를 company 데이터에 바인딩
             console.log(this.company);
 
@@ -161,6 +154,7 @@ export default {
                 })
         },
 
+        /* 고객의 스튜디오별 최근 수신 대화(스튜디오 중복 없음) */
         getRecentComChatNoRpeat() {
             axios.get('http://127.0.0.1:7777/chat/recent/comNoRepeat/' + company.comId)
                 .then((response) => {
@@ -228,6 +222,7 @@ export default {
                 })
         },
 
+        /* 스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 */
         getRecentChatByStuIdAndCustName(stuId, custName) {
             axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId + '/' + stuId + '/' + custName)
                 .then((response) => {
@@ -306,6 +301,7 @@ export default {
                     } else if (response.data == -1) {
                         this.prevAllChat = [];
                     }
+                    this.connect(); //소켓 연결
                 })
                 .catch(() => {
                     console.log('이전 대화 가져오기 실패');
@@ -326,10 +322,13 @@ export default {
 
                     /* 서버의 메세지 전송 endpoing를 구독(Pub/Sub 구조) */
                     this.stompClient.subscribe("/send", response => {
-                        console.log('구독으로 받은 메시지 : ', response.body);
+                        if (this.chat.stuId == JSON.parse(response.body).stuId &&
+                            this.chat.custId == JSON.parse(response.body).custId) { //채팅을 해당자들만 1:1로 확인
+                            console.log('구독으로 받은 메시지 : ', response.body);
 
-                        // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                        this.recvList.push(JSON.parse(response.body))
+                            // 받은 데이터를 json으로 파싱 후 리스트에 넣음
+                            this.prevAllChat.push(JSON.parse(response.body))
+                        }
                     });
                 },
                 /* 연결 실패 */
@@ -340,24 +339,113 @@ export default {
             );
         },
 
+        /* 파일이름 및 경로를 화면에 보임 */
+        setFile(event) {
+            document.getElementById('chatFileName').value = event.target.value;
+        },
+
+        /* 업로드한 파일을 삭제함 */
+        deleteFile() {
+            if (document.getElementById('chatFile').value == '') {
+                alert("삭제할 파일이 없습니다.");
+                return;
+            } else {
+                let result = confirm('첨부파일을 삭제하시겠습니까?');
+                if (result) {
+                    document.getElementById('chatFile').value = '';
+                    document.getElementById('chatFileName').value = '';
+                } else {
+                    return;
+                }
+            }
+        },
+
+        /* 파일 확장자 체크해서 이미지 파일이면 true 리턴 
+         true면 채팅 화면에 이미지를 보여줌 */
+        isImgFile(path) {
+            if (path === null) {
+                return false;
+            }
+            let imgFormat = ['jpeg', 'jpg', 'gif', 'png', 'svg'];
+            let fileForm = path.substring(path.lastIndexOf('.') + 1, path.length).toLowerCase();
+            for (let i = 0; i < imgFormat.length; i++) {
+                if (imgFormat[i] == fileForm) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        /* 채팅 이미지 업로드 */
+        uploadChatImg() {
+            /* 파일 용량 체크 */
+            let maxSize = 5 * 1024 * 1000; //파일 최대 용량 5MB
+            let formData = new FormData();
+            let file = document.querySelector('#chatFile');
+            formData.append("file", file.files[0]);
+            console.log("파일 정보 : " + file.files[0]);
+            if (file.files[0].size > maxSize) {
+                alert("파일은 5MB 이내로 첨부 가능합니다.");
+                return;
+            }
+
+            let id = '';
+            if (company != null) {
+                id = company.comId;
+            } else if (customer != null) {
+                id = customer.custId;
+            }
+            axios.post('http://127.0.0.1:7777/fileUpload/chat/' + id, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }).then((response) => {
+                    console.log('채팅 파일 업로드 응답 성공');
+                    console.log('파일명 : ' + response.data);
+                    this.chat.filePath = response.data;
+
+                    this.send(); //보냄
+                })
+                .catch(() => {
+                    console.log('채팅 파일 업로드 응답 실패');
+                })
+        },
+
         /* 보낼 메시지 처리 */
-        sendMessage(e) {
-            if (e.keyCode === 13 && this.sender !== '' && this.word !== '') {
-                //13은 아스키코드 중에서 엔터를 나타냄
-                this.send(); //보냄
-                this.word = '' //보내고 나서 입력 리셋
+        sendChat(cmd) {
+            if (this.chat.stuId !== '' && this.chat.custId !== '') {
+                if (this.chat.word !== '' || document.getElementById('chatFile').value !== '') {
+                    if (cmd == 'file') {
+                        let result = confirm("파일을 전송하시겠습니까?");
+                        if (!result) {
+                            return;
+                        } else {
+                            this.uploadChatImg();
+                        }
+                    } else if (cmd == 'word') {
+                        this.send(); //보냄
+                    }
+                    /* 보내고 나서 입력 리셋 */
+                    this.chat.word = '';
+                    this.chat.filePath = '';
+                    document.getElementById('chatFile').value = ''
+                } else if (cmd == 'word' && this.chat.word == '') {
+                    alert("내용을 입력하세요");
+                    return;
+                } else if (cmd == 'file' && document.getElementById('chatFile').value == '') {
+                    alert("파일을 첨부하세요");
+                }
             }
         },
 
         /* 메시지 전송 */
         send() {
-            console.log("Send Word:" + this.word);
+            console.log("보내는 메세지:" + this.chat.word);
+            console.log("보내는 파일:" + this.chat.filePath);
             if (this.stompClient && this.stompClient.connected) {
-                const msg = {
-                    sender: this.sender,
-                    word: this.word
-                };
+                const msg = this.chat;
                 this.stompClient.send("/receive", JSON.stringify(msg), {});
+                this.controlModal('hide', 'uploadModal');
             }
         },
 
@@ -456,10 +544,6 @@ export default {
             let imgSrc = event.target.src;
             document.getElementById('biggerProfile').setAttribute('src', imgSrc);
             this.controlModal('show', 'expandImgModal');
-        },
-        sendMsg() {
-            alert("메세지전송");
-            this.setChat(this.chat.stuId, this.chat.custId); //stuId, chatId 바인딩됨
         }
     },
 }

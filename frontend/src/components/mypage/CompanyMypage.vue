@@ -44,7 +44,7 @@
           <h4 v-if="indexFlag">예약인원 : {{totalPeople}}명</h4>
           <h4 v-if="indexFlag">비용 : {{totalPrice}}원</h4>
           <h4><span class="tui-full-calendar-icon tui-full-calendar-calendar-dot" :style="categoryColor"></span>{{reservationCategory}}</h4>
-          <button id="delete" @click="onBeforeUpdateSchedule">일정취소</button>
+          <button id="delete" @click="onBeforeDeleteSchedule">일정취소</button>
         </div>
       </modal>
 
@@ -61,6 +61,7 @@
         @beforeCreateSchedule="onBeforeCreateSchedule"
         @clickSchedule="onClickSchedule"
         @beforeUpdateSchedule="onBeforeUpdateSchedule"
+        @beforeDeleteSchedule="onBeforeDeleteSchedule"
       /> 
     </div>
     <MypageGap categoryName="스튜디오 관리 +" cateogryURL="http://localhost:9999/registerStudio"/>

@@ -124,10 +124,10 @@ public class StudioReserveController {
 		}
 	
 	// 5. Exception 삭제
-	@DeleteMapping("/studio/exceptionDate/{exceptionDateList}")
-	public ResponseEntity DeleteExceptionDates(@PathVariable List<ExceptionDate> exceptionDateList) {
+	@DeleteMapping("/studio/exceptionDate/{exceptionId}")
+	public ResponseEntity DeleteExceptionDate(@PathVariable int exceptionId) {
 		try{
-			studioReserveService.DeleteExceptionDates(exceptionDateList);
+			studioReserveService.DeleteExceptionDate(exceptionId);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(Exception e) {  
 			return new ResponseEntity(HttpStatus.NOT_MODIFIED);

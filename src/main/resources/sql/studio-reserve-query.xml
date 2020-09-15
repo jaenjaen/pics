@@ -125,20 +125,9 @@
 		WHERE res_id = #{value}
 	</delete>
 
- 	<delete id="deleteExceptionDates" parameterType="list">							
+ 	<delete id="deleteExceptionDates" parameterType="int">							
 		Delete FROM exception_date
-		WHERE stu_id in
-		<foreach collection="list" item="exception" open="(" close=")" separator=",">
-		#{exception.stuId}
-		</foreach>
-		AND start_date in
-		<foreach collection="list" item="exception" open="(" close=")" separator=",">
-		date(#{exception.startDate})
-		</foreach>
-		AND end_date in
-		<foreach collection="list" item="exception" open="(" close=")" separator=",">
-		date(#{exception.endDate})
-		</foreach> 
+		WHERE exception_id = #{value}
 	</delete>
 	
 	

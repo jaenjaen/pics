@@ -60,7 +60,6 @@ export default {
 
             /* for modal */
             styles: "",
-            calendarId: "1",
             categoryColor: "",
             indexFlag: false,
 
@@ -70,7 +69,11 @@ export default {
             reservationDate: "",
             reservationCategory: "",
             totalPeople: 0,
-            totalPrice: 0
+            totalPrice: 0,
+
+            /*for reservation delete*/
+            scheduleId: 0,
+            calendarId: "",
         };
     },
     mounted() {
@@ -166,6 +169,8 @@ export default {
             this.reservationDate = moment((e.schedule.start).toUTCString()).format('LLLL') + "<br/>" + moment(((e.schedule.end)).toUTCString()).format('LLLL');
             this.styles = "border-left: 10px solid" + e.schedule.bgColor;
             this.categoryColor = "background-color:" + e.schedule.bgColor;
+            this.scheduleId = e.schedule.id;
+            this.calendarId = e.schedule.calendarId;
 
             if (e.schedule.calendarId == "0") {
                 this.reservationCategory = "Pics예약";
@@ -183,9 +188,9 @@ export default {
 
         /* Custom Update Modal */
         onBeforeUpdateSchedule: function(e) {
-            console.log(e);
             this.$refs.studioCalendar.invoke('updateSchedule', e.schedule.id, e.schedule.calendarId, e.changes);
 
+            /* update reservation */
             if (e.schedule.calendarId == "0") {
                 //axios 예약
                 Axios.put("http://localhost:7777/studio/reservation", {
@@ -197,7 +202,10 @@ export default {
                 }).catch(err => {
                     console.log(err);
                 })
-            } else {
+            }
+
+            /* update exceptionDate */
+            else {
                 Axios.put("http://localhost:7777/studio/exceptionDate", {
                     exceptionId: Number(e.schedule.id),
                     startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
@@ -208,7 +216,32 @@ export default {
                     console.log(err);
                 })
             }
-        }
+        },
+
+        /* Delete Reservation */
+        onBeforeDeleteSchedule: function() {
+            this.$refs.studioCalendar.invoke('deleteSchedule', this.scheduleId, this.calendarId);
+            /* delete reservation */
+            if (this.calendarId == "0") {
+                Axios.delete("http://localhost:7777/studio/reservation/" + this.scheduleId)
+                    .then(() => {
+                        console.log("삭제 완.");
+                    }).catch(err => {
+                        console.log(err);
+                    })
+            }
+
+            /* delete Exception */
+            else {
+                Axios.delete("http://localhost:7777/studio/exceptionDate/" + this.scheduleId)
+                    .then(() => {
+                        console.log("삭제 완.");
+                    }).catch(err => {
+                        console.log(err);
+                    })
+            }
+            this.$modal.hide("detailModal");
+        },
     }
 
 };

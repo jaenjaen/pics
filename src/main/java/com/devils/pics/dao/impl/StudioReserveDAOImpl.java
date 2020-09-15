@@ -61,8 +61,8 @@ public class StudioReserveDAOImpl implements StudioReserveDAO{
 	}
 
 	@Override
-	public int DeleteExceptionDates(List<ExceptionDate> exceptionList) {
-		return sqlSession.delete(NS+"deleteExceptionDates", exceptionList);
+	public int DeleteExceptionDate(int exceptionId) {
+		return sqlSession.delete(NS+"deleteExceptionDates", exceptionId);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import com.devils.pics.dao.StudioReserveDAO;
 import com.devils.pics.domain.ExceptionDate;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Reservation;
+import com.devils.pics.domain.Schedule;
 import com.devils.pics.service.StudioReserveService;
 
 @Service
@@ -17,11 +18,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	private StudioReserveDAO studioReserveDAO;
 
 	@Override
-	public ArrayList<ExceptionDate> getExceptionDate(int stuId) {
-		List<ExceptionDate> exceptionDateList =new ArrayList<ExceptionDate>();
-		for(ExceptionDate ex: studioReserveDAO.getExceptionDate(stuId))
-			exceptionDateList .add(ex);
-		return (ArrayList<ExceptionDate>) exceptionDateList;
+	public ArrayList<ExceptionDate> getExceptionDate(Schedule schedule) {
+		return studioReserveDAO.getExceptionDate(schedule);
 	}
 
 	@Override
@@ -43,8 +41,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public List<Reservation> getReservation(Reservation reservation) {
-		return studioReserveDAO.getReservation(reservation);
+	public List<Reservation> getReservation(Schedule schedule) {
+		return studioReserveDAO.getReservation(schedule);
 	}
 
 	@Override

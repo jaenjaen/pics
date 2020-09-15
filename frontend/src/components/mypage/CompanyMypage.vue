@@ -40,10 +40,10 @@
       <!-- Custom Detail Popup -->
        <modal name="detailModal" :height="200" :width="300" :styles="styles">
          <div class="popup">
-          <h3>customerID(누르면 바로 채팅)</h3>
-          <h4>날짜~날짜</h4>
-          <h4>예약분류</h4>
-        <button>수정</button>
+          <h3>{{userName}} 님</h3>
+          <h4>{{reservationDate}}</h4>
+          <h4>{{reservationCategory}}</h4>
+          <button>수정</button>
         </div>
       </modal>
 

@@ -59,6 +59,17 @@ export default {
             /* for modal */
             styles: "border-left: 10px solid #00a9ff",
             calendarId: "1",
+
+            /* Detail */
+            userName: "",
+            reservationDate: "",
+            reservationCategory: "",
+            category: {
+                width: '20px',
+                height: '20px',
+                backgroundColor: ""
+            }
+
         };
     },
     mounted() {
@@ -150,6 +161,9 @@ export default {
         onClickSchedule: function(e) {
             this.$modal.show("detailModal");
             console.log(e);
+            this.userName = e.schedule.title;
+            this.reservationDate = e.schedule.start + "~" + e.schedule.end;
+            this.reservationCategory = "";
         }
     }
 };

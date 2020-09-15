@@ -183,7 +183,6 @@ public class StudioReserveController {
 		
 		try{
 			schedule = studioReserveService.getSchedule(schedule);
-			System.out.println("controller: "+schedule);
 			return new ResponseEntity(schedule,HttpStatus.OK);
 		}catch(Exception e) {
 			e.printStackTrace();

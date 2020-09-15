@@ -67,7 +67,6 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 		Schedule scheduleDTO = schedule;
 		scheduleDTO.setExceptionDate(studioReserveDAO.getExceptionDate(schedule));
 		scheduleDTO.setReservation(studioReserveDAO.getReservation(schedule));
-		System.out.println(scheduleDTO);
 		return scheduleDTO;
 	}
 

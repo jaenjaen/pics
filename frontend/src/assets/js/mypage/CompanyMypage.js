@@ -159,7 +159,6 @@ export default {
         /*Custom Detail Modal */
         onClickSchedule: function(e) {
             this.$modal.show("detailModal");
-            console.log(e);
             this.reservationDate = moment((e.schedule.start).toUTCString()).format('LLLL') + "<br/>" + moment(((e.schedule.end)).toUTCString()).format('LLLL');
             this.styles = "border-left: 10px solid" + e.schedule.bgColor;
             this.categoryColor = "background-color:" + e.schedule.bgColor;
@@ -171,6 +170,13 @@ export default {
                 this.reservationCategory = "예약불가능";
                 this.userName = e.schedule.title;
             }
+        },
+
+        /* Custom Update Modal */
+        onBeforeUpdateSchedule: function(e) {
+            this.$modal.hide("detailModal");
+            this.$modal.show("updateModal");
+            console.log(e);
         }
     }
 

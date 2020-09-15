@@ -16,6 +16,8 @@
 		<result column="word" property="word" />
 		<result column="dateTime" property="dateTime" />
 		<result column="sender" property="sender" />
+		<result column="readCheck" property="readCheck" />
+		<result column="filePath" property="filePath" />
 	</resultMap>
 	
 	<resultMap type="HashMap" id="stuDefaultInfo">
@@ -35,33 +37,39 @@
 	<!-- 채팅 추가하기 -->
 	<insert id="addChat" parameterType="chat">
 		INSERT INTO 
-		chat (cust_id, stu_id, word, date_time, filePath, sender, readCheck) 
-		VALUES(#{custId}, #{stuId}, #{word}, NOW(), #{filePath}, #{sender}, #{readCheck});
+		chat (cust_id, stu_id, word, file_path, date_time, sender, read_check) 
+		VALUES(#{custId}, #{stuId}, #{word}, #{filePath}, NOW(), #{sender}, #{readCheck});
 	</insert>
 	
 	<!-- 보내는 이(고객/기업)에 따라 해당되는 스튜디오, 고객의 대화를 가져옴 -->
 	<select id="getPrevAllChat" parameterType="hashMap" resultType="chat">
-		SELECT chat_id, cust_id, word, DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, stu_id, sender 
+		SELECT 
+		chat_id, cust_id, stu_id, 
+        word, file_path, 
+        DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check
 		FROM chat 
 		WHERE cust_id=#{custId} AND stu_id=#{stuId};
 	</select>
 	
 	<!-- 해당 스튜디오, 고객의 가장 최근 채팅 가져오기 -->
 	<select id="getMostRecentChat" parameterType="hashMap" resultType="chat">
-		SELECT chat_id, cust_id, word, DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, stu_id, sender
+		SELECT chat_id, cust_id, stu_id, 
+		word, file_path,
+		DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check
 		FROM chat
 		WHERE cust_id=#{custId} AND stu_id=#{stuId}
 		ORDER BY date_time DESC
 		LIMIT 1;
 	</select>
 
-	<!-- 업체의 스튜디오 및 고객별 최근 수신 대화  -->
+	<!-- 업체의 스튜디오 및 고객별 최근 대화  -->
 	<select id="getRecentComChat" parameterType="string" resultMap="recentChat">
 		SELECT
 		comId, comName, comLogo, 
 		cs.stuId, stuName, 
 		custId, custName, custLogo, 
-		chatId, word, DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
 		FROM
 			(SELECT 
 			c.com_id comId, c.name comName, c.logo_img comLogo,
@@ -70,7 +78,8 @@
 			WHERE c.com_id=#{comId} AND c.com_id = s.com_id) cs,
 			(SELECT 
 			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
-			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.date_time dateTime
+			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.file_path filePath,
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
 			FROM
 				(SELECT * FROM customer) cu,
 				(SELECT * 
@@ -78,20 +87,20 @@
 				WHERE date_time 
 					IN (SELECT MAX(date_time) 
 						FROM chat 
-						WHERE sender = 0
 						GROUP BY cust_id, stu_id)) ch
 			WHERE cu.cust_id=ch.cust_id) cuh
 		WHERE cs.stuId = cuh.stuId
 		ORDER BY cuh.dateTime DESC;
 	</select>
 	
-	<!-- 중복 없이 업체의 스튜디오 및 고객별 최근 수신 대화를 가져옴(스튜디오 이름순) -->
+	<!-- 중복 없이 업체의 스튜디오 및 고객별 최근 대화를 가져옴(스튜디오 이름순) -->
 	<select id="getRecentComChatNoRpeat" parameterType="string" resultMap="recentChat">
 		SELECT
 		comId, comName, comLogo, 
 		cs.stuId, stuName, 
 		custId, custName, custLogo, 
-		chatId, word, DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
 		FROM
 			(SELECT 
 			c.com_id comId, c.name comName, c.logo_img comLogo,
@@ -100,7 +109,8 @@
 			WHERE c.com_id=#{comId} AND c.com_id = s.com_id) cs,
 			(SELECT 
 			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
-			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.date_time dateTime
+			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.file_path filePath,
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
 			FROM
 				(SELECT * FROM customer) cu,
 				(SELECT * 
@@ -108,7 +118,6 @@
 				WHERE date_time 
 					IN (SELECT MAX(date_time) 
 						FROM chat 
-						WHERE sender = 0
 						GROUP BY cust_id, stu_id)) ch
 			WHERE cu.cust_id=ch.cust_id) cuh
 		WHERE cs.stuId = cuh.stuId
@@ -116,12 +125,13 @@
 		ORDER BY stuName;
 	</select>
 	
-	<!-- 스튜디오의 고객별 최근 수신 대화  -->
+	<!-- 스튜디오의 고객별 최근 대화  -->
 	<select id="getRecentStuChat" parameterType="string" resultMap="recentChat">
 		SELECT
 		cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
 		st.stu_id stuId, st.name stuName,
-		ch.chat_id chatId, ch.word word, ch.date_time dateTime, ch.sender sender
+		ch.chat_id chatId, ch.word word, ch.file_path,
+        ch.date_time dateTime, ch.sender sender, ch.read_check
 		FROM
 			(SELECT * FROM customer) cu,
 			(SELECT * FROM studio) st,
@@ -129,19 +139,20 @@
 			WHERE date_time 
 			IN (SELECT MAX(date_time) 
 				FROM chat 
-			    WHERE sender = 0 AND stu_id = #{stuId}
+			    WHERE stu_id = #{stuId}
 			    GROUP BY cust_id)) ch
 		WHERE ch.stu_id = st.stu_id AND ch.cust_id = cu.cust_id
 		ORDER BY dateTime DESC;
 	</select>
 	
-	<!-- 고객의 스튜디오별 최근 수신 대화  -->
+	<!-- 고객의 스튜디오별 최근 대화  -->
 	<select id="getRecentCustChat" parameterType="string" resultMap="recentChat">
 		SELECT
 		comId, comName, comLogo, 
 		cs.stuId, stuName, 
 		custId, custName, custLogo, 
-		chatId, word, DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
 		FROM
 			(SELECT 
 			c.com_id comId, c.name comName, c.logo_img comLogo,
@@ -150,7 +161,8 @@
 			WHERE c.com_id = s.com_id) cs,
 			(SELECT 
 			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
-			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.date_time dateTime
+			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.file_path filePath,
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
 			FROM
 				(SELECT * FROM customer) cu,
 				(SELECT * 
@@ -158,20 +170,21 @@
 				WHERE date_time 
 					IN (SELECT MAX(date_time) 
 						FROM chat 
-						WHERE sender = 1 AND cust_id = #{custId}
+						WHERE cust_id = #{custId}
 						GROUP BY stu_id)) ch
 			WHERE cu.cust_id=ch.cust_id) cuh
 		WHERE cs.stuId = cuh.stuId
 		ORDER BY cuh.dateTime DESC;
 	</select>
 	
-	<!-- 스튜디오 아이디와 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화 -->
+	<!-- 스튜디오 아이디와 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 대화 -->
 	<select id="getRecentChatByStuIdAndCustName" parameterType="hashMap" resultMap="recentChat">
 		SELECT
 		comId, comName, comLogo, 
 		cs.stuId, stuName, 
 		custId, custName, custLogo, 
-		chatId, word, DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
 		FROM
 			(SELECT 
 			c.com_id comId, c.name comName, c.logo_img comLogo,
@@ -180,7 +193,9 @@
 			WHERE s.stu_id = #{stuId} AND c.com_id=#{comId} AND c.com_id = s.com_id) cs,
 			(SELECT 
 			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
-			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.date_time dateTime
+			ch.chat_id chatId, ch.stu_id stuId, 
+            ch.word word, ch.file_path filePath, 
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
 			FROM
 				(SELECT * FROM customer) cu,
 				(SELECT * 
@@ -188,20 +203,20 @@
 				WHERE date_time 
 					IN (SELECT MAX(date_time) 
 						FROM chat 
-						WHERE sender = 0
 						GROUP BY cust_id, stu_id)) ch
 			WHERE cu.cust_id=ch.cust_id AND cu.nickname LIKE '%' #{custName} '%') cuh
 		WHERE cs.stuId = cuh.stuId
 		ORDER BY cuh.dateTime DESC;
 	</select>
 	
-	<!-- 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화 -->
+	<!-- 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 대화 -->
 	<select id="getRecentChatByCustName" parameterType="hashMap" resultMap="recentChat">
 	SELECT
 		comId, comName, comLogo, 
 		cs.stuId, stuName, 
 		custId, custName, custLogo, 
-		chatId, word, DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
 		FROM
 			(SELECT 
 			c.com_id comId, c.name comName, c.logo_img comLogo,
@@ -210,7 +225,9 @@
 			WHERE c.com_id=#{comId} AND c.com_id = s.com_id) cs,
 			(SELECT 
 			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
-			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.date_time dateTime
+			ch.chat_id chatId, ch.stu_id stuId, 
+            ch.word word, ch.file_path filePath, 
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
 			FROM
 				(SELECT * FROM customer) cu,
 				(SELECT * 
@@ -218,20 +235,20 @@
 				WHERE date_time 
 					IN (SELECT MAX(date_time) 
 						FROM chat 
-						WHERE sender = 0
 						GROUP BY cust_id, stu_id)) ch
 			WHERE cu.cust_id=ch.cust_id AND cu.nickname LIKE '%' #{custName} '%') cuh
 		WHERE cs.stuId = cuh.stuId
 		ORDER BY cuh.dateTime DESC;
 	</select>
 	
-	<!-- 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 수신 대화 -->
+	<!-- 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 대화 -->
 	<select id="getRecentChatByStuName" parameterType="hashMap" resultMap="recentChat">
 	SELECT
 		comId, comName, comLogo, 
 		cs.stuId, stuName, 
 		custId, custName, custLogo, 
-		chatId, word, DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime
+		chatId, word, filePath,
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
 		FROM
 			(SELECT 
 			c.com_id comId, c.name comName, c.logo_img comLogo,
@@ -240,7 +257,9 @@
 			WHERE c.com_id = s.com_id AND s.name LIKE '%' #{stuName} '%') cs,
 			(SELECT 
 			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
-			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.date_time dateTime
+			ch.chat_id chatId, ch.stu_id stuId, 
+            ch.word word, ch.file_path filePath, 
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
 			FROM
 				(SELECT * FROM customer) cu,
 				(SELECT * 
@@ -248,7 +267,7 @@
 				WHERE date_time 
 					IN (SELECT MAX(date_time) 
 						FROM chat 
-						WHERE sender = 1 AND cust_id = #{custId}
+						WHERE cust_id = #{custId}
 						GROUP BY stu_id)) ch
 			WHERE cu.cust_id=ch.cust_id) cuh
 		WHERE cs.stuId = cuh.stuId

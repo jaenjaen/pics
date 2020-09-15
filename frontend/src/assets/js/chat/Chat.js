@@ -10,6 +10,7 @@ export default {
     name: 'chat',
     data() {
         return {
+            chatRoute: 'http://localhost:7777/upload/chat/',
             defaultImg: {
                 list: 'http://localhost:7777/upload/default/list.png',
                 listHover: 'http://localhost:7777/upload/default/listHover.png',
@@ -56,12 +57,6 @@ export default {
 
             /* 고객/기업모드 여부 */
             customerMode: '',
-
-            /* 채팅 모드 */
-            chatMode: true,
-
-            sender: "",
-            word: "",
         }
     },
 
@@ -159,6 +154,7 @@ export default {
                 })
         },
 
+        /* 고객의 스튜디오별 최근 수신 대화(스튜디오 중복 없음) */
         getRecentComChatNoRpeat() {
             axios.get('http://127.0.0.1:7777/chat/recent/comNoRepeat/' + company.comId)
                 .then((response) => {
@@ -226,6 +222,7 @@ export default {
                 })
         },
 
+        /* 스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 */
         getRecentChatByStuIdAndCustName(stuId, custName) {
             axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId + '/' + stuId + '/' + custName)
                 .then((response) => {
@@ -325,10 +322,13 @@ export default {
 
                     /* 서버의 메세지 전송 endpoing를 구독(Pub/Sub 구조) */
                     this.stompClient.subscribe("/send", response => {
-                        console.log('구독으로 받은 메시지 : ', response.body);
+                        if (this.chat.stuId == JSON.parse(response.body).stuId &&
+                            this.chat.custId == JSON.parse(response.body).custId) { //채팅을 해당자들만 1:1로 확인
+                            console.log('구독으로 받은 메시지 : ', response.body);
 
-                        // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                        this.prevAllChat.push(JSON.parse(response.body))
+                            // 받은 데이터를 json으로 파싱 후 리스트에 넣음
+                            this.prevAllChat.push(JSON.parse(response.body))
+                        }
                     });
                 },
                 /* 연결 실패 */
@@ -339,17 +339,100 @@ export default {
             );
         },
 
+        /* 파일이름 및 경로를 화면에 보임 */
+        setFile(event) {
+            document.getElementById('chatFileName').value = event.target.value;
+        },
+
+        /* 업로드한 파일을 삭제함 */
+        deleteFile() {
+            if (document.getElementById('chatFile').value == '') {
+                alert("삭제할 파일이 없습니다.");
+                return;
+            } else {
+                let result = confirm('첨부파일을 삭제하시겠습니까?');
+                if (result) {
+                    document.getElementById('chatFile').value = '';
+                    document.getElementById('chatFileName').value = '';
+                } else {
+                    return;
+                }
+            }
+        },
+
+        /* 파일 확장자 체크해서 이미지 파일이면 true 리턴 
+         true면 채팅 화면에 이미지를 보여줌 */
+        isImgFile(path) {
+            if (path === null) {
+                return false;
+            }
+            let imgFormat = ['jpeg', 'jpg', 'gif', 'png', 'svg'];
+            let fileForm = path.substring(path.lastIndexOf('.') + 1, path.length).toLowerCase();
+            for (let i = 0; i < imgFormat.length; i++) {
+                if (imgFormat[i] == fileForm) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        /* 채팅 이미지 업로드 */
+        uploadChatImg() {
+            /* 파일 용량 체크 */
+            let maxSize = 5 * 1024 * 1000; //파일 최대 용량 5MB
+            let formData = new FormData();
+            let file = document.querySelector('#chatFile');
+            formData.append("file", file.files[0]);
+            console.log("파일 정보 : " + file.files[0]);
+            if (file.files[0].size > maxSize) {
+                alert("파일은 5MB 이내로 첨부 가능합니다.");
+                return;
+            }
+
+            let id = '';
+            if (company != null) {
+                id = company.comId;
+            } else if (customer != null) {
+                id = customer.custId;
+            }
+            axios.post('http://127.0.0.1:7777/fileUpload/chat/' + id, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                }).then((response) => {
+                    console.log('채팅 파일 업로드 응답 성공');
+                    console.log('파일명 : ' + response.data);
+                    this.chat.filePath = response.data;
+
+                    this.send(); //보냄
+                })
+                .catch(() => {
+                    console.log('채팅 파일 업로드 응답 실패');
+                })
+        },
+
         /* 보낼 메시지 처리 */
         sendChat(cmd) {
             if (this.chat.stuId !== '' && this.chat.custId !== '') {
-                if (this.chat.word !== '' || this.chat.filePath !== '') {
-                    this.send(); //보냄
-                    this.chat.word = '' //보내고 나서 입력 리셋
-                    this.chat.filePath = ''
+                if (this.chat.word !== '' || document.getElementById('chatFile').value !== '') {
+                    if (cmd == 'file') {
+                        let result = confirm("파일을 전송하시겠습니까?");
+                        if (!result) {
+                            return;
+                        } else {
+                            this.uploadChatImg();
+                        }
+                    } else if (cmd == 'word') {
+                        this.send(); //보냄
+                    }
+                    /* 보내고 나서 입력 리셋 */
+                    this.chat.word = '';
+                    this.chat.filePath = '';
+                    document.getElementById('chatFile').value = ''
                 } else if (cmd == 'word' && this.chat.word == '') {
                     alert("내용을 입력하세요");
                     return;
-                } else if (cmd == 'file' && this.chat.filePath == '') {
+                } else if (cmd == 'file' && document.getElementById('chatFile').value == '') {
                     alert("파일을 첨부하세요");
                 }
             }
@@ -362,6 +445,7 @@ export default {
             if (this.stompClient && this.stompClient.connected) {
                 const msg = this.chat;
                 this.stompClient.send("/receive", JSON.stringify(msg), {});
+                this.controlModal('hide', 'uploadModal');
             }
         },
 

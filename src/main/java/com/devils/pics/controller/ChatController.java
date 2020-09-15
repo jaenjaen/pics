@@ -29,17 +29,17 @@ public class ChatController {
 	@MessageMapping("/receive") //receive를 메세지를 받을 endpoing로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
-		System.out.println("입력값 chat : " + chat);
+		//System.out.println("입력값 chat : " + chat);
 		Chat resultChat = new Chat();
 		try {
 			int result = chatService.addChat(chat);
-			System.out.println("채팅 " + result + "개 추가");
+			//System.out.println("채팅 " + result + "개 추가");
 			
 			Map map = new HashMap();
 			map.put("custId", chat.getCustId());
 			map.put("stuId", chat.getStuId());
 			resultChat = chatService.getMostRecentChat(map);
-			System.out.println("결과값 resultChat : " + resultChat);
+			//System.out.println("결과값 resultChat : " + resultChat);
 		} catch (Exception e) {
 			//e.printStackTrace();
 		}
@@ -65,7 +65,7 @@ public class ChatController {
 		}
 	}
 	
-	/* 최근 수신 대화 가져오기(com, studio, cust, chat 정보 추출)  */
+	/* 최근 대화 가져오기(com, studio, cust, chat 정보 추출)  */
 	@GetMapping("/chat/recent/{member}/{id}")
 	public ResponseEntity getRecentChat(@PathVariable String member, @PathVariable String id) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
@@ -73,7 +73,7 @@ public class ChatController {
 			if(member.equals("com")) { //기업으로 로그인 했을 경우
 				recentChat = chatService.getRecentComChat(id);
 				//System.out.println(recentChat);
-			}else if(member.equals("comNoRepeat")) { //기업으로 로그인했는데 중복 없이 최근 수신 대화를 가져감
+			}else if(member.equals("comNoRepeat")) { //기업으로 로그인했는데 중복 없이 최근 대화를 가져감
 				recentChat = chatService.getRecentComChatNoRpeat(id);
 				//System.out.println(recentChat);
 			}else if(member.equals("cust")) { //고객으로 로그인 했을 경우
@@ -96,20 +96,20 @@ public class ChatController {
 		}
 	}
 	
-	/* 이름으로 검색하면 최근 수신 대화 가져오기(com, studio, cust, chat 정보 추출)  */
+	/* 이름으로 검색하면 최근 대화 가져오기(com, studio, cust, chat 정보 추출)  */
 	@GetMapping("/chat/recent/{member}/{id}/{name}")
 	public ResponseEntity getRecentChatByName(@PathVariable String member, @PathVariable String id, @PathVariable String name) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
 		Map map = new HashMap();
 		try {
-			/* 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화  */
+			/* 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 대화  */
 			if(member.equals("com")) { //기업으로 로그인 했을 경우
 				map.put("comId", id);
 				map.put("custName", name);
 				recentChat = chatService.getRecentChatByCustName(map);
 				//System.out.println(recentChat);
 			}
-			/* 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 수신 대화  */
+			/* 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 대화  */
 			else if(member.equals("cust")) { //고객으로 로그인 했을 경우
 				map.put("custId", id);
 				map.put("stuName", name);
@@ -129,7 +129,7 @@ public class ChatController {
 		}
 	}
 	
-	/* 스튜디오 아이디, 고객 이름으로 검색하면 업체의 최근 수신 대화 가져오기
+	/* 스튜디오 아이디, 고객 이름으로 검색하면 업체의 최근 대화 가져오기
 	 * (com, studio, cust, chat 정보 추출)  */
 	@GetMapping("/chat/recent/com/{comId}/{stuId}/{custName}")
 	public ResponseEntity getRecentChatByStuIdAndCustName(@PathVariable String comId, @PathVariable String stuId, @PathVariable String custName) {

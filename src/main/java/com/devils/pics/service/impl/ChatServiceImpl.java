@@ -34,43 +34,43 @@ public class ChatServiceImpl implements ChatService {
 		return chatDao.getMostRecentChat(map);
 	}
 	
-	/* 업체의 스튜디오 및 고객별 최근 수신 대화  */
+	/* 업체의 스튜디오 및 고객별 최근 대화  */
 	@Override
 	public List<Map<String, String>> getRecentComChat(String comId) throws Exception {
 		return chatDao.getRecentComChat(comId);
 	}
 	
-	/* 업체의 스튜디오 및 고객별 최근 수신 대화를 중복 없이 가져옴(스튜디오 이름순) */
+	/* 업체의 스튜디오 및 고객별 최근 대화를 중복 없이 가져옴(스튜디오 이름순) */
 	@Override
 	public List<Map<String, String>> getRecentComChatNoRpeat(String comId) throws Exception {
 		return chatDao.getRecentComChatNoRpeat(comId);
 	}
 	
-	/* 스튜디오의 고객별 최근 수신 대화  */
+	/* 스튜디오의 고객별 최근 대화  */
 	@Override
 	public List<Map<String, String>> getRecentStuChat(String stuId) throws Exception {
 		return chatDao.getRecentStuChat(stuId);
 	}
 	
-	/* 고객의 스튜디오별 최근 수신 대화  */
+	/* 고객의 스튜디오별 최근 대화  */
 	@Override
 	public List<Map<String, String>> getRecentCustChat(String custId) throws Exception{
 		return chatDao.getRecentCustChat(custId);
 	}
 	
-	/* 스튜디오 아이디와 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화   */
+	/* 스튜디오 아이디와 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 대화   */
 	@Override
 	public List<Map<String, String>> getRecentChatByStuIdAndCustName(Map map) throws Exception {
 		return chatDao.getRecentChatByStuIdAndCustName(map);
 	}
 	
-	/* 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화  */
+	/* 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 대화  */
 	@Override
 	public List<Map<String, String>> getRecentChatByCustName(Map map) throws Exception {
 		return chatDao.getRecentChatByCustName(map);
 	}
 	
-	/* 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 수신 대화  */
+	/* 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 대화  */
 	@Override
 	public List<Map<String, String>> getRecentChatByStuName(Map map) throws Exception {
 		return chatDao.getRecentChatByStuName(map);

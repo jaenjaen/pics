@@ -191,6 +191,14 @@
                 display: block;
             }
             
+            .chat-message-content a:link,
+            .chat-message-content a:visited,
+            .chat-message-content a:hover,
+            .chat-message-content a:active {
+                color: white;
+                text-decoration: underline;
+            }
+            
             .chat-wrapper .chat-message .chat-details {
                 clear: both;
                 width: 100%;

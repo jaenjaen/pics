@@ -39,7 +39,8 @@
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
                                     <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p class="other" v-else>{{prev.filePath}}</p>
+                                    <p v-else-if="isImgFile(prev.filePath)"><img :src="chatRoute + prev.filePath"></p>
+                                    <p v-else><a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a></p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -54,7 +55,8 @@
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
                                     <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p class="me" v-else>{{prev.filePath}}</p>
+                                    <p v-else-if="isImgFile(prev.filePath)"><img :src="chatRoute + prev.filePath"></p>
+                                    <p v-else><a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a></p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -71,7 +73,12 @@
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
                                     <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p class="other" v-else>{{prev.filePath}}</p>
+                                    <p v-else-if="isImgFile(prev.filePath)">
+                                        <img :src="chatRoute + prev.filePath">
+                                    </p>
+                                    <p v-else>
+                                        <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
+                                    </p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localization font-size-small stu-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -86,7 +93,8 @@
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
                                     <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p class="me" v-else>{{prev.filePath}}</p>
+                                    <p v-else-if="isImgFile(prev.filePath)"><img :src="chatRoute + prev.filePath"></p>
+                                    <p v-else><a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a></p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -161,10 +169,10 @@
             <div id="uploadContent">
                 <div id="closeUpload" @click="controlModal('hide', 'uploadModal')">&times;</div><br/><br/>
                 <p style="font-size:18px;">파일 첨부</p>
-                <input type="file" id="chatFileUpload" style="display:none;"><br/>
+                <input type="file" id="chatFile" style="display:none;" @change="setFile($event)"><br/>
                 <input type="text" v-model="chat.filePath" id="chatFileName" class="inputArea" disabled>
-                <button id="uploadBtn" class="btn" onclick="document.getElementById('chatFileUpload').click()">찾기</button>
-                <button id="removeBtn" class="btn">삭제</button><br/>
+                <button id="uploadBtn" class="btn" onclick="document.getElementById('chatFile').click()">찾기</button>
+                <button id="removeBtn" class="btn" @click="deleteFile()">삭제</button><br/>
                 <button id="sendBtn" class="btn" @click="sendChat('file')">전송</button>
             </div>
         </section>

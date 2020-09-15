@@ -108,9 +108,7 @@
 		SET 
 		start_date=#{startDate},
 		end_date=#{endDate},
-		total_price=#{totalPrice},
-		res_date=now(),
-		total_people=#{totalPeople}
+		res_date=now()
 		WHERE res_id=#{resId}
 	</update>
 
@@ -119,7 +117,7 @@
 		SET 
 		start_date=#{startDate},
 		end_date=#{endDate}
-		WHERE stu_id=#{stuId}
+		WHERE exception_id=#{exceptionId}
 	</update>
 
 	<delete id="deleteReservation" parameterType="int">							

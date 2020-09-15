@@ -84,6 +84,7 @@ public class StudioReserveController {
 	public ResponseEntity UpdateReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
 		try{
+			System.out.println(reservation);
 			studioReserveService.UpdateReservation(reservation);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(Exception e) { 

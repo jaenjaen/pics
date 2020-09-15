@@ -36,23 +36,15 @@
         </div>
       </modal>
 
-      <!-- Custom Update Popup -->
-       <modal name="updateModal" :height="200" :width="300" :styles="styles">
-         <div class="popup">
-          <h3> 예약이름(무조건 예외날만 추가)</h3>
-          <h3> 날짜데이터피커1  |  날짜 데이터피커2 | 올데이</h3>
-          <button>수정</button>
-          <button id="delete">삭제</button>
-        </div>
-      </modal>
-
       <!-- Custom Detail Popup -->
-       <modal name="detailModal" :height="200" :width="300" :styles="styles">
+       <modal name="detailModal" :height="230" :width="300" :styles="styles">
          <div class="popup">
           <h3>{{userName}}</h3>
           <h4 v-html="reservationDate"></h4>
+          <h4 v-if="indexFlag">예약인원 : {{totalPeople}}명</h4>
+          <h4 v-if="indexFlag">비용 : {{totalPrice}}원</h4>
           <h4><span class="tui-full-calendar-icon tui-full-calendar-calendar-dot" :style="categoryColor"></span>{{reservationCategory}}</h4>
-          <button @click="onBeforeUpdateSchedule">수정</button>
+          <button id="delete" @click="onBeforeUpdateSchedule">일정취소</button>
         </div>
       </modal>
 

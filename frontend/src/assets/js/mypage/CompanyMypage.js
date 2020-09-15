@@ -62,11 +62,15 @@ export default {
             styles: "",
             calendarId: "1",
             categoryColor: "",
+            indexFlag: false,
 
             /* Detail */
+            userId: 0,
             userName: "",
             reservationDate: "",
             reservationCategory: "",
+            totalPeople: 0,
+            totalPrice: 0
         };
     },
     mounted() {
@@ -113,7 +117,7 @@ export default {
                             dueDateClass: '',
                             start: Date.parse(data.reservation[j].startDate),
                             end: Date.parse(data.reservation[j].endDate),
-                            body: data.reservation[j].custId,
+                            body: [data.reservation[j].custId, data.reservation[j].totalPrice, data.reservation[j].totalPeople],
                         });
                     }
                     this.readOnly = false;
@@ -166,17 +170,44 @@ export default {
             if (e.schedule.calendarId == "0") {
                 this.reservationCategory = "Pics예약";
                 this.userName = e.schedule.title + " 님";
+                this.userId = e.schedule.body[0];
+                this.totalPeople = e.schedule.body[2];
+                this.totalPrice = e.schedule.body[1];
+                this.indexFlag = true;
             } else {
                 this.reservationCategory = "예약불가능";
                 this.userName = e.schedule.title;
+                this.indexFlag = false;
             }
         },
 
         /* Custom Update Modal */
         onBeforeUpdateSchedule: function(e) {
-            this.$modal.hide("detailModal");
-            this.$modal.show("updateModal");
             console.log(e);
+            this.$refs.studioCalendar.invoke('updateSchedule', e.schedule.id, e.schedule.calendarId, e.changes);
+
+            if (e.schedule.calendarId == "0") {
+                //axios 예약
+                Axios.put("http://localhost:7777/studio/reservation", {
+                    resId: Number(e.schedule.id),
+                    startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
+                    endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
+                }).then(() => {
+                    console.log("수정완료");
+                }).catch(err => {
+                    console.log(err);
+                })
+            } else {
+                Axios.put("http://localhost:7777/studio/exceptionDate", {
+                    exceptionId: Number(e.schedule.id),
+                    startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
+                    endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
+                }).then(() => {
+                    console.log("수정완료");
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
         }
     }
 

@@ -43,10 +43,8 @@ class StudioReserveTest {
 		String NS = "StudioReserveMapper.";
 //		 Customer customer=sqlSession.selectOne("CustomerMapper.getCustomer",1);
 //		 Studio studio=sqlSession.selectOne("StudioInfoMapper.getStudioInfo",10);
-		Schedule schedule = new Schedule();
-		schedule.setStuId(11);
-		schedule.setWeekStart("2020-09-13 00:00:00");
-		schedule.setWeekEnd("2020-09-19 23:59:59");
+//		Schedule schedule = new Schedule();
+//		schedule.setStuId(11);
 		
 //		System.out.println("==================== getExceptionDate ====================");
 //		
@@ -103,18 +101,26 @@ class StudioReserveTest {
 //		Reservation reservation =new Reservation(studio.get(0).getStuId(),customer,"2020-08-19","2020-08-21",250000,"2020-08-10",5);
 
 //		System.out.println("==================== UpdateReservation ====================");
+//		Reservation r = new Reservation();
+//		r.setResId(2889);
+//		r.setStartDate("2020-09-16 22:00:00"); // 이 양식만 됨
+//		r.setEndDate("2020-09-17T06:30:00+09:00");
 //		try {
-//		int result = sqlSession.update(NS+"UpdateReservation",resInfo);
+//		int result = sqlSession.update(NS+"updateReservation",r);
 //		System.out.println(result);
 //		}catch (NullPointerException e) {
 //			System.out.println("예외 일정 등록에 실패했습니다.");
 //		}
 //		
 //		System.out.println("==================== UpdateExceptionDates ====================");
+//		ExceptionDate e = new ExceptionDate();
+//		e.setExceptionId(18);
+//		e.setStartDate("2020-09-19 00:00:00");
+//		e.setEndDate("2020-09-19 23:59:59");
 //		try {
-//		int result = sqlSession.update(NS+"UpdateExceptionDates",resInfo);
+//		int result = sqlSession.update(NS+"updateExceptionDate",e);
 //		System.out.println(result);
-//		}catch (NullPointerException e) {
+//		}catch (NullPointerException ne) {
 //			System.out.println("예외 일정 등록에 실패했습니다.");
 //		}
 		

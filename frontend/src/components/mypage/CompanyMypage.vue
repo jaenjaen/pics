@@ -33,16 +33,16 @@
           <h3> 예약이름(무조건 예외날만 추가)</h3>
           <h3> 날짜데이터피커1  |  날짜 데이터피커2 | 올데이</h3>
           <button>저장</button>
-          <button id="delete" v-if="calendarId">삭제</button>
+          <button id="delete">삭제</button>
         </div>
       </modal>
 
       <!-- Custom Detail Popup -->
        <modal name="detailModal" :height="200" :width="300" :styles="styles">
          <div class="popup">
-          <h3>{{userName}} 님</h3>
+          <h3>{{userName}}</h3>
           <h4 v-html="reservationDate"></h4>
-          <h4><canvas width="20" height="20"></canvas>{{reservationCategory}}</h4>
+          <h4><span class="tui-full-calendar-icon tui-full-calendar-calendar-dot" :style="categoryColor"></span>{{reservationCategory}}</h4>
           <button>수정</button>
         </div>
       </modal>
@@ -54,7 +54,7 @@
         :schedules="scheduleList"
         :taskView="false"
         :disableDblClick="true"
-        :isReadOnly="false"
+        :isReadOnly="readOnly"
         :useCreationPopup="false"
         :useDetailPopup="false"
         @beforeCreateSchedule="onBeforeCreateSchedule"

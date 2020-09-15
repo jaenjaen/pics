@@ -31,7 +31,6 @@ let calendarList = [{
         borderColor: '#757575'
     }
 ]
-
 export default {
     name: "CompanyMypage",
     components: {
@@ -48,6 +47,9 @@ export default {
             studioFlag: true,
             selectedId: "",
 
+            /* calendar basic setting */
+            readOnly: true,
+
             /*calendar header */
             startWeek: moment().startOf('week').format('L'),
             endWeek: moment().endOf('week').format('L'),
@@ -57,8 +59,9 @@ export default {
             scheduleList: [],
 
             /* for modal */
-            styles: "border-left: 10px solid #00a9ff",
+            styles: "",
             calendarId: "1",
+            categoryColor: "",
 
             /* Detail */
             userName: "",
@@ -67,15 +70,6 @@ export default {
         };
     },
     mounted() {
-
-        /* drawing Circle */
-        var canvas = document.querySelector('canvas');
-        var ctx = canvas.getContext('2d');
-
-        ctx.beginPath();
-        ctx.arc(50, 50, 20, 0, Math.PI * 2);
-        ctx.stroke();
-
         /* 소유 스튜디오 불러오기 */
         Axios.get("http://localhost:7777/studio/" + this.comId)
             .then(res => {
@@ -84,6 +78,7 @@ export default {
             }).catch(err => {
                 console.log(err);
             });
+
     },
     methods: {
         getStudioReservation: function() {
@@ -121,6 +116,7 @@ export default {
                             body: data.reservation[j].custId,
                         });
                     }
+                    this.readOnly = false;
                 })
                 .catch(err => {
                     console.log(err);
@@ -164,12 +160,17 @@ export default {
         onClickSchedule: function(e) {
             this.$modal.show("detailModal");
             console.log(e);
-            this.userName = e.schedule.title;
             this.reservationDate = moment((e.schedule.start).toUTCString()).format('LLLL') + "<br/>" + moment(((e.schedule.end)).toUTCString()).format('LLLL');
+            this.styles = "border-left: 10px solid" + e.schedule.bgColor;
+            this.categoryColor = "background-color:" + e.schedule.bgColor;
 
             if (e.schedule.calendarId == "0") {
                 this.reservationCategory = "Pics예약";
-            } else this.reservationCategory = "예약불가능";
+                this.userName = e.schedule.title + " 님";
+            } else {
+                this.reservationCategory = "예약불가능";
+                this.userName = e.schedule.title;
+            }
         }
     }
 

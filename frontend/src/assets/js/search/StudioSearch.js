@@ -48,7 +48,7 @@ export default {
             this.setFilter()
         }
         //로그인 세션 정보 받기
-        this.login()
+        // this.login()
     },
     methods: {
         // 카테고리 설정 메소드
@@ -108,10 +108,6 @@ export default {
         },
         // 아래부터는 임시 메소드
         login() {
-            let customer = {
-                custId: 3
-            }
-            sessionStorage.setItem('customer', JSON.stringify(customer))
             var sessionTemp = sessionStorage.getItem('customer')
             this.filters.session = JSON.parse(sessionTemp).custId
         },

@@ -44,7 +44,9 @@ aside {
 .input-reserve-info-field {
     width: 60%;
     float: right;
-    margin: 5% 7% 5% 0%;
+    margin: 5% 4% 5% 0%;
+    padding-right: 20px;
+    border-right: 1px solid black;
 }
 
 .date-input-field {
@@ -74,4 +76,25 @@ aside {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+hr {
+    width: 730px;
+}
+
+.pricing-field {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pricing-field>table {
+    height: 180px;
+}
+
+.pricing-field>table>tr>td:nth-child(2) {
+    font-size: 20px;
+}
+
+.pricing-field>table>tr {
+    padding: 20px 0;
 }

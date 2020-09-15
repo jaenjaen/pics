@@ -41,8 +41,8 @@
        <modal name="detailModal" :height="200" :width="300" :styles="styles">
          <div class="popup">
           <h3>{{userName}} 님</h3>
-          <h4>{{reservationDate}}</h4>
-          <h4>{{reservationCategory}}</h4>
+          <h4 v-html="reservationDate"></h4>
+          <h4><canvas width="20" height="20"></canvas>{{reservationCategory}}</h4>
           <button>수정</button>
         </div>
       </modal>
@@ -89,5 +89,3 @@
 <script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
 <style scoped src="@/assets/css/mypage/calendar.css"></style>
-
-

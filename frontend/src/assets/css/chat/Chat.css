@@ -150,12 +150,13 @@
             
             .chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper:before {
                 left: -20px;
-                border-right-color: #BDBDBD;
+                border-right-color: #EAEAEA;
             }
             
             .chat-wrapper .chat-message.chat-message-recipient p {
-                background-color: #BDBDBD;
+                background-color: #EAEAEA;
                 border-top-color: #7dc576;
+                color: black;
                 border-radius: 8px;
             }
             

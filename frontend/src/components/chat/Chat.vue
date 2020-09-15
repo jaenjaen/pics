@@ -32,7 +32,8 @@
                         <img class='chat-image chat-image-default profile' :src='presentStu.comLogo' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>
-                                <p>{{prev.word}}</p>
+                                <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
+                                <p class="other" v-else>{{prev.filePath}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
                                 <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -47,7 +48,8 @@
                         <img class='chat-image chat-image-default profile' :src='customer.imgSrc' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>
-                                <p>{{prev.word}}</p>
+                                <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                <p class="me" v-else>{{prev.filePath}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
                                 <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -116,7 +118,8 @@
                         <img class='chat-image chat-image-default profile' :src='presentCust.custLogo' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>
-                                <p>{{prev.word}}</p>
+                                <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
+                                <p class="other" v-else>{{prev.filePath}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
                                 <span class='chat-message-localization font-size-small stu-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -131,7 +134,8 @@
                         <img class='chat-image chat-image-default profile' :src='company.logoImg' />
                         <div class='chat-message-wrapper'>
                             <div class='chat-message-content'>
-                                <p>{{prev.word}}</p>
+                                <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                <p class="me" v-else>{{prev.filePath}}</p>
                             </div><!-- chat-message-content -->
                             <div class='chat-details'>
                                 <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>

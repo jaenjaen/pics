@@ -55,18 +55,15 @@ export default {
             /* 고객/기업모드 여부 */
             cutomerMode: '',
 
-            /* 보낸 이 여부 */
-            senderDisplay: '',
-
             sender: "",
             word: "",
-            recvList: [],
+            recvChatList: [],
         }
     },
 
     created() {
         /* vue가 생성되면 소켓 연결 시도 */
-        //this.connect();
+        this.connect();
 
         if (customer != null) { //개인고객으로 로그인했을 경우
             this.cutomerMode = true; //고객모드 ON
@@ -329,7 +326,7 @@ export default {
                         console.log('구독으로 받은 메시지 : ', response.body);
 
                         // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                        this.recvList.push(JSON.parse(response.body))
+                        this.recvChatList.push(JSON.parse(response.body))
                     });
                 },
                 /* 연결 실패 */
@@ -357,7 +354,7 @@ export default {
                     sender: this.sender,
                     word: this.word
                 };
-                this.stompClient.send("/receive", JSON.stringify(msg), {});
+                this.stompClient.send("/webSocket/receive", JSON.stringify(msg), {});
             }
         },
 

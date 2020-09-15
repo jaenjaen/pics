@@ -167,13 +167,30 @@ public class StudioReserveController {
 			if(resultList.isEmpty()) return new ResponseEntity(HttpStatus.NO_CONTENT);
 			else return new ResponseEntity(resultList,HttpStatus.OK);
 		}catch(Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 		
 	}
 	
 	//9. 마이페이지용 exception date / reservation Date 넘기기 (weekStart / weekEnd)
+	@GetMapping("/company/schedule/{stuId}/{weekStart}/{weekEnd}")
+	public ResponseEntity getSchedule(@PathVariable int stuId, @PathVariable String weekStart, @PathVariable String weekEnd) {
+		Schedule schedule = new Schedule();
+		schedule.setStuId(stuId);
+		schedule.setWeekStart(weekStart);
+		schedule.setWeekEnd(weekEnd);
+		
+		try{
+			schedule = studioReserveService.getSchedule(schedule);
+			System.out.println("controller: "+schedule);
+			return new ResponseEntity(schedule,HttpStatus.OK);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 
 }
 

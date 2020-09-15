@@ -24,10 +24,7 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 
 	@Override
 	public ArrayList<RepeatDate> getRepeatDate(int stuId) {
-		List<RepeatDate> repeatDateList =new ArrayList<RepeatDate>();
-		for(RepeatDate rep: studioReserveDAO.getRepeatDate(stuId))
-			repeatDateList.add(rep);
-		return (ArrayList<RepeatDate>) repeatDateList;
+		return studioReserveDAO.getRepeatDate(stuId);
 	}
 
 	@Override
@@ -63,6 +60,15 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	@Override
 	public int DeleteExceptionDates(List<ExceptionDate> exceptionDateList) {
 		return studioReserveDAO.DeleteExceptionDates(exceptionDateList);
+	}
+	
+	@Override
+	public Schedule getSchedule(Schedule schedule) {
+		Schedule scheduleDTO = schedule;
+		scheduleDTO.setExceptionDate(studioReserveDAO.getExceptionDate(schedule));
+		scheduleDTO.setReservation(studioReserveDAO.getReservation(schedule));
+		System.out.println(scheduleDTO);
+		return scheduleDTO;
 	}
 
 	@Override

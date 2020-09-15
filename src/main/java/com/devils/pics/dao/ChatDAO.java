@@ -6,8 +6,14 @@ import java.util.Map;
 import com.devils.pics.domain.Chat;
 
 public interface ChatDAO {
+	/* 채팅 추가하기 */
+	public int addChat(Chat chat) throws Exception;
+	
 	/* 해당되는 스튜디오, 고객의 대화 모두를 가져옴 */
 	public List<Chat> getPrevAllChat(Map map) throws Exception;
+	
+	/* 해당 스튜디오, 고객의 가장 최근 채팅 가져오기  */
+	public Chat getMostRecentChat(Map map) throws Exception;
 	
 	/* 업체의 스튜디오 및 고객별 최근 수신 대화  */
 	public List<Map<String, String>> getRecentComChat(String comId) throws Exception;

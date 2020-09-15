@@ -2,196 +2,170 @@
 <template>
     <div id="app">
 
-    <!-- 고객 채팅 시작 -->
-    <div v-if="cutomerMode">
-        <!-- Header : 채팅하는 대상 -->
-        <header>
-            <div id="chatHeader">
-                <a href="javascript:;" @click="controlModal('show', 'chatListModal')">
-                    <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
-                </a>
-                <span id="otherNickname">{{presentStu.stuName | showLimitedContent}}</span>
-                <img id="otherProfile" class="profile" :src="presentStu.comLogo">
-            </div>
-            <div id="chatListHeader">
-                <a href="javascript:;" @click="controlModal('hide', 'chatListModal')">
-                    <img id="back" :src="defaultImg.back" @mouseover="controlListImg('mouseover', 'back')" @mouseout="controlListImg('mouseout', 'back')">
-                </a>
-                <span id="myNickname">{{customer.nickname | showLimitedContent}}</span>
-                <img id="myProfile" class="profile" :src="customer.imgSrc">
-            </div>
-        </header>
-
-        <!-- 채팅 본문 : 대화 내용 -->
-        <div id="chat-wrapper" class='chat-wrapper'>
-            <div id="custModeChat" class='chat-message padding'>
-                <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
-
-                    <!-- 상대방 -->
-                    <div class='chat-message chat-message-recipient' v-if="prev.sender == 1">
-                        <img class='chat-image chat-image-default profile' :src='presentStu.comLogo' />
-                        <div class='chat-message-wrapper'>
-                            <div class='chat-message-content'>
-                                <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
-                                <p class="other" v-else>{{prev.filePath}}</p>
-                            </div><!-- chat-message-content -->
-                            <div class='chat-details'>
-                                <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                <span style="display: none;">{{index}}</span>
-                                <span class='chat-message-read-status font-size-small'>- Read</span>
-                            </div><!-- chat-details -->
-                        </div><!-- chat-message-wrapper -->
-                    </div><!-- chat-message-recipient -->
-
-                    <!-- 나 -->
-                    <div class='chat-message chat-message-sender' v-else>
-                        <img class='chat-image chat-image-default profile' :src='customer.imgSrc' />
-                        <div class='chat-message-wrapper'>
-                            <div class='chat-message-content'>
-                                <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
-                                <p class="me" v-else>{{prev.filePath}}</p>
-                            </div><!-- chat-message-content -->
-                            <div class='chat-details'>
-                                <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                <span class='chat-message-read-status font-size-small'>- Read</span>
-                            </div><!-- chat-details -->
-                        </div><!-- chat-message-wrapper -->
-                    </div><!-- chat-message-sender -->
-
-                </div><!-- prevChatList -->
-            </div><!-- padding -->
-        </div><!-- chat-wrapper -->
-
-        <!-- Modal : 채팅 목록 -->
-        <section id="chatListModal">
-            <div id="studioList" style="height:60px;">
-                <div id="studioSearch">
-                    <input type="text" id="searchStuName" placeholder="스튜디오 검색" class="inputArea" @keyup="searchRecentChatByName('cust')">
-                    <img id="search" :src="defaultImg.search" 
-                    width="20px" height="20px" 
-                    @mouseover="controlListImg('mouseover', 'search')" 
-                    @mouseout="controlListImg('mouseout', 'search')"
-                    @click="searchRecentChatByName('cust')">
+        <div>
+            <!-- Header : 채팅하는 대상 -->
+            <header>
+                <div id="chatHeader">
+                    <a href="javascript:;" @click="controlModal('show', 'chatListModal')">
+                        <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
+                    </a>
+                    <span v-if="customerMode" id="otherNickname">{{presentStu.stuName | showLimitedContent}}</span>
+                    <span v-else id="otherNickname">{{presentCust.custName | showLimitedContent}}</span>
+                    <img v-if="customerMode" id="otherProfile" class="profile" :src="presentStu.comLogo" @click="showBiggerImg($event)">
+                    <img v-else id="otherProfile" class="profile" :src="presentCust.custLogo" @click="showBiggerImg($event)">
                 </div>
-            </div>
-            <div id="chatListContent" style="padding-top:55px;">
-                <p v-for="(recent, index) in recentChat" :key="index">
-                    <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
-                    <span id="userName" @click="getChatByUser($event)">
-                        {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
-                        <span style="display:none;">{{recent.stuId}}</span>
-                        <span style="display:none;">{{recent.custId}}</span>
-                    </span>
-                </p>
-            </div>
-        </section>
-    </div>
-    <!-- 고객 채팅 끝 -->
-
-    <!-- 기업 채팅 시작 -->
-    <div v-else>
-        <!-- Header : 채팅하는 대상 -->
-        <header>
-            <div id="chatHeader">
-                <a href="javascript:;" @click="controlModal('show', 'chatListModal')">
-                    <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
-                </a>
-                <span id="otherNickname">{{presentCust.custName | showLimitedContent}}</span>
-                <img id="otherProfile" class="profile" :src="presentCust.custLogo">
-            </div>
-            <div id="chatListHeader">
-                <a href="javascript:;" @click="controlModal('hide', 'chatListModal')">
-                    <img id="back" :src="defaultImg.back" @mouseover="controlListImg('mouseover', 'back')" @mouseout="controlListImg('mouseout', 'back')">
-                </a>
-                <span id="myNickname">{{company.name | showLimitedContent}}</span>
-                <img id="myProfile" class="profile" :src="company.logoImg">
-            </div>
-        </header>
-
-        <!-- 채팅 본문 : 대화 내용 -->
-        <div id="chat-wrapper" class='chat-wrapper'>
-            <div id="stuModeChat" class='chat-message padding'>
-                <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
-
-                    <!-- 상대방 -->
-                    <div class='chat-message chat-message-recipient' v-if="prev.sender == 0">
-                        <img class='chat-image chat-image-default profile' :src='presentCust.custLogo' />
-                        <div class='chat-message-wrapper'>
-                            <div class='chat-message-content'>
-                                <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
-                                <p class="other" v-else>{{prev.filePath}}</p>
-                            </div><!-- chat-message-content -->
-                            <div class='chat-details'>
-                                <span class='chat-message-localization font-size-small stu-time'>{{prev.dateTime | showUntilMin}}</span>
-                                <span style="display: none;">{{index}}</span>
-                                <span class='chat-message-read-status font-size-small'>- Read</span>
-                            </div><!-- chat-details -->
-                        </div><!-- chat-message-wrapper -->
-                    </div><!-- chat-message-recipient -->
-
-                    <!-- 나 -->
-                    <div class='chat-message chat-message-sender' v-else>
-                        <img class='chat-image chat-image-default profile' :src='company.logoImg' />
-                        <div class='chat-message-wrapper'>
-                            <div class='chat-message-content'>
-                                <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
-                                <p class="me" v-else>{{prev.filePath}}</p>
-                            </div><!-- chat-message-content -->
-                            <div class='chat-details'>
-                                <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>
-                                <span style="display: none;">{{index}}</span>
-                                <span class='chat-message-read-status font-size-small'>- Read</span>
-                            </div><!-- chat-details -->
-                        </div><!-- chat-message-wrapper -->
-                    </div><!-- chat-message-sender -->
-
-              </div><!-- prevChatList -->
-            </div><!-- padding -->
-        </div><!-- chat-wrapper -->
-
-        <!-- Modal : 채팅 목록 -->
-        <section id="chatListModal">
-            <div id="studioList">
-                <select id="studioSelect" @change="changeStudio($event)">
-                    <option>스튜디오 전체</option>
-                    <option v-for="(recent, index) in recentChatNoRepeat" :key="index">
-                        {{recent.stuName}}
-                        <input type="hidden" :value="recent.stuId">
-                    </option>
-                </select>
-                <div id="studioSearch">
-                    <input type="text" id="searchCustName" placeholder="고객 검색" class="inputArea" @keyup="searchRecentChatByName('com')">
-                    <img id="search" :src="defaultImg.search" 
-                    width="20px" height="20px" 
-                    @mouseover="controlListImg('mouseover', 'search')" 
-                    @mouseout="controlListImg('mouseout', 'search')"
-                    @click="searchRecentChatByName('com')">
+                <div id="chatListHeader">
+                    <a href="javascript:;" @click="controlModal('hide', 'chatListModal')">
+                        <img id="back" :src="defaultImg.back" @mouseover="controlListImg('mouseover', 'back')" @mouseout="controlListImg('mouseout', 'back')">
+                    </a>
+                    <span v-if="customerMode" id="myNickname">{{customer.nickname | showLimitedContent}}</span>
+                    <span v-else id="myNickname">{{company.name | showLimitedContent}}</span>
+                    <img v-if="customerMode" id="myProfile" class="profile" :src="customer.imgSrc" @click="showBiggerImg($event)">
+                    <img v-else id="myProfile" class="profile" :src="company.logoImg" @click="showBiggerImg($event)">
                 </div>
-            </div>
-            <div id="chatListContent">
-                <p v-for="(recent, index) in recentChat" :key="index">
-                    <img class="profile" src="http://localhost:7777/upload/default/user.png" @click="showBiggerImg($event)">
-                    <span id="userName" @click="getChatByUser($event)">
-                        {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
-                        <span style="display:none;">{{recent.stuId}}</span>
-                        <span style="display:none;">{{recent.custId}}</span>
-                    </span>
-                </p>
-            </div>
-        </section>
-    </div>
-    <!-- 기업 채팅 끝 -->
+            </header>
 
+            <!-- 채팅 본문 : 대화 내용 -->
+            <div id="chat-wrapper" class='chat-wrapper'>
+                <div class='chat-message padding'>
+
+                    <!-- 이전 채팅 불러오기 -->
+                    <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
+
+                        <!-- 고객 이전 채팅 불러오기 -->
+                        <!-- 상대방 -->
+                        <div class='chat-message chat-message-recipient' v-if="customerMode && prev.sender == 1">
+                            <img class='chat-image chat-image-default profile' :src='presentStu.comLogo' @click="showBiggerImg($event)" />
+                            <div class='chat-message-wrapper'>
+                                <div class='chat-message-content'>
+                                    <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p class="other" v-else>{{prev.filePath}}</p>
+                                </div><!-- chat-message-content -->
+                                <div class='chat-details'>
+                                    <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
+                                    <span style="display: none;">{{index}}</span>
+                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                </div><!-- chat-details -->
+                            </div><!-- chat-message-wrapper -->
+                        </div><!-- chat-message-recipient -->
+                        <!-- 나 -->
+                        <div class='chat-message chat-message-sender' v-if="customerMode && prev.sender == 0">
+                            <img class='chat-image chat-image-default profile' :src='customer.imgSrc' @click="showBiggerImg($event)" />
+                            <div class='chat-message-wrapper'>
+                                <div class='chat-message-content'>
+                                    <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p class="me" v-else>{{prev.filePath}}</p>
+                                </div><!-- chat-message-content -->
+                                <div class='chat-details'>
+                                    <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
+                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                </div><!-- chat-details -->
+                            </div><!-- chat-message-wrapper -->
+                        </div><!-- chat-message-sender -->
+
+
+                        <!-- 기업 이전 채팅 불러오기 -->
+                        <!-- 상대방 -->
+                        <div class='chat-message chat-message-recipient'  v-if="!customerMode && prev.sender == 0">
+                            <img class='chat-image chat-image-default profile' :src='presentCust.custLogo' @click="showBiggerImg($event)" />
+                            <div class='chat-message-wrapper'>
+                                <div class='chat-message-content'>
+                                    <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p class="other" v-else>{{prev.filePath}}</p>
+                                </div><!-- chat-message-content -->
+                                <div class='chat-details'>
+                                    <span class='chat-message-localization font-size-small stu-time'>{{prev.dateTime | showUntilMin}}</span>
+                                    <span style="display: none;">{{index}}</span>
+                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                </div><!-- chat-details -->
+                            </div><!-- chat-message-wrapper -->
+                        </div><!-- chat-message-recipient -->
+                        <!-- 나 -->
+                        <div class='chat-message chat-message-sender'  v-if="!customerMode && prev.sender == 1">
+                            <img class='chat-image chat-image-default profile' :src='company.logoImg' @click="showBiggerImg($event)" />
+                            <div class='chat-message-wrapper'>
+                                <div class='chat-message-content'>
+                                    <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p class="me" v-else>{{prev.filePath}}</p>
+                                </div><!-- chat-message-content -->
+                                <div class='chat-details'>
+                                    <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>
+                                    <span style="display: none;">{{index}}</span>
+                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                </div><!-- chat-details -->
+                            </div><!-- chat-message-wrapper -->
+                        </div><!-- chat-message-sender -->
+
+                    </div><!-- prevChatList -->
+                </div><!-- padding -->
+            </div><!-- chat-wrapper -->
+
+            <!-- Modal : 고객 채팅 목록 -->
+            <section id="chatListModal" v-if="customerMode">
+                <div id="studioList" style="height:60px;">
+                    <div id="studioSearch">
+                        <input type="text" id="searchStuName" placeholder="스튜디오 검색" class="inputArea" @keyup="searchRecentChatByName('cust')">
+                        <img id="search" :src="defaultImg.search" 
+                        width="20px" height="20px" 
+                        @mouseover="controlListImg('mouseover', 'search')" 
+                        @mouseout="controlListImg('mouseout', 'search')"
+                        @click="searchRecentChatByName('cust')">
+                    </div>
+                </div>
+                <div id="chatListContent" style="padding-top:55px;">
+                    <p v-for="(recent, index) in recentChat" :key="index">
+                        <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
+                        <span id="userName" @click="getChatByUser($event)">
+                            {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
+                            <span style="display:none;">{{recent.stuId}}</span>
+                            <span style="display:none;">{{recent.custId}}</span>
+                        </span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Modal : 기업 채팅 목록 -->
+            <section id="chatListModal" v-else>
+                <div id="studioList">
+                    <select id="studioSelect" @change="changeStudio($event)">
+                        <option>스튜디오 전체</option>
+                        <option v-for="(recent, index) in recentChatNoRepeat" :key="index">
+                            {{recent.stuName}}
+                            <input type="hidden" :value="recent.stuId">
+                        </option>
+                    </select>
+                    <div id="studioSearch">
+                        <input type="text" id="searchCustName" placeholder="고객 검색" class="inputArea" @keyup="searchRecentChatByName('com')">
+                        <img id="search" :src="defaultImg.search" 
+                        width="20px" height="20px" 
+                        @mouseover="controlListImg('mouseover', 'search')" 
+                        @mouseout="controlListImg('mouseout', 'search')"
+                        @click="searchRecentChatByName('com')">
+                    </div>
+                </div>
+                <div id="chatListContent">
+                    <p v-for="(recent, index) in recentChat" :key="index">
+                        <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
+                        <span id="userName" @click="getChatByUser($event)">
+                            {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
+                            <span style="display:none;">{{recent.stuId}}</span>
+                            <span style="display:none;">{{recent.custId}}</span>
+                        </span>
+                    </p>
+                </div>
+            </section>
+        </div>
+    
         <!-- Modal : 파일 업로드 -->
         <section id="uploadModal">
             <div id="uploadContent">
                 <div id="closeUpload" @click="controlModal('hide', 'uploadModal')">&times;</div><br/><br/>
                 <p style="font-size:18px;">파일 첨부</p>
                 <input type="file" id="chatFileUpload" style="display:none;"><br/>
-                <input type="text" id="chatFileName" class="inputArea" disabled>
+                <input type="text" v-model="chat.filePath" id="chatFileName" class="inputArea" disabled>
                 <button id="uploadBtn" class="btn" onclick="document.getElementById('chatFileUpload').click()">찾기</button>
                 <button id="removeBtn" class="btn">삭제</button><br/>
-                <button id="sendBtn" class="btn">전송</button>
+                <button id="sendBtn" class="btn" @click="sendChat('file')">전송</button>
             </div>
         </section>
 
@@ -214,10 +188,10 @@
               </a>
             </span>
             <span>
-                <input type="text" id="word" class="inputArea" name="word">
+                <input type="text" v-model="chat.word" id="word" class="inputArea" name="word" @keyup.enter="sendChat('word')">
             </span>
             <span>
-                <a href="javascript:;" @click="sendMsg">
+                <a href="javascript:;" @click="sendChat('word')">
                   <img :src="defaultImg.send" width="30px" height="30px">
                 </a>
             </span>

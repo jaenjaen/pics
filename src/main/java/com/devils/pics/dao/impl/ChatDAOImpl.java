@@ -16,10 +16,20 @@ public class ChatDAOImpl implements ChatDAO {
 	@Autowired
 	private SqlSession sqlSession;
 	private final String ns = "ChatMapper.";
+	
+	/* 채팅 추가하기 */
+	public int addChat(Chat chat) throws Exception {
+		return sqlSession.insert(ns+"addChat", chat);
+	}
 
 	/* 해당되는 스튜디오, 고객의 대화를 가져옴 */
 	public List<Chat> getPrevAllChat(Map map) throws Exception{
 		return sqlSession.selectList(ns+"getPrevAllChat", map);
+	}
+	
+	/* 해당 스튜디오, 고객의 가장 최근 채팅 가져오기  */
+	public Chat getMostRecentChat(Map map) throws Exception {
+		return sqlSession.selectOne(ns+"getMostRecentChat", map);
 	}
 	
 	/* 업체의 스튜디오 및 고객별 최근 수신 대화  */

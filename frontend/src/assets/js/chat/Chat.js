@@ -26,8 +26,10 @@ export default {
                 custId: '',
                 stuId: '',
                 word: '',
+                filePath: '',
                 dateTime: '',
-                sender: '' //보내는 사람이 개인이면 0, 기업이면 1
+                sender: '', //보내는 사람이 개인이면 0, 기업이면 1
+                readCheck: '' //읽었으면 1, 읽지 않았으면 0
             },
             customer: {
                 custId: '',
@@ -53,20 +55,19 @@ export default {
             presentCust: {},
 
             /* 고객/기업모드 여부 */
-            cutomerMode: '',
+            customerMode: '',
+
+            /* 채팅 모드 */
+            chatMode: true,
 
             sender: "",
             word: "",
-            recvChatList: [],
         }
     },
 
     created() {
-        /* vue가 생성되면 소켓 연결 시도 */
-        this.connect();
-
         if (customer != null) { //개인고객으로 로그인했을 경우
-            this.cutomerMode = true; //고객모드 ON
+            this.customerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
             console.log(this.customer);
             this.chat.custId = this.customer.custId; //세션에서 custId를 chat에 바인딩
@@ -74,7 +75,7 @@ export default {
             this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
 
         } else if (company != null) { //기업고객으로 로그인했을 경우
-            this.cutomerMode = false; //고객모드 OFF
+            this.customerMode = false; //고객모드 OFF
             this.company = company; //세션에 있는 업체 정보를 company 데이터에 바인딩
             console.log(this.company);
 
@@ -300,6 +301,8 @@ export default {
                         console.log('이전 대화 가져오기 성공');
                         this.prevAllChat = response.data;
                         console.log(this.prevAllChat);
+
+                        this.connect(); //소켓 연결
                     } else if (response.data == -1) {
                         this.prevAllChat = [];
                     }
@@ -326,7 +329,7 @@ export default {
                         console.log('구독으로 받은 메시지 : ', response.body);
 
                         // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                        this.recvChatList.push(JSON.parse(response.body))
+                        this.prevAllChat.push(JSON.parse(response.body))
                     });
                 },
                 /* 연결 실패 */
@@ -338,23 +341,28 @@ export default {
         },
 
         /* 보낼 메시지 처리 */
-        sendMessage(e) {
-            if (e.keyCode === 13 && this.sender !== '' && this.word !== '') {
-                //13은 아스키코드 중에서 엔터를 나타냄
-                this.send(); //보냄
-                this.word = '' //보내고 나서 입력 리셋
+        sendChat(cmd) {
+            if (this.chat.stuId !== '' && this.chat.custId !== '') {
+                if (this.chat.word !== '' || this.chat.filePath !== '') {
+                    this.send(); //보냄
+                    this.chat.word = '' //보내고 나서 입력 리셋
+                    this.chat.filePath = ''
+                } else if (cmd == 'word' && this.chat.word == '') {
+                    alert("내용을 입력하세요");
+                    return;
+                } else if (cmd == 'file' && this.chat.filePath == '') {
+                    alert("파일을 첨부하세요");
+                }
             }
         },
 
         /* 메시지 전송 */
         send() {
-            console.log("Send Word:" + this.word);
+            console.log("보내는 메세지:" + this.chat.word);
+            console.log("보내는 파일:" + this.chat.filePath);
             if (this.stompClient && this.stompClient.connected) {
-                const msg = {
-                    sender: this.sender,
-                    word: this.word
-                };
-                this.stompClient.send("/webSocket/receive", JSON.stringify(msg), {});
+                const msg = this.chat;
+                this.stompClient.send("/receive", JSON.stringify(msg), {});
             }
         },
 
@@ -453,10 +461,6 @@ export default {
             let imgSrc = event.target.src;
             document.getElementById('biggerProfile').setAttribute('src', imgSrc);
             this.controlModal('show', 'expandImgModal');
-        },
-        sendMsg() {
-            alert("메세지전송");
-            this.setChat(this.chat.stuId, this.chat.custId); //stuId, chatId 바인딩됨
         }
     },
 }

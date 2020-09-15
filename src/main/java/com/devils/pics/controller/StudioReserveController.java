@@ -174,13 +174,10 @@ public class StudioReserveController {
 	}
 	
 	//9. 마이페이지용 exception date / reservation Date 넘기기 (weekStart / weekEnd)
-	@GetMapping("/company/schedule/{stuId}/{weekStart}/{weekEnd}")
-	public ResponseEntity getSchedule(@PathVariable int stuId, @PathVariable String weekStart, @PathVariable String weekEnd) {
+	@GetMapping("/company/schedule/{stuId}")
+	public ResponseEntity getCompanySchedules(@PathVariable int stuId) {
 		Schedule schedule = new Schedule();
 		schedule.setStuId(stuId);
-		schedule.setWeekStart(weekStart);
-		schedule.setWeekEnd(weekEnd);
-		
 		try{
 			schedule = studioReserveService.getSchedule(schedule);
 			return new ResponseEntity(schedule,HttpStatus.OK);

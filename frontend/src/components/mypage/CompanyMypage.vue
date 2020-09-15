@@ -26,6 +26,28 @@
         </select>
 
       </div>
+
+      <!-- Custom Creation Popup -->
+       <modal name="creationModal" :height="200" :width="300" :styles="styles">
+         <div class="popup">
+          <h3> 예약이름(무조건 예외날만 추가)</h3>
+          <h3> 날짜데이터피커1  |  날짜 데이터피커2 | 올데이</h3>
+          <button>저장</button>
+          <button id="delete" v-if="calendarId">삭제</button>
+        </div>
+      </modal>
+
+      <!-- Custom Detail Popup -->
+       <modal name="detailModal" :height="200" :width="300" :styles="styles">
+         <div class="popup">
+          <h3>{{userName}} 님</h3>
+          <h4 v-html="reservationDate"></h4>
+          <h4><canvas width="20" height="20"></canvas>{{reservationCategory}}</h4>
+          <button>수정</button>
+        </div>
+      </modal>
+
+      <!-- Calendar -->
       <calendar ref="studioCalendar"
         style="height:450px;"
         :calendars="calendarList"
@@ -33,8 +55,10 @@
         :taskView="false"
         :disableDblClick="true"
         :isReadOnly="false"
-        :useCreationPopup="true"
-        :useDetailPopup="true"
+        :useCreationPopup="false"
+        :useDetailPopup="false"
+        @beforeCreateSchedule="onBeforeCreateSchedule"
+        @clickSchedule="onClickSchedule"
       /> 
     </div>
     <MypageGap categoryName="스튜디오 관리 +" cateogryURL="http://localhost:9999/registerStudio"/>
@@ -64,7 +88,4 @@
 
 <script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
-
 <style scoped src="@/assets/css/mypage/calendar.css"></style>
-
-

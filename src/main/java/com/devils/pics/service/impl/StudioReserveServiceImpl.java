@@ -20,6 +20,7 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	@Override
 	public ArrayList<ExceptionDate> getExceptionDate(Schedule schedule) {
 		return studioReserveDAO.getExceptionDate(schedule);
+
 	}
 
 	@Override

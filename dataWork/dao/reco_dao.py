@@ -3,7 +3,6 @@
 
 # In[3]:
 
-
 import pymysql
 import pandas as pd
 
@@ -109,5 +108,4 @@ def get_cfsource() :
 #     db.commit()
 #     db.close()
 #     res_id += 1
-
 

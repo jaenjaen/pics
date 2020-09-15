@@ -48,7 +48,10 @@ export default {
             this.setFilter()
         }
         //로그인 세션 정보 받기
-        this.login()
+        if (sessionStorage.getItem('customer')) {
+            let customer = JSON.parse(sessionStorage.getItem('customer'));
+            this.filters.session = customer.custId;
+        }
     },
     methods: {
         // 카테고리 설정 메소드

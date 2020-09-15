@@ -33,7 +33,4 @@ public class StudioServiceImpl implements StudioService{
 	public int deleteStudio(int stuId) throws Exception {
 		return studioDao.deleteStudio(stuId);
 	}
-
-	
-
 }

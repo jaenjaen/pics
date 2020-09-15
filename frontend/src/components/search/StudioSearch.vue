@@ -13,9 +13,6 @@
         />
       </span>
     </div>
-    <!-- <router-link to="/customerlogin">로그인하기</router-link> -->
-    <a @click.prevent="login">로그인하기</a>
-    <a @click.prevent="logout">로그아웃하기</a>
     <a @click.prevent="test">Flask Test</a>
     <!-- 필터 부분 -->
     <div class="row" id="filter">

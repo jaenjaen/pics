@@ -8,11 +8,20 @@ export default {
     },
     data() {
         return {
-            studio_infos: [],
+            studio_infos: [{
+                address: "",
+                category_name: "",
+                name: "",
+                stu_id: 0,
+                unit_price: 0,
+                main_img: ""
+            }],
+            customer: {},
+            canReco: false,
             num: 4
         };
     },
-    mounted() {
+    async mounted() {
         window.addEventListener('resize', this.handleResize);
         let check_width = window.matchMedia("only screen and (max-width: 768px)");
         if (check_width.matches) {
@@ -20,15 +29,34 @@ export default {
         } else {
             this.num = 4;
         }
-        axios
-            .get("http://localhost:7777/studio/popular")
-            .then(response => (this.studio_infos = response.data))
-            .catch(error => {
-                console.log(error);
-                this.errored = true;
-            })
-            .finally(() => (this.loading = false));
-
+        if (sessionStorage.getItem('customer')) {
+            this.customer = JSON.parse(sessionStorage.getItem('customer'));
+            axios
+                .get("http://localhost:5000/recommend/" + this.customer.custId)
+                .then(response => {
+                    if (response.data.status) {
+                        this.studio_infos = response.data.studios;
+                        this.canReco = true;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => (this.loading = false));
+        }
+        if (!this.canReco) {
+            axios
+                .get("http://localhost:5000/recommend")
+                .then(response => {
+                    this.studio_infos = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => (this.loading = false));
+        }
     },
     beforeDestroy() {
         window.removeEventListener('resize', this.handleResize);

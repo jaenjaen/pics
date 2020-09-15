@@ -72,5 +72,4 @@
 	DELTE FROM studio
 	WHERE stu_id = #{value}
 	</delete>
-	
  </mapper> 

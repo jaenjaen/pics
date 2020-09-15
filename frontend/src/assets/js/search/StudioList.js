@@ -75,6 +75,7 @@ export default {
         // 검색 메소드(전체 & 필터)
         infiniteHandler() {
             this.loading = true;
+            this.isDone = true;
             axios
                 .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
                 .then(response => {

@@ -1,39 +1,143 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[5]:
 
 
 import pymysql
 import pandas as pd
 
 
-# In[ ]:
+# In[82]:
 
 
 #DB 접근
 def get_cfsource() :
     db= pymysql.connect(host='pics.crvbvpzlygpt.ap-northeast-2.rds.amazonaws.com',
-                         port=3306,
-                         user='pics',
-                         passwd='picspics!1',
-                         db='pics',
-                         charset='utf8',
-                       cursorclass=pymysql.cursors.DictCursor)
-    cursor= db.cursor()
-    sql = "SELECT cust_id, stu_id, score "
-    sql += "FROM review"
+                             port=3306,
+                             user='pics',
+                             passwd='picspics!1',
+                             db='pics',
+                             charset='utf8',
+                           cursorclass=pymysql.cursors.DictCursor)
+    try :
+        cursor= db.cursor()
+        sql = "SELECT cust_id, stu_id, score "
+        sql += "FROM review"
 
-    cursor.execute(sql)
-    db.commit()
+        cursor.execute(sql)
+        db.commit()
 
-    result = cursor.fetchall()
-    db.close()
-    df = pd.DataFrame(result)
-    return df
+        result = cursor.fetchall()
+        df = pd.DataFrame(result)
+        return df
+    finally :
+        db.close()
 
 
-# In[4]:
+# In[83]:
+
+
+# 메인 추천 업체 가져오기
+def get_reco_studio(studio_list) :
+    result_list = []
+    db= pymysql.connect(host='pics.crvbvpzlygpt.ap-northeast-2.rds.amazonaws.com',
+                                 port=3306,
+                                 user='pics',
+                                 passwd='picspics!1',
+                                 db='pics',
+                                 charset='utf8',
+                               cursorclass=pymysql.cursors.DictCursor)
+    try :
+        for stu_id in studio_list :
+            
+            cursor= db.cursor()
+            sql = "SELECT s.stu_id, s.name, s.main_img, c.category_name, f.address, f.unit_price "
+            sql += "FROM studio s "
+            sql += "JOIN studio_filter f "
+            sql += "ON s.stu_id = f.stu_id "
+            sql += "JOIN studio_category c "
+            sql += "ON s.category_id = c.category_id "
+            sql += "WHERE s.stu_id = "+str(stu_id)
+            
+            cursor.execute(sql)
+            db.commit()
+
+            result = cursor.fetchall()
+            result_list.append(result[0])
+        return result_list
+    finally:
+        db.close()
+
+
+# In[11]:
+
+
+# 메인 추천 업체 가져오기
+def get_ranked_studio() :
+    db= pymysql.connect(host='pics.crvbvpzlygpt.ap-northeast-2.rds.amazonaws.com',
+                                 port=3306,
+                                 user='pics',
+                                 passwd='picspics!1',
+                                 db='pics',
+                                 charset='utf8',
+                               cursorclass=pymysql.cursors.DictCursor)
+    try :
+        cursor= db.cursor()
+        sql = "SELECT s.stu_id, s.name, c.category_name, f.address, f.unit_price, s.main_img "
+        sql += "FROM studio s "
+        sql += "JOIN studio_filter f "
+        sql += "ON s.stu_id = f.stu_id "
+        sql += "JOIN studio_category c "
+        sql += "ON s.category_id = c.category_id "
+        sql += "LEFT OUTER JOIN "
+        sql += "(SELECT stu_id, COUNT(stu_id) count FROM reservation WHERE res_date > SUBDATE(NOW(), INTERVAL 1 MONTH) GROUP BY stu_id) res "
+        sql += "ON s.stu_id = res.stu_id "
+        sql += "order by res.count desc " 
+        sql += "limit 8"
+
+        cursor.execute(sql)
+        db.commit()
+
+        result = cursor.fetchall()
+        return result
+    finally:
+        db.close()
+
+
+# In[1]:
+
+
+
+
+# stu_id = 1156
+
+# for i in range(20) : 
+#     try :
+#         sql = ""
+#         db= pymysql.connect(host='pics.crvbvpzlygpt.ap-northeast-2.rds.amazonaws.com',
+#                              port=3306,
+#                              user='pics',
+#                              passwd='picspics!1',
+#                              db='pics',
+#                              charset='utf8',
+#                            cursorclass=pymysql.cursors.DictCursor)
+#         cursor= db.cursor()
+#         sql = "UPDATE studio "
+#         sql += "set name = '"+name_list[random.randrange(0,166)]+"' "
+#         sql += "WHERE stu_id ="+str(stu_id)
+
+#         cursor.execute(sql)
+#         db.commit()
+#         stu_id += 1
+#         db.close()
+#     except :
+#         print(error)
+#     finally :
+#         db.close()
+
+
+# In[ ]:
 
 
 # data = pd.read_excel('review.xlsx', enconding='utf-8')
@@ -51,7 +155,7 @@ def get_cfsource() :
 # ratings
 
 
-# In[13]:
+# In[ ]:
 
 
 # from itertools import product
@@ -78,7 +182,7 @@ def get_cfsource() :
 #     db.close()
 
 
-# In[6]:
+# In[ ]:
 
 
 # from itertools import product
@@ -109,5 +213,4 @@ def get_cfsource() :
 #     db.commit()
 #     db.close()
 #     res_id += 1
-
 

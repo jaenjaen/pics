@@ -17,18 +17,18 @@
       >
         <a href v-for="(studio,index) in studio_infos" :key="index">
           <div class="row">
-            <div class="card" @click.prevent="moveToComInfo(studio.stuId)">
+            <div class="card" @click.prevent="moveToComInfo(studio.stu_id)">
               <div class="card-image">
-                <img :src="getImgUrl(studio.mainImg)" />
+                <img :src="getImgUrl(studio.main_img)" />
               </div>
               <div class="card-content">
                 <div class="name">{{studio.name}}</div>
                 <div class="category">
-                  {{ studio.category.categoryName }}/
-                  {{studio.studioFilter.address | category}}
+                  {{ studio.category_name }}/
+                  {{studio.address | category}}
                 </div>
                 <div class="price">
-                  {{ studio.studioFilter.unitPrice | currency }}
+                  {{ studio.unit_price | currency }}
                   <span>원/시간</span>
                 </div>
               </div>

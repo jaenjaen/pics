@@ -32,5 +32,9 @@ public class StudioTest {
 //		Studio s = sqlSession.selectOne(ns+"getStudio",1154);
 //		System.out.println(s);
 		
+//		스튜디오 인기순
+		List<Studio> list = sqlSession.selectList(ns+"getStudioByRank");
+		for(Studio s : list) System.out.println(s);
+		
 	}
 }

@@ -1,107 +1,53 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 # 외부 모듈
 import pandas as pd
-# 사용자 모듈 불러오기
-import sys
-sys.path.append('..')
-from dao import reco_dao
-def recommend():
-    # DB에서 불러온 source 받기
-    df = reco_dao.get_cfsource()
-    return df.iat[2,1] # 서버에서 받는지 확인용.... df가 진짜 리턴값
-
-
-# In[1]:
-
-
-import pandas as pd
 import numpy as np
-
 import sys
 sys.path.append('..')
-from model.reco_model import *
+from dao.reco_dao import get_reco_studio, get_ranked_studio
+
+def get_reco_studios(cust_id, path):
+    result = {'status':True, 'studios':[]}
+    # 예측점수 테이블 가져오기
+    df = pd.read_csv(path+'/resources/sim_table/sim_table.csv', encoding='utf-8', index_col = 0)
+    # pivot회
+    ratings_predicted = df.pivot_table(index= 'userId', columns='itemId', values='rate')
+    # 리뷰했는지 확인
+    if cust_id in ratings_predicted.index :
+        pass
+    else :
+        result['status'] = False
+        return result
+    # userId 받고 해당 사람에게 8개 stuId 추출
+    studio_list = ratings_predicted.loc[cust_id].sort_values(ascending=False)[:8].index
+    # 해당 아이디에 맞는 studio 정보 받고 보내기
+    studios = get_reco_studio(studio_list)
+    # 대표 사진 하나만 가지고 갈 수 있도록
+    for studio in studios:
+        studio['main_img'] = studio.get('main_img').split(',')[0]
+    result['studios']=studios
+    return result
 
 
-# In[2]:
+# In[7]:
 
 
-
-
-data = pd.read_excel('review.xlsx', enconding='utf-8')
-data.rename({'studio_name':'stu_id'}, axis='columns', inplace=True)
-data[data.duplicated(['stu_id','cust_id'])]
-data.drop_duplicates(['stu_id','cust_id'], inplace=True)
-data.score = round(data.score,0)
-
-
-# In[3]:
-
-
-
-ratings = data.pivot_table(index='cust_id', columns='stu_id', values='score')
-index_list = [i+1 for i in range(len(ratings.index))]
-ratings.index = index_list
-ratings.columns = index_list
-ratings.index.name = 'cust_id'
-ratings.columns.name = 'stu_id'
-ratings.head()
-# ratings.isnull().sum().sum()
-
-
-# In[4]:
-
-
-ratings_i=injection(ratings, 0.2)
-
-
-# In[ ]:
-
-
-ratings
+def get_ranked_studios():
+    studios = get_ranked_studio()
+    for studio in studios:
+        studio['main_img'] = studio.get('main_img').split(',')[0]
+    return studios
 
 
 # In[ ]:
 
 
-table=get_cossine_similarity_table(ratings_i)
-ratings_p = pred_scores(ratings_i, table)
-
-
-# In[ ]:
-
-
-ratings_p.iloc[6:15]
-
-
-# In[ ]:
-
-
-ratings_i.iloc[6:15]
-
-
-# In[ ]:
-
-
-
-# from itertools import product
-# import surprise
-# from surprise.model_selection import cross_validate
-# data = pd.read_excel("test_reco2.xlsx", encoding='utf-8')
-# data = surprise.Dataset.load_builtin('ml-100k')
-# df = pd.DataFrame(data.raw_ratings, columns=["user", "item", "rate", "id"])
-# ratings = df.pivot_table(index='user', columns='item', values='rate')
-# ratings_s = ratings.iloc[:20,:40]
-
-
-# In[ ]:
-
-
-get_ipython().system('jupyter nbconvert --to script reco_controller.ipynb ')
+# get_reco_studios(22, 'C:\kjy\pics\dataWork')
 
 
 # In[ ]:

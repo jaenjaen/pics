@@ -217,10 +217,6 @@
             box-shadow: none;
         }
         
-        .card.horizontal .card-image img {
-            width: 100% !important;
-        }
-        
         .btn-small {
             height: 32.4px;
             line-height: 32.4px;

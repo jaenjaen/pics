@@ -335,9 +335,9 @@
             #uploadModal {
                 display: none;
                 position: fixed;
-                z-index: 4;
-                padding-top: 200px;
-                padding-bottom: 80px;
+                z-index: 6;
+                padding-top: 70px;
+                padding-bottom: 70px;
                 left: 0;
                 top: 0;
                 width: 100%;
@@ -356,7 +356,7 @@
                 padding: 30px;
                 border: 1px solid #888;
                 width: 50%;
-                height: 80%;
+                height: 100%;
                 overflow: auto;
             }
             /* 파일 업로드 Modal 닫기 버튼 */
@@ -508,7 +508,6 @@
                 /* 업로드  모달 사이즈 및 위치 조정 */
                 #uploadContent {
                     width: 100%;
-                    margin-left: 25%;
                     padding-left: 10px;
                     padding-top: 10px;
                     padding-right: 0;

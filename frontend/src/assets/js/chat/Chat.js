@@ -301,11 +301,10 @@ export default {
                         console.log('이전 대화 가져오기 성공');
                         this.prevAllChat = response.data;
                         console.log(this.prevAllChat);
-
-                        this.connect(); //소켓 연결
                     } else if (response.data == -1) {
                         this.prevAllChat = [];
                     }
+                    this.connect(); //소켓 연결
                 })
                 .catch(() => {
                     console.log('이전 대화 가져오기 실패');

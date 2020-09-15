@@ -13,7 +13,7 @@ var session = JSON.parse(sessionStorage.getItem("company"));
 /* setting week*/
 moment.locale('ko'); //set Korean Time
 
-/* calendar tag */
+/* calendar tag DONT FIXING IT*/
 let calendarList = [{
         id: '0',
         name: 'Pics예약',
@@ -31,8 +31,6 @@ let calendarList = [{
         borderColor: '#757575'
     }
 ]
-
-var scheduleList = []
 
 export default {
     name: "CompanyMypage",
@@ -56,7 +54,11 @@ export default {
 
             /*Calendar index*/
             calendarList,
-            scheduleList,
+            scheduleList: [],
+
+            /* for modal */
+            styles: "border-left: 10px solid #00a9ff",
+            calendarId: "1",
         };
     },
     mounted() {
@@ -74,7 +76,7 @@ export default {
             //초기화 안하면 쌓임
             this.scheduleList = [];
 
-            Axios.get("http://localhost:7777/company/schedule/" + this.selectedId + "/" + this.startWeek + "/" + this.endWeek)
+            Axios.get("http://localhost:7777/company/schedule/" + this.selectedId)
                 .then(res => {
                     // console.log(res.data);
                     var data = res.data;
@@ -84,26 +86,26 @@ export default {
                         this.scheduleList.push({
                             id: data.exceptionDate[i].exceptionId,
                             calendarId: '1',
-                            title: 'test' + i,
+                            title: data.exceptionDate[i].exceptionTitle,
                             category: 'time',
                             dueDateClass: '',
                             start: Date.parse(data.exceptionDate[i].startDate),
                             end: Date.parse(data.exceptionDate[i].endDate)
                         });
+                    }
 
-                        /* Reservation Setting */
-                        for (var j = 0; j < data.reservation.length; j++) {
-                            console.log(j);
-                            this.scheduleList.push({
-                                id: data.reservation[j].resId,
-                                calendarId: '0',
-                                title: data.reservation[j].custId + " ",
-                                category: 'time',
-                                dueDateClass: '',
-                                start: Date.parse(data.reservation[j].startDate),
-                                end: Date.parse(data.reservation[j].endDate)
-                            });
-                        }
+                    /* Reservation Setting */
+                    for (var j = 0; j < data.reservation.length; j++) {
+                        this.scheduleList.push({
+                            id: data.reservation[j].resId,
+                            calendarId: '0',
+                            title: data.reservation[j].customer.nickname,
+                            category: 'time',
+                            dueDateClass: '',
+                            start: Date.parse(data.reservation[j].startDate),
+                            end: Date.parse(data.reservation[j].endDate),
+                            body: data.reservation[j].custId,
+                        });
                     }
                 })
                 .catch(err => {
@@ -115,7 +117,7 @@ export default {
         prevWeek: function() {
             this.$refs.studioCalendar.invoke('prev');
             this.changeFormat(this.$refs.studioCalendar.invoke('getDateRangeStart'), this.$refs.studioCalendar.invoke('getDateRangeEnd'));
-            //alert(this.$refs.studioCalendar.invoke('getDate').toDate()); check date
+            //alert(this.$refs.studioCalendar.invoke('getDate').toDate()); check dateexception_title
         },
 
         /* 이번주로 */
@@ -136,5 +138,18 @@ export default {
             this.endWeek = moment(end.toUTCString()).format('L');
 
         },
+
+        /* Custom Creation Modal */
+        onBeforeCreateSchedule: function(e) {
+            this.$modal.show("creationModal");
+            console.log(e);
+
+        },
+
+        /*Custom Detail Modal */
+        onClickSchedule: function(e) {
+            this.$modal.show("detailModal");
+            console.log(e);
+        }
     }
 };

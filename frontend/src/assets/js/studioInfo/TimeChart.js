@@ -1,7 +1,5 @@
 import { Line } from "vue-chartjs";
 import axios from "axios";
-// import Vue from 'vue'
-// var eventBus = new Vue();
 
 export default {
     name: "TimeChart",

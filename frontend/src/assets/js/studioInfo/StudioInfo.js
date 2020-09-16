@@ -12,12 +12,12 @@ import 'vue-material/dist/theme/default.css'
 import "materialize-css"
 import Chat from "@/components/chat/Chat.vue"; //문의
 import Clipboard from 'v-clipboard'
-import OthserStudio from "@/components/studioInfo/OtherStudio"
+import OtherStudio from "@/components/studioInfo/OtherStudio"
 
 Vue.use(Clipboard)
 Vue.use(VueMaterial)
 Vue.use(VModal);
-// var eventBus = new Vue();
+
 export default {
     name: "studio-info",
     components: {
@@ -27,7 +27,7 @@ export default {
         DayChart,
         Map,
         Chat,
-        OthserStudio
+        OtherStudio
     },
     event: 'studios',
     data: function() {
@@ -92,7 +92,6 @@ export default {
     async mounted() { //async mount로 비동기 처리
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
-        console.log("this.stuId : " + this.stuId);
         axios
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
@@ -103,7 +102,6 @@ export default {
                     for (let i = 0; i < Object.keys(mainImgSplit).length; i++) {
                         this.mainImgList.push(mainImgSplit[i]);
                     }
-                    console.log("this.mainImgList : " + this.mainImgList);
                 } else {
                     this.mainImgList.push(this.studios[0].mainImg)
                 }
@@ -117,8 +115,6 @@ export default {
                 } else {
                     this.portImgList.push(this.studios[0].portImg)
                 }
-
-
             })
             .catch(error => {
                 console.log(error);
@@ -168,7 +164,6 @@ export default {
                     this.errored = true;
                 })
                 .finally(() => (this.loading = false));
-            console.log("this.isBooked : " + this.isBooked);
         }
     },
     filters: {

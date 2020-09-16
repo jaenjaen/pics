@@ -1,7 +1,6 @@
 import axios from "axios";
 import carousel from "vue-owl-carousel";
 
-
 export default {
     components: {
         carousel,

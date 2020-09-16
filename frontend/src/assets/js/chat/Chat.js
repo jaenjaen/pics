@@ -324,6 +324,9 @@ export default {
                         console.log('이전 대화 가져오기 성공');
                         this.prevAllChat = response.data;
                         console.log(this.prevAllChat);
+
+                        /* 채팅 모달의 스크롤을 최하단으로 내림 */
+                        this.$emit('moveScroll');
                     } else if (response.data == -1) {
                         this.prevAllChat = [];
                     }
@@ -397,9 +400,6 @@ export default {
                             //this.prevAllChat.push(JSON.parse(response.body))
 
                             this.getPrevAllChat();
-
-                            /* 채팅 모달의 스크롤을 최하단으로 내림 */
-                            this.$emit('moveScroll');
                         }
                     });
                 },
@@ -520,9 +520,6 @@ export default {
                 this.chat.filePath = '';
                 document.getElementById('chatFile').value = '';
                 document.getElementById('chatFileName').value = '';
-
-                /* 채팅 모달의 스크롤을 최하단으로 내림 */
-                this.$emit('moveScroll');
             }
         },
 
@@ -630,7 +627,6 @@ export default {
             this.chat.stuId = event.target.childNodes[1].innerHTML;
             this.chat.custId = event.target.childNodes[2].innerHTML;
             this.setChat(this.chat.stuId, this.chat.custId);
-            this.$emit('moveScroll'); //채팅 모달의 스크롤을 최하단으로 내림
             this.controlModal('disappear', 'chatListModal');
             /* 무조건 사라져야 하므로 hide 대신 disappear로 함.
              hide일 때 prevAllChat가 비어있으면 대화 영역을 볼 수 없음. */

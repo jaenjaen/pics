@@ -94,5 +94,26 @@ export default {
 
             return forSpace
         }
+    },
+    computed: {
+        wWidth() {
+            let wWidth = window.innerWidth;
+            if (wWidth < 768) {
+                return wWidth + 'px'
+
+            }
+        },
+        imgWidth() {
+            let wWidth = window.innerWidth;
+            if (wWidth < 768) {
+                return 300 + 'px'
+            }
+        },
+        imgHeight() {
+            let wWidth = window.innerWidth;
+            if (wWidth < 768) {
+                return 250 + 'px'
+            }
+        }
     }
 }

@@ -30,11 +30,11 @@
       <!-- Custom Creation Popup -->
        <modal name="creationModal" :height="230" :width="300" :styles="styles">
          <div class="popup">
-          <div class="creation_contents"><label>일정 제목: </label><input type="text" placeholder="예약 불가 일정 등록" v-model="title"><br></div>
-          <div class="creation_contents"><label>시작 날짜</label><input type="datetime-local" :min="now"><br></div>
-          <div class="creation_contents"><label>종료 날짜</label><input type="datetime-local" :min="now"><br></div>
-          <div class="creation_contents"><input type="checkbox"><label>Allday</label></div>
-          <div class="creation_contents"><button>저장</button></div>
+          <div class="creation_contents"><label>일정 제목: </label><input type="text" placeholder="예약 불가 일정 등록" v-model="ex_title"><br></div>
+          <div class="creation_contents"><label>시작 날짜</label><input type="datetime-local" :min="now" :value="start_date" @change="minuteControl"><br></div>
+          <div class="creation_contents"><label>종료 날짜</label><input type="datetime-local" :min="now" :value="end_date"><br></div>
+          <div class="creation_contents"><input type="checkbox" :checked="allday"><label>Allday</label></div>
+          <div class="creation_contents"><button @click="addExceptionDate">저장</button></div>
         </div>
       </modal>
 

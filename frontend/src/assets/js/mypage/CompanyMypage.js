@@ -1,6 +1,5 @@
 import 'tui-calendar/dist/tui-calendar.css';
 import { Calendar } from '@toast-ui/vue-calendar';
-import Datepicker from 'vuejs-datepicker';
 import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
 import Inquiry from "@/components/mypage/Inquiry.vue";
@@ -38,7 +37,6 @@ export default {
         Inquiry,
         'calendar': Calendar,
         moment,
-        Datepicker
     },
     data() {
         return {
@@ -65,9 +63,10 @@ export default {
 
             /*creation */
             now: moment(new Date()).format("YYYY-MM-DDThh:mm"),
-            title: "",
-            start_date: "",
-            end_date: "",
+            ex_title: "",
+            start_date: moment(new Date()).format("YYYY-MM-DDThh:mm"),
+            end_date: moment(new Date()).format("YYYY-MM-DDThh:mm"),
+            allday: false,
 
             /* Detail */
             userId: 0,
@@ -166,9 +165,28 @@ export default {
         onBeforeCreateSchedule: function(e) {
             this.$modal.show("creationModal");
             this.styles = "border-left: 10px solid #757575;";
-            console.log(this.now);
-            console.log(e);
+            this.start_date = moment((e.start).toDate()).format("YYYY-MM-DDTHH:mm");
+            this.end_date = moment((e.end).toDate()).format("YYYY-MM-DDTHH:mm");
+            this.minuteControl();
+            this.allday = e.isAllDay;
+        },
 
+        /*Creation Exception */
+        addExceptionDate: function() {
+            var schedule = {
+                startDate: this.start_date,
+                endDate: this.end_date,
+                stuId: this.selectedId,
+                exceptionTitle: this.ex_title,
+            };
+
+            Axios.post("http://localhost:7777/studio/exceptionDate", schedule)
+                .then(() => {
+                    this.$modal.hide("creationModal");
+                    location.reload();
+                }).catch(err => {
+                    console.log(err);
+                })
         },
 
         /*Custom Detail Modal */
@@ -205,9 +223,7 @@ export default {
                     resId: Number(e.schedule.id),
                     startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
                     endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
-                }).then(() => {
-                    console.log("수정완료");
-                }).catch(err => {
+                }).then(() => {}).catch(err => {
                     console.log(err);
                 })
             }
@@ -218,9 +234,7 @@ export default {
                     exceptionId: Number(e.schedule.id),
                     startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
                     endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
-                }).then(() => {
-                    console.log("수정완료");
-                }).catch(err => {
+                }).then(() => {}).catch(err => {
                     console.log(err);
                 })
             }
@@ -232,9 +246,7 @@ export default {
             /* delete reservation */
             if (this.calendarId == "0") {
                 Axios.delete("http://localhost:7777/studio/reservation/" + this.scheduleId)
-                    .then(() => {
-                        console.log("삭제 완.");
-                    }).catch(err => {
+                    .then(() => {}).catch(err => {
                         console.log(err);
                     })
             }
@@ -242,14 +254,22 @@ export default {
             /* delete Exception */
             else {
                 Axios.delete("http://localhost:7777/studio/exceptionDate/" + this.scheduleId)
-                    .then(() => {
-                        console.log("삭제 완.");
-                    }).catch(err => {
+                    .then(() => {}).catch(err => {
                         console.log(err);
                     })
             }
             this.$modal.hide("detailModal");
         },
+
+        /* minute control */
+        minuteControl: function() {
+            if (moment(this.start_date).minute() > 0 || moment(this.end_date).minute() > 0) {
+                this.start_date = moment(this.start_date).minute(0).format('YYYY-MM-DDTHH:mm');
+                this.end_date = moment(this.end_date).minute(0).format('YYYY-MM-DDTHH:mm');
+                alert("시간은 정각만 설정 가능합니다.");
+
+            }
+        }
     }
 
 };

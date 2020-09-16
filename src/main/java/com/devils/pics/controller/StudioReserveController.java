@@ -104,7 +104,8 @@ public class StudioReserveController {
 	@PostMapping("/studio/exceptionDate")
 	public ResponseEntity AddExceptionDates(@RequestBody ExceptionDate exceptionDate) {
 		try{
-		int result=studioReserveService.AddExceptionDates(exceptionDate);
+			System.out.println(exceptionDate);
+			int result=studioReserveService.AddExceptionDates(exceptionDate);
 			return new ResponseEntity(result,HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity(0,HttpStatus.NO_CONTENT);

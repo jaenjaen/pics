@@ -19,6 +19,7 @@
                         :md-model-type="String"
                         :md-immediately="true"
                         :disable-passed-days="true"
+                        ::md-disabled-dates="disabledDates"
                         :value="start_date"
                       ></md-datepicker>
                     </span>
@@ -31,6 +32,7 @@
                         :md-model-type="String"
                         :md-immediately="true"
                         :disable-passed-days="true"
+                        ::md-disabled-dates="disabledDates"
                         :value="end_date"
                       ></md-datepicker>
                     </span>
@@ -48,8 +50,8 @@
                         required="required"
                         v-for="(startTime,index) in startTimes"
                         v-bind:key="index"
-                        :value="parseInt(time)"
-                      >{{time}}시</md-option>
+                        :value="parseInt(startTime)"
+                      >{{startTime}}시</md-option>
                     </md-select>
                   </md-field>
                   <br />
@@ -61,12 +63,41 @@
                         required="required"
                         v-for="(endTime,index) in endTimes"
                         v-bind:key="index"
-                        :value="parseInt(time)"
-                      >{{time}}시</md-option>
+                        :value="parseInt(endTime)"
+                      >{{endTime}}시</md-option>
                     </md-select>
                   </md-field>
                 </div>
               </div>
+              <!-- 시간 -->
+
+                <!-- <div class="time-input-field">
+                  <div class="start-time">
+                    <label for="time">예약 시작 시간</label><br>
+                    <select id="start_time" v-model="start_time" required>
+                      <option
+                        required="required"
+                        v-for="(startTime,index) in startTimes"
+                        v-bind:key="index"
+                        :value="parseInt(startTime)"
+                      >{{startTime}}시</option>
+                    </select>
+                  </div>
+                  <br />
+                  <br />
+                  <div class="end-time">
+                    <label for="time">예약 종료 시간</label><br>
+                    <select id="end_time" v-model="end_time" required>
+                      <option
+                        required="required"
+                        v-for="(endTime,index) in endTimes"
+                        v-bind:key="index"
+                        :value="parseInt(endTime)"
+                      >{{endTime}}시</option>
+                    </select>
+                  </div>
+                </div> -->
+
               <!-- <span>{{msg}}</span> -->
               <br />
               <br />

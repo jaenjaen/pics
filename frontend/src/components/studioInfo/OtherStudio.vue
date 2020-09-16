@@ -3,9 +3,9 @@
         <!-- <input type="file" accept="image/*" @change="uploadImg($event)">
         <br>
         {{predicted}}
-        <br>
-        reco : {{studio}} -->
-        {{studio}}
+        <br>-->
+        reco : {{studio}} 
+        <!-- {{studio}} -->
     </div>
 </template>
 
@@ -32,7 +32,8 @@ export default {
         axios
             .post("http://127.0.0.1:5000/target/", this.stuId)
             .then(response => {
-                // this.studio = response.data;
+                alert("던짐")
+                this.studio = response.data;
             })
             .catch(error => {
                 console.log(error);
@@ -40,17 +41,17 @@ export default {
             })
             .finally(() => (this.loading = false));
 
-        axios
-            .get("http://127.0.0.1:5000/similar/" + this.studio)
-            .then(response => {
-                this.studio = response.data;
-                console.log(studio)
-            })
-            .catch(error => {
-                console.log(error);
-                this.errored = true;
-            })
-            .finally(() => (this.loading = false));
+        // axios
+        //     .get("http://127.0.0.1:5000/similar/" + this.studio)
+        //     .then(response => {
+        //         this.studio = response.data;
+        //         console.log(studio)
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         this.errored = true;
+        //     })
+        //     .finally(() => (this.loading = false));
     },
 
 }

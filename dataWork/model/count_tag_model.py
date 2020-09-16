@@ -46,7 +46,7 @@ def tagCount(stuId,dataset):
         restTag2List=strToList(rest.iloc[i]["new_tag2"])
         for j in range(len(targetExTagList)):
             if targetExTagList[j] in restTagExList:
-                cnt+=0.99
+                cnt+=0.98
         for j in range(len(targetTag2List)):
             if targetTag2List[j] in restTag2List:
                 cnt+=1
@@ -55,12 +55,26 @@ def tagCount(stuId,dataset):
             countKeyword.append(cnt)
 
     ## dataset에 열 추가
-    rest["tagCount"]=countKeyword
-    target["tagCount"]=0  # target은 아예 안 뜨도록 0으로 처리
+    rest.loc[:,"tagCount"]=countKeyword
+    target.loc[:,"tagCount"]=0  # target은 아예 안 뜨도록 0으로 처리
 
     dataset=pd.concat([target,rest],ignore_index=True) # 다시 2개 합치기
     dataset=dataset.sort_values(by=['tagCount'],ascending=False)
+    
+    # 해당 아이디에 맞는 studio 정보 받고 보내기
+    studios = get_reco_studio(studio_list)
+    # 대표 사진 하나만 가지고 갈 수 있도록
+    for studio in studios:
+        studio['main_img'] = studio.get('main_img').split(',')[0]
+    result['studios']=studios
+    
     return dataset
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:

@@ -167,7 +167,7 @@
                 <b>넓이</b>
               </td>
               <td>
-                {{ studio.studioFilter.size}}m
+                {{ studio.studioFilter.size|sizePoint}}m
                 <sup>2</sup>
                 ({{ studio.studioFilter.size |sizeUnit}}/평)
               </td>
@@ -267,11 +267,11 @@
       </div>
       <hr />
       <!-- ============== OthserStudio ============== -->
-      <div class="article-Chart-area">
+      <!-- <div class="article-Chart-area">
         <OthserStudio>
           
         </OthserStudio>      
-      </div>
+      </div> -->
       <!-- ============== Review ============== -->
       <div id="review-container">
         <div id="no-review" v-if="(reviews+'').length<=0">

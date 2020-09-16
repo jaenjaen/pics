@@ -13,11 +13,21 @@ export default {
     },
     mounted() {
         this.$refs.chat.controlModal('show', 'chatListModal');
+        this.moveToScrollBottom();
     },
     methods: {
         goBackToMyPage: function() {
             location.href = "/mypage"
-        }
+        },
 
+        /* 스크롤을 최하단으로 옮김 */
+        moveToScrollBottom() {
+            setTimeout(function() {
+                var length = document.getElementById('chatContent').scrollHeight;
+                document.getElementById('chatContent').scrollTop = length;
+            }, 100);
+        }
     },
+
+
 }

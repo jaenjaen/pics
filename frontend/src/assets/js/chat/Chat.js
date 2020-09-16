@@ -450,6 +450,9 @@ export default {
                 this.chat.filePath = '';
                 document.getElementById('chatFile').value = '';
                 document.getElementById('chatFileName').value = '';
+
+                /* 스크롤 최하단으로 이동 */
+                this.$emit('moveScroll');
             }
         },
 
@@ -552,6 +555,8 @@ export default {
             this.chat.stuId = event.target.childNodes[1].innerHTML;
             this.chat.custId = event.target.childNodes[2].innerHTML;
             this.setChat(this.chat.stuId, this.chat.custId);
+            //window.scrollTo(0, document.body.scrollHeight);
+            this.$emit('moveScroll');
             this.controlModal('hide', 'chatListModal');
         },
 

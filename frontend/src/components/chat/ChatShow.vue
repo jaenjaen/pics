@@ -1,11 +1,10 @@
 <template>
     <div id="app">
-
         <!-- Chat Modal 영역 -->
         <div id="chatModal" style="display:block;">
             <div id="chatContent">
                 <div id="closeChat" @click="goBackToMyPage()" >&times;</div>
-                <Chat id="chatArea" ref="chat" />
+                <Chat id="chatArea" ref="chat" @moveScroll="moveToScrollBottom()" />
             </div>
         </div>
 

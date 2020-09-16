@@ -207,10 +207,18 @@ export default {
                 this.$refs.chat.setChat(this.stuId, this.customer.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
+                this.moveToScrollBottom();
             }
         },
         hideChatModal: function() {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
+        },
+        /* 스크롤을 최하단으로 옮김 */
+        moveToScrollBottom() {
+            setTimeout(function() {
+                var length = document.getElementById('chatContent').scrollHeight;
+                document.getElementById('chatContent').scrollTop = length;
+            }, 100);
         },
         /* 문의 영역 끝 */
         imgUrl(imgName) {

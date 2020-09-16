@@ -1,5 +1,42 @@
 <template>
   <div id="app">
+    <a
+    :href="url"
+    @click.prevent="downloadItem(url)"
+    >
+    다운로드
+    </a>
+  </div>
+</template>
+<script>
+import axios from "axios";
+export default {
+  data(){
+    return{
+      url: 'http://localhost:7777/upload/chat/20200916093823203_1234@admin.com.png'
+    }
+  },
+  methods: {
+    downloadItem (url) {
+      axios.get(url, { responseType: 'blob' }, )
+        .then(({ data }) => {
+          let blob = new Blob([data], { type: 'image/png' })
+          let link = document.createElement('a')
+          link.href = window.URL.createObjectURL(blob)
+          link.download = 'image.png'
+          link.click()
+        .catch(error => {
+          console.error(error)
+        })
+      })
+  }
+  }
+}
+</script>
+
+<!--
+<template>
+  <div id="app">
     유저이름: 
     <input
       v-model="sender"
@@ -84,3 +121,4 @@ export default {
   }
 }
 </script>
+-->

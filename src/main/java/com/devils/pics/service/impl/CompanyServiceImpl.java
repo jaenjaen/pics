@@ -28,7 +28,6 @@ public class CompanyServiceImpl implements CompanyService {
         String salt = saltUtil.genSalt();
         company.setSalt(salt);
         company.setPassword(saltUtil.encodePassword(salt,password));
-        System.out.println(company.getPassword());
 		return companyDAO.registerCompany(company);
 	}
 

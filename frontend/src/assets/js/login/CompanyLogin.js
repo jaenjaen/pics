@@ -20,11 +20,11 @@ export default {
                 .get(
                     "http://localhost:7777/company/" + this.comId + "/" + this.password
                 )
-                .then(response => {
-                    this.rdata = response.data;
+                .then(res => {
+                    this.rdata = res.data;
                     if (this.rdata != "") {
                         sessionStorage.setItem("company", JSON.stringify(this.rdata));
-                        location.href = "http://localhost:9999";
+                        //location.href = "http://localhost:9999";
                     }
                 })
                 .catch(e => {

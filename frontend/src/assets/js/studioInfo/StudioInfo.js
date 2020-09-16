@@ -12,6 +12,7 @@ import 'vue-material/dist/theme/default.css'
 import "materialize-css"
 import Chat from "@/components/chat/Chat.vue"; //문의
 import Clipboard from 'v-clipboard'
+import OthserStudio from "@/components/studioInfo/OtherStudio"
 
 Vue.use(Clipboard)
 Vue.use(VueMaterial)
@@ -25,7 +26,8 @@ export default {
         TimeChart,
         DayChart,
         Map,
-        Chat
+        Chat,
+        OthserStudio
     },
     event: 'studios',
     data: function() {

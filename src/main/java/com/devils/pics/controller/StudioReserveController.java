@@ -70,7 +70,7 @@ public class StudioReserveController {
 	// 3. reservation 테이블에 추가, 예약 일자 
 	@PostMapping("/studio/reservation")
 	public ResponseEntity AddReservation(@RequestBody Reservation reservation) {
-		//등록 시간 삽입		
+		//등록 시간 삽입
 		try{
 		int result=studioReserveService.AddReservation(reservation);
 			return new ResponseEntity(result,HttpStatus.OK);

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[60]:
+# In[2]:
 
 
 import pymysql
@@ -58,8 +58,8 @@ def getTagData() :
 
     # str 처리    
     for i in range(len(tagNameList)):
-        tagNameList[i]=str(tagNameList[i])
-        tagIdList[i]=str(tagIdList[i])
+        tagNameList[i]=tagNameList[i]
+        tagIdList[i]=tagIdList[i]
 
     # studio 테이블에 추가
     studio["tag_id"]=tagIdList
@@ -73,5 +73,5 @@ def getTagData() :
 # In[21]:
 
 
-get_ipython().system('jupyter nbconvert --to script tag_dao.ipynb ')
+
 

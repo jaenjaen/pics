@@ -32,7 +32,7 @@ public class ChatController {
 	private ChatService chatService;
 	
 	@ApiOperation(value="", response = Chat.class)
-	@MessageMapping("/receive") //receive를 메세지를 받을 endpoing로 설정
+	@MessageMapping("/receive") //receive를 메세지를 받을 endpoint로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
 //		System.out.println("입력값 chat : " + chat);
@@ -71,7 +71,7 @@ public class ChatController {
 	}
 	
 	@ApiOperation(value="스튜디오, 고객의 대화를 모두 반환", response = List.class)
-	@GetMapping("/chat/prev/{stuId}/{custId}")
+	@GetMapping("/chat/prev/{stuId}/{custId}/{sender}")
 	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
 		try {
 			Map map = new HashMap();

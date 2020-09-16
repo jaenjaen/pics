@@ -70,7 +70,7 @@ public class StudioReserveController {
 	// 3. reservation 테이블에 추가, 예약 일자 
 	@PostMapping("/studio/reservation")
 	public ResponseEntity AddReservation(@RequestBody Reservation reservation) {
-		//등록 시간 삽입		
+		//등록 시간 삽입
 		try{
 		int result=studioReserveService.AddReservation(reservation);
 			return new ResponseEntity(result,HttpStatus.OK);
@@ -84,6 +84,7 @@ public class StudioReserveController {
 	public ResponseEntity UpdateReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
 		try{
+			System.out.println(reservation);
 			studioReserveService.UpdateReservation(reservation);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(Exception e) { 
@@ -103,7 +104,8 @@ public class StudioReserveController {
 	@PostMapping("/studio/exceptionDate")
 	public ResponseEntity AddExceptionDates(@RequestBody ExceptionDate exceptionDate) {
 		try{
-		int result=studioReserveService.AddExceptionDates(exceptionDate);
+			System.out.println(exceptionDate);
+			int result=studioReserveService.AddExceptionDates(exceptionDate);
 			return new ResponseEntity(result,HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity(0,HttpStatus.NO_CONTENT);
@@ -123,10 +125,10 @@ public class StudioReserveController {
 		}
 	
 	// 5. Exception 삭제
-	@DeleteMapping("/studio/exceptionDate/{exceptionDateList}")
-	public ResponseEntity DeleteExceptionDates(@PathVariable List<ExceptionDate> exceptionDateList) {
+	@DeleteMapping("/studio/exceptionDate/{exceptionId}")
+	public ResponseEntity DeleteExceptionDate(@PathVariable int exceptionId) {
 		try{
-			studioReserveService.DeleteExceptionDates(exceptionDateList);
+			studioReserveService.DeleteExceptionDate(exceptionId);
 			return new ResponseEntity(HttpStatus.OK);
 		}catch(Exception e) {  
 			return new ResponseEntity(HttpStatus.NOT_MODIFIED);
@@ -174,13 +176,10 @@ public class StudioReserveController {
 	}
 	
 	//9. 마이페이지용 exception date / reservation Date 넘기기 (weekStart / weekEnd)
-	@GetMapping("/company/schedule/{stuId}/{weekStart}/{weekEnd}")
-	public ResponseEntity getSchedule(@PathVariable int stuId, @PathVariable String weekStart, @PathVariable String weekEnd) {
+	@GetMapping("/company/schedule/{stuId}")
+	public ResponseEntity getCompanySchedules(@PathVariable int stuId) {
 		Schedule schedule = new Schedule();
 		schedule.setStuId(stuId);
-		schedule.setWeekStart(weekStart);
-		schedule.setWeekEnd(weekEnd);
-		
 		try{
 			schedule = studioReserveService.getSchedule(schedule);
 			return new ResponseEntity(schedule,HttpStatus.OK);

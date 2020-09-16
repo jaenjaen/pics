@@ -12,6 +12,7 @@ import 'vue-material/dist/theme/default.css'
 import "materialize-css"
 import Chat from "@/components/chat/Chat.vue"; //문의
 import Clipboard from 'v-clipboard'
+import OthserStudio from "@/components/studioInfo/OtherStudio"
 
 Vue.use(Clipboard)
 Vue.use(VueMaterial)
@@ -25,7 +26,8 @@ export default {
         TimeChart,
         DayChart,
         Map,
-        Chat
+        Chat,
+        OthserStudio
     },
     event: 'studios',
     data: function() {
@@ -207,10 +209,18 @@ export default {
                 this.$refs.chat.setChat(this.stuId, this.customer.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
+                this.moveToScrollBottom();
             }
         },
         hideChatModal: function() {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
+        },
+        /* 스크롤을 최하단으로 옮김 */
+        moveToScrollBottom() {
+            setTimeout(function() {
+                var length = document.getElementById('chatContent').scrollHeight;
+                document.getElementById('chatContent').scrollTop = length;
+            }, 100);
         },
         /* 문의 영역 끝 */
         imgUrl(imgName) {

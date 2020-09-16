@@ -47,6 +47,22 @@
 		</association>
 	</resultMap>
 	
+	<resultMap type="reservation" id="resv-custRM">
+		<result property="resId" column="res_id"/>
+		<result property="stuId" column="stu_id"/>
+		<result property="custId" column="cust_id"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="resDate" column="res_date"/>
+		<result property="totalPeople" column="total_people"/>
+		<association property="customer" javaType="customer">
+			<result property="nickname" column="nickname"/>
+			<result property="email" column="email"/>
+			<result property="tel" column="tel"/>	
+		</association>
+	</resultMap>
+	
 	<sql id="select-reservation-studio">
 		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
 		,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
@@ -55,12 +71,9 @@
 	
 	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
   	<select id="getExceptionDate" parameterType="schedule" resultType="exceptionDate">							
-		SELECT exception_id, start_date,end_date 
+		SELECT exception_id, start_date,end_date,exception_title
 		FROM exception_date
 		WHERE stu_id=#{stuId}
-		<if test="weekStart!=null and weekEnd!=null">
-		AND start_date between #{weekStart} and #{weekEnd}
-		</if>
 	</select>
 
 	<select id="getRepeatDate" parameterType="int" resultType="repeatDate">							
@@ -69,17 +82,14 @@
 		WHERE rep.stu_id=${value}
 	</select>
 
-	<select id="getReservation" parameterType="schedule" resultType="reservation">							
-		SELECT res_id,stu_id,cust_id,start_date,end_date,total_price,res_date,total_people
-		FROM reservation
-		<choose>
-			<when test="stuId!=null">
-				WHERE stu_id=#{stuId}
-			</when>
-			<when test="weekStart!=null and weekEnd!=null">
-				AND start_date between #{weekStart} and #{weekEnd}
-			</when>
-		</choose>
+	<select id="getReservation" parameterType="schedule" resultMap="resv-custRM">							
+		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people,
+			   c.nickname,c.email,c.tel
+		FROM reservation r, customer c
+		<if test="stuId!=null">
+			WHERE r.stu_id=#{stuId}
+			AND c.cust_id = r.cust_id
+		</if>
 	</select>
 	
 	<!-- ================== 2. 예약하기 ================== -->
@@ -89,8 +99,8 @@
 	</insert> 
 	
  	<insert id="addExceptionDates" parameterType="exceptionDate">							
-		INSERT into exception_date(start_date,end_date,stu_id)
-		VALUES (#{startDate},#{endDate},#{stuId})
+		INSERT into exception_date(start_date,end_date,stu_id,exception_title)
+		VALUES (#{startDate},#{endDate},#{stuId},#{exceptionTitle})
 	</insert>
 
 	<update id="updateReservation" parameterType="reservation">							
@@ -98,9 +108,7 @@
 		SET 
 		start_date=#{startDate},
 		end_date=#{endDate},
-		total_price=#{totalPrice},
-		res_date=now(),
-		total_people=#{totalPeople}
+		res_date=now()
 		WHERE res_id=#{resId}
 	</update>
 
@@ -109,7 +117,7 @@
 		SET 
 		start_date=#{startDate},
 		end_date=#{endDate}
-		WHERE stu_id=#{stuId}
+		WHERE exception_id=#{exceptionId}
 	</update>
 
 	<delete id="deleteReservation" parameterType="int">							
@@ -117,20 +125,9 @@
 		WHERE res_id = #{value}
 	</delete>
 
- 	<delete id="deleteExceptionDates" parameterType="list">							
+ 	<delete id="deleteExceptionDates" parameterType="int">							
 		Delete FROM exception_date
-		WHERE stu_id in
-		<foreach collection="list" item="exception" open="(" close=")" separator=",">
-		#{exception.stuId}
-		</foreach>
-		AND start_date in
-		<foreach collection="list" item="exception" open="(" close=")" separator=",">
-		date(#{exception.startDate})
-		</foreach>
-		AND end_date in
-		<foreach collection="list" item="exception" open="(" close=")" separator=",">
-		date(#{exception.endDate})
-		</foreach> 
+		WHERE exception_id = #{value}
 	</delete>
 	
 	

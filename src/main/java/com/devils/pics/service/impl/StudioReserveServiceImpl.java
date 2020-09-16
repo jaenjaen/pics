@@ -59,8 +59,8 @@ public class StudioReserveServiceImpl implements StudioReserveService {
 	}
 
 	@Override
-	public int DeleteExceptionDates(List<ExceptionDate> exceptionDateList) {
-		return studioReserveDAO.DeleteExceptionDates(exceptionDateList);
+	public int DeleteExceptionDate(int exceptionId) {
+		return studioReserveDAO.DeleteExceptionDate(exceptionId);
 	}
 	
 	@Override

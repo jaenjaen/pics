@@ -12,6 +12,10 @@
     text-align: left;
 }
 
+.mypage_card::-webkit-scrollbar {
+    display: none;
+}
+
 .mypage_card table {
     width: 100%;
     text-align: center;

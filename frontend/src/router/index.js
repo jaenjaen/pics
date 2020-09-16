@@ -16,13 +16,14 @@ import StudioEdit from "@/views/mypage/edit/StudioEdit.vue";
 import FileRoute from "@/components/studioRegister/FileRoute.vue";
 import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
-import Map from "@/components/studioInfo/Map.vue";
+import OtherStudio from "@/components/studioInfo/OtherStudio.vue";
 import StudioList from "@/components/search/StudioList.vue";
 import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
 import CompanyInfo from "@/components/company/company_info.vue"
 import ChatTest from "@/components/chat/ChatTest.vue";
+import errorPage from "@/components/extra/error.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -131,13 +132,17 @@ const routes = [{
         component: CompanyInfo
     },
     {
-        path: "/Map",
-        name: "Map",
-        component: Map
+        path: "/OtherStudio",
+        name: "OtherStudio",
+        component: OtherStudio
     }, {
         path: "/studioEdit/:stuId",
         name: "studioEdit",
         component: StudioEdit
+    }, {
+        path: "*",
+        name: "errorPage",
+        component: errorPage
     }
 ];
 

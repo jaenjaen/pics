@@ -67,6 +67,18 @@ export default {
                     return value.substring(0, i);
                 }
             }
+        },
+
+        handleWord(value) {
+            if (value === '') {
+                return '(첨부파일)';
+            } else {
+                if (value.length > 15) {
+                    return value.substring(0, 15) + "... ";
+                } else {
+                    return value;
+                }
+            }
         }
     },
     methods: {
@@ -88,6 +100,7 @@ export default {
                 this.$refs.chat.setChat(this.stuId, this.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
+                this.moveToScrollBottom();
             }
         },
 
@@ -95,5 +108,13 @@ export default {
         hideChatModal: function() {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
         },
+
+        /* 스크롤을 최하단으로 옮김 */
+        moveToScrollBottom() {
+            setTimeout(function() {
+                var length = document.getElementById('chatContent').scrollHeight;
+                document.getElementById('chatContent').scrollTop = length;
+            }, 100);
+        }
     }
 }

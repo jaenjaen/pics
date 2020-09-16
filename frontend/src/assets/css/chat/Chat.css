@@ -10,9 +10,9 @@
                 box-sizing: border-box;
             }
             
-            #app {
+            #chatVue {
                 /* 부모요소에 height 100% 부여 */
-                height: 100%;
+                height: auto;
                 padding-bottom: 110px;
                 margin-top: 50px;
             }
@@ -137,6 +137,7 @@
                 padding: 10px 20px;
                 color: #fff;
                 border-top: 1px solid;
+                overflow: auto;
             }
             
             .chat-wrapper .chat-message .chat-message-wrapper p:first-of-type {
@@ -150,12 +151,13 @@
             
             .chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper:before {
                 left: -20px;
-                border-right-color: #BDBDBD;
+                border-right-color: #EAEAEA;
             }
             
             .chat-wrapper .chat-message.chat-message-recipient p {
-                background-color: #BDBDBD;
+                background-color: #EAEAEA;
                 border-top-color: #7dc576;
+                color: black;
                 border-radius: 8px;
             }
             
@@ -188,6 +190,14 @@
             .chat-wrapper .chat-message .chat-message-content:before {
                 content: " ";
                 display: block;
+            }
+            
+            .chat-message-content a:link,
+            .chat-message-content a:visited,
+            .chat-message-content a:hover,
+            .chat-message-content a:active {
+                color: white;
+                text-decoration: underline;
             }
             
             .chat-wrapper .chat-message .chat-details {
@@ -334,9 +344,9 @@
             #uploadModal {
                 display: none;
                 position: fixed;
-                z-index: 4;
-                padding-top: 200px;
-                padding-bottom: 80px;
+                z-index: 6;
+                padding-top: 70px;
+                padding-bottom: 70px;
                 left: 0;
                 top: 0;
                 width: 100%;
@@ -355,7 +365,7 @@
                 padding: 30px;
                 border: 1px solid #888;
                 width: 50%;
-                height: 80%;
+                height: 100%;
                 overflow: auto;
             }
             /* 파일 업로드 Modal 닫기 버튼 */
@@ -423,8 +433,8 @@
                 display: none;
                 position: fixed;
                 z-index: 5;
-                padding-top: 120px;
-                padding-bottom: 120px;
+                padding-top: 50px;
+                padding-bottom: 50px;
                 left: 0;
                 top: 0;
                 width: 100%;
@@ -474,9 +484,9 @@
                     width: 35%;
                 }
             }
-            /* 반응형 : 너비 675px 이하 */
+            /* 반응형 : 너비 850px 이하 */
             
-            @media screen and (max-width: 675px) {
+            @media screen and (max-width: 850px) {
                 header {
                     width: 100%;
                 }
@@ -507,7 +517,6 @@
                 /* 업로드  모달 사이즈 및 위치 조정 */
                 #uploadContent {
                     width: 100%;
-                    margin-left: 25%;
                     padding-left: 10px;
                     padding-top: 10px;
                     padding-right: 0;

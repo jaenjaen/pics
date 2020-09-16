@@ -7,7 +7,7 @@
     <div id="chatModal" style="display:none;">
       <div id="chatContent">
         <div id="closeChat" @click="hideChatModal">&times;</div>
-        <Chat id="chatArea" ref="chat" />
+        <Chat id="chatArea" ref="chat" @moveScroll="moveToScrollBottom()" />
       </div>
     </div>
 
@@ -266,6 +266,12 @@
         </div>
       </div>
       <hr />
+      <!-- ============== OthserStudio ============== -->
+      <div class="article-Chart-area">
+        <OthserStudio>
+          
+        </OthserStudio>      
+      </div>
       <!-- ============== Review ============== -->
       <div id="review-container">
         <div id="no-review" v-if="(reviews+'').length<=0">

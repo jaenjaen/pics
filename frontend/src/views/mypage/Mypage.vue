@@ -41,4 +41,10 @@ export default {
     width:768px;
     margin:auto;
   }
+
+  @media all and (min-width: 333px) and (max-width: 768px) {
+    .mypage_container {
+        width: 100%;
+    }
+}
 </style>

@@ -23,7 +23,7 @@ export default {
     },
     mounted() {
         axios
-            .post("http://127.0.0.1:5000/target/" + this.stuId)
+            .post("http://127.0.0.1:5000/target/", this.stuId)
             .catch(error => {
                 console.log(error);
                 this.errored = true;

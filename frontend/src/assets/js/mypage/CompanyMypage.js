@@ -1,7 +1,6 @@
-import 'tui-calendar/dist/tui-calendar.css'
-import { Calendar } from '@toast-ui/vue-calendar'
-import 'tui-date-picker/dist/tui-date-picker.css';
-import 'tui-time-picker/dist/tui-time-picker.css';
+import 'tui-calendar/dist/tui-calendar.css';
+import { Calendar } from '@toast-ui/vue-calendar';
+import Datepicker from 'vuejs-datepicker';
 import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
 import Inquiry from "@/components/mypage/Inquiry.vue";
@@ -38,7 +37,8 @@ export default {
         MypageGap,
         Inquiry,
         'calendar': Calendar,
-        moment
+        moment,
+        Datepicker
     },
     data() {
         return {
@@ -59,9 +59,15 @@ export default {
             scheduleList: [],
 
             /* for modal */
-            styles: "",
+            styles: "border-left: 10px solid #757575;",
             categoryColor: "",
             indexFlag: false,
+
+            /*creation */
+            now: moment(new Date()).format("YYYY-MM-DDThh:mm"),
+            title: "",
+            start_date: "",
+            end_date: "",
 
             /* Detail */
             userId: 0,
@@ -159,6 +165,8 @@ export default {
         /* Custom Creation Modal */
         onBeforeCreateSchedule: function(e) {
             this.$modal.show("creationModal");
+            this.styles = "border-left: 10px solid #757575;";
+            console.log(this.now);
             console.log(e);
 
         },
@@ -186,7 +194,7 @@ export default {
             }
         },
 
-        /* Custom Update Modal */
+        /* Custom Update */
         onBeforeUpdateSchedule: function(e) {
             this.$refs.studioCalendar.invoke('updateSchedule', e.schedule.id, e.schedule.calendarId, e.changes);
 

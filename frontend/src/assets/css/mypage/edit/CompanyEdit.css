@@ -173,3 +173,9 @@ input[type='submit'] {
 .upload_label:hover {
     background-color: #034EA2;
 }
+
+@media all and (min-width: 250px) and (max-width: 768px) {
+    .publicSpace {
+        width: 100%;
+    }
+}

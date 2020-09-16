@@ -27,6 +27,16 @@ public class ChatDAOImpl implements ChatDAO {
 		return sqlSession.delete(ns+"deleteChat", chatId);
 	}
 	
+	/* 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) */
+	public int setAlreadyRead(Map map) throws Exception {
+		return sqlSession.update(ns+"setAlreadyRead", map);
+	}
+	
+	/* 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) */
+	public List<Chat> getNotYetRead(Map map) throws Exception {
+		return sqlSession.selectList(ns+"getNotYetRead", map);
+	}
+	
 	/* 채팅 아이디로 대화를 가져옴 */
 	public Chat getChatByChatId(String chatId) throws Exception {
 		return sqlSession.selectOne(ns+"getChatByChatId", chatId);

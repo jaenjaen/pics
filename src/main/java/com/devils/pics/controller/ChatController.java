@@ -67,12 +67,18 @@ public class ChatController {
 	}
 	
 	/* 이제까지의 해당되는 스튜디오, 고객의 대화 모두를 가져옴 */
-	@GetMapping("/chat/prev/{stuId}/{custId}")
-	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {
+	@GetMapping("/chat/prev/{stuId}/{custId}/{sender}")
+	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
 		try {
 			Map map = new HashMap();
 			map.put("stuId", stuId);
 			map.put("custId", custId);
+			map.put("sender", sender);
+			
+			/* 대화 목록을 가져가기 전에 읽음 처리를 한다. */
+			int result = chatService.setAlreadyRead(map);
+			System.out.println("읽음 처리 : " + result);
+			
 			List<Chat> list = chatService.getPrevAllChat(map);
 			if(list.size()>0) {
 				return new ResponseEntity(list, HttpStatus.OK);

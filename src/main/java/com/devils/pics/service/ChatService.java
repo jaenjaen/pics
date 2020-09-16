@@ -12,6 +12,15 @@ public interface ChatService {
 	/* 채팅 아이디로 해당되는 대화를 삭제함 */
 	public int deleteChat(String chatId) throws Exception;
 	
+	/* 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) */
+	public int setAlreadyRead(Map map) throws Exception;
+	
+	/* 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) */
+	public List<Chat> getNotYetRead(Map map) throws Exception;
+	
+	/* 읽지 않은 메세지의 개수를 가져옴 */
+	public int countNotYetRead(Map map) throws Exception;
+	
 	/* 채팅 아이디로 대화를 가져옴 */
 	public Chat getChatByChatId(String chatId) throws Exception;
 	

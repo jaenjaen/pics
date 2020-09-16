@@ -551,7 +551,11 @@ export default {
                     document.getElementById('chatListHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatHeader').setAttribute('style', 'display:none;');
                 }
-            } else if (cmd == 'hide') {
+            } else {
+                if (cmd == 'hide' && this.prevAllChat.length == 0) {
+                    alert("선택한 대화가 없습니다.");
+                    return;
+                }
                 document.getElementById(obj).setAttribute('style', 'display:none;');
                 if (obj == 'chatListModal') {
                     document.getElementById('chatHeader').setAttribute('style', 'display:block;');
@@ -601,7 +605,9 @@ export default {
             this.chat.custId = event.target.childNodes[2].innerHTML;
             this.setChat(this.chat.stuId, this.chat.custId);
             this.$emit('moveScroll'); //채팅 모달의 스크롤을 최하단으로 내림
-            this.controlModal('hide', 'chatListModal');
+            this.controlModal('disappear', 'chatListModal');
+            /* 무조건 사라져야 하므로 hide 대신 disappear로 함.
+             hide일 때 prevAllChat가 비어있으면 대화 영역을 볼 수 없음. */
         },
 
         /* 프로필 사진을 클릭하면 Modal로 크게 봄 */

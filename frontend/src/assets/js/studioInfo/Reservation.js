@@ -235,7 +235,7 @@ export default {
             this.customer = JSON.parse(sessionStorage.getItem('customer'));
             if (this.customer == undefined) this.$modal.show("login-required");
             else {
-                axios
+                await axios
                     .get("http://127.0.0.1:7777/customer/" + this.customer.custId)
                     .then(response => {
                         this.customer = response.data;

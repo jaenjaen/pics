@@ -311,7 +311,7 @@ export default {
         },
 
         /* 대화 삭제 */
-        deleteChat(fileName, chatId, event) {
+        deleteChat(fileName, chatId) {
             let result = confirm("삭제하시겠습니까?");
             if (result) {
                 if (fileName != '') { //파일일 경우 파일을 먼저 삭제

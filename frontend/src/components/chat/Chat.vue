@@ -71,7 +71,7 @@
                                 <div class='chat-details'>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
                                     <span class='chat-message-read-status font-size-small'>- 읽음</span>
-                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId, $event)">삭제</span>
+                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->
@@ -114,7 +114,7 @@
                                 <div class='chat-details'>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
                                     <span class='chat-message-read-status font-size-small'>- 읽음</span>
-                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId, $event)">삭제</span>
+                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->

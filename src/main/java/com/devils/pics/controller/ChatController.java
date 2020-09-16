@@ -20,14 +20,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devils.pics.domain.Chat;
 import com.devils.pics.service.ChatService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
+@Api(tags= {"Pics Chatting"})
 public class ChatController {
 	
 	@Autowired
 	private ChatService chatService;
 	
-	/* 발송한 채팅을 DB에 저장하고 발신자, 수신자 모두에게 리턴함 */
+	@ApiOperation(value="", response = Chat.class)
 	@MessageMapping("/receive") //receive를 메세지를 받을 endpoing로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
@@ -66,7 +70,7 @@ public class ChatController {
 		}
 	}
 	
-	/* 이제까지의 해당되는 스튜디오, 고객의 대화 모두를 가져옴 */
+	@ApiOperation(value="스튜디오, 고객의 대화를 모두 반환", response = List.class)
 	@GetMapping("/chat/prev/{stuId}/{custId}")
 	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {
 		try {
@@ -85,7 +89,8 @@ public class ChatController {
 		}
 	}
 	
-	/* 최근 대화 가져오기(com, studio, cust, chat 정보 추출)  */
+	
+	@ApiOperation(value="가장 최근 대화 반환", response = List.class)
 	@GetMapping("/chat/recent/{member}/{id}")
 	public ResponseEntity getRecentChat(@PathVariable String member, @PathVariable String id) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
@@ -116,7 +121,7 @@ public class ChatController {
 		}
 	}
 	
-	/* 이름으로 검색하면 최근 대화 가져오기(com, studio, cust, chat 정보 추출)  */
+	@ApiOperation(value="이름으로 대화 검색한 결과 반환", response = List.class)
 	@GetMapping("/chat/recent/{member}/{id}/{name}")
 	public ResponseEntity getRecentChatByName(@PathVariable String member, @PathVariable String id, @PathVariable String name) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
@@ -151,6 +156,7 @@ public class ChatController {
 	
 	/* 스튜디오 아이디, 고객 이름으로 검색하면 업체의 최근 대화 가져오기
 	 * (com, studio, cust, chat 정보 추출)  */
+	@ApiOperation(value="스튜디오 아이디, 고객 이름으로 검색한 뒤 업체의 최근 대화 반환", response = List.class)
 	@GetMapping("/chat/recent/com/{comId}/{stuId}/{custName}")
 	public ResponseEntity getRecentChatByStuIdAndCustName(@PathVariable String comId, @PathVariable String stuId, @PathVariable String custName) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
@@ -175,6 +181,7 @@ public class ChatController {
 	}
 	
 	/* 채팅 상대 기본 정보 가져오기 */
+	@ApiOperation(value="채팅 상대의 기본정보 반환", response = Map.class)
 	@GetMapping("/chat/info/{member}/{id}")
 	public ResponseEntity getDefaultInfo(@PathVariable String member, @PathVariable String id) {
 		Map map = new HashMap();

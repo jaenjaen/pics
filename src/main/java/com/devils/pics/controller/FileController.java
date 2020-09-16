@@ -18,10 +18,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.devils.pics.domain.Bookmark;
 import com.devils.pics.domain.Company;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
+@Api(tags= {"Pics FileControl"})
 public class FileController {
 	
 	private String fileSeparator = File.separator;
@@ -32,7 +37,7 @@ public class FileController {
 	 * 성공했을 경우 => 파일 이름 리턴
 	 * 파일이 존재하지 않을 경우 => 응답하지 않음 */
 
-	/* 싱글 파일 업로드 */
+	@ApiOperation(value="하나의 파일을 스프링부트에 저장하고 변환한 파일명 반환",response =String.class)
 	@PostMapping("/fileUpload/{subPath}/{id}")
 	public ResponseEntity uploadImage(@RequestBody MultipartFile file, 
 			@PathVariable String subPath, @PathVariable String id,
@@ -73,7 +78,7 @@ public class FileController {
 		}
 	}
 
-	/* 멀티 파일 업로드 */
+	@ApiOperation(value="여러개의 파일을 스프링부트에 저장하고 변환한 파일명 반환",response =String.class)
 	@PostMapping("/filesUpload/{subPath}/{comId}")
 	public ResponseEntity uploadImages(@RequestBody List<MultipartFile> files, 
 			@PathVariable String subPath, @PathVariable String comId,
@@ -122,7 +127,7 @@ public class FileController {
 		}
 	}
 	
-	
+	@ApiOperation(value="사용하지 않는 파일 삭제")
 	@DeleteMapping("/filedelte/{subPath}/{imgSrc}")
 	public ResponseEntity deleteFile(@PathVariable String subPath,@PathVariable String imgSrc, HttpServletRequest request) {
 		

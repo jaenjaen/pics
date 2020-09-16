@@ -12,16 +12,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Company;
 import com.devils.pics.domain.Customer;
 import com.devils.pics.service.CustomerService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins={"*"})
+@Api(tags= {"Pics Personal-Customer"})
 public class CustomerController {
 
 	@Autowired
 	private CustomerService customerService;
 	
+	@ApiOperation(value="개인 회원 가입")
 	@PostMapping("/customer")
 	public ResponseEntity registerCustomer(@RequestBody Customer customer) {
 		try {
@@ -32,6 +38,7 @@ public class CustomerController {
 		}
 	}
 	
+	@ApiOperation(value="개인 회원 로그인", response = Customer.class)
 	@GetMapping("/customer/{apiKey}")
 	public ResponseEntity getCustomer(@PathVariable String apiKey) {
 		try {
@@ -42,6 +49,7 @@ public class CustomerController {
 		}
 	}
 	
+	@ApiOperation(value="개인 회원 정보 수정")
 	@PutMapping("/customer")
 	public ResponseEntity updateCustomer(@RequestBody Customer customer) {
 		try {
@@ -52,6 +60,7 @@ public class CustomerController {
 		}
 	}
 	
+	@ApiOperation(value="개인 회원 탈퇴")
 	@DeleteMapping("/customer/{custId}")
 	public ResponseEntity deleteCustomer(@PathVariable int custId) {
 		try {

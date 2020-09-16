@@ -26,8 +26,12 @@ import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.service.StudioInfoService;
 import com.devils.pics.service.StudioService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
+@Api(tags= {"Pics Studio"})
 public class StudioController {
 
 	@Autowired
@@ -42,7 +46,8 @@ public class StudioController {
 	@Autowired
 	private StudioService studioService;
 
-	/* 카테고리 목록을 화면으로 보냄 */
+	
+	@ApiOperation(value="스튜디오 카테고리 반환", response = List.class)
 	@GetMapping("/category")
 	public ResponseEntity getCategory() {
 		List<Category> category = studioInfoService.getCategory();
@@ -54,6 +59,8 @@ public class StudioController {
 	 * 화면으로부터 받은 studio가 null값이라서 응답할 내용이 없음. => 응답값 없음
 	 * 성공 => 1 응답
 	 * 이미 등록된 스튜디오임(중복 등록 방지) => -1 응답 */
+	
+	@ApiOperation(value="스튜디오 등록", response = Integer.class)
 	@PostMapping("/studio")
 	public ResponseEntity registerStudio(@RequestBody Studio studio) {
 		System.out.println("받아온 폼값 : "+studio);
@@ -123,6 +130,7 @@ public class StudioController {
 		}
 	}
 	
+	@ApiOperation(value="스튜디오 정보 반환", response = List.class)
 	@GetMapping("/studio/{comId}")
 	public ResponseEntity getStudiosBycomId(@PathVariable String comId) {
 		try {
@@ -134,6 +142,7 @@ public class StudioController {
 		}
 	}
 	
+	@ApiOperation(value="스튜디오 수정을 위한 정보 반환", response = Studio.class)
 	@GetMapping("/studio/edit/{stuId}")
 	public ResponseEntity getStudio(@PathVariable int stuId) {
 		Schedule schedule = new Schedule();

@@ -23,14 +23,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Chat;
 import com.devils.pics.domain.Company;
 import com.devils.pics.service.CompanyService;
 import com.devils.pics.util.security.JwtService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @CrossOrigin(origins={"*"})
+@Api(tags= {"Pics Company-Customer"})
 public class CompanyController {
 
 	@Autowired
@@ -39,6 +43,7 @@ public class CompanyController {
 	private JwtService jwtService;
 	
 	
+	@ApiOperation(value="업체 회원 가입")
 	@PostMapping("/company")
 	public ResponseEntity registerCustomer(@RequestBody Company company) {
 		try {
@@ -50,6 +55,7 @@ public class CompanyController {
 
 	}
 	
+	@ApiOperation(value="업체 회원 로그인", response = Company.class)
 	@GetMapping("/company/{comId}/{password}")
 	public ResponseEntity loginCompany(@PathVariable String comId,@PathVariable String password,HttpServletResponse res) {
 		Company company = new Company();
@@ -73,6 +79,7 @@ public class CompanyController {
 		}
 	}
 	
+	@ApiOperation(value="업체회원 정보 반환", response = Company.class)
 	@GetMapping("/company/{comId}")
 	public ResponseEntity getCompany(@PathVariable String comId) {
 		try {
@@ -86,6 +93,7 @@ public class CompanyController {
 		}
 	}
 	
+	@ApiOperation(value="업체회원 정보 수정")
 	@PutMapping("/company")
 	public ResponseEntity updateCustomer(@RequestBody Company company) {
 		try {
@@ -97,6 +105,7 @@ public class CompanyController {
 		}
 	}
 	
+	@ApiOperation(value="업체회원 정보 삭제(탈퇴)")
 	@DeleteMapping("/company/{comId}")
 	public ResponseEntity deleteCustomer(@PathVariable String comId) {
 		try {
@@ -107,7 +116,8 @@ public class CompanyController {
 		}
 	}
 	
-	/** 보유 스튜디오가 담겨 studio 객체 반환*/ 
+	
+	@ApiOperation(value="업체회원이 소유한 studio정보를 담아 함께 반환", response = Company.class)
 	@GetMapping("/companyifo/{comId}")
 	public ResponseEntity getCompanyinfo(@PathVariable String comId) {
 		System.out.println(comId+"로 검색 시작");

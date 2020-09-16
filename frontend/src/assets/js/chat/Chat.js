@@ -113,7 +113,6 @@ export default {
     methods: {
         /* 같은 시간인지 체크 */
         checkSameTime(i) {
-            console.log("타입 체크");
             if (i == this.prevAllChat.length - 1) { //마지막 인덱스일 경우 비교 대상이 없으므로 리턴
                 return true;
             } else {
@@ -313,7 +312,13 @@ export default {
 
         /* 이전 대화 내역 가져오기 */
         getPrevAllChat() {
-            axios.get('http://127.0.0.1:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId)
+            let other = -1;
+            if (this.chat.sender == 0) { //고객으로 로그인했을 때
+                other = 1;
+            } else if (this.chat.sender == 1) { //업체로 로그인했을 때
+                other = 0;
+            }
+            axios.get('http://127.0.0.1:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId + '/' + other)
                 .then((response) => {
                     if (response.data != -1) {
                         console.log('이전 대화 가져오기 성공');
@@ -389,7 +394,9 @@ export default {
                             console.log('구독으로 받은 메시지 : ', response.body);
 
                             // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                            this.prevAllChat.push(JSON.parse(response.body))
+                            //this.prevAllChat.push(JSON.parse(response.body))
+
+                            this.getPrevAllChat();
 
                             /* 채팅 모달의 스크롤을 최하단으로 내림 */
                             this.$emit('moveScroll');
@@ -619,6 +626,7 @@ export default {
 
         /* 채팅 상대를 클릭하면 채팅을 가져옴 */
         getChatByUser(event) {
+            this.chat.word = ''; //이전 채팅방에서 작성한 채팅 내용은 초기화시킴
             this.chat.stuId = event.target.childNodes[1].innerHTML;
             this.chat.custId = event.target.childNodes[2].innerHTML;
             this.setChat(this.chat.stuId, this.chat.custId);

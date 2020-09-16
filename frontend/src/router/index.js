@@ -23,6 +23,7 @@ import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
 import CompanyInfo from "@/components/company/company_info.vue"
 import ChatTest from "@/components/chat/ChatTest.vue";
+import errorPage from "@/components/extra/error.vue";
 
 Vue.use(VueRouter);
 const routes = [{
@@ -138,6 +139,10 @@ const routes = [{
         path: "/studioEdit/:stuId",
         name: "studioEdit",
         component: StudioEdit
+    }, {
+        path: "*",
+        name: "errorPage",
+        component: errorPage
     }
 ];
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[93]:
+# In[1]:
 
 
 # 외부 모듈
@@ -15,22 +15,13 @@ import os
 ### 자연어 처리기
 from konlpy.tag import Okt
 from collections import Counter
-import pandas as pd
 
 ## wordVec
 import gensim 
 from gensim.models import word2vec
 
 
-# In[94]:
-
-
-# def targetStuId(stuid):
-#     stuId=1
-#     return stuId 
-
-
-# In[97]:
+# In[7]:
 
 
 ### 사용자 모듈 불러오기
@@ -42,7 +33,7 @@ from model import word2vec_model
 from model import count_tag_model
 
 # 데이터 불러오기
-def tagData(stuid):
+def tagData(stuId):
     # DB 데이터
     
     dataset = tag_dao.getTagData()
@@ -94,19 +85,27 @@ def tagData(stuid):
     dataset["extend_tag"]=extendTagList
     dataset["extend_tag_sim"]=extendTagSimList
 
-    stuId=stuid
+    stuid=stuId
     
 #   Counting Words
-    dataset=count_tag_model.tagCount(stuId,dataset)
-#     dataset10=dataset.loc[:10,:]
-    dataset.to_json('result.json', orient='table')
-    return dataset
+    dataset=count_tag_model.tagCount(stuid,dataset)
+    topSim=list(dataset.loc[:10,"stu_id"])
+#     tag_dao.getTop10(topSim)
+    return tag_dao.getTop10(topSim)
 
 
-# In[98]:
+# In[10]:
 
 
+# result=tagData(1)
+# result
 
+
+# In[11]:
+
+
+# topSim=[880,770]
+# tag_dao.getTop10(topSim)
 
 
 # In[ ]:

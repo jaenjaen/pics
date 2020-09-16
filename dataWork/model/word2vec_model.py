@@ -25,8 +25,8 @@ def wordVec(CoreTagData1):
     num_workers = 2     # Number of threads to run in parallel
     context = 4          # Context window size                                                                                    
     downsampling = 1e-3  # Downsample setting for frequent words
-    dataset=CoreTagData1
-    
+    dataset1=dataset
+
     model = gensim.models.Word2Vec(CoreTagData1, workers=num_workers, 
                               size=num_features, min_count = min_word_count,
                               window = context, sample = downsampling)

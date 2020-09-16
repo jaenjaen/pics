@@ -205,8 +205,10 @@
                 text-decoration: underline;
             }
             
-            .chat-details .chat-message-read-status {
+            .chat-message-read-status {
                 color: #FFA7A7 !important;
+                float: right;
+                margin-right: 5px;
             }
             
             .chat-details .delChatBtn {

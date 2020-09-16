@@ -16,18 +16,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devils.pics.domain.Bookmark;
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Review;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.service.ExtraService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins= {"*"}, maxAge=6000)
+@Api(tags= {"Pics ExtraFucntions"})
 public class ExtraController {
 
 	@Autowired
 	private ExtraService extraService;
 	
-	
+	@ApiOperation(value="북마크 추가")
 	@PostMapping("/bookmark")
 	public ResponseEntity addBookmark(@RequestBody Bookmark bookmark) {
 		try {
@@ -40,17 +45,19 @@ public class ExtraController {
 		}
 	}
 	
-	@GetMapping("/bookmark/{custId}")
-	public ResponseEntity getBookmark(@PathVariable int custId) {
+	@ApiOperation(value="고객이 찜한 북마크 리스트 반환" ,response =Bookmark.class)
+	@GetMapping("/bookmarklist/{custId}")
+	public ResponseEntity getBookmarkList(@PathVariable int custId) {
 		try {
-			List<Studio> bookmark= extraService.getBookmark(custId);
+			List<Studio> list= extraService.getBookmarkList(custId);
 			
-			return new ResponseEntity(bookmark,HttpStatus.OK);
+			return new ResponseEntity(list,HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
 	}
 	
+	@ApiOperation(value="고객의 정보와 스튜디오 아이디를 통해 북마크 반환" ,response =Bookmark.class)
 	@GetMapping("/bookmark/custId/{custId}/stuId/{stuId}")
 	public ResponseEntity getBookmark(@PathVariable int custId, @PathVariable int stuId) {
 		try {
@@ -66,6 +73,7 @@ public class ExtraController {
 		}
 	}
 	
+	@ApiOperation(value="북마크 삭제")
 	@DeleteMapping("/bookmark/{bookId}")
 	public ResponseEntity deleteBookmark(@PathVariable int bookId) {
 		//System.out.println("deleteBookmark 호출됬다. ");
@@ -78,6 +86,7 @@ public class ExtraController {
 		}
 	}
 	
+	@ApiOperation(value="리뷰 작성")
 	@PostMapping("/review")
 	public ResponseEntity writeReview(@RequestBody Review review) {
 		try {
@@ -89,6 +98,7 @@ public class ExtraController {
 		}
 	}
 	
+	@ApiOperation(value="고객이 작성한 리뷰 반환" ,response =Review.class)
 	@GetMapping("/review/{custId}")
 	public ResponseEntity getCustomerReivews(@PathVariable int custId) {
 		try {
@@ -100,6 +110,7 @@ public class ExtraController {
 		}
 	}
 	
+	@ApiOperation(value="해당 예약의 리뷰가 작성되었는지 반환" ,response =Integer.class)
 	@GetMapping("/review/check/{resId}")
 	public ResponseEntity checkReviews(@PathVariable int resId) {
 		try {
@@ -110,6 +121,7 @@ public class ExtraController {
 		}
 	}
 	
+	@ApiOperation(value="리뷰 삭제")
 	@DeleteMapping("/review/{reviewId}")
 	public ResponseEntity deleteReview(@PathVariable int reviewId) {
 		try {
@@ -119,17 +131,5 @@ public class ExtraController {
 		}catch (Exception e){
 			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
-	}
-	
-	@GetMapping("/bookmarklist/{custId}")
-	public ResponseEntity getBookmarkList(@PathVariable int custId) {
-		try {
-			List<Studio> list= extraService.getBookmarkList(custId);
-			
-			return new ResponseEntity(list,HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
-		}
-	}
-	
+	}	
 }

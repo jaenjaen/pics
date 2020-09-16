@@ -107,6 +107,7 @@ export default {
         /* 문의 영역 Modal 숨김 */
         hideChatModal: function() {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
+            window.location.reload();
         },
 
         /* 스크롤을 최하단으로 옮김 */

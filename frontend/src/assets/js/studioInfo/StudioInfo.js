@@ -212,6 +212,7 @@ export default {
         },
         hideChatModal: function() {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
+            window.location.reload(); //새로고침
         },
         /* 스크롤을 최하단으로 옮김 */
         moveToScrollBottom() {

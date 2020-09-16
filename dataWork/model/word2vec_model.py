@@ -16,53 +16,55 @@ import gensim
 from gensim.models import word2vec
 
 
-# In[ ]:
+# In[2]:
 
 
-class getDescTags(dataset):
-    def __init__(self, n,CoreTagDate1, CoreTagDate2):
-    self.n = len(dataset)
-    self.dataset = dataset
-    
-    def wordVec(CoreTagDate1):
+def wordVec(CoreTagData1):
     num_features =350    # Word vector dimensionality                      
     min_word_count =2   # Minimum word count                        
     num_workers = 2     # Number of threads to run in parallel
     context = 4          # Context window size                                                                                    
     downsampling = 1e-3  # Downsample setting for frequent words
-    dataset1=dataset
-
+    dataset=CoreTagData1
+    
     model = gensim.models.Word2Vec(CoreTagData1, workers=num_workers, 
                               size=num_features, min_count = min_word_count,
                               window = context, sample = downsampling)
-       
-    def extendTag(CoreTagDate2):
+    return model 
+# model=wordVec(CoreTagData1)
+
+
+# In[ ]:
+
+
+def extendTag(CoreTagData2,model):
     vocab=model.wv.vocab
     extendTagList=[]
     extendTagSimList=[]
-    for i in range(len(CoreTagDate2)):
+    for i in range(len(CoreTagData2)):
         tags=[]
         tagsSim=[]
-        for j in range(len(CoreTagDate2[i])):
-            if((len(CoreTagDate2[i])>25)):
-                tags.append(CoreTagDate2[i][j])
+        for j in range(len(CoreTagData2[i])):
+            if((len(CoreTagData2[i])>25)):
+                tags.append(CoreTagData2[i][j])
                 tagsSim.append(0)
-            if((CoreTagDate2[i][j] in vocab.keys())&(len(CoreTagDate2[i])>12)):
+            if((CoreTagData2[i][j] in vocab.keys())&(len(CoreTagData2[i])>12)):
                 for k in range(1):
-                    tags.append(model.wv.most_similar(CoreTagDate2[i][j],topn=1)[k][0])
-                    tagsSim.append(model.wv.most_similar(CoreTagDate2[i][j],topn=1)[k][1])
-            elif((CoreTagDate2[i][j] in vocab.keys())&(len(CoreTagDate2[i])>5)):
+                    tags.append(model.wv.most_similar(CoreTagData2[i][j],topn=1)[k][0])
+                    tagsSim.append(model.wv.most_similar(CoreTagData2[i][j],topn=1)[k][1])
+            elif((CoreTagData2[i][j] in vocab.keys())&(len(CoreTagData2[i])>5)):
                 for k in range(3):
-                    tags.append(model.wv.most_similar(CoreTagDate2[i][j],topn=3)[k][0])
-                    tagsSim.append(model.wv.most_similar(CoreTagDate2[i][j],topn=3)[k][1])
-            elif((CoreTagDate2[i][j] in vocab.keys())&(len(CoreTagDate2[i])<=4)):
+                    tags.append(model.wv.most_similar(CoreTagData2[i][j],topn=3)[k][0])
+                    tagsSim.append(model.wv.most_similar(CoreTagData2[i][j],topn=3)[k][1])
+            elif((CoreTagData2[i][j] in vocab.keys())&(len(CoreTagData2[i])<=4)):
                 for k in range(4):
-                    tags.append(model.wv.most_similar(CoreTagDate2[i][j],topn=4)[k][0])                    
-                    tagsSim.append(model.wv.most_similar(CoreTagDate2[i][j],topn=4)[k][1])
-        extendTagList.append(list(set(tags)))
-        extendTagSimList.append(list(set(tagsSim)))
-        
-    dataset["extend_tag"]=extendTagList[0]
-    dataset["extend_tag_sim"]=extendTagSimList[1]
+                    tags.append(model.wv.most_similar(CoreTagData2[i][j],topn=4)[k][0])                    
+                    tagsSim.append(model.wv.most_similar(CoreTagData2[i][j],topn=4)[k][1])
+        extendTagList.append(tags)
+        extendTagSimList.append(tagsSim) 
+    dataset["extend_tag"]=extendTagList
+    dataset["extend_tag_sim"]=extendTagSimList
+    
     return dataset
+# dataset=extendTag(CoreTagData2)
 

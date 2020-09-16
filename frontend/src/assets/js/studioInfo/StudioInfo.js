@@ -12,6 +12,7 @@ import 'vue-material/dist/theme/default.css'
 import "materialize-css"
 import Chat from "@/components/chat/Chat.vue"; //문의
 import Clipboard from 'v-clipboard'
+import OthserStudio from "@/components/studioInfo/OthserStudio"
 
 Vue.use(Clipboard)
 Vue.use(VueMaterial)
@@ -25,7 +26,8 @@ export default {
         TimeChart,
         DayChart,
         Map,
-        Chat
+        Chat,
+        OthserStudio
     },
     event: 'studios',
     data: function() {
@@ -89,6 +91,16 @@ export default {
     },
     async mounted() { //async mount로 비동기 처리
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
+        axios
+            .get("http://127.0.0.1:5000/similar/")
+            .then(response => {
+                this.customer = response.data;
+            })
+            .catch(error => {
+                console.log(error);
+                this.errored = true;
+            })
+            .finally(() => (this.loading = false));
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
         console.log("this.stuId : " + this.stuId);
         axios

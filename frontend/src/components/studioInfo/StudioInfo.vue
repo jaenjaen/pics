@@ -266,6 +266,12 @@
         </div>
       </div>
       <hr />
+      <!-- ============== OthserStudio ============== -->
+      <div class="article-Chart-area">
+        <OthserStudio>
+          
+        </OthserStudio>      
+      </div>
       <!-- ============== Review ============== -->
       <div id="review-container">
         <div id="no-review" v-if="(reviews+'').length<=0">

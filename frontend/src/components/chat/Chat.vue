@@ -51,7 +51,7 @@
                                 <div class='chat-details'>
                                     <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
                                     <span style="display: none;">{{index}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                    <span class='chat-message-read-status font-size-small'>- 읽음</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-recipient -->
@@ -60,7 +60,7 @@
                             <img class='chat-image chat-image-default profile' :src='customer.imgSrc' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
-                                    <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p v-if="prev.word != ''">{{prev.word}}</p>
                                     <p v-else-if="isImgFile(prev.filePath)">
                                         <img class="chatUploadImg" :src="chatRoute + prev.filePath">
                                     </p>
@@ -70,7 +70,8 @@
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                    <span class='chat-message-read-status font-size-small'>- 읽음</span>
+                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId, $event)">삭제</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->
@@ -93,7 +94,7 @@
                                 <div class='chat-details'>
                                     <span class='chat-message-localization font-size-small stu-time'>{{prev.dateTime | showUntilMin}}</span>
                                     <span style="display: none;">{{index}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                    <span class='chat-message-read-status font-size-small'>- 읽음</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-recipient -->
@@ -102,7 +103,7 @@
                             <img class='chat-image chat-image-default profile' :src='company.logoImg' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
-                                    <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p v-if="prev.word != ''">{{prev.word}}</p>
                                     <p v-else-if="isImgFile(prev.filePath)">
                                         <img class="chatUploadImg" :src="chatRoute + prev.filePath">
                                     </p>
@@ -111,9 +112,9 @@
                                     </p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
-                                    <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span style="display: none;">{{index}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                    <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
+                                    <span class='chat-message-read-status font-size-small'>- 읽음</span>
+                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId, $event)">삭제</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->

@@ -38,14 +38,14 @@ public class FileController {
 			@PathVariable String subPath, @PathVariable String id,
 			HttpServletRequest request) {		
 		/* 업체 아이디 받아오기 */
-		System.out.println("업체 아이디 : " + id);
+//		System.out.println("업체 아이디 : " + id);
 
 		String fileName = ""; //화면으로 보낼 파일의 이름들
 
 		/* 파일 경로 설정하기 */
 		root = request.getSession().getServletContext().getRealPath("/");
 		path = root + "upload" + fileSeparator + subPath + fileSeparator; //공통 파일 경로
-		System.out.println(path);
+//		System.out.println(path);
 
 		if(file==null) return new ResponseEntity(HttpStatus.NO_CONTENT);
 
@@ -53,15 +53,15 @@ public class FileController {
 			fileName = file.getOriginalFilename(); //업로드된 파일명
 
 			/* 파일 정보 확인 */
-			System.out.println("파일의 사이즈 :: "+file.getSize());
-			System.out.println("업로드된 파일명 :: "+fileName);
-			System.out.println("파일의 파라미터명 :: "+file.getName());
+//			System.out.println("파일의 사이즈 :: "+file.getSize());
+//			System.out.println("업로드된 파일명 :: "+fileName);
+//			System.out.println("파일의 파라미터명 :: "+file.getName());
 
 			/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
 			String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
 			int i = fileName.lastIndexOf("."); //파일 확장자 위치
 			fileName = now + "_" + id + fileName.substring(i, fileName.length());
-			System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
+//			System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
 
 			try {
 				file.transferTo(new File(path+fileName)); //파일 생성
@@ -79,7 +79,7 @@ public class FileController {
 			@PathVariable String subPath, @PathVariable String comId,
 			HttpServletRequest request) {
 		/* 업체 아이디 받아오기 */
-		System.out.println("업체 아이디 : " + comId);
+//		System.out.println("업체 아이디 : " + comId);
 
 
 		String fileNames = ""; //화면으로 보낼 파일의 이름들
@@ -87,7 +87,7 @@ public class FileController {
 		/* 파일 경로 설정하기 */
 		root = request.getSession().getServletContext().getRealPath("/");
 		path = root + "upload"+fileSeparator+ subPath + fileSeparator; //공통 파일 경로
-		System.out.println(path);
+//		System.out.println(path);
 
 		if(files.size()==0) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -98,15 +98,15 @@ public class FileController {
 				String fileName = file.getOriginalFilename(); //업로드된 파일명
 
 				/* 파일 정보 확인 */
-				System.out.println("파일의 사이즈 :: "+file.getSize());
-				System.out.println("업로드된 파일명 :: "+file.getOriginalFilename());
-				System.out.println("파일의 파라미터명 :: "+file.getName());
+//				System.out.println("파일의 사이즈 :: "+file.getSize());
+//				System.out.println("업로드된 파일명 :: "+file.getOriginalFilename());
+//				System.out.println("파일의 파라미터명 :: "+file.getName());
 
 				/* 파일 이름 설정하기(현재시간+_+comId+확장자) */
 				String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS")); //현재 시간
 				int i = fileName.lastIndexOf("."); //파일 확장자 위치
 				fileName = now + "_" + comId + fileName.substring(i, fileName.length());
-				System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
+//				System.out.println("새롭게 설정한 파일 이름 :: " + fileName);
 
 				fileNames += fileName + ",";
 

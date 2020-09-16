@@ -1,7 +1,5 @@
 package com.devils.pics.service.impl;
 
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +19,16 @@ public class ChatServiceImpl implements ChatService {
 	/* 채팅 추가하기 */
 	public int addChat(Chat chat) throws Exception {
 		return chatDao.addChat(chat);
+	}
+	
+	/* 채팅 아이디로 해당되는 대화를 삭제함 */
+	public int deleteChat(String chatId) throws Exception {
+		return chatDao.deleteChat(chatId);
+	}
+	
+	/* 채팅 아이디로 대화를 가져옴 */
+	public Chat getChatByChatId(String chatId) throws Exception {
+		return chatDao.getChatByChatId(chatId);
 	}
 	
 	/* 해당되는 스튜디오, 고객의 모든 대화를 가져옴 */

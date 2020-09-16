@@ -41,6 +41,19 @@
 		VALUES(#{custId}, #{stuId}, #{word}, #{filePath}, NOW(), #{sender}, #{readCheck});
 	</insert>
 	
+	<!-- 채팅 아이디로 해당되는 대화를 삭제함 -->
+	<delete id="deleteChat" parameterType="string">
+		DELETE FROM chat WHERE chat_id=#{chatId};
+	</delete>
+	
+	<!-- 채팅 아이디로 대화를 가져옴 -->
+	<select id="getChatByChatId" parameterType="string" resultType="chat">
+		SELECT chat_id, cust_id, stu_id, 
+        word, file_path, 
+        DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check 
+		FROM chat WHERE chat_id=#{chatId};
+	</select>
+	
 	<!-- 보내는 이(고객/기업)에 따라 해당되는 스튜디오, 고객의 대화를 가져옴 -->
 	<select id="getPrevAllChat" parameterType="hashMap" resultType="chat">
 		SELECT 

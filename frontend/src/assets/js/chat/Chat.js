@@ -310,6 +310,48 @@ export default {
                 })
         },
 
+        /* 대화 삭제 */
+        deleteChat(fileName, chatId, event) {
+            let result = confirm("삭제하시겠습니까?");
+            if (result) {
+                if (fileName != '') { //파일일 경우 파일을 먼저 삭제
+                    this.deleteChatFile(fileName);
+                }
+                axios.delete('http://127.0.0.1:7777/chat/delete/' + chatId)
+                    .then((response) => {
+                        if (response.data == 1) {
+                            console.log('대화 삭제 성공');
+                            this.getPrevAllChat(); //대화 내역을 다시 불러옴
+
+                            /* 채팅 모달의 스크롤을 최하단으로 내림 */
+                            this.$emit('moveScroll');
+                        } else if (response.data == -1) {
+                            console.log('삭제할 대화가 없음');
+                        }
+                    })
+                    .catch(() => {
+                        console.log('대화 삭제 실패');
+                    })
+            } else { //삭제를 원하지 않을 경우
+                return;
+            }
+        },
+
+        /* 파일 삭제 */
+        deleteChatFile(fileName) {
+            axios.delete('http://127.0.0.1:7777/filedelte/chat/' + fileName)
+                .then((response) => {
+                    if (response.data === 'OK') {
+                        console.log('파일 삭제 성공');
+                    } else if (response.data === 'FAIL') {
+                        console.log('삭제할 파일이 없음');
+                    }
+                })
+                .catch(() => {
+                    console.log('대화 삭제 실패');
+                })
+        },
+
         /* 웹소켓 연결 */
         connect() {
             const serverURL = "http://localhost:7777/webSocket"

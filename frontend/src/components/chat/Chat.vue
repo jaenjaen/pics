@@ -1,6 +1,6 @@
 <script scoped src="@/assets/js/chat/Chat.js"></script>
 <template>
-    <div id="app">
+    <div id="chatVue">
 
         <div>
             <!-- Header : 채팅하는 대상 -->

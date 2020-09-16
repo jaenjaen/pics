@@ -7,7 +7,7 @@
     <div id="chatModal" style="display:none;">
       <div id="chatContent">
         <div id="closeChat" @click="hideChatModal">&times;</div>
-        <Chat id="chatArea" ref="chat" />
+        <Chat id="chatArea" ref="chat" @moveScroll="moveToScrollBottom()" />
       </div>
     </div>
 

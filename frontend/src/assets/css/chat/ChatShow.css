@@ -19,7 +19,7 @@
     #chatContent {
         background-color: #fefefe;
         margin: auto;
-        overflow: auto;
+        overflow: scroll;
         text-align: left;
         padding: 30px;
         padding-top: 0;
@@ -49,7 +49,6 @@
     
     #chatArea {
         margin-left: 10px;
-        padding-bottom: 30px;
     }
     
     @media screen and (max-width: 1000px) {
@@ -58,9 +57,9 @@
             right: 30%;
         }
     }
-    /* 반응형 : 너비 675px 이하 */
+    /* 반응형 : 너비 850px 이하 */
     
-    @media screen and (max-width: 675px) {
+    @media screen and (max-width: 850px) {
         /* 모달 너비 조정 */
         #chatModal {
             padding-top: 50px;
@@ -69,8 +68,12 @@
         #chatContent {
             width: 100%;
             padding-top: 3px;
+            padding-left: 0;
             padding-right: 0;
             padding-bottom: 30px;
+        }
+        #chatArea {
+            padding-bottom: 20px;
         }
         #closeChat {
             left: 90%;

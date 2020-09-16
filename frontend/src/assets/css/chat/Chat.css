@@ -10,9 +10,9 @@
                 box-sizing: border-box;
             }
             
-            #app {
+            #chatVue {
                 /* 부모요소에 height 100% 부여 */
-                height: 100%;
+                height: auto;
                 padding-bottom: 110px;
                 margin-top: 50px;
             }
@@ -484,9 +484,9 @@
                     width: 35%;
                 }
             }
-            /* 반응형 : 너비 675px 이하 */
+            /* 반응형 : 너비 850px 이하 */
             
-            @media screen and (max-width: 675px) {
+            @media screen and (max-width: 850px) {
                 header {
                     width: 100%;
                 }

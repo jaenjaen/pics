@@ -105,15 +105,33 @@ export default {
         },
         /* 문의 날짜를 연/월/일/시/분으로 분할함 */
         showUntilMin(value) {
-            for (let i = 0; i < value.length; i++) {
-                if (value[i] === ':' && value[i + 3] === ':') {
-                    return value.substring(0, i + 3) + value.substring(i + 6, value.length);
-                }
-            }
+            let ref = value.lastIndexOf(":");
+            return value.substring(0, ref) + value.substring(ref + 3, value.length);
         }
     },
 
     methods: {
+        /* 같은 시간인지 체크 */
+        checkSameTime(i) {
+            console.log("타입 체크");
+            if (i == this.prevAllChat.length - 1) { //마지막 인덱스일 경우 비교 대상이 없으므로 리턴
+                return true;
+            } else {
+                let before =
+                    this.prevAllChat[i].dateTime.substring(0, this.prevAllChat[i].dateTime.lastIndexOf(":")) +
+                    this.prevAllChat[i].dateTime.substring(this.prevAllChat[i].dateTime.lastIndexOf(":") + 3, this.prevAllChat[i].dateTime.length);
+                let after =
+                    this.prevAllChat[i + 1].dateTime.substring(0, this.prevAllChat[i + 1].dateTime.lastIndexOf(":")) +
+                    this.prevAllChat[i + 1].dateTime.substring(this.prevAllChat[i + 1].dateTime.lastIndexOf(":") + 3, this.prevAllChat[i + 1].dateTime.length);
+                if (this.prevAllChat[i].sender === this.prevAllChat[i + 1].sender && before === after) { //같은 시간일 경우 앞선 영역을 보이지 않음.
+                    return false;
+                } else { //다른 시간일 경우 보임
+                    return true;
+                }
+            }
+        },
+
+
         /* 채팅 접속시 설정 */
         setChat(stuId, custId) {
             /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */

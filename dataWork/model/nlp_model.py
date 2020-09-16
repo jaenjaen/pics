@@ -12,6 +12,7 @@ import pandas as pd
 from pandas import DataFrame as df
 import csv
 import os
+import sys
 
 # 자연어 처리기
 from konlpy.tag import Okt

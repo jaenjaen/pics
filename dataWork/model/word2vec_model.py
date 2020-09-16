@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 from pandas import DataFrame as df
 import os
+import sys
 
 import gensim 
 from gensim.models import word2vec
@@ -25,7 +26,7 @@ def wordVec(CoreTagData1):
     num_workers = 2     # Number of threads to run in parallel
     context = 4          # Context window size                                                                                    
     downsampling = 1e-3  # Downsample setting for frequent words
-    dataset1=dataset
+#     dataset1=dataset
 
     model = gensim.models.Word2Vec(CoreTagData1, workers=num_workers, 
                               size=num_features, min_count = min_word_count,
@@ -37,7 +38,7 @@ def wordVec(CoreTagData1):
 # In[ ]:
 
 
-def extendTag(CoreTagData2,model):
+def extendTag(CoreTagData2,model,dataset):
     vocab=model.wv.vocab
     extendTagList=[]
     extendTagSimList=[]

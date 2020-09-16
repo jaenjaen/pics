@@ -24,10 +24,10 @@ export default {
     components: {
 
     },
-    created: function() {
-        console.log("props로 데이터 받음~~!!");
-        this.stuId = this.stuIdData;
-    },
+    // created: function() {
+    //     console.log("props로 데이터 받음~~!!");
+    //     this.stuId = this.stuIdData;
+    // },
     mounted() {
         axios
             .get("http://127.0.0.1:5000/tag/10")

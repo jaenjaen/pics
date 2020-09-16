@@ -11,5 +11,15 @@ export default {
         moveBack() {
             this.$router.go(-1);
         },
-    }
-};
+    },
+    computed: {
+        wWidth() {
+            let wWidth = window.innerWidth;
+
+            if (wWidth < 768) {
+                return wWidth + 'px'
+
+            }
+        }
+    },
+}

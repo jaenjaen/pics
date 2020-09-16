@@ -9,5 +9,5 @@ export default {
             // alert(value)
             this.$router.push('wishlist/' + value);
         }
-    }
+    },
 };

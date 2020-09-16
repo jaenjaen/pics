@@ -29,22 +29,22 @@ export default {
         this.stuId = this.stuIdData;
     },
     mounted() {
-        axios
-            .post("http://127.0.0.1:5000/target/", this.stuId)
-            .then(response => {
-                // this.studio = response.data;
-            })
-            .catch(error => {
-                console.log(error);
-                this.errored = true;
-            })
-            .finally(() => (this.loading = false));
+        // axios
+        //     .post("http://127.0.0.1:5000/target/", this.stuId)
+        //     .then(response => {
+        //         // this.studio = response.data;
+        //     })
+        //     .catch(error => {
+        //         console.log(error);
+        //         this.errored = true;
+        //     })
+        //     .finally(() => (this.loading = false));
 
         axios
             .get("http://127.0.0.1:5000/similar/" + this.studio)
             .then(response => {
                 this.studio = response.data;
-                console.log(studio)
+                console.log(this.studio)
             })
             .catch(error => {
                 console.log(error);

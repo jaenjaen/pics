@@ -63,6 +63,7 @@ export default {
     },
 
     created() {
+        this.connect(); //소켓 연결
         if (customer != null) { //개인고객으로 로그인했을 경우
             this.customerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
@@ -122,14 +123,14 @@ export default {
             if (customer != null) { //개인고객으로 로그인했을 경우
                 this.chat.sender = 0; //보내는 이 : 개인
                 this.chat.custId = customer.custId;
-                console.log("chat 데이터 세팅 완료/sender=1");
+                console.log("chat 데이터 세팅 완료(보내는 이 : 고객)");
                 console.log(this.chat);
 
                 this.getPresentStu(); //현재 대화 중인 스튜디오 정보 가져오기
 
             } else if (company != null) { //기업고객으로 로그인했을 경우
                 this.chat.sender = 1; //보내는 이 : 기업
-                console.log("chat 데이터 세팅 완료/sender=0");
+                console.log("chat 데이터 세팅 완료(보내는 이 : 기업)");
                 console.log(this.chat);
 
                 this.getPresentCust(); //현재 대화 중인 고객 정보 가져오기
@@ -303,7 +304,6 @@ export default {
                     } else if (response.data == -1) {
                         this.prevAllChat = [];
                     }
-                    this.connect(); //소켓 연결
                 })
                 .catch(() => {
                     console.log('이전 대화 가져오기 실패');
@@ -330,6 +330,9 @@ export default {
 
                             // 받은 데이터를 json으로 파싱 후 리스트에 넣음
                             this.prevAllChat.push(JSON.parse(response.body))
+
+                            /* 채팅 모달의 스크롤을 최하단으로 내림 */
+                            this.$emit('moveScroll');
                         }
                     });
                 },
@@ -451,7 +454,7 @@ export default {
                 document.getElementById('chatFile').value = '';
                 document.getElementById('chatFileName').value = '';
 
-                /* 스크롤 최하단으로 이동 */
+                /* 채팅 모달의 스크롤을 최하단으로 내림 */
                 this.$emit('moveScroll');
             }
         },
@@ -555,8 +558,7 @@ export default {
             this.chat.stuId = event.target.childNodes[1].innerHTML;
             this.chat.custId = event.target.childNodes[2].innerHTML;
             this.setChat(this.chat.stuId, this.chat.custId);
-            //window.scrollTo(0, document.body.scrollHeight);
-            this.$emit('moveScroll');
+            this.$emit('moveScroll'); //채팅 모달의 스크롤을 최하단으로 내림
             this.controlModal('hide', 'chatListModal');
         },
 

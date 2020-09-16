@@ -53,13 +53,15 @@
 	
 	<!-- 해당 스튜디오, 고객의 가장 최근 채팅 가져오기 -->
 	<select id="getMostRecentChat" parameterType="hashMap" resultType="chat">
-		SELECT chat_id, cust_id, stu_id, 
-		word, file_path,
-		DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check
-		FROM chat
-		WHERE cust_id=#{custId} AND stu_id=#{stuId}
-		ORDER BY date_time DESC
-		LIMIT 1;
+		SELECT s.chat_id, s.cust_id, s.stu_id, 
+		s.word, s.file_path,
+		DATE_FORMAT(s.date_time, "%Y/%c/%e %r") date_time, s.sender, s.read_check
+		FROM
+		(SELECT *
+				FROM chat
+				WHERE cust_id=#{custId} AND stu_id=#{stuId}
+				ORDER BY date_time DESC
+				LIMIT 1) s;
 	</select>
 
 	<!-- 업체의 스튜디오 및 고객별 최근 대화  -->

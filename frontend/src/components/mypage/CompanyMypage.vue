@@ -28,16 +28,18 @@
       </div>
 
       <!-- Custom Creation Popup -->
-       <modal name="creationModal" :height="200" :width="300" :styles="styles">
+       <modal name="creationModal" :height="230" :width="300" :styles="styles">
          <div class="popup">
-          <h3> 예약이름(무조건 예외날만 추가)</h3>
-          <h3> 날짜데이터피커1  |  날짜 데이터피커2 | 올데이</h3>
-          <button>저장</button>
+          <div class="creation_contents"><label>일정 제목: </label><input type="text" placeholder="예약 불가 일정 등록" v-model="ex_title"><br></div>
+          <div class="creation_contents"><label>시작 날짜</label><input type="datetime-local" :min="now" :value="start_date" @change="minuteControl"><br></div>
+          <div class="creation_contents"><label>종료 날짜</label><input type="datetime-local" :min="now" :value="end_date"><br></div>
+          <div class="creation_contents"><input type="checkbox" :checked="allday"><label>Allday</label></div>
+          <div class="creation_contents"><button @click="addExceptionDate">저장</button></div>
         </div>
       </modal>
 
       <!-- Custom Detail Popup -->
-       <modal name="detailModal" :height="230" :width="300" :styles="styles">
+       <modal name="detailModal" :height="250" :width="300" :styles="styles">
          <div class="popup">
           <h3>{{userName}}</h3>
           <h4 v-html="reservationDate"></h4>

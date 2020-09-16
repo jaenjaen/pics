@@ -99,8 +99,8 @@
 	</insert> 
 	
  	<insert id="addExceptionDates" parameterType="exceptionDate">							
-		INSERT into exception_date(start_date,end_date,stu_id)
-		VALUES (#{startDate},#{endDate},#{stuId})
+		INSERT into exception_date(start_date,end_date,stu_id,exception_title)
+		VALUES (#{startDate},#{endDate},#{stuId},#{exceptionTitle})
 	</insert>
 
 	<update id="updateReservation" parameterType="reservation">							

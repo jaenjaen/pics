@@ -183,6 +183,9 @@ export default {
         sizeUnit(size) { // m^2 : 평 단위
             return (size * 0.3025).toFixed(1);
         },
+        sizePoint(value) {
+            return value.toFixed(2);
+        },
         emailHide(value) { //이메일 아이디 가리기
             var id = value.split("@");
             if (id.length < 5) {

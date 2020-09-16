@@ -7,7 +7,7 @@
         </td>
         <td class="userName">{{username}}</td>
         <td rowspan="2" id="userHeart">
-          <a href="http://localhost:9999/wishlist"><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></a>
+          <router-link :to="{name:'wishList', params: {custId:custId}}"><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></router-link>
         </td>
       </tr>
       <tr>

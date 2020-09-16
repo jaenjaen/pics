@@ -45,12 +45,6 @@ def getDescList(dataset):
 # In[ ]:
 
 
-
-
-
-# In[ ]:
-
-
 ## 2) Tag 다듬기 : 복합명사로 이루어진 태그는 잘라서 길이 2~7 사이의 단어만 추출
 def getTagList(dataset):
     n=len(dataset)
@@ -100,8 +94,6 @@ def getCoreTags1(dataset):
     CoreTagData1=CoreTagData1[0]
     return CoreTagData1
 
-# CoreTagData1=getCoreTags1(dataset)
-
 
 # In[ ]:
 
@@ -128,8 +120,6 @@ def getCoreTags2(dataset):
             coreTagList.append(list(set(descript[k]))) 
     return coreTagList
 
-# CoreTagData2=getCoreTags2(dataset)
-
 
 # In[ ]:
 
@@ -142,7 +132,28 @@ def fillCoreTag(CoreTagData1,CoreTagData2):
 
     for i in range(len(CoreTagData2)):
         CoreTagData2[i]=list(set(CoreTagData2[i]))
-        CoreTagData1[i]=list(set(CoreTagData1[i])) 
+        CoreTagData1[i]=list(set(CoreTagData1[i]))
+    
+    ## dataset에 키워드 삽입
+    dataset["new_tag1"]=CoreTagData1
+    dataset["new_tag2"]=CoreTagData2
+    return dataset 
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
 
 
 

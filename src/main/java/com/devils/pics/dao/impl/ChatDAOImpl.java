@@ -21,6 +21,16 @@ public class ChatDAOImpl implements ChatDAO {
 	public int addChat(Chat chat) throws Exception {
 		return sqlSession.insert(ns+"addChat", chat);
 	}
+	
+	/* 채팅 아이디로 해당되는 대화를 삭제함 */
+	public int deleteChat(String chatId) throws Exception {
+		return sqlSession.delete(ns+"deleteChat", chatId);
+	}
+	
+	/* 채팅 아이디로 대화를 가져옴 */
+	public Chat getChatByChatId(String chatId) throws Exception {
+		return sqlSession.selectOne(ns+"getChatByChatId", chatId);
+	}
 
 	/* 해당되는 스튜디오, 고객의 대화를 가져옴 */
 	public List<Chat> getPrevAllChat(Map map) throws Exception{

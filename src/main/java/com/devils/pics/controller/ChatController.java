@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,26 +27,45 @@ public class ChatController {
 	@Autowired
 	private ChatService chatService;
 	
+	/* 발송한 채팅을 DB에 저장하고 발신자, 수신자 모두에게 리턴함 */
 	@MessageMapping("/receive") //receive를 메세지를 받을 endpoing로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
-		System.out.println("입력값 chat : " + chat);
+//		System.out.println("입력값 chat : " + chat);
 		Chat resultChat = new Chat();
 		try {
 			int result = chatService.addChat(chat);
-			System.out.println("채팅 " + result + "개 추가");
+//			System.out.println("채팅 " + result + "개 추가");
 			
 			Map map = new HashMap();
 			map.put("custId", chat.getCustId());
 			map.put("stuId", chat.getStuId());
 			resultChat = chatService.getMostRecentChat(map);
-			System.out.println("결과값 resultChat : " + resultChat);
+//			System.out.println("결과값 resultChat : " + resultChat);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return resultChat;
 	}
 
+	/* 채팅 아이디로 해당되는 채팅을 지움 */
+	@DeleteMapping("/chat/delete/{chatId}")
+	public ResponseEntity deleteChat(@PathVariable String chatId) {
+		try {
+			int result = chatService.deleteChat(chatId);
+			System.out.println("채팅 파일 " + result + "개 삭제 완료");
+			
+			if(result == 1) {
+				return new ResponseEntity(1, HttpStatus.OK);
+			}else { //해당되는 채팅이 없을 경우
+				return new ResponseEntity(-1, HttpStatus.OK);
+			}
+		}catch(Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
 	/* 이제까지의 해당되는 스튜디오, 고객의 대화 모두를 가져옴 */
 	@GetMapping("/chat/prev/{stuId}/{custId}")
 	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {

@@ -39,8 +39,14 @@
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
                                     <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p v-else-if="isImgFile(prev.filePath)"><img :src="chatRoute + prev.filePath"></p>
-                                    <p v-else><a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a></p>
+                                    <p v-else-if="isImgFile(prev.filePath)">
+                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                    </p>
+                                    <p v-else>
+                                        <a :href="chatRoute + prev.filePath" download="downloadFile">
+                                            {{prev.filePath}}
+                                        </a>
+                                    </p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -55,8 +61,12 @@
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
                                     <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p v-else-if="isImgFile(prev.filePath)"><img :src="chatRoute + prev.filePath"></p>
-                                    <p v-else><a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a></p>
+                                    <p v-else-if="isImgFile(prev.filePath)">
+                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                    </p>
+                                    <p v-else>
+                                        <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
+                                    </p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -74,7 +84,7 @@
                                 <div class='chat-message-content'>
                                     <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
                                     <p v-else-if="isImgFile(prev.filePath)">
-                                        <img :src="chatRoute + prev.filePath">
+                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
                                     </p>
                                     <p v-else>
                                         <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
@@ -93,8 +103,12 @@
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
                                     <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p v-else-if="isImgFile(prev.filePath)"><img :src="chatRoute + prev.filePath"></p>
-                                    <p v-else><a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a></p>
+                                    <p v-else-if="isImgFile(prev.filePath)">
+                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                    </p>
+                                    <p v-else>
+                                        <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
+                                    </p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details'>
                                     <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>
@@ -192,7 +206,7 @@
           <div style="background:white; display:inline-block;">
             <span>
               <a href="javascript:;" @click="controlModal('show', 'uploadModal')">
-                <img :src="defaultImg.add" width="30px" height="30px">
+                <img id="add" :src="defaultImg.add"  @mouseover="controlListImg('mouseover', 'add')" @mouseout="controlListImg('mouseout', 'add')" width="30px" height="30px">
               </a>
             </span>
             <span>
@@ -200,7 +214,7 @@
             </span>
             <span>
                 <a href="javascript:;" @click="sendChat('word')">
-                  <img :src="defaultImg.send" width="30px" height="30px">
+                  <img :src="defaultImg.send" id="send" @mouseover="controlListImg('mouseover', 'send')" @mouseout="controlListImg('mouseout', 'send')" width="30px" height="30px">
                 </a>
             </span>
           </div>

@@ -20,7 +20,9 @@ export default {
                 searchHover: 'http://localhost:7777/upload/default/searchHover.png',
                 user: 'http://localhost:7777/upload/default/user.png',
                 add: 'http://localhost:7777/upload/default/add.png',
-                send: 'http://localhost:7777/upload/default/send.png'
+                addHover: 'http://localhost:7777/upload/default/addHover.png',
+                send: 'http://localhost:7777/upload/default/send.png',
+                sendHover: 'http://localhost:7777/upload/default/sendHover.png'
             },
             chat: {
                 chatId: '',
@@ -425,10 +427,6 @@ export default {
                     } else if (cmd == 'word') {
                         this.send(); //보냄
                     }
-                    /* 보내고 나서 입력 리셋 */
-                    this.chat.word = '';
-                    this.chat.filePath = '';
-                    document.getElementById('chatFile').value = ''
                 } else if (cmd == 'word' && this.chat.word == '') {
                     alert("내용을 입력하세요");
                     return;
@@ -446,6 +444,12 @@ export default {
                 const msg = this.chat;
                 this.stompClient.send("/receive", JSON.stringify(msg), {});
                 this.controlModal('hide', 'uploadModal');
+
+                /* 보내고 나서 입력 리셋 */
+                this.chat.word = '';
+                this.chat.filePath = '';
+                document.getElementById('chatFile').value = '';
+                document.getElementById('chatFileName').value = '';
             }
         },
 
@@ -462,6 +466,12 @@ export default {
                     case 'search':
                         document.getElementById(obj).setAttribute('src', this.defaultImg.searchHover);
                         break;
+                    case 'add':
+                        document.getElementById(obj).setAttribute('src', this.defaultImg.addHover);
+                        break;
+                    case 'send':
+                        document.getElementById(obj).setAttribute('src', this.defaultImg.sendHover);
+                        break;
                 }
 
             } else if (cmd == 'mouseout') {
@@ -474,6 +484,12 @@ export default {
                         break;
                     case 'search':
                         document.getElementById(obj).setAttribute('src', this.defaultImg.search);
+                        break;
+                    case 'add':
+                        document.getElementById(obj).setAttribute('src', this.defaultImg.add);
+                        break;
+                    case 'send':
+                        document.getElementById(obj).setAttribute('src', this.defaultImg.send);
                         break;
                 }
             }

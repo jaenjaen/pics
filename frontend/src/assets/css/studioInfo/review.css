@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@media screen and (max-width: 768px) {
+    #app {
+        width: 100%;
+        background-color: #fff;
+    }
+}
+
+
+/* 리뷰 영역 */
+
+.card-content {
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 2%;
+    box-shadow: 2px 2px 1.5px lightgray;
+}
+
+#reviewr-img {
+    width: 10px;
+    height: 10px;
+}
+
+#reviewr-email {
+    display: table-cell;
+    font-size: 1.2em;
+}
+
+.star-score {
+    margin: 5px auto;
+    padding: 5px auto;
+}
+
+#material-icons {
+    display: table-cell;
+    width: 7px;
+    height: 7px;
+}
+
+#review-content {
+    margin: 2% 5% 1% 5%;
+}
+
+#no-review {
+    align-content: center;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    padding: 2%;
+    box-shadow: 2px 2px 1.5px lightgray;
+}
+
+#answer {
+    padding: 2%;
+    /* box-shadow:2px 2px 1.5px lightgray; */
+}
+
+.card-expansion {
+    width: 100%;
+    padding: 2%;
+    text-align: left;
+}
+
+.md-card {
+    width: 100%;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.article-review-area {
+    clear: both;
+    margin: 2% 2% 2% 3%;
+}
+
+#reviewTitle {
+    text-align: left;
+}
+
+#countReview {
+    float: left;
+    color: gray;
+    font-size: small;
+}
+
+#more-review {
+    text-align: right;
+    margin: 2% 2% 2% 3%;
+}
+
+#review {
+    padding-left: 5px;
+}
+
+#more-review-btn {
+    background-color: white;
+    border: none;
+    color: #029be0;
+    padding: 5px 7px 5px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    margin: 4px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 1.5px solid lightgray;
+}
+
+#more-review-btn:hover {
+    background-color: #029be0;
+    color: #fff;
+    border: 1.5px solid lightgray;
+}

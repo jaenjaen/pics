@@ -95,7 +95,7 @@ export default {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
 
         await axios
-            .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/info/11") // + this.stuId)
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
@@ -106,7 +106,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/11") // + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 var exceptionDate = (response.data.exceptionDate);

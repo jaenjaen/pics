@@ -24,6 +24,8 @@ import ChatShow from "@/components/chat/ChatShow.vue";
 import CompanyInfo from "@/components/company/company_info.vue"
 import ChatTest from "@/components/chat/ChatTest.vue";
 import errorPage from "@/components/extra/error.vue";
+import Review from "@/components/studioInfo/Review.vue";
+
 
 Vue.use(VueRouter);
 const routes = [{
@@ -86,7 +88,7 @@ const routes = [{
         path: "/studioInfo/:stuId",
         name: "studioInfo",
         component: StudioInfo,
-        // props: true
+        props: true
     },
     {
         path: "/studioList",
@@ -143,7 +145,16 @@ const routes = [{
         path: "*",
         name: "errorPage",
         component: errorPage
-    }
+    }, {
+        path: "/Review",
+        name: "Review",
+        component: Review,
+    },
+
+
+
+
+
 ];
 
 const router = new VueRouter({

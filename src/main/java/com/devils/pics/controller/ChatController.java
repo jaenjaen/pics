@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,7 +58,7 @@ public class ChatController {
 	public ResponseEntity deleteChat(@PathVariable String chatId) {
 		try {
 			int result = chatService.deleteChat(chatId);
-			System.out.println("채팅 파일 " + result + "개 삭제 완료");
+			//System.out.println("채팅 파일 " + result + "개 삭제 완료");
 			
 			if(result == 1) {
 				return new ResponseEntity(1, HttpStatus.OK);
@@ -70,20 +71,42 @@ public class ChatController {
 		}
 	}
 	
-	@ApiOperation(value="스튜디오, 고객의 대화를 모두 반환", response = List.class)
-	@GetMapping("/chat/prev/{stuId}/{custId}/{sender}")
-	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
+	@ApiOperation(value="채팅 읽음 처리(readCheck=1)", response = List.class)
+	@PutMapping("/chat/prev/{stuId}/{custId}/{sender}")
+	public ResponseEntity updateReadCheck(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
 		try {
+			System.out.println(stuId);
+			System.out.println(custId);
+			System.out.println(sender);
+			
 			Map map = new HashMap();
 			map.put("stuId", stuId);
 			map.put("custId", custId);
-			map.put("sender", sender);
+			map.put("custId", sender);
 			
 			/* 대화 목록을 가져가기 전에 읽음 처리를 한다. */
 			int result = chatService.setAlreadyRead(map);
 			System.out.println("읽음 처리 : " + result);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch(Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@ApiOperation(value="스튜디오, 고객의 대화를 모두 반환", response = List.class)
+	@GetMapping("/chat/prev/{stuId}/{custId}")
+	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {
+		try {
+			System.out.println(stuId);
+			System.out.println(custId);
+			
+			Map map = new HashMap();
+			map.put("stuId", stuId);
+			map.put("custId", custId);
 			
 			List<Chat> list = chatService.getPrevAllChat(map);
+			System.out.println(list);
 			if(list.size()>0) {
 				return new ResponseEntity(list, HttpStatus.OK);
 			}else { //해당되는 대화가 없을 경우
@@ -172,7 +195,7 @@ public class ChatController {
 			map.put("stuId", stuId);
 			map.put("custName", custName);
 			recentChat = chatService.getRecentChatByStuIdAndCustName(map);
-			System.out.println(recentChat);
+			//System.out.println(recentChat);
 			
 			if(recentChat.size()>0) {
 				return new ResponseEntity(recentChat, HttpStatus.OK);

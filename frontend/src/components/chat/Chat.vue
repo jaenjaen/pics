@@ -86,7 +86,9 @@
                                         <img class="chatUploadImg" :src="chatRoute + prev.filePath">
                                     </p>
                                     <p v-else>
-                                        <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
+                                        <a :href="chatRoute + prev.filePath" download="downloadFile">
+                                            {{prev.filePath}}
+                                        </a>
                                     </p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details' v-if="checkSameTime(idx)">

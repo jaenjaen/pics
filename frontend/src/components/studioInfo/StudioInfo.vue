@@ -78,7 +78,7 @@
           <div>
             <h2 id="studio-name">
               <span>{{ studio.name }}</span>
-              <button class="chat-btn" @click="showChatMoal">문의</button>
+              <button class="chat-btn" @click="showChatModal">문의</button>
               <!-- 문의 클릭 이벤트 -->
             </h2>
 

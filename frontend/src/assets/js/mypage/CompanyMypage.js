@@ -273,13 +273,20 @@ export default {
             }
         },
         /* 문의 영역 시작 */
-        showChatMoal: function() {
+        showComChatForInquiry(stuId, custId) { //inquiry에서 stuId, custId를 받음.
+            this.selectedId = stuId;
+            this.userId = custId;
+            console.log("부모 stuId : " + this.selectedId);
+            console.log("부모 custId : " + this.userId);
+            this.showChatModal();
+        },
+        showChatModal: function() {
             if (this.comId === null) {
                 alert("로그인한 회원만 이용 가능합니다.");
-                location.href = "/customerLogin"
+                location.href = "/companyLogin"
             } else {
                 this.$modal.hide("detailModal");
-                this.$refs.chat.setChat(this.stuId, this.userId);
+                this.$refs.chat.setChat(this.selectedId, this.userId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
                 this.moveToScrollBottom();

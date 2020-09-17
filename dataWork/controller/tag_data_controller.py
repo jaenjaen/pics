@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[22]:
 
 
 # 외부 모듈
@@ -21,7 +21,7 @@ import gensim
 from gensim.models import word2vec
 
 
-# In[17]:
+# In[25]:
 
 
 ### 사용자 모듈 불러오기
@@ -30,10 +30,9 @@ sys.path.append('..')
 from dao import tag_dao
 from model import nlp_model
 from model import word2vec_model
-from model import count_tag_model
 
 # 데이터 불러오기
-def tagData(stuId):
+def tagData():
     # DB 데이터
     
     dataset = tag_dao.getTagData()
@@ -56,30 +55,27 @@ def tagData(stuId):
     dataset["new_tag2"]=CoreTagData2
     
     
-#     Word2Vec
+#   Word2Vec
     model=word2vec_model.wordVec(CoreTagData1)
     vocab=model.wv.vocab
     extendTagList=[]
     extendTagSimList=[]
     dataset=word2vec_model.extendTag(CoreTagData2,model,dataset)
-
-#   Counting Words
-    dataset=count_tag_model.tagCount(stuId,dataset)
-    topSim=list(dataset.loc[:10,"stu_id"])
-    return tag_dao.getTop10(topSim)[:10]
+    
+    # 파일 저장 
+    dataset.to_csv('../resources/dataset/tag_data.csv',sep=',',na_rep='NaN',index =True,encoding='utf-8-sig')
 
 
-# In[19]:
+# In[26]:
 
 
-# result=tagData(11) 
-# result
+tagData() 
 
 
 # In[ ]:
 
 
-
+# result.save(path[:-9]+'/resources/images/'+img.filename)
 
 
 # In[ ]:

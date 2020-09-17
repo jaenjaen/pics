@@ -38,10 +38,18 @@
         </div>
       </modal>
 
+      <!-- chat modal -->
+      <div id="chatModal" style="display:none;">
+      <div id="chatContent">
+        <div id="closeChat" @click="hideChatModal">&times;</div>
+        <Chat id="chatArea" ref="chat" @moveScroll="moveToScrollBottom()" />
+      </div>
+    </div>
+
       <!-- Custom Detail Popup -->
        <modal name="detailModal" :height="250" :width="300" :styles="styles">
          <div class="popup">
-          <h3>{{userName}}</h3>
+          <h3>{{userName}}</h3><button class="chat-btn" @click="showChatMoal">문의</button>
           <h4 v-html="reservationDate"></h4>
           <h4 v-if="indexFlag">예약인원 : {{totalPeople}}명</h4>
           <h4 v-if="indexFlag">비용 : {{totalPrice}}원</h4>
@@ -94,3 +102,4 @@
 <script scoped src="@/assets/js/mypage/CompanyMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
 <style scoped src="@/assets/css/mypage/calendar.css"></style>
+<style scoped src="@/assets/css/chat/ChatShow.css"></style>

@@ -24,7 +24,7 @@ export default {
                     this.rdata = res.data;
                     if (this.rdata != "") {
                         sessionStorage.setItem("company", JSON.stringify(this.rdata));
-                        //location.href = "http://localhost:9999";
+                        location.href = "http://localhost:9999";
                     }
                 })
                 .catch(e => {

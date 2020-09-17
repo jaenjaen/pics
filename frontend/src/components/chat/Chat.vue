@@ -66,8 +66,8 @@
                                         <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
                                     </p>
                                 </div><!-- chat-message-content -->
-                                 <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
                                 <div class='chat-details' v-if="checkSameTime(idx)">
+                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
                                     <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
                                 </div><!-- chat-details -->

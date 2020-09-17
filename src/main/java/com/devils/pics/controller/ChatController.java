@@ -32,7 +32,7 @@ public class ChatController {
 	@Autowired
 	private ChatService chatService;
 	
-	@ApiOperation(value="", response = Chat.class)
+	@ApiOperation(value="채팅을 DB에 넣고 리턴함", response = Chat.class)
 	@MessageMapping("/receive") //receive를 메세지를 받을 endpoint로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
@@ -54,6 +54,7 @@ public class ChatController {
 	}
 
 	/* 채팅 아이디로 해당되는 채팅을 지움 */
+	@ApiOperation(value="채팅 아이디로 해당되는 채팅을 삭제함", response = int.class)
 	@DeleteMapping("/chat/delete/{chatId}")
 	public ResponseEntity deleteChat(@PathVariable String chatId) {
 		try {
@@ -71,7 +72,7 @@ public class ChatController {
 		}
 	}
 	
-	@ApiOperation(value="채팅 읽음 처리(readCheck=1)", response = List.class)
+	@ApiOperation(value="채팅 읽음 처리(readCheck=1)")
 	@PutMapping("/chat/prev/{stuId}/{custId}/{sender}")
 	public ResponseEntity updateReadCheck(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
 		try {

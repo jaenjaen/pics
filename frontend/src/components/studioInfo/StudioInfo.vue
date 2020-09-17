@@ -141,8 +141,7 @@
                   <i class="material-icons" id="icon_filter">star</i>
                 </span>
               </span>
-              <span v-if="studio.countReview == 0">평가 없음</span>
-              <!-- <span v-else>{{ studio.avgScore | demical }} 점</span> -->
+              <span v-if="studio.countReview == 0"></span>
             </div>
           </div>
           <div class="price">
@@ -151,7 +150,7 @@
           </div>
         </div>
         <div id="company-of-studio">
-          <!-- <span><img :src="imgUrl(studio.company.logoImg)" width="10%" height="20px"/></span> -->
+          <span><img :src="profilUrl(studio.company.logoImg)" width="25px" height="25px" v-if="studio.company.logoImg"/></span>
           <span>{{studio.company.name}}</span>
         </div>
       </div>
@@ -218,7 +217,6 @@
       </div>
 
       <!-- ============== Description ============== -->
-
       <div class="article-Description-area" v-for="(studio,index) in studios" v-bind:key="index">
         <hr />
         <div class="studio-rule">

@@ -80,7 +80,6 @@ export default {
             errored: false,
         };
     },
-    // Props: [],
     props: [
         "md-disabled-dates",
         "md-model-type",

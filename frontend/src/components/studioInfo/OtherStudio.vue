@@ -1,7 +1,9 @@
 <template>
   <div class="other-studio-area" id="OtherStudio">
     <div class="word-field">
-      <div class="word-item">비슷한 스튜디오 살펴보기</div>
+      <div class="word-item">
+        <h6 align="left"><b>비슷한 스튜디오 살펴보기</b></h6>
+      </div>
       <div class="word-item">
         <!-- <a href>더보기</a> -->
       </div>
@@ -19,8 +21,8 @@
           <div class="row">
             <div class="card" @click.prevent="moveToComInfo(studio.stu_id)">
               <div class="card-image">
-                <!-- <img :src="getImgUrl(studio.main_img)" /> -->
-               <img :src="`@/assets/img/studio/${studio.main_img}`"/>
+                <img :src="imgUrl(studio.main_img)" >
+               <!-- <img :src="`@/assets/img/studio/${studio.main_img}`"/> -->
               </div>
               <div class="card-content">
                 <div class="name">{{studio.name}}</div>

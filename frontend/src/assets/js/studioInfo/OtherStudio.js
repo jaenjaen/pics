@@ -5,6 +5,7 @@ export default {
     name: "OtherStudio",
     data() {
         return {
+            stuId: 0,
             studio_infos: [{
                 address: "",
                 category_name: "",
@@ -21,19 +22,20 @@ export default {
         carousel,
     },
     created: function() {
-        console.log("props studio 정보 : " + this.stuIdData);
         this.stuId = this.stuIdData;
+        console.log("Props로 데이터 받음~~!! 여긴 OtherStudio : " + this.stuId);
     },
-    mounted() {
-        axios
-            .get("http://127.0.0.1:5000/tag/" + this.stuId)
+    async mounted() {
+        await axios
+            .get("http://127.0.0.1:5000/tag/10") // + this.stuId)
             .then(response => {
                 this.studio_infos = response.data;
-                for (let i = 0; i < Object.keys(this.studio_infos).length; i++) {
-                    console.log(this.studio_infos[i].main_img)
-                    if (this.studio_infos[i].main_img.match(",")) {
-                        let mainImg1 = (this.studios[i].main_img).split(',')[-1];
-                        this.studio_infos.main_img = mainImg1;
+                for (let i = 0; i < (this.studio_infos).length; i++) {
+                    let mainImg1 = (this.studios[i].main_img).split(',');
+                    console.log("this.studio_infos[i].main_img : " + mainImg1)
+                    for (let j = 0; j < 1; i++) {
+                        this.studio_infos.main_img = mainImg1[i];
+                        console.log("this.studio_infos.main_img : " + this.studio_infos.main_img)
                     }
                 }
             })
@@ -44,9 +46,10 @@ export default {
             .finally(() => (this.loading = false));
     },
     methods: {
-        // getImgUrl(url) {
-        //     return require("@/assets/img/studio/" + url);
-        // },
+        imgUrl(imgName) {
+            console.log("imgName : " + imgName)
+            return require("@/assets/img/studio/" + imgName);
+        },
         moveToComInfo(value) {
             this.$router.push("/studioInfo/" + value);
         }
@@ -59,7 +62,7 @@ export default {
         },
         currency: function(value) {
             let num = new Number(value);
-            return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+            return num.toFixed(0).toLocaleString();
         },
         category: function(value) {
             let str = value.split("시");

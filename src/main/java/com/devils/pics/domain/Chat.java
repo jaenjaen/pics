@@ -16,18 +16,7 @@ public class Chat {
 	private int readCheck;
 	
 	public Chat() {}
-	public Chat(int chatId, int custId, int stuId, String word, String dateTime, String filePath, int sender,
-			int readCheck) {
-		super();
-		this.chatId = chatId;
-		this.custId = custId;
-		this.stuId = stuId;
-		this.word = word;
-		this.dateTime = dateTime;
-		this.filePath = filePath;
-		this.sender = sender;
-		this.readCheck = readCheck;
-	}
+	
 	
 	public int getChatId() {
 		return chatId;

@@ -14,7 +14,8 @@ export default {
                 unit_price: 0,
                 main_img: ""
             }],
-            num: 4
+            num: 4,
+            mainImg1: "",
         }
     },
     props: ["stuIdData"],
@@ -30,12 +31,13 @@ export default {
             .get("http://127.0.0.1:5000/tag/10") // + this.stuId)
             .then(response => {
                 this.studio_infos = response.data;
-                for (let i = 0; i < (this.studio_infos).length; i++) {
-                    let mainImg1 = (this.studios[i].main_img).split(',');
-                    console.log("this.studio_infos[i].main_img : " + mainImg1)
+                for (let i = 0; i < 8; i++) {
+                    console.log("imagetype : " + typeof this.studios[i].main_img)
+                    let mainImgs = (this.studios[i].main_img).split(',');
+                    console.log("mainImgs: " + mainImgs)
                     for (let j = 0; j < 1; i++) {
-                        this.studio_infos.main_img = mainImg1[i];
-                        console.log("this.studio_infos.main_img : " + this.studio_infos.main_img)
+                        this.mainImg1 = mainImgs[i];
+                        console.log("this.mainImg1: " + this.mainImg1)
                     }
                 }
             })

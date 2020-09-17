@@ -21,7 +21,7 @@ import gensim
 from gensim.models import word2vec
 
 
-# In[2]:
+# In[17]:
 
 
 ### 사용자 모듈 불러오기
@@ -66,22 +66,14 @@ def tagData(stuId):
 #   Counting Words
     dataset=count_tag_model.tagCount(stuId,dataset)
     topSim=list(dataset.loc[:10,"stu_id"])
-
-    return tag_dao.getTop10(topSim)
-
-
-# In[1]:
+    return tag_dao.getTop10(topSim)[:10]
 
 
-# result=tagData(1)
+# In[19]:
+
+
+# result=tagData(11) 
 # result
-
-
-# In[4]:
-
-
-# topSim=[880,770]
-# tag_dao.getTop10(topSim)
 
 
 # In[ ]:

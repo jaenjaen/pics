@@ -1,10 +1,6 @@
 package com.devils.pics.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data //getter, setter를 자동생성
-@AllArgsConstructor //생성자를 자동 생성
 public class Chat {
 	private int chatId;
 	private int custId;
@@ -16,7 +12,18 @@ public class Chat {
 	private int readCheck;
 	
 	public Chat() {}
-	
+	public Chat(int chatId, int custId, int stuId, String word, String dateTime, String filePath, int sender,
+			int readCheck) {
+		super();
+		this.chatId = chatId;
+		this.custId = custId;
+		this.stuId = stuId;
+		this.word = word;
+		this.dateTime = dateTime;
+		this.filePath = filePath;
+		this.sender = sender;
+		this.readCheck = readCheck;
+	}
 	
 	public int getChatId() {
 		return chatId;

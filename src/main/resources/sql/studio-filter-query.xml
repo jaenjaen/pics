@@ -79,17 +79,8 @@
 		) res
 		ON s.stu_id = res.stu_id
 	</sql>
-	<!-- 전체 검색 쿼리 with category-->
-	<select id="selectStudios" parameterType="Integer" resultMap="studioRM">
-		<include refid="Select-J-Studio-Category-filter-tag-review" />
-		<where>
-			<if test="value != null">
-				AND c.category_id = #{value}
-			</if>
-		</where>
-	</select>
 
-	<!-- 필터 검색 쿼리 -->
+	<!-- 필터 검색 쿼리 | 이미지검색 쿼리 -->
 	<select id="selectStudioByFilter" parameterType="searchCon" resultMap="studioRM">
 		<include refid="Select-J-Studio-Category-filter-tag-review" />
 		<where>
@@ -99,6 +90,13 @@
 				AND t.tag_name = #{searchTag}
 			</when>
 			<otherwise>
+			<!-- 이미지 추론 stuId 결과 조건 -->
+			<if test="stuId != null">
+				AND
+				<foreach collection="stuId" item="id" open="(" close =")" separator="OR">
+					 s.stu_id = #{id}
+				</foreach>
+			</if>
 			<!-- 카테고리/필터 조건 -->
 			<if test="categoryId != null">
 				AND c.category_id = #{categoryId}
@@ -166,9 +164,18 @@
 	
 	<!-- 찜 했는지 여부 확인하는 쿼리 -->
 	<select id="checkBookMark" parameterType="bookmark" resultType="bookmark">
-	SELECT book_id, stu_id
-	FROM bookmark
-	WHERE cust_id = #{custId}
-	AND stu_id = #{stuId}
+		SELECT book_id, stu_id
+		FROM bookmark
+		WHERE cust_id = #{custId}
+		AND stu_id = #{stuId}
+	</select>
+	
+	<!-- 테스트 -->
+	<select id="getStudioByStuId" parameterType="java.util.List" resultMap="studioRM">
+		SELECT stu_id
+		FROM studio
+		<where>
+			
+		</where>
 	</select>
 </mapper>

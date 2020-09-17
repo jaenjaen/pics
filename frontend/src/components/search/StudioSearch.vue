@@ -13,9 +13,12 @@
         />
       </span>
     </div>
-    <a @click.prevent="test">Flask Test</a>
+    <!-- 이미지 검색 부분 -->
+    <i class="material-icons" id="icon_filter" v-if="!isImage" @click="isImage=true" >camera_alt</i>
+    <span v-if="isImage" @click="isImage=false" >되돌리기</span>
+    <ImageSearch v-if="isImage" />
     <!-- 필터 부분 -->
-    <div class="row" id="filter">
+    <div class="row" id="filter" v-if="!isImage">
       <!-- 필터 Collapse -->
       <div id="filterCol">
         <div>
@@ -155,7 +158,7 @@
       </div>
     </div>
     <!-- 정렬하기 부분 -->
-    <div id="order">
+    <div id="order" v-if ="!isImage" > 
       <!-- 정렬하기 위한 select 태그 -->
       <select name="orderCon" id="orderCon" @change="setFilter" v-model="filters.orderCon">
         <option value disabled>정렬하기</option>

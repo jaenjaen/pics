@@ -34,7 +34,7 @@ def get_reco_studios(cust_id, path):
     return result
 
 
-# In[7]:
+# In[2]:
 
 
 def get_ranked_studios():
@@ -44,64 +44,5 @@ def get_ranked_studios():
     return studios
 
 
-# In[ ]:
-
-
-# get_reco_studios(22, 'C:\kjy\pics\dataWork')
-
-
-# In[ ]:
-
-
-# #surprise 모듈 사용
-
-
-# reader = surprise.Reader(rating_scale=(1,5))
-# ds = surprise.Dataset.load_from_df(ratings_r.loc[:,['user','item', 'score']],reader)
-
-# sim_options = {'name':'cossine',
-#               'user_based':False}
-# # sim_options = {'name':'pearson'}
-# # algo = surprise.KNNBasic(sim_options=sim_options)
-# algo = surprise.KNNBasic(sim_options=sim_options)
-# print(cross_validate(algo, ds)['test_rmse'].mean())
-# ds_set = ds.build_full_trainset()
-# algo.fit(ds_set)
-
-# # index_combinations=list(product(final['userId'], final['itemId'])) # repeat = n 씩 조합한다
-# # index_combinations
-# # for userId, itemId in index_combinations:
-# # #     print(type(userId),itemId)
-# # #     predict_list = []
-# #     predict_rate = algo.predict(userId, itemId).est
-# # #     print(algo.predict(userId,itemId).est, algo.predict(userId,itemId).details.get('was_impossible'))
-# #     predict_dic = {
-# #         'userId':userId,
-# #         'itemId':itemId,
-# #         'rate': predict_rate
-# #     }
-# #     predict_list.append(predict_dic)
-# # predict_list
-# # rating_result = pd.DataFrame(predict_list)
-# # rating_result
-
-
-# In[ ]:
-
-
-# # (4) CF 진행
-# reader = surprise.Reader(rating_scale=(1,5))
-# ds = surprise.Dataset.load_from_df(compare.loc[:,['userId','itemId', 'rate']],reader)
-
-# sim_options = {'name':'pearson',
-#               'user_based':False}
-# # sim_options = {'name':'pearson'}
-# # algo = surprise.KNNBasic(sim_options=sim_options)
-# algo = surprise.KNNBasic(sim_options=sim_options)
-# print(cross_validate(algo, ds)['test_rmse'].mean())
-# ds_set = ds.build_full_trainset()
-# algo.fit(ds_set)
-# # for i in ratings.index:
-# #     for j in ratings.columns:
-# #         print("{}" .format(algo.predict(i,j)))
+# In[7]:
 

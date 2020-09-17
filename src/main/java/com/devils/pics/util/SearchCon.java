@@ -18,13 +18,14 @@ public class SearchCon {
 	private String orderCon;
 	private int page;
 	private int custId;
-	private int stuId;
+	private ArrayList<String> stuId;
 	
 	public SearchCon() {}
 
 	public SearchCon(String categoryId, String weekDate, String selectedDate, String address1, String address2,
 			String minSize, String maxSize, String minUnitPrice, String maxUnitPrice, String capacity,
-			ArrayList<String> searchContent, String searchTag, String orderCon, int page, int custId, int stuId) {
+			ArrayList<String> searchContent, String searchTag, String orderCon, int page, int custId,
+			ArrayList<String> stuId) {
 		super();
 		this.categoryId = categoryId;
 		this.weekDate = weekDate;
@@ -164,11 +165,11 @@ public class SearchCon {
 		this.custId = custId;
 	}
 
-	public int getStuId() {
+	public ArrayList<String> getStuId() {
 		return stuId;
 	}
 
-	public void setStuId(int stuId) {
+	public void setStuId(ArrayList<String> stuId) {
 		this.stuId = stuId;
 	}
 
@@ -180,4 +181,5 @@ public class SearchCon {
 				+ ", searchContent=" + searchContent + ", searchTag=" + searchTag + ", orderCon=" + orderCon + ", page="
 				+ page + ", custId=" + custId + ", stuId=" + stuId + "]";
 	}
-}
+	
+	}

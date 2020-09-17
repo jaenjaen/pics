@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-    <!-- <MainSecond /> -->
+    <MainSecond />
     <MainThird />
   </div>
 </template>

@@ -5,8 +5,9 @@
     background-color: White;
 }
 
-.row {
-    height: 200px;
+.row,
+.card {
+    height: 250px !important;
 }
 
 .word_container {
@@ -33,8 +34,7 @@
 }
 
 img {
-    width: 120px;
-    height: 150px;
+    height: 150px !important;
 }
 
 .card-content {
@@ -42,6 +42,7 @@ img {
 }
 
 .name {
+    height: 40px;
     text-align: left;
     font-size: 12px;
     font-weight: 700;
@@ -50,7 +51,7 @@ img {
 
 .category {
     padding-top: 2px;
-    color: black;
+    color: grey;
     font-size: 10px;
     text-align: left;
 }
@@ -67,31 +68,21 @@ img {
 }
 
 @media only screen and (max-width: 768px) {
-    .mainsecond_container {
-        width: 100%;
-    }
+    .mainsecond_container,
     .word_container {
         width: 100%;
     }
     .mainsecond_carousel {
-        width: 100%;
+        width: 95%;
     }
-    .row {
-        width: 300px !important;
+    .img {
+        width: 40%;
+        height: auto !important;
     }
-    img {
-        width: 300px !important;
-    }
-    .word_item:nth-child(1) {
-        padding-left: 5px;
-    }
-    .word_item:nth-child(2) {
-        padding-right: 15px;
+    .card-content {
+        height: 40%;
     }
     .name {
-        font-size: 13px;
-    }
-    .category {
-        font-size: 3px;
+        height: 75%;
     }
 }

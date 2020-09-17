@@ -64,7 +64,6 @@ export default {
             repeatedDays: [],
             disabledDates: date => {
                 const day = date.getDay()
-                alert(date.getDay())
                 return this.checkDisable(day) == 0
             },
             // //1) 초로 환산한 날짜
@@ -85,6 +84,7 @@ export default {
         "md-model-type",
         "md-immediately",
         "v-model",
+        "md-disabled-dates",
         "stuIdData"
     ],
 
@@ -95,7 +95,7 @@ export default {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
 
         await axios
-            .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/info/10") // + this.stuId)
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
@@ -106,7 +106,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 var exceptionDate = (response.data.exceptionDate);
@@ -159,7 +159,7 @@ export default {
                 this.end_idx = this.repeatedDays.indexOf(week[this.endDay], 0);
                 var startTime = parseInt(this.start_time);
                 var endTime = parseInt(this.end_time);
-                this.difTime = (this.endDayTime - this.startDayTime) / (1000 * 60 * 60);
+                this.difTime = (this.endDayTime - this.startDayTime) / (1000 * 60 * 60) - 1;
             }
             // 3. 끝나는 일자가 항상 시작일보다 크게, 예약 일자는 현재 일자 이후
             // 영업일/비영업 일자 및 시간대 구분, Exception Date 확인
@@ -179,23 +179,25 @@ export default {
                 }
             }
             if (startTime < 25 | endTime < 25) {
-                if (startTime >= endTime & this.difTime == 0) { //하루 예약이면 시작시간 < 종료시간
+                console.log("startTime : " + startTime + ", startTimes : " + this.startTimes[-1]);
+                if (this.difTime == 0 & startTime >= endTime) { //하루 예약이면 시작시간 < 종료시간
                     alert("대여 종료시간은 시작시간 이후로 설정하세요.");
                     this.end_time = this.start_time + 1;
-                    console.log("this.startTimes[0] : " + this.startTimes[0] + ", endTime : " + endTime)
-                    if (this.startTimes[0] == endTime) {
-                        alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
-                        this.end_time = "";
-                    }
-                    if (this.endTimes[-1] == startTime) {
-                        alert("대여 종료시간을 오픈 시간 이후로 설정하세요. : " + this.endTimes[-1]);
-                        this.start_time = "";
-                    }
                 }
+                if (this.startTimes[this.startTimes.length - 1] == startTime) {
+                    alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
+                    this.start_time = "";
+                }
+                if (this.endTimes[0] == endTime) {
 
+                    alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
+                    this.end_time = "";
+                }
             }
             if (this.start_date != "" & this.end_date != "" & this.start_time != 0 & this.end_time != 0) {
                 if ((this.checkException() == 0) | (this.checkReservation() == 0)) {
+                    console.log("this.checkException() : " + this.checkException() +
+                        ", this.checkReservation() : " + this.checkReservation())
                     alert("예약 불가능한 일정 입니다.");
                     this.start_time = "";
                     this.end_time = "";
@@ -204,7 +206,7 @@ export default {
             //4. 시간대 반영
             var total_price = 0;
             if (startTime >= endTime) this.difTime -= (endTime - startTime);
-            else this.difTime += endTime - startTime;
+            else this.difTime += (endTime - startTime);
             // 4. 총 요금
             if (this.total_people > this.studios[0].studioFilter.defaultCapacity) {
                 // 추가 인원 있는 경우
@@ -325,10 +327,9 @@ export default {
             }
         },
         checkDisable(date) {
-            alert("date : " + date)
-            let disableWeek = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+            let tempWeek = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
             if (date != null) {
-                if (this.repeatedDays.indexOf(disableWeek[date], 0) > -1) { //일치하는 요일의 
+                if (this.repeatedDays.indexOf(tempWeek[date], 0) > -1) {
                     return 1;
                 } else {
                     return 0;
@@ -366,6 +367,7 @@ export default {
                 var res_startDate = this.transTime(res_startOnlyDate, res_startOnlyTime);
                 var res_endDate = this.transTime(res_endOnlyDate, res_endOnlyTime);
                 if ((res_startDate <= this.startDayTime) | (res_endDate >= this.endDayTime)) {
+                    console.log("res_startDate : " + res_startDate + ", this.startDayTime : " + this.startDayTime)
                     continue;
                 } else {
                     return 0;

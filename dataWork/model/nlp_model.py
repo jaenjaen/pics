@@ -126,7 +126,7 @@ def getCoreTags2(dataset):
 
 
 # Tag2 데이터 보정 : Tag1의 데이터 갖다쓰기
-def fillCoreTag(CoreTagData1,CoreTagData2):
+def fillCoreTag(CoreTagData1,CoreTagData2,model):
     for i in range(len(CoreTagData2)):
         if len(CoreTagData2[i])<1:
             CoreTagData2[i]=(CoreTagData1[i])

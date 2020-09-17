@@ -49,6 +49,12 @@ section {
     border-radius: 5px;
 }
 
+.tag-btn:hover {
+    background-color: white;
+    color: #029be0;
+    border: 1.5px solid lightgray;
+}
+
 .section-bookmark-share-field {
     float: right;
     margin-right: 3%;
@@ -63,12 +69,6 @@ section {
     size: 0.5em;
     margin-right: 1%;
     margin-top: 7px;
-}
-
-.tag-btn:hover {
-    background-color: white;
-    color: #029be0;
-    border: 1.5px solid lightgray;
 }
 
 #accCustomer {
@@ -97,6 +97,23 @@ section {
     font-size: 35px;
     margin: 0;
     height: 40px;
+}
+
+.price {
+    font-weight: 700;
+    display: flex;
+    align-self: flex-end;
+    height: 25px;
+}
+
+.price>span:nth-child(1) {
+    font-size: 30px;
+    padding-right: 5px;
+}
+
+.price>span:nth-child(2) {
+    font-size: 20px;
+    align-self: flex-end;
 }
 
 
@@ -134,7 +151,12 @@ section {
     margin: 20%;
     list-style-type: none;
     display: inline;
+}
+
+.nav-tab a {
     font-weight: 700;
+    font-size: 1.3em;
+    color: #029be0;
 }
 
 
@@ -144,6 +166,7 @@ article {
     width: 100%;
     float: left;
     margin-bottom: 10em;
+    padding: 1%;
 }
 
 .info_filter_map {
@@ -186,8 +209,9 @@ article {
 #roadView {
     background-color: white;
     color: #029be0;
-    border: 1px solid #029be0;
+    border: 1.5px solid lightgray;
     border-radius: 5px;
+    font-weight: 700;
 }
 
 .article-Description-area {
@@ -209,119 +233,13 @@ article {
     margin: 2% 10% 2% 5%;
 }
 
-
-/* 리뷰 영역 */
-
-.card-content {
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    padding: 2%;
-    box-shadow: 2px 2px 1.5px lightgray;
-}
-
-#reviewr-img {
-    width: 10px;
-    height: 10px;
-}
-
-#reviewr-email {
-    color: gray;
-    display: table-cell;
-}
-
-.star-score {
-    margin: 3px auto;
-}
-
-#material-icons {
-    display: table-cell;
-    width: 7px;
-    height: 7px;
-}
-
-#review-content {
-    margin: 2% 5% 1% 5%;
-}
-
-#no-review {
-    align-content: center;
-    border: 1px solid lightgray;
-    border-radius: 10px;
-    padding: 2%;
-    box-shadow: 2px 2px 1.5px lightgray;
-}
-
-#answer {
-    padding: 2%;
-    /* box-shadow:2px 2px 1.5px lightgray; */
-}
-
-.card-expansion {
-    width: 100%;
-    padding: 2%;
-    text-align: left;
-}
-
-.md-card {
-    width: 100%;
-    margin: 4px;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.article-review-area {
-    clear: both;
-    margin: 2% 2% 2% 3%;
-}
-
-#reviewTitle {
-    display: inline;
-}
-
-#countReview {
-    float: left;
-    color: gray;
-    font-size: small;
-}
-
-#more-review {
-    text-align: right;
-    margin: 2% 2% 2% 3%;
-}
-
 hr {
     width: 95%;
     color: lightgray;
 }
 
-.price {
-    font-weight: 700;
-    display: flex;
-    align-self: flex-end;
-    height: 25px;
-}
 
-.price>span:nth-child(1) {
-    font-size: 30px;
-    padding-right: 5px;
-}
-
-.price>span:nth-child(2) {
-    font-size: 20px;
-    align-self: flex-end;
-}
-
-#review {
-    padding-left: 5px;
-}
-
-#material-icons {
-    color: #f6f33a;
-}
-
-hr {
-    width: 730px;
-}
+/* Description 영역*/
 
 .article-Description-area h4 {
     font-size: 25px;

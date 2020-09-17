@@ -76,12 +76,11 @@
         <!-- 누적 이용자 수 -->
         <div class="studio-name">
           <div>
-            <h2 id="studio-name">
+            <h3 id="studio-name">
               <span>{{ studio.name }}</span>
               <button class="chat-btn" @click="showChatModal">문의</button>
               <!-- 문의 클릭 이벤트 -->
-            </h2>
-
+            </h3>
             <p id="accCustomer">
               누적 이용자 총
               <b>{{accCustomer}}</b>명
@@ -103,7 +102,7 @@
                 <span v-if="studio.avgScore == 2">
                   <i class="material-icons" id="icon_filter">star</i>
                   <i class="material-icons" id="icon_filter">star</i>
-                </span>
+                </span>ㄴ
                 <span v-if="studio.avgScore > 2 && studio.avgScore < 3">
                   <i class="material-icons" id="icon_filter">star</i>
                   <i class="material-icons" id="icon_filter">star</i>
@@ -150,7 +149,7 @@
           </div>
         </div>
         <div id="company-of-studio">
-          <span><img :src="profilUrl(studio.company.logoImg)" width="25px" height="25px" v-if="studio.company.logoImg"/></span>
+          <!-- <span><img :src="profilUrl(studio.company.logoImg)" width="25px" height="25px" v-if="studio.company.logoImg"/></span> -->
           <span>{{studio.company.name}}</span>
         </div>
       </div>
@@ -210,7 +209,6 @@
       </div>
 
       <!-- ============== Reservation ============== -->
-
       <div class="article-Filterstudiormation-map-area">
         <hr />
         <Reservation width="70%" :stuIdData="stuId" :custData="customer"></Reservation>
@@ -265,103 +263,12 @@
       </div>
       <hr />
       <!-- ============== Review ============== -->
-      <div id="review-container">
-        <div id="no-review" v-if="(reviews+'').length<=0">
-          <h3>"아직 등록된 리뷰가 없습니다!"</h3>
-        </div>
-        <div class="article-review-area" id="article-review-area" v-if="(reviews+'').length>0">
-          <h2 id="reviewTitle" align="left">리뷰보기</h2>
-          <span id="countReview">(총 {{studios[0].countReview}}개의 리뷰)</span>
-          <div v-for="(review,index) in uncoveredReview" v-bind:key="index">
-            <div>
-              <div class="card-expansion" id="reviews">
-                <md-card-media>
-                  <!-- <span id="reviewr-img"><img :src="imgUrl(review.costomer.srcImg)"></span>  -->
-                </md-card-media>
-                <md-card>
-                  <md-card-header>
-                    <span class="md-subhead" id="reviewr-email">
-                      <strong>{{ review.customer.email|emailHide }}</strong>
-                      ({{ review.regDate}})
-                    </span>
-                    <!-- 별점 부분 -->
-                    <div id="star-score">
-                      <span class="md-subhead" v-if="review.score == 0">
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span class="md-subhead" v-if="review.score == 1">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span class="md-subhead" v-if="review.score == 2">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span class="md-subhead" v-if="review.score == 3">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                        <i class="material-icons" id="icon_filter">star_border</i>
-                      </span>
-                      <span class="md-subhead" v-if="review.score == 4">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star_half</i>
-                      </span>
-                      <span class="md-subhead" v-if="review.score == 5">
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                        <i class="material-icons" id="icon_filter">star</i>
-                      </span>
-                    </div>
-                  </md-card-header>
-                  <hr />
-                  <div id="review-content">{{ review.content }}</div>
-                  <md-card-expand v-if="review.answer!=''">
-                    <md-card-actions md-alignment="space-between">
-                      <md-card-expand-trigger>
-                        <md-button class="md-icon-button">
-                          <md-icon>keyboard_arrow_down</md-icon>
-                        </md-button>
-                      </md-card-expand-trigger>
-                    </md-card-actions>
-                    <md-card-expand-content>
-                      <md-card-content id="answer">{{ review.answer }}</md-card-content>
-                    </md-card-expand-content>
-                  </md-card-expand>
-                </md-card>
-              </div>
-            </div>
-          </div>
-          <div id="more-review" v-if="(reviews).length>3">
-            <button
-              type="button"
-              @click="appendReviews()"
-              :disabled="dataFull === true"
-              :class="{disabled : dataFull}"
-            >더보기</button>
-          </div>
-        </div>
-      </div>
+      <Review :stuIdData="stuId">
+      </Review>
       <!-- ============== OthserStudio ============== -->
-      <OtherStudio :stuIdData="stuId"></OtherStudio>
+      <!-- <OtherStudio :stuIdData="stuId"></OtherStudio> -->
     </article>
-    <!-- 모달 모아두기 -->
+      <!-- ============= 모달 모아두기 ============== -->
     <div>
       <modal
         name="delBook"

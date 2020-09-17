@@ -11,49 +11,103 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devils.pics.domain.Chat;
 import com.devils.pics.service.ChatService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
+@Api(tags= {"Pics Chatting"})
 public class ChatController {
 	
 	@Autowired
 	private ChatService chatService;
 	
-	@MessageMapping("/receive") //receive를 메세지를 받을 endpoing로 설정
+	@ApiOperation(value="채팅을 DB에 넣고 리턴함", response = Chat.class)
+	@MessageMapping("/receive") //receive를 메세지를 받을 endpoint로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
-		//System.out.println("입력값 chat : " + chat);
+//		System.out.println("입력값 chat : " + chat);
 		Chat resultChat = new Chat();
 		try {
 			int result = chatService.addChat(chat);
-			//System.out.println("채팅 " + result + "개 추가");
+//			System.out.println("채팅 " + result + "개 추가");
 			
 			Map map = new HashMap();
 			map.put("custId", chat.getCustId());
 			map.put("stuId", chat.getStuId());
 			resultChat = chatService.getMostRecentChat(map);
-			//System.out.println("결과값 resultChat : " + resultChat);
+//			System.out.println("결과값 resultChat : " + resultChat);
 		} catch (Exception e) {
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
 		return resultChat;
 	}
 
-	/* 이제까지의 해당되는 스튜디오, 고객의 대화 모두를 가져옴 */
-	@GetMapping("/chat/prev/{stuId}/{custId}")
-	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {
+	/* 채팅 아이디로 해당되는 채팅을 지움 */
+	@ApiOperation(value="채팅 아이디로 해당되는 채팅을 삭제함", response = int.class)
+	@DeleteMapping("/chat/delete/{chatId}")
+	public ResponseEntity deleteChat(@PathVariable String chatId) {
 		try {
+			int result = chatService.deleteChat(chatId);
+			//System.out.println("채팅 파일 " + result + "개 삭제 완료");
+			
+			if(result == 1) {
+				return new ResponseEntity(1, HttpStatus.OK);
+			}else { //해당되는 채팅이 없을 경우
+				return new ResponseEntity(-1, HttpStatus.OK);
+			}
+		}catch(Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@ApiOperation(value="채팅 읽음 처리(readCheck=1)")
+	@PutMapping("/chat/prev/{stuId}/{custId}/{sender}")
+	public ResponseEntity updateReadCheck(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
+		try {
+			System.out.println(stuId);
+			System.out.println(custId);
+			System.out.println(sender);
+			
 			Map map = new HashMap();
 			map.put("stuId", stuId);
 			map.put("custId", custId);
+			map.put("custId", sender);
+			
+			/* 대화 목록을 가져가기 전에 읽음 처리를 한다. */
+			int result = chatService.setAlreadyRead(map);
+			System.out.println("읽음 처리 : " + result);
+			return new ResponseEntity(HttpStatus.OK);
+		} catch(Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@ApiOperation(value="스튜디오, 고객의 대화를 모두 반환", response = List.class)
+	@GetMapping("/chat/prev/{stuId}/{custId}")
+	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {
+		try {
+			System.out.println(stuId);
+			System.out.println(custId);
+			
+			Map map = new HashMap();
+			map.put("stuId", stuId);
+			map.put("custId", custId);
+			
 			List<Chat> list = chatService.getPrevAllChat(map);
+			System.out.println(list);
 			if(list.size()>0) {
 				return new ResponseEntity(list, HttpStatus.OK);
 			}else { //해당되는 대화가 없을 경우
@@ -65,7 +119,8 @@ public class ChatController {
 		}
 	}
 	
-	/* 최근 대화 가져오기(com, studio, cust, chat 정보 추출)  */
+	
+	@ApiOperation(value="가장 최근 대화 반환", response = List.class)
 	@GetMapping("/chat/recent/{member}/{id}")
 	public ResponseEntity getRecentChat(@PathVariable String member, @PathVariable String id) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
@@ -96,7 +151,7 @@ public class ChatController {
 		}
 	}
 	
-	/* 이름으로 검색하면 최근 대화 가져오기(com, studio, cust, chat 정보 추출)  */
+	@ApiOperation(value="이름으로 대화 검색한 결과 반환", response = List.class)
 	@GetMapping("/chat/recent/{member}/{id}/{name}")
 	public ResponseEntity getRecentChatByName(@PathVariable String member, @PathVariable String id, @PathVariable String name) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
@@ -131,6 +186,7 @@ public class ChatController {
 	
 	/* 스튜디오 아이디, 고객 이름으로 검색하면 업체의 최근 대화 가져오기
 	 * (com, studio, cust, chat 정보 추출)  */
+	@ApiOperation(value="스튜디오 아이디, 고객 이름으로 검색한 뒤 업체의 최근 대화 반환", response = List.class)
 	@GetMapping("/chat/recent/com/{comId}/{stuId}/{custName}")
 	public ResponseEntity getRecentChatByStuIdAndCustName(@PathVariable String comId, @PathVariable String stuId, @PathVariable String custName) {
 		List<Map<String, String>> recentChat = new ArrayList<>();
@@ -140,7 +196,7 @@ public class ChatController {
 			map.put("stuId", stuId);
 			map.put("custName", custName);
 			recentChat = chatService.getRecentChatByStuIdAndCustName(map);
-			System.out.println(recentChat);
+			//System.out.println(recentChat);
 			
 			if(recentChat.size()>0) {
 				return new ResponseEntity(recentChat, HttpStatus.OK);
@@ -155,6 +211,7 @@ public class ChatController {
 	}
 	
 	/* 채팅 상대 기본 정보 가져오기 */
+	@ApiOperation(value="채팅 상대의 기본정보 반환", response = Map.class)
 	@GetMapping("/chat/info/{member}/{id}")
 	public ResponseEntity getDefaultInfo(@PathVariable String member, @PathVariable String id) {
 		Map map = new HashMap();

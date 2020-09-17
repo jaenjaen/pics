@@ -60,14 +60,7 @@ def tagCount(stuId,dataset):
 
     dataset=pd.concat([target,rest],ignore_index=True) # 다시 2개 합치기
     dataset=dataset.sort_values(by=['tagCount'],ascending=False)
-    
-    # 해당 아이디에 맞는 studio 정보 받고 보내기
-    studios = get_reco_studio(studio_list)
-    # 대표 사진 하나만 가지고 갈 수 있도록
-    for studio in studios:
-        studio['main_img'] = studio.get('main_img').split(',')[0]
-    result['studios']=studios
-    
+        
     return dataset
 
 

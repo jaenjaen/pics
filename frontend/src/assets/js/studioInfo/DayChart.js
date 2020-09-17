@@ -15,13 +15,13 @@ export default {
                 datasets: [{
                     data: [0, 0, 0, 0, 0, 0, 0],
                     backgroundColor: [
-                        "rgba(245, 99, 132, 1)",
-                        "rgba(245, 99, 132, 2)",
-                        "rgba(245, 99, 132, 3)",
-                        "rgba(245, 99, 132, 4)",
-                        "rgba(245, 99, 132, 5)",
-                        "rgba(245, 99, 132, 6)",
-                        "rgba(245, 99, 132, 7)"
+                        "rgba(245, 100, 132, 1)",
+                        "rgba(245, 100, 132, 2)",
+                        "rgba(245, 100, 132, 3)",
+                        "rgba(245, 100, 132, 4)",
+                        "rgba(245, 100, 132, 5)",
+                        "rgba(245, 100, 132, 6)",
+                        "rgba(245, 100, 132, 7)"
                     ],
                     label: "Reservation per Day"
                 }],
@@ -53,11 +53,9 @@ export default {
     },
     props: ["stuIdData"],
     created: function() {
-        console.log("Props로 데이터 받음~~!! 여긴 DayChart");
         this.stuId = this.stuIdData;
     },
     mounted() {
-        console.log("aaa");
         axios
             .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
             .then(response => {

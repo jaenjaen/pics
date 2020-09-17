@@ -13,11 +13,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.ExceptionDate;
 import com.devils.pics.domain.RepeatDate;
 import com.devils.pics.domain.Reservation;
 import com.devils.pics.domain.Schedule;
 import com.devils.pics.service.StudioReserveService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /* 예약하기 flow
  * 1. 날짜 및 시간 가능불가능 표시
@@ -28,6 +33,7 @@ import com.devils.pics.service.StudioReserveService;
 
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
+@Api(tags= {"Pics Studio-Reservation"})
 public class StudioReserveController {
 	@Autowired
 	private StudioReserveService studioReserveService;	
@@ -35,7 +41,7 @@ public class StudioReserveController {
 	
 	private List<Reservation> resultList;
 	
-	// 1. 예약 불가능/가능 날짜 받아서 Schedule로 옮기기
+	@ApiOperation(value="스튜디오의 예약스케쥴 반환", response = Schedule.class)
 	@GetMapping("/studio/schedule/{stuId}")
 	public ResponseEntity getSchedule(@PathVariable int stuId) {
 		// 페이지에 있는 studio 정보 & 세션에서 login 정보
@@ -54,7 +60,7 @@ public class StudioReserveController {
 		}
 	}
 
-	//2.getReservation for studio
+	@ApiOperation(value="getReservation for studio", response = List.class)
 	@GetMapping("/studio/reservation/{stuId}")
 	public ResponseEntity getReservation(@PathVariable int stuId) {
 		Schedule schedule=new Schedule();
@@ -67,7 +73,7 @@ public class StudioReserveController {
 			}
 	}
 	
-	// 3. reservation 테이블에 추가, 예약 일자 
+	@ApiOperation(value="스튜디오 예약 추가", response = Integer.class)
 	@PostMapping("/studio/reservation")
 	public ResponseEntity AddReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
@@ -79,7 +85,7 @@ public class StudioReserveController {
 		}
 	}
 	
-	// 4. reservation,예약 불가능 일자 update 
+	@ApiOperation(value="스튜디오 예약 수정")
 	@PutMapping("/studio/reservation")
 	public ResponseEntity UpdateReservation(@RequestBody Reservation reservation) {
 		//등록 시간 삽입
@@ -92,7 +98,7 @@ public class StudioReserveController {
 			}
 		}
 	
-	// 5. 예약취소
+	@ApiOperation(value="스튜디오 예약 취소")
 	@DeleteMapping("/studio/reservation/{resId}")
 	public ResponseEntity DeleteReservation(@PathVariable int resId) {
 		if(studioReserveService.DeleteReservations(resId)!=0) {
@@ -100,7 +106,7 @@ public class StudioReserveController {
 		}else return new ResponseEntity(HttpStatus.NOT_MODIFIED);
 		}
 
-	// 3. Exception 테이블에 추가, 예약 일자 
+	@ApiOperation(value="스튜디오 예약 예외 날짜 추가", response = Integer.class)
 	@PostMapping("/studio/exceptionDate")
 	public ResponseEntity AddExceptionDates(@RequestBody ExceptionDate exceptionDate) {
 		try{
@@ -112,7 +118,7 @@ public class StudioReserveController {
 		}
 	}
 	
-	// 4. Exception 예약 불가능 일자 update 
+	@ApiOperation(value="예약 불가능 날짜 수정")
 	@PutMapping("/studio/exceptionDate")
 	public ResponseEntity UpdateExceptionDate(@RequestBody ExceptionDate exceptionDate) {
 		//등록 시간 삽입
@@ -124,7 +130,7 @@ public class StudioReserveController {
 			}
 		}
 	
-	// 5. Exception 삭제
+	@ApiOperation(value="예약 불가능 날짜 삭제")
 	@DeleteMapping("/studio/exceptionDate/{exceptionId}")
 	public ResponseEntity DeleteExceptionDate(@PathVariable int exceptionId) {
 		try{
@@ -136,7 +142,7 @@ public class StudioReserveController {
 		}
 	
 	
-	//6. 이미 지난 예약
+	@ApiOperation(value="날짜가 지난 고객의 예약리스트 반환", response = List.class)
 	@GetMapping("/customer/reservation/expired/{custId}")
 	public ResponseEntity getExpiredReservation(@PathVariable int custId) {
 		resultList = studioReserveService.getExpiredReservation(custId);
@@ -146,7 +152,7 @@ public class StudioReserveController {
 		else return new ResponseEntity(resultList,HttpStatus.OK);
 	}
 	
-	//7. 앞으로 남은 예약
+	@ApiOperation(value="날짜가 지나지 않은 고객의 예약리스트 반환", response = List.class)
 	@GetMapping("/customer/reservation/will/{custId}")
 	public ResponseEntity getWillReservation(@PathVariable int custId) {
 		resultList = studioReserveService.getWillReservation(custId);
@@ -156,7 +162,7 @@ public class StudioReserveController {
 		else return new ResponseEntity(resultList,HttpStatus.OK);
 	}
 	
-	//8.n월의 지난 예약
+	@ApiOperation(value="N월의 지난 예약리스트 반환", response = List.class)
 	@GetMapping("/customer/reservation/expired/{custId}/{startDate}/{endDate}")
 	public ResponseEntity getMonthReservation(@PathVariable int custId, @PathVariable String startDate, @PathVariable String endDate) {
 		Reservation reservation = new Reservation();
@@ -175,7 +181,7 @@ public class StudioReserveController {
 		
 	}
 	
-	//9. 마이페이지용 exception date / reservation Date 넘기기 (weekStart / weekEnd)
+	@ApiOperation(value="업체고객의 예약관리를 위한 스케쥴 반환", response = Schedule.class)
 	@GetMapping("/company/schedule/{stuId}")
 	public ResponseEntity getCompanySchedules(@PathVariable int stuId) {
 		Schedule schedule = new Schedule();

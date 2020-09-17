@@ -14,6 +14,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
 		config.enableSimpleBroker("/send");
+		config.setApplicationDestinationPrefixes("/"); //도착경로에 대한 prefix 설정 부분
 	}
 	
 	/* connection을 맺을 때 CORS 허용 */

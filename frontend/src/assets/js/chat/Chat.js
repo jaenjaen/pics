@@ -63,6 +63,7 @@ export default {
     },
 
     created() {
+        this.connect(); //소켓 연결
         if (customer != null) { //개인고객으로 로그인했을 경우
             this.customerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
@@ -104,15 +105,32 @@ export default {
         },
         /* 문의 날짜를 연/월/일/시/분으로 분할함 */
         showUntilMin(value) {
-            for (let i = 0; i < value.length; i++) {
-                if (value[i] === ':' && value[i + 3] === ':') {
-                    return value.substring(0, i + 3) + value.substring(i + 6, value.length);
-                }
-            }
+            let ref = value.lastIndexOf(":");
+            return value.substring(0, ref) + value.substring(ref + 3, value.length);
         }
     },
 
     methods: {
+        /* 같은 시간인지 체크 */
+        checkSameTime(i) {
+            if (i == this.prevAllChat.length - 1) { //마지막 인덱스일 경우 비교 대상이 없으므로 리턴
+                return true;
+            } else {
+                let before =
+                    this.prevAllChat[i].dateTime.substring(0, this.prevAllChat[i].dateTime.lastIndexOf(":")) +
+                    this.prevAllChat[i].dateTime.substring(this.prevAllChat[i].dateTime.lastIndexOf(":") + 3, this.prevAllChat[i].dateTime.length);
+                let after =
+                    this.prevAllChat[i + 1].dateTime.substring(0, this.prevAllChat[i + 1].dateTime.lastIndexOf(":")) +
+                    this.prevAllChat[i + 1].dateTime.substring(this.prevAllChat[i + 1].dateTime.lastIndexOf(":") + 3, this.prevAllChat[i + 1].dateTime.length);
+                if (this.prevAllChat[i].sender === this.prevAllChat[i + 1].sender && before === after) { //같은 시간일 경우 앞선 영역을 보이지 않음.
+                    return false;
+                } else { //다른 시간일 경우 보임
+                    return true;
+                }
+            }
+        },
+
+
         /* 채팅 접속시 설정 */
         setChat(stuId, custId) {
             /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
@@ -122,21 +140,18 @@ export default {
             if (customer != null) { //개인고객으로 로그인했을 경우
                 this.chat.sender = 0; //보내는 이 : 개인
                 this.chat.custId = customer.custId;
-                console.log("chat 데이터 세팅 완료/sender=1");
+                console.log("chat 데이터 세팅 완료(보내는 이 : 고객)");
                 console.log(this.chat);
 
                 this.getPresentStu(); //현재 대화 중인 스튜디오 정보 가져오기
 
             } else if (company != null) { //기업고객으로 로그인했을 경우
                 this.chat.sender = 1; //보내는 이 : 기업
-                console.log("chat 데이터 세팅 완료/sender=0");
+                console.log("chat 데이터 세팅 완료(보내는 이 : 기업)");
                 console.log(this.chat);
 
                 this.getPresentCust(); //현재 대화 중인 고객 정보 가져오기
             }
-
-            /* 이전 대화 내역 가져오기 */
-            this.getPrevAllChat()
         },
 
         /* 고객의 스튜디오별 최근 수신 대화 */
@@ -266,6 +281,9 @@ export default {
                         console.log('현재 대화 중인 Studio 정보 가져오기 성공');
                         this.presentStu = response.data;
                         console.log(this.presentStu);
+
+                        /* 읽음 처리하기 */
+                        this.updateReadCheck();
                     } else if (response.data != -1) {
                         this.presentStu = {};
                     }
@@ -283,12 +301,34 @@ export default {
                         console.log('현재 대화 중인 Customer 정보 가져오기 성공');
                         this.presentCust = response.data;
                         console.log(this.presentCust);
+
+                        /* 이전 대화 내역 가져오기 */
+                        this.updateReadCheck();
                     } else if (response.data == -1) {
                         this.presentCust = {};
                     }
                 })
                 .catch(() => {
                     console.log('현재 대화 중인 Customer 정보 가져오기 실패');
+                })
+        },
+
+        /* 채팅 읽음 처리 */
+        updateReadCheck() {
+            let other = -1;
+            if (this.chat.sender == 0) { //고객으로 로그인했을 때
+                other = 1;
+            } else if (this.chat.sender == 1) { //업체로 로그인했을 때
+                other = 0;
+            }
+            axios.put('http://127.0.0.1:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId + '/' + other)
+                .then((response) => {
+                    console.log('채팅 읽음 처리 성공');
+                    console.log(response.data);
+                    setTimeout(this.getPrevAllChat(), 100);
+                })
+                .catch(() => {
+                    console.log('채팅 읽음 처리 실패');
                 })
         },
 
@@ -300,13 +340,58 @@ export default {
                         console.log('이전 대화 가져오기 성공');
                         this.prevAllChat = response.data;
                         console.log(this.prevAllChat);
+
+                        /* 채팅 모달의 스크롤을 최하단으로 내림 */
+                        this.$emit('moveScroll');
                     } else if (response.data == -1) {
                         this.prevAllChat = [];
                     }
-                    this.connect(); //소켓 연결
                 })
                 .catch(() => {
                     console.log('이전 대화 가져오기 실패');
+                })
+        },
+
+        /* 대화 삭제 */
+        deleteChat(fileName, chatId) {
+            let result = confirm("삭제하시겠습니까?");
+            if (result) {
+                if (fileName != '') { //파일일 경우 파일을 먼저 삭제
+                    this.deleteChatFile(fileName);
+                }
+                axios.delete('http://127.0.0.1:7777/chat/delete/' + chatId)
+                    .then((response) => {
+                        if (response.data == 1) {
+                            console.log('대화 삭제 성공');
+                            this.updateReadCheck();
+                            //혹시 읽음 처리 안 된 대화가 생겼을 수 있으니 읽음 처리 -> 대화 내역을 다시 불러옴
+
+                            /* 채팅 모달의 스크롤을 최하단으로 내림 */
+                            this.$emit('moveScroll');
+                        } else if (response.data == -1) {
+                            console.log('삭제할 대화가 없음');
+                        }
+                    })
+                    .catch(() => {
+                        console.log('대화 삭제 실패');
+                    })
+            } else { //삭제를 원하지 않을 경우
+                return;
+            }
+        },
+
+        /* 파일 삭제 */
+        deleteChatFile(fileName) {
+            axios.delete('http://127.0.0.1:7777/filedelte/chat/' + fileName)
+                .then((response) => {
+                    if (response.data === 'OK') {
+                        console.log('파일 삭제 성공');
+                    } else if (response.data === 'FAIL') {
+                        console.log('삭제할 파일이 없음');
+                    }
+                })
+                .catch(() => {
+                    console.log('대화 삭제 실패');
                 })
         },
 
@@ -329,7 +414,9 @@ export default {
                             console.log('구독으로 받은 메시지 : ', response.body);
 
                             // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                            this.prevAllChat.push(JSON.parse(response.body))
+                            //this.prevAllChat.push(JSON.parse(response.body))
+
+                            this.updateReadCheck(); //읽음 처리 -> 대화 가져오기
                         }
                     });
                 },
@@ -450,9 +537,6 @@ export default {
                 this.chat.filePath = '';
                 document.getElementById('chatFile').value = '';
                 document.getElementById('chatFileName').value = '';
-
-                /* 스크롤 최하단으로 이동 */
-                this.$emit('moveScroll');
             }
         },
 
@@ -552,11 +636,10 @@ export default {
 
         /* 채팅 상대를 클릭하면 채팅을 가져옴 */
         getChatByUser(event) {
+            this.chat.word = ''; //이전 채팅방에서 작성한 채팅 내용은 초기화시킴
             this.chat.stuId = event.target.childNodes[1].innerHTML;
             this.chat.custId = event.target.childNodes[2].innerHTML;
             this.setChat(this.chat.stuId, this.chat.custId);
-            //window.scrollTo(0, document.body.scrollHeight);
-            this.$emit('moveScroll');
             this.controlModal('hide', 'chatListModal');
         },
 

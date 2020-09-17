@@ -11,7 +11,7 @@
             </tr>
             <tr v-else v-for="(custChat, index) in recentChat" :key="index">
                 <td>{{custChat.stuName | showLimitedContent}}({{custChat.comName | showLimitedContent}})</td>
-                <td @click="showChatMoal($event)" class="linkToChatModal">
+                <td @click="showChatModal($event)" class="linkToChatModal">
                     {{custChat.word | handleWord}}
                     <span style="display:none;">{{custChat.stuId}}</span>
                     <span style="display:none;">{{custChat.custId}}</span>
@@ -33,7 +33,7 @@
             <tr v-else v-for="(comChat, index) in recentChat" :key="index">
                 <td>{{comChat.stuName | showLimitedContent}}</td>
                 <td>{{comChat.custName | showLimitedContent}}</td> 
-                <td @click="showChatMoal($event)" class="linkToChatModal">
+                <td @click="showChatModal($event)" class="linkToChatModal">
                     {{comChat.word | handleWord}}
                     <span style="display:none;">{{comChat.stuId}}</span>
                     <span style="display:none;">{{comChat.custId}}</span>
@@ -42,17 +42,9 @@
             </tr>
         </table>
         </div>
-        <!-- Chat Modal 영역 -->
-        <div id="chatModal" style="display:none;">
-            <div id="chatContent">
-                <div id="closeChat" @click="hideChatModal()" >&times;</div>
-                <Chat id="chatArea" ref="chat" @moveScroll="moveToScrollBottom()" />
-            </div>
-        </div>
     </div>
 </template>
 
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
-<style scoped src="@/assets/css/chat/ChatShow.css"></style>
 <script scoped src="@/assets/js/mypage/Inquiry.js"> </script>
 

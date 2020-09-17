@@ -1,12 +1,11 @@
 package com.devils.pics.service.impl;
 
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.devils.pics.dao.ChatDAO;
 import com.devils.pics.domain.Chat;
@@ -21,6 +20,32 @@ public class ChatServiceImpl implements ChatService {
 	/* 채팅 추가하기 */
 	public int addChat(Chat chat) throws Exception {
 		return chatDao.addChat(chat);
+	}
+	
+	/* 채팅 아이디로 해당되는 대화를 삭제함 */
+	public int deleteChat(String chatId) throws Exception {
+		return chatDao.deleteChat(chatId);
+	}
+	
+	/* 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) */
+	@Transactional
+	public int setAlreadyRead(Map map) throws Exception {
+		return chatDao.setAlreadyRead(map);
+	}
+	
+	/* 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) */
+	public List<Chat> getNotYetRead(Map map) throws Exception {
+		return chatDao.getNotYetRead(map);
+	}
+	
+	/* 읽지 않은 메세지의 개수를 가져옴 */
+	public int countNotYetRead(Map map) throws Exception {
+		return getNotYetRead(map).size();
+	}
+	
+	/* 채팅 아이디로 대화를 가져옴 */
+	public Chat getChatByChatId(String chatId) throws Exception {
+		return chatDao.getChatByChatId(chatId);
 	}
 	
 	/* 해당되는 스튜디오, 고객의 모든 대화를 가져옴 */

@@ -24,6 +24,9 @@ import com.devils.pics.domain.Tag;
 import com.devils.pics.service.StudioInfoService;
 import com.devils.pics.service.StudioReserveService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 /*스튜디오 정보 로딩 flow
  * 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
  * 2. Studio 클래스에 없는 정보 (태그, 누적 이용자수,찜 여부)
@@ -33,14 +36,15 @@ import com.devils.pics.service.StudioReserveService;
 
 @RestController
 @CrossOrigin(origins={"*"}, maxAge=6000)
+@Api(tags= {"Pics Studio-Info"})
 public class StudioInfoController {
 	@Autowired
 	private StudioInfoService studioInfoService;
 
 	@Autowired
 	private StudioReserveService studioReserveService;
-
-	// 1. 기본 정보(스튜디오 필터/소속 업체/카테고리)
+	
+	@ApiOperation(value="스튜디오 기본 정보(필터/소속 업체/카테고리) 반환", response = List.class)
 	@GetMapping("/studio/info/{stuId}")
 	public ResponseEntity<List<Studio>> getStudioInfo(@PathVariable int stuId) {	
 		try {		
@@ -52,7 +56,8 @@ public class StudioInfoController {
 			return new ResponseEntity<List<Studio>>(HttpStatus.NO_CONTENT);
 		}
 	}
-	// 2-1. Studio 클래스에 없는 정보 (누적 이용자수)
+	
+	@ApiOperation(value="스튜디오 누적 view수 반환", response = Integer.class)
 	@GetMapping("/studio/accCustomer/{stuId}")
 	public ResponseEntity getAccCustomer(@PathVariable int stuId) {	
 		try {
@@ -65,14 +70,14 @@ public class StudioInfoController {
 		}
 	}
 	
-	//2-2. Studio 클래스에 없는 정보 (태그)
+	@ApiOperation(value="스튜디오 태그 반환", response = List.class)
 	@GetMapping("studio/tags/{stuId}")
 	public ResponseEntity<List<Tag>> getTags(@PathVariable int stuId) {	
 		List<Tag> tagVO=studioInfoService.getTags(stuId);
 		return new ResponseEntity<List<Tag>>(tagVO,HttpStatus.OK);
 	}
 	
-	//2-2. Studio 클래스에 없는 정보 (찜 여부)
+	@ApiOperation(value="스튜디오 찜여부 반환", response = Integer.class)
 	@GetMapping("/studio/getBookmark/{custId}/{stuId}")
 	public ResponseEntity<Integer> getBookmark(@PathVariable int custId,@PathVariable int stuId) {	
 		try {
@@ -90,7 +95,7 @@ public class StudioInfoController {
 	}
 	
 	
-	//2-3. Studio 클래스에 없는 정보 (리뷰)
+	@ApiOperation(value="스튜디오 리뷰 반환", response = List.class)
 	@GetMapping("/studio/reviews/{stuId}")
 	public ResponseEntity<List<Review>> getStudioReviews(@PathVariable int stuId) {	
 		try {

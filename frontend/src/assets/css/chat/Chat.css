@@ -144,6 +144,11 @@
                 border-top: 0 !important;
             }
             
+            .chat-wrapper .chat-message.chat-message-recipient,
+            .chat-wrapper .chat-message.chat-message-sender {
+                margin-top: 5px;
+            }
+            
             .chat-wrapper .chat-message.chat-message-recipient .chat-message-wrapper,
             .chat-wrapper .chat-message.chat-message-recipient .chat-message-content {
                 float: left;
@@ -200,11 +205,25 @@
                 text-decoration: underline;
             }
             
+            .chat-message-read-status {
+                color: #FFA7A7 !important;
+                margin-right: 5px;
+            }
+            
+            .chat-details .delChatBtn {
+                cursor: pointer;
+                font-size: 0.7rem;
+                color: white !important;
+                background-color: #A6A6A6;
+                padding: 1px;
+            }
+            
             .chat-wrapper .chat-message .chat-details {
                 clear: both;
                 width: 100%;
                 display: table;
                 overflow: auto;
+                vertical-align: middle;
             }
             
             .chat-wrapper .chat-message .chat-details:before {

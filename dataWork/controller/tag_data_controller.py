@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[93]:
+# In[1]:
 
 
 # 외부 모듈
@@ -15,22 +15,13 @@ import os
 ### 자연어 처리기
 from konlpy.tag import Okt
 from collections import Counter
-import pandas as pd
 
 ## wordVec
 import gensim 
 from gensim.models import word2vec
 
 
-# In[94]:
-
-
-# def targetStuId(stuid):
-#     stuId=1
-#     return stuId 
-
-
-# In[97]:
+# In[17]:
 
 
 ### 사용자 모듈 불러오기
@@ -42,7 +33,7 @@ from model import word2vec_model
 from model import count_tag_model
 
 # 데이터 불러오기
-def tagData(stuid):
+def tagData(stuId):
     # DB 데이터
     
     dataset = tag_dao.getTagData()
@@ -70,43 +61,19 @@ def tagData(stuid):
     vocab=model.wv.vocab
     extendTagList=[]
     extendTagSimList=[]
-    for i in range(len(CoreTagData2)):
-        tags=[]
-        tagsSim=[]
-        for j in range(len(CoreTagData2[i])):
-            if((len(CoreTagData2[i])>25)):
-                tags.append(CoreTagData2[i][j])
-                tagsSim.append(0)
-            if((CoreTagData2[i][j] in vocab.keys())&(len(CoreTagData2[i])>12)):
-                for k in range(1):
-                    tags.append(model.wv.most_similar(CoreTagData2[i][j],topn=1)[k][0])
-                    tagsSim.append(model.wv.most_similar(CoreTagData2[i][j],topn=1)[k][1])
-            elif((CoreTagData2[i][j] in vocab.keys())&(len(CoreTagData2[i])>5)):
-                for k in range(3):
-                    tags.append(model.wv.most_similar(CoreTagData2[i][j],topn=3)[k][0])
-                    tagsSim.append(model.wv.most_similar(CoreTagData2[i][j],topn=3)[k][1])
-            elif((CoreTagData2[i][j] in vocab.keys())&(len(CoreTagData2[i])<=4)):
-                for k in range(4):
-                    tags.append(model.wv.most_similar(CoreTagData2[i][j],topn=4)[k][0])                    
-                    tagsSim.append(model.wv.most_similar(CoreTagData2[i][j],topn=4)[k][1])
-        extendTagList.append(tags)
-        extendTagSimList.append(tagsSim) 
-    dataset["extend_tag"]=extendTagList
-    dataset["extend_tag_sim"]=extendTagSimList
+    dataset=word2vec_model.extendTag(CoreTagData2,model,dataset)
 
-    stuId=stuid
-    
 #   Counting Words
     dataset=count_tag_model.tagCount(stuId,dataset)
-#     dataset10=dataset.loc[:10,:]
-    dataset.to_json('result.json', orient='table')
-    return dataset
+    topSim=list(dataset.loc[:10,"stu_id"])
+    return tag_dao.getTop10(topSim)[:10]
 
 
-# In[98]:
+# In[19]:
 
 
-
+# result=tagData(11) 
+# result
 
 
 # In[ ]:

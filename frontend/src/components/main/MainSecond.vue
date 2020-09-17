@@ -22,10 +22,12 @@
                 <img :src="getImgUrl(studio.main_img)" />
               </div>
               <div class="card-content">
-                <div class="name">{{studio.name}}</div>
-                <div class="category">
-                  {{ studio.category_name }}/
-                  {{studio.address | category}}
+                <div class="name">
+                  {{studio.name |titleSplit}}
+                  <div class="category">
+                    {{ studio.category_name }}/
+                    {{studio.address | category}}
+                  </div>
                 </div>
                 <div class="price">
                   {{ studio.unit_price | currency }}

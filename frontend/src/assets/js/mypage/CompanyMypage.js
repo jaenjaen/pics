@@ -5,6 +5,7 @@ import MypageGap from "@/components/mypage/MypageGap.vue";
 import Inquiry from "@/components/mypage/Inquiry.vue";
 import Axios from "axios";
 import moment from 'moment';
+import Chat from "@/components/chat/Chat.vue"; //채팅
 
 var session = JSON.parse(sessionStorage.getItem("company"));
 
@@ -37,6 +38,7 @@ export default {
         Inquiry,
         'calendar': Calendar,
         moment,
+        Chat
     },
     data() {
         return {
@@ -269,6 +271,41 @@ export default {
                 alert("시간은 정각만 설정 가능합니다.");
 
             }
+        },
+        /* 문의 영역 시작 */
+        showComChatForInquiry(stuId, custId) { //inquiry에서 stuId, custId를 받음.
+            this.selectedId = stuId;
+            this.userId = custId;
+            console.log("부모 stuId : " + this.selectedId);
+            console.log("부모 custId : " + this.userId);
+            this.showChatModal();
+        },
+        showChatModal: function() {
+            if (this.comId === null) {
+                alert("로그인한 회원만 이용 가능합니다.");
+                location.href = "/companyLogin"
+            } else {
+                this.$modal.hide("detailModal");
+                this.$refs.chat.setChat(this.selectedId, this.userId);
+                let chatModal = document.getElementById('chatModal');
+                chatModal.setAttribute('style', 'display:block;');
+                this.moveToScrollBottom();
+            }
+        },
+        hideChatModal: function() {
+            document.getElementById('chatModal').setAttribute('style', 'display:none;');
+        },
+        /* 스크롤을 최하단으로 옮김 */
+        moveToScrollBottom() {
+            setTimeout(function() {
+                var length = document.getElementById('chatContent').scrollHeight;
+                document.getElementById('chatContent').scrollTop = length;
+            }, 100);
+        },
+        /* 문의 영역 끝 */
+        imgUrl(imgName) {
+            console.log('imgName' + imgName);
+            return require("@/assets/img/studio/" + imgName);
         }
     }
 

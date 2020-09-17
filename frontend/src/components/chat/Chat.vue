@@ -66,7 +66,7 @@
                                         <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
                                     </p>
                                 </div><!-- chat-message-content -->
-                                <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
+                                 <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
                                 <div class='chat-details' v-if="checkSameTime(idx)">
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
                                     <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
@@ -207,7 +207,7 @@
               </a>
             </span>
             <span>
-                <input type="text" v-model="chat.word" placeholder="200자 내외로 입력하세요." maxlength="200" id="word" class="inputArea" name="word" @keyup.enter="sendChat('word')">
+                <input type="text" v-model="chat.word" id="word" class="inputArea" name="word" @keyup.enter="sendChat('word')">
             </span>
             <span>
                 <a href="javascript:;" @click="sendChat('word')">

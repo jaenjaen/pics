@@ -105,10 +105,12 @@
     cursor: pointer;
     border-radius: 5px;
     border: 1.5px solid lightgray;
+    font-weight: 700;
 }
 
 #more-review-btn:hover {
     background-color: #029be0;
     color: #fff;
     border: 1.5px solid lightgray;
+    font-weight: 700;
 }

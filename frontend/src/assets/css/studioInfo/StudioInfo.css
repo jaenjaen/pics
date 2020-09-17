@@ -151,7 +151,12 @@ section {
     margin: 20%;
     list-style-type: none;
     display: inline;
+}
+
+.nav-tab a {
     font-weight: 700;
+    font-size: 1.3em;
+    color: #029be0;
 }
 
 
@@ -161,6 +166,7 @@ article {
     width: 100%;
     float: left;
     margin-bottom: 10em;
+    padding: 1%;
 }
 
 .info_filter_map {
@@ -203,8 +209,9 @@ article {
 #roadView {
     background-color: white;
     color: #029be0;
-    border: 1px solid #029be0;
+    border: 1.5px solid lightgray;
     border-radius: 5px;
+    font-weight: 700;
 }
 
 .article-Description-area {

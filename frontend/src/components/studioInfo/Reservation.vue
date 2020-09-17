@@ -19,7 +19,7 @@
                         :md-model-type="String"
                         :md-immediately="true"
                         :disable-passed-days="true"
-                        ::md-disabled-dates="disabledDates"
+                        :md-disabled-dates="disabledDates"
                         :value="start_date"
                       ></md-datepicker>
                     </span>
@@ -32,7 +32,7 @@
                         :md-model-type="String"
                         :md-immediately="true"
                         :disable-passed-days="true"
-                        ::md-disabled-dates="disabledDates"
+                        :md-disabled-dates="disabledDates"
                         :value="end_date"
                       ></md-datepicker>
                     </span>
@@ -154,12 +154,11 @@
                 </tr>
               </table>
               <div>
-                <md-button
+                <button
                   id="reservation-btn"
                   type="submit"
                   align="center"
-                  class="md-raised md-primary"
-                >예약하기</md-button>
+                >예약하기</button>
               </div>
             </div>
           </div>

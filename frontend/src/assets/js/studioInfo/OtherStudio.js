@@ -44,9 +44,9 @@ export default {
             .finally(() => (this.loading = false));
     },
     methods: {
-        getImgUrl(url) {
-            return require("@/assets/img/studio/" + url);
-        },
+        // getImgUrl(url) {
+        //     return require("@/assets/img/studio/" + url);
+        // },
         moveToComInfo(value) {
             this.$router.push("/studioInfo/" + value);
         }

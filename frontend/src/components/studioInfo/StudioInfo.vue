@@ -76,11 +76,11 @@
         <!-- 누적 이용자 수 -->
         <div class="studio-name">
           <div>
-            <h1 id="studio-name">
+            <h2 id="studio-name">
               <span>{{ studio.name }}</span>
               <button class="chat-btn" @click="showChatMoal">문의</button>
               <!-- 문의 클릭 이벤트 -->
-            </h1>
+            </h2>
 
             <p id="accCustomer">
               누적 이용자 총
@@ -267,7 +267,6 @@
       </div>
       <hr />
       <!-- ============== OthserStudio ============== -->
-      
       <OtherStudio></OtherStudio>
       <hr />
       <!-- ============== Review ============== -->

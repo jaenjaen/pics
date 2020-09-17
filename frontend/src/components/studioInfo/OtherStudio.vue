@@ -19,8 +19,8 @@
           <div class="row">
             <div class="card" @click.prevent="moveToComInfo(studio.stu_id)">
               <div class="card-image">
-                <img :src="getImgUrl(studio.main_img)" />
-                {{studio.main_img)}
+                <!-- <img :src="getImgUrl(studio.main_img)" /> -->
+               <img :src="`@/assets/img/studio/${studio.main_img}`"/>
               </div>
               <div class="card-content">
                 <div class="name">{{studio.name}}</div>

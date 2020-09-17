@@ -2,6 +2,7 @@ import axios from "axios";
 import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
 import Inquiry from "@/components/mypage/Inquiry.vue";
+import Chat from "@/components/chat/Chat.vue"; //채팅
 
 var session = JSON.parse(sessionStorage.getItem("customer"));
 export default {
@@ -9,7 +10,8 @@ export default {
     components: {
         MypageNametag,
         MypageGap,
-        Inquiry
+        Inquiry,
+        Chat
     },
     data() {
         return {
@@ -18,7 +20,8 @@ export default {
             reviewList: [],
             rvFlag: true,
             custId: session.custId,
-            resId: ""
+            resId: "",
+            selectedId: ''
         };
     },
     mounted() {
@@ -48,6 +51,36 @@ export default {
 
     },
     methods: {
+        /* 문의 영역 시작 */
+        showCustChatForInquiry(stuId) { //inquiry에서 stuId, custId를 받음.
+            this.selectedId = stuId;
+            console.log("부모 stuId : " + this.selectedId);
+            this.showChatModal();
+        },
+        showChatModal: function() {
+            if (session === null) {
+                alert("로그인한 회원만 이용 가능합니다.");
+                location.href = "/customerLogin"
+            } else {
+                this.$modal.hide("detailModal");
+                this.$refs.chat.setChat(this.selectedId, this.custId);
+                let chatModal = document.getElementById('chatModal');
+                chatModal.setAttribute('style', 'display:block;');
+                this.moveToScrollBottom();
+            }
+        },
+        hideChatModal: function() {
+            document.getElementById('chatModal').setAttribute('style', 'display:none;');
+        },
+        /* 스크롤을 최하단으로 옮김 */
+        moveToScrollBottom() {
+            setTimeout(function() {
+                var length = document.getElementById('chatContent').scrollHeight;
+                document.getElementById('chatContent').scrollTop = length;
+            }, 100);
+        },
+        /* 문의 영역 끝 */
+
         /* 예약 취소 */
         deleteResv: function(resId) {
             axios.delete("http://localhost:7777/studio/reservation/" + resId)

@@ -63,26 +63,18 @@ export default {
         },
 
         /* 문의 영역 Modal 보임 */
-        showChatMoal: function(event) {
-            if (customer === null && company === null) {
-                alert("로그인한 회원만 이용 가능합니다.");
-                location.href = "/customerLogin"
-            } else {
-                this.stuId = event.target.childNodes[1].innerHTML;
-                this.custId = event.target.childNodes[2].innerHTML;
-                console.log("stuId : " + this.stuId);
-                console.log("custId : " + this.custId);
-                this.$refs.chat.setChat(this.stuId, this.custId);
-                let chatModal = document.getElementById('chatModal');
-                chatModal.setAttribute('style', 'display:block;');
-                this.moveToScrollBottom();
-            }
-        },
+        showChatModal: function(event) {
+            this.stuId = event.target.childNodes[1].innerHTML;
+            this.custId = event.target.childNodes[2].innerHTML;
+            console.log("자식 stuId : " + this.stuId);
+            console.log("자식 custId : " + this.custId);
 
-        /* 문의 영역 Modal 숨김 */
-        hideChatModal: function() {
-            document.getElementById('chatModal').setAttribute('style', 'display:none;');
-            this.getRecentChat();
+            /* 업체, 고객에 맞춰 각각의 값을 CompanyMyPage 또는 CustomerMyPage로 보냄 */
+            if (company != null) {
+                this.$emit('showComChat', this.stuId, this.custId);
+            } else if (customer != null) {
+                this.$emit('showCustChat', this.stuId);
+            }
         },
 
         /* 최신 대화 가져오기 */
@@ -91,37 +83,29 @@ export default {
                 axios.get('http://127.0.0.1:7777/chat/recent/cust/' + customer.custId)
                     .then((response) => {
                         if (response.data != -1) {
-                            console.log('customer 최근 대화 가져오기 성공');
+                            //console.log('customer 최근 대화 가져오기 성공');
                             this.recentChat = response.data;
-                            console.log(this.recentChat);
+                            //console.log(this.recentChat);
                             this.inquiryFlag = false;
                         }
                     })
                     .catch(() => {
-                        console.log('customer 최근 대화 가져오기 실패');
+                        //console.log('customer 최근 대화 가져오기 실패');
                     })
             } else if (company != null) {
                 axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId)
                     .then((response) => {
                         if (response.data != -1) {
-                            console.log('company 최근 대화 가져오기 성공');
+                            //console.log('company 최근 대화 가져오기 성공');
                             this.recentChat = response.data;
-                            console.log(this.recentChat);
+                            //console.log(this.recentChat);
                             this.inquiryFlag = false;
                         }
                     })
                     .catch(() => {
-                        console.log('company 최근 대화 가져오기 실패');
+                        //console.log('company 최근 대화 가져오기 실패');
                     })
             }
         },
-
-        /* 스크롤을 최하단으로 옮김 */
-        moveToScrollBottom() {
-            setTimeout(function() {
-                var length = document.getElementById('chatContent').scrollHeight;
-                document.getElementById('chatContent').scrollTop = length;
-            }, 100)
-        }
     }
 }

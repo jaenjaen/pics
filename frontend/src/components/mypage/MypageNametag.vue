@@ -7,7 +7,7 @@
         </td>
         <td class="userName">{{username}}</td>
         <td rowspan="2" id="userHeart">
-          <router-link :to="{name:'wishList', params: {custId:custId}}" v-if="customerMode"><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></router-link>
+          <router-link :to="{name:'wishList', params: {custId:userId}}" v-if="customerMode"><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></router-link>
         </td>
       </tr>
       <tr>
@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       username:"",
-      userid:"",
+      userId:"",
       userImg: require("@/assets/img/mypage/defaultStudio.svg"),
       link:""
     };

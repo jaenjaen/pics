@@ -7,7 +7,6 @@
                 <Chat id="chatArea" ref="chat" @moveScroll="moveToScrollBottom()" />
             </div>
         </div>
-
     </div>
 </template>
 

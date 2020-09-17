@@ -199,7 +199,7 @@ export default {
     ////////////////////////////// Methods //////////////////////////////
     methods: {
         /* 문의 영역 시작 */
-        showChatMoal: function() {
+        showChatModal: function() {
             if (this.customer === null) {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"

@@ -1,18 +1,18 @@
 <template>
-  <div class="other-studio-area" id="OtherStudio">
-    <div class="word-field">
+  <div class="mainsecond_container" id="OtherStudio">
+    <div class="word_container">
       <div class="word-item">
-        <h6 align="left"><b>비슷한 스튜디오 살펴보기</b></h6>
+        <h5><strong>비슷한 스튜디오 살펴보기</strong></h5>
       </div>
       <div class="word-item">
         <!-- <a href>더보기</a> -->
       </div>
     </div>
     <!-- 캐라셀 -->
-    <div class="mainsecond_carousel">
+    <div class="mainsecond_carousel" v-show="studio_infos && studio_infos.length">
       <carousel
         v-if="studio_infos && studio_infos.length"
-        v-bind:items="num"
+        v-bind:items="4"
         :margin="5"
         :loop="true"
         :nav="false"
@@ -21,11 +21,11 @@
           <div class="row">
             <div class="card" @click.prevent="moveToComInfo(studio.stu_id)">
               <div class="card-image">
-                <!-- <img :src="imgUrl(mainImg1)" > -->
-               <img :src="`@/assets/img/studio/${mainImg1}`"/>
+                <img :src="imgUrl(studio.main_img)" />
+                <!-- <img :src="`@/assets/img/studio/${studio_infos.main_img}`" /> -->
               </div>
               <div class="card-content">
-                <div class="name">{{studio.name}}</div>
+                <div class="name">{{studio.name|substring}}</div>
                 <div class="category">
                   {{ studio.category_name }}/
                   {{studio.address | category}}

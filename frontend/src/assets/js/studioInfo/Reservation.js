@@ -90,7 +90,6 @@ export default {
 
     created: function() {
         this.stuId = this.stuIdData;
-        console.log("Props로 데이터 받음~~!! 여긴 Reservation" + this.stuId);
     },
     async mounted() {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));

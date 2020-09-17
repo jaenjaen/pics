@@ -24,21 +24,16 @@ export default {
     },
     created: function() {
         this.stuId = this.stuIdData;
-        console.log("Props로 데이터 받음~~!! 여긴 OtherStudio : " + this.stuId);
     },
     async mounted() {
         await axios
-            .get("http://127.0.0.1:5000/tag/10") // + this.stuId)
+            .get("http://127.0.0.1:5000/tag/" + this.stuId)
             .then(response => {
-                this.studio_infos = response.data;
-                for (let i = 0; i < 8; i++) {
-                    console.log("imagetype : " + typeof this.studios[i].main_img)
-                    let mainImgs = (this.studios[i].main_img).split(',');
-                    console.log("mainImgs: " + mainImgs)
-                    for (let j = 0; j < 1; i++) {
-                        this.mainImg1 = mainImgs[i];
-                        console.log("this.mainImg1: " + this.mainImg1)
-                    }
+                this.studio_infos = response.data
+                for (let j = 0; j < 1; j++) {
+                    let mainImgs = (this.studio_infos[j].main_img).split(',');
+                    this.studio_infos[j].main_img = mainImgs[0];
+                    console.log("this.studio_infos: " + this.studio_infos)
                 }
             })
             .catch(error => {
@@ -49,7 +44,6 @@ export default {
     },
     methods: {
         imgUrl(imgName) {
-            console.log("imgName : " + imgName)
             return require("@/assets/img/studio/" + imgName);
         },
         moveToComInfo(value) {
@@ -69,6 +63,13 @@ export default {
         category: function(value) {
             let str = value.split("시");
             return str[0];
+        },
+        substring: function(value) {
+            if (value.length > 12) {
+                return value.substring(0, 9) + "...";
+            }
+            return value;
+
         }
     }
 

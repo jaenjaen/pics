@@ -264,9 +264,6 @@
         </div>
       </div>
       <hr />
-      <!-- ============== OthserStudio ============== -->
-      <OtherStudio></OtherStudio>
-      <hr />
       <!-- ============== Review ============== -->
       <div id="review-container">
         <div id="no-review" v-if="(reviews+'').length<=0">
@@ -361,6 +358,8 @@
           </div>
         </div>
       </div>
+      <!-- ============== OthserStudio ============== -->
+      <OtherStudio :stuIdData="stuId"></OtherStudio>
     </article>
     <!-- 모달 모아두기 -->
     <div>

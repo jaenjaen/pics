@@ -64,6 +64,7 @@ export default {
             repeatedDays: [],
             disabledDates: date => {
                 const day = date.getDay()
+                alert(date.getDay())
                 return this.checkDisable(day) == 0
             },
             // //1) 초로 환산한 날짜
@@ -86,8 +87,8 @@ export default {
         "v-model",
         "stuIdData"
     ],
+
     created: function() {
-        console.log("Props로 데이터 받음~~!! 여긴 Reservation");
         this.stuId = this.stuIdData;
     },
     async mounted() {
@@ -105,7 +106,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-            .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 var exceptionDate = (response.data.exceptionDate);
@@ -128,7 +129,6 @@ export default {
             });
     },
     filters: {
-        // 숫자를 금액 형식으로
         currency: function(value) {
             if (!isNaN(value)) return value.toLocaleString();
             else return 0;
@@ -166,8 +166,8 @@ export default {
             if (this.start_date != "") {
                 this.startTimes = this.setTime(this.startDay);
                 if (this.startDate < todayTime) {
-                    alert("대여 종료일을 오늘 이후로 선택하세요.");
-                    this.start_date = this.today.getFullYear + "-" + (this.today.getMonth + 1) + "-" + this.today.getDate;
+                    alert("대여 시작일을 오늘 이후로 선택하세요.");
+                    this.start_date = this.today.getFullYear() + "-" + (this.today.getMonth() + 1) + "-" + this.today.getDate();
                 }
             }
             if (this.end_date != "") {
@@ -325,6 +325,7 @@ export default {
             }
         },
         checkDisable(date) {
+            alert("date : " + date)
             let disableWeek = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
             if (date != null) {
                 if (this.repeatedDays.indexOf(disableWeek[date], 0) > -1) { //일치하는 요일의 

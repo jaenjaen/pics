@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[1]:
 
 
 import pymysql
@@ -70,7 +70,54 @@ def getTagData() :
     return dataset 
 
 
-# In[21]:
+# In[2]:
+
+
+
+# 메인 추천 업체 가져오기
+def getTop10(topSim) :
+    result_list = []
+    db= pymysql.connect(host='pics.crvbvpzlygpt.ap-northeast-2.rds.amazonaws.com',
+                                 port=3306,
+                                 user='pics',
+                                 passwd='picspics!1',
+                                 db='pics',
+                                 charset='utf8',
+                               cursorclass=pymysql.cursors.DictCursor)
+    try :
+        for stu_id in topSim :
+            
+            cursor= db.cursor()
+            sql ="SELECT "
+            sql +="s.stu_id, s.name, c.category_name, s.main_img,sf.unit_price ,sf.address "
+            sql +="FROM studio s "
+            sql +="JOIN studio_filter sf ON s.stu_id = sf.stu_id "
+            sql +="JOIN studio_category c ON s.category_id = c.category_id "
+            sql +="WHERE s.stu_id ="+str(stu_id)
+  
+            cursor.execute(sql)
+            db.commit()
+
+            result= cursor.fetchall()
+            result_list.append(result[0])
+        return result_list
+    finally:
+        db.close()
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
 
 
 

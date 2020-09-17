@@ -12,6 +12,7 @@ import pandas as pd
 from pandas import DataFrame as df
 import csv
 import os
+import sys
 
 # 자연어 처리기
 from konlpy.tag import Okt
@@ -40,12 +41,6 @@ def getDescList(dataset):
         else:
             descList.append(tempList)
     return descList
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
@@ -100,8 +95,6 @@ def getCoreTags1(dataset):
     CoreTagData1=CoreTagData1[0]
     return CoreTagData1
 
-# CoreTagData1=getCoreTags1(dataset)
-
 
 # In[ ]:
 
@@ -128,8 +121,6 @@ def getCoreTags2(dataset):
             coreTagList.append(list(set(descript[k]))) 
     return coreTagList
 
-# CoreTagData2=getCoreTags2(dataset)
-
 
 # In[ ]:
 
@@ -142,7 +133,28 @@ def fillCoreTag(CoreTagData1,CoreTagData2):
 
     for i in range(len(CoreTagData2)):
         CoreTagData2[i]=list(set(CoreTagData2[i]))
-        CoreTagData1[i]=list(set(CoreTagData1[i])) 
+        CoreTagData1[i]=list(set(CoreTagData1[i]))
+    
+    ## dataset에 키워드 삽입
+    dataset["new_tag1"]=CoreTagData1
+    dataset["new_tag2"]=CoreTagData2
+    return dataset 
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
 
 
 

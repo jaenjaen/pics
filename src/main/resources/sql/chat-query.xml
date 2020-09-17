@@ -41,6 +41,32 @@
 		VALUES(#{custId}, #{stuId}, #{word}, #{filePath}, NOW(), #{sender}, #{readCheck});
 	</insert>
 	
+	<!-- 채팅 아이디로 해당되는 대화를 삭제함 -->
+	<delete id="deleteChat" parameterType="string">
+		DELETE FROM chat WHERE chat_id=#{chatId};
+	</delete>
+	
+	<!-- 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) -->
+	<update id="setAlreadyRead" parameterType="hashMap">
+		UPDATE chat SET read_check = 1 WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
+	</update>
+	
+	<!-- 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) -->
+	<select id="getNotYetRead" parameterType="hashMap" resultType="list">
+		SELECT chat_id, cust_id, stu_id, 
+        word, file_path, 
+        DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check  
+		FROM chat WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
+	</select>
+		
+	<!-- 채팅 아이디로 대화를 가져옴 -->
+	<select id="getChatByChatId" parameterType="string" resultType="chat">
+		SELECT chat_id, cust_id, stu_id, 
+        word, file_path, 
+        DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check 
+		FROM chat WHERE chat_id=#{chatId};
+	</select>
+	
 	<!-- 보내는 이(고객/기업)에 따라 해당되는 스튜디오, 고객의 대화를 가져옴 -->
 	<select id="getPrevAllChat" parameterType="hashMap" resultType="chat">
 		SELECT 
@@ -53,13 +79,15 @@
 	
 	<!-- 해당 스튜디오, 고객의 가장 최근 채팅 가져오기 -->
 	<select id="getMostRecentChat" parameterType="hashMap" resultType="chat">
-		SELECT chat_id, cust_id, stu_id, 
-		word, file_path,
-		DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check
-		FROM chat
-		WHERE cust_id=#{custId} AND stu_id=#{stuId}
-		ORDER BY date_time DESC
-		LIMIT 1;
+		SELECT s.chat_id, s.cust_id, s.stu_id, 
+		s.word, s.file_path,
+		DATE_FORMAT(s.date_time, "%Y/%c/%e %r") date_time, s.sender, s.read_check
+		FROM
+		(SELECT *
+				FROM chat
+				WHERE cust_id=#{custId} AND stu_id=#{stuId}
+				ORDER BY date_time DESC
+				LIMIT 1) s;
 	</select>
 
 	<!-- 업체의 스튜디오 및 고객별 최근 대화  -->

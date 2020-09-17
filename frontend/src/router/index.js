@@ -18,7 +18,6 @@ import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
 import OtherStudio from "@/components/studioInfo/OtherStudio.vue";
 import StudioList from "@/components/search/StudioList.vue";
-import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
 import CompanyInfo from "@/components/company/company_info.vue"
@@ -102,11 +101,6 @@ const routes = [{
         path: "/customeredit",
         name: "customeredit",
         component: CustomerEdit
-    },
-    {
-        path: "/uploadImg",
-        name: "uploadImg",
-        component: UploadImg
     },
     {
         path: "/reservationlist",

@@ -49,10 +49,15 @@ public class StudioFilterTest {
 		 * 
 		 * category.setCategoryId(1); //카테고리 별 filter.set studio.setCategory(category);
 		 */
-//		SearchCon searchCon = new SearchCon();
-//		ArrayList<String> search = new ArrayList<String>();
-//		search.add("서울");
-//		search.add("이태원");
+		SearchCon searchCon = new SearchCon();
+		ArrayList<String> search = new ArrayList<String>();
+		search.add("서울");
+		search.add("이태원");
+		
+		ArrayList<String> stuId = new ArrayList<String>();
+		stuId.add("742");
+		stuId.add("740");
+		searchCon.setStuId(stuId);
 		
 //		searchCon.setCategoryId("1");
 //		filterMap.put("weekDate","월");
@@ -73,10 +78,10 @@ public class StudioFilterTest {
 //		searchCon.setCustId(3);
 //		  
 //		
-//		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", searchCon);
-//		System.out.println(searchCon);
-//		System.out.println("조회된 총 studio 수 : " + list.size());
-//		for (Studio s : list) System.out.println(s);
+		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter", searchCon);
+		System.out.println(searchCon);
+		System.out.println("조회된 총 studio 수 : " + list.size());
+		for (Studio s : list) System.out.println(s);
 		
 		
 //		Bookmark b = new Bookmark();
@@ -88,7 +93,14 @@ public class StudioFilterTest {
 		
 		
 		
-		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudios");
-		System.out.println("조회된 총 studio 수 : " + list.size());
+//		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudios");
+//		System.out.println("조회된 총 studio 수 : " + list.size());
+		
+//		List<String> stuList = new ArrayList<String>();
+//		for(int i=1156;i<1161;i++) {
+//			stuList.add(i+"");
+//		}
+//		List<Studio> list = sqlSession.selectList("StudioFilterMapper.getStudioByStuId", stuList);
+//		for(Studio s : list) System.out.println(s);
 	}
 }

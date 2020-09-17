@@ -30,7 +30,7 @@
                 <div class='chat-message padding'>
 
                     <!-- 이전 채팅 불러오기 -->
-                    <div id="prevChatList" v-for="(prev, index) in prevAllChat" :key="index">
+                    <div id="prevChatList" v-for="(prev, idx) in prevAllChat" :key="idx">
 
                         <!-- 고객 이전 채팅 불러오기 -->
                         <!-- 상대방 -->
@@ -48,10 +48,8 @@
                                         </a>
                                     </p>
                                 </div><!-- chat-message-content -->
-                                <div class='chat-details'>
+                                <div class='chat-details' v-if="checkSameTime(idx)">
                                     <span class='chat-message-localization font-size-small cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span style="display: none;">{{index}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-recipient -->
@@ -60,7 +58,7 @@
                             <img class='chat-image chat-image-default profile' :src='customer.imgSrc' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
-                                    <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p v-if="prev.word != ''">{{prev.word}}</p>
                                     <p v-else-if="isImgFile(prev.filePath)">
                                         <img class="chatUploadImg" :src="chatRoute + prev.filePath">
                                     </p>
@@ -68,9 +66,10 @@
                                         <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
                                     </p>
                                 </div><!-- chat-message-content -->
-                                <div class='chat-details'>
+                                <div class='chat-details' v-if="checkSameTime(idx)">
+                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->
@@ -87,13 +86,13 @@
                                         <img class="chatUploadImg" :src="chatRoute + prev.filePath">
                                     </p>
                                     <p v-else>
-                                        <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
+                                        <a :href="chatRoute + prev.filePath" download="downloadFile">
+                                            {{prev.filePath}}
+                                        </a>
                                     </p>
                                 </div><!-- chat-message-content -->
-                                <div class='chat-details'>
+                                <div class='chat-details' v-if="checkSameTime(idx)">
                                     <span class='chat-message-localization font-size-small stu-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span style="display: none;">{{index}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-recipient -->
@@ -102,7 +101,7 @@
                             <img class='chat-image chat-image-default profile' :src='company.logoImg' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
                                 <div class='chat-message-content'>
-                                    <p class="me" v-if="prev.word != ''">{{prev.word}}</p>
+                                    <p v-if="prev.word != ''">{{prev.word}}</p>
                                     <p v-else-if="isImgFile(prev.filePath)">
                                         <img class="chatUploadImg" :src="chatRoute + prev.filePath">
                                     </p>
@@ -110,10 +109,10 @@
                                         <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
                                     </p>
                                 </div><!-- chat-message-content -->
-                                <div class='chat-details'>
-                                    <span class='chat-message-localisation font-size-small  stu-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span style="display: none;">{{index}}</span>
-                                    <span class='chat-message-read-status font-size-small'>- Read</span>
+                                <div class='chat-details' v-if="checkSameTime(idx)">
+                                    <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
+                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">- 읽음</span>
+                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->

@@ -12,7 +12,7 @@
             </label>
           </div>
           <div class="col-75">
-            <input type="text" id="name" name="name" :placeholder="studio.name" disabled/>
+            <input type="text" id="name" name="name" v-model="studio.name"/>
           </div>
         </div>
         <div class="row">

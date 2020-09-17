@@ -32,3 +32,9 @@
     text-decoration-line: none;
     border-bottom: 2px solid #33A3DC;
 }
+
+@media all and (min-width: 250px) and (max-width: 768px) {
+    .loginHeader {
+        width: 100%;
+    }
+}

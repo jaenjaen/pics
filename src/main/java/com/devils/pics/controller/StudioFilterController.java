@@ -14,20 +14,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devils.pics.domain.Customer;
 import com.devils.pics.domain.Studio;
 import com.devils.pics.domain.StudioFilter;
 import com.devils.pics.domain.Tag;
 import com.devils.pics.service.StudioFilterService;
 import com.devils.pics.util.SearchCon;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @CrossOrigin(origins= {"*"}, maxAge=6000)
+@Api(tags= {"Pics Search"})
 public class StudioFilterController {
 
 	@Autowired
 	private StudioFilterService studioFilterService;
 	
-	// 전체 출력
+	@ApiOperation(value="스튜디오 전체 반환", response = List.class)
 	@GetMapping("/studio/search")
 	public ResponseEntity searchStudio(){
 		try {
@@ -38,7 +43,7 @@ public class StudioFilterController {
 		}
 	}
 	
-	// 필터 출력
+	@ApiOperation(value="필터 정보를 바탕으로 검색된 스튜디오 반환", response = List.class)
 	@PostMapping("/studio/search/filter")
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
@@ -63,6 +68,7 @@ public class StudioFilterController {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 	}
+	
 	// Client로 받은 정보를 VO로 전환
 	public SearchCon getSearchCon(HashMap<String, String> filters) {
 		SearchCon searchCon = new SearchCon();
@@ -102,44 +108,44 @@ public class StudioFilterController {
 		return searchCon;
 	}
 	
-	    // 추천 장소 보내주기 
-		@GetMapping("/studio/popular")
-		public ResponseEntity popularStudio(){
-			//System.out.println("/studio/popular 들어옴");
-			try {
-				List<Studio> list = studioFilterService.searchStudio();
-				List<Studio> sendList = new ArrayList<>();
-				int numList[] = new int[10];
+	@ApiOperation(value="추천 스튜디오 정보반환", response = List.class)
+	@GetMapping("/studio/popular")
+	public ResponseEntity popularStudio(){
+		//System.out.println("/studio/popular 들어옴");
+		try {
+			List<Studio> list = studioFilterService.searchStudio();
+			List<Studio> sendList = new ArrayList<>();
+			int numList[] = new int[10];
 				
-				for(int i=0; i<10; i++) {
-					numList[i]= (int)(Math.random()*list.size())+1;
-					
-					for(int j=0; j<i; j++) {
-						if(numList[i]==numList[j]) {
-							i--;
-							break;
-						}// if
-					}//for j
-					Studio tempData = list.get(numList[i]);
-					tempData.setMainImg(tempData.getMainImg().split(",")[0]);
-					if(!tempData.getMainImg().contains("jpg")) {
-						String word = ".jpg";
-						String tempWord= tempData.getMainImg().concat(word);
-						tempData.setMainImg(tempWord);
-					}
-					if(tempData.getMainImg().contains("/")){
-						String tempWord= tempData.getMainImg().replace("/", "");
-						tempData.setMainImg(tempWord);
-					}
-					list.set(numList[i], tempData);
-					
-					sendList.add(list.get(numList[i]));
-				} // for i
+			for(int i=0; i<10; i++) {
+				numList[i]= (int)(Math.random()*list.size())+1;
 				
+				for(int j=0; j<i; j++) {
+					if(numList[i]==numList[j]) {
+						i--;
+						break;
+					}// if
+				}//for j
+				Studio tempData = list.get(numList[i]);
+				tempData.setMainImg(tempData.getMainImg().split(",")[0]);
+				if(!tempData.getMainImg().contains("jpg")) {
+					String word = ".jpg";
+					String tempWord= tempData.getMainImg().concat(word);
+					tempData.setMainImg(tempWord);
+				}
+				if(tempData.getMainImg().contains("/")){
+					String tempWord= tempData.getMainImg().replace("/", "");
+					tempData.setMainImg(tempWord);
+				}
+				list.set(numList[i], tempData);
+				
+				sendList.add(list.get(numList[i]));
+			} // for i
+			
 //				System.out.println(sendList);
-				return new ResponseEntity(sendList, HttpStatus.OK);
-			}catch(RuntimeException e) {
-				return new ResponseEntity(HttpStatus.NO_CONTENT);
-			}
+			return new ResponseEntity(sendList, HttpStatus.OK);
+		}catch(RuntimeException e) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		}
+	}
+}

@@ -27,18 +27,3 @@ nav {
 #backward {
     width: 20px;
 }
-
-@media all and (min-width: 250px) and (max-width: 768px) {
-    .navbar-fixed {
-        width: 100% !important;
-    }
-    nav {
-        width: 100% !important;
-    }
-    .header_nav {
-        width: 100% !important;
-    }
-    .header_container {
-        width: 100% !important;
-    }
-}

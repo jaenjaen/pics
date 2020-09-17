@@ -79,12 +79,19 @@ p {
 }
 
 @media only screen and (max-width: 615px) {
-    .jb-wrap {
-        width: 150px !important;
-        height: 150px !important;
+    .jb-wrap,
+    img {
+        width: 250px !important;
+        height: 250px !important;
+        flex: 1 1 40%;
     }
+}
+
+@media only screen and (max-width: 515px) {
+    .jb-wrap,
     img {
         width: 150px !important;
         height: 150px !important;
+        flex: 1 1 40%;
     }
 }

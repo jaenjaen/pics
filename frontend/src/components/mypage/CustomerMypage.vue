@@ -19,7 +19,15 @@
     </div>
     <MypageGap categoryName="문의내역" cateogryURL="/chatShow"/>
     <!-- 문의 내역-->
-    <Inquiry :customerMode="true"/>
+    <Inquiry :customerMode="true" @showCustChat="showCustChatForInquiry"/>
+    <!-- chat modal -->
+    <div id="chatModal" style="display:none;">
+      <div id="chatContent">
+        <div id="closeChat" @click="hideChatModal">&times;</div>
+        <Chat id="chatArea" ref="chat" @moveScroll="moveToScrollBottom()" />
+      </div>
+    </div>
+
     <MypageGap categoryName="스튜디오 리뷰" cateogryURL="#"/>
     <!-- 리뷰 -->
     <div class="mypage_card">
@@ -41,3 +49,4 @@
 
 <script scoped src="@/assets/js/mypage/CustomerMypage.js"></script>
 <style scoped src="@/assets/css/mypage/mypage_common.css"></style>
+<style scoped src="@/assets/css/chat/ChatShow.css"></style>

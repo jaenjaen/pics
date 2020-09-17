@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-fixed">
-    <nav class="header_nav">
-      <div class="header_container">
+    <nav class="header_nav" :style="{width:wWidth}">
+      <div class="header_container" :style="{width:wWidth}">
         <div>
           <a href>
             <img src="@/assets/img/util/backward.svg" id="backward" @click.prevent="moveBack" />

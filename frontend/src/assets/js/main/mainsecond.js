@@ -1,7 +1,6 @@
 import axios from "axios";
 import carousel from "vue-owl-carousel";
 
-
 export default {
     components: {
         carousel,
@@ -72,8 +71,8 @@ export default {
             }
         },
         item_num() {
-            let check_width = window.matchMedia("only screen and (max-width: 768px)");
-            if (check_width.matches) {
+            let wWidth = window.innerWidth;
+            if (wWidth < 768) {
                 this.num = 2;
             } else {
                 this.num = 4;
@@ -97,6 +96,20 @@ export default {
         category: function(value) {
             let str = value.split("시");
             return str[0];
+        },
+        titleSplit(value) {
+            let reSplit = value.split("_");
+            return reSplit[0] + " " + reSplit[1]
         }
-    }
+    },
+    computed: {
+        wWith() {
+            let wWidth = window.innerWidth;
+            if (wWidth > 768) {
+                return 768 + 'px';
+            } else {
+                return wWidth + 'px';
+            }
+        }
+    },
 };

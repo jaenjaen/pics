@@ -145,7 +145,6 @@ export default {
                 this.studio.description = data.description;
                 this.studio.rule = data.rule;
                 this.studio.mainImg = data.mainImg;
-                this.studio.portImg = data.portImg;
                 this.studio.cadImg = data.cadImg;
                 this.studio.floor = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;

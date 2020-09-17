@@ -61,6 +61,13 @@ aside {
     margin-right: 5%;
 }
 
+#start_time,
+#end_time {
+    border-radius: 5%;
+    border: 1.5px solid lightgray;
+    width: 40%;
+}
+
 #totalPeople {
     display: block;
     border-radius: 10px;

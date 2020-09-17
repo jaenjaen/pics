@@ -26,14 +26,22 @@ export default {
         this.stuId = this.stuIdData;
     },
     async mounted() {
+        window.addEventListener('resize', this.handleResize);
+        let check_width = window.matchMedia("only screen and (max-width: 768px)");
+        if (check_width.matches) {
+            this.num = 2;
+        } else {
+            this.num = 4;
+        }
+
         await axios
             .get("http://127.0.0.1:5000/tag/" + this.stuId)
             .then(response => {
                 this.studio_infos = response.data
-                for (let j = 0; j < 1; j++) {
+                for (let j = 0; j < (this.studio_infos).length; j++) {
                     let mainImgs = (this.studio_infos[j].main_img).split(',');
                     this.studio_infos[j].main_img = mainImgs[0];
-                    console.log("this.studio_infos: " + this.studio_infos)
+                    console.log("this.studio_infos: " + this.studio_infos[j].main_img)
                 }
             })
             .catch(error => {

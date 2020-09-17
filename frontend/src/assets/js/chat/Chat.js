@@ -458,6 +458,8 @@ export default {
             console.log("파일 정보 : " + file.files[0]);
             if (file.files[0].size > maxSize) {
                 alert("파일은 5MB 이내로 첨부 가능합니다.");
+                document.getElementById('chatFile').value = '';
+                document.getElementById('chatFileName').value = '';
                 return;
             }
 

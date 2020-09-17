@@ -5,6 +5,7 @@ export default {
     name: "OtherStudio",
     data() {
         return {
+            stuId: 0,
             studio_infos: [{
                 address: "",
                 category_name: "",
@@ -13,7 +14,8 @@ export default {
                 unit_price: 0,
                 main_img: ""
             }],
-            num: 4
+            num: 4,
+            mainImg1: "",
         }
     },
     props: ["stuIdData"],
@@ -21,20 +23,17 @@ export default {
         carousel,
     },
     created: function() {
-        console.log("props studio 정보 : " + this.stuIdData);
         this.stuId = this.stuIdData;
     },
-    mounted() {
-        axios
+    async mounted() {
+        await axios
             .get("http://127.0.0.1:5000/tag/" + this.stuId)
             .then(response => {
-                this.studio_infos = response.data;
-                for (let i = 0; i < Object.keys(this.studio_infos).length; i++) {
-                    console.log(this.studio_infos[i].main_img)
-                    if (this.studio_infos[i].main_img.match(",")) {
-                        let mainImg1 = (this.studios[i].main_img).split(',')[-1];
-                        this.studio_infos.main_img = mainImg1;
-                    }
+                this.studio_infos = response.data
+                for (let j = 0; j < 1; j++) {
+                    let mainImgs = (this.studio_infos[j].main_img).split(',');
+                    this.studio_infos[j].main_img = mainImgs[0];
+                    console.log("this.studio_infos: " + this.studio_infos)
                 }
             })
             .catch(error => {
@@ -44,8 +43,8 @@ export default {
             .finally(() => (this.loading = false));
     },
     methods: {
-        getImgUrl(url) {
-            return require("@/assets/img/studio/" + url);
+        imgUrl(imgName) {
+            return require("@/assets/img/studio/" + imgName);
         },
         moveToComInfo(value) {
             this.$router.push("/studioInfo/" + value);
@@ -59,11 +58,18 @@ export default {
         },
         currency: function(value) {
             let num = new Number(value);
-            return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+            return num.toFixed(0).toLocaleString();
         },
         category: function(value) {
             let str = value.split("시");
             return str[0];
+        },
+        substring: function(value) {
+            if (value.length > 12) {
+                return value.substring(0, 9) + "...";
+            }
+            return value;
+
         }
     }
 

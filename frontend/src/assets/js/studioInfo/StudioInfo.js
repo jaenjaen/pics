@@ -222,8 +222,10 @@ export default {
         },
         /* 문의 영역 끝 */
         imgUrl(imgName) {
-            console.log('imgName' + imgName);
             return require("@/assets/img/studio/" + imgName);
+        },
+        profilUrl(profile) {
+            return require("@/assets/img/company_image/" + profile);
         },
         // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거
         async setBookMark() {

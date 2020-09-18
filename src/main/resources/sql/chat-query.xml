@@ -48,7 +48,8 @@
 	
 	<!-- 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) -->
 	<update id="setAlreadyRead" parameterType="hashMap">
-		UPDATE chat SET read_check = 1 WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
+		UPDATE chat SET read_check = 1 
+		WHERE stu_id=#{stuId} AND cust_id=#{custId} AND sender=#{sender} AND read_check=0;
 	</update>
 	
 	<!-- 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) -->

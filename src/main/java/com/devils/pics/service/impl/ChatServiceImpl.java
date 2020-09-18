@@ -28,7 +28,6 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	/* 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) */
-	@Transactional
 	public int setAlreadyRead(Map map) throws Exception {
 		return chatDao.setAlreadyRead(map);
 	}

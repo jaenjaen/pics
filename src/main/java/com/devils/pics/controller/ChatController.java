@@ -76,14 +76,14 @@ public class ChatController {
 	@PutMapping("/chat/prev/{stuId}/{custId}/{sender}")
 	public ResponseEntity updateReadCheck(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
 		try {
-			System.out.println(stuId);
-			System.out.println(custId);
-			System.out.println(sender);
+			System.out.println("stuId : "+stuId);
+			System.out.println("custId : "+custId);
+			System.out.println("sender : "+sender);
 			
 			Map map = new HashMap();
 			map.put("stuId", stuId);
 			map.put("custId", custId);
-			map.put("custId", sender);
+			map.put("sender", sender);
 			
 			/* 대화 목록을 가져가기 전에 읽음 처리를 한다. */
 			int result = chatService.setAlreadyRead(map);

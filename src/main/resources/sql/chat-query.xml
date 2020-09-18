@@ -58,6 +58,34 @@
         DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check  
 		FROM chat WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
 	</select>
+	
+	<!-- 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 -->
+	<select id="getCountOfUnreadComChat" parameterType="string" resultType="list">
+		SELECT
+		s.com_id comId, c.stuId, c.custId, count, DATE_FORMAT(c.dateTime, "%Y/%c/%e %r") dateTime
+		FROM
+			(SELECT stu_id stuId, cust_id custId, COUNT(chat_id) count, MAX(date_time) dateTime
+			FROM chat
+			WHERE sender=0 AND read_check = 0
+			GROUP BY cust_id, stu_id) c,
+			(SELECT * FROM studio) s
+		WHERE c.stuId = s.stu_id AND s.com_id=#{comId}
+		ORDER BY dateTime DESC;
+	</select>
+	
+	<!-- 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 -->
+	<select id="getCountOfUnreadCustChat" parameterType="string" resultType="list">
+		SELECT
+		c.stuId, c.custId, count, DATE_FORMAT(c.dateTime, "%Y/%c/%e %r") dateTime
+		FROM
+			(SELECT stu_id stuId, cust_id custId, COUNT(chat_id) count, MAX(date_time) dateTime
+			FROM chat
+			WHERE sender = 1 AND read_check = 0
+			GROUP BY cust_id, stu_id) c,
+			(SELECT * FROM customer) cu
+		WHERE c.custId = cu.cust_id AND cu.cust_id = #{custId}
+		ORDER BY dateTime DESC;
+	</select>
 		
 	<!-- 채팅 아이디로 대화를 가져옴 -->
 	<select id="getChatByChatId" parameterType="string" resultType="chat">

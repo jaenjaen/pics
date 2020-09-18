@@ -43,6 +43,16 @@ public class ChatServiceImpl implements ChatService {
 		return getNotYetRead(map).size();
 	}
 	
+	/* 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadComChat(String comId) throws Exception {
+		return chatDao.getCountOfUnreadComChat(comId); 
+	}
+	
+	/* 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadCustChat(String custId) throws Exception {
+		return chatDao.getCountOfUnreadCustChat(custId);
+	}
+	
 	/* 채팅 아이디로 대화를 가져옴 */
 	public Chat getChatByChatId(String chatId) throws Exception {
 		return chatDao.getChatByChatId(chatId);

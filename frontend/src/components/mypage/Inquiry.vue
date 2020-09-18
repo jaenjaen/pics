@@ -15,6 +15,11 @@
                     {{custChat.word | handleWord}}
                     <span style="display:none;">{{custChat.stuId}}</span>
                     <span style="display:none;">{{custChat.custId}}</span>
+                    <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="index">
+                        <span v-if="unreadChat.stuId == recentChat.stuId && unreadChat.custId == recentChat.custId">
+                            {{unreadChat.count}}
+                        </span>
+                    </span>
                 </td>
                 <td>{{custChat.dateTime | showOnlyDate}}</td>
             </tr>

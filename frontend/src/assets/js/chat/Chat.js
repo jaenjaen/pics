@@ -50,6 +50,9 @@ export default {
             recentChat: [],
             recentChatNoRepeat: [],
 
+            /* 읽지 않은 대화 개수 */
+            CountOfUnreadChat: [],
+
             /* 이전 대화 내역 */
             prevAllChat: [],
 
@@ -325,12 +328,47 @@ export default {
                 .then((response) => {
                     console.log('채팅 읽음 처리 성공');
                     console.log(response.data);
+                    this.getPrevAllChat();
                     setTimeout(this.getPrevAllChat(), 100);
                 })
                 .catch(() => {
                     console.log('채팅 읽음 처리 실패');
                 })
         },
+
+        /* 읽지 않은 대화 개수 */
+        getCountOfUnreadComChat() {
+            if (company != null) { //업체 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/com/' + company.comId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('업체의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('업체의 읽지 않은 대화 개수 가져오기 실패');
+                    })
+            } else if (customer != null) { //고객 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/cust/' + customer.custId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('고객의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('고객의 읽지 않은 대화 개수 가져오기 실패');
+                    })
+            }
+        },
+
 
         /* 이전 대화 내역 가져오기 */
         getPrevAllChat() {

@@ -19,10 +19,14 @@ export default {
 
             /* 최근 대화 */
             recentChat: [],
+
+            /* 읽지 않은 대화 개수 */
+            CountOfUnreadChat: []
         }
     },
     mounted() {
         this.getRecentChat(); //최신 대화를 불러옴
+        this.getCountOfUnreadComChat(); //읽지 않은 메세지 개수를 불러옴
 
     },
     filters: {
@@ -104,6 +108,39 @@ export default {
                     })
                     .catch(() => {
                         //console.log('company 최근 대화 가져오기 실패');
+                    })
+            }
+        },
+
+        /* 읽지 않은 대화 개수 가져오기 */
+        getCountOfUnreadComChat() {
+            if (company != null) { //업체 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/com/' + company.comId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('업체의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('업체의 읽지 않은 대화 개수 가져오기 실패');
+                    })
+            } else if (customer != null) { //고객 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/cust/' + customer.custId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('고객의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('고객의 읽지 않은 대화 개수 가져오기 실패');
                     })
             }
         },

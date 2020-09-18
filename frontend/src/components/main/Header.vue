@@ -8,7 +8,7 @@
           </a>
         </div>
         <div>
-          <a href="http://localhost:9999">
+          <a @click.prevent="toHome()">
             <img src="@/assets/img/header_bottom/pics_logo.svg" alt="pics" id="pics_logo" />
           </a>
         </div>

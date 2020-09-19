@@ -87,14 +87,14 @@ section {
 }
 
 .studio-name {
-    padding-top: 20px;
+    padding-top: 10px;
     display: flex;
     justify-content: space-between;
 }
 
 #studio-name {
     display: flex;
-    font-size: 35px;
+    font-size: 1.7em;
     margin: 0;
     height: 40px;
 }

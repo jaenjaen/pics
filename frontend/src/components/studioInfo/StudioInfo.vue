@@ -76,11 +76,11 @@
         <!-- 누적 이용자 수 -->
         <div class="studio-name">
           <div>
-            <h3 id="studio-name">
-              <span>{{ studio.name }}</span>
+            <h1 id="studio-name">
+              <strong>{{ studio.name }}</strong>
               <button class="chat-btn" @click="showChatModal">문의</button>
               <!-- 문의 클릭 이벤트 -->
-            </h3>
+            </h1>
             <p id="accCustomer">
               누적 이용자 총
               <b>{{accCustomer}}</b>명
@@ -266,7 +266,7 @@
       <Review :stuIdData="stuId">
       </Review>
       <!-- ============== OthserStudio ============== -->
-      <!-- <OtherStudio :stuIdData="stuId"></OtherStudio> -->
+      <OtherStudio :stuIdData="stuId"></OtherStudio>
     </article>
       <!-- ============= 모달 모아두기 ============== -->
     <div>

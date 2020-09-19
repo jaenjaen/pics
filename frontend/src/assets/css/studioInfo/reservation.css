@@ -1,3 +1,12 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@media screen and (max-width: 768px) {
+    #app {
+        width: 100%;
+        background-color: #fff;
+    }
+}
+
 .container {
     width: 95%;
 }
@@ -44,34 +53,68 @@ aside {
 .input-reserve-info-field {
     width: 60%;
     float: right;
-    margin: 5% 4% 5% 0%;
-    padding-right: 20px;
-    border-right: 1px solid black;
+    margin: 5% 0% 5% 0%;
+    border-right: 1px solid gray;
+    /* padding-right: 5px; */
 }
 
-.date-input-field {
+.start-date,
+.end-date {
     margin-left: 5%;
     width: 35%;
     float: left;
+    align-content: center;
+}
+
+.start-time {
+    /* margin-left: 4%; */
+    width: 35%;
+    float: left;
+    align-content: center;
+}
+
+.end-time {
+    margin-left: 5%;
+    width: 35%;
+    float: left;
+    align-content: center;
 }
 
 .time-input-field {
-    width: 30%;
-    float: right;
-    margin-right: 5%;
+    clear: both;
+    margin-left: 5%;
+    align-content: center;
+    width: 100%;
 }
 
-#start_time,
-#end_time {
-    border-radius: 5%;
+.time-picker {
+    display: block;
+    width: 80%;
+    height: 30px;
+    border-radius: 5px;
     border: 1.5px solid lightgray;
-    width: 40%;
+    /* margin-left: 5%; */
+    float: right;
+}
+
+.people-cnt {
+    clear: both;
+    margin: 5%;
+}
+
+.people-cnt table {
+    float: left;
+    margin: 5%;
+    text-align: center;
 }
 
 #totalPeople {
     display: block;
-    border-radius: 10px;
-    border: 1px solid lightgray;
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1.5px solid lightgray;
+    align-items: center;
     text-align: center;
 }
 
@@ -82,13 +125,13 @@ aside {
     border-radius: 5px;
     margin: 5% auto;
     font-weight: 700;
-    font-size: 1.2em;
-    padding: 7px 10px 7px 10px;
+    font-size: 1em;
+    padding: 6px 10px 6px 10px;
 }
 
 .calender_container {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
 }
 
@@ -97,6 +140,7 @@ hr {
 }
 
 .pricing-field {
+    margin-left: 10px;
     font-size: 15px;
     font-weight: 600;
 }

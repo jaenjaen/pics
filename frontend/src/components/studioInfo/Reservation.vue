@@ -4,15 +4,14 @@
       <div id="reservation-floating-banner">
         <form method="post" @submit.prevent="addReserve">
           <!-- ============== calender ============== -->
-
           <div class="calender_container">
             <div class="input-reserve-info-field">
               <!-- 날짜 -->
               <div class="date-input-field">
                 <div class="row">
                   <div class="col s12 m6">
-                    <strong>예약 시작일</strong>
                     <span class="start-date">
+                      <strong>예약 시작일</strong>
                       <md-datepicker
                         id="start_date"
                         v-model="start_date"
@@ -23,9 +22,9 @@
                         :value="start_date"
                       ></md-datepicker>
                     </span>
-                    <br />
-                    <strong>예약 종료일</strong>
+                    
                     <span class="end-date">
+                      <strong>예약 종료일</strong>
                       <md-datepicker
                         id="end_date"
                         v-model="end_date"
@@ -39,71 +38,37 @@
                   </div>
                 </div>
               </div>
-              <br />
-              <!-- 시간 -->
-              <div class="md-layout-item">
-                <div class="time-input-field">
-                  <md-field class="start-time">
-                    <label for="time">예약 시작 시간</label>
-                    <md-select v-model="start_time" required style="width:30%">
-                      <md-option
-                        required="required"
-                        v-for="(startTime,index) in startTimes"
-                        v-bind:key="index"
-                        :value="parseInt(startTime)"
-                      >{{startTime}}시</md-option>
-                    </md-select>
-                  </md-field>
-                  <br />
-                  <br />
-                  <md-field class="end-time">
-                    <label for="time">예약 종료 시간</label>
-                    <md-select v-model="end_time" required style="width:30%">
-                      <md-option
-                        required="required"
-                        v-for="(endTime,index) in endTimes"
-                        v-bind:key="index"
-                        :value="parseInt(endTime)"
-                      >{{endTime}}시</md-option>
-                    </md-select>
-                  </md-field>
-                </div>
-              </div>
-              <!-- 시간 -->
-                <!-- <div class="time-input-field">
-                  <div class="start-time">
-                    <label for="time">예약 시작 시간</label><br>
-                    <select id="start_time" v-model="start_time" required>
-                      <option
-                        required="required"
-                        v-for="(startTime,index) in startTimes"
-                        v-bind:key="index"
-                        :value="parseInt(startTime)"
-                      >{{startTime}}시</option>
-                    </select>
-                  </div>
-                  <br />
-                  <br />
-                  <div class="end-time">
-                    <label for="time">예약 종료 시간</label><br>
-                    <select id="end_time" v-model="end_time" required>
-                      <option
-                        required="required"
-                        v-for="(endTime,index) in endTimes"
-                        v-bind:key="index"
-                        :value="parseInt(endTime)"
-                      >{{endTime}}시</option>
-                    </select>
-                  </div>
-                </div> -->
 
-              <!-- <span>{{msg}}</span> -->
-              <br />
-              <br />
+              <!-- 시간 -->
+              <div class="time-input-field">
+                <span class="start-time">
+                  <p><strong>예약 시작 시간</strong></p>
+                  <select class="time-picker" v-model="start_time" required>
+                    <option
+                      required="required"
+                      v-for="(startTime,index) in startTimes"
+                      v-bind:key="index"
+                      :value="parseInt(startTime)"
+                    >{{startTime}}시</option>
+                  </select>
+                </span>
+                <spand class="end-time">
+                  <p><strong>예약 종료 시간</strong></p>
+                  <select class="time-picker" v-model="end_time" required>
+                    <option
+                      required="required"
+                      v-for="(endTime,index) in endTimes"
+                      v-bind:key="index"
+                      :value="parseInt(endTime)"
+                    >{{endTime}}시</option>
+                  </select>
+                </spand>
+              </div>
+              <br>
               <!-- 인원 -->
-              <div>
-                <table width="70%" align="center">
-                  <tr align="center">
+              <div class="people-cnt">
+                <table width="70%">
+                  <tr>
                     <td>
                       <md-button
                         id="deletePeopleBtn"

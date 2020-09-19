@@ -1,7 +1,6 @@
 import axios from "axios"; //axios
 import Vue from 'vue'
-
-import VueMaterial from 'vue-material'
+import VueMaterial, { MdCard } from 'vue-material';
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
@@ -14,6 +13,7 @@ export default {
     props: [
         "stuIdData"
     ],
+    component: [MdCard],
     data: function() {
         return {
             stuId: 0,

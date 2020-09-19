@@ -60,8 +60,12 @@ export default {
             presentStu: {},
             presentCust: {},
 
+            /* 대화 선택 여부 */
+            selectChat: '',
+
             /* 고객/기업모드 여부 */
             customerMode: '',
+
         }
     },
 
@@ -135,6 +139,8 @@ export default {
 
         /* 채팅 접속시 설정 */
         setChat(stuId, custId) {
+            this.selectChat = true; //대화 선택 여부를 켬
+
             /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
             this.chat.stuId = stuId; //개인고객, 기업고객이 채팅할 때 필요한 스튜디오 아이디
             this.chat.custId = custId; //기업고객이 채팅할 때 필요한 고객 아이디

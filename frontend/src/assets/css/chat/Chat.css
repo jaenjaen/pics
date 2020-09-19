@@ -357,6 +357,18 @@
                 margin-left: 10px;
                 vertical-align: middle;
             }
+            
+            .unreadList {
+                background: #33A3DC;
+                text-align: center;
+                font-weight: bold !important;
+                display: inline-block;
+                width: 40px;
+                height: 20px;
+                font-size: 12px;
+                border-radius: 10px;
+                margin-left: 0 !important;
+            }
             /* 파일 업로드 Modal 전체 */
             
             #uploadModal {

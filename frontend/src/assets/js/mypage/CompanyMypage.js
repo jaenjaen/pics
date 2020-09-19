@@ -287,6 +287,7 @@ export default {
             } else {
                 this.$modal.hide("detailModal");
                 this.$refs.chat.setChat(this.selectedId, this.userId);
+                this.$refs.chat.controlModal('hide', 'chatListModal');
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
                 this.moveToScrollBottom();

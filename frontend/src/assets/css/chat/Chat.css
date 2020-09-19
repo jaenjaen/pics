@@ -334,10 +334,9 @@
                 overflow: auto;
             }
             
-            #chatListContent p {
+            #chatListContent td {
                 text-align: left;
                 padding: 10px;
-                overflow: hidden;
             }
             
             #userName {

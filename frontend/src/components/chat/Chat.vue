@@ -134,14 +134,33 @@
                     </div>
                 </div>
                 <div id="chatListContent" style="padding-top:55px;">
-                    <p v-for="(recent, index) in recentChat" :key="'recentCustChat'+index">
-                        <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
-                        <span id="userName" @click="getChatByUser($event)">
-                            {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
-                            <span style="display:none;">{{recent.stuId}}</span>
-                            <span style="display:none;">{{recent.custId}}</span>
-                        </span>
-                    </p>
+                    <table>
+                        <tr v-for="(recent, index) in recentChat" :key="'recentCustFirstChat'+index">
+                            <td v-if="recent.sender==1 && recent.readCheck==0">
+                                <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                                <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'custUnreadCount'+index">
+                                    <span v-if="unreadChat.stuId == recent.stuId && unreadChat.custId == recent.custId" class="unread">
+                                        +{{unreadChat.count}}
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr v-for="(recent, index) in recentChat" :key="'recentCustSecondChat'+index">
+                            <td v-if="recent.sender!=1 || recent.readCheck!=0">
+                                <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </section>
 
@@ -165,14 +184,33 @@
                     </div>
                 </div>
                 <div id="chatListContent">
-                    <p v-for="(recent, index) in recentChat" :key="'recentComChat'+index">
-                        <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
-                        <span id="userName" @click="getChatByUser($event)">
-                            {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
-                            <span style="display:none;">{{recent.stuId}}</span>
-                            <span style="display:none;">{{recent.custId}}</span>
-                        </span>
-                    </p>
+                    <table>
+                        <tr v-for="(recent, index) in recentChat" :key="'recentComFirstChat'+index">
+                            <td v-if="recent.sender==0 && recent.readCheck==0">
+                                <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                                <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'comUnreadCount'+index">
+                                    <span v-if="unreadChat.stuId == recent.stuId && unreadChat.custId == recent.custId" class="unread">
+                                        +{{unreadChat.count}}
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr v-for="(recent, index) in recentChat" :key="'recentComSecondChat'+index">
+                            <td v-if="recent.sender!=0 || recent.readCheck!=0">
+                                <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </section>
         </div>

@@ -174,7 +174,7 @@ export default {
                 })
         },
 
-        /* 고객의 스튜디오별 최근 수신 대화(스튜디오 중복 없음) */
+        /* 업체의 스튜디오별 최근 수신 대화(고객이 다르더라도 같은 스튜디오는 중복 없음) */
         getRecentComChatNoRpeat() {
             axios.get('http://127.0.0.1:7777/chat/recent/comNoRepeat/' + company.comId)
                 .then((response) => {
@@ -631,6 +631,11 @@ export default {
             if (cmd == 'show') {
                 document.getElementById(obj).setAttribute('style', 'display:block;');
                 if (obj == 'chatListModal') {
+                    if (company != null) {
+                        this.getRecentComChat();
+                    } else if (customer != null) {
+                        this.getRecentCustChat();
+                    }
                     document.getElementById('chatListHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatHeader').setAttribute('style', 'display:none;');
                 }

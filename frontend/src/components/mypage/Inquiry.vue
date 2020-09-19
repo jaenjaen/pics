@@ -23,7 +23,7 @@
                         {{custChat.word | handleWord}}
                         <span style="display:none;">{{custChat.stuId}}</span>
                         <span style="display:none;">{{custChat.custId}}</span>
-                        <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'custFirstUnreadCount'+index">
+                        <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'custUnreadCount'+index">
                             <span class="unread" v-if="unreadChat.stuId == custChat.stuId && unreadChat.custId == custChat.custId">
                                 +{{unreadChat.count}}
                             </span>
@@ -38,11 +38,6 @@
                         {{custChat.word | handleWord}}
                         <span style="display:none;">{{custChat.stuId}}</span>
                         <span style="display:none;">{{custChat.custId}}</span>
-                        <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'custSecondUnreadCount'+index">
-                            <span class="unread" v-if="unreadChat.stuId == custChat.stuId && unreadChat.custId == custChat.custId">
-                                +{{unreadChat.count}}
-                            </span>
-                        </span>
                     </td>
                     <td v-if="custChat.sender!=1 || custChat.readCheck!=0">{{custChat.dateTime | showOnlyDate}}</td>
                 </tr>
@@ -73,7 +68,7 @@
                         {{comChat.word | handleWord}}
                         <span style="display:none;">{{comChat.stuId}}</span>
                         <span style="display:none;">{{comChat.custId}}</span>
-                        <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'comFirstUnreadCount'+index">
+                        <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'comUnreadCount'+index">
                             <span class="unread" v-if="unreadChat.stuId == comChat.stuId && unreadChat.custId == comChat.custId">
                                 +{{unreadChat.count}}
                             </span>
@@ -89,11 +84,6 @@
                         {{comChat.word | handleWord}}
                         <span style="display:none;">{{comChat.stuId}}</span>
                         <span style="display:none;">{{comChat.custId}}</span>
-                        <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'comSecondUnreadCount'+index">
-                            <span class="unread" v-if="unreadChat.stuId == comChat.stuId && unreadChat.custId == comChat.custId">
-                                +{{unreadChat.count}}
-                            </span>
-                        </span>
                     </td>
                     <td v-if="comChat.sender!=0 || comChat.readCheck!=0">{{comChat.dateTime | showOnlyDate}}</td>
                 </tr>

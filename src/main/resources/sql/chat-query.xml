@@ -15,6 +15,7 @@
 		<result column="chatId" property="chatId" />
 		<result column="word" property="word" />
 		<result column="dateTime" property="dateTime" />
+		<result column="count" property="count" />
 		<result column="sender" property="sender" />
 		<result column="readCheck" property="readCheck" />
 		<result column="filePath" property="filePath" />
@@ -43,12 +44,15 @@
 	
 	<!-- 채팅 아이디로 해당되는 대화를 삭제함 -->
 	<delete id="deleteChat" parameterType="string">
-		DELETE FROM chat WHERE chat_id=#{chatId};
+		DELETE 
+		FROM chat 
+		WHERE chat_id=#{chatId};
 	</delete>
 	
 	<!-- 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) -->
 	<update id="setAlreadyRead" parameterType="hashMap">
-		UPDATE chat SET read_check = 1 WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
+		UPDATE chat SET read_check = 1 
+		WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
 	</update>
 	
 	<!-- 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) -->
@@ -60,7 +64,7 @@
 	</select>
 	
 	<!-- 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 -->
-	<select id="getCountOfUnreadComChat" parameterType="string" resultType="list">
+	<select id="getCountOfUnreadComChat" parameterType="string" resultMap="recentChat">
 		SELECT
 		s.com_id comId, c.stuId, c.custId, count, DATE_FORMAT(c.dateTime, "%Y/%c/%e %r") dateTime
 		FROM
@@ -74,7 +78,7 @@
 	</select>
 	
 	<!-- 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 -->
-	<select id="getCountOfUnreadCustChat" parameterType="string" resultType="list">
+	<select id="getCountOfUnreadCustChat" parameterType="string" resultMap="recentChat">
 		SELECT
 		c.stuId, c.custId, count, DATE_FORMAT(c.dateTime, "%Y/%c/%e %r") dateTime
 		FROM

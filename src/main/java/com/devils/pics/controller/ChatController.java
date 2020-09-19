@@ -79,7 +79,7 @@ public class ChatController {
 			Map map = new HashMap();
 			map.put("stuId", stuId);
 			map.put("custId", custId);
-			map.put("custId", sender);
+			map.put("sender", sender);
 			
 			/* 대화 목록을 가져가기 전에 읽음 처리를 한다. */
 			int result = chatService.setAlreadyRead(map);
@@ -94,6 +94,9 @@ public class ChatController {
 	@ApiOperation(value="읽지 않은 채팅 개수를 반환", response = List.class)
 	@GetMapping("/chat/unread/{member}/{id}")
 	public ResponseEntity getCountOfUnreadChat(@PathVariable String member, @PathVariable String id) {
+		System.out.println(member);
+		System.out.println(id);
+		
 		List<Map> list = new ArrayList<>();
 		try {
 			if(member.equals("com")) {

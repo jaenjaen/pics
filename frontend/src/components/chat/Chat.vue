@@ -110,8 +110,8 @@
                                     </p>
                                 </div><!-- chat-message-content -->
                                 <div class='chat-details' v-if="checkSameTime(idx)">
+                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
                                     <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">- 읽음</span>
                                     <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
                                 </div><!-- chat-details -->
                             </div><!-- chat-message-wrapper -->
@@ -134,7 +134,7 @@
                     </div>
                 </div>
                 <div id="chatListContent" style="padding-top:55px;">
-                    <p v-for="(recent, index) in recentChat" :key="index">
+                    <p v-for="(recent, index) in recentChat" :key="'recentCustChat'+index">
                         <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
                         <span id="userName" @click="getChatByUser($event)">
                             {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 <div id="chatListContent">
-                    <p v-for="(recent, index) in recentChat" :key="index">
+                    <p v-for="(recent, index) in recentChat" :key="'recentComChat'+index">
                         <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
                         <span id="userName" @click="getChatByUser($event)">
                             {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}

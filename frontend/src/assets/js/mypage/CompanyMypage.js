@@ -294,6 +294,9 @@ export default {
         },
         hideChatModal: function() {
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
+            /* 모달 창을 닫으면 수정된 최신 대화 내역을 refresh함 */
+            this.$refs.inquiry.getRecentChat();
+            this.$refs.inquiry.getCountOfUnreadChat();
         },
         /* 스크롤을 최하단으로 옮김 */
         moveToScrollBottom() {

@@ -74,7 +74,6 @@ export default {
             this.chat.custId = this.customer.custId; //세션에서 custId를 chat에 바인딩
 
             this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
-
         } else if (company != null) { //기업고객으로 로그인했을 경우
             this.customerMode = false; //고객모드 OFF
             this.company = company; //세션에 있는 업체 정보를 company 데이터에 바인딩
@@ -165,6 +164,7 @@ export default {
                         console.log('customer 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -182,6 +182,7 @@ export default {
                         console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공');
                         this.recentChatNoRepeat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChatNoRepeat = [];
                     }
@@ -199,6 +200,7 @@ export default {
                         console.log('company 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -216,6 +218,7 @@ export default {
                         console.log('studio 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -233,6 +236,7 @@ export default {
                         console.log('스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -250,6 +254,7 @@ export default {
                         console.log('스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -267,6 +272,7 @@ export default {
                         console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -337,7 +343,7 @@ export default {
         },
 
         /* 읽지 않은 대화 개수 */
-        getCountOfUnreadComChat() {
+        getCountOfUnreadChat() {
             if (company != null) { //업체 로그인
                 axios.get('http://127.0.0.1:7777/chat/unread/com/' + company.comId)
                     .then((response) => {

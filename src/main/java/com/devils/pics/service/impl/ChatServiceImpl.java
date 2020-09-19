@@ -5,13 +5,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devils.pics.dao.ChatDAO;
 import com.devils.pics.domain.Chat;
 import com.devils.pics.service.ChatService;
 
-@Repository
+@Service
 public class ChatServiceImpl implements ChatService {
 
 	@Autowired

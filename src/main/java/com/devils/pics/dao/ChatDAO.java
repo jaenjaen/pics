@@ -18,6 +18,12 @@ public interface ChatDAO {
 	/* 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) */
 	public List<Chat> getNotYetRead(Map map) throws Exception;
 	
+	/* 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadComChat(String comId) throws Exception;
+	
+	/* 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadCustChat(String custId) throws Exception;
+	
 	/* 채팅 아이디로 대화를 가져옴 */
 	public Chat getChatByChatId(String chatId) throws Exception;
 	

@@ -87,7 +87,7 @@
     <MypageGap categoryName="문의내역" cateogryURL="/chatShow"/>
 
     <!-- 채팅 -->
-    <Inquiry :customerMode="false" @showComChat="showComChatForInquiry"/>
+    <Inquiry ref="inquiry" :customerMode="false" @showComChat="showComChatForInquiry"/>
     <!-- chat modal -->
       <div id="chatModal" style="display:none;">
         <div id="chatContent">

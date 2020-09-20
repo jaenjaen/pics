@@ -50,6 +50,9 @@ export default {
             recentChat: [],
             recentChatNoRepeat: [],
 
+            /* 읽지 않은 대화 개수 */
+            CountOfUnreadChat: [],
+
             /* 이전 대화 내역 */
             prevAllChat: [],
 
@@ -57,13 +60,20 @@ export default {
             presentStu: {},
             presentCust: {},
 
+            /* 대화 구독 여부 on/off */
+            chatSubscribe: false,
+
+            /* 대화 선택 여부 */
+            selectChat: '',
+
             /* 고객/기업모드 여부 */
             customerMode: '',
+
         }
     },
 
     created() {
-        this.connect(); //소켓 연결
+        this.connect(); //웹소켓 연결
         if (customer != null) { //개인고객으로 로그인했을 경우
             this.customerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
@@ -71,7 +81,6 @@ export default {
             this.chat.custId = this.customer.custId; //세션에서 custId를 chat에 바인딩
 
             this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
-
         } else if (company != null) { //기업고객으로 로그인했을 경우
             this.customerMode = false; //고객모드 OFF
             this.company = company; //세션에 있는 업체 정보를 company 데이터에 바인딩
@@ -130,9 +139,19 @@ export default {
             }
         },
 
+        /* 채팅 구독 여부 on/off */
+        setChatSubscribe(cmd) {
+            if (cmd === 'on') {
+                this.chatSubscribe = true;
+            } else if (cmd === 'off') {
+                this.chatSubscribe = false;
+            }
+        },
 
         /* 채팅 접속시 설정 */
         setChat(stuId, custId) {
+            this.selectChat = true; //대화 선택 여부를 켬
+
             /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
             this.chat.stuId = stuId; //개인고객, 기업고객이 채팅할 때 필요한 스튜디오 아이디
             this.chat.custId = custId; //기업고객이 채팅할 때 필요한 고객 아이디
@@ -162,6 +181,7 @@ export default {
                         console.log('customer 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -171,7 +191,7 @@ export default {
                 })
         },
 
-        /* 고객의 스튜디오별 최근 수신 대화(스튜디오 중복 없음) */
+        /* 업체의 스튜디오별 최근 수신 대화(고객이 다르더라도 같은 스튜디오는 중복 없음) */
         getRecentComChatNoRpeat() {
             axios.get('http://127.0.0.1:7777/chat/recent/comNoRepeat/' + company.comId)
                 .then((response) => {
@@ -179,6 +199,7 @@ export default {
                         console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공');
                         this.recentChatNoRepeat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChatNoRepeat = [];
                     }
@@ -196,6 +217,7 @@ export default {
                         console.log('company 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -213,6 +235,7 @@ export default {
                         console.log('studio 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -230,6 +253,7 @@ export default {
                         console.log('스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -247,6 +271,7 @@ export default {
                         console.log('스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -264,6 +289,7 @@ export default {
                         console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
                         this.recentChat = response.data;
                         console.log(this.recentChat);
+                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = [];
                     }
@@ -325,12 +351,47 @@ export default {
                 .then((response) => {
                     console.log('채팅 읽음 처리 성공');
                     console.log(response.data);
+                    this.getPrevAllChat();
                     setTimeout(this.getPrevAllChat(), 100);
                 })
                 .catch(() => {
                     console.log('채팅 읽음 처리 실패');
                 })
         },
+
+        /* 읽지 않은 대화 개수 */
+        getCountOfUnreadChat() {
+            if (company != null) { //업체 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/com/' + company.comId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('업체의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('업체의 읽지 않은 대화 개수 가져오기 실패');
+                    })
+            } else if (customer != null) { //고객 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/cust/' + customer.custId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('고객의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('고객의 읽지 않은 대화 개수 가져오기 실패');
+                    })
+            }
+        },
+
 
         /* 이전 대화 내역 가져오기 */
         getPrevAllChat() {
@@ -410,11 +471,11 @@ export default {
                     /* 서버의 메세지 전송 endpoing를 구독(Pub/Sub 구조) */
                     this.stompClient.subscribe("/send", response => {
                         if (this.chat.stuId == JSON.parse(response.body).stuId &&
-                            this.chat.custId == JSON.parse(response.body).custId) { //채팅을 해당자들만 1:1로 확인
+                            this.chat.custId == JSON.parse(response.body).custId &&
+                            this.chatSubscribe) {
+                            //채팅을 해당자들만 1:1로 확인
+                            //채팅 모달이 켜져있어야 받음. 채팅 모달을 껐을 경우 읽지 않음.
                             console.log('구독으로 받은 메시지 : ', response.body);
-
-                            // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                            //this.prevAllChat.push(JSON.parse(response.body))
 
                             this.updateReadCheck(); //읽음 처리 -> 대화 가져오기
                         }
@@ -586,13 +647,20 @@ export default {
         controlModal(cmd, obj) {
             if (cmd == 'show') {
                 document.getElementById(obj).setAttribute('style', 'display:block;');
-                if (obj == 'chatListModal') {
+                if (obj == 'chatListModal') { //채팅 목록 보기
+                    this.setChatSubscribe('off'); //채팅 구독 여부 off
+                    if (company != null) {
+                        this.getRecentComChat();
+                    } else if (customer != null) {
+                        this.getRecentCustChat();
+                    }
                     document.getElementById('chatListHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatHeader').setAttribute('style', 'display:none;');
                 }
             } else if (cmd == 'hide') {
                 document.getElementById(obj).setAttribute('style', 'display:none;');
-                if (obj == 'chatListModal') {
+                if (obj == 'chatListModal') { //채팅 목록 끄고 이전 채팅으로 돌아가기
+                    this.setChatSubscribe('on'); //채팅 구독 여부 on
                     document.getElementById('chatHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatListHeader').setAttribute('style', 'display:none;');
                 }

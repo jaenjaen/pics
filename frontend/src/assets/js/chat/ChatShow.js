@@ -12,12 +12,14 @@ export default {
         }
     },
     mounted() {
+        this.$refs.chat.setChatSubscribe('on'); //채팅 구독 여부 on
         this.$refs.chat.controlModal('show', 'chatListModal');
         this.moveToScrollBottom();
     },
     methods: {
         goBackToMyPage: function() {
-            location.href = "/mypage"
+            this.$refs.chat.setChatSubscribe('off'); //채팅 구독 여부 off
+            location.href = "/mypage";
         },
 
         /* 스크롤을 최하단으로 옮김 */

@@ -162,6 +162,13 @@ public class StudioReserveController {
 		else return new ResponseEntity(resultList,HttpStatus.OK);
 	}
 	
+	@ApiOperation(value="스튜디오 기준 지나지 않은 예약 리스트 반환", response = List.class)
+	@GetMapping("/studio/reservation/will/{stuId}")
+	public ResponseEntity getWillStudioReservation(@PathVariable int stuId) {
+		resultList = studioReserveService.getWillStudioReservation(stuId);
+		return new ResponseEntity(resultList,HttpStatus.OK);
+	}
+	
 	@ApiOperation(value="N월의 지난 예약리스트 반환", response = List.class)
 	@GetMapping("/customer/reservation/expired/{custId}/{startDate}/{endDate}")
 	public ResponseEntity getMonthReservation(@PathVariable int custId, @PathVariable String startDate, @PathVariable String endDate) {

@@ -10,6 +10,11 @@
 
 /* 리뷰 영역 */
 
+card-expansion {
+    width: 70%;
+    height: 70px;
+}
+
 .card-content {
     border: 1px solid lightgray;
     border-radius: 10px;
@@ -24,7 +29,7 @@
 
 #reviewr-email {
     display: table-cell;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 .star-score {

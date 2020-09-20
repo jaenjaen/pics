@@ -93,7 +93,7 @@ export default {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
 
         await axios
-            .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/info/10") //+ this.stuId)
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
@@ -104,7 +104,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/10") //+ this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 var exceptionDate = (response.data.exceptionDate);
@@ -165,7 +165,10 @@ export default {
                 this.startTimes = this.setTime(this.startDay);
                 if (this.startDate < todayTime) {
                     alert("대여 시작일을 오늘 이후로 선택하세요.");
-                    this.start_date = this.today.getFullYear() + "-" + (this.today.getMonth() + 1) + "-" + this.today.getDate();
+                    this.start_date =
+                        this.today.getFullYear() +
+                        "-" + (this.today.getMonth() + 1) +
+                        "-" + this.today.getDate();
                 }
             }
             if (this.end_date != "") {
@@ -177,14 +180,18 @@ export default {
                 }
             }
             // 2-2) 시간 조건
-
-            if (this.start_date != "" & this.start_date == this.end_date & startTime < 24) {
+            if (this.start_date != "" &
+                this.start_date == this.end_date &
+                startTime < 24) {
                 if (startTime >= endTime) { //하루 예약이면 시작시간 < 종료시간
                     alert("대여 종료시간은 시작시간 이후로 설정하세요.");
                     this.end_time = 25;
                 }
             }
-            if ((startTime < 24) & this.start_date != "" & this.end_date != "" & this.startTimes[this.startTimes.length - 1] == startTime) {
+            if ((startTime < 24) &
+                this.start_date != "" &
+                this.end_date != "" &
+                this.startTimes[this.startTimes.length - 1] == startTime) {
                 alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
                 this.start_time = 25;
             }
@@ -192,14 +199,13 @@ export default {
                 alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
                 this.end_time = 25;
             }
-
             // 3. 새로운 예약 일정이 기존 Reservation 및 Exception Date 일정과 겹치는지 확인
             if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
                 if ((this.checkException() == 0) | (this.checkReservation() == 0)) {
                     this.start_date = "";
                     this.end_date = "";
-                    this.start_time = 25;
-                    this.end_time = 25;
+                    this.start_time = "";
+                    this.end_time = "";
                     alert("예약 불가능한 일정 입니다.");
                 }
             }
@@ -209,15 +215,19 @@ export default {
             // 4-1) 예약 일자 사이에 날짜별 영업 시간 구하기(for문)
             var cntTime = 0;
             if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
-                if (this.start_date == "" & this.end_date) {
-                    cntTime = (endTime - startTime) //
-                } else {
+                if (difDate == 0) { //1일 예약
+                    cntTime = (endTime - startTime)
+                } else { //연일 예약
                     for (let i = 0; i <= difDate; i++) {
                         var next = new Date(this.startDate + (i * 1000 * 60 * 60 * 24));
-                        var nextDay = this.transWeekDay(next.getFullYear() + "-" + (next.getMonth() - 1) + "-" + next.getDate());
-                        var j = this.repeatedDays.indexOf(week[nextDay], 0)
-                        var closeTime = parseInt(this.repeated[j].time.split('-')[1]);
-                        var openTime = parseInt(this.repeated[j].time.split('-')[0]);
+                        var nextDay = this.transWeekDay(
+                            next.getFullYear() +
+                            "-" + (next.getMonth() - 1) +
+                            "-" + next.getDate());
+                        let j = this.repeatedDays.indexOf(week[nextDay], 0)
+                        let openTime = parseInt((this.repeated[j]).time.split('-')[0]);
+                        let closeTime = parseInt((this.repeated[j]).time.split('-')[1]);
+
                         if (i == 0) { //시작일 : 마감시간-시작시간
                             cntTime += (closeTime - parseInt(startTime));
                         } else if (i == (difDate)) { //종료일: 종료시간-오픈시간
@@ -298,10 +308,10 @@ export default {
                         let openTime = parseInt(this.repeated[i].time.split('-')[0]);
                         let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
                         let times = []
-                        let t = 0;
-                        for (let j = 0; j < (closeTime - openTime) + 1; j++) {
-                            t = j + openTime
-                            times.push(t);
+                            // let t = 0;
+                        for (let j = openTime; j < closeTime + 1; j++) {
+                            // t = j + openTime
+                            times.push(j);
                         }
                         return times;
                     } else continue
@@ -321,9 +331,6 @@ export default {
         checkReservation() {
             if (this.startDayTime != "" & this.endDayTime != "") {
                 for (var i = 0; i < this.reservationLength; i++) {
-                    //포함안되면 repeat가서 뒤지기
-                    //날짜 + 시간을 초로 환산 >> 등록하려는 시작일이 기존 예약의 종료시간보다 늦거나 
-                    // 등록하려는 종료일이 기존 예약의 시작시간보다 빠른 경우 기존 예약 및 Reservation에 포함 X
                     var res_startOnlyDate = (this.schedule.reservation[i].startDate).split(' ')[0]; //시작 날짜 분리
                     var res_startOnlyTime = (this.schedule.reservation[i].startDate).split(' ')[1]; //시작 시간 분리
                     var res_endOnlyDate = (this.schedule.reservation[i].endDate).split(' ')[0]; //종료 날짜 분리
@@ -346,9 +353,6 @@ export default {
         checkException() {
             if (this.startDayTime != "" & this.endDayTime != "") {
                 for (var i = 0; i < this.exceptionLength; i++) {
-                    //포함안되면 repeat가서 뒤지기
-                    //날짜 + 시간을 초로 환산 >> 등록하려는 시작일이 기존 예약의 종료시간보다 늦거나 
-                    // 등록하려는 종료일이 기존 예약의 시작시간보다 빠른 경우 기존 예약 및 ExceptionDate에 포함 X
                     var exc_startOnlyDate = (this.schedule.exceptionDate[i].startDate).split(' ')[0];
                     var exc_startOnlyTime = (this.schedule.exceptionDate[i].startDate).split(' ')[1];
                     var exc_endOnlyDate = (this.schedule.exceptionDate[i].endDate).split(' ')[0];

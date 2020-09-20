@@ -50,7 +50,6 @@ export default {
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
-                // console.log("리뷰 studioInfo : " + this.studios)
             })
             .catch(error => {
                 console.log(error);
@@ -61,13 +60,17 @@ export default {
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => {
                 this.reviews = response.data;
-                // console.log("리뷰 reviews : " + this.reviews)
-                let temp = []
-                for (var i = 0; i < this.cntReviews; i++) {
-                    temp.push(this.reviews[i]);
+                if (this.reviews.length > this.cntReviews) {
+                    let temp = []
+                    for (var i = 0; i < this.cntReviews; i++) {
+                        console.log("this.reviews : " + this.reviews[i] + this.cntReviews)
+                        temp.push(this.reviews[i]);
+                    }
+                    this.uncoveredReview = temp
+                    this.allReviewLength = (this.reviews).length
+                } else {
+                    this.uncoveredReview = this.reviews
                 }
-                this.uncoveredReview = temp
-                this.allReviewLength = (this.reviews).length
             })
             .catch(error => {
                 console.log(error);

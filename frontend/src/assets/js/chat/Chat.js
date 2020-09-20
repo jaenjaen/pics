@@ -60,6 +60,9 @@ export default {
             presentStu: {},
             presentCust: {},
 
+            /* 대화 구독 여부 on/off */
+            chatSubscribe: false,
+
             /* 대화 선택 여부 */
             selectChat: '',
 
@@ -70,6 +73,7 @@ export default {
     },
 
     created() {
+        this.connect(); //웹소켓 연결
         if (customer != null) { //개인고객으로 로그인했을 경우
             this.customerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
@@ -132,6 +136,15 @@ export default {
                 } else { //다른 시간일 경우 보임
                     return true;
                 }
+            }
+        },
+
+        /* 채팅 구독 여부 on/off */
+        setChatSubscribe(cmd) {
+            if (cmd === 'on') {
+                this.chatSubscribe = true;
+            } else if (cmd === 'off') {
+                this.chatSubscribe = false;
             }
         },
 
@@ -458,7 +471,8 @@ export default {
                     /* 서버의 메세지 전송 endpoing를 구독(Pub/Sub 구조) */
                     this.stompClient.subscribe("/send", response => {
                         if (this.chat.stuId == JSON.parse(response.body).stuId &&
-                            this.chat.custId == JSON.parse(response.body).custId) {
+                            this.chat.custId == JSON.parse(response.body).custId &&
+                            this.chatSubscribe) {
                             //채팅을 해당자들만 1:1로 확인
                             //채팅 모달이 켜져있어야 받음. 채팅 모달을 껐을 경우 읽지 않음.
                             console.log('구독으로 받은 메시지 : ', response.body);
@@ -473,14 +487,6 @@ export default {
                     this.connected = false;
                 }
             );
-        },
-
-        /* 웹소켓 연결 해제 */
-        disconnect() {
-            if (this.stompClient != null) {
-                this.stompClient.disconnect();
-            }
-            console.log("웹소켓 연결 해제 상태");
         },
 
         /* 파일이름 및 경로를 화면에 보임 */
@@ -641,7 +647,8 @@ export default {
         controlModal(cmd, obj) {
             if (cmd == 'show') {
                 document.getElementById(obj).setAttribute('style', 'display:block;');
-                if (obj == 'chatListModal') {
+                if (obj == 'chatListModal') { //채팅 목록 보기
+                    this.setChatSubscribe('off'); //채팅 구독 여부 off
                     if (company != null) {
                         this.getRecentComChat();
                     } else if (customer != null) {
@@ -652,7 +659,8 @@ export default {
                 }
             } else if (cmd == 'hide') {
                 document.getElementById(obj).setAttribute('style', 'display:none;');
-                if (obj == 'chatListModal') {
+                if (obj == 'chatListModal') { //채팅 목록 끄고 이전 채팅으로 돌아가기
+                    this.setChatSubscribe('on'); //채팅 구독 여부 on
                     document.getElementById('chatHeader').setAttribute('style', 'display:block;');
                     document.getElementById('chatListHeader').setAttribute('style', 'display:none;');
                 }

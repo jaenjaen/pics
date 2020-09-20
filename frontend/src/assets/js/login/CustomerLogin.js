@@ -72,7 +72,7 @@ export default {
             nickname: "",
             email: "",
             params: {
-                client_id: "904661069189-3mk7nkmdpmp22qnb0sr0li8t1laim3cr.apps.googleusercontent.com"
+                client_id: "804544618984-l5mb6g3htflqb0uvliqbkl3maa06j4ng.apps.googleusercontent.com"
             },
             renderParams: {
                 width: 300,

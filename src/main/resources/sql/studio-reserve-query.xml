@@ -151,6 +151,13 @@
 		and start_date &gt;= now()
 	 </select>
 	 
+	 <select id="getWillStudioReservation" parameterType="int" resultType="reservation">
+	 	SELECT res_id
+	 	FROM reservation
+		WHERE stu_id = #{value}
+		AND start_date &gt;= now()
+	 </select>
+	 
 	 <select id="getMonthReservation" parameterType="reservation" resultMap="resv-stuRM">
 	 	<include refid="select-reservation-studio"/>
 		where cust_id = #{custId}

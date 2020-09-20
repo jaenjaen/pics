@@ -21,6 +21,12 @@ public interface ChatService {
 	/* 읽지 않은 메세지의 개수를 가져옴 */
 	public int countNotYetRead(Map map) throws Exception;
 	
+	/* 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadComChat(String comId) throws Exception;
+	
+	/* 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadCustChat(String custId) throws Exception;
+	
 	/* 채팅 아이디로 대화를 가져옴 */
 	public Chat getChatByChatId(String chatId) throws Exception;
 	

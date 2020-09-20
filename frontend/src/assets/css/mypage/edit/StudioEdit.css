@@ -62,6 +62,7 @@
         
         button#delete {
             background-color: #DB5D55;
+            float: left;
         }
         
         button#delete:hover {

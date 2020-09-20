@@ -36,17 +36,17 @@ public class ChatController {
 	@MessageMapping("/receive") //receive를 메세지를 받을 endpoint로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
-//		System.out.println("입력값 chat : " + chat);
+		//System.out.println("입력값 chat : " + chat);
 		Chat resultChat = new Chat();
 		try {
 			int result = chatService.addChat(chat);
-//			System.out.println("채팅 " + result + "개 추가");
+			//System.out.println("채팅 " + result + "개 추가");
 			
 			Map map = new HashMap();
 			map.put("custId", chat.getCustId());
 			map.put("stuId", chat.getStuId());
 			resultChat = chatService.getMostRecentChat(map);
-//			System.out.println("결과값 resultChat : " + resultChat);
+			//System.out.println("결과값 resultChat : " + resultChat);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,19 +76,41 @@ public class ChatController {
 	@PutMapping("/chat/prev/{stuId}/{custId}/{sender}")
 	public ResponseEntity updateReadCheck(@PathVariable String stuId, @PathVariable String custId, @PathVariable String sender) {
 		try {
-			System.out.println(stuId);
-			System.out.println(custId);
-			System.out.println(sender);
-			
 			Map map = new HashMap();
 			map.put("stuId", stuId);
 			map.put("custId", custId);
-			map.put("custId", sender);
+			map.put("sender", sender);
 			
 			/* 대화 목록을 가져가기 전에 읽음 처리를 한다. */
 			int result = chatService.setAlreadyRead(map);
-			System.out.println("읽음 처리 : " + result);
+			//System.out.println("읽음 처리 : " + result);
 			return new ResponseEntity(HttpStatus.OK);
+		} catch(Exception e) {
+			//e.printStackTrace();
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+	}
+	
+	@ApiOperation(value="읽지 않은 채팅 개수를 반환", response = List.class)
+	@GetMapping("/chat/unread/{member}/{id}")
+	public ResponseEntity getCountOfUnreadChat(@PathVariable String member, @PathVariable String id) {
+		System.out.println(member);
+		System.out.println(id);
+		
+		List<Map> list = new ArrayList<>();
+		try {
+			if(member.equals("com")) {
+				list = chatService.getCountOfUnreadComChat(id);
+			}else if(member.equals("cust")) {
+				list = chatService.getCountOfUnreadCustChat(id);
+			}
+			System.out.println(list);
+			
+			if(list.size()>0) {
+				return new ResponseEntity(list, HttpStatus.OK);
+			}else { //해당되는 대화가 없을 경우
+				return new ResponseEntity(-1, HttpStatus.OK);
+			}
 		} catch(Exception e) {
 			//e.printStackTrace();
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -99,15 +121,12 @@ public class ChatController {
 	@GetMapping("/chat/prev/{stuId}/{custId}")
 	public ResponseEntity getAllChat(@PathVariable String stuId, @PathVariable String custId) {
 		try {
-			System.out.println(stuId);
-			System.out.println(custId);
-			
 			Map map = new HashMap();
 			map.put("stuId", stuId);
 			map.put("custId", custId);
 			
 			List<Chat> list = chatService.getPrevAllChat(map);
-			System.out.println(list);
+			//System.out.println(list);
 			if(list.size()>0) {
 				return new ResponseEntity(list, HttpStatus.OK);
 			}else { //해당되는 대화가 없을 경우

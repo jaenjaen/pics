@@ -144,8 +144,7 @@
                 border-top: 0 !important;
             }
             
-            .chat-wrapper .chat-message.chat-message-recipient,
-            .chat-wrapper .chat-message.chat-message-sender {
+            .chat-wrapper .chat-message.chat-message-recipient {
                 margin-top: 5px;
             }
             
@@ -172,8 +171,12 @@
             }
             
             .chat-wrapper .chat-message.chat-message-sender .chat-message-wrapper:before {
-                right: -20px;
+                right: -15px;
                 border-left-color: #33A3DC;
+            }
+            
+            .chat-wrapper .chat-message.chat-message-sender {
+                margin-bottom: -5px;
             }
             
             .chat-wrapper .chat-message.chat-message-sender p {
@@ -205,17 +208,32 @@
                 text-decoration: underline;
             }
             
+            .readAndDelTd {
+                text-align: right;
+                width: 60px;
+                position: relative;
+                height: 100%;
+            }
+            
             .chat-message-read-status {
                 color: #FFA7A7 !important;
                 margin-right: 5px;
+                position: absolute;
+                bottom: 5px;
+                width: 25px;
+                right: 23px;
             }
             
-            .chat-details .delChatBtn {
+            .delChatBtn {
                 cursor: pointer;
                 font-size: 0.7rem;
                 color: white !important;
                 background-color: #A6A6A6;
                 padding: 1px;
+                position: absolute;
+                bottom: 5px;
+                width: 25px;
+                right: 0px;
             }
             
             .chat-wrapper .chat-message .chat-details {
@@ -232,12 +250,15 @@
             }
             
             .chat-wrapper .chat-message .chat-details span {
-                margin-right: 4px;
                 color: #bbb;
             }
             
             .chat-message-sender .chat-details {
                 text-align: right;
+            }
+            
+            .chat-message-localisation {
+                margin-top: -5px;
             }
             /* 하단 스타일 */
             
@@ -285,6 +306,8 @@
                 background-color: rgb(0, 0, 0);
                 background-color: rgba(0, 0, 0, 0.4);
             }
+            
+            table td {}
             /* 스튜디오 선택 */
             
             #studioList {
@@ -334,10 +357,9 @@
                 overflow: auto;
             }
             
-            #chatListContent p {
+            #chatListContent td {
                 text-align: left;
                 padding: 10px;
-                overflow: hidden;
             }
             
             #userName {
@@ -357,6 +379,18 @@
                 font-size: 15px;
                 margin-left: 10px;
                 vertical-align: middle;
+            }
+            
+            .unreadList {
+                background: #33A3DC;
+                text-align: center;
+                font-weight: bold !important;
+                display: inline-block;
+                width: 40px;
+                height: 20px;
+                font-size: 12px;
+                border-radius: 10px;
+                margin-left: 0 !important;
             }
             /* 파일 업로드 Modal 전체 */
             

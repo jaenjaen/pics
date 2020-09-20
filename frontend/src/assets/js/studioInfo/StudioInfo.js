@@ -180,6 +180,7 @@ export default {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"
             } else {
+                this.$refs.chat.setChatSubscribe('on'); //채팅 구독 여부 on
                 this.$refs.chat.setChat(this.stuId, this.customer.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
@@ -187,6 +188,7 @@ export default {
             }
         },
         hideChatModal: function() {
+            this.$refs.chat.setChatSubscribe('off'); //채팅 구독 여부 off
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
         },
         /* 스크롤을 최하단으로 옮김 */

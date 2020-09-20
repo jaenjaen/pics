@@ -29,7 +29,6 @@ public class ChatServiceImpl implements ChatService {
 	}
 	
 	/* 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) */
-	@Transactional
 	public int setAlreadyRead(Map map) throws Exception {
 		return chatDao.setAlreadyRead(map);
 	}
@@ -42,6 +41,16 @@ public class ChatServiceImpl implements ChatService {
 	/* 읽지 않은 메세지의 개수를 가져옴 */
 	public int countNotYetRead(Map map) throws Exception {
 		return getNotYetRead(map).size();
+	}
+	
+	/* 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadComChat(String comId) throws Exception {
+		return chatDao.getCountOfUnreadComChat(comId); 
+	}
+	
+	/* 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadCustChat(String custId) throws Exception {
+		return chatDao.getCountOfUnreadCustChat(custId);
 	}
 	
 	/* 채팅 아이디로 대화를 가져옴 */

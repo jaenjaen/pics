@@ -62,15 +62,21 @@ export default {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"
             } else {
+                this.$refs.chat.setChatSubscribe('on'); //채팅 구독 여부 on
                 this.$modal.hide("detailModal");
                 this.$refs.chat.setChat(this.selectedId, this.custId);
+                this.$refs.chat.controlModal('hide', 'chatListModal');
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
                 this.moveToScrollBottom();
             }
         },
         hideChatModal: function() {
+            this.$refs.chat.setChatSubscribe('off'); //채팅 구독 여부 off
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
+            /* 모달 창을 닫으면 수정된 최신 대화 내역을 refresh함 */
+            this.$refs.inquiry.getRecentChat();
+            this.$refs.inquiry.getCountOfUnreadChat();
         },
         /* 스크롤을 최하단으로 옮김 */
         moveToScrollBottom() {

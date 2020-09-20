@@ -19,7 +19,7 @@
     </div>
     <MypageGap categoryName="문의내역" cateogryURL="/chatShow"/>
     <!-- 문의 내역-->
-    <Inquiry :customerMode="true" @showCustChat="showCustChatForInquiry"/>
+    <Inquiry ref="inquiry" :customerMode="true" @showCustChat="showCustChatForInquiry"/>
     <!-- chat modal -->
     <div id="chatModal" style="display:none;">
       <div id="chatContent">

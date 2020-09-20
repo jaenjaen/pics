@@ -37,6 +37,16 @@ public class ChatDAOImpl implements ChatDAO {
 		return sqlSession.selectList(ns+"getNotYetRead", map);
 	}
 	
+	/* 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadComChat(String comId) throws Exception {
+		return sqlSession.selectList(ns+"getCountOfUnreadComChat", comId);
+	}
+	
+	/* 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 */
+	public List<Map> getCountOfUnreadCustChat(String custId) throws Exception {
+		return sqlSession.selectList(ns+"getCountOfUnreadCustChat", custId);
+	}
+	
 	/* 채팅 아이디로 대화를 가져옴 */
 	public Chat getChatByChatId(String chatId) throws Exception {
 		return sqlSession.selectOne(ns+"getChatByChatId", chatId);

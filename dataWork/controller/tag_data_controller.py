@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[24]:
 
 
 # 외부 모듈
@@ -21,7 +21,7 @@ import gensim
 from gensim.models import word2vec
 
 
-# In[4]:
+# In[27]:
 
 
 ### 사용자 모듈 불러오기
@@ -34,7 +34,6 @@ from model import word2vec_model
 # 데이터 불러오기
 def tagData():
     # DB 데이터
-    
     dataset = tag_dao.getTagData()
     dataset["description"].fillna("",inplace=True)
     
@@ -55,7 +54,7 @@ def tagData():
     dataset["new_tag2"]=CoreTagData2
     
     
-#   Word2Vec
+#   Word2Vec : CoreTagData1로 데이터 셋 확보
     model=word2vec_model.wordVec(CoreTagData1)
     vocab=model.wv.vocab
     extendTagList=[]
@@ -65,20 +64,21 @@ def tagData():
     # 파일 저장 
     file_path=os.getcwd()
     file_path=file_path.replace("\\",'/')
-
     dataset.to_csv(file_path+'/resources/dataset/tag_data.csv',sep=',',na_rep='NaN',index =True,encoding='utf-8-sig')
+    
+#     dataset.to_csv('../resources/dataset/tag_data.csv',sep=',',na_rep='NaN',index =True,encoding='utf-8-sig')
 
 
-# In[5]:
+# In[28]:
 
 
-# tagData() 
+tagData()
 
 
 # In[ ]:
 
 
-# result.save(path[:-9]+'/resources/images/'+img.filename)
+
 
 
 # In[ ]:

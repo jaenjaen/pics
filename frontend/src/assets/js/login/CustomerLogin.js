@@ -2,6 +2,7 @@ import axios from "axios";
 import LoginHeader from "@/components/LoginHeader.vue";
 import KakaoLogin from "vue-kakao-login";
 import GoogleLogin from "vue-google-login";
+import router from "../../../router";
 
 //kakao
 let onSuccessKakao = data => {
@@ -34,10 +35,10 @@ let onSuccessKakao = data => {
                 .then(res => {
                     if (res.data == "") {
                         sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
-                        location.href = "http://localhost:9999/customerregister";
+                        router.push('/customerregister');
                     } else {
                         sessionStorage.setItem("customer", JSON.stringify(res.data));
-                        location.href = "http://localhost:9999";
+                        router.push('/');
                     }
                 })
                 .catch(err => {
@@ -71,7 +72,7 @@ export default {
             nickname: "",
             email: "",
             params: {
-                client_id: "904661069189-3mk7nkmdpmp22qnb0sr0li8t1laim3cr.apps.googleusercontent.com"
+                client_id: "804544618984-l5mb6g3htflqb0uvliqbkl3maa06j4ng.apps.googleusercontent.com"
             },
             renderParams: {
                 width: 300,
@@ -117,10 +118,10 @@ export default {
                     if (res.data == "") {
                         console.log(this.apiData);
                         sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
-                        location.href = "http://localhost:9999/customerregister";
+                        router.push('/customerregister');
                     } else {
                         sessionStorage.setItem("customer", JSON.stringify(res.data));
-                        location.href = "http://localhost:9999";
+                        router.push('/');
                     }
                 })
                 .catch(err => {

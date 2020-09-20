@@ -24,7 +24,7 @@ export default {
     mounted() {
         if (company == null) {
             alert("로그인 후 이용 가능합니다.")
-            location.href = "http://localhost:9999/customerlogin";
+            location.href = "/customerlogin";
         }
         this.name = company.name;
         this.address = company.address;
@@ -61,7 +61,7 @@ export default {
                         sessionStorage.setItem("company", JSON.stringify(company));
 
                         alert("회원정보가 수정되었습니다.");
-                        location.href = "http://localhost:9999/mypage";
+                        location.href = "/mypage";
                     })
                     .catch(e => {
                         console.log(e);
@@ -116,7 +116,7 @@ export default {
                         console.log(res)
                         alert("회원탈퇴 되었습니다.");
                         sessionStorage.removeItem("company");
-                        location.href = "http://localhost:9999";
+                        location.href = "/";
                     })
                     .catch(err => {
                         console.log(err);

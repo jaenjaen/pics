@@ -1,6 +1,7 @@
 <template>
   <div class="publicSpace">
     <LoginHeader companyMode="true" />
+
     <div class="grid">
       <form
         action=""

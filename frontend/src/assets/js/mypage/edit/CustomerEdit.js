@@ -42,7 +42,7 @@ export default {
                         customer.job = this.job;
                         sessionStorage.setItem("customer", JSON.stringify(customer));
                         alert("정보가 수정되었습니다.");
-                        location.href = "http://localhost:9999/mypage";
+                        location.href = "/mypage";
                     }
                 })
                 .catch(e => {
@@ -62,7 +62,7 @@ export default {
                     if (res != null) {
                         alert("회원탈퇴 되었습니다.");
                         sessionStorage.removeItem("customer");
-                        location.href = "http://localhost:9999";
+                        location.href = "/";
                     }
                 })
                 .catch(err => {

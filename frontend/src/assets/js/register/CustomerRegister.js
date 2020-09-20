@@ -45,7 +45,7 @@ export default {
                     this.condata = response.data
                     sessionStorage.removeItem("apiData")
                     alert(this.nickname + " 님의 가입을 환영합니다.");
-                    location.href = "http://localhost:9999"
+                    location.href = "/"
                 })
                 .catch(e => {
                     console.log(e)

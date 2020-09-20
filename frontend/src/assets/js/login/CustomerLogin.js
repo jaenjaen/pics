@@ -2,6 +2,7 @@ import axios from "axios";
 import LoginHeader from "@/components/LoginHeader.vue";
 import KakaoLogin from "vue-kakao-login";
 import GoogleLogin from "vue-google-login";
+import router from "../../../router";
 
 //kakao
 let onSuccessKakao = data => {
@@ -34,10 +35,10 @@ let onSuccessKakao = data => {
                 .then(res => {
                     if (res.data == "") {
                         sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
-                        location.href = "http://localhost:9999/customerregister";
+                        router.push('/customerregister');
                     } else {
                         sessionStorage.setItem("customer", JSON.stringify(res.data));
-                        location.href = "http://localhost:9999";
+                        router.push('/');
                     }
                 })
                 .catch(err => {
@@ -117,10 +118,10 @@ export default {
                     if (res.data == "") {
                         console.log(this.apiData);
                         sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
-                        location.href = "http://localhost:9999/customerregister";
+                        router.push('/customerregister');
                     } else {
                         sessionStorage.setItem("customer", JSON.stringify(res.data));
-                        location.href = "http://localhost:9999";
+                        router.push('/');
                     }
                 })
                 .catch(err => {

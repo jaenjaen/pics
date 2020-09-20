@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.devils.pics.dao.CompanyDAO;
 import com.devils.pics.dao.CustomerDAO;
@@ -13,7 +14,7 @@ import com.devils.pics.domain.Customer;
 import com.devils.pics.service.CompanyService;
 import com.devils.pics.util.security.SaltUtil;
 
-@Repository
+@Service
 public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired

@@ -32,7 +32,7 @@ def tagCount(stuId):
     # Counting Words
     dataset=count_tag_model.tagCount(stuId,dataset)
     topSim=list(dataset.loc[:10,"stu_id"])
-    return tag_dao.getTop10(topSim)[:10]
+    return tag_dao.getTop10(topSim)[:8]
 
 
 # In[42]:

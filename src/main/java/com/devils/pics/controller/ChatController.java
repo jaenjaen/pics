@@ -36,17 +36,17 @@ public class ChatController {
 	@MessageMapping("/receive") //receive를 메세지를 받을 endpoint로 설정
 	@SendTo("/send") //send로 메세지를 반환
 	public Chat ChatHandler(@RequestBody Chat chat) {
-//		System.out.println("입력값 chat : " + chat);
+		//System.out.println("입력값 chat : " + chat);
 		Chat resultChat = new Chat();
 		try {
 			int result = chatService.addChat(chat);
-//			System.out.println("채팅 " + result + "개 추가");
+			//System.out.println("채팅 " + result + "개 추가");
 			
 			Map map = new HashMap();
 			map.put("custId", chat.getCustId());
 			map.put("stuId", chat.getStuId());
 			resultChat = chatService.getMostRecentChat(map);
-//			System.out.println("결과값 resultChat : " + resultChat);
+			//System.out.println("결과값 resultChat : " + resultChat);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

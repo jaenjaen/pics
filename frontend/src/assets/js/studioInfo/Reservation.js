@@ -177,29 +177,29 @@ export default {
                 }
             }
             // 2-2) 시간 조건
-            if ((startTime < 24 | endTime < 24)) {
-                if ((this.start_date != "") & (this.endDayTime == this.startDayTime)) {
-                    if (startTime >= endTime) { //하루 예약이면 시작시간 < 종료시간
-                        alert("대여 종료시간은 시작시간 이후로 설정하세요.");
-                        this.end_time = 25;
-                    }
-                }
-                if ((startTime < 24) & this.startTimes[this.startTimes.length - 1] == startTime) {
-                    alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
-                    this.start_time = 25;
-                }
-                if ((endTime < 24) & (this.endTimes[0] == endTime) & (this.end_date != "")) {
-                    alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
+
+            if (this.start_date != "" & this.start_date == this.end_date & startTime < 24) {
+                if (startTime >= endTime) { //하루 예약이면 시작시간 < 종료시간
+                    alert("대여 종료시간은 시작시간 이후로 설정하세요.");
                     this.end_time = 25;
                 }
             }
+            if ((startTime < 24) & this.start_date != "" & this.end_date != "" & this.startTimes[this.startTimes.length - 1] == startTime) {
+                alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
+                this.start_time = 25;
+            }
+            if ((endTime < 24) & this.end_date != "" & (this.endTimes[0] == endTime) & (this.end_date != "")) {
+                alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
+                this.end_time = 25;
+            }
+
             // 3. 새로운 예약 일정이 기존 Reservation 및 Exception Date 일정과 겹치는지 확인
             if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
                 if ((this.checkException() == 0) | (this.checkReservation() == 0)) {
                     this.start_date = "";
                     this.end_date = "";
-                    this.start_time = "";
-                    this.end_time = "";
+                    this.start_time = 25;
+                    this.end_time = 25;
                     alert("예약 불가능한 일정 입니다.");
                 }
             }
@@ -385,7 +385,7 @@ export default {
                     .finally(() => (this.loading = false));
             }
             //2. 예약 정보 확인 reservation 변수 설정
-            if (this.total_price > 0 && this.msg == "") {
+            if (this.total_price > 0 & this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
                 let reservation = {
                     stuId: this.stuIdData,
                     custId: this.customer.custId,

@@ -8,6 +8,8 @@ export default {
         return {
             stuId: 0,
             reservatedLength: 0,
+            schedule: {},
+            reservation: [{}],
             timeCount: new Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
             datacollection: {
                 datasets: [{
@@ -47,16 +49,16 @@ export default {
     props: ["stuIdData"],
     created: function() {
         this.stuId = this.stuIdData;
-        console.log(this.stuId + "Props로 데이터 받음~~!! 여긴 TimeChart");
     },
     mounted() {
         axios
             .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
             .then(response => {
-                this.reservation = response.data;
+                this.schedule = response.data;
+                this.reservation = this.schedule.reservation
                 var reservation = this.reservation;
                 this.reservationLength = reservation.length;
-                this.chartData(this.reservation);
+                this.chartTimeData();
                 this.renderChart(this.datacollection, this.options);
             })
             .catch(error => {
@@ -68,7 +70,7 @@ export default {
             });
     },
     methods: {
-        chartData() {
+        chartTimeData() {
             for (let i = 0; i < this.reservationLength; i++) {
                 let startTime = parseInt((new Date(this.reservation[i].startDate)).getHours());
                 let endTime = parseInt((new Date(this.reservation[i].endDate)).getHours());
@@ -76,9 +78,10 @@ export default {
                     this.timeCount[j] += 1;
                 }
             }
-            for (let i = 0; i < 24; i++) {
-                this.$set(this.datacollection.datasets[0].data, i, this.timeCount[i]);
+            for (let k = 0; k < 24; k++) {
+                this.$set(this.datacollection.datasets[0].data, k, this.timeCount[k]);
             }
+
         }
     }
 }

@@ -26,7 +26,7 @@ export default {
             // 리뷰 페이징 변수
             reviews: [{
                 reviewId: 0,
-                customer: [{}],
+                customer: {},
                 studio: {},
                 resId: 0,
                 score: 0,
@@ -43,7 +43,6 @@ export default {
     },
     created: function() {
         this.stuId = this.stuIdData;
-        console.log("props로 값 전달 ~! 여기는 Review : " + this.stuId);
     },
     async mounted() { //async mount로 비동기 처리
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
@@ -51,7 +50,7 @@ export default {
             .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
-                console.log("리뷰 studioInfo : " + this.studios)
+                // console.log("리뷰 studioInfo : " + this.studios)
             })
             .catch(error => {
                 console.log(error);
@@ -62,7 +61,7 @@ export default {
             .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
             .then(response => {
                 this.reviews = response.data;
-                console.log("리뷰 reviews : " + this.reviews)
+                // console.log("리뷰 reviews : " + this.reviews)
                 let temp = []
                 for (var i = 0; i < this.cntReviews; i++) {
                     temp.push(this.reviews[i]);

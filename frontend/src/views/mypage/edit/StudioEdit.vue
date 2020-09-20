@@ -555,8 +555,8 @@
         </div>
         <div id="submitArea" class="row">
           <button type="button" id="reset" @click="resetContent()">새로쓰기</button>
-          <button type="button" id="delete" @click="deleteStudio()">스튜디오 삭제</button>
           <button type="submit" id="register" @click="checkLogin()">등록</button>
+          <button type="button" id="delete" @click="deleteStudio()">스튜디오 삭제</button>
         </div>
       </section>
     </div>

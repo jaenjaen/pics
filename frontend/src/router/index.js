@@ -18,12 +18,13 @@ import StudioInfo from "@/components/studioInfo/StudioInfo.vue";
 import Reservation from "@/components/studioInfo/Reservation.vue";
 import OtherStudio from "@/components/studioInfo/OtherStudio.vue";
 import StudioList from "@/components/search/StudioList.vue";
-import UploadImg from "@/components/predict/uploadImg.vue";
 import Chat from "@/components/chat/Chat.vue";
 import ChatShow from "@/components/chat/ChatShow.vue";
 import CompanyInfo from "@/components/company/company_info.vue"
 import ChatTest from "@/components/chat/ChatTest.vue";
 import errorPage from "@/components/extra/error.vue";
+import Review from "@/components/studioInfo/Review.vue";
+
 
 Vue.use(VueRouter);
 const routes = [{
@@ -86,7 +87,7 @@ const routes = [{
         path: "/studioInfo/:stuId",
         name: "studioInfo",
         component: StudioInfo,
-        // props: true
+        props: true
     },
     {
         path: "/studioList",
@@ -102,11 +103,6 @@ const routes = [{
         path: "/customeredit",
         name: "customeredit",
         component: CustomerEdit
-    },
-    {
-        path: "/uploadImg",
-        name: "uploadImg",
-        component: UploadImg
     },
     {
         path: "/reservationlist",
@@ -143,7 +139,16 @@ const routes = [{
         path: "*",
         name: "errorPage",
         component: errorPage
-    }
+    }, {
+        path: "/Review",
+        name: "Review",
+        component: Review,
+    },
+
+
+
+
+
 ];
 
 const router = new VueRouter({

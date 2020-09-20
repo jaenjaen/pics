@@ -11,6 +11,9 @@ export default {
         moveBack() {
             this.$router.go(-1);
         },
+        toHome() {
+            this.$router.push("/");
+        }
     },
     computed: {
         wWidth() {

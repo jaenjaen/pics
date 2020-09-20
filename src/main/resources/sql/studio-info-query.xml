@@ -103,8 +103,7 @@
 		</if>
 	</select>
 
-	<select id="getStudioReviews" parameterType="int"
-		resultMap="reviewRM">
+	<select id="getStudioReviews" parameterType="int" resultMap="reviewRM">
 		SELECT
 		re.review_id,re.score, re.content, re.img,
 		re.reg_date, re.answer,

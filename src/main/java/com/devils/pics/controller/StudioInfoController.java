@@ -100,24 +100,12 @@ public class StudioInfoController {
 	public ResponseEntity<List<Review>> getStudioReviews(@PathVariable int stuId) {	
 		try {
 		List<Review> reviewVO=studioInfoService.getStudioReviews(stuId);
-		//System.out.println(reviewVO);
 		return new ResponseEntity<List<Review>>(reviewVO,HttpStatus.OK);
 		}catch (NullPointerException e) {
-			//System.out.println("아직 작성된 스튜디오 리뷰가 없습니다");
 			return new ResponseEntity<List<Review>>(HttpStatus.NO_CONTENT);
 			}
 		}
 	
-//	@GetMapping("/studio/genderRatio/{stuId}")
-//	public ResponseEntity genderRatio(@PathVariable int stuId) {	
-//		try {
-//			List<Customer> customers=studioInfoService.genderRatio(stuId);
-//			System.out.println(customers);
-//		return new ResponseEntity(customers,HttpStatus.OK);
-//		}catch (NullPointerException e) {
-//			return new ResponseEntity(HttpStatus.NO_CONTENT);
-//		}
-//	}
 }
 
 

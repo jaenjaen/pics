@@ -1,13 +1,15 @@
 import StudioList from '@/components/search/StudioList.vue'
+import ImageSearch from '@/components/search/ImageSearch.vue'
 // import axios from "axios";
 // 요일 변환을 위한 리스트
 const week = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
     // Vue 시작
 export default {
-    name: 'studio-list',
+    name: 'studio-search',
     props: ['categoryId'],
     components: {
-        StudioList
+        StudioList,
+        ImageSearch
     },
     data() {
         return {
@@ -31,7 +33,10 @@ export default {
                 session: -1
             },
             // Collapse 변수
-            visible: true
+            visible: true,
+
+            //ImageSearch 변수
+            isImage: false
         }
     },
     mounted() {

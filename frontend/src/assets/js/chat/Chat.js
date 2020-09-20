@@ -70,7 +70,6 @@ export default {
     },
 
     created() {
-        this.connect(); //소켓 연결
         if (customer != null) { //개인고객으로 로그인했을 경우
             this.customerMode = true; //고객모드 ON
             this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
@@ -135,7 +134,6 @@ export default {
                 }
             }
         },
-
 
         /* 채팅 접속시 설정 */
         setChat(stuId, custId) {
@@ -460,11 +458,10 @@ export default {
                     /* 서버의 메세지 전송 endpoing를 구독(Pub/Sub 구조) */
                     this.stompClient.subscribe("/send", response => {
                         if (this.chat.stuId == JSON.parse(response.body).stuId &&
-                            this.chat.custId == JSON.parse(response.body).custId) { //채팅을 해당자들만 1:1로 확인
+                            this.chat.custId == JSON.parse(response.body).custId) {
+                            //채팅을 해당자들만 1:1로 확인
+                            //채팅 모달이 켜져있어야 받음. 채팅 모달을 껐을 경우 읽지 않음.
                             console.log('구독으로 받은 메시지 : ', response.body);
-
-                            // 받은 데이터를 json으로 파싱 후 리스트에 넣음
-                            //this.prevAllChat.push(JSON.parse(response.body))
 
                             this.updateReadCheck(); //읽음 처리 -> 대화 가져오기
                         }
@@ -476,6 +473,14 @@ export default {
                     this.connected = false;
                 }
             );
+        },
+
+        /* 웹소켓 연결 해제 */
+        disconnect() {
+            if (this.stompClient != null) {
+                this.stompClient.disconnect();
+            }
+            console.log("웹소켓 연결 해제 상태");
         },
 
         /* 파일이름 및 경로를 화면에 보임 */

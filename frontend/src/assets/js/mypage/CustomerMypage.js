@@ -62,6 +62,7 @@ export default {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"
             } else {
+                this.$refs.chat.connect(); //웹소켓 연결
                 this.$modal.hide("detailModal");
                 this.$refs.chat.setChat(this.selectedId, this.custId);
                 this.$refs.chat.controlModal('hide', 'chatListModal');
@@ -71,6 +72,7 @@ export default {
             }
         },
         hideChatModal: function() {
+            this.$refs.chat.disconnect(); //웹소켓 연결 해제
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
             /* 모달 창을 닫으면 수정된 최신 대화 내역을 refresh함 */
             this.$refs.inquiry.getRecentChat();

@@ -12,11 +12,14 @@ export default {
         }
     },
     mounted() {
+        this.$refs.chat.connect(); //웹소켓 연결
         this.$refs.chat.controlModal('show', 'chatListModal');
         this.moveToScrollBottom();
     },
     methods: {
         goBackToMyPage: function() {
+            this.$refs.chat.disconnect(); //웹소켓 연결 해제
+            this.$refs.chat.controlModal('show', 'chatListModal');
             location.href = "/mypage"
         },
 

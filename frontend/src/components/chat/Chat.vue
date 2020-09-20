@@ -62,22 +62,34 @@
                         <div class='chat-message chat-message-sender' v-if="customerMode && prev.sender == 0">
                             <img class='chat-image chat-image-default profile' :src='customer.imgSrc' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
-                                <div class='chat-message-content'>
-                                    <p v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p v-else-if="isImgFile(prev.filePath)">
-                                        <a :href="chatRoute + prev.filePath" target="_blank">
-                                            <img class="chatUploadImg" :src="chatRoute + prev.filePath">
-                                        </a>
-                                    </p>
-                                    <p v-else>
-                                        <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">{{prev.filePath}}</a>
-                                    </p>
-                                </div><!-- chat-message-content -->
-                                <div class='chat-details' v-if="checkSameTime(idx)">
-                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
-                                    <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
-                                </div><!-- chat-details -->
+                                <table>
+                                    <tr>
+                                        <td class="readAndDelTd">
+                                            <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
+                                            <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
+                                        </td>
+                                        <td>
+                                            <div class='chat-message-content'>
+                                                <p v-if="prev.word != ''">{{prev.word}}</p>
+                                                <p v-else-if="isImgFile(prev.filePath)">
+                                                    <a :href="chatRoute + prev.filePath" target="_blank">
+                                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                                    </a>
+                                                </p>
+                                                <p v-else>
+                                                    <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">{{prev.filePath}}</a>
+                                                </p>
+                                            </div><!-- chat-message-content -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class='chat-details' v-if="checkSameTime(idx)">
+                                                <div class='chat-message-localisation font-size-small  cust-time' style="text-align: right;">{{prev.dateTime | showUntilMin}}</div>
+                                            </div><!-- chat-details -->
+                                        </td>
+                                    </tr>
+                                </table>
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->
 
@@ -109,22 +121,34 @@
                         <div class='chat-message chat-message-sender'  v-if="!customerMode && prev.sender == 1">
                             <img class='chat-image chat-image-default profile' :src='company.logoImg' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
-                                <div class='chat-message-content'>
-                                    <p v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p v-else-if="isImgFile(prev.filePath)">
-                                        <a :href="chatRoute + prev.filePath" target="_blank">
-                                            <img class="chatUploadImg" :src="chatRoute + prev.filePath">
-                                        </a>
-                                    </p>
-                                    <p v-else>
-                                        <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">{{prev.filePath}}</a>
-                                    </p>
-                                </div><!-- chat-message-content -->
-                                <div class='chat-details' v-if="checkSameTime(idx)">
-                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
-                                    <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
-                                </div><!-- chat-details -->
+                                <table>
+                                    <tr>
+                                        <td class="readAndDelTd">
+                                            <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
+                                            <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
+                                        </td>
+                                        <td>
+                                            <div class='chat-message-content'>
+                                                <p v-if="prev.word != ''">{{prev.word}}</p>
+                                                <p v-else-if="isImgFile(prev.filePath)">
+                                                    <a :href="chatRoute + prev.filePath" target="_blank">
+                                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                                    </a>
+                                                </p>
+                                                <p v-else>
+                                                    <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">{{prev.filePath}}</a>
+                                                </p>
+                                            </div><!-- chat-message-content -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class='chat-details' v-if="checkSameTime(idx)">
+                                                <div class='chat-message-localisation font-size-small  cust-time' style="text-align: right;">{{prev.dateTime | showUntilMin}}</div>
+                                            </div><!-- chat-details -->
+                                        </td>
+                                    </tr>
+                                </table>
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->
 

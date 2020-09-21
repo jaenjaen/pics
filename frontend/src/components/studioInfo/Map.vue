@@ -12,6 +12,7 @@
     <button id="roadView" @click="roadView()">로드뷰</button>
     </div>
 </template>
+
 <script>
 import VueDaumMap from "vue-daum-map";
 import axios from "axios"; //axios
@@ -81,8 +82,8 @@ export default {
     },
         
 }
-
 </script>
+
 <style scoped>
 #map{
     align-content: center;

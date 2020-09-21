@@ -305,9 +305,9 @@ export default {
             if (date != null) {
                 for (let i = 0; i < this.repeatedLength; i++) {
                     if (this.repeated[i].weekday == week[parseInt(date)]) {
-                        let openTime = parseInt(this.repeated[i].time.split('-')[0]);
-                        let closeTime = parseInt(this.repeated[i].time.split('-')[1]);
-                        let times = []
+                        var openTime = parseInt(this.repeated[i].time.split('-')[0]);
+                        var closeTime = parseInt(this.repeated[i].time.split('-')[1]);
+                        var times = []
                             // let t = 0;
                         for (let j = openTime; j < closeTime + 1; j++) {
                             // t = j + openTime

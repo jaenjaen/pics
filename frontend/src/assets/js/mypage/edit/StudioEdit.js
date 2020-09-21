@@ -1357,7 +1357,7 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/main/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1380,7 +1380,7 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1405,7 +1405,7 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1424,7 +1424,7 @@ export default {
 
         /* 스튜디오 업데이트 */
         editStudio() {
-            axios.put("http://127.0.0.1:7777/studio", this.studio)
+            axios.put("http://54.180.25.91:7777/studio", this.studio)
                 .then(
                     function(response) {
                         console.log("스튜디오 수정 성공");

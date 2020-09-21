@@ -1,0 +1,44 @@
+.bottom {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    text-align: center;
+    height: 53px;
+}
+
+.container_bottom {
+    width: 768px;
+    margin: 0 auto;
+    padding: 3px 25px !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 5px;
+}
+
+a {
+    font-size: 9.52px;
+    color: black;
+    text-decoration: none;
+}
+
+img {
+    width: 20px;
+    /* height: 30px; */
+}
+
+p {
+    height: 10px;
+    font-weight: 900;
+    font-size: 10px;
+    color: #448aff;
+}
+
+.item_bottom {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}

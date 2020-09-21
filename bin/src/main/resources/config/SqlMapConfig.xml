@@ -6,11 +6,11 @@
 	 <settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
-	
+
 	<typeAliases>
 		<package name="com.devils.pics.domain"/>
+		<package name="com.devils.pics.util"/>
 	</typeAliases>
-	
 	
 	<mappers>
 		<mapper resource="sql/customer-query.xml"/>
@@ -19,6 +19,9 @@
 		<mapper resource="sql/schedule-query.xml"/>
 		<mapper resource="sql/extra-query.xml"/>
 		<mapper resource="sql/company-query.xml"/>
+	 	<mapper resource="sql/studio-reserve-query.xml"/>
+	 	<mapper resource="sql/studio-query.xml"/>
+	 	<mapper resource="sql/chat-query.xml"/>
 	</mappers>
 </configuration>
 

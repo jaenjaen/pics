@@ -3,4 +3,31 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ScheduleMapper">
+	<!-- =================== 스튜디오 공간 등록 관련 쿼리 ======================= -->
+	<insert id="registerRepeatDate" parameterType="repeatDate">
+		INSERT INTO
+		repeat_date(weekday, time, stu_id)
+		VALUES(#{weekday}, #{time}, #{stuId});
+	</insert>
+	
+	<!--스케쥴 수정용 불러오기 쿼리 -->
+	<select id="getRepeatDateByStuId" parameterType="int" resultType="repeatDate">
+		SELECT repeat_id,weekday,time,stu_id
+		FROM repeat_date
+		WHERE stu_id = #{value};
+	</select>
+	
+	<!--  스케쥴 수정 쿼리 -->
+	<update id="updateRepeatDate" parameterType="repeatDate">
+		UPDATE repeat_date
+		SET weekday = #{weekday}, time=#{time}
+		WHERE stu_id = #{stuId}
+		and weekday = #{weekday}
+	</update>
+	
+	<!-- 스케쥴 삭제 쿼리 -->
+	<delete id="deleteRepeatDate" parameterType="int">
+		DLETE FROM repeat_date
+		WHERE repeat_id = #{value}
+	</delete>
 </mapper>

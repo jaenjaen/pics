@@ -41,15 +41,15 @@ export default {
             },
 
             /* 이미지 경로 */
-            mainRoute: 'http://localhost:7777/upload/main/',
-            cadRoute: 'http://localhost:7777/upload/cad/',
-            portRoute: 'http://localhost:7777/upload/port/',
+            mainRoute: 'http://54.180.25.91:7777/upload/main/',
+            cadRoute: 'http://54.180.25.91:7777/upload/cad/',
+            portRoute: 'http://54.180.25.91:7777/upload/port/',
 
             /* 디폴트 이미지 */
-            required: 'http://localhost:7777/upload/default/required.png',
-            main: 'http://localhost:7777/upload/default/main.png',
-            port: 'http://localhost:7777/upload/default/port.png',
-            cad: 'http://localhost:7777/upload/default/cad.png',
+            required: 'http://54.180.25.91:7777/upload/default/required.png',
+            main: 'http://54.180.25.91:7777/upload/default/main.png',
+            port: 'http://54.180.25.91:7777/upload/default/port.png',
+            cad: 'http://54.180.25.91:7777/upload/default/cad.png',
 
             /* 카테고리 */
             category: "",
@@ -116,22 +116,22 @@ export default {
             tag2: "",
             tag3: "",
 
-            mainArray: ['http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png'
+            mainArray: ['http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png'
             ],
             cadHolder: this.cad,
-            portArray: ['http://localhost:7777/upload/default/port.png',
-                'http://localhost:7777/upload/default/port.png',
-                'http://localhost:7777/upload/default/port.png',
-                'http://localhost:7777/upload/default/port.png'
+            portArray: ['http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png'
             ]
 
         };
@@ -161,7 +161,7 @@ export default {
             uploadImg[i].setAttribute('style', 'height:100%');
         }
         /*DB에서 기존 정보 불러오기*/
-        axios.get("http://localhost:7777/studio/edit/" + studioId)
+        axios.get("http://54.180.25.91:7777/studio/edit/" + studioId)
             .then(res => {
                 var data = res.data;
                 console.log(data);
@@ -1445,12 +1445,12 @@ export default {
         /*스튜디오 삭제 */
         deleteStudio() {
             console.log(studioId);
-            axios.get("http://localhost:7777/studio/reservation/will/" + studioId)
+            axios.get("http://54.180.25.91:7777/studio/reservation/will/" + studioId)
                 .then(res => {
                     if (res.data.length > 0)
                         alert("진행중인 예약을 모두 마쳐야 스튜디오를 삭제할 수 있습니다.");
                     else {
-                        axios.delete("http://localhost:7777/studio/delete/" + studioId)
+                        axios.delete("http://54.180.25.91:7777/studio/delete/" + studioId)
                             .then(res => {
                                 if (res.date < 1) alert("다시 시도하여 주십시오.");
                                 else {

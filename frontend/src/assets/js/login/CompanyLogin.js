@@ -1,5 +1,6 @@
 import LoginHeader from "@/components/LoginHeader.vue";
 import axios from "axios";
+import router from "../../../router";
 
 export default {
     name: "customerLogin",
@@ -24,7 +25,7 @@ export default {
                     this.rdata = res.data;
                     if (this.rdata != "") {
                         sessionStorage.setItem("company", JSON.stringify(this.rdata));
-                        location.href = "http://localhost:9999";
+                        router.push('/');
                     }
                 })
                 .catch(e => {

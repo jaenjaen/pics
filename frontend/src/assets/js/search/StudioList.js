@@ -1,7 +1,11 @@
 import axios from "axios";
 import Vue from "vue";
-import { BCollapse } from "bootstrap-vue";
-import { VBToggle } from "bootstrap-vue";
+import {
+    BCollapse
+} from "bootstrap-vue";
+import {
+    VBToggle
+} from "bootstrap-vue";
 import VModal from 'vue-js-modal'
 
 Vue.use(VModal);
@@ -77,7 +81,7 @@ export default {
             this.loading = true;
             this.isDone = true;
             axios
-                .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
+                .post("http://54.180.25.91:7777/studio/search/filter", this.filters)
                 .then(response => {
                     this.doSearch = true; //호출 시 동글뱅이 시작
                     setTimeout(() => {

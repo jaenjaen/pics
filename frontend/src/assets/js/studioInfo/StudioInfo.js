@@ -1,18 +1,23 @@
 import axios from "axios"; //axios
 import Vue from 'vue'
+
+/* css, 템플릿 라이브러리 */
 import carousel from "vue-owl-carousel"; //캐러셀
 import VModal from 'vue-js-modal'
 import VueMaterial from 'vue-material'
-import Reservation from "@/components/studioInfo/Reservation.vue"
-import TimeChart from "@/assets/js/studioInfo/TimeChart.js";
-import DayChart from "@/assets/js/studioInfo/DayChart.js";
-import Map from "@/components/studioInfo/Map.vue"
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
-import Chat from "@/components/chat/Chat.vue"; //문의
 import Clipboard from 'v-clipboard'
-import OtherStudio from "@/components/studioInfo/OtherStudio"
+
+/* 연결된 컴포넌트 */
+import Chat from "@/components/chat/Chat.vue"; //문의
+import Map from "@/components/studioInfo/Map.vue"
+import Reservation from "@/components/studioInfo/Reservation.vue"
+import TimeChart from "@/assets/js/studioInfo/TimeChart.js";
+import DayChart from "@/assets/js/studioInfo/DayChart.js";
+import OtherStudio from "@/components/studioInfo/OtherStudio.vue"
+import Review from "@/components/studioInfo/Review.vue"
 
 Vue.use(Clipboard)
 Vue.use(VueMaterial)
@@ -27,7 +32,8 @@ export default {
         DayChart,
         Map,
         Chat,
-        OtherStudio
+        OtherStudio,
+        Review
     },
     event: 'studios',
     data: function() {
@@ -81,12 +87,6 @@ export default {
             datacollection: null,
             options: null,
 
-            // 리뷰 페이징 변수
-            reviews: [{}], // 전체 리뷰 데이터
-            uncoveredReview: {}, // 화면에 노출되는 리뷰 데이터
-            allReviewLength: 0, // 전체 리뷰 데이터 수
-            cntReviews: 3, // 화면에 노출할 리뷰 데이터 수 (초기 세팅 = 3)
-            dataFull: false, // 전체 데이터보다 많은 데이터 호출 여부
         };
     },
     async mounted() { //async mount로 비동기 처리
@@ -105,7 +105,6 @@ export default {
                 } else {
                     this.mainImgList.push(this.studios[0].mainImg)
                 }
-
                 // 포폴 이미지 자르기 
                 if (this.studios[0].portImg.match(",")) {
                     let portImgSplit = (this.studios[0].portImg).split(',');
@@ -137,22 +136,7 @@ export default {
                 this.errored = true;
             })
             .finally(() => (this.loading = false));
-        await axios
-            .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
-            .then(response => {
-                this.reviews = response.data;
-                let temp = []
-                for (var i = 0; i < this.cntReviews; i++) {
-                    temp.push(this.reviews[i]);
-                }
-                this.uncoveredReview = temp
-                this.allReviewLength = (this.reviews).length
-            })
-            .catch(error => {
-                console.log(error);
-                this.errored = true;
-            })
-            .finally(() => (this.loading = false));
+
         if (this.customer != undefined) {
             axios
                 .get("http://127.0.0.1:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
@@ -181,14 +165,6 @@ export default {
         sizePoint(value) {
             return value.toFixed(2);
         },
-        emailHide(value) { //이메일 아이디 가리기
-            var id = value.split("@");
-            if (id.length < 5) {
-                return id + "****님"
-            } else {
-                return id.slice(0, 4) + "****님"
-            }
-        },
     },
     computed: {
         getUrl: function() {
@@ -204,6 +180,7 @@ export default {
                 alert("로그인한 회원만 이용 가능합니다.");
                 location.href = "/customerLogin"
             } else {
+                this.$refs.chat.setChatSubscribe('on'); //채팅 구독 여부 on
                 this.$refs.chat.setChat(this.stuId, this.customer.custId);
                 let chatModal = document.getElementById('chatModal');
                 chatModal.setAttribute('style', 'display:block;');
@@ -211,6 +188,7 @@ export default {
             }
         },
         hideChatModal: function() {
+            this.$refs.chat.setChatSubscribe('off'); //채팅 구독 여부 off
             document.getElementById('chatModal').setAttribute('style', 'display:none;');
         },
         /* 스크롤을 최하단으로 옮김 */
@@ -263,28 +241,7 @@ export default {
             this.$modal.hide("copy-link-success");
             this.$modal.hide("copy-link-error");
         },
-        appendReviews() {
-            // 전체 리뷰 개수보다 노출되는 리뷰 개수가 작은 경우
-            if (this.cntReviews < this.allReviewLength) {
-                this.cntReviews += 3; // 노출 리뷰 개수 3개 증가
-                let temp = []
-                for (var i = 0; i < this.cntReviews; i++) {
-                    temp.push(this.reviews[i]); // 전체 리뷰에서 노출 리뷰 개수만큼 데이터 추출하여 temp에 저장
-                }
-                this.uncoveredReview = temp; // 전체 리뷰 개수와 노출되는 리뷰 개수가 같으면
-                // review 객체에 data 배열 업데이트
-            } else {
-                this.dataFull = true; // dataFull 객체를 true 상태로 변경
-                alert('마지막 리뷰입니다.'); // 모든 데이터 출력 알림
-            }
-        },
-        // 지도 관련 메서드
-        roadView() {
-            window.open("https://map.kakao.com/link/roadview/37.5571792,126.919226"); //+ this.center.lat + this.center.lng;
-        },
-        onLoad(map) {
-            this.map = map
-        },
+
         // 링크 공유 관련 메서드
         clipboardSuccessHandler() {
             this.$modal.show("copy-link-success");

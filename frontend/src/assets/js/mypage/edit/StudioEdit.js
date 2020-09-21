@@ -5,7 +5,7 @@ import { VueDaumPostcode } from "vue-daum-postcode";
 import 'vue-material/dist/vue-material.min.css';
 
 var session = JSON.parse(sessionStorage.getItem("company"));
-var link = (window.location.href).split("/")[4];
+var studioId = (window.location.href).split("/")[4];
 export default {
     components: { vueMultiSelect, VueDaumPostcode },
     data() {
@@ -13,7 +13,7 @@ export default {
             /* Back으로 보낼 studio 데이터 */
             studio: {
                 comId: session.comId,
-                stuId: link[4],
+                stuId: 0,
                 categoryId: "",
                 name: "",
                 description: "",
@@ -136,7 +136,7 @@ export default {
             uploadImg[i].setAttribute('style', 'height:100%');
         }
         /*DB에서 기존 정보 불러오기*/
-        axios.get("http://localhost:7777/studio/edit/" + link)
+        axios.get("http://localhost:7777/studio/edit/" + studioId)
             .then(res => {
                 var data = res.data;
                 console.log(data);
@@ -987,7 +987,7 @@ export default {
         checkLogin() {
             if (this.studio.company == '') {
                 alert("기업고객으로 로그인하세요.");
-                //location.href = "/companyLogin";
+                location.href = "/companyLogin";
             }
             this.checkStudio();
         },
@@ -1217,22 +1217,22 @@ export default {
                     console.log('포트폴리오 파일 업로드 응답 실패');
                 })
                 .finally(() => {
-                    this.addStudio();
+                    this.editStudio();
                 });
         },
 
         /* 스튜디오 업데이트 */
-        addStudio() {
-            axios.post("http://127.0.0.1:7777/studio", this.studio)
+        editStudio() {
+            axios.put("http://127.0.0.1:7777/studio", this.studio)
                 .then(
                     function(response) {
-                        console.log("스튜디오 등록 응답 성공");
+                        console.log("스튜디오 수정 성공");
                         console.log(response.data);
                         if (response.data == '1') {
-                            alert(`스튜디오가 성공적으로 등록되었습니다.`);
+                            alert(`스튜디오가 성공적으로 수정되었습니다.`);
                             //location.href = "/mypage";
                         } else if (response.data == '-1') {
-                            alert("이미 등록된 스튜디오입니다.");
+                            alert("수정에 실패하였습니다.");
                             return false;
                         }
                     },
@@ -1240,6 +1240,27 @@ export default {
                         console.log("스튜디오 등록 응답 실패");
                     }
                 );
+        },
+        /*스튜디오 삭제 */
+        deleteStudio() {
+            console.log(studioId);
+            axios.get("http://localhost:7777/studio/reservation/will/" + studioId)
+                .then(res => {
+                    if (res.data.length > 0)
+                        alert("진행중인 예약을 모두 마쳐야 스튜디오를 삭제할 수 있습니다.");
+                    else {
+                        axios.delete("http://localhost:7777/studio/delete/" + studioId)
+                            .then(res => {
+                                if (res.date < 1) alert("다시 시도하여 주십시오.");
+                                else {
+                                    alert("스튜디오가 삭제되었습니다.");
+                                    location.href = "/mypage";
+                                }
+                            })
+                            .catch(() => {})
+                    }
+                })
+                .catch(() => {})
         }
     }
 }

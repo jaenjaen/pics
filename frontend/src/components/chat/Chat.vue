@@ -9,10 +9,10 @@
                     <a href="javascript:;" @click="controlModal('show', 'chatListModal')">
                         <img id="list" :src='defaultImg.list' @mouseover="controlListImg('mouseover', 'list')" @mouseout="controlListImg('mouseout', 'list')">
                     </a>
-                    <span v-if="customerMode" id="otherNickname">{{presentStu.stuName | showLimitedContent}}</span>
-                    <span v-else id="otherNickname">{{presentCust.custName | showLimitedContent}}</span>
-                    <img v-if="customerMode" id="otherProfile" class="profile" :src="presentStu.comLogo" @click="showBiggerImg($event)">
-                    <img v-else id="otherProfile" class="profile" :src="presentCust.custLogo" @click="showBiggerImg($event)">
+                    <span v-if="customerMode && selectChat" id="otherNickname">{{presentStu.stuName | showLimitedContent}}</span>
+                    <span v-else-if="selectChat" id="otherNickname">{{presentCust.custName | showLimitedContent}}</span>
+                    <img v-if="customerMode && selectChat" id="otherProfile" class="profile" :src="presentStu.comLogo" @click="showBiggerImg($event)">
+                    <img v-else-if="selectChat" id="otherProfile" class="profile" :src="presentCust.custLogo" @click="showBiggerImg($event)">
                 </div>
                 <div id="chatListHeader">
                     <a href="javascript:;" @click="controlModal('hide', 'chatListModal')">
@@ -27,7 +27,10 @@
 
             <!-- 채팅 본문 : 대화 내용 -->
             <div id="chat-wrapper" class='chat-wrapper'>
-                <div class='chat-message padding'>
+                <div class='chat-message padding' v-if="!selectChat">
+                    선택한 대화가 없습니다.
+                </div>
+                <div class='chat-message padding' v-else>
 
                     <!-- 이전 채팅 불러오기 -->
                     <div id="prevChatList" v-for="(prev, idx) in prevAllChat" :key="idx">
@@ -40,10 +43,12 @@
                                 <div class='chat-message-content'>
                                     <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
                                     <p v-else-if="isImgFile(prev.filePath)">
-                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                        <a :href="chatRoute + prev.filePath" target="_blank">
+                                            <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                        </a>
                                     </p>
                                     <p v-else>
-                                        <a :href="chatRoute + prev.filePath" download="downloadFile">
+                                        <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">
                                             {{prev.filePath}}
                                         </a>
                                     </p>
@@ -57,20 +62,34 @@
                         <div class='chat-message chat-message-sender' v-if="customerMode && prev.sender == 0">
                             <img class='chat-image chat-image-default profile' :src='customer.imgSrc' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
-                                <div class='chat-message-content'>
-                                    <p v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p v-else-if="isImgFile(prev.filePath)">
-                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
-                                    </p>
-                                    <p v-else>
-                                        <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
-                                    </p>
-                                </div><!-- chat-message-content -->
-                                <div class='chat-details' v-if="checkSameTime(idx)">
-                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
-                                    <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
-                                </div><!-- chat-details -->
+                                <table>
+                                    <tr>
+                                        <td class="readAndDelTd">
+                                            <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
+                                            <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
+                                        </td>
+                                        <td>
+                                            <div class='chat-message-content'>
+                                                <p v-if="prev.word != ''">{{prev.word}}</p>
+                                                <p v-else-if="isImgFile(prev.filePath)">
+                                                    <a :href="chatRoute + prev.filePath" target="_blank">
+                                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                                    </a>
+                                                </p>
+                                                <p v-else>
+                                                    <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">{{prev.filePath}}</a>
+                                                </p>
+                                            </div><!-- chat-message-content -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class='chat-details' v-if="checkSameTime(idx)">
+                                                <div class='chat-message-localisation font-size-small  cust-time' style="text-align: right;">{{prev.dateTime | showUntilMin}}</div>
+                                            </div><!-- chat-details -->
+                                        </td>
+                                    </tr>
+                                </table>
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->
 
@@ -83,10 +102,12 @@
                                 <div class='chat-message-content'>
                                     <p class="other" v-if="prev.word != ''">{{prev.word}}</p>
                                     <p v-else-if="isImgFile(prev.filePath)">
-                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                        <a :href="chatRoute + prev.filePath" target="_blank">
+                                            <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                        </a>
                                     </p>
                                     <p v-else>
-                                        <a :href="chatRoute + prev.filePath" download="downloadFile">
+                                        <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">
                                             {{prev.filePath}}
                                         </a>
                                     </p>
@@ -100,20 +121,34 @@
                         <div class='chat-message chat-message-sender'  v-if="!customerMode && prev.sender == 1">
                             <img class='chat-image chat-image-default profile' :src='company.logoImg' @click="showBiggerImg($event)" />
                             <div class='chat-message-wrapper'>
-                                <div class='chat-message-content'>
-                                    <p v-if="prev.word != ''">{{prev.word}}</p>
-                                    <p v-else-if="isImgFile(prev.filePath)">
-                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
-                                    </p>
-                                    <p v-else>
-                                        <a :href="chatRoute + prev.filePath" download="downloadFile">{{prev.filePath}}</a>
-                                    </p>
-                                </div><!-- chat-message-content -->
-                                <div class='chat-details' v-if="checkSameTime(idx)">
-                                    <span class='chat-message-localisation font-size-small  cust-time'>{{prev.dateTime | showUntilMin}}</span>
-                                    <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">- 읽음</span>
-                                    <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
-                                </div><!-- chat-details -->
+                                <table>
+                                    <tr>
+                                        <td class="readAndDelTd">
+                                            <span class='chat-message-read-status font-size-small' v-if="prev.readCheck == 1">읽음</span>
+                                            <span class="delChatBtn" @click="deleteChat(prev.filePath, prev.chatId)">삭제</span>
+                                        </td>
+                                        <td>
+                                            <div class='chat-message-content'>
+                                                <p v-if="prev.word != ''">{{prev.word}}</p>
+                                                <p v-else-if="isImgFile(prev.filePath)">
+                                                    <a :href="chatRoute + prev.filePath" target="_blank">
+                                                        <img class="chatUploadImg" :src="chatRoute + prev.filePath">
+                                                    </a>
+                                                </p>
+                                                <p v-else>
+                                                    <a :href="chatRoute + prev.filePath" target="_blank" download="downloadFile">{{prev.filePath}}</a>
+                                                </p>
+                                            </div><!-- chat-message-content -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div class='chat-details' v-if="checkSameTime(idx)">
+                                                <div class='chat-message-localisation font-size-small  cust-time' style="text-align: right;">{{prev.dateTime | showUntilMin}}</div>
+                                            </div><!-- chat-details -->
+                                        </td>
+                                    </tr>
+                                </table>
                             </div><!-- chat-message-wrapper -->
                         </div><!-- chat-message-sender -->
 
@@ -134,14 +169,36 @@
                     </div>
                 </div>
                 <div id="chatListContent" style="padding-top:55px;">
-                    <p v-for="(recent, index) in recentChat" :key="index">
-                        <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
-                        <span id="userName" @click="getChatByUser($event)">
-                            {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
-                            <span style="display:none;">{{recent.stuId}}</span>
-                            <span style="display:none;">{{recent.custId}}</span>
-                        </span>
-                    </p>
+                    <!-- 최근순으로 고객의 스튜디오별 대화 내역들을 불러옴 -->
+                    <table>
+                        <!-- 안 읽은 대화부터 최근순으로 부름 -->
+                        <tr v-for="(recent, index) in recentChat" :key="'recentCustFirstChat'+index">
+                            <td v-if="recent.sender==1 && recent.readCheck==0">
+                                <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                                <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'custUnreadCount'+index">
+                                    <span v-if="unreadChat.stuId == recent.stuId && unreadChat.custId == recent.custId" class="unreadList">
+                                        +{{unreadChat.count}}
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <!-- 읽은 대화를 최근순으로 부름 -->
+                        <tr v-for="(recent, index) in recentChat" :key="'recentCustSecondChat'+index">
+                            <td v-if="recent.sender!=1 || recent.readCheck!=0">
+                                <img class="profile" :src="recent.comLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.stuName | showLimitedContent}} | {{recent.comName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </section>
 
@@ -165,14 +222,36 @@
                     </div>
                 </div>
                 <div id="chatListContent">
-                    <p v-for="(recent, index) in recentChat" :key="index">
-                        <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
-                        <span id="userName" @click="getChatByUser($event)">
-                            {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
-                            <span style="display:none;">{{recent.stuId}}</span>
-                            <span style="display:none;">{{recent.custId}}</span>
-                        </span>
-                    </p>
+                    <!-- 읽은 대화를 최근순으로 부름 -->
+                    <table>
+                        <!-- 안 읽은 대화부터 최근순으로 부름 -->
+                        <tr v-for="(recent, index) in recentChat" :key="'recentComFirstChat'+index">
+                            <td v-if="recent.sender==0 && recent.readCheck==0">
+                                <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                                <span v-for="(unreadChat, index) in CountOfUnreadChat" :key="'comUnreadCount'+index">
+                                    <span v-if="unreadChat.stuId == recent.stuId && unreadChat.custId == recent.custId" class="unreadList">
+                                        +{{unreadChat.count}}
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        <!-- 읽은 대화를 최근순으로 부름 -->
+                        <tr v-for="(recent, index) in recentChat" :key="'recentComSecondChat'+index">
+                            <td v-if="recent.sender!=0 || recent.readCheck!=0">
+                                <img class="profile" :src="recent.custLogo" @click="showBiggerImg($event)">
+                                <span id="userName" @click="getChatByUser($event)">
+                                    {{recent.custName | showLimitedContent}} | {{recent.stuName | showLimitedContent}}
+                                    <span style="display:none;">{{recent.stuId}}</span>
+                                    <span style="display:none;">{{recent.custId}}</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </section>
         </div>

@@ -19,10 +19,14 @@ export default {
 
             /* 최근 대화 */
             recentChat: [],
+
+            /* 읽지 않은 대화 개수 */
+            CountOfUnreadChat: []
         }
     },
     mounted() {
         this.getRecentChat(); //최신 대화를 불러옴
+        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 불러옴
 
     },
     filters: {
@@ -44,6 +48,7 @@ export default {
             }
         },
 
+        //파일을 첨부했을 경우 (첨부파일) 출력, 내용이 15글자 넘어갈 경우 자르기
         handleWord(value) {
             if (value === '') {
                 return '(첨부파일)';
@@ -83,9 +88,9 @@ export default {
                 axios.get('http://127.0.0.1:7777/chat/recent/cust/' + customer.custId)
                     .then((response) => {
                         if (response.data != -1) {
-                            //console.log('customer 최근 대화 가져오기 성공');
+                            console.log('customer 최근 대화 가져오기 성공');
                             this.recentChat = response.data;
-                            //console.log(this.recentChat);
+                            console.log(this.recentChat);
                             this.inquiryFlag = false;
                         }
                     })
@@ -104,6 +109,39 @@ export default {
                     })
                     .catch(() => {
                         //console.log('company 최근 대화 가져오기 실패');
+                    })
+            }
+        },
+
+        /* 읽지 않은 대화 개수 가져오기 */
+        getCountOfUnreadChat() {
+            if (company != null) { //업체 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/com/' + company.comId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('업체의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('업체의 읽지 않은 대화 개수 가져오기 실패');
+                    })
+            } else if (customer != null) { //고객 로그인
+                axios.get('http://127.0.0.1:7777/chat/unread/cust/' + customer.custId)
+                    .then((response) => {
+                        if (response.data != -1) {
+                            console.log('고객의 읽지 않은 대화 개수 가져오기 성공');
+                            this.CountOfUnreadChat = response.data;
+                            console.log(this.CountOfUnreadChat);
+                        } else if (response.data == -1) {
+                            this.CountOfUnreadChat = [];
+                        }
+                    })
+                    .catch(() => {
+                        console.log('고객의 읽지 않은 대화 개수 가져오기 실패');
                     })
             }
         },

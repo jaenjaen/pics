@@ -74,8 +74,8 @@ def getTagData() :
 
 
 
-# 메인 추천 업체 가져오기
-def getTop10(topSim) :
+# 상위 8개 업체 가져오기
+def getTop8(topSim) :
     result_list = []
     db= pymysql.connect(host='pics.crvbvpzlygpt.ap-northeast-2.rds.amazonaws.com',
                                  port=3306,
@@ -85,7 +85,7 @@ def getTop10(topSim) :
                                  charset='utf8',
                                cursorclass=pymysql.cursors.DictCursor)
     try :
-        for stu_id in topSim :
+        for stu_id in topSim:
             
             cursor= db.cursor()
             sql ="SELECT "

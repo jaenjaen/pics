@@ -40,7 +40,7 @@ export default {
                     .then(response => {
                         this.condata = response.data;
                         alert(this.name + "의 가입을 환영합니다.");
-                        location.href = "http://localhost:9999";
+                        location.href = "/";
                     })
                     .catch(e => {
                         console.log(e);

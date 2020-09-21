@@ -1,13 +1,20 @@
 import axios from "axios";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
-import { VueDaumPostcode } from "vue-daum-postcode";
+import {
+    VueDaumPostcode
+} from "vue-daum-postcode";
 import 'vue-material/dist/vue-material.min.css';
 
 var session = JSON.parse(sessionStorage.getItem("company"));
 var studioId = (window.location.href).split("/")[4];
+
+
 export default {
-    components: { vueMultiSelect, VueDaumPostcode },
+    components: {
+        vueMultiSelect,
+        VueDaumPostcode
+    },
     data() {
         return {
             /* Back으로 보낼 studio 데이터 */
@@ -39,15 +46,15 @@ export default {
             },
 
             /* 이미지 경로 */
-            mainRoute: 'http://localhost:7777/upload/main/',
-            cadRoute: 'http://localhost:7777/upload/cad/',
-            portRoute: 'http://localhost:7777/upload/port/',
+            mainRoute: 'http://54.180.25.91:7777/upload/main/',
+            cadRoute: 'http://54.180.25.91:7777/upload/cad/',
+            portRoute: 'http://54.180.25.91:7777/upload/port/',
 
             /* 디폴트 이미지 */
-            required: 'http://localhost:7777/upload/default/required.png',
-            main: 'http://localhost:7777/upload/default/main.png',
-            cad: 'http://localhost:7777/upload/default/cad.png',
-            port: 'http://localhost:7777/upload/default/port.png',
+            required: 'http://54.180.25.91:7777/upload/default/required.png',
+            main: 'http://54.180.25.91:7777/upload/default/main.png',
+            port: 'http://54.180.25.91:7777/upload/default/port.png',
+            cad: 'http://54.180.25.91:7777/upload/default/cad.png',
 
             /* 카테고리 */
             category: "",
@@ -81,14 +88,27 @@ export default {
             option_save: [],
             option_list: [{
                 name: "선택",
-                list: [
-                    { name: "카메라" },
-                    { name: "조명" },
-                    { name: "반사판" },
-                    { name: "삼각대" },
-                    { name: "철제박스" },
-                    { name: "스피커" },
-                    { name: "포토그래퍼" }
+                list: [{
+                        name: "카메라"
+                    },
+                    {
+                        name: "조명"
+                    },
+                    {
+                        name: "반사판"
+                    },
+                    {
+                        name: "삼각대"
+                    },
+                    {
+                        name: "철제박스"
+                    },
+                    {
+                        name: "스피커"
+                    },
+                    {
+                        name: "포토그래퍼"
+                    }
                 ]
             }],
             option_filters: [{
@@ -113,6 +133,25 @@ export default {
             tag1: "",
             tag2: "",
             tag3: "",
+
+            mainArray: ['http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png'
+            ],
+            cadHolder: this.cad,
+            portArray: ['http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png'
+            ]
+
         };
     },
     created() {
@@ -128,6 +167,10 @@ export default {
         }
     },
     mounted() {
+        var mainTmp = [];
+        var cadTmp = "";
+        var portTmp = [];
+        var floorTmp = 0;
         /* 라이브러리 충돌로 인해 적용되지 않는 CSS 해결 */
         document.getElementById('multi').childNodes[0].setAttribute('style', 'width:100%; height:45px');
         document.getElementById('multi').childNodes[1].setAttribute('style', 'width:100%;');
@@ -136,7 +179,7 @@ export default {
             uploadImg[i].setAttribute('style', 'height:100%');
         }
         /*DB에서 기존 정보 불러오기*/
-        axios.get("http://localhost:7777/studio/edit/" + studioId)
+        axios.get("http://54.180.25.91:7777/studio/edit/" + studioId)
             .then(res => {
                 var data = res.data;
                 console.log(data);
@@ -144,9 +187,10 @@ export default {
                 this.studio.name = data.name;
                 this.studio.description = data.description;
                 this.studio.rule = data.rule;
-                this.studio.mainImg = data.mainImg;
-                this.studio.cadImg = data.cadImg;
-                this.studio.floor = data.floor;
+                mainTmp = data.mainImg.split(",");
+                cadTmp = data.cadImg;
+                portTmp = data.portImg.split(",");
+                floorTmp = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;
                 this.studio.studioFilter.options = data.studioFilter.options;
                 this.studio.studioFilter.parking = data.studioFilter.parking;
@@ -156,18 +200,50 @@ export default {
                 this.studio.studioFilter.address = data.studioFilter.address;
                 this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
-                console.log(this.studio.schedule.repeatDate);
-                this.tag = data.tag
+                this.tag = data.tag;
 
                 /* placeholder용 */
-                this.floorNum = data.floor;
                 this.sizeValue = data.studioFilter.size;
                 this.address1 = data.studioFilter.address;
 
                 this.tag1 = data.tag[0].tagName;
                 this.tag2 = data.tag[1].tagName;
                 this.tag3 = data.tag[2].tagName;
-                console.log(this.studio);
+
+                /*mainImg placeholder */
+                if (mainTmp.length > 0 && mainTmp[0] != "") {
+                    for (var i = 0; i < mainTmp.length; i++) {
+                        this.mainArray[i] = this.mainRoute + mainTmp[i];
+                    }
+                }
+                if (cadTmp != "") this.cadHolder = this.cadRoute + cadTmp;
+
+                /*portImg placeholder */
+                if (portTmp.length > 0 && portTmp[0] != "") {
+                    for (var j = 0; j < portTmp.length; j++) {
+                        this.portArray[j] = this.portRoute + portTmp[j];
+                    }
+                }
+
+                /* set ground */
+                let underground = document.getElementById('underground');
+
+                if (floorTmp < 0) {
+                    underground.checked = true;
+                    this.floorNum = Number((floorTmp).toString().substr(1));
+                    console.log(this.floor);
+                }
+
+                /*set parking */
+
+                if (this.studio.studioFilter.parking > 0) {
+                    document.getElementsByName("parkFlag")[1].checked = true;
+                    document
+                        .getElementById("parkAmount")
+                        .setAttribute("style", "display: block;");
+
+                }
+
             })
             .catch(err => {
                 console.log(err);
@@ -370,9 +446,11 @@ export default {
                 let whatDay = document.getElementById(day);
                 let dayName = day.substring(0, 3);
                 thisCheck = document.getElementById(dayName);
-                if (thisCheck.checked) { /* 요일 선택시 */
+                if (thisCheck.checked) {
+                    /* 요일 선택시 */
                     whatDay.style.display = "inline-block"; //해당 요일 시간표 보임
-                } else { /* 요일 선택해제시 */
+                } else {
+                    /* 요일 선택해제시 */
                     //해당 요일 시간표 전체 체크 해제 및 숨김
                     let dayTime = document.getElementById(dayName + 'Time');
                     for (let i = 0; i < dayTime.length; i++) {
@@ -999,7 +1077,9 @@ export default {
             let tags = document.getElementsByName("tag");
             for (let i = 0; i < tags.length; i++) {
                 if (tags[i].value == "") continue;
-                this.studio.tag.push({ tagName: tags[i].value });
+                this.studio.tag.push({
+                    tagName: tags[i].value
+                });
                 this.tagCount++;
             }
 
@@ -1156,7 +1236,7 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/main/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1179,7 +1259,7 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1204,7 +1284,7 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1223,7 +1303,7 @@ export default {
 
         /* 스튜디오 업데이트 */
         editStudio() {
-            axios.put("http://127.0.0.1:7777/studio", this.studio)
+            axios.put("http://54.180.25.91:7777/studio", this.studio)
                 .then(
                     function(response) {
                         console.log("스튜디오 수정 성공");
@@ -1244,12 +1324,12 @@ export default {
         /*스튜디오 삭제 */
         deleteStudio() {
             console.log(studioId);
-            axios.get("http://localhost:7777/studio/reservation/will/" + studioId)
+            axios.get("http://54.180.25.91:7777/studio/reservation/will/" + studioId)
                 .then(res => {
                     if (res.data.length > 0)
                         alert("진행중인 예약을 모두 마쳐야 스튜디오를 삭제할 수 있습니다.");
                     else {
-                        axios.delete("http://localhost:7777/studio/delete/" + studioId)
+                        axios.delete("http://54.180.25.91:7777/studio/delete/" + studioId)
                             .then(res => {
                                 if (res.date < 1) alert("다시 시도하여 주십시오.");
                                 else {

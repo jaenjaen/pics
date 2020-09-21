@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@media screen and (max-width: 768px) {
+    #app {
+        width: 100%;
+        background-color: #fff;
+    }
+}
+
+.container {
+    width: 95%;
+}
+
+aside {
+    align-content: center;
+}
+
+#reservation-floating-banner {
+    background-color: #ffff;
+    /* box-shadow: 5px 9px rgb(196, 194, 194); */
+    /* position: absolute; */
+    width: 100%;
+    padding: 3px 10px;
+}
+
+.reservation-Information-area {
+    border-right: 1px solid black;
+    padding-right: 10px;
+}
+
+#Studio-Filter-Table {
+    font-size: 20px;
+    height: 250px;
+}
+
+#Studio-Filter-Table>thead>th {
+    padding-bottom: 15px;
+}
+
+#Studio-Filter-Table>tbody>tr>td {
+    height: 40px;
+    padding: 0 !important;
+}
+
+#Studio-Filter-Table tr {
+    border-bottom: 1.5px solid #bbb5b5;
+}
+
+#Studio-Filter-Table tr td {
+    text-align: center;
+}
+
+.input-reserve-info-field {
+    width: 60%;
+    float: right;
+    margin: 5% 0% 5% 0%;
+    border-right: 1px solid gray;
+    /* padding-right: 5px; */
+}
+
+.start-date,
+.end-date {
+    margin-left: 5%;
+    width: 35%;
+    float: left;
+    align-content: center;
+}
+
+.start-time {
+    /* margin-left: 4%; */
+    width: 35%;
+    float: left;
+    align-content: center;
+}
+
+.end-time {
+    margin-left: 5%;
+    width: 35%;
+    float: left;
+    align-content: center;
+}
+
+.time-input-field {
+    clear: both;
+    margin-left: 5%;
+    align-content: center;
+    width: 100%;
+}
+
+.time-picker {
+    display: block;
+    width: 80%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1.5px solid lightgray;
+    /* margin-left: 5%; */
+    float: right;
+}
+
+.people-cnt {
+    clear: both;
+    margin: 5%;
+}
+
+.people-cnt table {
+    float: left;
+    margin: 5%;
+    text-align: center;
+}
+
+#totalPeople {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1.5px solid lightgray;
+    align-items: center;
+    text-align: center;
+}
+
+#deletePeopleBtn {
+    display: block;
+    width: 40px;
+    height: 30px;
+}
+
+#addPeopleBtn {
+    display: block;
+    width: 40px;
+    height: 30px;
+}
+
+#reservation-btn {
+    background-color: white;
+    color: #029be0;
+    border: 1.5px solid lightgray;
+    border-radius: 5px;
+    margin: 5% auto;
+    font-weight: 700;
+    font-size: 1em;
+    padding: 6px 10px 6px 10px;
+}
+
+.calender_container {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+hr {
+    width: 730px;
+}
+
+.pricing-field {
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.pricing-field>table {
+    height: 180px;
+}
+
+.pricing-field>table>tr>td:nth-child(2) {
+    font-size: 20px;
+}
+
+.pricing-field>table>tr {
+    padding: 20px 0;
+}

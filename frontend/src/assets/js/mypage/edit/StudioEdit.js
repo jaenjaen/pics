@@ -6,6 +6,8 @@ import 'vue-material/dist/vue-material.min.css';
 
 var session = JSON.parse(sessionStorage.getItem("company"));
 var studioId = (window.location.href).split("/")[4];
+
+
 export default {
     components: { vueMultiSelect, VueDaumPostcode },
     data() {
@@ -150,6 +152,7 @@ export default {
         var mainTmp = [];
         var cadTmp = "";
         var portTmp = [];
+        var floorTmp = 0;
         /* 라이브러리 충돌로 인해 적용되지 않는 CSS 해결 */
         document.getElementById('multi').childNodes[0].setAttribute('style', 'width:100%; height:45px');
         document.getElementById('multi').childNodes[1].setAttribute('style', 'width:100%;');
@@ -169,7 +172,7 @@ export default {
                 mainTmp = data.mainImg.split(",");
                 cadTmp = data.cadImg;
                 portTmp = data.portImg.split(",");
-                this.studio.floor = data.floor;
+                floorTmp = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;
 
                 this.studio.studioFilter.options = data.studioFilter.options;
@@ -324,7 +327,6 @@ export default {
                 this.tag = data.tag;
 
                 /* placeholder용 */
-                this.floorNum = data.floor;
                 this.sizeValue = data.studioFilter.size;
                 this.address1 = data.studioFilter.address;
 
@@ -345,6 +347,25 @@ export default {
                     for (var j = 0; j < portTmp.length; j++) {
                         this.portArray[j] = this.portRoute + portTmp[j];
                     }
+                }
+
+                /* set ground */
+                let underground = document.getElementById('underground');
+
+                if (floorTmp < 0) {
+                    underground.checked = true;
+                    this.floorNum = Number((floorTmp).toString().substr(1));
+                    console.log(this.floor);
+                }
+
+                /*set parking */
+
+                if (this.studio.studioFilter.parking > 0) {
+                    document.getElementsByName("parkFlag")[1].checked = true;
+                    document
+                        .getElementById("parkAmount")
+                        .setAttribute("style", "display: block;");
+
                 }
 
             })

@@ -47,7 +47,8 @@ public class StudioFilterController {
 	@PostMapping("/studio/search/filter")
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
-			//System.out.println("/studio/search/"+filters+"들어옴 ");
+			System.out.println("/studio/search/"+filters+"들어옴 ");
+			System.out.println("--------------------------------------");
 
 			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
 			
@@ -64,6 +65,8 @@ public class StudioFilterController {
 					std.setMainImg(word2);
 				}
 			}
+			
+			System.out.println(list);
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

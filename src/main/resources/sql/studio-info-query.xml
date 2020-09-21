@@ -175,6 +175,12 @@
 		WHERE s.stu_id =
 		f.stu_id;
 	</select>
+	
+	<update id="updateTag" parameterType="tag">
+		UPDATE tag
+		SET tag_name = #{tagName}
+		WHERE tag_id=#{tagId};
+	</update>
 	<!-- 카테고리 목록을 가져옴 -->
 	<select id="getCategory" resultType="category">
 		SELECT category_id,

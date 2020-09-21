@@ -172,7 +172,6 @@
         <option value="4">평점순</option>
       </select>
     </div>
-    <StudioList :filters="filters" ref="studioList" />
     <div id='imageSearchLoading' v-if="isImage">
         <p>올려주신 이미지와 유사한 상위 5개 공간을 찾고 있습니다.</p>
         <p>실수로 취소를 누르셨다면, 카메라 아이콘을 눌러 다시 검색해주세요.</p>
@@ -193,6 +192,8 @@
           </div>
         </div>
     </div>
+    <StudioList :filters="filters" ref="studioList" />
+    
   </div>
 </template>
 

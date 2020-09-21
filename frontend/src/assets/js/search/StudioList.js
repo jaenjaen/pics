@@ -16,7 +16,7 @@ Vue.component("b-collapse", BCollapse);
 // Vue 시작
 export default {
     name: "studio-list",
-    props: ["filters", "loading"],
+    props: ["filters"],
     data() {
         return {
             // Axios 전체 리스트 변수
@@ -80,8 +80,9 @@ export default {
         infiniteHandler() {
             this.loading = true;
             this.isDone = true;
+            alert(this.filters.stuId)
             axios
-                .post("http://54.180.25.91:7777/studio/search/filter", this.filters)
+                .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
                 .then(response => {
                     this.doSearch = true; //호출 시 동글뱅이 시작
                     setTimeout(() => {

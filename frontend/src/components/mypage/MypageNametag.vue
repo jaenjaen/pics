@@ -5,7 +5,7 @@
         <td rowspan="2" class="userImg">
           <img :src="userImg" alt="userImg" width="70px" height="70px">
         </td>
-        <td class="userName">{{username}}</td>
+        <td class="userName">{{username}} <span class="logout" @click="logout()">로그아웃</span></td>
         <td rowspan="2" id="userHeart">
           <router-link :to="{name:'wishList', params: {custId:userId}}" v-if="customerMode"><img src="@/assets/img/util/fullheart.svg" width="20px" height="20px" v-if="customerMode"></router-link>
         </td>
@@ -51,6 +51,20 @@ export default {
       this.userId = company.comId;
       this.link = "/companyedit";
       if (company.logoImg != null) this.userImg = company.logoImg;
+    }
+  },
+  methods:{
+    logout(){
+      let result = confirm("로그아웃 하시겠습니까?");
+      if(result){
+        if(sessionStorage.getItem("customer")!= null){
+          sessionStorage.removeItem("customer");
+        }
+        else if(sessionStorage.getItem("company")!=null){
+          sessionStorage.removeItem("company");
+        }
+        location.href = "/";
+      }
     }
   }
 };

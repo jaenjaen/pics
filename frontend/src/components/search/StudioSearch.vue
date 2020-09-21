@@ -8,17 +8,21 @@
           name="searchContent"
           type="text"
           v-model="filters.searchContent"
-          placeholder="나에게 딱 맞는 촬영공간 찾기    ||    '#' 을 앞에 붙이면 해시태그 검색 "
+          placeholder="'#' 을 앞에 붙이면 해시태그 검색(Enter)    ||    카메라를 누르면 이미지 검색 "
           v-on:keyup.enter="setFilter"
         />
+        <!-- 이미지 검색 부분 -->
+        <span class="uploadArea" >
+         <input type=file id="uploadImg" name="uploadImg" class="uploadImg" 
+         @change="handleImgFileSelect('uploadImg', $event)" style='display: none;'> 
+         <i class="material-icons" id="icon_camera" @click='insertImg' >camera_alt</i>
+        </span>
       </span>
     </div>
     <!-- 이미지 검색 부분 -->
-    <i class="material-icons" id="icon_filter" v-if="!isImage" @click="isImage=true" >camera_alt</i>
-    <span v-if="isImage" @click="isImage=false" >되돌리기</span>
-    <ImageSearch v-if="isImage" />
+    
     <!-- 필터 부분 -->
-    <div class="row" id="filter" v-if="!isImage">
+    <div class="row" id="filter">
       <!-- 필터 Collapse -->
       <div id="filterCol">
         <div>
@@ -158,7 +162,7 @@
       </div>
     </div>
     <!-- 정렬하기 부분 -->
-    <div id="order" v-if ="!isImage" > 
+    <div id="order" > 
       <!-- 정렬하기 위한 select 태그 -->
       <select name="orderCon" id="orderCon" @change="setFilter" v-model="filters.orderCon">
         <option value disabled>정렬하기</option>
@@ -168,7 +172,28 @@
         <option value="4">평점순</option>
       </select>
     </div>
-    <StudioList :filters="filters" ref="studioList"/>
+    <div id='imageSearchLoading' v-if="isImage">
+        <p>올려주신 이미지와 유사한 상위 5개 공간을 찾고 있습니다.</p>
+        <p>실수로 취소를 누르셨다면, 카메라 아이콘을 눌러 다시 검색해주세요.</p>
+    </div>
+    <!-- 로딩 시 출력 부분 -->
+    <div id="loading" v-if="loading">
+      <div class="preloader-wrapper active">
+          <div class="spinner-layer spinner-red-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div>
+            <div class="gap-patch">
+              <div class="circle"></div>
+            </div>
+            <div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <StudioList :filters="filters" ref="studioList" />
+    
   </div>
 </template>
 

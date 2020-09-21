@@ -1,0 +1,30 @@
+.navbar-fixed {
+    z-index: 9999;
+    height: 54px !important;
+}
+
+nav {
+    background-color: white !important;
+    height: 54px !important;
+}
+
+.header_container {
+    width: 768px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    padding-top: 20px;
+}
+
+#pics_logo {
+    width: 60px;
+}
+
+#search_icon {
+    width: 20px;
+}
+
+#backward {
+    width: 20px;
+}

@@ -1,15 +1,14 @@
 import StudioList from '@/components/search/StudioList.vue'
-import ImageSearch from '@/components/search/ImageSearch.vue'
-// import axios from "axios";
+import axios from "axios";
 // 요일 변환을 위한 리스트
 const week = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-    // Vue 시작
+
+// Vue 시작
 export default {
     name: 'studio-search',
     props: ['categoryId'],
     components: {
-        StudioList,
-        ImageSearch
+        StudioList
     },
     data() {
         return {
@@ -29,6 +28,7 @@ export default {
                 searchTag: '',
                 orderCon: '',
                 page: 0,
+                stuId: "",
                 //로그인 session 변수, 기본값은 -1
                 session: -1
             },
@@ -36,7 +36,11 @@ export default {
             visible: true,
 
             //ImageSearch 변수
-            isImage: false
+            isImage: false, // 이미지 검색을 하는지?
+            addIcon: require("@/assets/img/util/addPhoto.svg"), // 이미지 경로
+
+            //loading 변수
+            loading: false, //검색이 완료되면 동글뱅이 멈춘다
         }
     },
     mounted() {
@@ -59,6 +63,64 @@ export default {
         }
     },
     methods: {
+        /* 이미지 검색 Part */
+        // 업로드하여 받아온 stuId를 filter에 각인 후 바로 검색
+        uploadImg(e) {
+            this.loading = true;
+            this.filters.stuId = "";
+            this.filters.page = 0;
+            let image = e.target.files[0];
+            let formData = new FormData();
+            formData.append("image", image);
+            axios
+                .post('http://54.180.25.91:5000/imageSearch', formData)
+                .then((response) => {
+                    this.filters.stuId = response.data;
+                    this.$refs.studioList.infiniteHandler()
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    this.loading = false;
+                });
+        },
+        // 파일 업로드 화면단 처리
+        handleImgFileSelect(fileId, e) {
+            var thisFileId = document.getElementById(fileId);
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+
+            if (thisFileId.value != "") {
+                filesArr.forEach(function(f) {
+                        /* 확장자 제한 */
+                        if (!f.type.match("image.*")) {
+                            alert("확장자는 이미지 확장자만 가능합니다.");
+                            thisFileId.value = "";
+                            return false;
+                        }
+
+                        /* 용량 제한 */
+                        var fileSize = thisFileId.files[0].size;
+                        var maxSize = 5 * 1024 * 1000;
+                        if (fileSize > maxSize) {
+                            alert("파일용량 5MB을 초과했습니다.");
+                            thisFileId.value = "";
+                            return false;
+                        }
+
+                    }) //forEach
+            } //if
+            this.uploadImg(e);
+        },
+        insertImg() {
+            document.getElementById("uploadImg").click();
+            this.isImage = true;
+            this.visible = false;
+        },
+        /*   -------------------------------------------------------------------------------------     */
+        /* 필터 Part */
         // 카테고리 설정 메소드
         setCategory() {
             this.filters.categoryId = this.$refs.cataSelect.value
@@ -84,6 +146,10 @@ export default {
                 this.filters.searchTag = this.filters.searchContent
                 this.filters.searchContent = ''
             }
+
+            // 유사이미지 검색을 했는데 다시 검색한다는 것은 다른 업체를 찾는다는 뜻
+            // stuId 초기화
+            this.filters.stuId = "";
 
             //필터를 설정하면 collapse 문 닫기
             this.visible = false
@@ -114,6 +180,8 @@ export default {
             }
             this.searchList()
         },
+
+
         // 아래부터는 임시 메소드
         login() {
             let customer = {
@@ -126,9 +194,6 @@ export default {
         logout() {
             sessionStorage.removeItem('cust')
             this.filters.session = -1
-        },
-        test() {
-            this.$router.push('/uploadImg')
         }
     }
 }

@@ -6,6 +6,8 @@ import 'vue-material/dist/vue-material.min.css';
 
 var session = JSON.parse(sessionStorage.getItem("company"));
 var studioId = (window.location.href).split("/")[4];
+
+
 export default {
     components: { vueMultiSelect, VueDaumPostcode },
     data() {
@@ -46,8 +48,8 @@ export default {
             /* 디폴트 이미지 */
             required: 'http://localhost:7777/upload/default/required.png',
             main: 'http://localhost:7777/upload/default/main.png',
-            cad: 'http://localhost:7777/upload/default/cad.png',
             port: 'http://localhost:7777/upload/default/port.png',
+            cad: 'http://localhost:7777/upload/default/cad.png',
 
             /* 카테고리 */
             category: "",
@@ -113,6 +115,25 @@ export default {
             tag1: "",
             tag2: "",
             tag3: "",
+
+            mainArray: ['http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png'
+            ],
+            cadHolder: this.cad,
+            portArray: ['http://localhost:7777/upload/default/port.png',
+                'http://localhost:7777/upload/default/port.png',
+                'http://localhost:7777/upload/default/port.png',
+                'http://localhost:7777/upload/default/port.png'
+            ]
+
         };
     },
     created() {
@@ -128,6 +149,10 @@ export default {
         }
     },
     mounted() {
+        var mainTmp = [];
+        var cadTmp = "";
+        var portTmp = [];
+        var floorTmp = 0;
         /* 라이브러리 충돌로 인해 적용되지 않는 CSS 해결 */
         document.getElementById('multi').childNodes[0].setAttribute('style', 'width:100%; height:45px');
         document.getElementById('multi').childNodes[1].setAttribute('style', 'width:100%;');
@@ -144,36 +169,212 @@ export default {
                 this.studio.name = data.name;
                 this.studio.description = data.description;
                 this.studio.rule = data.rule;
-                this.studio.mainImg = data.mainImg;
-                this.studio.cadImg = data.cadImg;
-                this.studio.floor = data.floor;
+                mainTmp = data.mainImg.split(",");
+                cadTmp = data.cadImg;
+                portTmp = data.portImg.split(",");
+                floorTmp = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;
+
                 this.studio.studioFilter.options = data.studioFilter.options;
+                let temp = this.studio.studioFilter.options.split(',');
+                for(let i=0; i<temp.length; i++){
+                    this.option_save.push({'name' : temp[i]});
+                }
+
                 this.studio.studioFilter.parking = data.studioFilter.parking;
                 this.studio.studioFilter.unitPrice = data.studioFilter.unitPrice;
                 this.studio.studioFilter.defaultCapacity = data.studioFilter.defaultCapacity;
                 this.studio.studioFilter.excharge = data.studioFilter.excharge;
                 this.studio.studioFilter.address = data.studioFilter.address;
                 this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
+
+                /* 운영 시간 바인딩 */
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
-                console.log(this.studio.schedule.repeatDate);
-                this.tag = data.tag
+                for(let i=0; i<this.studio.schedule.repeatDate.length; i++){
+                    let day = this.studio.schedule.repeatDate[i].weekday;
+                    let time = this.studio.schedule.repeatDate[i].time;
+                    let timeFirstSplit = time.split(',');
+                    for(let i=0; i<timeFirstSplit.length; i++){
+                        let timeSecondSplit = timeFirstSplit[i].split('-');
+                        switch(day){
+                            case 'mon':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.mon[j] = 1;
+                                }
+                                break;
+                            case 'tue':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.tue[j] = 1;
+                                }
+                                break;
+                            case 'wed':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.wed[j] = 1;
+                                }
+                                break;
+                            case 'thu':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.thu[j] = 1;
+                                }
+                                break;
+                            case 'fri':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.fri[j] = 1;
+                                }
+                                break;
+                            case 'sat':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.sat[j] = 1;
+                                }
+                                break;
+                            case 'sun':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.sun[j] = 1;
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                let dayCount = [0, 0, 0, 0, 0, 0, 0]; //요일별 체크된 시간 수
+                let dayList = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']; //요일 이름
+
+                for (let i = 0; i < 24; i++) { //요일에 따른 체크, 선택, 보임
+                    if (this.week.mon[i] > 0) {
+                        document.getElementById('monTime')[i].selected = true; //해당되는 시간 select option 선택
+                        document.getElementById('monTd').setAttribute('style', 'display:inline-block'); //월요일 시간표 보임
+                        document.getElementById('mon').checked = true; //월요일에 체크
+                        dayCount[0]++; //월요일이 체크된 시간 수
+                    }
+                    if (this.week.tue[i] > 0) {
+                        document.getElementById('tueTime')[i].selected = true;
+                        document.getElementById('tueTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('tue').checked = true;
+                        dayCount[1]++;
+                    }
+                    if (this.week.wed[i] > 0) {
+                        document.getElementById('wedTime')[i].selected = true;
+                        document.getElementById('wedTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('wed').checked = true;
+                        dayCount[2]++;
+                    }
+                    if (this.week.thu[i] > 0) {
+                        document.getElementById('thuTime')[i].selected = true;
+                        document.getElementById('thuTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('thu').checked = true;
+                        dayCount[3]++;
+                    }
+                    if (this.week.fri[i] > 0) {
+                        document.getElementById('friTime')[i].selected = true;
+                        document.getElementById('friTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('fri').checked = true;
+                        dayCount[4]++;
+                    }
+                    if (this.week.sat[i] > 0) {
+                        document.getElementById('satTime')[i].selected = true;
+                        document.getElementById('satTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('sat').checked = true;
+                        dayCount[5]++;
+                    }
+                    if (this.week.sun[i] > 0) {
+                        document.getElementById('sunTime')[i].selected = true;
+                        document.getElementById('sunTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('sun').checked = true;
+                        dayCount[6]++;
+                    }
+                }
+
+                let allDay = true;
+                for (let i = 0; i < 7; i++) {
+                    if (dayCount[i] == 0) { //해당 요일에 시간이 하나도 선택되지 않았을 경우
+                        allDay = false;
+                    } else { //해당 요일에 시간이 선택되었을 경우
+                        this.selectTime(dayList[i]);
+                    }
+                }
+                if (allDay == true) { //모든 요일에 선택된 시간이 있을 경우
+                    this.selectDay('all');
+                }
+
+                for (let i = 0; i < 7; i++) { //특정 요일에서 모든 시간을 선택했을 경우
+                    if (dayCount[i] == 24) {
+                        switch (i) {
+                            case 0:
+                                this.selectAllTime('select', 'monTime', 'noneMonTime', 'allMonTime', 'noneMonTimeCheck');
+                                break;
+                            case 1:
+                                this.selectAllTime('select', 'tueTime', 'noneTueTime', 'allTueTime', 'noneTueTimeCheck');
+                                break;
+                            case 2:
+                                this.selectAllTime('select', 'wedTime', 'noneWedTime', 'allWedTime', 'noneWedTimeCheck');
+                                break;
+                            case 3:
+                                this.selectAllTime('select', 'thuTime', 'noneThuTime', 'allThuTime', 'noneThuTimeCheck');
+                                break;
+                            case 4:
+                                this.selectAllTime('select', 'friTime', 'noneFriTime', 'allFriTime', 'noneFriTimeCheck');
+                                break;
+                            case 5:
+                                this.selectAllTime('select', 'satTime', 'noneSatTime', 'allSatTime', 'noneSatTimeCheck');
+                                break;
+                            case 6:
+                                this.selectAllTime('select', 'sunTime', 'noneSunTime', 'allSunTime', 'noneSunTimeCheck');
+                                break;
+                        }
+                    }
+                }
+
+                this.tag = data.tag;
 
                 /* placeholder용 */
-                this.floorNum = data.floor;
                 this.sizeValue = data.studioFilter.size;
                 this.address1 = data.studioFilter.address;
 
                 this.tag1 = data.tag[0].tagName;
                 this.tag2 = data.tag[1].tagName;
                 this.tag3 = data.tag[2].tagName;
-                console.log(this.studio);
+
+                /*mainImg placeholder */
+                if (mainTmp.length > 0 && mainTmp[0] != "") {
+                    for (var i = 0; i < mainTmp.length; i++) {
+                        this.mainArray[i] = this.mainRoute + mainTmp[i];
+                    }
+                }
+                if (cadTmp != "") this.cadHolder = this.cadRoute + cadTmp;
+
+                /*portImg placeholder */
+                if (portTmp.length > 0 && portTmp[0] != "") {
+                    for (var j = 0; j < portTmp.length; j++) {
+                        this.portArray[j] = this.portRoute + portTmp[j];
+                    }
+                }
+
+                /* set ground */
+                let underground = document.getElementById('underground');
+
+                if (floorTmp < 0) {
+                    underground.checked = true;
+                    this.floorNum = Number((floorTmp).toString().substr(1));
+                    console.log(this.floor);
+                }
+
+                /*set parking */
+
+                if (this.studio.studioFilter.parking > 0) {
+                    document.getElementsByName("parkFlag")[1].checked = true;
+                    document
+                        .getElementById("parkAmount")
+                        .setAttribute("style", "display: block;");
+
+                }
+
             })
             .catch(err => {
                 console.log(err);
             })
     },
     methods: {
+
         /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
         checkLength() {
             var changeArea = document.getElementsByName('changeArea');

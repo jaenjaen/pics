@@ -1,28 +1,28 @@
-import axios from "axios";
+import axios from 'axios'
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 
 /* 로그인 확인을 위한 세션 정의 */
-var customer = JSON.parse(sessionStorage.getItem("customer")); //개인고객
-var company = JSON.parse(sessionStorage.getItem("company")); //기업고객
+var customer = JSON.parse(sessionStorage.getItem('customer')) //개인고객
+var company = JSON.parse(sessionStorage.getItem('company')) //기업고객
 
 export default {
     name: 'chat',
     data() {
         return {
-            chatRoute: 'http://localhost:7777/upload/chat/',
+            chatRoute: 'http://54.180.25.91:7777/upload/chat/',
             defaultImg: {
-                list: 'http://localhost:7777/upload/default/list.png',
-                listHover: 'http://localhost:7777/upload/default/listHover.png',
-                back: 'http://localhost:7777/upload/default/back.png',
-                backHover: 'http://localhost:7777/upload/default/backHover.png',
-                search: 'http://localhost:7777/upload/default/search.png',
-                searchHover: 'http://localhost:7777/upload/default/searchHover.png',
-                user: 'http://localhost:7777/upload/default/user.png',
-                add: 'http://localhost:7777/upload/default/add.png',
-                addHover: 'http://localhost:7777/upload/default/addHover.png',
-                send: 'http://localhost:7777/upload/default/send.png',
-                sendHover: 'http://localhost:7777/upload/default/sendHover.png'
+                list: 'http://54.180.25.91:7777/upload/default/list.png',
+                listHover: 'http://54.180.25.91:7777/upload/default/listHover.png',
+                back: 'http://54.180.25.91:7777/upload/default/back.png',
+                backHover: 'http://54.180.25.91:7777/upload/default/backHover.png',
+                search: 'http://54.180.25.91:7777/upload/default/search.png',
+                searchHover: 'http://54.180.25.91:7777/upload/default/searchHover.png',
+                user: 'http://54.180.25.91:7777/upload/default/user.png',
+                add: 'http://54.180.25.91:7777/upload/default/add.png',
+                addHover: 'http://54.180.25.91:7777/upload/default/addHover.png',
+                send: 'http://54.180.25.91:7777/upload/default/send.png',
+                sendHover: 'http://54.180.25.91:7777/upload/default/sendHover.png'
             },
             chat: {
                 chatId: '',
@@ -67,38 +67,40 @@ export default {
             selectChat: '',
 
             /* 고객/기업모드 여부 */
-            customerMode: '',
-
+            customerMode: ''
         }
     },
 
     created() {
-        this.connect(); //웹소켓 연결
-        if (customer != null) { //개인고객으로 로그인했을 경우
-            this.customerMode = true; //고객모드 ON
-            this.customer = customer; //세션에 있는 고객 정보를 customer 데이터에 바인딩
-            console.log(this.customer);
-            this.chat.custId = this.customer.custId; //세션에서 custId를 chat에 바인딩
+        this.connect() //웹소켓 연결
+        if (customer != null) {
+            //개인고객으로 로그인했을 경우
+            this.customerMode = true //고객모드 ON
+            this.customer = customer //세션에 있는 고객 정보를 customer 데이터에 바인딩
+            //console.log(this.customer)
+            this.chat.custId = this.customer.custId //세션에서 custId를 chat에 바인딩
 
-            this.getRecentCustChat(); //고객의 최근 수신 대화를 가져옴
-        } else if (company != null) { //기업고객으로 로그인했을 경우
-            this.customerMode = false; //고객모드 OFF
-            this.company = company; //세션에 있는 업체 정보를 company 데이터에 바인딩
-            console.log(this.company);
+            this.getRecentCustChat() //고객의 최근 수신 대화를 가져옴
+        } else if (company != null) {
+            //기업고객으로 로그인했을 경우
+            this.customerMode = false //고객모드 OFF
+            this.company = company //세션에 있는 업체 정보를 company 데이터에 바인딩
+            //console.log(this.company)
 
             /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
-            axios.get('http://127.0.0.1:7777/companyifo/' + company.comId)
-                .then((response) => {
-                    console.log('company 정보 가져오기 성공');
-                    this.company = response.data; //company 데이터에 바인딩
-                    console.log(this.company);
+            axios
+                .get('http://54.180.25.91:7777/companyifo/' + company.comId)
+                .then(response => {
+                    //console.log('company 정보 가져오기 성공')
+                    this.company = response.data //company 데이터에 바인딩
+                    //console.log(this.company)
 
                     /* 업체의 최근 수신 대화를 가져옴 */
-                    this.getRecentComChat();
-                    this.getRecentComChatNoRpeat(); //스튜디오 중복 없이 가져옴.
+                    this.getRecentComChat()
+                    this.getRecentComChatNoRpeat() //스튜디오 중복 없이 가져옴.
                 })
                 .catch(() => {
-                    console.log('company 정보 가져오기 실패');
+                    console.log('company 정보 가져오기 실패')
                 })
         }
     },
@@ -107,34 +109,52 @@ export default {
         /* 스튜디오 이름과 고객 닉네임, 문의 내용 글자수를 15자까지만 화면에 보여줌 */
         showLimitedContent(value) {
             if (value != undefined && value.length > 15) {
-                return value.substring(0, 15) + "... ";
+                return value.substring(0, 15) + '... '
             } else {
-                return value;
+                return value
             }
         },
         /* 문의 날짜를 연/월/일/시/분으로 분할함 */
         showUntilMin(value) {
-            let ref = value.lastIndexOf(":");
-            return value.substring(0, ref) + value.substring(ref + 3, value.length);
+            let ref = value.lastIndexOf(':')
+            return value.substring(0, ref) + value.substring(ref + 3, value.length)
         }
     },
 
     methods: {
         /* 같은 시간인지 체크 */
         checkSameTime(i) {
-            if (i == this.prevAllChat.length - 1) { //마지막 인덱스일 경우 비교 대상이 없으므로 리턴
-                return true;
+            if (i == this.prevAllChat.length - 1) {
+                //마지막 인덱스일 경우 비교 대상이 없으므로 리턴
+                return true
             } else {
                 let before =
-                    this.prevAllChat[i].dateTime.substring(0, this.prevAllChat[i].dateTime.lastIndexOf(":")) +
-                    this.prevAllChat[i].dateTime.substring(this.prevAllChat[i].dateTime.lastIndexOf(":") + 3, this.prevAllChat[i].dateTime.length);
+                    this.prevAllChat[i].dateTime.substring(
+                        0,
+                        this.prevAllChat[i].dateTime.lastIndexOf(':')
+                    ) +
+                    this.prevAllChat[i].dateTime.substring(
+                        this.prevAllChat[i].dateTime.lastIndexOf(':') + 3,
+                        this.prevAllChat[i].dateTime.length
+                    )
                 let after =
-                    this.prevAllChat[i + 1].dateTime.substring(0, this.prevAllChat[i + 1].dateTime.lastIndexOf(":")) +
-                    this.prevAllChat[i + 1].dateTime.substring(this.prevAllChat[i + 1].dateTime.lastIndexOf(":") + 3, this.prevAllChat[i + 1].dateTime.length);
-                if (this.prevAllChat[i].sender === this.prevAllChat[i + 1].sender && before === after) { //같은 시간일 경우 앞선 영역을 보이지 않음.
-                    return false;
-                } else { //다른 시간일 경우 보임
-                    return true;
+                    this.prevAllChat[i + 1].dateTime.substring(
+                        0,
+                        this.prevAllChat[i + 1].dateTime.lastIndexOf(':')
+                    ) +
+                    this.prevAllChat[i + 1].dateTime.substring(
+                        this.prevAllChat[i + 1].dateTime.lastIndexOf(':') + 3,
+                        this.prevAllChat[i + 1].dateTime.length
+                    )
+                if (
+                    this.prevAllChat[i].sender === this.prevAllChat[i + 1].sender &&
+                    before === after
+                ) {
+                    //같은 시간일 경우 앞선 영역을 보이지 않음.
+                    return false
+                } else {
+                    //다른 시간일 경우 보임
+                    return true
                 }
             }
         },
@@ -142,120 +162,133 @@ export default {
         /* 채팅 구독 여부 on/off */
         setChatSubscribe(cmd) {
             if (cmd === 'on') {
-                this.chatSubscribe = true;
+                this.chatSubscribe = true
             } else if (cmd === 'off') {
-                this.chatSubscribe = false;
+                this.chatSubscribe = false
             }
         },
 
         /* 채팅 접속시 설정 */
         setChat(stuId, custId) {
-            this.selectChat = true; //대화 선택 여부를 켬
+            this.selectChat = true //대화 선택 여부를 켬
 
             /* 스튜디오 아이디와 고객 아이디를 부모 컴포넌트로부터 받아와서 바인딩 */
-            this.chat.stuId = stuId; //개인고객, 기업고객이 채팅할 때 필요한 스튜디오 아이디
-            this.chat.custId = custId; //기업고객이 채팅할 때 필요한 고객 아이디
+            this.chat.stuId = stuId //개인고객, 기업고객이 채팅할 때 필요한 스튜디오 아이디
+            this.chat.custId = custId //기업고객이 채팅할 때 필요한 고객 아이디
 
-            if (customer != null) { //개인고객으로 로그인했을 경우
-                this.chat.sender = 0; //보내는 이 : 개인
-                this.chat.custId = customer.custId;
-                console.log("chat 데이터 세팅 완료(보내는 이 : 고객)");
-                console.log(this.chat);
+            if (customer != null) {
+                //개인고객으로 로그인했을 경우
+                this.chat.sender = 0 //보내는 이 : 개인
+                this.chat.custId = customer.custId
+                //console.log('chat 데이터 세팅 완료(보내는 이 : 고객)')
+                //console.log(this.chat)
 
-                this.getPresentStu(); //현재 대화 중인 스튜디오 정보 가져오기
+                this.getPresentStu() //현재 대화 중인 스튜디오 정보 가져오기
+            } else if (company != null) {
+                //기업고객으로 로그인했을 경우
+                this.chat.sender = 1 //보내는 이 : 기업
+                //console.log('chat 데이터 세팅 완료(보내는 이 : 기업)')
+                //console.log(this.chat)
 
-            } else if (company != null) { //기업고객으로 로그인했을 경우
-                this.chat.sender = 1; //보내는 이 : 기업
-                console.log("chat 데이터 세팅 완료(보내는 이 : 기업)");
-                console.log(this.chat);
-
-                this.getPresentCust(); //현재 대화 중인 고객 정보 가져오기
+                this.getPresentCust() //현재 대화 중인 고객 정보 가져오기
             }
         },
 
         /* 고객의 스튜디오별 최근 수신 대화 */
         getRecentCustChat() {
-            axios.get('http://127.0.0.1:7777/chat/recent/cust/' + customer.custId)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/recent/cust/' + customer.custId)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('customer 최근 대화 가져오기 성공');
-                        this.recentChat = response.data;
-                        console.log(this.recentChat);
-                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
+                        //console.log('customer 최근 대화 가져오기 성공')
+                        this.recentChat = response.data
+                        //console.log(this.recentChat)
+                        this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
-                        this.recentChat = [];
+                        this.recentChat = []
                     }
                 })
                 .catch(() => {
-                    console.log('customer 최근 대화 가져오기 실패');
+                    console.log('customer 최근 대화 가져오기 실패')
                 })
         },
 
         /* 업체의 스튜디오별 최근 수신 대화(고객이 다르더라도 같은 스튜디오는 중복 없음) */
         getRecentComChatNoRpeat() {
-            axios.get('http://127.0.0.1:7777/chat/recent/comNoRepeat/' + company.comId)
-                .then((response) => {
+            axios
+                .get(
+                    'http://54.180.25.91:7777/chat/recent/comNoRepeat/' + company.comId
+                )
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공');
-                        this.recentChatNoRepeat = response.data;
-                        console.log(this.recentChat);
-                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
+                        //console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공')
+                        this.recentChatNoRepeat = response.data
+                        //console.log(this.recentChat)
+                        this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
-                        this.recentChatNoRepeat = [];
+                        this.recentChatNoRepeat = []
                     }
                 })
                 .catch(() => {
-                    console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공');
+                    console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 실패')
                 })
         },
 
         /* 업체의 스튜디오 및 고객별 최근 수신 대화 */
         getRecentComChat() {
-            axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/recent/com/' + company.comId)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('company 최근 대화 가져오기 성공');
-                        this.recentChat = response.data;
-                        console.log(this.recentChat);
-                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
+                        //console.log('company 최근 대화 가져오기 성공')
+                        this.recentChat = response.data
+                        //console.log(this.recentChat)
+                        this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
-                        this.recentChat = [];
+                        this.recentChat = []
                     }
                 })
                 .catch(() => {
-                    console.log('company 최근 대화 가져오기 실패');
+                    console.log('company 최근 대화 가져오기 실패')
                 })
         },
 
         /* 스튜디오의 고객별 최근 수신 대화 */
         getRecentStuChat(stuId) {
-            axios.get('http://127.0.0.1:7777/chat/recent/stu/' + stuId)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/recent/stu/' + stuId)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('studio 최근 대화 가져오기 성공');
-                        this.recentChat = response.data;
-                        console.log(this.recentChat);
-                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
+                        //console.log('studio 최근 대화 가져오기 성공')
+                        this.recentChat = response.data
+                        //console.log(this.recentChat)
+                        this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
-                        this.recentChat = [];
+                        this.recentChat = []
                     }
                 })
                 .catch(() => {
-                    console.log('studio 최근 대화 가져오기 실패');
+                    console.log('studio 최근 대화 가져오기 실패')
                 })
         },
 
         /* 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 수신 대화  */
         getRecentChatByStuName(stuName) {
-            axios.get('http://127.0.0.1:7777/chat/recent/cust/' + customer.custId + '/' + stuName)
-                .then((response) => {
+            axios
+                .get(
+                    'http://54.180.25.91:7777/chat/recent/cust/' +
+                    customer.custId +
+                    '/' +
+                    stuName
+                )
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 성공');
-                        this.recentChat = response.data;
-                        console.log(this.recentChat);
-                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
+                        //console.log('스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 성공');
+                        this.recentChat = response.data
+                        //console.log(this.recentChat)
+                        this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
-                        this.recentChat = [];
+                        this.recentChat = []
                     }
                 })
                 .catch(() => {
@@ -265,15 +298,16 @@ export default {
 
         /* 스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 */
         getRecentChatByStuIdAndCustName(stuId, custName) {
-            axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId + '/' + stuId + '/' + custName)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/recent/com/' + company.comId + '/' + stuId + '/' + custName)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
-                        this.recentChat = response.data;
-                        console.log(this.recentChat);
-                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
+                        //console.log('스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
+                        this.recentChat = response.data
+                        //console.log(this.recentChat)
+                        this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
-                        this.recentChat = [];
+                        this.recentChat = []
                     }
                 })
                 .catch(() => {
@@ -283,321 +317,344 @@ export default {
 
         /* 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화  */
         getRecentChatByCustName(custName) {
-            axios.get('http://127.0.0.1:7777/chat/recent/com/' + company.comId + '/' + custName)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/recent/com/' + company.comId + '/' + custName)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
-                        this.recentChat = response.data;
-                        console.log(this.recentChat);
-                        this.getCountOfUnreadChat(); //읽지 않은 메세지 개수를 가져옴
+                        //console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공')
+                        this.recentChat = response.data
+                        //console.log(this.recentChat)
+                        this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
-                        this.recentChat = [];
+                        this.recentChat = []
                     }
                 })
                 .catch(() => {
-                    console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기  실패');
+                    console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 실패');
                 })
         },
 
         /* 현재 대화 중인 스튜디오 정보 가져오기 */
         getPresentStu() {
-            axios.get('http://127.0.0.1:7777/chat/info/stu/' + this.chat.stuId)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/info/stu/' + this.chat.stuId)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('현재 대화 중인 Studio 정보 가져오기 성공');
-                        this.presentStu = response.data;
-                        console.log(this.presentStu);
+                        //console.log('현재 대화 중인 Studio 정보 가져오기 성공')
+                        this.presentStu = response.data
+                        //console.log(this.presentStu)
 
                         /* 읽음 처리하기 */
-                        this.updateReadCheck();
+                        this.updateReadCheck()
                     } else if (response.data != -1) {
-                        this.presentStu = {};
+                        this.presentStu = {}
                     }
                 })
                 .catch(() => {
-                    console.log('현재 대화 중인 Studio 정보 가져오기 실패');
+                    console.log('현재 대화 중인 Studio 정보 가져오기 실패')
                 })
         },
 
         /* 현재 대화 중인 고객 정보 가져오기 */
         getPresentCust() {
-            axios.get('http://127.0.0.1:7777/chat/info/cust/' + this.chat.custId)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/info/cust/' + this.chat.custId)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('현재 대화 중인 Customer 정보 가져오기 성공');
-                        this.presentCust = response.data;
-                        console.log(this.presentCust);
+                        //console.log('현재 대화 중인 Customer 정보 가져오기 성공')
+                        this.presentCust = response.data
+                        //console.log(this.presentCust)
 
                         /* 이전 대화 내역 가져오기 */
-                        this.updateReadCheck();
+                        this.updateReadCheck()
                     } else if (response.data == -1) {
-                        this.presentCust = {};
+                        this.presentCust = {}
                     }
                 })
                 .catch(() => {
-                    console.log('현재 대화 중인 Customer 정보 가져오기 실패');
+                    console.log('현재 대화 중인 Customer 정보 가져오기 실패')
                 })
         },
 
         /* 채팅 읽음 처리 */
         updateReadCheck() {
-            let other = -1;
-            if (this.chat.sender == 0) { //고객으로 로그인했을 때
-                other = 1;
-            } else if (this.chat.sender == 1) { //업체로 로그인했을 때
-                other = 0;
+            let other = -1
+            if (this.chat.sender == 0) {
+                //고객으로 로그인했을 때
+                other = 1
+            } else if (this.chat.sender == 1) {
+                //업체로 로그인했을 때
+                other = 0
             }
             axios.put('http://127.0.0.1:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId + '/' + other)
-                .then((response) => {
-                    console.log('채팅 읽음 처리 성공');
-                    console.log(response.data);
+                .then(() => {
+                    //console.log('채팅 읽음 처리 성공');
                     this.getPrevAllChat();
-                    setTimeout(this.getPrevAllChat(), 100);
                 })
                 .catch(() => {
-                    console.log('채팅 읽음 처리 실패');
+                    console.log('채팅 읽음 처리 실패')
                 })
         },
 
         /* 읽지 않은 대화 개수 */
         getCountOfUnreadChat() {
-            if (company != null) { //업체 로그인
-                axios.get('http://127.0.0.1:7777/chat/unread/com/' + company.comId)
-                    .then((response) => {
+            if (company != null) {
+                //업체 로그인
+                axios
+                    .get('http://54.180.25.91:7777/chat/unread/com/' + company.comId)
+                    .then(response => {
                         if (response.data != -1) {
-                            console.log('업체의 읽지 않은 대화 개수 가져오기 성공');
-                            this.CountOfUnreadChat = response.data;
-                            console.log(this.CountOfUnreadChat);
+                            //console.log('업체의 읽지 않은 대화 개수 가져오기 성공')
+                            this.CountOfUnreadChat = response.data
+                            //console.log(this.CountOfUnreadChat)
                         } else if (response.data == -1) {
-                            this.CountOfUnreadChat = [];
+                            this.CountOfUnreadChat = []
                         }
                     })
                     .catch(() => {
-                        console.log('업체의 읽지 않은 대화 개수 가져오기 실패');
+                        console.log('업체의 읽지 않은 대화 개수 가져오기 실패')
                     })
-            } else if (customer != null) { //고객 로그인
-                axios.get('http://127.0.0.1:7777/chat/unread/cust/' + customer.custId)
-                    .then((response) => {
+            } else if (customer != null) {
+                //고객 로그인
+                axios
+                    .get('http://54.180.25.91:7777/chat/unread/cust/' + customer.custId)
+                    .then(response => {
                         if (response.data != -1) {
-                            console.log('고객의 읽지 않은 대화 개수 가져오기 성공');
-                            this.CountOfUnreadChat = response.data;
-                            console.log(this.CountOfUnreadChat);
+                            //console.log('고객의 읽지 않은 대화 개수 가져오기 성공')
+                            this.CountOfUnreadChat = response.data
+                            //console.log(this.CountOfUnreadChat)
                         } else if (response.data == -1) {
-                            this.CountOfUnreadChat = [];
+                            this.CountOfUnreadChat = []
                         }
                     })
                     .catch(() => {
-                        console.log('고객의 읽지 않은 대화 개수 가져오기 실패');
+                        console.log('고객의 읽지 않은 대화 개수 가져오기 실패')
                     })
             }
         },
 
-
         /* 이전 대화 내역 가져오기 */
         getPrevAllChat() {
-            axios.get('http://127.0.0.1:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId)
-                .then((response) => {
+            axios
+                .get('http://54.180.25.91:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId)
+                .then(response => {
                     if (response.data != -1) {
-                        console.log('이전 대화 가져오기 성공');
-                        this.prevAllChat = response.data;
-                        console.log(this.prevAllChat);
+                        //console.log('이전 대화 가져오기 성공')
+                        this.prevAllChat = response.data
+                        //console.log(this.prevAllChat)
 
                         /* 채팅 모달의 스크롤을 최하단으로 내림 */
-                        this.$emit('moveScroll');
+                        this.$emit('moveScroll')
                     } else if (response.data == -1) {
-                        this.prevAllChat = [];
+                        this.prevAllChat = []
                     }
                 })
                 .catch(() => {
-                    console.log('이전 대화 가져오기 실패');
+                    console.log('이전 대화 가져오기 실패')
                 })
         },
 
         /* 대화 삭제 */
         deleteChat(fileName, chatId) {
-            let result = confirm("삭제하시겠습니까?");
+            let result = confirm('삭제하시겠습니까?')
             if (result) {
-                if (fileName != '') { //파일일 경우 파일을 먼저 삭제
-                    this.deleteChatFile(fileName);
+                if (fileName != '') {
+                    //파일일 경우 파일을 먼저 삭제
+                    this.deleteChatFile(fileName)
                 }
-                axios.delete('http://127.0.0.1:7777/chat/delete/' + chatId)
-                    .then((response) => {
+                axios
+                    .delete('http://54.180.25.91:7777/chat/delete/' + chatId)
+                    .then(response => {
                         if (response.data == 1) {
-                            console.log('대화 삭제 성공');
-                            this.updateReadCheck();
-                            //혹시 읽음 처리 안 된 대화가 생겼을 수 있으니 읽음 처리 -> 대화 내역을 다시 불러옴
+                            //console.log('대화 삭제 성공')
+                            this.updateReadCheck()
+                                //혹시 읽음 처리 안 된 대화가 생겼을 수 있으니 읽음 처리 -> 대화 내역을 다시 불러옴
 
                             /* 채팅 모달의 스크롤을 최하단으로 내림 */
-                            this.$emit('moveScroll');
+                            this.$emit('moveScroll')
                         } else if (response.data == -1) {
-                            console.log('삭제할 대화가 없음');
+                            console.log('삭제할 대화가 없음')
                         }
                     })
                     .catch(() => {
-                        console.log('대화 삭제 실패');
+                        console.log('대화 삭제 실패')
                     })
-            } else { //삭제를 원하지 않을 경우
-                return;
+            } else {
+                //삭제를 원하지 않을 경우
+                return
             }
         },
 
         /* 파일 삭제 */
         deleteChatFile(fileName) {
-            axios.delete('http://127.0.0.1:7777/filedelte/chat/' + fileName)
-                .then((response) => {
+            axios
+                .delete('http://54.180.25.91:7777/filedelte/chat/' + fileName)
+                .then(response => {
                     if (response.data === 'OK') {
-                        console.log('파일 삭제 성공');
+                        //console.log('파일 삭제 성공')
                     } else if (response.data === 'FAIL') {
-                        console.log('삭제할 파일이 없음');
+                        console.log('삭제할 파일이 없음')
                     }
                 })
                 .catch(() => {
-                    console.log('대화 삭제 실패');
+                    console.log('대화 삭제 실패')
                 })
         },
 
         /* 웹소켓 연결 */
         connect() {
-            const serverURL = "http://localhost:7777/webSocket"
-            let socket = new SockJS(serverURL);
-            this.stompClient = Stomp.over(socket);
+            const serverURL = 'http://54.180.25.91:7777/webSocket'
+            let socket = new SockJS(serverURL)
+            this.stompClient = Stomp.over(socket)
             console.log(`소켓 연결 시도... 서버 주소: ${serverURL}`)
             this.stompClient.connect({},
                 /* 연결 성공 */
                 frame => {
-                    this.connected = true;
-                    console.log('소켓 연결 성공', frame);
+                    this.connected = true
+                    console.log('소켓 연결 성공', frame)
 
                     /* 서버의 메세지 전송 endpoing를 구독(Pub/Sub 구조) */
-                    this.stompClient.subscribe("/send", response => {
-                        if (this.chat.stuId == JSON.parse(response.body).stuId &&
+                    this.stompClient.subscribe('/send', response => {
+                        if (
+                            this.chat.stuId == JSON.parse(response.body).stuId &&
                             this.chat.custId == JSON.parse(response.body).custId &&
-                            this.chatSubscribe) {
+                            this.chatSubscribe
+                        ) {
                             //채팅을 해당자들만 1:1로 확인
                             //채팅 모달이 켜져있어야 받음. 채팅 모달을 껐을 경우 읽지 않음.
-                            console.log('구독으로 받은 메시지 : ', response.body);
+                            //console.log('구독으로 받은 메시지 : ', response.body)
 
-                            this.updateReadCheck(); //읽음 처리 -> 대화 가져오기
+                            this.updateReadCheck() //읽음 처리 -> 대화 가져오기
                         }
-                    });
+                    })
                 },
                 /* 연결 실패 */
                 error => {
-                    console.log('소켓 연결 실패', error);
-                    this.connected = false;
+                    console.log('소켓 연결 실패', error)
+                    this.connected = false
                 }
-            );
+            )
         },
 
         /* 파일이름 및 경로를 화면에 보임 */
         setFile(event) {
-            document.getElementById('chatFileName').value = event.target.value;
+            document.getElementById('chatFileName').value = event.target.value
         },
 
         /* 업로드한 파일을 삭제함 */
         deleteFile() {
             if (document.getElementById('chatFile').value == '') {
-                alert("삭제할 파일이 없습니다.");
-                return;
+                alert('삭제할 파일이 없습니다.')
+                return
             } else {
-                let result = confirm('첨부파일을 삭제하시겠습니까?');
+                let result = confirm('첨부파일을 삭제하시겠습니까?')
                 if (result) {
-                    document.getElementById('chatFile').value = '';
-                    document.getElementById('chatFileName').value = '';
+                    document.getElementById('chatFile').value = ''
+                    document.getElementById('chatFileName').value = ''
                 } else {
-                    return;
+                    return
                 }
             }
         },
 
         /* 파일 확장자 체크해서 이미지 파일이면 true 리턴 
-         true면 채팅 화면에 이미지를 보여줌 */
+                 true면 채팅 화면에 이미지를 보여줌 */
         isImgFile(path) {
             if (path === null) {
-                return false;
+                return false
             }
-            let imgFormat = ['jpeg', 'jpg', 'gif', 'png', 'svg'];
-            let fileForm = path.substring(path.lastIndexOf('.') + 1, path.length).toLowerCase();
+            let imgFormat = ['jpeg', 'jpg', 'gif', 'png', 'svg']
+            let fileForm = path
+                .substring(path.lastIndexOf('.') + 1, path.length)
+                .toLowerCase()
             for (let i = 0; i < imgFormat.length; i++) {
                 if (imgFormat[i] == fileForm) {
-                    return true;
+                    return true
                 }
             }
-            return false;
+            return false
         },
 
         /* 채팅 이미지 업로드 */
         uploadChatImg() {
             /* 파일 용량 체크 */
-            let maxSize = 5 * 1024 * 1000; //파일 최대 용량 5MB
-            let formData = new FormData();
-            let file = document.querySelector('#chatFile');
-            formData.append("file", file.files[0]);
-            console.log("파일 정보 : " + file.files[0]);
+            let maxSize = 5 * 1024 * 1000 //파일 최대 용량 5MB
+            let formData = new FormData()
+            let file = document.querySelector('#chatFile')
+            formData.append('file', file.files[0])
+            //console.log('파일 정보 : ' + file.files[0])
             if (file.files[0].size > maxSize) {
-                alert("파일은 5MB 이내로 첨부 가능합니다.");
-                return;
+                alert('파일은 5MB 이내로 첨부 가능합니다.')
+                return
             }
 
-            let id = '';
+            let id = ''
             if (company != null) {
-                id = company.comId;
+                id = company.comId
             } else if (customer != null) {
-                id = customer.custId;
+                id = customer.custId
             }
-            axios.post('http://127.0.0.1:7777/fileUpload/chat/' + id, formData, {
+            axios
+                .post('http://54.180.25.91:7777/fileUpload/chat/' + id, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    },
-                }).then((response) => {
-                    console.log('채팅 파일 업로드 응답 성공');
-                    console.log('파일명 : ' + response.data);
-                    this.chat.filePath = response.data;
+                    }
+                })
+                .then(response => {
+                    //console.log('채팅 파일 업로드 응답 성공')
+                    //console.log('파일명 : ' + response.data)
+                    this.chat.filePath = response.data
 
-                    this.send(); //보냄
+                    this.send() //보냄
                 })
                 .catch(() => {
-                    console.log('채팅 파일 업로드 응답 실패');
+                    console.log('채팅 파일 업로드 응답 실패')
                 })
         },
 
         /* 보낼 메시지 처리 */
         sendChat(cmd) {
             if (this.chat.stuId !== '' && this.chat.custId !== '') {
-                if (this.chat.word !== '' || document.getElementById('chatFile').value !== '') {
+                if (
+                    this.chat.word !== '' ||
+                    document.getElementById('chatFile').value !== ''
+                ) {
                     if (cmd == 'file') {
-                        let result = confirm("파일을 전송하시겠습니까?");
+                        let result = confirm('파일을 전송하시겠습니까?')
                         if (!result) {
-                            return;
+                            return
                         } else {
-                            this.uploadChatImg();
+                            this.uploadChatImg()
                         }
                     } else if (cmd == 'word') {
-                        this.send(); //보냄
+                        this.send() //보냄
                     }
                 } else if (cmd == 'word' && this.chat.word == '') {
-                    alert("내용을 입력하세요");
-                    return;
-                } else if (cmd == 'file' && document.getElementById('chatFile').value == '') {
-                    alert("파일을 첨부하세요");
+                    alert('내용을 입력하세요')
+                    return
+                } else if (
+                    cmd == 'file' &&
+                    document.getElementById('chatFile').value == ''
+                ) {
+                    alert('파일을 첨부하세요')
                 }
             }
         },
 
         /* 메시지 전송 */
         send() {
-            console.log("보내는 메세지:" + this.chat.word);
-            console.log("보내는 파일:" + this.chat.filePath);
+            //console.log('보내는 메세지:' + this.chat.word)
+            //console.log('보내는 파일:' + this.chat.filePath)
             if (this.stompClient && this.stompClient.connected) {
-                const msg = this.chat;
-                this.stompClient.send("/receive", JSON.stringify(msg), {});
-                this.controlModal('hide', 'uploadModal');
+                const msg = this.chat
+                this.stompClient.send('/receive', JSON.stringify(msg), {})
+                this.controlModal('hide', 'uploadModal')
 
                 /* 보내고 나서 입력 리셋 */
-                this.chat.word = '';
-                this.chat.filePath = '';
-                document.getElementById('chatFile').value = '';
-                document.getElementById('chatFileName').value = '';
+                this.chat.word = ''
+                this.chat.filePath = ''
+                document.getElementById('chatFile').value = ''
+                document.getElementById('chatFileName').value = ''
             }
         },
 
@@ -606,39 +663,58 @@ export default {
             if (cmd == 'mouseover') {
                 switch (obj) {
                     case 'list':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.listHover);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.listHover)
+                        break
                     case 'back':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.backHover);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.backHover)
+                        break
                     case 'search':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.searchHover);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.searchHover)
+                        break
                     case 'add':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.addHover);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.addHover)
+                        break
                     case 'send':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.sendHover);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.sendHover)
+                        break
                 }
-
             } else if (cmd == 'mouseout') {
                 switch (obj) {
                     case 'list':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.list);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.list)
+                        break
                     case 'back':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.back);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.back)
+                        break
                     case 'search':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.search);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.search)
+                        break
                     case 'add':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.add);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.add)
+                        break
                     case 'send':
-                        document.getElementById(obj).setAttribute('src', this.defaultImg.send);
-                        break;
+                        document
+                            .getElementById(obj)
+                            .setAttribute('src', this.defaultImg.send)
+                        break
                 }
             }
         },
@@ -646,55 +722,70 @@ export default {
         /* Modal 보이기&숨기기 */
         controlModal(cmd, obj) {
             if (cmd == 'show') {
-                document.getElementById(obj).setAttribute('style', 'display:block;');
-                if (obj == 'chatListModal') { //채팅 목록 보기
-                    this.setChatSubscribe('off'); //채팅 구독 여부 off
+                document.getElementById(obj).setAttribute('style', 'display:block;')
+                if (obj == 'chatListModal') {
+                    //채팅 목록 보기
+                    this.setChatSubscribe('off') //채팅 구독 여부 off
                     if (company != null) {
-                        this.getRecentComChat();
+                        this.getRecentComChat()
                     } else if (customer != null) {
-                        this.getRecentCustChat();
+                        this.getRecentCustChat()
                     }
-                    document.getElementById('chatListHeader').setAttribute('style', 'display:block;');
-                    document.getElementById('chatHeader').setAttribute('style', 'display:none;');
+                    document
+                        .getElementById('chatListHeader')
+                        .setAttribute('style', 'display:block;')
+                    document
+                        .getElementById('chatHeader')
+                        .setAttribute('style', 'display:none;')
                 }
             } else if (cmd == 'hide') {
-                document.getElementById(obj).setAttribute('style', 'display:none;');
-                if (obj == 'chatListModal') { //채팅 목록 끄고 이전 채팅으로 돌아가기
-                    this.setChatSubscribe('on'); //채팅 구독 여부 on
-                    document.getElementById('chatHeader').setAttribute('style', 'display:block;');
-                    document.getElementById('chatListHeader').setAttribute('style', 'display:none;');
+                document.getElementById(obj).setAttribute('style', 'display:none;')
+                if (obj == 'chatListModal') {
+                    //채팅 목록 끄고 이전 채팅으로 돌아가기
+                    this.setChatSubscribe('on') //채팅 구독 여부 on
+                    document
+                        .getElementById('chatHeader')
+                        .setAttribute('style', 'display:block;')
+                    document
+                        .getElementById('chatListHeader')
+                        .setAttribute('style', 'display:none;')
                 }
             }
         },
 
         /* 스튜디오 옵션 변경시 */
         changeStudio(event) {
-            let studio = event.target.childNodes;
-            if (studio[0].selected) { //전체 선택
-                this.getRecentComChat();
+            let studio = event.target.childNodes
+            if (studio[0].selected) {
+                //전체 선택
+                this.getRecentComChat()
             }
             for (let i = 1; i < studio.length; i++) {
                 if (studio[i].selected) {
-                    let stuId = studio[i].childNodes[1].value;
-                    this.getRecentStuChat(stuId);
+                    let stuId = studio[i].childNodes[1].value
+                    this.getRecentStuChat(stuId)
                 }
             }
         },
 
         /* 이름으로 최근 채팅을 검색함 */
         searchRecentChatByName(member) {
-            if (member == 'cust') { //스튜디오 이름으로 검색(고객 모드)
-                let stuName = document.getElementById('searchStuName').value;
-                this.getRecentChatByStuName(stuName);
-            } else if (member == 'com') { //고객 이름으로 검색(업체 모드)
-                let studioSelect = document.getElementById('studioSelect');
-                let custName = document.getElementById('searchCustName').value;
+            if (member == 'cust') {
+                //스튜디오 이름으로 검색(고객 모드)
+                let stuName = document.getElementById('searchStuName').value
+                this.getRecentChatByStuName(stuName)
+            } else if (member == 'com') {
+                //고객 이름으로 검색(업체 모드)
+                let studioSelect = document.getElementById('studioSelect')
+                let custName = document.getElementById('searchCustName').value
                 for (let i = 0; i < studioSelect.length; i++) {
                     if (studioSelect[i].selected) {
-                        if (i == 0) { //스튜디오 전체에서 검색
-                            this.getRecentChatByCustName(custName);
-                        } else { //해당 스튜디오 안에서 검색
-                            let stuId = studioSelect[i].childNodes[1].value;
+                        if (i == 0) {
+                            //스튜디오 전체에서 검색
+                            this.getRecentChatByCustName(custName)
+                        } else {
+                            //해당 스튜디오 안에서 검색
+                            let stuId = studioSelect[i].childNodes[1].value
                             this.getRecentChatByStuIdAndCustName(stuId, custName)
                         }
                     }
@@ -704,18 +795,18 @@ export default {
 
         /* 채팅 상대를 클릭하면 채팅을 가져옴 */
         getChatByUser(event) {
-            this.chat.word = ''; //이전 채팅방에서 작성한 채팅 내용은 초기화시킴
-            this.chat.stuId = event.target.childNodes[1].innerHTML;
-            this.chat.custId = event.target.childNodes[2].innerHTML;
-            this.setChat(this.chat.stuId, this.chat.custId);
-            this.controlModal('hide', 'chatListModal');
+            this.chat.word = '' //이전 채팅방에서 작성한 채팅 내용은 초기화시킴
+            this.chat.stuId = event.target.childNodes[1].innerHTML
+            this.chat.custId = event.target.childNodes[2].innerHTML
+            this.setChat(this.chat.stuId, this.chat.custId)
+            this.controlModal('hide', 'chatListModal')
         },
 
         /* 프로필 사진을 클릭하면 Modal로 크게 봄 */
         showBiggerImg(event) {
-            let imgSrc = event.target.src;
-            document.getElementById('biggerProfile').setAttribute('src', imgSrc);
-            this.controlModal('show', 'expandImgModal');
+            let imgSrc = event.target.src
+            document.getElementById('biggerProfile').setAttribute('src', imgSrc)
+            this.controlModal('show', 'expandImgModal')
         }
-    },
+    }
 }

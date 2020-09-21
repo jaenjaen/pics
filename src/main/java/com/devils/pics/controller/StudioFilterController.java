@@ -43,13 +43,15 @@ public class StudioFilterController {
 		}
 	}
 	
-	@ApiOperation(value="필터 정보를 바탕으로 검색된 스튜디오 반환", response = List.class)
+	@ApiOperation(value="이미지, 필터 정보를 바탕으로 검색된 스튜디오 반환", response = List.class)
 	@PostMapping("/studio/search/filter")
 	public ResponseEntity searchStudio(@RequestBody HashMap<String, String> filters){
 		try {
-			//System.out.println("/studio/search/"+filters+"들어옴 ");
+			System.out.println("/studio/search/"+filters+"들어옴 ");
+			System.out.println("--------------------------------------");
 
 			List<Studio> list = studioFilterService.searchStudio(getSearchCon(filters));
+			
 			for(Studio std : list) {
 				String oneMainImg =std.getMainImg().split(",")[0];
 				std.setMainImg(oneMainImg);
@@ -63,6 +65,8 @@ public class StudioFilterController {
 					std.setMainImg(word2);
 				}
 			}
+			
+			System.out.println(list);
 			return new ResponseEntity(list, HttpStatus.OK);
 		}catch(RuntimeException e) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -104,6 +108,13 @@ public class StudioFilterController {
 		if (filters.get("session").length()>0)
 			searchCon.setCustId(Integer.parseInt(filters.get("session")));
 		searchCon.setPage(Integer.parseInt(filters.get("page")));
+		if (filters.get("stuId").length()>0) {
+			ArrayList<String> array = new ArrayList<>(Arrays.asList(filters.get("stuId").split(",")));
+			searchCon.setStuId(array);
+		}
+		
+		System.out.println("f : " + filters);
+		System.out.println("s : "+searchCon);
 
 		return searchCon;
 	}

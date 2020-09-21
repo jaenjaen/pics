@@ -4,13 +4,29 @@
 
 <mapper namespace="CustomerMapper">
 	<sql id="select-customer">
-		SELECT cust_id,api_id,gender,age,job,funnel,email,tel,api_key
-		FROM customer;
+		SELECT cust_id,api_id,nickname,gender,job,funnel,email,tel,api_key,img_src
+		FROM customer
 	</sql>
 	
 	<insert id="registerCustomer" parameterType="customer">
-		INSERT INTO customer(api_id,gender,age,job,funnel,email,tel,api_key)
-		VALUES ((SELECT api_id FROM loginapi WHERE api_id = #{apiId})
-				,#{gender},#{age},#{job},#{funnel},#{email},#{tel},#{apiKey})
+		INSERT INTO customer(api_id,nickname,gender,job,funnel,email,tel,api_key,img_src)
+		VALUES ((SELECT api_id FROM loginapi WHERE api_id = #{apiId}),#{nickname}
+				,#{gender},#{job},#{funnel},#{email},#{tel},#{apiKey},#{imgSrc})
 	</insert>
+	
+	<select id="getCustomer" parameterType="string" resultType="customer">
+		<include refid="select-customer"/>
+		WHERE api_key = #{value}
+	</select>
+	
+	<update id="updateCustomer" parameterType="customer">
+		UPDATE customer 
+		SET nickname = #{nickname}, job = #{job}, tel = #{tel}, img_src= #{imgSrc}
+		WHERE cust_id = #{custId}
+	</update>
+	
+	<delete id="deleteCustomer" parameterType="int">
+		DELETE FROM customer
+		WHERE cust_id = #{value}
+	</delete>
 </mapper>

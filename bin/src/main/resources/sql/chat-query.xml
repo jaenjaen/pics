@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ChatMapper">	
+	<resultMap type="HashMap" id="recentChat">
+		<result column="comId" property="comId" />
+		<result column="comName" property="comName" />
+		<result column="comLogo" property="comLogo" />
+		<result column="stuId" property="stuId" />
+		<result column="stuName" property="stuName" />
+		<result column="custId" property="custId" />
+		<result column="custName" property="custName" />
+		<result column="custLogo" property="custLogo" />
+		<result column="chatId" property="chatId" />
+		<result column="word" property="word" />
+		<result column="dateTime" property="dateTime" />
+		<result column="count" property="count" />
+		<result column="sender" property="sender" />
+		<result column="readCheck" property="readCheck" />
+		<result column="filePath" property="filePath" />
+	</resultMap>
+	
+	<resultMap type="HashMap" id="stuDefaultInfo">
+		<result column="comId" property="comId" />
+		<result column="comName" property="comName" />
+		<result column="comLogo" property="comLogo" />
+		<result column="stuId" property="stuId" />
+		<result column="stuName" property="stuName" />
+	</resultMap>
+	
+	<resultMap type="HashMap" id="custDefaultInfo">
+		<result column="custId" property="custId" />
+		<result column="custName" property="custName" />
+		<result column="custLogo" property="custLogo" />
+	</resultMap>
+	
+	<!-- 채팅 추가하기 -->
+	<insert id="addChat" parameterType="chat">
+		INSERT INTO 
+		chat (cust_id, stu_id, word, file_path, date_time, sender, read_check) 
+		VALUES(#{custId}, #{stuId}, #{word}, #{filePath}, NOW(), #{sender}, #{readCheck});
+	</insert>
+	
+	<!-- 채팅 아이디로 해당되는 대화를 삭제함 -->
+	<delete id="deleteChat" parameterType="string">
+		DELETE 
+		FROM chat 
+		WHERE chat_id=#{chatId};
+	</delete>
+	
+	<!-- 읽음 처리(고객은 sender=1을 읽음 / 업체는 sender=0을 읽음) -->
+	<update id="setAlreadyRead" parameterType="hashMap">
+		UPDATE chat SET read_check = 1 
+		WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
+	</update>
+	
+	<!-- 읽지 않은 메세지를 가져옴(고객은 sender=1을 가져옴 / 업체는 sender=0을 가져옴) -->
+	<select id="getNotYetRead" parameterType="hashMap" resultType="list">
+		SELECT chat_id, cust_id, stu_id, 
+        word, file_path, 
+        DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check  
+		FROM chat WHERE cust_id=#{custId} AND stu_id=#{stuId} AND sender=#{sender} AND read_check=0;
+	</select>
+	
+	<!-- 업체의 comId, stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 -->
+	<select id="getCountOfUnreadComChat" parameterType="string" resultMap="recentChat">
+		SELECT
+		s.com_id comId, c.stuId, c.custId, count, DATE_FORMAT(c.dateTime, "%Y/%c/%e %r") dateTime
+		FROM
+			(SELECT stu_id stuId, cust_id custId, COUNT(chat_id) count, MAX(date_time) dateTime
+			FROM chat
+			WHERE sender=0 AND read_check = 0
+			GROUP BY cust_id, stu_id) c,
+			(SELECT * FROM studio) s
+		WHERE c.stuId = s.stu_id AND s.com_id=#{comId}
+		ORDER BY dateTime DESC;
+	</select>
+	
+	<!-- 고객의 stuId, custId, 안 읽은 채팅 개수, 날짜를 가져옴 -->
+	<select id="getCountOfUnreadCustChat" parameterType="string" resultMap="recentChat">
+		SELECT
+		c.stuId, c.custId, count, DATE_FORMAT(c.dateTime, "%Y/%c/%e %r") dateTime
+		FROM
+			(SELECT stu_id stuId, cust_id custId, COUNT(chat_id) count, MAX(date_time) dateTime
+			FROM chat
+			WHERE sender = 1 AND read_check = 0
+			GROUP BY cust_id, stu_id) c,
+			(SELECT * FROM customer) cu
+		WHERE c.custId = cu.cust_id AND cu.cust_id = #{custId}
+		ORDER BY dateTime DESC;
+	</select>
+		
+	<!-- 채팅 아이디로 대화를 가져옴 -->
+	<select id="getChatByChatId" parameterType="string" resultType="chat">
+		SELECT chat_id, cust_id, stu_id, 
+        word, file_path, 
+        DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check 
+		FROM chat WHERE chat_id=#{chatId};
+	</select>
+	
+	<!-- 보내는 이(고객/기업)에 따라 해당되는 스튜디오, 고객의 대화를 가져옴 -->
+	<select id="getPrevAllChat" parameterType="hashMap" resultType="chat">
+		SELECT 
+		chat_id, cust_id, stu_id, 
+        word, file_path, 
+        DATE_FORMAT(date_time, "%Y/%c/%e %r") date_time, sender, read_check
+		FROM chat 
+		WHERE cust_id=#{custId} AND stu_id=#{stuId};
+	</select>
+	
+	<!-- 해당 스튜디오, 고객의 가장 최근 채팅 가져오기 -->
+	<select id="getMostRecentChat" parameterType="hashMap" resultType="chat">
+		SELECT s.chat_id, s.cust_id, s.stu_id, 
+		s.word, s.file_path,
+		DATE_FORMAT(s.date_time, "%Y/%c/%e %r") date_time, s.sender, s.read_check
+		FROM
+		(SELECT *
+				FROM chat
+				WHERE cust_id=#{custId} AND stu_id=#{stuId}
+				ORDER BY date_time DESC
+				LIMIT 1) s;
+	</select>
+
+	<!-- 업체의 스튜디오 및 고객별 최근 대화  -->
+	<select id="getRecentComChat" parameterType="string" resultMap="recentChat">
+		SELECT
+		comId, comName, comLogo, 
+		cs.stuId, stuName, 
+		custId, custName, custLogo, 
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
+		FROM
+			(SELECT 
+			c.com_id comId, c.name comName, c.logo_img comLogo,
+			s.stu_id stuId, s.name stuName
+			FROM company c, studio s
+			WHERE c.com_id=#{comId} AND c.com_id = s.com_id) cs,
+			(SELECT 
+			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.file_path filePath,
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
+			FROM
+				(SELECT * FROM customer) cu,
+				(SELECT * 
+				FROM chat
+				WHERE date_time 
+					IN (SELECT MAX(date_time) 
+						FROM chat 
+						GROUP BY cust_id, stu_id)) ch
+			WHERE cu.cust_id=ch.cust_id) cuh
+		WHERE cs.stuId = cuh.stuId
+		ORDER BY cuh.dateTime DESC;
+	</select>
+	
+	<!-- 중복 없이 업체의 스튜디오 및 고객별 최근 대화를 가져옴(스튜디오 이름순) -->
+	<select id="getRecentComChatNoRpeat" parameterType="string" resultMap="recentChat">
+		SELECT
+		comId, comName, comLogo, 
+		cs.stuId, stuName, 
+		custId, custName, custLogo, 
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
+		FROM
+			(SELECT 
+			c.com_id comId, c.name comName, c.logo_img comLogo,
+			s.stu_id stuId, s.name stuName
+			FROM company c, studio s
+			WHERE c.com_id=#{comId} AND c.com_id = s.com_id) cs,
+			(SELECT 
+			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.file_path filePath,
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
+			FROM
+				(SELECT * FROM customer) cu,
+				(SELECT * 
+				FROM chat
+				WHERE date_time 
+					IN (SELECT MAX(date_time) 
+						FROM chat 
+						GROUP BY cust_id, stu_id)) ch
+			WHERE cu.cust_id=ch.cust_id) cuh
+		WHERE cs.stuId = cuh.stuId
+        GROUP BY stuId
+		ORDER BY stuName;
+	</select>
+	
+	<!-- 스튜디오의 고객별 최근 대화  -->
+	<select id="getRecentStuChat" parameterType="string" resultMap="recentChat">
+		SELECT
+		cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+		st.stu_id stuId, st.name stuName,
+		ch.chat_id chatId, ch.word word, ch.file_path,
+        ch.date_time dateTime, ch.sender sender, ch.read_check
+		FROM
+			(SELECT * FROM customer) cu,
+			(SELECT * FROM studio) st,
+			(SELECT * FROM chat
+			WHERE date_time 
+			IN (SELECT MAX(date_time) 
+				FROM chat 
+			    WHERE stu_id = #{stuId}
+			    GROUP BY cust_id)) ch
+		WHERE ch.stu_id = st.stu_id AND ch.cust_id = cu.cust_id
+		ORDER BY dateTime DESC;
+	</select>
+	
+	<!-- 고객의 스튜디오별 최근 대화  -->
+	<select id="getRecentCustChat" parameterType="string" resultMap="recentChat">
+		SELECT
+		comId, comName, comLogo, 
+		cs.stuId, stuName, 
+		custId, custName, custLogo, 
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
+		FROM
+			(SELECT 
+			c.com_id comId, c.name comName, c.logo_img comLogo,
+			s.stu_id stuId, s.name stuName
+			FROM company c, studio s
+			WHERE c.com_id = s.com_id) cs,
+			(SELECT 
+			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+			ch.chat_id chatId, ch.stu_id stuId, ch.word word, ch.file_path filePath,
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
+			FROM
+				(SELECT * FROM customer) cu,
+				(SELECT * 
+				FROM chat
+				WHERE date_time 
+					IN (SELECT MAX(date_time) 
+						FROM chat 
+						WHERE cust_id = #{custId}
+						GROUP BY stu_id)) ch
+			WHERE cu.cust_id=ch.cust_id) cuh
+		WHERE cs.stuId = cuh.stuId
+		ORDER BY cuh.dateTime DESC;
+	</select>
+	
+	<!-- 스튜디오 아이디와 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 대화 -->
+	<select id="getRecentChatByStuIdAndCustName" parameterType="hashMap" resultMap="recentChat">
+		SELECT
+		comId, comName, comLogo, 
+		cs.stuId, stuName, 
+		custId, custName, custLogo, 
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
+		FROM
+			(SELECT 
+			c.com_id comId, c.name comName, c.logo_img comLogo,
+			s.stu_id stuId, s.name stuName
+			FROM company c, studio s
+			WHERE s.stu_id = #{stuId} AND c.com_id=#{comId} AND c.com_id = s.com_id) cs,
+			(SELECT 
+			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+			ch.chat_id chatId, ch.stu_id stuId, 
+            ch.word word, ch.file_path filePath, 
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
+			FROM
+				(SELECT * FROM customer) cu,
+				(SELECT * 
+				FROM chat
+				WHERE date_time 
+					IN (SELECT MAX(date_time) 
+						FROM chat 
+						GROUP BY cust_id, stu_id)) ch
+			WHERE cu.cust_id=ch.cust_id AND cu.nickname LIKE '%' #{custName} '%') cuh
+		WHERE cs.stuId = cuh.stuId
+		ORDER BY cuh.dateTime DESC;
+	</select>
+	
+	<!-- 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 대화 -->
+	<select id="getRecentChatByCustName" parameterType="hashMap" resultMap="recentChat">
+	SELECT
+		comId, comName, comLogo, 
+		cs.stuId, stuName, 
+		custId, custName, custLogo, 
+		chatId, word, filePath, 
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
+		FROM
+			(SELECT 
+			c.com_id comId, c.name comName, c.logo_img comLogo,
+			s.stu_id stuId, s.name stuName
+			FROM company c, studio s
+			WHERE c.com_id=#{comId} AND c.com_id = s.com_id) cs,
+			(SELECT 
+			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+			ch.chat_id chatId, ch.stu_id stuId, 
+            ch.word word, ch.file_path filePath, 
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
+			FROM
+				(SELECT * FROM customer) cu,
+				(SELECT * 
+				FROM chat
+				WHERE date_time 
+					IN (SELECT MAX(date_time) 
+						FROM chat 
+						GROUP BY cust_id, stu_id)) ch
+			WHERE cu.cust_id=ch.cust_id AND cu.nickname LIKE '%' #{custName} '%') cuh
+		WHERE cs.stuId = cuh.stuId
+		ORDER BY cuh.dateTime DESC;
+	</select>
+	
+	<!-- 스튜디오 이름으로 검색한, 고객의 스튜디오별 최근 대화 -->
+	<select id="getRecentChatByStuName" parameterType="hashMap" resultMap="recentChat">
+	SELECT
+		comId, comName, comLogo, 
+		cs.stuId, stuName, 
+		custId, custName, custLogo, 
+		chatId, word, filePath,
+        DATE_FORMAT(dateTime, "%Y/%c/%e %r") dateTime, sender, readCheck
+		FROM
+			(SELECT 
+			c.com_id comId, c.name comName, c.logo_img comLogo,
+			s.stu_id stuId, s.name stuName
+			FROM company c, studio s
+			WHERE c.com_id = s.com_id AND s.name LIKE '%' #{stuName} '%') cs,
+			(SELECT 
+			cu.cust_id custId, cu.nickname custName, cu.img_src custLogo,
+			ch.chat_id chatId, ch.stu_id stuId, 
+            ch.word word, ch.file_path filePath, 
+            ch.date_time dateTime, ch.sender sender, ch.read_check readCheck
+			FROM
+				(SELECT * FROM customer) cu,
+				(SELECT * 
+				FROM chat
+				WHERE date_time 
+					IN (SELECT MAX(date_time) 
+						FROM chat 
+						WHERE cust_id = #{custId}
+						GROUP BY stu_id)) ch
+			WHERE cu.cust_id=ch.cust_id) cuh
+		WHERE cs.stuId = cuh.stuId
+		ORDER BY cuh.dateTime DESC;
+	</select>
+	
+	<!-- 고객 기본 정보(아이디, 이름, 프로필 사진) 가져오기 -->
+	<select id="getStuDefaultInfo" parameterType="string" resultMap="stuDefaultInfo">
+		SELECT s.stu_id stuId, s.name stuName, c.com_id comId, c.name comName, c.logo_img comLogo
+		FROM company c, 
+		(SELECT * FROM studio WHERE stu_id = #{stuId}) s
+		WHERE c.com_id = s.com_id;
+	</select>
+	
+	<!-- 스튜디오 기본 정보(스튜디오 아이디, 스튜디오 이름, 회사 아이디, 회사 이름, 회사 프로필 ) 가져오기 -->
+	<select id="getCustDefaultInfo" parameterType="string" resultMap="custDefaultInfo">
+		SELECT cust_id custId, nickname custName, img_src custLogo 
+		FROM customer 
+		WHERE cust_id = #{custId};
+	</select>
+</mapper>

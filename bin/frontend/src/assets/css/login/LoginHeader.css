@@ -1,0 +1,40 @@
+.loginHeader {
+    width: 768px;
+    text-align: center;
+    margin: 10px 0 40px 0;
+}
+
+.loginSort {
+    text-align: center;
+    margin-block-start: 0;
+    padding-inline-start: 0;
+}
+
+.loginMode {
+    display: inline-block;
+    margin: 20px 20px;
+    padding: 5px;
+}
+
+.loginMode a:focus,
+.loginMode a:hover {
+    background-color: #33A3DC;
+}
+
+.loginMode a:-webkit-any-link {
+    color: #C1E3F4;
+    text-decoration-line: none;
+    border-bottom: 2px solid #99D1ED;
+}
+
+.is-active a:-webkit-any-link {
+    color: #034EA2;
+    text-decoration-line: none;
+    border-bottom: 2px solid #33A3DC;
+}
+
+@media all and (min-width: 250px) and (max-width: 768px) {
+    .loginHeader {
+        width: 100%;
+    }
+}

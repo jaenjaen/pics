@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:x="urn:schemas-microsoft-com:office:excel"
+xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+xmlns:html="http://www.w3.org/TR/REC-html40">
+<Worksheet ss:Name="Table1">
+	<Table>
+		<Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="110"/>
+		<Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="110"/>
+		<Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="110"/>
+		<Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="110"/>
+		<Row>
+			<Cell><Data ss:Type="String">review_id</Data></Cell>
+			<Cell><Data ss:Type="String">cust_id</Data></Cell>
+			<Cell><Data ss:Type="String">stu_id</Data></Cell>
+			<Cell><Data ss:Type="String">res_id</Data></Cell>
+			<Cell><Data ss:Type="String">score</Data></Cell>
+			<Cell><Data ss:Type="String">content</Data></Cell>
+			<Cell><Data ss:Type="String">img</Data></Cell>
+			<Cell><Data ss:Type="String">reg_date</Data></Cell>
+			<Cell><Data ss:Type="String">answer</Data></Cell>
+		</Row>
+
+		<Row>
+			<Cell><Data ss:Type="Number">13</Data></Cell>
+			<Cell><Data ss:Type="Number">4</Data></Cell>
+			<Cell><Data ss:Type="Number">15</Data></Cell>
+			<Cell><Data ss:Type="Number">1</Data></Cell>
+			<Cell><Data ss:Type="Number">3</Data></Cell>
+			<Cell><Data ss:Type="String">정말좋았어요</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-08-25 16:24:33</Data></Cell>
+			<Cell><Data ss:Type="String">좋게 이용해주셨다니 감사합니다 다음번에 블라블라</Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">14</Data></Cell>
+			<Cell><Data ss:Type="Number">3</Data></Cell>
+			<Cell><Data ss:Type="Number">10</Data></Cell>
+			<Cell><Data ss:Type="Number">2</Data></Cell>
+			<Cell><Data ss:Type="Number">5</Data></Cell>
+			<Cell><Data ss:Type="String">다시 한번 더 촬영오고 싶네요^^~</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-08-26 17:25:44</Data></Cell>
+			<Cell><Data ss:Type="String">또오세요 감사~</Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">15</Data></Cell>
+			<Cell><Data ss:Type="Number">3</Data></Cell>
+			<Cell><Data ss:Type="Number">10</Data></Cell>
+			<Cell><Data ss:Type="Number">12</Data></Cell>
+			<Cell><Data ss:Type="Number">5</Data></Cell>
+			<Cell><Data ss:Type="String">너무 좋아서 또왔어요~</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-08-30 15:33:22</Data></Cell>
+			<Cell><Data ss:Type="String">또 와주셨군요 감사!</Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">16</Data></Cell>
+			<Cell><Data ss:Type="Number">15</Data></Cell>
+			<Cell><Data ss:Type="Number">11</Data></Cell>
+			<Cell><Data ss:Type="Number">36</Data></Cell>
+			<Cell><Data ss:Type="Number">0</Data></Cell>
+			<Cell><Data ss:Type="String">정말 별로입니다 이런데를 왜? 대여하죠? 다신안올듯 ㄹㅇ 돈아까움</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-09-01 11:11:11</Data></Cell>
+			<Cell><Data ss:Type="String">고객님 스튜디오를 사용하시는 동안 불편한 사항이 있으셨나봅니다. 문의하기를 통해 의견 남겨주시면 고치고 나아가는 스튜디오 되겠습니다. 감사합니다.</Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">17</Data></Cell>
+			<Cell><Data ss:Type="Number">15</Data></Cell>
+			<Cell><Data ss:Type="Number">10</Data></Cell>
+			<Cell><Data ss:Type="Number">57</Data></Cell>
+			<Cell><Data ss:Type="Number">4</Data></Cell>
+			<Cell><Data ss:Type="String">촬영하기 딱 좋아요 자연광이 너무 잘 나옴</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-09-01 12:11:02</Data></Cell>
+			<Cell><Data ss:Type="String">좋게 이용해주셨다니 감사합니다 다음번에 블라블라</Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">27</Data></Cell>
+			<Cell><Data ss:Type="Number">1</Data></Cell>
+			<Cell><Data ss:Type="Number">10</Data></Cell>
+			<Cell><Data ss:Type="Number">21</Data></Cell>
+			<Cell><Data ss:Type="Number">4</Data></Cell>
+			<Cell><Data ss:Type="String">깔끔하고 반사판, 조명이 구비되어 있어서 너무 좋았습니다.</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-09-02 10:21:29</Data></Cell>
+			<Cell><Data ss:Type="String">감사합니다. 다음에도 또 이용해주세요~~!</Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">28</Data></Cell>
+			<Cell><Data ss:Type="Number">15</Data></Cell>
+			<Cell><Data ss:Type="Number">13</Data></Cell>
+			<Cell><Data ss:Type="Number">37</Data></Cell>
+			<Cell><Data ss:Type="Number">5</Data></Cell>
+			<Cell><Data ss:Type="String">일때문에왔었는데 찐 좋음ㅎㅎ</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-09-03 17:00:01</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">30</Data></Cell>
+			<Cell><Data ss:Type="Number">15</Data></Cell>
+			<Cell><Data ss:Type="Number">16</Data></Cell>
+			<Cell><Data ss:Type="Number">38</Data></Cell>
+			<Cell><Data ss:Type="Number">4</Data></Cell>
+			<Cell><Data ss:Type="String">옵션도 추가 가격 없이 사용할 수 있어서 너무 좋습니다
+사장님도 친절하시고 다음 야경 촬영 때 또 오고싶네요
+다만 너무 계단턱이 높아서 촬영장비 옮길때 힘들어요</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-09-08 17:22:21</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">32</Data></Cell>
+			<Cell><Data ss:Type="Number">15</Data></Cell>
+			<Cell><Data ss:Type="Number">18</Data></Cell>
+			<Cell><Data ss:Type="Number">39</Data></Cell>
+			<Cell><Data ss:Type="Number">4</Data></Cell>
+			<Cell><Data ss:Type="String">바다가 정말 예쁩니다. 아 근데 여기 루프탑인데 뭐 대충 예쁘다 치져</Data></Cell>
+			<Cell><Data ss:Type="String">http://localhost:7777/upload/review/20200910144154651_15.jpeg</Data></Cell>
+			<Cell><Data ss:Type="String">2020-09-10 14:41:55</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+		</Row>
+		<Row>
+			<Cell><Data ss:Type="Number">34</Data></Cell>
+			<Cell><Data ss:Type="Number">3</Data></Cell>
+			<Cell><Data ss:Type="Number">17</Data></Cell>
+			<Cell><Data ss:Type="Number">61</Data></Cell>
+			<Cell><Data ss:Type="Number">4</Data></Cell>
+			<Cell><Data ss:Type="String">잘 이용했습니다.</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+			<Cell><Data ss:Type="String">2020-09-14 15:31:21</Data></Cell>
+			<Cell><Data ss:Type="String"></Data></Cell>
+		</Row>	</Table>
+</Worksheet>
+</Workbook>

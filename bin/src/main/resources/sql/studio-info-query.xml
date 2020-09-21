@@ -2,7 +2,182 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!-- ================== 스튜디오 상세 페이지 ResultMap================== -->
 <mapper namespace="StudioInfoMapper">
+	<resultMap type="studio" id="studioInfoRM">
+		<result property="stuId" column="stu_id" />
+		<result property="comId" column="com_id" />
+		<result property="name" column="name" />
+		<result property="categoryId" column="category_id" />
+		<result property="name" column="name" />
+		<result property="description" column="description" />
+		<result property="rule" column="rule" />
+		<result property="mainImg" column="main_img" />
+		<result property="portImg" column="port_img" />
+		<result property="cadImg" column="cad_img" />
+		<result property="floor" column="floor" />
+		<result column="avg_score" property="avgScore" />
+		<result column="count_review" property="countReview" />
+		<association property="studioFilter"
+			javaType="studioFilter">
+			<id property="stuId" column="stu_id" />
+			<result property="filterId" column="filter_id" />
+			<result property="size" column="size" />
+			<result property="options" column="options" />
+			<result property="parking" column="parking" />
+			<result property="unitPrice" column="unit_price" />
+			<result property="defaultCapacity" column="default_capacity" />
+			<result property="excharge" column="excharge" />
+			<result property="address" column="address" />
+			<result property="maxCapacity" column="max_capacity" />
+		</association>
+		<association property="company" javaType="company">
+			<id property="comId" column="com_id" />
+			<result property="comId" column="com_id" />
+			<result property="name" column="comName" />
+			<result property="address" column="address" />
+			<result property="password" column="password" />
+			<result property="tel" column="tel" />
+			<result property="description" column="description" />
+			<result property="logoImg" column="logo_img" />
+		</association>
+		<association property="category" javaType="category">
+			<id property="categoryId" column="category_id" />
+			<result property="categoryId" column="category_id" />
+			<result property="categoryName" column="category_name" />
+		</association>
+	</resultMap>
 
+	<resultMap type="review" id="reviewRM">
+		<result property="reviewId" column="review_id" />
+		<result property="score" column="score" />
+		<result property="content" column="content" />
+		<result property="img" column="img" />
+		<result property="regDate" column="reg_Date" />
+		<result property="answer" column="answer" />
+		<association property="customer" javaType="customer">
+			<id property="custId" column="cust_id" />
+			<result property="custId" column="cust_id" />
+			<result property="apiId" column="api_id" />
+			<result property="gender" column="gender" />
+			<result property="job" column="job" />
+			<result property="funnel" column="funnel" />
+			<result property="email" column="email" />
+			<result property="tel" column="tel" />
+			<result property="apiKey" column="api_key" />
+			<result property="imgSrc" column="img_src" />
+		</association>
+		<association property="studio" javaType="studio">
+			<id property="stuId" column="stu_id" />
+			<result property="stuId" column="stu_id" />
+			<result property="comId" column="com_id" />
+			<result property="categoryId" column="category_id" />
+			<result property="name" column="name" />
+			<result property="description" column="description" />
+			<result property="rule" column="rule" />
+			<result property="mainImg" column="main_img" />
+			<result property="portImg" column="port_img" />
+			<result property="cadImg" column="cad_img" />
+			<result property="floor" column="floor" />
+		</association>
+	</resultMap>
 
-</mapper>
+	<select id="getStudioInfo" parameterType="int"
+		resultMap="studioInfoRM">
+		SELECT
+		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor,
+		ctg.category_id,ctg.category_name,
+		com.com_id,com.name,com.logo_img,
+		sf.filter_id, sf.size,
+		sf.options,sf.parking,sf.unit_price,sf.default_capacity,sf.excharge,sf.address,sf.max_capacity,sf.stu_id,
+		avg(re.score) avg_score, count(re.review_id) count_review
+		FROM studio s
+		LEFT JOIN studio_category ctg ON s.category_id=ctg.category_id
+		LEFT
+		JOIN company com ON s.com_id=com.com_id
+		LEFT JOIN studio_filter sf ON
+		s.stu_id=sf.stu_id
+		LEFT JOIN review re ON s.stu_id=re.stu_id
+		<if test="'${value}'!=null">
+			WHERE s.stu_id=${value};
+		</if>
+	</select>
+
+	<select id="getStudioReviews" parameterType="int" resultMap="reviewRM">
+		SELECT
+		re.review_id,re.score, re.content, re.img,
+		re.reg_date, re.answer,
+		c.cust_id,c.api_id,c.gender,c.job,c.funnel,c.email,c.tel,c.api_key,c.img_src,
+		s.stu_id,s.com_id,s.category_id,s.name,s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		FROM review re
+		LEFT JOIN studio s ON re.stu_Id=s.stu_Id
+		LEFT JOIN customer c ON
+		re.cust_Id=c.cust_Id
+		WHERE re.stu_Id=${value}
+	</select>
+
+	<select id="getAccCustomer" parameterType="int" resultType="int">
+		SELECT count(res.res_id)
+		FROM reservation res
+		GROUP BY res.stu_id
+		HAVING
+		res.stu_id=${value};
+	</select>
+
+	<select id="getBookmark" parameterType="list" resultType="int">
+		SELECT
+		b.book_id,cust_id,stu_id
+		FROM bookmark b
+		WHERE b.cust_id = ${list[0]}
+		AND b.stu_id = ${list[1]}
+	</select>
+
+	<select id="getTags" parameterType="int" resultType="tag">
+		SELECT t.tag_id, t.stu_id ,t.tag_name
+		FROM tag t
+		<if test="'${value}'!=null">
+			WHERE stu_id=${value}
+		</if>
+	</select>
+
+	<!-- ================== 스튜디오 공간 등록 관련 쿼리 ======================== -->
+	<!-- 스튜디오 등록 -->
+	<insert id="registerStudioInfo" parameterType="studio">
+		INSERT
+		INTO studio (com_id, category_id, name, description, rule, main_img,
+		port_img, cad_img, floor)
+		VALUES((SELECT com_id FROM company WHERE com_id = #{comId}), #{categoryId}, #{name},
+		#{description}, #{rule}, #{mainImg}, #{portImg}, #{cadImg}, #{floor});
+	</insert>
+	<!-- 태그 등록 -->
+	<insert id="registerTag" parameterType="tag">
+		INSERT
+		INTO tag (stu_id, tag_name)
+		VALUES(#{stuId}, #{tagName});
+	</insert>
+	<!-- autoIncreasement된 stuId를 가져옴 -->
+	<select id="getStudioId" parameterType="studio" resultType="int">
+		SELECT stu_id FROM studio WHERE name = #{name} AND com_id = #{comId};
+	</select>
+	<!-- name, comId로 studio를 가져옴 -->
+	<select id="getStudioByNameAndComId" parameterType="studio"
+		resultType="studio">
+		SELECT * FROM studio WHERE name = #{name} AND com_id =
+		#{comId};
+	</select>
+	<!-- address, comId로 studio를 가져옴 -->
+	<select id="getStudioByAddrAndComId" parameterType="hashMap"
+		resultMap="studioInfoRM">
+		SELECT *
+		FROM
+		(SELECT * FROM studio WHERE com_id = #{comId}) s,
+		(SELECT * FROM studio_filter WHERE address = #{address}) f
+		WHERE s.stu_id =
+		f.stu_id;
+	</select>
+	<!-- 카테고리 목록을 가져옴 -->
+	<select id="getCategory" resultType="category">
+		SELECT category_id,
+		category_name FROM studio_category;
+	</select>
+</mapper>	

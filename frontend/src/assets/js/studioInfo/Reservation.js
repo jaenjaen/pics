@@ -71,7 +71,8 @@ export default {
             startDate: 0,
             endDate: 0,
             // //3) 그 외
-            msg: "",
+            openTime: 0,
+            closeTime: 0,
             // 상태 체크 변수
             loading: true,
             errored: false,
@@ -157,7 +158,6 @@ export default {
                 this.endDayTime = this.transTime(this.end_date, this.end_time); //종료일+ 종료시간 초로 환산
                 var startTime = parseInt(this.start_time); //숫자
                 var endTime = parseInt(this.end_time);
-
             }
             // 2. 개별 항목 체크
             // 2-1) 날짜 조건
@@ -225,16 +225,15 @@ export default {
                             "-" + (next.getMonth() - 1) +
                             "-" + next.getDate());
                         let j = this.repeatedDays.indexOf(week[nextDay], 0)
-                        let openTime = parseInt((this.repeated[j]).time.split('-')[0]);
-                        let closeTime = parseInt((this.repeated[j]).time.split('-')[1]);
-
+                        this.openTime = parseInt(this.repeated[j].time.split('-')[0]);
+                        this.closeTime = parseInt(this.repeated[j].time.split('-')[1]);
                         if (i == 0) { //시작일 : 마감시간-시작시간
-                            cntTime += (closeTime - parseInt(startTime));
+                            cntTime += (this.closeTime - parseInt(startTime));
                         } else if (i == (difDate)) { //종료일: 종료시간-오픈시간
-                            cntTime += (parseInt(endTime) - openTime);
+                            cntTime += (parseInt(endTime) - this.openTime);
                         } else { // 그 사이날짜 : if 영업일 >> 마감시간-오픈시간
                             if (this.repeatedDays.indexOf(week[nextDay], 0) > -1) {
-                                cntTime += (closeTime - openTime)
+                                cntTime += (this.closeTime - this.openTime)
                             }
                         }
                     }
@@ -305,11 +304,12 @@ export default {
             if (date != null) {
                 for (let i = 0; i < this.repeatedLength; i++) {
                     if (this.repeated[i].weekday == week[parseInt(date)]) {
-                        var openTime = parseInt(this.repeated[i].time.split('-')[0]);
-                        var closeTime = parseInt(this.repeated[i].time.split('-')[1]);
+                        this.openTime = parseInt(this.repeated[i].time.split('-')[0]);
+                        this.closeTime = parseInt(this.repeated[i].time.split('-')[1]);
+
                         var times = []
                             // let t = 0;
-                        for (let j = openTime; j < closeTime + 1; j++) {
+                        for (let j = this.openTime; j < this.closeTime + 1; j++) {
                             // t = j + openTime
                             times.push(j);
                         }
@@ -374,9 +374,15 @@ export default {
         // 예약 등록 로직
         async addReserve() {
             // 유저 Id 가져오기
-            this.customer = JSON.parse(sessionStorage.getItem('customer'));
-            if (this.customer == undefined) this.$modal.show("login-required");
-            else {
+            try {
+                this.customer = JSON.parse(sessionStorage.getItem('customer'));
+            } catch (error) {
+                console.log(error);
+            }
+
+            if (this.customer == undefined) {
+                this.$modal.show("login-required");
+            } else {
                 await axios
                     .get("http://54.180.25.91:7777/customer/" + this.customer.custId)
                     .then(response => {

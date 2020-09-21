@@ -130,7 +130,14 @@ export default {
             .finally(() => (this.loading = false));
         axios
             .get("http://54.180.25.91:7777/studio/accCustomer/" + this.stuId)
-            .then(response => (this.accCustomer = response.data))
+            .then(response => {
+                if (response.data < 1) {
+                    this.accCustomer = 0;
+                } else {
+                    this.accCustomer = response.data;
+                }
+
+            })
             .catch(error => {
                 console.log(error);
                 this.errored = true;
@@ -165,6 +172,12 @@ export default {
         sizePoint(value) {
             return value.toFixed(2);
         },
+        substring: function(value) {
+            if (value.length > 23) {
+                return value.substring(0, 20) + "...";
+            }
+            return value;
+        }
     },
     computed: {
         getUrl: function() {

@@ -77,7 +77,7 @@
         <div class="studio-name">
           <div>
             <h1 id="studio-name">
-              <strong>{{ studio.name }}</strong>
+              <strong>{{ studio.name|substring }}</strong>
               <button class="chat-btn" @click="showChatModal">문의</button>
               <!-- 문의 클릭 이벤트 -->
             </h1>
@@ -102,7 +102,7 @@
                 <span v-if="studio.avgScore == 2">
                   <i class="material-icons" id="icon_filter">star</i>
                   <i class="material-icons" id="icon_filter">star</i>
-                </span>ㄴ
+                </span>
                 <span v-if="studio.avgScore > 2 && studio.avgScore < 3">
                   <i class="material-icons" id="icon_filter">star</i>
                   <i class="material-icons" id="icon_filter">star</i>
@@ -304,7 +304,7 @@
         :maxWidth="768"
       >
         <div id="login-required">
-          <p>찜 목록에 등록했습니다</p>
+          <p>로그인이 필요합니다.</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>

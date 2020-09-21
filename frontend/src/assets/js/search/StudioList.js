@@ -26,7 +26,7 @@ export default {
             score: 0,
 
             //무한스크롤링 변수
-            isDone: true, // 무한스크롤링 끝냄 & 스크롤바가 내려가서 무한 검색하는 것 방지 & 검색이 완료되면 동글뱅이 멈춘다
+            isDone: true, // 무한스크롤링 끝냄 & 스크롤바가 내려가서 무한 검색하는 것 방지
             doSearch: false, //true면 loading 중, false면 끝
 
             //bookmark 변수
@@ -34,8 +34,8 @@ export default {
             isBooked: [], // 반복적으로 찜 등록/해제를 가능하게 해주는 변수
 
             // 기본 변수
-            loading: false,
-            errored: false
+            errored: false,
+            loading: this.loading
         };
     },
     created() {
@@ -80,8 +80,9 @@ export default {
         infiniteHandler() {
             this.loading = true;
             this.isDone = true;
+            alert(this.filters.stuId)
             axios
-                .post("http://54.180.25.91:7777/studio/search/filter", this.filters)
+                .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
                 .then(response => {
                     this.doSearch = true; //호출 시 동글뱅이 시작
                     setTimeout(() => {
@@ -95,15 +96,17 @@ export default {
                             if (response.data.length < 5) {
                                 this.isDone = true;
                                 this.doSearch = false; //동글뱅이 끝(각 서치마다)
+                            } else {
+                                this.filters.page += 5;
+                                this.isDone = false; // 다시 검색하도록 방지 풂
+                                this.doSearch = false;
                             }
-                            this.filters.page += 5;
-                            this.isDone = false; // 다시 검색하도록 방지 풂
-                            this.doSearch = false;
                         } else {
                             this.isDone = true; // 아무것도 없으면 무한스크롤링 끝낸다
                             this.doSearch = false;
                         }
                     }, 1000);
+                    this.$parent.isImage = false;
                 })
                 .catch(error => {
                     console.log(error);
@@ -128,9 +131,9 @@ export default {
         async setBookMark(index, stuId, $event) {
             try {
                 this.doBookMark = false;
-                const bookmark = await axios.get("http://127.0.0.1:7777/bookmark/custId/" + this.filters.session + "/stuId/" + stuId)
+                const bookmark = await axios.get("http://54.180.25.91:7777/bookmark/custId/" + this.filters.session + "/stuId/" + stuId)
                 if (bookmark.data) { //찜목록에 있다면
-                    await axios.delete("http://127.0.0.1:7777/bookmark/" + bookmark.data.bookId);
+                    await axios.delete("http://54.180.25.91:7777/bookmark/" + bookmark.data.bookId);
                     // alert(deleteStatus.data); // 에러 페이지용
                     this.$modal.show("delBook");
                     this.isBooked[index] = false;
@@ -144,7 +147,7 @@ export default {
                             custId: this.filters.session
                         }
                     };
-                    await axios.post("http://127.0.0.1:7777/bookmark", regBookmark);
+                    await axios.post("http://54.180.25.91:7777/bookmark", regBookmark);
                     // alert(insertStatus.data); // 에러 페이지용
                     this.$modal.show("regBook");
                     this.isBooked[index] = true;

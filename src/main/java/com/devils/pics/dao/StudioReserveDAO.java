@@ -21,6 +21,7 @@ public interface StudioReserveDAO {
 	public int DeleteExceptionDate(int exceptionId); //예약 불가 테이블 업데이트
 	public List<Reservation> getExpiredReservation(int custId); //지난예약
 	public List<Reservation> getWillReservation(int custId);//앞으로 남은 예약
+	public List<Reservation> getWillStudioReservation(int stuId);//스튜디오 기준 앞으로 남은 예약
 	public List<Reservation> getMonthReservation(Reservation reservation);//지난 예약중 n월의예약
 
 }

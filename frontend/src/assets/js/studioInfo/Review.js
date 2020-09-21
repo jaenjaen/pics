@@ -1,6 +1,8 @@
 import axios from "axios"; //axios
 import Vue from 'vue'
-import VueMaterial, { MdCard } from 'vue-material';
+import VueMaterial, {
+    MdCard
+} from 'vue-material';
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 import "materialize-css"
@@ -26,7 +28,7 @@ export default {
             // 리뷰 페이징 변수
             reviews: [{
                 reviewId: 0,
-                customer: [{}],
+                customer: {},
                 studio: {},
                 resId: 0,
                 score: 0,
@@ -43,15 +45,13 @@ export default {
     },
     created: function() {
         this.stuId = this.stuIdData;
-        console.log("props로 값 전달 ~! 여기는 Review : " + this.stuId);
     },
     async mounted() { //async mount로 비동기 처리
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         await axios
-            .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+            .get("http://54.180.25.91:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
-                console.log("리뷰 studioInfo : " + this.studios)
             })
             .catch(error => {
                 console.log(error);
@@ -59,16 +59,20 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-            .get("http://127.0.0.1:7777/studio/reviews/" + this.stuId)
+            .get("http://54.180.25.91:7777/studio/reviews/" + this.stuId)
             .then(response => {
                 this.reviews = response.data;
-                console.log("리뷰 reviews : " + this.reviews)
-                let temp = []
-                for (var i = 0; i < this.cntReviews; i++) {
-                    temp.push(this.reviews[i]);
+                if (this.reviews.length > this.cntReviews) {
+                    let temp = []
+                    for (var i = 0; i < this.cntReviews; i++) {
+                        console.log("this.reviews : " + this.reviews[i] + this.cntReviews)
+                        temp.push(this.reviews[i]);
+                    }
+                    this.uncoveredReview = temp
+                    this.allReviewLength = (this.reviews).length
+                } else {
+                    this.uncoveredReview = this.reviews
                 }
-                this.uncoveredReview = temp
-                this.allReviewLength = (this.reviews).length
             })
             .catch(error => {
                 console.log(error);

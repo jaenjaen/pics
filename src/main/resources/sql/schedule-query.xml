@@ -10,6 +10,11 @@
 		VALUES(#{weekday}, #{time}, #{stuId});
 	</insert>
 	
+	<update id="updateRepeatdate" parameterType="repeatDate">
+		UPDATE repeat_date
+		SET weekday = #{weekday}, time=#{time}, stu_id=#{stuId}
+	</update>
+	
 	<!--스케쥴 수정용 불러오기 쿼리 -->
 	<select id="getRepeatDateByStuId" parameterType="int" resultType="repeatDate">
 		SELECT repeat_id,weekday,time,stu_id

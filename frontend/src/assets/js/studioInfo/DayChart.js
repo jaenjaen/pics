@@ -1,4 +1,6 @@
-import { Bar } from "vue-chartjs";
+import {
+    Bar
+} from "vue-chartjs";
 import axios from "axios";
 
 export default {
@@ -25,7 +27,7 @@ export default {
                     ],
                     label: "Reservation per Day"
                 }],
-                labels: ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+                labels: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
             },
             options: {
                 scales: {
@@ -57,13 +59,13 @@ export default {
     },
     mounted() {
         axios
-            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
+            .get("http://54.180.25.91:7777/studio/schedule/" + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 var reservation = this.schedule.reservation;
                 this.reservationLength = reservation.length;
                 this.reservation = this.schedule.reservation;
-                this.chartData(this.reservation);
+                this.chartData();
                 this.renderChart(this.datacollection, this.options);
             })
             .catch(error => {
@@ -88,7 +90,7 @@ export default {
                     }
                 }
                 for (let j = 0; j < diff % 7; j++) {
-                    let tomorrow = new Date(startDay.getFullYear(), startDay.getMonth(), startDay.getDate() + 1)
+                    let tomorrow = new Date(startDay.getFullYear(), startDay.getMonth(), startDay.getDate() + j)
                     let tomorrowDay = tomorrow.getDay()
                     this.dayCount[tomorrowDay] += 1;
                 }

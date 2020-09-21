@@ -52,7 +52,7 @@
                     >{{startTime}}시</option>
                   </select>
                 </span>
-                <spand class="end-time">
+                <span class="end-time">
                   <p><strong>예약 종료 시간</strong></p>
                   <select class="time-picker" v-model="end_time" required>
                     <option
@@ -62,7 +62,7 @@
                       :value="parseInt(endTime)"
                     >{{endTime}}시</option>
                   </select>
-                </spand>
+                </span>
               </div>
               <br>
               <!-- 인원 -->
@@ -76,7 +76,7 @@
                         style="display:inline"
                         class="md-primary"
                       >
-                        <strong>-</strong>
+                        <strong>-</strong>  
                       </md-button>
                     </td>
                     <td>

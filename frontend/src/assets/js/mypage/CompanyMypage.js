@@ -1,5 +1,7 @@
 import 'tui-calendar/dist/tui-calendar.css';
-import { Calendar } from '@toast-ui/vue-calendar';
+import {
+    Calendar
+} from '@toast-ui/vue-calendar';
 import MypageNametag from "@/components/mypage/MypageNametag.vue";
 import MypageGap from "@/components/mypage/MypageGap.vue";
 import Inquiry from "@/components/mypage/Inquiry.vue";
@@ -85,7 +87,7 @@ export default {
     },
     mounted() {
         /* 소유 스튜디오 불러오기 */
-        Axios.get("http://localhost:7777/studio/" + this.comId)
+        Axios.get("http://54.180.25.91:7777/studio/" + this.comId)
             .then(res => {
                 this.studioList = res.data;
                 this.studioFlag = false;
@@ -99,7 +101,7 @@ export default {
             //초기화 안하면 쌓임
             this.scheduleList = [];
 
-            Axios.get("http://localhost:7777/company/schedule/" + this.selectedId)
+            Axios.get("http://54.180.25.91:7777/company/schedule/" + this.selectedId)
                 .then(res => {
                     // console.log(res.data);
                     var data = res.data;
@@ -182,7 +184,7 @@ export default {
                 exceptionTitle: this.ex_title,
             };
 
-            Axios.post("http://localhost:7777/studio/exceptionDate", schedule)
+            Axios.post("http://54.180.25.91:7777/studio/exceptionDate", schedule)
                 .then(() => {
                     this.$modal.hide("creationModal");
                     location.reload();
@@ -221,7 +223,7 @@ export default {
             /* update reservation */
             if (e.schedule.calendarId == "0") {
                 //axios 예약
-                Axios.put("http://localhost:7777/studio/reservation", {
+                Axios.put("http://54.180.25.91:7777/studio/reservation", {
                     resId: Number(e.schedule.id),
                     startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
                     endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
@@ -232,7 +234,7 @@ export default {
 
             /* update exceptionDate */
             else {
-                Axios.put("http://localhost:7777/studio/exceptionDate", {
+                Axios.put("http://54.180.25.91:7777/studio/exceptionDate", {
                     exceptionId: Number(e.schedule.id),
                     startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
                     endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
@@ -247,7 +249,7 @@ export default {
             this.$refs.studioCalendar.invoke('deleteSchedule', this.scheduleId, this.calendarId);
             /* delete reservation */
             if (this.calendarId == "0") {
-                Axios.delete("http://localhost:7777/studio/reservation/" + this.scheduleId)
+                Axios.delete("http://54.180.25.91:7777/studio/reservation/" + this.scheduleId)
                     .then(() => {}).catch(err => {
                         console.log(err);
                     })
@@ -255,7 +257,7 @@ export default {
 
             /* delete Exception */
             else {
-                Axios.delete("http://localhost:7777/studio/exceptionDate/" + this.scheduleId)
+                Axios.delete("http://54.180.25.91:7777/studio/exceptionDate/" + this.scheduleId)
                     .then(() => {}).catch(err => {
                         console.log(err);
                     })

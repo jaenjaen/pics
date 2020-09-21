@@ -263,8 +263,7 @@
       </div>
       <hr />
       <!-- ============== Review ============== -->
-      <Review :stuIdData="stuId">
-      </Review>
+      <Review :stuIdData="stuId"></Review>
       <!-- ============== OthserStudio ============== -->
       <OtherStudio :stuIdData="stuId"></OtherStudio>
     </article>

@@ -1,0 +1,23 @@
+1. 플라스크 ResutfulAPI & 딥러닝 예제 풍부
+https://niceman.tistory.com/193?category=1009824
+
+2. FrameWork 안 쓰고 Socket 을 활용해서 Python - Spring 연동
+https://gusrb.tistory.com/47
+
+3. Flask Restful API 기본 (로그인 예제 등 다른 것들도 풍부)
+https://niceman.tistory.com/191
+
+4. 기본
+https://www.fun-coding.org/flask_basic-2.html
+
+5. colab 모델 읽기/저장
+https://yamalab.tistory.com/80
+https://tutorials.pytorch.kr/beginner/saving_loading_models.html
+
+6. 이미지 데이터 전처리
+https://wordbe.tistory.com/entry/Data-Loading-and-Processing-Tutorial
+
+7. 이미지 DataLoader로 받기
+https://data-panic.tistory.com/13
+
+

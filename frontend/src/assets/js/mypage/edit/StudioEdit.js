@@ -46,8 +46,8 @@ export default {
             /* 디폴트 이미지 */
             required: 'http://localhost:7777/upload/default/required.png',
             main: 'http://localhost:7777/upload/default/main.png',
-            cad: 'http://localhost:7777/upload/default/cad.png',
             port: 'http://localhost:7777/upload/default/port.png',
+            cad: 'http://localhost:7777/upload/default/cad.png',
 
             /* 카테고리 */
             category: "",
@@ -113,6 +113,25 @@ export default {
             tag1: "",
             tag2: "",
             tag3: "",
+
+            mainArray: ['http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png',
+                'http://localhost:7777/upload/default/main.png'
+            ],
+            cadHolder: this.cad,
+            portArray: ['http://localhost:7777/upload/default/port.png',
+                'http://localhost:7777/upload/default/port.png',
+                'http://localhost:7777/upload/default/port.png',
+                'http://localhost:7777/upload/default/port.png'
+            ]
+
         };
     },
     created() {
@@ -128,6 +147,9 @@ export default {
         }
     },
     mounted() {
+        var mainTmp = [];
+        var cadTmp = "";
+        var portTmp = [];
         /* 라이브러리 충돌로 인해 적용되지 않는 CSS 해결 */
         document.getElementById('multi').childNodes[0].setAttribute('style', 'width:100%; height:45px');
         document.getElementById('multi').childNodes[1].setAttribute('style', 'width:100%;');
@@ -144,8 +166,9 @@ export default {
                 this.studio.name = data.name;
                 this.studio.description = data.description;
                 this.studio.rule = data.rule;
-                this.studio.mainImg = data.mainImg;
-                this.studio.cadImg = data.cadImg;
+                mainTmp = data.mainImg.split(",");
+                cadTmp = data.cadImg;
+                portTmp = data.portImg.split(",");
                 this.studio.floor = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;
                 this.studio.studioFilter.options = data.studioFilter.options;
@@ -156,7 +179,6 @@ export default {
                 this.studio.studioFilter.address = data.studioFilter.address;
                 this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
-                console.log(this.studio.schedule.repeatDate);
                 this.tag = data.tag
 
                 /* placeholder용 */
@@ -167,7 +189,22 @@ export default {
                 this.tag1 = data.tag[0].tagName;
                 this.tag2 = data.tag[1].tagName;
                 this.tag3 = data.tag[2].tagName;
-                console.log(this.studio);
+
+                /*mainImg placeholder */
+                if (mainTmp.length > 0 && mainTmp[0] != "") {
+                    for (var i = 0; i < mainTmp.length; i++) {
+                        this.mainArray[i] = this.mainRoute + mainTmp[i];
+                    }
+                }
+                if (cadTmp != "") this.cadHolder = this.cadRoute + cadTmp;
+
+                /*portImg placeholder */
+                if (portTmp.length > 0 && portTmp[0] != "") {
+                    for (var j = 0; j < portTmp.length; j++) {
+                        this.portArray[j] = this.portRoute + portTmp[j];
+                    }
+                }
+
             })
             .catch(err => {
                 console.log(err);

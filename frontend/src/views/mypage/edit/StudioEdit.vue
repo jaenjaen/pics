@@ -54,52 +54,52 @@
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
               <input type=file id="mainFile0" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile0', 'mainImg0', 'mainFilesBtn0', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg0" onclick='document.getElementById("mainFile0").click()'>
+              <img :src="mainArray[0]" class="uploadImg" id="mainImg0" onclick='document.getElementById("mainFile0").click()'>
               <button type="button" id="mainFilesBtn0" class="uploadResetBtn" @click="resetUploadImg('mainFile0', 'mainImg0', 'mainFilesBtn0', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile1" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile1', 'mainImg1', 'mainFilesBtn1', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg1" onclick='document.getElementById("mainFile1").click()'>
+              <img :src="mainArray[1]" class="uploadImg" id="mainImg1" onclick='document.getElementById("mainFile1").click()'>
               <button type="button" id="mainFilesBtn1" class="uploadResetBtn" @click="resetUploadImg('mainFile1', 'mainImg1', 'mainFilesBtn1', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile2" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile2', 'mainImg2', 'mainFilesBtn2', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg2" onclick='document.getElementById("mainFile2").click()'>
+              <img :src="mainArray[2]" class="uploadImg" id="mainImg2" onclick='document.getElementById("mainFile2").click()'>
               <button type="button" id="mainFilesBtn2" class="uploadResetBtn" @click="resetUploadImg('mainFile2', 'mainImg2', 'mainFilesBtn2', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile3" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile3', 'mainImg3', 'mainFilesBtn3', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg3" onclick='document.getElementById("mainFile3").click()'>
+              <img :src="mainArray[3]" class="uploadImg" id="mainImg3" onclick='document.getElementById("mainFile3").click()'>
               <button type="button" id="mainFilesBtn3" class="uploadResetBtn" @click="resetUploadImg('mainFile3', 'mainImg3', 'mainFilesBtn3', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile4" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile4', 'mainImg4', 'mainFilesBtn4', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg4" onclick='document.getElementById("mainFile4").click()'>
+              <img :src="mainArray[4]" class="uploadImg" id="mainImg4" onclick='document.getElementById("mainFile4").click()'>
               <button type="button" id="mainFilesBtn4" class="uploadResetBtn" @click="resetUploadImg('mainFile4', 'mainImg4', 'mainFilesBtn4', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile5" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile5', 'mainImg5', 'mainFilesBtn5', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg5" onclick='document.getElementById("mainFile5").click()'>
+              <img :src="mainArray[5]" class="uploadImg" id="mainImg5" onclick='document.getElementById("mainFile5").click()'>
               <button type="button" id="mainFilesBtn5" class="uploadResetBtn" @click="resetUploadImg('mainFile5', 'mainImg5', 'mainFilesBtn5', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile6" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile6', 'mainImg6', 'mainFilesBtn6', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg6" onclick='document.getElementById("mainFile6").click()'>
+              <img :src="mainArray[6]" class="uploadImg" id="mainImg6" onclick='document.getElementById("mainFile6").click()'>
               <button type="button" id="mainFilesBtn6" class="uploadResetBtn" @click="resetUploadImg('mainFile6', 'mainImg6', 'mainFilesBtn6', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile7" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile7', 'mainImg7', 'mainFilesBtn7', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg7" onclick='document.getElementById("mainFile7").click()'>
+              <img :src="mainArray[7]" class="uploadImg" id="mainImg7" onclick='document.getElementById("mainFile7").click()'>
               <button type="button" id="mainFilesBtn7" class="uploadResetBtn" @click="resetUploadImg('mainFile7', 'mainImg7', 'mainFilesBtn7', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile8" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile8', 'mainImg8', 'mainFilesBtn8', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg8" onclick='document.getElementById("mainFile8").click()'>
+              <img :src="mainArray[8]" class="uploadImg" id="mainImg8" onclick='document.getElementById("mainFile8").click()'>
               <button type="button" id="mainFilesBtn8" class="uploadResetBtn" @click="resetUploadImg('mainFile8', 'mainImg8', 'mainFilesBtn8', 'main')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="mainFile9" name="mainFiles" class="mainFiles" @change="handleImgFileSelect('mainFile9', 'mainImg9', 'mainFilesBtn9', $event)" style='display: none;'> 
-              <img :src="main" class="uploadImg" id="mainImg9" onclick='document.getElementById("mainFile9").click()'>
+              <img :src="mainArray[9]" class="uploadImg" id="mainImg9" onclick='document.getElementById("mainFile9").click()'>
               <button type="button" id="mainFilesBtn9" class="uploadResetBtn" @click="resetUploadImg('mainFile9', 'mainImg9', 'mainFilesBtn9', 'main')">삭제</button>
             </div>
           </div>
@@ -533,22 +533,22 @@
           <div class="col-75 uploadTotal">
             <div class="uploadArea">
               <input type=file id="portFile0" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile0', 'portImg0', 'portFilesBtn0', $event)" style='display: none;'> 
-              <img :src="port" class="uploadImg" id="portImg0" onclick='document.getElementById("portFile0").click()'>
+              <img :src="portArray[0]" class="uploadImg" id="portImg0" onclick='document.getElementById("portFile0").click()'>
               <button type="button" id="portFilesBtn0" class="uploadResetBtn" @click="resetUploadImg('portFile0', 'portImg0', 'portFilesBtn0', 'port')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="portFile1" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile1', 'portImg1', 'portFilesBtn1', $event)" style='display: none;'> 
-              <img :src="port" class="uploadImg" id="portImg1" onclick='document.getElementById("portFile1").click()'>
+              <img :src="portArray[1]" class="uploadImg" id="portImg1" onclick='document.getElementById("portFile1").click()'>
               <button type="button" id="portFilesBtn1" class="uploadResetBtn" @click="resetUploadImg('portFile1', 'portImg1', 'portFilesBtn1', 'port')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="portFile2" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile2', 'portImg2', 'portFilesBtn2', $event)" style='display: none;'> 
-              <img :src="port" class="uploadImg" id="portImg2" onclick='document.getElementById("portFile2").click()'>
+              <img :src="portArray[2]" class="uploadImg" id="portImg2" onclick='document.getElementById("portFile2").click()'>
               <button type="button" id="portFilesBtn2" class="uploadResetBtn" @click="resetUploadImg('portFile2', 'portImg2', 'portFilesBtn2', 'port')">삭제</button>
             </div>
             <div class="uploadArea">
               <input type=file id="portFile3" name="portFiles" class="portFiles" @change="handleImgFileSelect('portFile3', 'portImg3', 'portFilesBtn3', $event)" style='display: none;'> 
-              <img :src="port" class="uploadImg" id="portImg3" onclick='document.getElementById("portFile3").click()'>
+              <img :src="portArray[3]" class="uploadImg" id="portImg3" onclick='document.getElementById("portFile3").click()'>
               <button type="button" id="portFilesBtn3" class="uploadResetBtn" @click="resetUploadImg('portFile3', 'portImg3', 'portFilesBtn3', 'port')">삭제</button>
             </div>
           </div>

@@ -67,6 +67,8 @@ export default {
         // 업로드하여 받아온 stuId를 filter에 각인 후 바로 검색
         uploadImg(e) {
             this.loading = true;
+            this.filters.stuId = "";
+            this.filters.page = 0;
             let image = e.target.files[0];
             let formData = new FormData();
             formData.append("image", image);

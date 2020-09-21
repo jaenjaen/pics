@@ -2,15 +2,87 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="CompanyMapper">
-	<sql id="select-company">
-		SELECT com_id,name,address,password,tel,desc,logo_img
-		FROM company;
-	</sql>
+<mapper namespace="CompanyMapper">	
+
+
+	<resultMap type="company" id="companyInfo">	
+		<result property="comId" column="com_id"/>
+		<result property="name" column="cp_name"/>
+		<result property="address" column="address"/>
+		<result property="password" column="password"/>
+		<result property="tel" column="tel" />
+		<result property="description" column="cp_description"/>
+		<result property="logoImg" column="logo_img" />
+		<result property="salt" column="salt" />
+		<collection property="studioList" ofType="studio">
+			<id property="stuId" column="stu_id"/>
+			<result property="stuId" column="stu_id"/>
+			<result property="comId" column="com_id"/>
+			<result property="name" column="st_name"/>
+			<result property="categoryId" column="category_id"/>
+			<result property="name" column="name"/>
+			<result property="description" column="st_description"/>
+			<result property="rule" column="rule"/>			
+			<result property="mainImg" column="main_img"/>
+			<result property="portImg" column="port_img"/>
+			<result property="cadImg" column="cad_img"/>
+			<result property="floor" column="floor"/>
+			<result column="avg_score" property="avgScore" />
+			<result column="count_review" property="countReview" />
+			<association property="studioFilter" javaType="studioFilter">
+				<id property="stuId" column="stu_id"/>
+				<result property="filterId" column="filter_id" />
+				<result property="size" column="size" />
+				<result property="options" column="options"/>
+				<result property="parking" column="parking"/>
+				<result property="unitPrice" column="unit_price"/>
+				<result property="defaultCapacity" column="default_capacity" />
+				<result property="excharge" column="excharge"/>
+				<result property="address" column="address" />
+				<result property="maxCapacity" column="max_capacity"/>
+		</association>
+		</collection>
+		
+	</resultMap>
 	
+	<!-- 고객 회원가입 -->
 	<insert id="registerCompany" parameterType="company">
-		INSERT INTO company(com_id,name,address,password,tel,logo_img)
-		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg})
+		INSERT INTO company(com_id,name,address,password,tel,logo_img,salt)
+		VALUES (#{comId},#{name},#{address},#{password},#{tel},#{logoImg},#{salt})
 	</insert>
 	
+	<!--고객 정보 가져오기 -->
+	<select id="getCompany" parameterType="company" resultType="company">
+		SELECT com_id, name, address, password, tel, description, logo_img, salt
+		FROM company
+		<if test="comId !=null">
+			WHERE com_id = #{comId}
+		</if>
+	</select>
+	
+	<!--고객 정보 수정 -->
+	<update id="updateCompany" parameterType="company">
+		UPDATE company SET name=#{name}, address=#{address}, password= #{password},
+							tel=#{tel},description = #{description},logo_img =#{logoImg},salt =#{salt}
+		WHERE com_id = #{comId}
+	</update>
+	
+	<!--고객 탈퇴 -->
+	<delete id="deleteCompany" parameterType="string">
+		DELETE FROM company
+		WHERE com_id = #{value}
+	</delete>
+
+	<!--고객 정보 및 스튜디오 모두 불러오기-->
+	<select id="getCompanyInfo" parameterType="string" resultMap="companyInfo">
+		SELECT cp.com_id, cp.name as cp_name, cp.address, cp.password, cp.tel, cp.description as cp_description, cp.logo_img, cp.salt, 
+		st.stu_id,st.name as st_name , st.category_id, st.description as st_description, st.rule, st.main_img, st.port_img, st.cad_img, st.floor , 
+		stf.size, stf.options, stf.parking, stf.unit_price, stf.default_capacity, stf.excharge, stf.address, stf.max_capacity,
+		re.avg_score , re.count_review
+		from company as cp 
+		join studio as st on cp.com_id = st.com_id 
+		join studio_filter as stf on st.stu_id = stf.stu_id 
+		left outer join (select stu_id,avg(score) avg_score, count(review_id) count_review from review group by stu_id) as re on st.stu_id = re.stu_id
+		where cp.com_id= #{value}
+	</select>
 </mapper>

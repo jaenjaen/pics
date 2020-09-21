@@ -1,0 +1,51 @@
+    #nameTag {
+        background-color: #fff;
+        width: 99%;
+        margin: auto;
+    }
+    
+    #nameTag a:-webkit-any-link {
+        color: #B5B5B5;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    
+    .userImg {
+        padding: 10px 5px 10px 5px;
+        width: 15%;
+        text-align: center;
+    }
+    
+    .userImg img {
+        border-radius: 100%;
+        width: 80px;
+        height: 80px;
+    }
+    
+    .userName {
+        padding-top: 10px;
+        font-size: large;
+        font-weight: bold;
+        text-align: left;
+    }
+    
+    .userDetail {
+        text-align: left;
+    }
+    
+    #userHeart {
+        width: 10%;
+        padding: 10px;
+        text-align: center;
+    }
+    
+    @media all and (min-width: 333px) and (max-width: 768px) {
+        .mypage_container {
+            width: 100%;
+        }
+        .userImg img {
+            border-radius: 100%;
+            width: 40px;
+            height: 40px;
+        }
+    }

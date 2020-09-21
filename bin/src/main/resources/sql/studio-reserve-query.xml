@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 예약 Flow 정리 
+		1. Select
+		1-1. 해당 스튜디오의 예약 관련 정보 불러오기 
+			- 예약 가능 일자 : 캘린더 표시, 가능 시간 (-,로 split) : 불가능은 클릭 막든지... 
+			- 인원수 : 최소 인원수부터 최대 인원수까지 +/-로 제시+ 추가 인원 수  		
+		1-2. 총 금액
+			- 초과 인원 : excharge*초과 인원수 계산
+			- 폼 조건 입력 할 때마다 총 금액에는 keyup 이벤트로 계산 결과 제시
+		★ 예약부터는 로긴 필요 >> 사용자 정보 및 스튜디오 정보는 session에 넣고 활용하는 방법도 있음
+		2. insert
+		2-1. 입력한 조건으로 예약한 내역 있는지 조회 >>> 있으면 이미 예약된 내역 있다고 알림 & 마이페이지 가기
+			- 예약자 id, 스튜디오 id, 날짜, 시간 비교
+		2-2. 예약 버튼 누르면 스튜디오 정보, 예약 정보, 고객 정보 가지고 서버로, 이후 작업
+			★ service에서 꼭꼭꼭 transaction처리!!!!
+			- Reservation 테이블에 예약 row 1개 추가 (ok)
+			- 고객 마이페이지에서도 Reservation 테이블에서 cust_id와 일치하는 모든 예약정보 불러오기 
+			- 업체 측 일정도 불가능으로 변경(Exception Date에 해당 일자 추가)	
+		3. update : 1-1 ~ 2-2 과정과 동일. 다만 update 적용
+		4. delete : 2-2에서 reserve id 지우기
+	-->
+
+<mapper namespace="StudioReserveMapper">
+	
+	<resultMap type="reservation" id="resv-stuRM">
+		<result property="resId" column="res_id"/>
+		<result property="stuId" column="stu_id"/>
+		<result property="custId" column="cust_id"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="resDate" column="res_date"/>
+		<result property="totalPeople" column="total_people"/>
+		<association property="studio" javaType="studio">
+			<result property="comId" column="com_id"/>
+			<result property="categoryId" column="category_id"/>
+			<result property="name" column="name"/>
+			<result property="description" column="description"/>
+			<result property="rule" column="rule"/>
+			<result property="mainImg" column="main_img"/>
+			<result property="portImg" column="port_img"/>
+			<result property="cadImg" column="cad_img"/>
+			<result property="floor" column="floor"/>		
+		</association>
+	</resultMap>
+	
+	<resultMap type="reservation" id="resv-custRM">
+		<result property="resId" column="res_id"/>
+		<result property="stuId" column="stu_id"/>
+		<result property="custId" column="cust_id"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="totalPrice" column="total_price"/>
+		<result property="resDate" column="res_date"/>
+		<result property="totalPeople" column="total_people"/>
+		<association property="customer" javaType="customer">
+			<result property="nickname" column="nickname"/>
+			<result property="email" column="email"/>
+			<result property="tel" column="tel"/>	
+		</association>
+	</resultMap>
+	
+	<sql id="select-reservation-studio">
+		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people
+		,s.name, s.description,s.rule,s.main_img,s.port_img,s.cad_img,s.floor
+		FROM reservation r,studio s
+	</sql>
+	
+	<!-- ================== 1. 예약 관련 정보 불러오기 ================== -->	
+  	<select id="getExceptionDate" parameterType="schedule" resultType="exceptionDate">							
+		SELECT exception_id, start_date,end_date,exception_title
+		FROM exception_date
+		WHERE stu_id=#{stuId}
+	</select>
+
+	<select id="getRepeatDate" parameterType="int" resultType="repeatDate">							
+		SELECT rep.repeat_id,rep.weekday, rep.time
+		FROM repeat_date rep
+		WHERE rep.stu_id=${value}
+	</select>
+
+	<select id="getReservation" parameterType="schedule" resultMap="resv-custRM">							
+		SELECT r.res_id,r.stu_id,r.cust_id,r.start_date,r.end_date,r.total_price,r.res_date,r.total_people,
+			   c.nickname,c.email,c.tel
+		FROM reservation r, customer c
+		<if test="stuId!=null">
+			WHERE r.stu_id=#{stuId}
+			AND c.cust_id = r.cust_id
+		</if>
+	</select>
+	
+	<!-- ================== 2. 예약하기 ================== -->
+	<insert id="addReservation" parameterType="reservation">							
+		INSERT into reservation(cust_id,stu_id,start_date,end_date,total_price,res_date,total_people)
+		VALUES(#{custId},#{stuId},#{startDate},#{endDate},#{totalPrice},now(),#{totalPeople})
+	</insert> 
+	
+ 	<insert id="addExceptionDates" parameterType="exceptionDate">							
+		INSERT into exception_date(start_date,end_date,stu_id,exception_title)
+		VALUES (#{startDate},#{endDate},#{stuId},#{exceptionTitle})
+	</insert>
+
+	<update id="updateReservation" parameterType="reservation">							
+		UPDATE reservation 
+		SET 
+		start_date=#{startDate},
+		end_date=#{endDate},
+		res_date=now()
+		WHERE res_id=#{resId}
+	</update>
+
+ 	<update id="updateExceptionDate" parameterType="exceptionDate">							
+		UPDATE exception_date 
+		SET 
+		start_date=#{startDate},
+		end_date=#{endDate}
+		WHERE exception_id=#{exceptionId}
+	</update>
+
+	<delete id="deleteReservation" parameterType="int">							
+		Delete FROM reservation
+		WHERE res_id = #{value}
+	</delete>
+
+ 	<delete id="deleteExceptionDates" parameterType="int">							
+		Delete FROM exception_date
+		WHERE exception_id = #{value}
+	</delete>
+	
+	
+	<!-- reservation for customer
+		 1. 오늘 이전 날짜 예약
+		 2. 오늘 이후 날짜 예약 
+		 3. 월별 예약-->
+	
+	
+	<select id="getExpiredReservation" parameterType="int" resultMap="resv-stuRM">
+		<include refid="select-reservation-studio"/>
+		where cust_id = #{value}
+		and s.stu_id =r.stu_id
+		and start_date &lt; now()
+	 </select>
+	 
+	 <select id="getWillReservation" parameterType="int" resultMap="resv-stuRM">
+	 	<include refid="select-reservation-studio"/>
+		where cust_id = #{value}
+		and s.stu_id =r.stu_id
+		and start_date &gt;= now()
+	 </select>
+	 
+	 <select id="getWillStudioReservation" parameterType="int" resultType="reservation">
+	 	SELECT res_id
+	 	FROM reservation
+		WHERE stu_id = #{value}
+		AND start_date &gt;= now()
+	 </select>
+	 
+	 <select id="getMonthReservation" parameterType="reservation" resultMap="resv-stuRM">
+	 	<include refid="select-reservation-studio"/>
+		where cust_id = #{custId}
+		and s.stu_id =r.stu_id
+	 	and start_date between #{startDate} and #{endDate}
+	 	and start_date &lt; now()
+	 </select>
+ </mapper> 

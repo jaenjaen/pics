@@ -76,7 +76,7 @@
                         style="display:inline"
                         class="md-primary"
                       >
-                        <strong>-</strong>
+                        <strong>-</strong>  
                       </md-button>
                     </td>
                     <td>

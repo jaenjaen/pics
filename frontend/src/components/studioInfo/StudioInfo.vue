@@ -265,7 +265,7 @@
       <!-- ============== Review ============== -->
       <Review :stuIdData="stuId"></Review>
       <!-- ============== OthserStudio ============== -->
-      <!-- <OtherStudio :stuIdData="stuId"></OtherStudio> -->
+      <OtherStudio :stuIdData="stuId"></OtherStudio>
     </article>
       <!-- ============= 모달 모아두기 ============== -->
     <div>

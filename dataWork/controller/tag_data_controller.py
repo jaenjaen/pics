@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[24]:
+# In[1]:
 
 
 # 외부 모듈
@@ -21,7 +21,7 @@ import gensim
 from gensim.models import word2vec
 
 
-# In[27]:
+# In[2]:
 
 
 ### 사용자 모듈 불러오기
@@ -62,14 +62,14 @@ def tagData():
     dataset=word2vec_model.extendTag(CoreTagData2,model,dataset)
     
     # 파일 저장 
-    file_path=os.getcwd()
-    file_path=file_path.replace("\\",'/')
-    dataset.to_csv(file_path+'/resources/dataset/tag_data.csv',sep=',',na_rep='NaN',index =True,encoding='utf-8-sig')
+#     file_path=os.getcwd()
+#     file_path=file_path.replace("\\",'/')
+#     dataset.to_csv(file_path+'/resources/dataset/tag_data.csv',sep=',',na_rep='NaN',index =True,encoding='utf-8-sig')
     
-#     dataset.to_csv('../resources/dataset/tag_data.csv',sep=',',na_rep='NaN',index =True,encoding='utf-8-sig')
+    dataset.to_csv('../resources/dataset/tag_data.csv',sep=',',na_rep='NaN',index =True,encoding='utf-8-sig')
 
 
-# In[28]:
+# In[3]:
 
 
 tagData()

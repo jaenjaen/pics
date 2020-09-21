@@ -352,7 +352,6 @@ export default {
                     console.log('채팅 읽음 처리 성공');
                     console.log(response.data);
                     this.getPrevAllChat();
-                    setTimeout(this.getPrevAllChat(), 100);
                 })
                 .catch(() => {
                     console.log('채팅 읽음 처리 실패');

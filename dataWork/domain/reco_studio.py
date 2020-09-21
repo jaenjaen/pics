@@ -12,6 +12,3 @@ class reco_studio(object):
         self.unit_price = unit_price
         self.main_img = main_img
 
-
-# In[1]:
-

@@ -16,7 +16,7 @@ Vue.component("b-collapse", BCollapse);
 // Vue 시작
 export default {
     name: "studio-list",
-    props: ["filters"],
+    props: ["filters", "loading"],
     data() {
         return {
             // Axios 전체 리스트 변수
@@ -26,7 +26,7 @@ export default {
             score: 0,
 
             //무한스크롤링 변수
-            isDone: true, // 무한스크롤링 끝냄 & 스크롤바가 내려가서 무한 검색하는 것 방지 & 검색이 완료되면 동글뱅이 멈춘다
+            isDone: true, // 무한스크롤링 끝냄 & 스크롤바가 내려가서 무한 검색하는 것 방지
             doSearch: false, //true면 loading 중, false면 끝
 
             //bookmark 변수
@@ -34,8 +34,8 @@ export default {
             isBooked: [], // 반복적으로 찜 등록/해제를 가능하게 해주는 변수
 
             // 기본 변수
-            loading: false,
-            errored: false
+            errored: false,
+            loading: this.loading
         };
     },
     created() {
@@ -95,15 +95,17 @@ export default {
                             if (response.data.length < 5) {
                                 this.isDone = true;
                                 this.doSearch = false; //동글뱅이 끝(각 서치마다)
+                            } else {
+                                this.filters.page += 5;
+                                this.isDone = false; // 다시 검색하도록 방지 풂
+                                this.doSearch = false;
                             }
-                            this.filters.page += 5;
-                            this.isDone = false; // 다시 검색하도록 방지 풂
-                            this.doSearch = false;
                         } else {
                             this.isDone = true; // 아무것도 없으면 무한스크롤링 끝낸다
                             this.doSearch = false;
                         }
                     }, 1000);
+                    this.$parent.isImage = false;
                 })
                 .catch(error => {
                     console.log(error);

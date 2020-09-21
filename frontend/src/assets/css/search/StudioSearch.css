@@ -34,7 +34,7 @@
         
         #searchContent {
             /* box-sizing: border-box; */
-            width: 90%;
+            width: 80%;
             height: 3.2em;
             padding-left: 2em;
             background-color: white !important;
@@ -43,7 +43,16 @@
         }
         
         #searchContent::placeholder {
+            margin-right: 0;
             color: #4e83be;
+        }
+        
+        #icon_camera {
+            margin: 0 0.3em 0.1em 0.3em;
+            vertical-align: middle;
+            color: white !important;
+            font-size: 2em;
+            cursor: pointer;
         }
         
         #filterResult {
@@ -195,7 +204,8 @@
         }
         
         #filterBtn #initBtn {
-            margin-left: 81.5%;
+            margin-left: 80.5%;
+            width: 5.9em;
         }
         
         #filterBtn #applyBtn {
@@ -223,6 +233,10 @@
             line-height: 32.4px;
             font-size: 12px !important;
             background: linear-gradient(135deg, #33a3dc, #034ea2) !important;
+        }
+        
+        #imageSearchLoading p {
+            font-weight: bold;
         }
         /* Select Field
 ========================================================================== */

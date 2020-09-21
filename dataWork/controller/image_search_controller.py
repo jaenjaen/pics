@@ -1,6 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+# In[1]:
+
+
+#!/usr/bin/env python
+# coding: utf-8
+
 # In[18]:
 
 
@@ -41,8 +47,12 @@ def get_stuIds_by_img(file, root_path):
     result_list = get_sim_image_names(saved_img_path, file.filename, simpath)
     stu_ids = get_stuId_by_img(result_list)
     
+    stuId_list = ""
+    for stu_id in stu_ids:
+        stuId_list += str(stu_id)+","
+    
     remove(join(saved_img_path,file.filename))
-    return stu_ids
+    return stuId_list[:-1]
 
 
 # In[2]:
@@ -156,7 +166,5 @@ def show_pics(result_list, target_file) :
 
 
 # In[ ]:
-
-
 
 

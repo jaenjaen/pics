@@ -38,14 +38,12 @@ public class StudioFilterServiceImpl implements StudioFilterService {
 	@Override
 	public List<Studio> searchStudio(SearchCon searchCon) {
 		List<Studio> list = studioFilterDao.searchStudio(searchCon);
-		System.out.println("첫 리스트 : " + list);
 		Bookmark b = new Bookmark();
 		b.setCustId(searchCon.getCustId());
 		if (searchCon.getCustId() != -1) {
 			for (Studio std : list) {
 				b.setStuId(std.getStuId());
 				if (checkBookMark(b) != null && std.getStuId() == checkBookMark(b).getStuId()) {
-					System.out.println(3);
 					ArrayList<Bookmark> bmList = new ArrayList<Bookmark>();
 					bmList.add(checkBookMark(b));
 					std.setBookmark(bmList);

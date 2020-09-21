@@ -178,8 +178,144 @@ export default {
                 this.studio.studioFilter.excharge = data.studioFilter.excharge;
                 this.studio.studioFilter.address = data.studioFilter.address;
                 this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
+
+                /* 운영 시간 바인딩 */
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
-                this.tag = data.tag
+                for(let i=0; i<this.studio.schedule.repeatDate.length; i++){
+                    let day = this.studio.schedule.repeatDate[i].weekday;
+                    let time = this.studio.schedule.repeatDate[i].time;
+                    let timeFirstSplit = time.split(', ');
+                    for(let i=0; i<timeFirstSplit.length; i++){
+                        let timeSecondSplit = timeFirstSplit[i].split('-');
+                        switch(day){
+                            case 'mon':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.mon[j] = 1;
+                                }
+                                break;
+                            case 'tue':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.tue[j] = 1;
+                                }
+                                break;
+                            case 'wed':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.wed[j] = 1;
+                                }
+                                break;
+                            case 'thu':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.thu[j] = 1;
+                                }
+                                break;
+                            case 'fri':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.fri[j] = 1;
+                                }
+                                break;
+                            case 'sat':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.sat[j] = 1;
+                                }
+                                break;
+                            case 'sun':
+                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                    this.week.sun[j] = 1;
+                                }
+                                break;
+                        }
+                    }
+                }
+
+            let dayCount = [0, 0, 0, 0, 0, 0, 0]; //요일별 체크된 시간 수
+            let dayList = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']; //요일 이름
+
+            for (let i = 0; i < 24; i++) { //요일에 따른 체크, 선택, 보임
+                if (this.week.mon[i] > 0) {
+                    document.getElementById('monTime')[i].selected = true; //해당되는 시간 select option 선택
+                    document.getElementById('monTd').setAttribute('style', 'display:inline-block'); //월요일 시간표 보임
+                    document.getElementById('mon').checked = true; //월요일에 체크
+                    dayCount[0]++; //월요일이 체크된 시간 수
+                }
+                if (this.week.tue[i] > 0) {
+                    document.getElementById('tueTime')[i].selected = true;
+                    document.getElementById('tueTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('tue').checked = true;
+                    dayCount[1]++;
+                }
+                if (this.week.wed[i] > 0) {
+                    document.getElementById('wedTime')[i].selected = true;
+                    document.getElementById('wedTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('wed').checked = true;
+                    dayCount[2]++;
+                }
+                if (this.week.thu[i] > 0) {
+                    document.getElementById('thuTime')[i].selected = true;
+                    document.getElementById('thuTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('thu').checked = true;
+                    dayCount[3]++;
+                }
+                if (this.week.fri[i] > 0) {
+                    document.getElementById('friTime')[i].selected = true;
+                    document.getElementById('friTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('fri').checked = true;
+                    dayCount[4]++;
+                }
+                if (this.week.sat[i] > 0) {
+                    document.getElementById('satTime')[i].selected = true;
+                    document.getElementById('satTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('sat').checked = true;
+                    dayCount[5]++;
+                }
+                if (this.week.sun[i] > 0) {
+                    document.getElementById('sunTime')[i].selected = true;
+                    document.getElementById('sunTd').setAttribute('style', 'display:inline-block');
+                    document.getElementById('sun').checked = true;
+                    dayCount[6]++;
+                }
+            }
+
+            let allDay = true;
+            for (let i = 0; i < 7; i++) {
+                if (dayCount[i] == 0) { //해당 요일에 시간이 하나도 선택되지 않았을 경우
+                    allDay = false;
+                } else { //해당 요일에 시간이 선택되었을 경우
+                    this.selectTime(dayList[i]);
+                }
+            }
+            if (allDay == true) { //모든 요일에 선택된 시간이 있을 경우
+                this.selectDay('all');
+            }
+
+            for (let i = 0; i < 7; i++) { //특정 요일에서 모든 시간을 선택했을 경우
+                if (dayCount[i] == 24) {
+                    switch (i) {
+                        case 0:
+                            this.selectAllTime('select', 'monTime', 'noneMonTime', 'allMonTime', 'noneMonTimeCheck');
+                            break;
+                        case 1:
+                            this.selectAllTime('select', 'tueTime', 'noneTueTime', 'allTueTime', 'noneTueTimeCheck');
+                            break;
+                        case 2:
+                            this.selectAllTime('select', 'wedTime', 'noneWedTime', 'allWedTime', 'noneWedTimeCheck');
+                            break;
+                        case 3:
+                            this.selectAllTime('select', 'thuTime', 'noneThuTime', 'allThuTime', 'noneThuTimeCheck');
+                            break;
+                        case 4:
+                            this.selectAllTime('select', 'friTime', 'noneFriTime', 'allFriTime', 'noneFriTimeCheck');
+                            break;
+                        case 5:
+                            this.selectAllTime('select', 'satTime', 'noneSatTime', 'allSatTime', 'noneSatTimeCheck');
+                            break;
+                        case 6:
+                            this.selectAllTime('select', 'sunTime', 'noneSunTime', 'allSunTime', 'noneSunTimeCheck');
+                            break;
+                    }
+                }
+            }
+
+                this.tag = data.tag;
 
                 /* placeholder용 */
                 this.floorNum = data.floor;

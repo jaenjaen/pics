@@ -80,7 +80,6 @@ export default {
         infiniteHandler() {
             this.loading = true;
             this.isDone = true;
-            alert(this.filters.stuId)
             axios
                 .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
                 .then(response => {

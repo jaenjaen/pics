@@ -41,15 +41,15 @@ export default {
             },
 
             /* 이미지 경로 */
-            mainRoute: 'http://localhost:7777/upload/main/',
-            cadRoute: 'http://localhost:7777/upload/cad/',
-            portRoute: 'http://localhost:7777/upload/port/',
+            mainRoute: 'http://54.180.25.91:7777/upload/main/',
+            cadRoute: 'http://54.180.25.91:7777/upload/cad/',
+            portRoute: 'http://54.180.25.91:7777/upload/port/',
 
             /* 디폴트 이미지 */
-            required: 'http://localhost:7777/upload/default/required.png',
-            main: 'http://localhost:7777/upload/default/main.png',
-            port: 'http://localhost:7777/upload/default/port.png',
-            cad: 'http://localhost:7777/upload/default/cad.png',
+            required: 'http://54.180.25.91:7777/upload/default/required.png',
+            main: 'http://54.180.25.91:7777/upload/default/main.png',
+            port: 'http://54.180.25.91:7777/upload/default/port.png',
+            cad: 'http://54.180.25.91:7777/upload/default/cad.png',
 
             /* 카테고리 */
             category: "",
@@ -116,22 +116,22 @@ export default {
             tag2: "",
             tag3: "",
 
-            mainArray: ['http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png',
-                'http://localhost:7777/upload/default/main.png'
+            mainArray: ['http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png',
+                'http://54.180.25.91:7777/upload/default/main.png'
             ],
             cadHolder: this.cad,
-            portArray: ['http://localhost:7777/upload/default/port.png',
-                'http://localhost:7777/upload/default/port.png',
-                'http://localhost:7777/upload/default/port.png',
-                'http://localhost:7777/upload/default/port.png'
+            portArray: ['http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png',
+                'http://54.180.25.91:7777/upload/default/port.png'
             ]
 
         };
@@ -161,10 +161,12 @@ export default {
             uploadImg[i].setAttribute('style', 'height:100%');
         }
         /*DB에서 기존 정보 불러오기*/
-        axios.get("http://localhost:7777/studio/edit/" + studioId)
+        axios.get("http://54.180.25.91:7777/studio/edit/" + studioId)
             .then(res => {
                 var data = res.data;
                 console.log(data);
+                this.studio.stuId = data.stuId;
+                this.studio.categoryId = data.categoryId;
                 this.category = data.category.categoryName;
                 this.studio.name = data.name;
                 this.studio.description = data.description;
@@ -174,11 +176,12 @@ export default {
                 portTmp = data.portImg.split(",");
                 floorTmp = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;
+                this.studio.tag = data.tag;
 
                 this.studio.studioFilter.options = data.studioFilter.options;
                 let temp = this.studio.studioFilter.options.split(',');
-                for(let i=0; i<temp.length; i++){
-                    this.option_save.push({'name' : temp[i]});
+                for (let i = 0; i < temp.length; i++) {
+                    this.option_save.push({ 'name': temp[i] });
                 }
 
                 this.studio.studioFilter.parking = data.studioFilter.parking;
@@ -190,45 +193,45 @@ export default {
 
                 /* 운영 시간 바인딩 */
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
-                for(let i=0; i<this.studio.schedule.repeatDate.length; i++){
+                for (let i = 0; i < this.studio.schedule.repeatDate.length; i++) {
                     let day = this.studio.schedule.repeatDate[i].weekday;
                     let time = this.studio.schedule.repeatDate[i].time;
                     let timeFirstSplit = time.split(',');
-                    for(let i=0; i<timeFirstSplit.length; i++){
+                    for (let i = 0; i < timeFirstSplit.length; i++) {
                         let timeSecondSplit = timeFirstSplit[i].split('-');
-                        switch(day){
+                        switch (day) {
                             case 'mon':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.mon[j] = 1;
                                 }
                                 break;
                             case 'tue':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.tue[j] = 1;
                                 }
                                 break;
                             case 'wed':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.wed[j] = 1;
                                 }
                                 break;
                             case 'thu':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.thu[j] = 1;
                                 }
                                 break;
                             case 'fri':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.fri[j] = 1;
                                 }
                                 break;
                             case 'sat':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.sat[j] = 1;
                                 }
                                 break;
                             case 'sun':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.sun[j] = 1;
                                 }
                                 break;
@@ -355,7 +358,7 @@ export default {
                 if (floorTmp < 0) {
                     underground.checked = true;
                     this.floorNum = Number((floorTmp).toString().substr(1));
-                    console.log(this.floor);
+
                 }
 
                 /*set parking */
@@ -1211,15 +1214,7 @@ export default {
             }
 
             /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
-            if (this.address1 == '') {
-                alert("주소를 선택하세요");
-                return false;
-            } else if (this.address2 == '') {
-                alert("상세주소를 입력하세요");
-                return false;
-            } else {
-                this.studio.studioFilter.address = this.address1 + " " + this.address2;
-            }
+            this.studio.studioFilter.address = this.address1 + " " + this.address2;
 
             /* 숫자 유효성 검사 */
             let floor = document.getElementById('floor').value;
@@ -1326,17 +1321,6 @@ export default {
             }
             this.studio.studioFilter.options = this.option_save.join(","); //배열을 string으로 만듦(,로 구분)
 
-            /* 서비스에 모두 동의해야 등록 */
-            let agrees = document.getElementsByName("checkAgree[]");
-            this.agreeCount = 0;
-            for (let i = 0; i < agrees.length; i++) {
-                if (agrees[i].checked) this.agreeCount++;
-            }
-            if (this.agreeCount < 3) {
-                alert("서비스에 모두 동의하셔야 등록 가능합니다.");
-                return false;
-            }
-
             this.uploadMainImg();
         },
 
@@ -1357,7 +1341,7 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/main/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1380,7 +1364,7 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1405,7 +1389,7 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1424,14 +1408,14 @@ export default {
 
         /* 스튜디오 업데이트 */
         editStudio() {
-            axios.put("http://127.0.0.1:7777/studio", this.studio)
+            axios.put("http://54.180.25.91:7777/studio", this.studio)
                 .then(
                     function(response) {
                         console.log("스튜디오 수정 성공");
                         console.log(response.data);
                         if (response.data == '1') {
                             alert(`스튜디오가 성공적으로 수정되었습니다.`);
-                            //location.href = "/mypage";
+                            location.href = "/mypage";
                         } else if (response.data == '-1') {
                             alert("수정에 실패하였습니다.");
                             return false;
@@ -1445,12 +1429,12 @@ export default {
         /*스튜디오 삭제 */
         deleteStudio() {
             console.log(studioId);
-            axios.get("http://localhost:7777/studio/reservation/will/" + studioId)
+            axios.get("http://54.180.25.91:7777/studio/reservation/will/" + studioId)
                 .then(res => {
                     if (res.data.length > 0)
                         alert("진행중인 예약을 모두 마쳐야 스튜디오를 삭제할 수 있습니다.");
                     else {
-                        axios.delete("http://localhost:7777/studio/delete/" + studioId)
+                        axios.delete("http://54.180.25.91:7777/studio/delete/" + studioId)
                             .then(res => {
                                 if (res.date < 1) alert("다시 시도하여 주십시오.");
                                 else {

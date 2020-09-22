@@ -57,17 +57,18 @@ public class CompanyController {
 	
 	@ApiOperation(value="업체 회원 로그인", response = Company.class)
 	@GetMapping("/company/{comId}/{password}")
-	public ResponseEntity loginCompany(@PathVariable String comId,@PathVariable String password,HttpServletResponse res) {
+	public ResponseEntity loginCompany(@PathVariable String comId,@PathVariable String password) {
 		Company company = new Company();
 		company.setComId(comId);
 		company.setPassword(password);
 		
 		
 		try {
+			
 			Company comp = companyService.loginCompany(company);
 			String token = jwtService.create(comp);
 			
-			res.setHeader("jwt-auth-token", token);
+			//res.setHeader("jwt-auth-token", token);
 			
 			return new ResponseEntity(comp, HttpStatus.OK);
 			

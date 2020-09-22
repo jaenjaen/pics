@@ -15,7 +15,8 @@ export default {
         return {
             custId: JSON.parse(sessionStorage.getItem("customer")).custId,
             month: today + "",
-            resvList: [],
+
+            vList: [],
             emptyFlag: false,
             content: "",
             rating: 0,
@@ -183,7 +184,7 @@ export default {
                 score: this.rating,
                 content: this.content,
                 img: this.img
-            }).then(res => {
+            }).then(() => {
                 // console.log(res.data);
                 alert("리뷰 작성이 완료되었습니다.");
                 location.reload();

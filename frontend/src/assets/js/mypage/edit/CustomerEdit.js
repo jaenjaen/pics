@@ -117,7 +117,7 @@ export default {
         deleteImg() {
             if (this.imgSrc != "") {
                 axios.delete("http://54.180.25.91:7777/filedelte/customer/" + this.imgName)
-                    .then(res => {
+                    .then(() => {
                         // console.log(res);
                     })
                     .catch(err => {

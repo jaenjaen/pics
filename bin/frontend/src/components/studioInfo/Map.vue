@@ -68,7 +68,7 @@ export default {
     },   
     mounted() {  
         axios
-        .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
+        .get("http://54.180.25.91:7777/studio/info/" + this.stuId)
         .then(response => {
             this.studios = response.data;
             console.log("Map Done~!");

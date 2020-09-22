@@ -41,12 +41,13 @@
       <!-- Custom Detail Popup -->
        <modal name="detailModal" :height="250" :width="300" :styles="styles">
          <div class="popup">
-          <h3>{{userName}}</h3><button class="chat-btn" @click="showChatModal">문의</button>
+          <h3>{{userName}}</h3>
           <h4 v-html="reservationDate"></h4>
           <h4 v-if="indexFlag">예약인원 : {{totalPeople}}명</h4>
           <h4 v-if="indexFlag">비용 : {{totalPrice}}원</h4>
           <h4><span class="tui-full-calendar-icon tui-full-calendar-calendar-dot" :style="categoryColor"></span>{{reservationCategory}}</h4>
           <button id="delete" @click="onBeforeDeleteSchedule">일정취소</button>
+          <button class="chat_btn" @click="showChatModal">문의</button>
         </div>
       </modal>
 

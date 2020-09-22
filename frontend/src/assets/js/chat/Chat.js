@@ -386,7 +386,7 @@ export default {
                 //업체로 로그인했을 때
                 other = 0
             }
-            axios.put('http://127.0.0.1:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId + '/' + other)
+            axios.put('http://54.180.25.91:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId + '/' + other)
                 .then(() => {
                     //console.log('채팅 읽음 처리 성공');
                     this.getPrevAllChat();

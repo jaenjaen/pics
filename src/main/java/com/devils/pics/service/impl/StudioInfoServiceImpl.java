@@ -93,4 +93,9 @@ public class StudioInfoServiceImpl implements StudioInfoService {
 	public int addBookmark(Bookmark bookmark) {
 		return studioInfoDao.addBookmark(bookmark);
 	}
+
+	@Override
+	public int updateTag(Tag tag) {
+		return studioInfoDao.updateTag(tag);
+	}
 }

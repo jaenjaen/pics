@@ -87,4 +87,9 @@ public class StudioInfoDAOImpl implements StudioInfoDAO {
 	public int addBookmark(Bookmark bookmark) {
 		return sqlSession.insert(NS+"addBookmark",bookmark);
 	}
+
+	@Override
+	public int updateTag(Tag tag) {
+		return sqlSession.update(NS+"updateTag",tag);
+	}
 }

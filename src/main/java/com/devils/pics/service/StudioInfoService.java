@@ -18,6 +18,7 @@ public interface StudioInfoService {
 	public List<Tag> getTags(int stuId); //tag 가져오기
 	public int getBookmark(List<Integer> idList); //tag 가져오기
 	public int addBookmark(Bookmark bookmark); //tag 추가
+	public int updateTag(Tag tag);
 	
 	/* 스튜디오 공간 등록 관련 메소드 */
 	public int registerStudioInfo(Studio studio); //Studio 등록

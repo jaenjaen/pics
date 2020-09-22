@@ -35,4 +35,9 @@ public class StudioDAOImpl implements StudioDAO {
 	public int deleteStudio(int stuId) throws Exception {
 		return sqlSession.delete(NS+"deleteStudio",stuId);
 	}
+
+	@Override
+	public int updateStudio(Studio studio) throws Exception {
+		return sqlSession.update(NS+"updateStudio",studio);
+	}
 }

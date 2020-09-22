@@ -19,7 +19,7 @@ export default {
         companyLogin: function() {
             axios
                 .get(
-                    "http://54.180.25.91:7777/company/" + this.comId + "/" + this.password
+                    "http://localhost:7777/company/" + this.comId + "/" + this.password
                 )
                 .then(res => {
                     this.rdata = res.data;
@@ -29,7 +29,7 @@ export default {
                     }
                 })
                 .catch(e => {
-                    this.err = e;
+                    console.log(e)
                     alert("가입하지 않은 아이디이거나, 잘못된 비밀번호 입니다.");
                 });
         }

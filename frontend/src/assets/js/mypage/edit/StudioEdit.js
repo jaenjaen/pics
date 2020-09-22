@@ -165,6 +165,8 @@ export default {
             .then(res => {
                 var data = res.data;
                 console.log(data);
+                this.studio.stuId = data.stuId;
+                this.studio.categoryId = data.categoryId;
                 this.category = data.category.categoryName;
                 this.studio.name = data.name;
                 this.studio.description = data.description;
@@ -174,11 +176,12 @@ export default {
                 portTmp = data.portImg.split(",");
                 floorTmp = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;
+                this.studio.tag = data.tag;
 
                 this.studio.studioFilter.options = data.studioFilter.options;
                 let temp = this.studio.studioFilter.options.split(',');
-                for(let i=0; i<temp.length; i++){
-                    this.option_save.push({'name' : temp[i]});
+                for (let i = 0; i < temp.length; i++) {
+                    this.option_save.push({ 'name': temp[i] });
                 }
 
                 this.studio.studioFilter.parking = data.studioFilter.parking;
@@ -190,45 +193,45 @@ export default {
 
                 /* 운영 시간 바인딩 */
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
-                for(let i=0; i<this.studio.schedule.repeatDate.length; i++){
+                for (let i = 0; i < this.studio.schedule.repeatDate.length; i++) {
                     let day = this.studio.schedule.repeatDate[i].weekday;
                     let time = this.studio.schedule.repeatDate[i].time;
                     let timeFirstSplit = time.split(',');
-                    for(let i=0; i<timeFirstSplit.length; i++){
+                    for (let i = 0; i < timeFirstSplit.length; i++) {
                         let timeSecondSplit = timeFirstSplit[i].split('-');
-                        switch(day){
+                        switch (day) {
                             case 'mon':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.mon[j] = 1;
                                 }
                                 break;
                             case 'tue':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.tue[j] = 1;
                                 }
                                 break;
                             case 'wed':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.wed[j] = 1;
                                 }
                                 break;
                             case 'thu':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.thu[j] = 1;
                                 }
                                 break;
                             case 'fri':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.fri[j] = 1;
                                 }
                                 break;
                             case 'sat':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.sat[j] = 1;
                                 }
                                 break;
                             case 'sun':
-                                for(let j = Number(timeSecondSplit[0]); j<Number(timeSecondSplit[1]); j++){
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
                                     this.week.sun[j] = 1;
                                 }
                                 break;
@@ -355,7 +358,7 @@ export default {
                 if (floorTmp < 0) {
                     underground.checked = true;
                     this.floorNum = Number((floorTmp).toString().substr(1));
-                    console.log(this.floor);
+
                 }
 
                 /*set parking */
@@ -1326,17 +1329,6 @@ export default {
             }
             this.studio.studioFilter.options = this.option_save.join(","); //배열을 string으로 만듦(,로 구분)
 
-            /* 서비스에 모두 동의해야 등록 */
-            let agrees = document.getElementsByName("checkAgree[]");
-            this.agreeCount = 0;
-            for (let i = 0; i < agrees.length; i++) {
-                if (agrees[i].checked) this.agreeCount++;
-            }
-            if (this.agreeCount < 3) {
-                alert("서비스에 모두 동의하셔야 등록 가능합니다.");
-                return false;
-            }
-
             this.uploadMainImg();
         },
 
@@ -1424,14 +1416,14 @@ export default {
 
         /* 스튜디오 업데이트 */
         editStudio() {
-            axios.put("http://54.180.25.91:7777/studio", this.studio)
+            axios.put("http://localhost:7777/studio", this.studio)
                 .then(
                     function(response) {
                         console.log("스튜디오 수정 성공");
                         console.log(response.data);
                         if (response.data == '1') {
                             alert(`스튜디오가 성공적으로 수정되었습니다.`);
-                            //location.href = "/mypage";
+                            location.href = "/mypage";
                         } else if (response.data == '-1') {
                             alert("수정에 실패하였습니다.");
                             return false;

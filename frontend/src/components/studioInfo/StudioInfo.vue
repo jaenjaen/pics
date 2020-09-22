@@ -149,7 +149,7 @@
           </div>
         </div>
         <div id="company-of-studio">
-          <!-- <span><img :src="profilUrl(studio.company.logoImg)" width="25px" height="25px" v-if="studio.company.logoImg"/></span> -->
+          <span><img :src="profilUrl(studio.company.logoImg)" width="25px" height="25px" v-if="studio.company.logoImg"/></span>
           <span>{{studio.company.name}}</span>
         </div>
       </div>

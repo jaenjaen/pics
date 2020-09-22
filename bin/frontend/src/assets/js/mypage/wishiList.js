@@ -13,7 +13,7 @@ export default {
     mounted() {
 
         axios
-            .get("http://127.0.0.1:7777/bookmarklist/" + this.custId)
+            .get("http://54.180.25.91:7777/bookmarklist/" + this.custId)
             .then(response => (this.studios = response.data))
             .catch(error => {
                 console.log(error);
@@ -30,7 +30,7 @@ export default {
         },
         removeBookmark(bookId) {
             axios
-                .delete("http://127.0.0.1:7777/bookmark/" + bookId)
+                .delete("http://54.180.25.91:7777/bookmark/" + bookId)
                 .then(response => (this.deleteResponse = response.data))
                 .catch(error => {
                     console.log(error);

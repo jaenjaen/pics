@@ -1,11 +1,16 @@
 import axios from "axios";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
-import { VueDaumPostcode } from "vue-daum-postcode";
+import {
+    VueDaumPostcode
+} from "vue-daum-postcode";
 import 'vue-material/dist/vue-material.min.css';
 
 export default {
-    components: { vueMultiSelect, VueDaumPostcode },
+    components: {
+        vueMultiSelect,
+        VueDaumPostcode
+    },
     data() {
         return {
             /* Back으로 보낼 studio 데이터 */
@@ -36,15 +41,15 @@ export default {
             },
 
             /* 이미지 경로 */
-            mainRoute: 'http://localhost:7777/upload/main/',
-            cadRoute: 'http://localhost:7777/upload/cad/',
-            portRoute: 'http://localhost:7777/upload/port/',
+            mainRoute: 'http://54.180.25.91:7777/upload/main/',
+            cadRoute: 'http://54.180.25.91:7777/upload/cad/',
+            portRoute: 'http://54.180.25.91:7777/upload/port/',
 
             /* 디폴트 이미지 */
-            required: 'http://localhost:7777/upload/default/required.png',
-            main: 'http://localhost:7777/upload/default/main.png',
-            cad: 'http://localhost:7777/upload/default/cad.png',
-            port: 'http://localhost:7777/upload/default/port.png',
+            required: 'http://54.180.25.91:7777/upload/default/required.png',
+            main: 'http://54.180.25.91:7777/upload/default/main.png',
+            cad: 'http://54.180.25.91:7777/upload/default/cad.png',
+            port: 'http://54.180.25.91:7777/upload/default/port.png',
 
             /* 카테고리 */
             category: [],
@@ -78,14 +83,27 @@ export default {
             option_save: [],
             option_list: [{
                 name: "선택",
-                list: [
-                    { name: "카메라" },
-                    { name: "조명" },
-                    { name: "반사판" },
-                    { name: "삼각대" },
-                    { name: "철제박스" },
-                    { name: "스피커" },
-                    { name: "포토그래퍼" }
+                list: [{
+                        name: "카메라"
+                    },
+                    {
+                        name: "조명"
+                    },
+                    {
+                        name: "반사판"
+                    },
+                    {
+                        name: "삼각대"
+                    },
+                    {
+                        name: "철제박스"
+                    },
+                    {
+                        name: "스피커"
+                    },
+                    {
+                        name: "포토그래퍼"
+                    }
                 ]
             }],
             option_filters: [{
@@ -129,7 +147,7 @@ export default {
         }
 
         /* DB에서 카테고리 가져오기 */
-        axios.get('http://127.0.0.1:7777/category')
+        axios.get('http://54.180.25.91:7777/category')
             .then((response) => {
                 this.category = JSON.parse(JSON.stringify(response.data));
             })
@@ -488,9 +506,11 @@ export default {
                 let whatDay = document.getElementById(day);
                 let dayName = day.substring(0, 3);
                 thisCheck = document.getElementById(dayName);
-                if (thisCheck.checked) { /* 요일 선택시 */
+                if (thisCheck.checked) {
+                    /* 요일 선택시 */
                     whatDay.style.display = "inline-block"; //해당 요일 시간표 보임
-                } else { /* 요일 선택해제시 */
+                } else {
+                    /* 요일 선택해제시 */
                     //해당 요일 시간표 전체 체크 해제 및 숨김
                     let dayTime = document.getElementById(dayName + 'Time');
                     for (let i = 0; i < dayTime.length; i++) {
@@ -1150,7 +1170,9 @@ export default {
             let tags = document.getElementsByName("tag");
             for (let i = 0; i < tags.length; i++) {
                 if (tags[i].value == "") continue;
-                this.studio.tag.push({ tagName: tags[i].value });
+                this.studio.tag.push({
+                    tagName: tags[i].value
+                });
                 this.tagCount++;
             }
 
@@ -1307,7 +1329,7 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/main/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/main/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1330,7 +1352,7 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://127.0.0.1:7777/fileUpload/cad/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1355,7 +1377,7 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://127.0.0.1:7777/filesUpload/port/' + this.studio.comId, formData, {
+            axios.post('http://54.180.25.91:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1374,7 +1396,7 @@ export default {
 
         /* 스튜디오 등록 */
         addStudio() {
-            axios.post("http://127.0.0.1:7777/studio", this.studio)
+            axios.post("http://54.180.25.91:7777/studio", this.studio)
                 .then(
                     function(response) {
                         console.log("스튜디오 등록 응답 성공");

@@ -1,6 +1,3 @@
-<head>
-    <script src="https://kit.fontawesome.com/8cc10ba7fd.js" crossorigin="anonymous"></script>
- </head>
 
 ### <빅데이터를 활용한 촬영공간 중계 020 서비스 플랫폼>
 

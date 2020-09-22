@@ -26,9 +26,7 @@
         </div>
       </div>
     </carousel>
-
     <hr />
-
     <nav>
       <div class="tabs-field">
         <div class="row">
@@ -149,7 +147,7 @@
           </div>
         </div>
         <div id="company-of-studio">
-          <!-- <span><img :src="profilUrl(studio.company.logoImg)" width="25px" height="25px" v-if="studio.company.logoImg"/></span> -->
+          <span><img :src="profilUrl(studio.company.logoImg)" width="20px" height="20px" v-if="studio.company.logoImg"/></span>
           <span>{{studio.company.name}}</span>
         </div>
       </div>
@@ -216,7 +214,7 @@
 
       <!-- ============== Description ============== -->
       <div class="article-Description-area" v-for="(studio,index) in studios" v-bind:key="index">
-        <hr />
+        <hr/>
         <div class="studio-rule">
           <h4>Studio 이용 수칙</h4>
           <p>{{ studio.rule }}</p>

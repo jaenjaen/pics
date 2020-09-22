@@ -215,8 +215,8 @@ export default {
         imgUrl(imgName) {
             return require("@/assets/img/studio/" + imgName);
         },
-        profilUrl(profile) {
-            return require("@/assets/img/company_image/" + profile);
+        profilUrl(profil) {
+            return require("@/assets/img/company_image/" + profil);
         },
         // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거
         async setBookMark() {

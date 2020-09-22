@@ -164,48 +164,46 @@ export default {
             if (this.start_date != "") {
                 this.startTimes = this.setTime(this.startDay);
                 if (this.startDate < todayTime) {
-                    alert("대여 시작일을 오늘 이후로 선택하세요.");
                     this.start_date =
                         this.today.getFullYear() +
                         "-" + (this.today.getMonth() + 1) +
                         "-" + this.today.getDate();
+                    alert("대여 시작일을 오늘 이후로 선택하세요.");
                 }
             }
             if (this.end_date != "") {
                 this.endTimes = this.setTime(this.endDay);
                 if (this.startDate > this.endDate) {
-                    alert("대여 종료일을 시작일 이후로 설정하세요.");
                     this.end_date = "";
-
+                    alert("대여 종료일을 시작일 이후로 설정하세요.");
                 }
             }
             // 2-2) 시간 조건
-            if (this.start_date != "" &
-                this.start_date == this.end_date &
-                startTime < 24) {
-                if (startTime >= endTime) { //하루 예약이면 시작시간 < 종료시간
-                    alert("대여 종료시간은 시작시간 이후로 설정하세요.");
+            if (this.start_date != "" && this.end_date != "") {
+                if (
+                    this.startTimes[this.startTimes.length - 1] == startTime) {
+                    this.start_time = 25;
+                    alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
+                }
+                //하루 예약이면 시작시간 < 종료시간
+                if (this.start_date == this.end_date && startTime < 24 && startTime >= endTime) {
                     this.end_time = 25;
+                    alert("대여 종료시간은 시작시간 이후로 설정하세요.");
                 }
             }
-            if ((startTime < 24) &
-                this.start_date != "" &
-                this.end_date != "" &
-                this.startTimes[this.startTimes.length - 1] == startTime) {
-                alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
-                this.start_time = 25;
-            }
-            if ((endTime < 24) & this.end_date != "" & (this.endTimes[0] == endTime) & (this.end_date != "")) {
-                alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
-                this.end_time = 25;
+            if (this.end_date != "") {
+                if ((endTime < 24) & (this.endTimes[0] == endTime)) {
+                    this.end_time = 25;
+                    alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
+                }
             }
             // 3. 새로운 예약 일정이 기존 Reservation 및 Exception Date 일정과 겹치는지 확인
             if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
                 if ((this.checkException() == 0) | (this.checkReservation() == 0)) {
                     this.start_date = "";
                     this.end_date = "";
-                    this.start_time = "";
-                    this.end_time = "";
+                    this.start_time = 25;
+                    this.end_time = 25;
                     alert("예약 불가능한 일정 입니다.");
                 }
             }
@@ -363,7 +361,6 @@ export default {
                         (this.startDayTime < exc_endDate & exc_endDate <= this.endDayTime)) {
                         return 0;
                     } else {
-
                         continue;
                     }
                 }

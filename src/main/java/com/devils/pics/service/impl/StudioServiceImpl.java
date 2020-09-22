@@ -33,4 +33,9 @@ public class StudioServiceImpl implements StudioService{
 	public int deleteStudio(int stuId) throws Exception {
 		return studioDao.deleteStudio(stuId);
 	}
+
+	@Override
+	public int updateStudio(Studio studio) throws Exception {
+		return studioDao.updateStudio(studio);
+	}
 }

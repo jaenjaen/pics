@@ -20,6 +20,7 @@ public interface StudioInfoDAO {
 	public int getStudioId(Studio studio);//Studio 등록 후 StudioFilter에 넣을 stu_id(autoIncrement)를 찾아옴
 	public List<Studio> getStudioByNameAndComId(Studio studio); //name, comId로 Studio를 찾아옴
 	public List<Studio> getStudioByAddrAndComId(Map map); //addr, comId로 Studio를 찾아옴
+	public int updateTag(Tag tag);
 	
 	// 스튜디오 상세조회	
 	public List<Studio> getStudioInfo(int stuId); // Studio DAO에 있는 스튜디오 기본 정보 조회

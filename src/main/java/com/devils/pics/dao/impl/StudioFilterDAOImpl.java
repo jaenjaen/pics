@@ -44,4 +44,9 @@ public class StudioFilterDAOImpl implements StudioFilterDAO {
 	public Bookmark checkBookMark(Bookmark bm) {
 		return sqlSession.selectOne(NS+"checkBookMark", bm);
 	}
+
+	@Override
+	public int updateStudioFilter(StudioFilter studioFilter) {
+		return sqlSession.update(NS+"updateStudioFilter",studioFilter);
+	}
 }

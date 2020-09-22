@@ -68,6 +68,18 @@
 		AND s.stu_id = #{value};
 	</select>
 	
+	<update id="updateStudio" parameterType="studio">
+		UPDATE studio s, studio_filter f 
+		SET s.category_id = #{categoryId}, s.name = #{name} ,s.description = #{description}
+		,s.rule= #{rule}
+		,s.main_img =#{mainImg} ,s.port_img=#{portImg},s.cad_img=#{cadImg},s.floor=#{floor}
+		,f.size= #{studioFilter.size},f.options=#{studioFilter.options},f.parking=#{studioFilter.parking}
+		,f.unit_price=#{studioFilter.unitPrice},f.default_capacity=#{studioFilter.defaultCapacity}
+		,f.excharge=#{studioFilter.excharge},f.address=#{studioFilter.address},f.max_capacity=#{studioFilter.maxCapacity}
+		WHERE s.stu_id=#{stuId}
+		and f.stu_id = s.stu_id;
+	</update>
+	
 	<delete id="deleteStudio" parameterType="int">
 	DELTE FROM studio
 	WHERE stu_id = #{value}

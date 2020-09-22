@@ -1408,7 +1408,7 @@ export default {
 
         /* 스튜디오 업데이트 */
         editStudio() {
-            axios.put("http://localhost:7777/studio", this.studio)
+            axios.put("http://54.180.25.91:7777/studio", this.studio)
                 .then(
                     function(response) {
                         console.log("스튜디오 수정 성공");

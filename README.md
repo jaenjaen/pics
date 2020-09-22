@@ -1,5 +1,6 @@
-# pics
-Photo Studio Rental O2O Service Platform by Devils
+<head>
+    <script src="https://kit.fontawesome.com/8cc10ba7fd.js" crossorigin="anonymous"></script>
+ </head>
 
 ### <빅데이터를 활용한 촬영공간 중계 020 서비스 플랫폼>
 
@@ -35,7 +36,7 @@ Photo Studio Rental O2O Service Platform by Devils
 - 머신러닝을 활용한 촬영공간 중계 O2O 서비스 플랫폼 개발
 - 서비스명 : Pics (Picture + Square)
 	사진의 틀, 사진의 액자
- <<<이미지>>>
+![](https://images.velog.io/images/wpdud94/post/7d933196-d234-42b8-9c54-f9f1fd305e17/0_0_main.png)
  
 ### (2) 기획의도
 - **콘텐츠 산업의 변화로 인한, 촬영공간에 대한 수요 증가**
@@ -69,7 +70,7 @@ Photo Studio Rental O2O Service Platform by Devils
 - 개발 기간 : 2020.08.24(월) ~ 2020.09.18(금) (총 4주) 
 ![](https://images.velog.io/images/wpdud94/post/00f2276c-0f84-47ef-92cf-cf887364a41e/1_5_development%20schedule.png)
 
-
+<br>
 ### (6) 개발팀 소개
 ![](https://images.velog.io/images/wpdud94/post/a66322de-67ca-4116-bf1f-a193c2639e1e/1_6_members.png)
 

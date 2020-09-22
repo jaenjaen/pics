@@ -168,3 +168,27 @@ hr {
 .pricing-field>table>tr {
     padding: 20px 0;
 }
+
+.vm--modal {
+    vertical-align: middle;
+    margin-top: 25%;
+    margin: auto !important;
+}
+
+#success p,
+#login-required p {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.btn-small {
+    background-color: white;
+    color: #029be0;
+    border: 1px solid lightgray;
+    padding: 5 5px;
+    font-size: 1em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+}

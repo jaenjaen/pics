@@ -1214,15 +1214,7 @@ export default {
             }
 
             /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
-            if (this.address1 == '') {
-                alert("주소를 선택하세요");
-                return false;
-            } else if (this.address2 == '') {
-                alert("상세주소를 입력하세요");
-                return false;
-            } else {
-                this.studio.studioFilter.address = this.address1 + " " + this.address2;
-            }
+            this.studio.studioFilter.address = this.address1 + " " + this.address2;
 
             /* 숫자 유효성 검사 */
             let floor = document.getElementById('floor').value;

@@ -75,7 +75,7 @@
 		,s.main_img =#{mainImg} ,s.port_img=#{portImg},s.cad_img=#{cadImg},s.floor=#{floor}
 		,f.size= #{studioFilter.size},f.options=#{studioFilter.options},f.parking=#{studioFilter.parking}
 		,f.unit_price=#{studioFilter.unitPrice},f.default_capacity=#{studioFilter.defaultCapacity}
-		,f.excharge=#{studioFilter.excharge},f.address=#{studioFilter.address},f.max_capacity={studioFilter.maxCapacity}
+		,f.excharge=#{studioFilter.excharge},f.address=#{studioFilter.address},f.max_capacity=#{studioFilter.maxCapacity}
 		WHERE s.stu_id=#{stuId}
 		and f.stu_id = s.stu_id;
 	</update>

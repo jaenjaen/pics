@@ -509,9 +509,9 @@ export default {
             console.log(`소켓 연결 시도... 서버 주소: ${serverURL}`)
             this.stompClient.connect({},
                 /* 연결 성공 */
-                frame => {
+                () => {
                     this.connected = true
-                    console.log('소켓 연결 성공', frame)
+                    //console.log('소켓 연결 성공', frame)
 
                     /* 서버의 메세지 전송 endpoing를 구독(Pub/Sub 구조) */
                     this.stompClient.subscribe('/send', response => {

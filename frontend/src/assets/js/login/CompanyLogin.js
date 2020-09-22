@@ -29,7 +29,7 @@ export default {
                     }
                 })
                 .catch(e => {
-                    this.err = e;
+                    console.log(e)
                     alert("가입하지 않은 아이디이거나, 잘못된 비밀번호 입니다.");
                 });
         }

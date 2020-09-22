@@ -1,9 +1,7 @@
 import axios from "axios";
 import vueMultiSelect from "vue-multi-select"; //https://vue-multi-select.tuturu.io/
 import "vue-multi-select/dist/lib/vue-multi-select.css";
-import {
-    VueDaumPostcode
-} from "vue-daum-postcode";
+import { VueDaumPostcode } from "vue-daum-postcode";
 import 'vue-material/dist/vue-material.min.css';
 
 var session = JSON.parse(sessionStorage.getItem("company"));
@@ -11,10 +9,7 @@ var studioId = (window.location.href).split("/")[4];
 
 
 export default {
-    components: {
-        vueMultiSelect,
-        VueDaumPostcode
-    },
+    components: { vueMultiSelect, VueDaumPostcode },
     data() {
         return {
             /* Back으로 보낼 studio 데이터 */
@@ -88,27 +83,14 @@ export default {
             option_save: [],
             option_list: [{
                 name: "선택",
-                list: [{
-                        name: "카메라"
-                    },
-                    {
-                        name: "조명"
-                    },
-                    {
-                        name: "반사판"
-                    },
-                    {
-                        name: "삼각대"
-                    },
-                    {
-                        name: "철제박스"
-                    },
-                    {
-                        name: "스피커"
-                    },
-                    {
-                        name: "포토그래퍼"
-                    }
+                list: [
+                    { name: "카메라" },
+                    { name: "조명" },
+                    { name: "반사판" },
+                    { name: "삼각대" },
+                    { name: "철제박스" },
+                    { name: "스피커" },
+                    { name: "포토그래퍼" }
                 ]
             }],
             option_filters: [{
@@ -183,6 +165,8 @@ export default {
             .then(res => {
                 var data = res.data;
                 console.log(data);
+                this.studio.stuId = data.stuId;
+                this.studio.categoryId = data.categoryId;
                 this.category = data.category.categoryName;
                 this.studio.name = data.name;
                 this.studio.description = data.description;
@@ -192,14 +176,157 @@ export default {
                 portTmp = data.portImg.split(",");
                 floorTmp = data.floor;
                 this.studio.studioFilter.size = data.studioFilter.size;
+                this.studio.tag = data.tag;
+
                 this.studio.studioFilter.options = data.studioFilter.options;
+                let temp = this.studio.studioFilter.options.split(',');
+                for (let i = 0; i < temp.length; i++) {
+                    this.option_save.push({ 'name': temp[i] });
+                }
+
                 this.studio.studioFilter.parking = data.studioFilter.parking;
                 this.studio.studioFilter.unitPrice = data.studioFilter.unitPrice;
                 this.studio.studioFilter.defaultCapacity = data.studioFilter.defaultCapacity;
                 this.studio.studioFilter.excharge = data.studioFilter.excharge;
                 this.studio.studioFilter.address = data.studioFilter.address;
                 this.studio.studioFilter.maxCapacity = data.studioFilter.maxCapacity;
+
+                /* 운영 시간 바인딩 */
                 this.studio.schedule.repeatDate = data.schedule.repeatDate;
+                for (let i = 0; i < this.studio.schedule.repeatDate.length; i++) {
+                    let day = this.studio.schedule.repeatDate[i].weekday;
+                    let time = this.studio.schedule.repeatDate[i].time;
+                    let timeFirstSplit = time.split(',');
+                    for (let i = 0; i < timeFirstSplit.length; i++) {
+                        let timeSecondSplit = timeFirstSplit[i].split('-');
+                        switch (day) {
+                            case 'mon':
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
+                                    this.week.mon[j] = 1;
+                                }
+                                break;
+                            case 'tue':
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
+                                    this.week.tue[j] = 1;
+                                }
+                                break;
+                            case 'wed':
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
+                                    this.week.wed[j] = 1;
+                                }
+                                break;
+                            case 'thu':
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
+                                    this.week.thu[j] = 1;
+                                }
+                                break;
+                            case 'fri':
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
+                                    this.week.fri[j] = 1;
+                                }
+                                break;
+                            case 'sat':
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
+                                    this.week.sat[j] = 1;
+                                }
+                                break;
+                            case 'sun':
+                                for (let j = Number(timeSecondSplit[0]); j < Number(timeSecondSplit[1]); j++) {
+                                    this.week.sun[j] = 1;
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                let dayCount = [0, 0, 0, 0, 0, 0, 0]; //요일별 체크된 시간 수
+                let dayList = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']; //요일 이름
+
+                for (let i = 0; i < 24; i++) { //요일에 따른 체크, 선택, 보임
+                    if (this.week.mon[i] > 0) {
+                        document.getElementById('monTime')[i].selected = true; //해당되는 시간 select option 선택
+                        document.getElementById('monTd').setAttribute('style', 'display:inline-block'); //월요일 시간표 보임
+                        document.getElementById('mon').checked = true; //월요일에 체크
+                        dayCount[0]++; //월요일이 체크된 시간 수
+                    }
+                    if (this.week.tue[i] > 0) {
+                        document.getElementById('tueTime')[i].selected = true;
+                        document.getElementById('tueTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('tue').checked = true;
+                        dayCount[1]++;
+                    }
+                    if (this.week.wed[i] > 0) {
+                        document.getElementById('wedTime')[i].selected = true;
+                        document.getElementById('wedTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('wed').checked = true;
+                        dayCount[2]++;
+                    }
+                    if (this.week.thu[i] > 0) {
+                        document.getElementById('thuTime')[i].selected = true;
+                        document.getElementById('thuTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('thu').checked = true;
+                        dayCount[3]++;
+                    }
+                    if (this.week.fri[i] > 0) {
+                        document.getElementById('friTime')[i].selected = true;
+                        document.getElementById('friTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('fri').checked = true;
+                        dayCount[4]++;
+                    }
+                    if (this.week.sat[i] > 0) {
+                        document.getElementById('satTime')[i].selected = true;
+                        document.getElementById('satTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('sat').checked = true;
+                        dayCount[5]++;
+                    }
+                    if (this.week.sun[i] > 0) {
+                        document.getElementById('sunTime')[i].selected = true;
+                        document.getElementById('sunTd').setAttribute('style', 'display:inline-block');
+                        document.getElementById('sun').checked = true;
+                        dayCount[6]++;
+                    }
+                }
+
+                let allDay = true;
+                for (let i = 0; i < 7; i++) {
+                    if (dayCount[i] == 0) { //해당 요일에 시간이 하나도 선택되지 않았을 경우
+                        allDay = false;
+                    } else { //해당 요일에 시간이 선택되었을 경우
+                        this.selectTime(dayList[i]);
+                    }
+                }
+                if (allDay == true) { //모든 요일에 선택된 시간이 있을 경우
+                    this.selectDay('all');
+                }
+
+                for (let i = 0; i < 7; i++) { //특정 요일에서 모든 시간을 선택했을 경우
+                    if (dayCount[i] == 24) {
+                        switch (i) {
+                            case 0:
+                                this.selectAllTime('select', 'monTime', 'noneMonTime', 'allMonTime', 'noneMonTimeCheck');
+                                break;
+                            case 1:
+                                this.selectAllTime('select', 'tueTime', 'noneTueTime', 'allTueTime', 'noneTueTimeCheck');
+                                break;
+                            case 2:
+                                this.selectAllTime('select', 'wedTime', 'noneWedTime', 'allWedTime', 'noneWedTimeCheck');
+                                break;
+                            case 3:
+                                this.selectAllTime('select', 'thuTime', 'noneThuTime', 'allThuTime', 'noneThuTimeCheck');
+                                break;
+                            case 4:
+                                this.selectAllTime('select', 'friTime', 'noneFriTime', 'allFriTime', 'noneFriTimeCheck');
+                                break;
+                            case 5:
+                                this.selectAllTime('select', 'satTime', 'noneSatTime', 'allSatTime', 'noneSatTimeCheck');
+                                break;
+                            case 6:
+                                this.selectAllTime('select', 'sunTime', 'noneSunTime', 'allSunTime', 'noneSunTimeCheck');
+                                break;
+                        }
+                    }
+                }
+
                 this.tag = data.tag;
 
                 /* placeholder용 */
@@ -231,7 +358,7 @@ export default {
                 if (floorTmp < 0) {
                     underground.checked = true;
                     this.floorNum = Number((floorTmp).toString().substr(1));
-                    console.log(this.floor);
+
                 }
 
                 /*set parking */
@@ -250,6 +377,7 @@ export default {
             })
     },
     methods: {
+
         /* 스튜디오 소개, 이용 수칙 글자수 체크 및 입력 제한 */
         checkLength() {
             var changeArea = document.getElementsByName('changeArea');
@@ -446,11 +574,9 @@ export default {
                 let whatDay = document.getElementById(day);
                 let dayName = day.substring(0, 3);
                 thisCheck = document.getElementById(dayName);
-                if (thisCheck.checked) {
-                    /* 요일 선택시 */
+                if (thisCheck.checked) { /* 요일 선택시 */
                     whatDay.style.display = "inline-block"; //해당 요일 시간표 보임
-                } else {
-                    /* 요일 선택해제시 */
+                } else { /* 요일 선택해제시 */
                     //해당 요일 시간표 전체 체크 해제 및 숨김
                     let dayTime = document.getElementById(dayName + 'Time');
                     for (let i = 0; i < dayTime.length; i++) {
@@ -1077,9 +1203,7 @@ export default {
             let tags = document.getElementsByName("tag");
             for (let i = 0; i < tags.length; i++) {
                 if (tags[i].value == "") continue;
-                this.studio.tag.push({
-                    tagName: tags[i].value
-                });
+                this.studio.tag.push({ tagName: tags[i].value });
                 this.tagCount++;
             }
 
@@ -1090,15 +1214,7 @@ export default {
             }
 
             /* 주소 입력을 확인하고, 입력한 주소들을 연결하여 바인딩 */
-            if (this.address1 == '') {
-                alert("주소를 선택하세요");
-                return false;
-            } else if (this.address2 == '') {
-                alert("상세주소를 입력하세요");
-                return false;
-            } else {
-                this.studio.studioFilter.address = this.address1 + " " + this.address2;
-            }
+            this.studio.studioFilter.address = this.address1 + " " + this.address2;
 
             /* 숫자 유효성 검사 */
             let floor = document.getElementById('floor').value;
@@ -1205,17 +1321,6 @@ export default {
             }
             this.studio.studioFilter.options = this.option_save.join(","); //배열을 string으로 만듦(,로 구분)
 
-            /* 서비스에 모두 동의해야 등록 */
-            let agrees = document.getElementsByName("checkAgree[]");
-            this.agreeCount = 0;
-            for (let i = 0; i < agrees.length; i++) {
-                if (agrees[i].checked) this.agreeCount++;
-            }
-            if (this.agreeCount < 3) {
-                alert("서비스에 모두 동의하셔야 등록 가능합니다.");
-                return false;
-            }
-
             this.uploadMainImg();
         },
 
@@ -1310,7 +1415,7 @@ export default {
                         console.log(response.data);
                         if (response.data == '1') {
                             alert(`스튜디오가 성공적으로 수정되었습니다.`);
-                            //location.href = "/mypage";
+                            location.href = "/mypage";
                         } else if (response.data == '-1') {
                             alert("수정에 실패하였습니다.");
                             return false;

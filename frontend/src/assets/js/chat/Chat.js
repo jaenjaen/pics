@@ -77,7 +77,7 @@ export default {
             //개인고객으로 로그인했을 경우
             this.customerMode = true //고객모드 ON
             this.customer = customer //세션에 있는 고객 정보를 customer 데이터에 바인딩
-            console.log(this.customer)
+            //console.log(this.customer)
             this.chat.custId = this.customer.custId //세션에서 custId를 chat에 바인딩
 
             this.getRecentCustChat() //고객의 최근 수신 대화를 가져옴
@@ -85,15 +85,15 @@ export default {
             //기업고객으로 로그인했을 경우
             this.customerMode = false //고객모드 OFF
             this.company = company //세션에 있는 업체 정보를 company 데이터에 바인딩
-            console.log(this.company)
+            //console.log(this.company)
 
             /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
             axios
                 .get('http://54.180.25.91:7777/companyifo/' + company.comId)
                 .then(response => {
-                    console.log('company 정보 가져오기 성공')
+                    //console.log('company 정보 가져오기 성공')
                     this.company = response.data //company 데이터에 바인딩
-                    console.log(this.company)
+                    //console.log(this.company)
 
                     /* 업체의 최근 수신 대화를 가져옴 */
                     this.getRecentComChat()
@@ -180,15 +180,15 @@ export default {
                 //개인고객으로 로그인했을 경우
                 this.chat.sender = 0 //보내는 이 : 개인
                 this.chat.custId = customer.custId
-                console.log('chat 데이터 세팅 완료(보내는 이 : 고객)')
-                console.log(this.chat)
+                //console.log('chat 데이터 세팅 완료(보내는 이 : 고객)')
+                //console.log(this.chat)
 
                 this.getPresentStu() //현재 대화 중인 스튜디오 정보 가져오기
             } else if (company != null) {
                 //기업고객으로 로그인했을 경우
                 this.chat.sender = 1 //보내는 이 : 기업
-                console.log('chat 데이터 세팅 완료(보내는 이 : 기업)')
-                console.log(this.chat)
+                //console.log('chat 데이터 세팅 완료(보내는 이 : 기업)')
+                //console.log(this.chat)
 
                 this.getPresentCust() //현재 대화 중인 고객 정보 가져오기
             }
@@ -200,9 +200,9 @@ export default {
                 .get('http://54.180.25.91:7777/chat/recent/cust/' + customer.custId)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('customer 최근 대화 가져오기 성공')
+                        //console.log('customer 최근 대화 가져오기 성공')
                         this.recentChat = response.data
-                        console.log(this.recentChat)
+                        //console.log(this.recentChat)
                         this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = []
@@ -221,16 +221,16 @@ export default {
                 )
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공')
+                        //console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공')
                         this.recentChatNoRepeat = response.data
-                        console.log(this.recentChat)
+                        //console.log(this.recentChat)
                         this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChatNoRepeat = []
                     }
                 })
                 .catch(() => {
-                    console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 성공')
+                    console.log('스튜디오 중복 없이 업체의 최근 대화 가져오기 실패')
                 })
         },
 
@@ -240,9 +240,9 @@ export default {
                 .get('http://54.180.25.91:7777/chat/recent/com/' + company.comId)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('company 최근 대화 가져오기 성공')
+                        //console.log('company 최근 대화 가져오기 성공')
                         this.recentChat = response.data
-                        console.log(this.recentChat)
+                        //console.log(this.recentChat)
                         this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = []
@@ -259,9 +259,9 @@ export default {
                 .get('http://54.180.25.91:7777/chat/recent/stu/' + stuId)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('studio 최근 대화 가져오기 성공')
+                        //console.log('studio 최근 대화 가져오기 성공')
                         this.recentChat = response.data
-                        console.log(this.recentChat)
+                        //console.log(this.recentChat)
                         this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = []
@@ -283,74 +283,54 @@ export default {
                 )
                 .then(response => {
                     if (response.data != -1) {
-                        console.log(
-                            '스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 성공'
-                        )
+                        //console.log('스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 성공');
                         this.recentChat = response.data
-                        console.log(this.recentChat)
+                        //console.log(this.recentChat)
                         this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = []
                     }
                 })
                 .catch(() => {
-                    console.log(
-                        '스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 실패'
-                    )
+                    console.log('스튜디오 이름으로 검색한, 고객의 최근 대화 가져오기 실패');
                 })
         },
 
         /* 스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 */
         getRecentChatByStuIdAndCustName(stuId, custName) {
             axios
-                .get(
-                    'http://54.180.25.91:7777/chat/recent/com/' +
-                    company.comId +
-                    '/' +
-                    stuId +
-                    '/' +
-                    custName
-                )
+                .get('http://54.180.25.91:7777/chat/recent/com/' + company.comId + '/' + stuId + '/' + custName)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log(
-                            '스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공'
-                        )
+                        //console.log('스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공');
                         this.recentChat = response.data
-                        console.log(this.recentChat)
+                        //console.log(this.recentChat)
                         this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = []
                     }
                 })
                 .catch(() => {
-                    console.log(
-                        '스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기  실패'
-                    )
+                    console.log('스튜디오 아이디, 고객 이름으로 검색한, 업체의 최근 대화 가져오기  실패');
                 })
         },
 
         /* 고객 이름으로 검색한, 업체의 스튜디오별/고객별 최근 수신 대화  */
         getRecentChatByCustName(custName) {
             axios
-                .get(
-                    'http://54.180.25.91:7777/chat/recent/com/' +
-                    company.comId +
-                    '/' +
-                    custName
-                )
+                .get('http://54.180.25.91:7777/chat/recent/com/' + company.comId + '/' + custName)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공')
+                        //console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 성공')
                         this.recentChat = response.data
-                        console.log(this.recentChat)
+                        //console.log(this.recentChat)
                         this.getCountOfUnreadChat() //읽지 않은 메세지 개수를 가져옴
                     } else if (response.data == -1) {
                         this.recentChat = []
                     }
                 })
                 .catch(() => {
-                    console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기  실패')
+                    console.log('고객 이름으로 검색한, 업체의 최근 대화 가져오기 실패');
                 })
         },
 
@@ -360,9 +340,9 @@ export default {
                 .get('http://54.180.25.91:7777/chat/info/stu/' + this.chat.stuId)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('현재 대화 중인 Studio 정보 가져오기 성공')
+                        //console.log('현재 대화 중인 Studio 정보 가져오기 성공')
                         this.presentStu = response.data
-                        console.log(this.presentStu)
+                        //console.log(this.presentStu)
 
                         /* 읽음 처리하기 */
                         this.updateReadCheck()
@@ -381,9 +361,9 @@ export default {
                 .get('http://54.180.25.91:7777/chat/info/cust/' + this.chat.custId)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('현재 대화 중인 Customer 정보 가져오기 성공')
+                        //console.log('현재 대화 중인 Customer 정보 가져오기 성공')
                         this.presentCust = response.data
-                        console.log(this.presentCust)
+                        //console.log(this.presentCust)
 
                         /* 이전 대화 내역 가져오기 */
                         this.updateReadCheck()
@@ -406,20 +386,10 @@ export default {
                 //업체로 로그인했을 때
                 other = 0
             }
-            axios
-                .put(
-                    'http://54.180.25.91:7777/chat/prev/' +
-                    this.chat.stuId +
-                    '/' +
-                    this.chat.custId +
-                    '/' +
-                    other
-                )
-                .then(response => {
-                    console.log('채팅 읽음 처리 성공')
-                    console.log(response.data)
-                    this.getPrevAllChat()
-                    setTimeout(this.getPrevAllChat(), 100)
+            axios.put('http://54.180.25.91:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId + '/' + other)
+                .then(() => {
+                    //console.log('채팅 읽음 처리 성공');
+                    this.getPrevAllChat();
                 })
                 .catch(() => {
                     console.log('채팅 읽음 처리 실패')
@@ -434,9 +404,9 @@ export default {
                     .get('http://54.180.25.91:7777/chat/unread/com/' + company.comId)
                     .then(response => {
                         if (response.data != -1) {
-                            console.log('업체의 읽지 않은 대화 개수 가져오기 성공')
+                            //console.log('업체의 읽지 않은 대화 개수 가져오기 성공')
                             this.CountOfUnreadChat = response.data
-                            console.log(this.CountOfUnreadChat)
+                            //console.log(this.CountOfUnreadChat)
                         } else if (response.data == -1) {
                             this.CountOfUnreadChat = []
                         }
@@ -450,9 +420,9 @@ export default {
                     .get('http://54.180.25.91:7777/chat/unread/cust/' + customer.custId)
                     .then(response => {
                         if (response.data != -1) {
-                            console.log('고객의 읽지 않은 대화 개수 가져오기 성공')
+                            //console.log('고객의 읽지 않은 대화 개수 가져오기 성공')
                             this.CountOfUnreadChat = response.data
-                            console.log(this.CountOfUnreadChat)
+                            //console.log(this.CountOfUnreadChat)
                         } else if (response.data == -1) {
                             this.CountOfUnreadChat = []
                         }
@@ -466,17 +436,12 @@ export default {
         /* 이전 대화 내역 가져오기 */
         getPrevAllChat() {
             axios
-                .get(
-                    'http://54.180.25.91:7777/chat/prev/' +
-                    this.chat.stuId +
-                    '/' +
-                    this.chat.custId
-                )
+                .get('http://54.180.25.91:7777/chat/prev/' + this.chat.stuId + '/' + this.chat.custId)
                 .then(response => {
                     if (response.data != -1) {
-                        console.log('이전 대화 가져오기 성공')
+                        //console.log('이전 대화 가져오기 성공')
                         this.prevAllChat = response.data
-                        console.log(this.prevAllChat)
+                        //console.log(this.prevAllChat)
 
                         /* 채팅 모달의 스크롤을 최하단으로 내림 */
                         this.$emit('moveScroll')
@@ -501,7 +466,7 @@ export default {
                     .delete('http://54.180.25.91:7777/chat/delete/' + chatId)
                     .then(response => {
                         if (response.data == 1) {
-                            console.log('대화 삭제 성공')
+                            //console.log('대화 삭제 성공')
                             this.updateReadCheck()
                                 //혹시 읽음 처리 안 된 대화가 생겼을 수 있으니 읽음 처리 -> 대화 내역을 다시 불러옴
 
@@ -526,7 +491,7 @@ export default {
                 .delete('http://54.180.25.91:7777/filedelte/chat/' + fileName)
                 .then(response => {
                     if (response.data === 'OK') {
-                        console.log('파일 삭제 성공')
+                        //console.log('파일 삭제 성공')
                     } else if (response.data === 'FAIL') {
                         console.log('삭제할 파일이 없음')
                     }
@@ -557,7 +522,7 @@ export default {
                         ) {
                             //채팅을 해당자들만 1:1로 확인
                             //채팅 모달이 켜져있어야 받음. 채팅 모달을 껐을 경우 읽지 않음.
-                            console.log('구독으로 받은 메시지 : ', response.body)
+                            //console.log('구독으로 받은 메시지 : ', response.body)
 
                             this.updateReadCheck() //읽음 처리 -> 대화 가져오기
                         }
@@ -617,7 +582,7 @@ export default {
             let formData = new FormData()
             let file = document.querySelector('#chatFile')
             formData.append('file', file.files[0])
-            console.log('파일 정보 : ' + file.files[0])
+            //console.log('파일 정보 : ' + file.files[0])
             if (file.files[0].size > maxSize) {
                 alert('파일은 5MB 이내로 첨부 가능합니다.')
                 return
@@ -636,8 +601,8 @@ export default {
                     }
                 })
                 .then(response => {
-                    console.log('채팅 파일 업로드 응답 성공')
-                    console.log('파일명 : ' + response.data)
+                    //console.log('채팅 파일 업로드 응답 성공')
+                    //console.log('파일명 : ' + response.data)
                     this.chat.filePath = response.data
 
                     this.send() //보냄
@@ -678,8 +643,8 @@ export default {
 
         /* 메시지 전송 */
         send() {
-            console.log('보내는 메세지:' + this.chat.word)
-            console.log('보내는 파일:' + this.chat.filePath)
+            //console.log('보내는 메세지:' + this.chat.word)
+            //console.log('보내는 파일:' + this.chat.filePath)
             if (this.stompClient && this.stompClient.connected) {
                 const msg = this.chat
                 this.stompClient.send('/receive', JSON.stringify(msg), {})

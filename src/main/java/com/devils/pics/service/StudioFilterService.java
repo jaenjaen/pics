@@ -15,4 +15,6 @@ public interface StudioFilterService {
 	public List<Studio> searchStudio(SearchCon searchCon); //Studio 검색
 	public List<Studio> searchStudio();
 	public Bookmark checkBookMark(Bookmark bm);
+	
+	public int updateStudioFilter(StudioFilter studioFilter);
 }

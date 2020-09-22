@@ -58,4 +58,9 @@ public class StudioFilterServiceImpl implements StudioFilterService {
 	public Bookmark checkBookMark(Bookmark bm) {
 		return studioFilterDao.checkBookMark(bm);
 	}
+
+	@Override
+	public int updateStudioFilter(StudioFilter studioFilter) {
+		return studioFilterDao.updateStudioFilter(studioFilter);
+	}
 }

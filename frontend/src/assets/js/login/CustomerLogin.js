@@ -7,7 +7,7 @@ import router from "../../../router";
 //kakao
 let onSuccessKakao = data => {
     console.log("KAKAO - success");
-    console.log(data);
+    // console.log(data);
     window.Kakao.API.request({
         url: "/v2/user/me",
         success: function(res) {
@@ -51,13 +51,13 @@ let onSuccessKakao = data => {
     });
 };
 let onFailureKakao = data => {
-    console.log(data);
+    // console.log(data);
     console.log("KAKAO - callback 처리에 실패하였습니다.");
 };
 
 //google
 let onFailureGoogle = function(data) {
-    console.log(data);
+    // console.log(data);
     console.log("GOOGLE - callback 처리에 실패하였습니다.");
 };
 
@@ -116,7 +116,7 @@ export default {
                 })
                 .then(res => {
                     if (res.data == "") {
-                        console.log(this.apiData);
+                        // console.log(this.apiData);
                         sessionStorage.setItem("apiData", JSON.stringify(this.apiData));
                         router.push('/customerregister');
                     } else {
@@ -125,7 +125,7 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                    // console.log(err);
                 });
         },
         onFailureGoogle,

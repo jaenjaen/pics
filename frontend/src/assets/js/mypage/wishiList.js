@@ -37,7 +37,7 @@ export default {
                     this.errored = true;
                 })
                 .finally(() => (this.loading = false));
-            console.log("북마크 삭제 완료")
+            // console.log("북마크 삭제 완료")
             location.reload();
 
         },

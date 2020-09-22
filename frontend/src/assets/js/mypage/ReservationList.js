@@ -35,7 +35,7 @@ export default {
         axios
             .get("http://54.180.25.91:7777/customer/reservation/expired/" + this.custId)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.resvList = res.data;
             })
             .catch(err => {
@@ -95,13 +95,13 @@ export default {
                 if (tmpDate.getMonth() == 2) endDate = tmpDate.getFullYear() + "-" + mm + "-" + 28;
                 else if (monthList.indexOf(tmpDate.getMonth()) >= 0) endDate = tmpDate.getFullYear() + "-" + mm + "-" + 30;
                 else endDate = tmpDate.getFullYear() + "-" + mm + "-" + 31;
-                console.log(startDate + "," + endDate);
+                // console.log(startDate + "," + endDate);
             }
             axios.get("http://54.180.25.91:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
                 .then(res => {
                     this.resvList = res.data;
                     this.emptyFlag = false;
-                    console.log(res.data);
+                    // console.log(res.data);
                     if (res.data == "") this.emptyFlag = true;
                 })
                 .catch(err => {
@@ -118,7 +118,7 @@ export default {
             if (this.month == today + "") {
                 if (today.getMonth() == 11) {
                     today = new Date((today.getFullYear() + 1) + "-" + 1 + "-" + today.getDate());
-                    console.log(today);
+                    // console.log(today);
                 } else mm = today.getMonth() + 2
 
                 this.month = today.getFullYear() + "-" + mm + "-" + today.getDate();
@@ -131,7 +131,7 @@ export default {
                 var tmpDate = new Date(this.month);
                 if (tmpDate.getMonth() == 11) {
                     tmpDate = new Date((tmpDate.getFullYear() + 1) + "-" + 1 + "-" + tmpDate.getDate());
-                    console.log(tmpDate);
+                    // console.log(tmpDate);
                 } else mm = tmpDate.getMonth() + 2
                 this.month = tmpDate.getFullYear() + "-" + mm + "-" + tmpDate.getDate();
 
@@ -184,7 +184,7 @@ export default {
                 content: this.content,
                 img: this.img
             }).then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 alert("리뷰 작성이 완료되었습니다.");
                 location.reload();
             }).catch(err => {
@@ -223,9 +223,9 @@ export default {
                     }
                 })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     this.img = "http://54.180.25.91:7777/upload/review/" + res.data;
-                    console.log(this.img);
+                    // console.log(this.img);
                 })
                 .catch(err => {
                     console.log(err);

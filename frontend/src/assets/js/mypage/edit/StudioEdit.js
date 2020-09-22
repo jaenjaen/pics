@@ -164,7 +164,7 @@ export default {
         axios.get("http://54.180.25.91:7777/studio/edit/" + studioId)
             .then(res => {
                 var data = res.data;
-                console.log(data);
+                // console.log(data);
                 this.studio.stuId = data.stuId;
                 this.studio.categoryId = data.categoryId;
                 this.category = data.category.categoryName;
@@ -1335,7 +1335,7 @@ export default {
                     continue;
                 }
                 formData.append("files", files[i].files[0]);
-                console.log("파일 정보 : " + files[i].files[0]);
+                // console.log("파일 정보 : " + files[i].files[0]);
             }
             if (count == 10) {
                 alert("대표 사진을 1장 이상 입력하세요.");
@@ -1346,8 +1346,8 @@ export default {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('대표사진 파일 업로드 응답 성공');
-                    console.log('파일명 : ' + response.data);
+                    // console.log('대표사진 파일 업로드 응답 성공');
+                    // console.log('파일명 : ' + response.data);
                     this.studio.mainImg = response.data; //대표사진 파일명 데이터 바인딩
                 })
                 .catch(() => {
@@ -1363,14 +1363,14 @@ export default {
             let formData = new FormData();
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
-            console.log("파일 정보 : " + file.files[0]);
+            // console.log("파일 정보 : " + file.files[0]);
             axios.post('http://54.180.25.91:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('공간도면 파일 업로드 응답 성공');
-                    console.log('파일명 : ' + response.data);
+                    // console.log('공간도면 파일 업로드 응답 성공');
+                    // console.log('파일명 : ' + response.data);
                     this.studio.cadImg = response.data; //공간도면 파일명 데이터 바인딩
                 })
                 .catch(() => {
@@ -1387,15 +1387,15 @@ export default {
             let files = document.getElementsByName('portFiles');
             for (let i = 0; i < files.length; i++) {
                 formData.append("files", files[i].files[0]);
-                console.log("파일 정보 : " + files[i].files[0]);
+                // console.log("파일 정보 : " + files[i].files[0]);
             }
             axios.post('http://54.180.25.91:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
                 }).then((response) => {
-                    console.log('포트폴리오 파일 업로드 응답 성공');
-                    console.log('파일명 : ' + response.data);
+                    // console.log('포트폴리오 파일 업로드 응답 성공');
+                    // console.log('파일명 : ' + response.data);
                     this.studio.portImg = response.data; //포트폴리오 파일명 데이터 바인딩
                 })
                 .catch(() => {
@@ -1411,8 +1411,8 @@ export default {
             axios.put("http://54.180.25.91:7777/studio", this.studio)
                 .then(
                     function(response) {
-                        console.log("스튜디오 수정 성공");
-                        console.log(response.data);
+                        // console.log("스튜디오 수정 성공");
+                        // console.log(response.data);
                         if (response.data == '1') {
                             alert(`스튜디오가 성공적으로 수정되었습니다.`);
                             location.href = "/mypage";
@@ -1428,7 +1428,7 @@ export default {
         },
         /*스튜디오 삭제 */
         deleteStudio() {
-            console.log(studioId);
+            // console.log(studioId);
             axios.get("http://54.180.25.91:7777/studio/reservation/will/" + studioId)
                 .then(res => {
                     if (res.data.length > 0)

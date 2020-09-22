@@ -42,7 +42,7 @@ export default {
                 for (let j = 0; j < (this.studio_infos).length; j++) {
                     let mainImgs = (this.studio_infos[j].main_img).split(',');
                     this.studio_infos[j].main_img = mainImgs[0];
-                    console.log("this.studio_infos: " + this.studio_infos[j].main_img)
+                    // console.log("this.studio_infos: " + this.studio_infos[j].main_img)
                 }
             })
             .catch(error => {

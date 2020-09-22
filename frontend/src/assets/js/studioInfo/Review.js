@@ -65,7 +65,7 @@ export default {
                 if (this.reviews.length > this.cntReviews) {
                     let temp = []
                     for (var i = 0; i < this.cntReviews; i++) {
-                        console.log("this.reviews : " + this.reviews[i] + this.cntReviews)
+                        // console.log("this.reviews : " + this.reviews[i] + this.cntReviews)
                         temp.push(this.reviews[i]);
                     }
                     this.uncoveredReview = temp

@@ -278,8 +278,8 @@ export default {
         showComChatForInquiry(stuId, custId) { //inquiry에서 stuId, custId를 받음.
             this.selectedId = stuId;
             this.userId = custId;
-            console.log("부모 stuId : " + this.selectedId);
-            console.log("부모 custId : " + this.userId);
+            // console.log("부모 stuId : " + this.selectedId);
+            // console.log("부모 custId : " + this.userId);
             this.showChatModal();
         },
         showChatModal: function() {
@@ -312,7 +312,7 @@ export default {
         },
         /* 문의 영역 끝 */
         imgUrl(imgName) {
-            console.log('imgName' + imgName);
+            // console.log('imgName' + imgName);
             return require("@/assets/img/studio/" + imgName);
         }
     }

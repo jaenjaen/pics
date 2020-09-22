@@ -21,7 +21,6 @@
             <div class="card" @click.prevent="moveToComInfo(studio.stu_id)">
               <div class="card-image">
                 <img :src="imgUrl(studio.main_img)" />
-                <!-- <img :src="`@/assets/img/studio/${studio.main_img}`" /> -->
               </div>
               <div class="card-content">
                 <div class="name">{{studio.name|substring}}</div>

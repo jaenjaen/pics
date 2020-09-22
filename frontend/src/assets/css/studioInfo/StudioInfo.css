@@ -254,3 +254,30 @@ hr {
 .portimage>img {
     height: 200px;
 }
+
+.vm--modal {
+    vertical-align: middle;
+    margin-top: 25%;
+    margin: auto !important;
+}
+
+#delBook p,
+#regBook p,
+#login-required p,
+#copy-link-success p,
+#copy-link-error p {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.btn-small {
+    background-color: white;
+    color: #029be0;
+    border: 1px solid lightgray;
+    padding: 5 5px;
+    font-size: 1em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+}

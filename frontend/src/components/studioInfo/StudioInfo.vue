@@ -341,3 +341,4 @@
 <style scoped src="material-design-icons/iconfont/material-icons.css">
 </style>
 <style scoped src="@/assets/css/studioInfo/StudioInfo.css"></style>
+

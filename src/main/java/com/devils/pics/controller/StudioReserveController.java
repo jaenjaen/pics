@@ -76,8 +76,8 @@ public class StudioReserveController {
 	@ApiOperation(value="스튜디오 예약 추가", response = Integer.class)
 	@PostMapping("/studio/reservation")
 	public ResponseEntity AddReservation(@RequestBody Reservation reservation) {
-		//등록 시간 삽입
 		try{
+		System.out.println("reservation : "+reservation);
 		int result=studioReserveService.AddReservation(reservation);
 			return new ResponseEntity(result,HttpStatus.OK);
 		}catch(Exception e) {

@@ -19,8 +19,6 @@
         </span>
       </span>
     </div>
-    <!-- 이미지 검색 부분 -->
-    
     <!-- 필터 부분 -->
     <div class="row" id="filter">
       <!-- 필터 Collapse -->
@@ -73,14 +71,14 @@
                 <input
                   type="text"
                   value=""
-                  v-model="filters.addr1"
+                  v-model="filters.address1"
                   placeholder="도시명을 입력해주세요"
                 />
                 <span>시</span>
                 <input
                   type="text"
                   value=""
-                  v-model="filters.addr2"
+                  v-model="filters.address2"
                   placeholder="구/면/읍 입력해주세요"
                 />
                 <span>구/면/읍</span>

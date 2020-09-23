@@ -132,6 +132,11 @@
             font-size: 1em;
             font-weight: bold;
         }
+        
+        #noResult {
+            font-weight: bold;
+            font-size: 1.5em;
+        }
         /* Select Field
    ========================================================================== */
         

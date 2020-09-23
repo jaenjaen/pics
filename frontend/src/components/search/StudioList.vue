@@ -156,6 +156,11 @@
         <button class="btn-small" @click="closePop">확인</button>
       </div>
     </modal>
+    <!-- 아무것도 없을 때 -->
+    <div id="noResult" v-if="underFive">
+      <img src="@/assets/img/util/caution.svg" alt="" width="80em">
+      <p>검색 결과가 없습니다.</p>
+    </div>
   </div>
 </template>
 

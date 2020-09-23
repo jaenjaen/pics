@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.devils.pics.domain.Reservation;
+import com.devils.pics.domain.Studio;
+import com.devils.pics.util.SearchCon;
 
 @SpringBootTest
 public class ReservationTest {
@@ -27,5 +29,13 @@ public class ReservationTest {
 //		for(Reservation r :list) {
 //			System.out.println(r);
 //		}
+		
+		SearchCon con = new SearchCon();
+		con.setAddress1("서울");
+		con.setPage(10);
+		
+		
+		List<Studio> list = sqlSession.selectList("StudioFilterMapper.selectStudioByFilter",con);
+		for(Studio s : list) System.out.println(s.getStudioFilter().getAddress());
 	}
 }

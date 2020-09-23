@@ -31,7 +31,7 @@ export default {
         if (sessionStorage.getItem('customer')) {
             this.customer = JSON.parse(sessionStorage.getItem('customer'));
             axios
-                .get("http://54.180.25.91:5000/recommend/" + this.customer.custId)
+                .get("http://127.0.0.1:5000/recommend/" + this.customer.custId)
                 .then(response => {
                     if (response.data.status) {
                         this.studio_infos = response.data.studios;
@@ -46,7 +46,7 @@ export default {
         }
         if (!this.canReco) {
             axios
-                .get("http://54.180.25.91:5000/recommend")
+                .get("http://127.0.0.1:5000/recommend")
                 .then(response => {
                     this.studio_infos = response.data;
                 })

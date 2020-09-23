@@ -318,8 +318,8 @@ export default {
                 let value = countLength[i].value;
                 let length = countLength[i].value.length;
                 if (i == 0) { //스튜디오 소개
-                    if (length > 500) {
-                        document.getElementsByName('countLength')[i].value = value.substring(0, 500);
+                    if (length > 2000) {
+                        document.getElementsByName('countLength')[i].value = value.substring(0, 2000);
                         return false;
                     } else {
                         changeArea[i].innerHTML = length;

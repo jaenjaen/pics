@@ -54,7 +54,7 @@ export default {
     },
     mounted() {
         axios
-            .get("http://54.180.25.91:7777/studio/schedule/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/" + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 this.reservation = this.schedule.reservation

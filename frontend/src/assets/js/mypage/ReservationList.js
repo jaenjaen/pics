@@ -16,7 +16,7 @@ export default {
             custId: JSON.parse(sessionStorage.getItem("customer")).custId,
             month: today + "",
 
-            vList: [],
+            resvList: [],
             emptyFlag: false,
             content: "",
             rating: 0,

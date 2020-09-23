@@ -73,7 +73,7 @@ export default {
             let formData = new FormData();
             formData.append("image", image);
             axios
-                .post('http://54.180.25.91:5000/imageSearch', formData)
+                .post('http://127.0.0.1:5000/imageSearch', formData)
                 .then((response) => {
                     this.filters.stuId = response.data;
                     this.$refs.studioList.infiniteHandler()

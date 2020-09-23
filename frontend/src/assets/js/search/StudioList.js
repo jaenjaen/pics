@@ -35,7 +35,10 @@ export default {
 
             // 기본 변수
             errored: false,
-            loading: this.loading
+            loading: this.loading,
+
+            //검색 결과 예외 변수
+            underFive: false
         };
     },
     created() {
@@ -80,6 +83,7 @@ export default {
         infiniteHandler() {
             this.loading = true;
             this.isDone = true;
+            this.underFive = false;
             axios
                 .post("http://127.0.0.1:7777/studio/search/filter", this.filters)
                 .then(response => {
@@ -100,7 +104,11 @@ export default {
                                 this.isDone = false; // 다시 검색하도록 방지 풂
                                 this.doSearch = false;
                             }
-                        } else {
+                        } else if (this.studios) { // 아무 결과가 없을 때
+                            this.isDone = true; // 아무것도 없으면 무한스크롤링 끝낸다
+                            this.doSearch = false;
+                            this.underFive = true;
+                        } else { // 로딩하다가 더 이상 검색 결과가 없을 때
                             this.isDone = true; // 아무것도 없으면 무한스크롤링 끝낸다
                             this.doSearch = false;
                         }
@@ -130,9 +138,9 @@ export default {
         async setBookMark(index, stuId, $event) {
             try {
                 this.doBookMark = false;
-                const bookmark = await axios.get("http://54.180.25.91:7777/bookmark/custId/" + this.filters.session + "/stuId/" + stuId)
+                const bookmark = await axios.get("http://127.0.0.1:7777/bookmark/custId/" + this.filters.session + "/stuId/" + stuId)
                 if (bookmark.data) { //찜목록에 있다면
-                    await axios.delete("http://54.180.25.91:7777/bookmark/" + bookmark.data.bookId);
+                    await axios.delete("http://127.0.0.1:7777/bookmark/" + bookmark.data.bookId);
                     // alert(deleteStatus.data); // 에러 페이지용
                     this.$modal.show("delBook");
                     this.isBooked[index] = false;
@@ -146,7 +154,7 @@ export default {
                             custId: this.filters.session
                         }
                     };
-                    await axios.post("http://54.180.25.91:7777/bookmark", regBookmark);
+                    await axios.post("http://127.0.0.1:7777/bookmark", regBookmark);
                     // alert(insertStatus.data); // 에러 페이지용
                     this.$modal.show("regBook");
                     this.isBooked[index] = true;

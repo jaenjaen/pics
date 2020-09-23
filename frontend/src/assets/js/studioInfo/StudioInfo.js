@@ -86,7 +86,6 @@ export default {
             // Chart
             datacollection: null,
             options: null,
-
         };
     },
     async mounted() { //async mount로 비동기 처리
@@ -102,6 +101,7 @@ export default {
                     for (let i = 0; i < Object.keys(mainImgSplit).length; i++) {
                         this.mainImgList.push(mainImgSplit[i]);
                     }
+                    console.log("this.mainImgList : " + this.mainImgList)
                 } else {
                     this.mainImgList.push(this.studios[0].mainImg)
                 }

@@ -131,8 +131,8 @@
       </div>
     </aside>
     <!-- 모달 모아두기 -->
-    <div>
-      <modal
+     <div>
+      <!-- <modal
         name="success"
         adaptive="adaptive"
         resizable="resizable"
@@ -145,6 +145,7 @@
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
       </modal>
+
       <modal
         name="login-required"
         adaptive="adaptive"
@@ -157,9 +158,9 @@
           <p>로그인 먼저 진행해주세요.</p>
           <button class="btn-small" @click="closePop()">확인</button>
         </div>
-      </modal>
+      </modal> -->
     </div>
-  </div>
+  </div> 
 </template>
 <script scoped src="@/assets/js/studioInfo/Reservation.js"></script>
 <style scoped src="@/assets/css/studioInfo/reservation.css"></style>

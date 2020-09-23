@@ -81,6 +81,7 @@ public class StudioReserveController {
 		int result=studioReserveService.AddReservation(reservation);
 			return new ResponseEntity(result,HttpStatus.OK);
 		}catch(Exception e) {
+			System.out.println(e.getMessage());
 			return new ResponseEntity(0,HttpStatus.NO_CONTENT);
 		}
 	}

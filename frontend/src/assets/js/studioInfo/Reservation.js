@@ -94,7 +94,7 @@ export default {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
 
         await axios
-        // .get("http://54.180.25.91:7777/studio/info/" + this.stuId)
+        // .get("http://localhost:7777/studio/info/" + this.stuId)
             .get("http://localhost:7777/studio/info/10") // + this.stuId)
             .then(response => {
                 this.studios = response.data;
@@ -106,8 +106,8 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-        //.get("http://54.180.25.91:7777/studio/schedule/" + this.stuId)
-            .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
+        //.get("http://localhost:7777/studio/schedule/" + this.stuId)
+            .get("http://localhost:7777/studio/schedule/10") // + this.stuId)
             .then(response => {
                 this.schedule = response.data;
                 console.log(this.schedule);
@@ -398,7 +398,7 @@ export default {
                 this.$modal.show("login-required");
             } else {
                 await axios
-                    .get("http://54.180.25.91:7777/customer/" + this.customer.custId)
+                    .get("http://localhost:7777/customer/" + this.customer.custId)
                     .then(response => {
                         this.customer = response.data;
                     })
@@ -420,7 +420,7 @@ export default {
                     totalPeople: this.total_people
                 };
                 await axios
-                    .post("http://54.180.25.91:7777/studio/reservation", reservation)
+                    .post("http://localhost:7777/studio/reservation", reservation)
                     .then(response => {
                         console.log(response.data);
                         this.$modal.show("success");

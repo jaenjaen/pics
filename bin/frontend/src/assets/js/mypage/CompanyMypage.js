@@ -87,7 +87,7 @@ export default {
     },
     mounted() {
         /* 소유 스튜디오 불러오기 */
-        Axios.get("http://54.180.25.91:7777/studio/" + this.comId)
+        Axios.get("http://localhost:7777/studio/" + this.comId)
             .then(res => {
                 this.studioList = res.data;
                 this.studioFlag = false;
@@ -99,9 +99,9 @@ export default {
     methods: {
         getStudioReservation: function() {
             //초기화 안하면 쌓임
-            this.scheduleList = [];
+        this.scheduleList = [];
 
-            Axios.get("http://54.180.25.91:7777/company/schedule/" + this.selectedId)
+        Axios.get("http://localhost:7777/company/schedule/" + this.selectedId)
                 .then(res => {
                     // console.log(res.data);
                     var data = res.data;
@@ -184,7 +184,7 @@ export default {
                 exceptionTitle: this.ex_title,
             };
 
-            Axios.post("http://54.180.25.91:7777/studio/exceptionDate", schedule)
+            Axios.post("http://localhost:7777/studio/exceptionDate", schedule)
                 .then(() => {
                     this.$modal.hide("creationModal");
                     location.reload();
@@ -223,7 +223,7 @@ export default {
             /* update reservation */
             if (e.schedule.calendarId == "0") {
                 //axios 예약
-                Axios.put("http://54.180.25.91:7777/studio/reservation", {
+                Axios.put("http://localhost:7777/studio/reservation", {
                     resId: Number(e.schedule.id),
                     startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
                     endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
@@ -234,7 +234,7 @@ export default {
 
             /* update exceptionDate */
             else {
-                Axios.put("http://54.180.25.91:7777/studio/exceptionDate", {
+                Axios.put("http://localhost:7777/studio/exceptionDate", {
                     exceptionId: Number(e.schedule.id),
                     startDate: moment((e.schedule.start).toUTCString()).format('YYYY-MM-DD HH:mm:ss'),
                     endDate: moment((e.schedule.end).toUTCString()).format('YYYY-MM-DD HH:mm:ss')
@@ -249,7 +249,7 @@ export default {
             this.$refs.studioCalendar.invoke('deleteSchedule', this.scheduleId, this.calendarId);
             /* delete reservation */
             if (this.calendarId == "0") {
-                Axios.delete("http://54.180.25.91:7777/studio/reservation/" + this.scheduleId)
+                Axios.delete("http://localhost:7777/studio/reservation/" + this.scheduleId)
                     .then(() => {}).catch(err => {
                         console.log(err);
                     })
@@ -257,7 +257,7 @@ export default {
 
             /* delete Exception */
             else {
-                Axios.delete("http://54.180.25.91:7777/studio/exceptionDate/" + this.scheduleId)
+                Axios.delete("http://localhost:7777/studio/exceptionDate/" + this.scheduleId)
                     .then(() => {}).catch(err => {
                         console.log(err);
                     })

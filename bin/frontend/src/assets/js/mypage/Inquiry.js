@@ -87,7 +87,7 @@ export default {
         /* 최신 대화 가져오기 */
         getRecentChat() {
             if (customer != null) {
-                axios.get('http://54.180.25.91:7777/chat/recent/cust/' + customer.custId)
+                axios.get('http://:7777/chat/recent/cust/' + customer.custId)
                     .then((response) => {
                         if (response.data != -1) {
                             console.log('customer 최근 대화 가져오기 성공');
@@ -100,7 +100,7 @@ export default {
                         //console.log('customer 최근 대화 가져오기 실패');
                     })
             } else if (company != null) {
-                axios.get('http://54.180.25.91:7777/chat/recent/com/' + company.comId)
+                axios.get('http://localhost:7777/chat/recent/com/' + company.comId)
                     .then((response) => {
                         if (response.data != -1) {
                             //console.log('company 최근 대화 가져오기 성공');
@@ -118,7 +118,7 @@ export default {
         /* 읽지 않은 대화 개수 가져오기 */
         getCountOfUnreadChat() {
             if (company != null) { //업체 로그인
-                axios.get('http://54.180.25.91:7777/chat/unread/com/' + company.comId)
+                axios.get('http://localhost:7777/chat/unread/com/' + company.comId)
                     .then((response) => {
                         if (response.data != -1) {
                             console.log('업체의 읽지 않은 대화 개수 가져오기 성공');
@@ -132,7 +132,7 @@ export default {
                         console.log('업체의 읽지 않은 대화 개수 가져오기 실패');
                     })
             } else if (customer != null) { //고객 로그인
-                axios.get('http://54.180.25.91:7777/chat/unread/cust/' + customer.custId)
+                axios.get('http://localhost:7777/chat/unread/cust/' + customer.custId)
                     .then((response) => {
                         if (response.data != -1) {
                             console.log('고객의 읽지 않은 대화 개수 가져오기 성공');

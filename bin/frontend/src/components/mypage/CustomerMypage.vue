@@ -1,7 +1,7 @@
 <template>
   <div class="mypage_container">
     <MypageNametag :customerMode="true" />
-    <MypageGap categoryName="예약내역 >" cateogryURL="http://54.180.25.91:9999/reservationlist"/>
+    <MypageGap categoryName="예약내역 >" cateogryURL="http://localhost:9999/reservationlist"/>
     <!-- 예약내역-->
     <div class="mypage_card">
        <table>

@@ -41,15 +41,15 @@ export default {
             },
 
             /* 이미지 경로 */
-            mainRoute: 'http://54.180.25.91:7777/upload/main/',
-            cadRoute: 'http://54.180.25.91:7777/upload/cad/',
-            portRoute: 'http://54.180.25.91:7777/upload/port/',
+            mainRoute: 'http://localhost:7777/upload/main/',
+            cadRoute: 'http://localhost:7777/upload/cad/',
+            portRoute: 'http://localhost:7777/upload/port/',
 
             /* 디폴트 이미지 */
-            required: 'http://54.180.25.91:7777/upload/default/required.png',
-            main: 'http://54.180.25.91:7777/upload/default/main.png',
-            cad: 'http://54.180.25.91:7777/upload/default/cad.png',
-            port: 'http://54.180.25.91:7777/upload/default/port.png',
+            required: 'http://localhost:7777/upload/default/required.png',
+            main: 'http://localhost:7777/upload/default/main.png',
+            cad: 'http://localhost:7777/upload/default/cad.png',
+            port: 'http://localhost:7777/upload/default/port.png',
 
             /* 카테고리 */
             category: [],
@@ -147,7 +147,7 @@ export default {
         }
 
         /* DB에서 카테고리 가져오기 */
-        axios.get('http://54.180.25.91:7777/category')
+        axios.get('http://localhost:7777/category')
             .then((response) => {
                 this.category = JSON.parse(JSON.stringify(response.data));
             })
@@ -1329,7 +1329,7 @@ export default {
                 alert("대표 사진을 1장 이상 입력하세요.");
                 return false;
             }
-            axios.post('http://54.180.25.91:7777/filesUpload/main/' + this.studio.comId, formData, {
+            axios.post('http://localhost:7777/filesUpload/main/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1352,7 +1352,7 @@ export default {
             let file = document.querySelector('#cadFile');
             formData.append("file", file.files[0]);
             console.log("파일 정보 : " + file.files[0]);
-            axios.post('http://54.180.25.91:7777/fileUpload/cad/' + this.studio.comId, formData, {
+            axios.post('http://localhost:7777/fileUpload/cad/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1377,7 +1377,7 @@ export default {
                 formData.append("files", files[i].files[0]);
                 console.log("파일 정보 : " + files[i].files[0]);
             }
-            axios.post('http://54.180.25.91:7777/filesUpload/port/' + this.studio.comId, formData, {
+            axios.post('http://localhost:7777/filesUpload/port/' + this.studio.comId, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     },
@@ -1396,7 +1396,7 @@ export default {
 
         /* 스튜디오 등록 */
         addStudio() {
-            axios.post("http://54.180.25.91:7777/studio", this.studio)
+            axios.post("http://localhost:7777/studio", this.studio)
                 .then(
                     function(response) {
                         console.log("스튜디오 등록 응답 성공");

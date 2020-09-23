@@ -28,7 +28,7 @@ export default {
         companyRegister: function() {
             if (this.idFlag == true && this.pwFlag == true) {
                 axios
-                    .post("http://54.180.25.91:7777/company", {
+                    .post("http://localhost:7777/company", {
                         name: this.name,
                         comId: this.comId,
                         password: this.password,
@@ -54,7 +54,7 @@ export default {
         /*메일 중복 검사*/
         checkEmail: function() {
             axios
-                .get("http://54.180.25.91:7777/company/" + this.comId)
+                .get("http://localhost:7777/company/" + this.comId)
                 .then(res => {
                     this.condata = res.data;
                     if (this.condata != "") {
@@ -133,14 +133,14 @@ export default {
             var file = this.$refs.logoImg.files[0];
             data.append('file', file);
 
-            axios.post('http://54.180.25.91:7777/fileUpload/company/' + this.comId, data, {
+            axios.post('http://localhost:7777/fileUpload/company/' + this.comId, data, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 })
                 .then(res => {
                     //console.log(res);
-                    this.imgSrc = "http://54.180.25.91:7777/upload/company/" + res.data;
+                    this.imgSrc = "http://localhost:7777/upload/company/" + res.data;
                     //console.log(this.imgSrc);
                 })
                 .catch(err => {

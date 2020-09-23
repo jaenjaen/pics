@@ -25,7 +25,7 @@ export default {
     methods: {
         customerEdit: function() {
             axios
-                .put('http://54.180.25.91:7777/customer', {
+                .put('http://localhost:7777/customer', {
                     custId: this.custId,
                     imgSrc: this.imgSrc,
                     nickname: this.nickname,
@@ -57,7 +57,7 @@ export default {
 
         /* 탈퇴 */
         signout: function() {
-            axios.delete("http://54.180.25.91:7777/customer/" + this.custId)
+            axios.delete("http://localhost:7777/customer/" + this.custId)
                 .then(res => {
                     if (res != null) {
                         alert("회원탈퇴 되었습니다.");
@@ -98,14 +98,14 @@ export default {
             var file = this.$refs.profileImg.files[0];
             data.append('file', file);
 
-            axios.post('http://54.180.25.91:7777/fileUpload/customer/' + this.custId, data, {
+            axios.post('http://localhost:7777/fileUpload/customer/' + this.custId, data, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 })
                 .then(res => {
                     // console.log(res);
-                    this.imgSrc = "http://54.180.25.91:7777/upload/customer/" + res.data;
+                    this.imgSrc = "http://localhost:7777/upload/customer/" + res.data;
                     // console.log(this.imgSrc);
                 })
                 .catch(err => {
@@ -116,7 +116,7 @@ export default {
         /*기존 로고 이미지 삭제 */
         deleteImg() {
             if (this.imgSrc != "") {
-                axios.delete("http://54.180.25.91:7777/filedelte/customer/" + this.imgName)
+                axios.delete("http://localhost:7777/filedelte/customer/" + this.imgName)
                     .then(() => {
                         // console.log(res);
                     })

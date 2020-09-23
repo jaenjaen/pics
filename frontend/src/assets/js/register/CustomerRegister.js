@@ -30,7 +30,7 @@ export default {
     methods: {
         customerRegister: function() {
             axios
-                .post('http://54.180.25.91:7777/customer', {
+                .post('http://localhost:7777/customer', {
                     apiId: this.apiId,
                     apiKey: this.apiKey,
                     imgSrc: this.imgSrc,

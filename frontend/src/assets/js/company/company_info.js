@@ -14,7 +14,7 @@ export default {
     },
     mounted() {
         axios
-            .get("http://54.180.25.91:7777/companyifo/" + this.comId)
+            .get("http://localhost:7777/companyifo/" + this.comId)
             .then(response => (this.company = response.data))
             .catch(error => {
                 console.log(error);

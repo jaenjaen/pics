@@ -26,7 +26,7 @@ let onSuccessKakao = () => {
             };
 
             axios
-                .get("http://54.180.25.91:7777/customer/" + this.apiKey, {
+                .get("http://localhost:7777/customer/" + this.apiKey, {
                     validateStatus: function(status) {
                         // 상태 코드가 400 이상일 경우 거부. 나머지(400보다 작은)는 허용.
                         return status <= 400;
@@ -108,7 +108,7 @@ export default {
 
             //로그인 or 가입
             axios
-                .get("http://54.180.25.91:7777/customer/" + this.apiKey, {
+                .get("http://localhost:7777/customer/" + this.apiKey, {
                     validateStatus: function(status) {
                         // 상태 코드가 400 이상일 경우 거부. 나머지(400보다 작은)는 허용.
                         return status <= 400;

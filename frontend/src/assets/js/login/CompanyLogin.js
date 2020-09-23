@@ -19,7 +19,7 @@ export default {
         companyLogin: function() {
             axios
                 .get(
-                    "http://54.180.25.91:7777/company/" + this.comId + "/" + this.password
+                    "http://localhost:7777/company/" + this.comId + "/" + this.password
                 )
                 .then(res => {
                     this.rdata = res.data;

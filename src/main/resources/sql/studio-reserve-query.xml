@@ -95,7 +95,7 @@
 	<!-- ================== 2. 예약하기 ================== -->
 	<insert id="addReservation" parameterType="reservation">							
 		INSERT into reservation(cust_id,stu_id,start_date,end_date,total_price,res_date,total_people)
-		VALUES(#{custId},#{stuId},#{startDate},#{endDate},#{totalPrice},now(),#{totalPeople})
+		VALUES((SELECT cust_id FROM customer WHERE cust_id = #{custId}),#{stuId},#{startDate},#{endDate},#{totalPrice},now(),#{totalPeople})
 	</insert> 
 	
  	<insert id="addExceptionDates" parameterType="exceptionDate">							

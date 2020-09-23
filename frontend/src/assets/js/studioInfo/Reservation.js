@@ -9,6 +9,7 @@ Vue.use(VModal);
 Vue.use(VueMaterial);
 // 요일 변환을 위한 리스트
 const week = ["fri", "sat", "sun", "mon", "tue", "wed", "thu"];
+let customer = JSON.parse(sessionStorage.getItem('customer'));
 
 export default {
     name: "Reservation",
@@ -42,7 +43,7 @@ export default {
                 }
             }],
             schedule: {},
-            customer: {},
+            custId: customer.custId,
             //새로운 예약 관련 변수 (POST)
             start_date: "",
             end_date: "",
@@ -93,7 +94,6 @@ export default {
         this.stuId = this.stuIdData;
     },
     async mounted() {
-        this.customer = JSON.parse(sessionStorage.getItem('customer'));
 
         await axios
             .get("http://localhost:7777/studio/info/" + this.stuId)
@@ -173,7 +173,7 @@ export default {
                 // 2-1) 날짜 조건
                 if (this.start_date != "") {
                     this.startTimes = this.setTime(this.startDay);
-                    console.log("ddd");
+                    // console.log("ddd");
                     if (this.startDate < todayTime) {
                         this.start_date =
                             this.today.getFullYear() +
@@ -392,23 +392,24 @@ export default {
             if (this.customer == undefined | (this.customer == "")) {
                 // this.$modal.show("login-required");
                 alert("로그인 먼저 진행해주세요.");
-            } else {
-                await axios
-                    .get("http://localhost:7777/customer/" + this.customer.custId)
-                    .then(response => {
-                        this.customer = response.data;
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        this.errored = true;
-                    })
-                    .finally(() => (this.loading = false));
+                // } else {
+                //     await axios
+                //         .get("http://localhost:7777/customer/" + this.custId)
+                //         .then(response => {
+                //             this.customer = response.data;
+                //         })
+                //         .catch(error => {
+                //             console.log(error);
+                //             this.errored = true;
+                //         })
+                //         .finally(() => (this.loading = false));
             }
             //2. 예약 정보 확인 reservation 변수 설정
             if (this.total_price > 0 & this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
+                console.log(this.custId);
                 let reservation = {
                     stuId: this.stuId,
-                    custId: this.customer.custId,
+                    custId: this.custId,
                     startDate: this.start_date + " " + this.start_time,
                     endDate: this.end_date + " " + this.end_time,
                     totalPrice: this.total_price,

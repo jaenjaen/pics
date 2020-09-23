@@ -18,13 +18,13 @@ export default {
     },
     mounted() {
         var apiData = JSON.parse(sessionStorage.getItem("apiData"));
-        console.log(apiData);
+        // console.log(apiData);
         this.apiId = apiData.apiId;
         this.apiKey = apiData.apiKey;
         this.imgSrc = apiData.imgSrc;
         this.nickname = apiData.nickname;
         this.email = apiData.email;
-        console.log(this.apiId + "," + this.apiKey + "," + this.imgSrc + "," + this.nickname + "," + this.email);
+        // console.log(this.apiId + "," + this.apiKey + "," + this.imgSrc + "," + this.nickname + "," + this.email);
 
     },
     methods: {

@@ -94,7 +94,8 @@ export default {
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
 
         await axios
-            .get("http://54.180.25.91:7777/studio/info/" + this.stuId)
+        // .get("http://54.180.25.91:7777/studio/info/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/info/10") // + this.stuId)
             .then(response => {
                 this.studios = response.data;
                 console.log(this.studios);
@@ -105,9 +106,11 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-            .get("http://54.180.25.91:7777/studio/schedule/" + this.stuId)
+        //.get("http://54.180.25.91:7777/studio/schedule/" + this.stuId)
+            .get("http://127.0.0.1:7777/studio/schedule/10") // + this.stuId)
             .then(response => {
                 this.schedule = response.data;
+                console.log(this.schedule);
                 var exceptionDate = (response.data.exceptionDate);
                 var repeatDate = (response.data.repeatDate);
                 var reservation = (response.data.reservation);
@@ -143,127 +146,129 @@ export default {
             }
         },
         totalPriceCalculate: function() {
-            this.msg = "";
-            // 1. 날짜 연산을 위한 변수 선언 : 초/시/일/요일/월/연 단위로 변환
-            if (this.start_date != "" | this.end_date != "" | this.start_time < 25 | this.end_time < 25) {
-                this.startDay = this.transWeekDay(this.start_date); //시작일의 요일(숫자)
-                this.endDay = this.transWeekDay(this.end_date); //종료일의 요일(숫자)
-                this.startDate = this.transTime(this.start_date); //시작일자 초로 환산
-                this.endDate = this.transTime(this.end_date); //종료일자 초로 환산
-                var todayTime = this.transTime(
-                    this.today.getFullYear() + "-" +
-                    (this.today.getMonth() + 1) + "-" +
-                    this.today.getDate()); //오늘날짜 초로 환산
-                this.startDayTime = this.transTime(this.start_date, this.start_time); //시작일+ 시작시간 초로 환산
-                this.endDayTime = this.transTime(this.end_date, this.end_time); //종료일+ 종료시간 초로 환산
-                var startTime = parseInt(this.start_time); //숫자
-                var endTime = parseInt(this.end_time);
-            }
-            // 2. 개별 항목 체크
-            // 2-1) 날짜 조건
-            if (this.start_date != "") {
-                this.startTimes = this.setTime(this.startDay);
-                if (this.startDate < todayTime) {
-                    alert("대여 시작일을 오늘 이후로 선택하세요.");
-                    this.start_date =
-                        this.today.getFullYear() +
-                        "-" + (this.today.getMonth() + 1) +
-                        "-" + this.today.getDate();
+            console.log(this.start_date + "  여기~~1")
+            if (this.start_date == undefined | this.end_date == undefined) {
+                this.start_date = "";
+                this.end_date = "";
+            } else {
+                console.log(this.start_date + "  여기~~2")
+                    // 1. 날짜 연산을 위한 변수 선언 : 초/시/일/요일/월/연 단위로 변환
+                if ((this.start_date != "" | this.end_date != "" | this.start_time < 25 | this.end_time < 25)) {
+                    this.startDay = this.transWeekDay(this.start_date); //시작일의 요일(숫자)
+                    this.endDay = this.transWeekDay(this.end_date); //종료일의 요일(숫자)
+                    this.startDate = this.transTime(this.start_date); //시작일자 초로 환산
+                    this.endDate = this.transTime(this.end_date); //종료일자 초로 환산
+                    var todayTime = this.transTime(
+                        this.today.getFullYear() + "-" +
+                        (this.today.getMonth() + 1) + "-" +
+                        this.today.getDate()); //오늘날짜 초로 환산
+                    this.startDayTime = this.transTime(this.start_date, this.start_time); //시작일+ 시작시간 초로 환산
+                    this.endDayTime = this.transTime(this.end_date, this.end_time); //종료일+ 종료시간 초로 환산
+                    var startTime = parseInt(this.start_time); //숫자
+                    var endTime = parseInt(this.end_time);
                 }
-                if (startTime < 24 &
-                    this.startTimes[this.startTimes.length - 1] == startTime) {
-                    alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
-                    this.start_time = 25;
+
+                console.log(this.start_date + "  여기~~3")
+                    // 2. 개별 항목 체크
+                    // 2-1) 날짜 조건
+                if (this.start_date != "") {
+                    this.startTimes = this.setTime(this.startDay);
+                    console.log("ddd");
+                    if (this.startDate < todayTime) {
+                        this.start_date =
+                            this.today.getFullYear() +
+                            "-" + (this.today.getMonth() + 1) +
+                            "-" + this.today.getDate();
+                        alert("대여 시작일을 오늘 이후로 선택하세요.");
+                    }
+                    if (startTime < 24 &
+                        this.startTimes[this.startTimes.length - 1] == startTime) {
+                        alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
+                        this.start_time = 25;
+                    }
                 }
-            }
-            if (this.end_date != "") {
-                this.endTimes = this.setTime(this.endDay);
-                if (this.startDate > this.endDate) {
-                    alert("대여 종료일을 시작일 이후로 설정하세요.");
-                    this.end_date = "";
+                if ((this.start_date != "" && this.end_date != "")) {
+                    this.endTimes = this.setTime(this.endDay);
+                    if (this.startDate > this.endDate) {
+                        this.end_date = this.start_date;
+                        alert("대여 종료일을 시작일 이후로 설정하세요.");
+                    }
+                    if (this.start_date == this.end_date && startTime < 24 && startTime >= endTime) {
+                        if ((endTime < 24) & (this.endTimes[0] == endTime)) {
+                            alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
+                            this.end_time = 25;
+                        }
+                    }
                 }
-                if ((endTime < 24) & (this.endTimes[0] == endTime)) {
+                if ((this.end_date != "") && endTime < 24 & (this.endTimes[0] == endTime)) {
+                    this.end_time = 25;
                     alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
-                    this.end_time = 25;
                 }
-            }
-            // 2-2) 시간 조건
-            if (this.start_date != "" & this.end_date != "" &
-                this.start_date == this.end_date &
-                startTime < 24) {
-                if (startTime >= endTime) { //하루 예약이면 시작시간 < 종료시간
-                    alert("대여 종료시간은 시작시간 이후로 설정하세요.");
-                    this.end_time = 25;
+                // 2-2) 시간 조건
+                if (this.start_date != "" & this.end_date != "" &
+                    this.start_date == this.end_date &
+                    startTime < 24) {
+                    if (startTime >= endTime) { //하루 예약이면 시작시간 < 종료시간
+                        alert("대여 종료시간은 대여 시작시간 이후로 설정하세요.");
+                        this.end_time = 25;
+                    }
                 }
-            }
-            // if (this.start_date != "" & this.end_date != "") {
-            //     if (startTime < 24 &
-            //         this.startTimes[this.startTimes.length - 1] == startTime) {
-            //         alert("대여 시작시간을 종료 시간 전으로 설정하세요. ");
-            //         this.start_time = 25;
-            //     }
-            // }
-            // if (this.end_date != "") {
-            // if ((endTime < 24) & (this.endTimes[0] == endTime)) {
-            //     alert("대여 종료시간을 오픈 시간 이후로 설정하세요.");
-            //     this.end_time = 25;
-            // }
-            // }
-            // 3. 새로운 예약 일정이 기존 Reservation 및 Exception Date 일정과 겹치는지 확인
-            if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
-                if ((this.checkException() == 0) | (this.checkReservation() == 0)) {
-                    this.start_date = "";
-                    this.end_date = "";
-                    this.start_time = "";
-                    this.end_time = "";
-                    alert("예약 불가능한 일정 입니다.");
+                // 3. 새로운 예약 일정이 기존 Reservation 및 Exception Date 일정과 겹치는지 확인
+                if ((this.start_date != "" & this.end_date != "") & this.start_time < 24 & this.end_time < 24) {
+                    if ((this.checkException() == 0) | (this.checkReservation() == 0)) {
+                        this.start_date = "";
+                        this.end_date = "";
+                        this.start_time = 25;
+                        this.end_time = 25;
+                        alert("예약 불가능한 일정 입니다.");
+                    }
                 }
-            }
-            //4. 시간대 반영한 요금 계산
-            var total_price = 0;
-            var difDate = (this.endDate - this.startDate) / (1000 * 60 * 60 * 24); //일자 차이
-            // 4-1) 예약 일자 사이에 날짜별 영업 시간 구하기(for문)
-            var cntTime = 0;
-            if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
-                if (difDate == 0) { //1일 예약
-                    cntTime = (endTime - startTime)
-                } else { //연일 예약
-                    for (let i = 0; i <= difDate; i++) {
-                        var next = new Date(this.startDate + (i * 1000 * 60 * 60 * 24));
-                        var nextDay = this.transWeekDay(
-                            next.getFullYear() +
-                            "-" + (next.getMonth() - 1) +
-                            "-" + next.getDate());
-                        let j = this.repeatedDays.indexOf(week[nextDay], 0)
-                        this.openTime = parseInt(this.repeated[j].time.split('-')[0]);
-                        this.closeTime = parseInt(this.repeated[j].time.split('-')[1]);
-                        if (i == 0) { //시작일 : 마감시간-시작시간
-                            cntTime += (this.closeTime - parseInt(startTime));
-                        } else if (i == (difDate)) { //종료일: 종료시간-오픈시간
-                            cntTime += (parseInt(endTime) - this.openTime);
-                        } else { // 그 사이날짜 : if 영업일 >> 마감시간-오픈시간
-                            if (this.repeatedDays.indexOf(week[nextDay], 0) > -1) {
-                                cntTime += (this.closeTime - this.openTime)
+                //4. 시간대 반영한 요금 계산
+                var total_price = 0;
+                var difDate = (this.endDate - this.startDate) / (1000 * 60 * 60 * 24); //일자 차이
+                // 4-1) 예약 일자 사이에 날짜별 영업 시간 구하기(for문)
+                var cntTime = 0;
+                if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
+                    if (difDate == 0) { //1일 예약
+                        cntTime = (endTime - startTime)
+                    } else { //연일 예약
+                        for (let i = 0; i <= difDate; i++) {
+                            var next = new Date(this.startDate + (i * 1000 * 60 * 60 * 24));
+                            var nextDay = this.transWeekDay(
+                                next.getFullYear() +
+                                "-" + (next.getMonth() - 1) +
+                                "-" + next.getDate());
+                            let j = this.repeatedDays.indexOf(week[nextDay], 0)
+                            this.openTime = parseInt(this.repeated[j].time.split('-')[0]);
+                            this.closeTime = parseInt(this.repeated[j].time.split('-')[1]);
+                            if (i == 0) { //시작일 : 마감시간-시작시간
+                                cntTime += (this.closeTime - parseInt(startTime));
+                            } else if (i == (difDate)) { //종료일: 종료시간-오픈시간
+                                cntTime += (parseInt(endTime) - this.openTime);
+                            } else { // 그 사이날짜 : if 영업일 >> 마감시간-오픈시간
+                                if (this.repeatedDays.indexOf(week[nextDay], 0) > -1) {
+                                    cntTime += (this.closeTime - this.openTime)
+                                }
                             }
                         }
                     }
                 }
-            }
-            //5. 인원수 반영한 요금 계산
-            if (this.total_people > this.studios[0].studioFilter.defaultCapacity) {
-                // 추가 인원 있는 경우
-                total_price = //시간*(unitPrice + excharge*(최대 인원수)
-                    cntTime * (this.studios[0].studioFilter.unitPrice +
-                        this.studios[0].studioFilter.excharge *
-                        (this.total_people - this.studios[0].studioFilter.defaultCapacity));
-            } else {
-                // 추가 인원 없는 경우
-                total_price = cntTime * this.studios[0].studioFilter.unitPrice;
-            }
-            // 6. 총 요금은 모든 항목 입력 후 출력
-            if (this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
-                this.total_price = total_price;
-                return total_price;
+                //5. 인원수 반영한 요금 계산
+                if (this.total_people > this.studios[0].studioFilter.defaultCapacity) {
+                    // 추가 인원 있는 경우
+                    total_price = //시간*(unitPrice + excharge*(최대 인원수)
+                        cntTime * (this.studios[0].studioFilter.unitPrice +
+                            this.studios[0].studioFilter.excharge *
+                            (this.total_people - this.studios[0].studioFilter.defaultCapacity));
+                } else {
+                    // 추가 인원 없는 경우
+                    total_price = cntTime * this.studios[0].studioFilter.unitPrice;
+                }
+                // 6. 총 요금은 모든 항목 입력 후 출력
+                if ((this.start_date != "" & this.end_date != "") & this.start_time < 24 & this.end_time < 24) {
+                    this.total_price = total_price;
+                    return total_price;
+                }
             }
         },
     },
@@ -373,7 +378,6 @@ export default {
                         (this.startDayTime < exc_endDate & exc_endDate <= this.endDayTime)) {
                         return 0;
                     } else {
-
                         continue;
                     }
                 }

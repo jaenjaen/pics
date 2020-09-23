@@ -15,7 +15,7 @@ export default {
         }
     },
     mounted() {
-        console.log(customer);
+        // console.log(customer);
         this.custId = customer.custId;
         this.imgSrc = customer.imgSrc;
         this.nickname = customer.nickname;
@@ -104,9 +104,9 @@ export default {
                     }
                 })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     this.imgSrc = "http://54.180.25.91:7777/upload/customer/" + res.data;
-                    console.log(this.imgSrc);
+                    // console.log(this.imgSrc);
                 })
                 .catch(err => {
                     console.log(err);
@@ -117,8 +117,8 @@ export default {
         deleteImg() {
             if (this.imgSrc != "") {
                 axios.delete("http://54.180.25.91:7777/filedelte/customer/" + this.imgName)
-                    .then(res => {
-                        console.log(res);
+                    .then(() => {
+                        // console.log(res);
                     })
                     .catch(err => {
                         console.log(err);

@@ -40,7 +40,7 @@ export default {
             .get("http://54.180.25.91:7777/review/" + this.custId)
             .then(res => {
                 this.reviewList = res.data;
-                console.log(this.reviewList);
+                // console.log(this.reviewList);
                 if (this.reviewList.length != 0) {
                     this.rvFlag = false;
                 }
@@ -54,7 +54,7 @@ export default {
         /* 문의 영역 시작 */
         showCustChatForInquiry(stuId) { //inquiry에서 stuId, custId를 받음.
             this.selectedId = stuId;
-            console.log("부모 stuId : " + this.selectedId);
+            // console.log("부모 stuId : " + this.selectedId);
             this.showChatModal();
         },
         showChatModal: function() {

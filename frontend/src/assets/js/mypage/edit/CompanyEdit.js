@@ -112,8 +112,8 @@ export default {
         signout() {
             this.deleteImg(); {
                 axios.delete("http://54.180.25.91:7777/company/" + this.comId)
-                    .then(res => {
-                        console.log(res)
+                    .then(() => {
+                        // console.log(res)
                         alert("회원탈퇴 되었습니다.");
                         sessionStorage.removeItem("company");
                         location.href = "/";
@@ -157,9 +157,9 @@ export default {
                     }
                 })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                     this.logoImg = "http://54.180.25.91:7777/upload/company/" + res.data;
-                    console.log(this.logoImg);
+                    // console.log(this.logoImg);
                 })
                 .catch(err => {
                     console.log(err);
@@ -170,8 +170,8 @@ export default {
         deleteImg() {
             if (this.logoImg != "") {
                 axios.delete("http://54.180.25.91:7777/filedelte/company/" + this.logoName)
-                    .then(res => {
-                        console.log(res);
+                    .then(() => {
+                        // console.log(res);
                     })
                     .catch(err => {
                         console.log(err);

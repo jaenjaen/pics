@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[6]:
 
 
 # 외부 모듈
@@ -11,6 +11,7 @@ import pandas as pd
 from pandas import DataFrame as df
 import csv
 import os
+
 
 
 # In[12]:
@@ -33,10 +34,10 @@ def tagCount(stuId):
     # Counting Words
     dataset=count_tag_model.tagCount(stuId,dataset)
     topSim=list(dataset.loc[:8,"stu_id"])
-    return tag_dao.getTop8(topSim)[:12]
+    return tag_dao.getTop8(topSim)[:20]
 
 
-# In[1]:
+# In[8]:
 
 
 # result=tagCount(11) 

@@ -34,7 +34,7 @@ export default {
             location.href = "/customerlogin";
         }
         axios
-            .get("http://54.180.25.91:7777/customer/reservation/expired/" + this.custId)
+            .get("http://localhost:7777/customer/reservation/expired/" + this.custId)
             .then(res => {
                 // console.log(res.data);
                 this.resvList = res.data;
@@ -56,7 +56,7 @@ export default {
             else endDate = yyyy + "-" + mm + "-" + 31;
             console.log(startDate + " and " + endDate);
             axios
-                .get("http://54.180.25.91:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
+                .get("http://localhost:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
                 .then(res => {
                     this.resvList = res.data;
                     this.emptyFlag = false;
@@ -98,7 +98,7 @@ export default {
                 else endDate = tmpDate.getFullYear() + "-" + mm + "-" + 31;
                 // console.log(startDate + "," + endDate);
             }
-            axios.get("http://54.180.25.91:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
+            axios.get("http://localhost:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
                 .then(res => {
                     this.resvList = res.data;
                     this.emptyFlag = false;
@@ -142,7 +142,7 @@ export default {
                 else if (monthList.indexOf(today.getMonth() + 1) >= 0) endDate = tmpDate.getFullYear() + "-" + mm + "-" + 30;
                 else endDate = tmpDate.getFullYear() + "-" + mm + "-" + 31;
             }
-            axios.get("http://54.180.25.91:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
+            axios.get("http://localhost:7777/customer/reservation/expired/" + this.custId + "/" + startDate + "/" + endDate)
                 .then(res => {
                     this.resvList = res.data;
                     this.emptyFlag = false;
@@ -159,7 +159,7 @@ export default {
         showModal: function(resId, studioName, stuId) {
             this.stuId = stuId;
             this.resId = resId;
-            axios.get("http://54.180.25.91:7777/review/check/" + resId)
+            axios.get("http://localhost:7777/review/check/" + resId)
                 .then(res => {
                     if (res.data < 1) {
                         this.$modal.show("reviewModal");
@@ -173,7 +173,7 @@ export default {
 
         /* 리뷰쓰기 */
         writingReview: function() {
-            axios.post("http://54.180.25.91:7777/review", {
+            axios.post("http://localhost:7777/review", {
                 customer: {
                     custId: this.custId
                 },
@@ -218,14 +218,14 @@ export default {
             var file = this.$refs.reviewImg.files[0];
             data.append('file', file);
 
-            axios.post('http://54.180.25.91:7777/fileUpload/review/' + this.custId, data, {
+            axios.post('http://localhost:7777/fileUpload/review/' + this.custId, data, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 })
                 .then(res => {
                     // console.log(res);
-                    this.img = "http://54.180.25.91:7777/upload/review/" + res.data;
+                    this.img = "http://localhost:7777/upload/review/" + res.data;
                     // console.log(this.img);
                 })
                 .catch(err => {

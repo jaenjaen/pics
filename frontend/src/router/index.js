@@ -13,7 +13,6 @@ import ReservationList from '../views/mypage/reservation/ReservationList.vue'
 import WishList from '../views/mypage/WishList.vue'
 import RegisterStudio from '@/components/studioRegister/RegisterStudio.vue'
 import StudioEdit from '@/views/mypage/edit/StudioEdit.vue'
-import FileRoute from '@/components/studioRegister/FileRoute.vue'
 import StudioInfo from '@/components/studioInfo/StudioInfo.vue'
 import Reservation from '@/components/studioInfo/Reservation.vue'
 import OtherStudio from '@/components/studioInfo/OtherStudio.vue'
@@ -21,7 +20,6 @@ import StudioList from '@/components/search/StudioList.vue'
 import Chat from '@/components/chat/Chat.vue'
 import ChatShow from '@/components/chat/ChatShow.vue'
 import CompanyInfo from '@/components/company/company_info.vue'
-import ChatTest from '@/components/chat/ChatTest.vue'
 import Review from '@/components/studioInfo/Review.vue'
 
 Vue.use(VueRouter)
@@ -50,11 +48,6 @@ const routes = [{
         path: '/registerStudio',
         name: 'registerStudio',
         component: RegisterStudio
-    },
-    {
-        path: '/fileRoute',
-        name: 'fileRoute',
-        component: FileRoute
     },
     {
         path: '/companyRegister',
@@ -116,11 +109,6 @@ const routes = [{
         path: '/chatShow',
         name: 'chatShow',
         component: ChatShow
-    },
-    {
-        path: '/chatTest',
-        name: 'chatTest',
-        component: ChatTest
     },
     {
         path: '/companyInfo/:comId',

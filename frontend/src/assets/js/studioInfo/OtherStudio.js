@@ -35,14 +35,13 @@ export default {
         }
 
         await axios
-        // .get("http://54.180.25.91:5000/tag/" + this.stuId)
-            .get("http://127.0.0.1:5000//tag/" + this.stuId)
+            .get("http://localhost:5000/tag/" + this.stuId)
+
             .then(response => {
                 this.studio_infos = response.data
                 for (let j = 0; j < (this.studio_infos).length; j++) {
                     let mainImgs = (this.studio_infos[j].main_img).split(',');
                     this.studio_infos[j].main_img = mainImgs[0];
-                    // console.log("this.studio_infos: " + this.studio_infos[j].main_img)
                 }
             })
             .catch(error => {

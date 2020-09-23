@@ -39,7 +39,7 @@ export default {
         companyEdit: function() {
             if (this.pwFlag == true) {
                 axios
-                    .put("http://54.180.25.91:7777/company", {
+                    .put("http://localhost:7777/company", {
                         name: this.name,
                         comId: this.comId,
                         password: this.password,
@@ -111,7 +111,7 @@ export default {
         /*회원탈퇴 */
         signout() {
             this.deleteImg(); {
-                axios.delete("http://54.180.25.91:7777/company/" + this.comId)
+                axios.delete("http://localhost:7777/company/" + this.comId)
                     .then(() => {
                         // console.log(res)
                         alert("회원탈퇴 되었습니다.");
@@ -151,14 +151,14 @@ export default {
             var file = this.$refs.logoImg.files[0];
             data.append('file', file);
 
-            axios.post('http://54.180.25.91:7777/fileUpload/company/' + this.comId, data, {
+            axios.post('http://localhost:7777/fileUpload/company/' + this.comId, data, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 })
                 .then(res => {
                     // console.log(res);
-                    this.logoImg = "http://54.180.25.91:7777/upload/company/" + res.data;
+                    this.logoImg = "http://localhost:7777/upload/company/" + res.data;
                     // console.log(this.logoImg);
                 })
                 .catch(err => {
@@ -169,7 +169,7 @@ export default {
         /*기존 로고 이미지 삭제 */
         deleteImg() {
             if (this.logoImg != "") {
-                axios.delete("http://54.180.25.91:7777/filedelte/company/" + this.logoName)
+                axios.delete("http://localhost:7777/filedelte/company/" + this.logoName)
                     .then(() => {
                         // console.log(res);
                     })

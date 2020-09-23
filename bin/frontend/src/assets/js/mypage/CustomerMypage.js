@@ -26,7 +26,7 @@ export default {
     },
     mounted() {
         axios
-            .get("http://54.180.25.91:7777/customer/reservation/will/" + this.custId)
+            .get("http://localhost:7777/customer/reservation/will/" + this.custId)
             .then(res => {
                 this.resvList = res.data;
                 this.resvFlag = false;
@@ -37,7 +37,7 @@ export default {
             });
 
         axios
-            .get("http://54.180.25.91:7777/review/" + this.custId)
+            .get("http://localhost:7777/review/" + this.custId)
             .then(res => {
                 this.reviewList = res.data;
                 console.log(this.reviewList);
@@ -89,7 +89,7 @@ export default {
 
         /* 예약 취소 */
         deleteResv: function(resId) {
-            axios.delete("http://54.180.25.91:7777/studio/reservation/" + resId)
+            axios.delete("http://localhost:7777/studio/reservation/" + resId)
                 .then(res => {
                     if (res != null) {
                         alert("예약이 취소되었습니다.");
@@ -103,7 +103,7 @@ export default {
 
         /* 리뷰 삭제 */
         deleteReview: function(reviewId) {
-            axios.delete("http://54.180.25.91:7777/review/" + reviewId)
+            axios.delete("http://localhost:7777/review/" + reviewId)
                 .then(res => {
                     if (res.data != null) {
                         alert("리뷰가 삭제되었습니다.");

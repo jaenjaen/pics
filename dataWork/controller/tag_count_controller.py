@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[6]:
 
 
 # 외부 모듈
@@ -13,7 +13,8 @@ import csv
 import os
 
 
-# In[40]:
+
+# In[12]:
 
 
 ### 사용자 모듈 불러오기
@@ -28,14 +29,15 @@ def tagCount(stuId):
     file_path=os.getcwd()
     file_path=file_path.replace("\\",'/')
     dataset = pd.read_csv(file_path+"/resources/dataset/tag_data.csv",encoding='utf-8')
+#     dataset = pd.read_csv("../resources/dataset/tag_data.csv",encoding='utf-8')
     
     # Counting Words
     dataset=count_tag_model.tagCount(stuId,dataset)
     topSim=list(dataset.loc[:8,"stu_id"])
-    return tag_dao.getTop8(topSim)[:8]
+    return tag_dao.getTop8(topSim)[:20]
 
 
-# In[42]:
+# In[8]:
 
 
 # result=tagCount(11) 

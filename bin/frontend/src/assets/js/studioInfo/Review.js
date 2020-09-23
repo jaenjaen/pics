@@ -49,7 +49,7 @@ export default {
     async mounted() { //async mount로 비동기 처리
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         await axios
-            .get("http://54.180.25.91:7777/studio/info/" + this.stuId)
+            .get("http://localhost:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
             })
@@ -59,7 +59,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         await axios
-            .get("http://54.180.25.91:7777/studio/reviews/" + this.stuId)
+            .get("http://localhost:7777/studio/reviews/" + this.stuId)
             .then(response => {
                 this.reviews = response.data;
                 if (this.reviews.length > this.cntReviews) {

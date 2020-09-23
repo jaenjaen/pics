@@ -11,9 +11,9 @@ export default {
   data(){
     return{
       /* 이미지 경로 */
-      mainRoute: 'http://54.180.25.91:7777/upload/main/',
-      cadRoute: 'http://54.180.25.91:7777/upload/cad/',
-      portRoute: 'http://54.180.25.91:7777/upload/port/'
+      mainRoute: 'http://localhost:7777/upload/main/',
+      cadRoute: 'http://localhost:7777/upload/cad/',
+      portRoute: 'http://localhost:7777/upload/port/'
     }
   }
 }

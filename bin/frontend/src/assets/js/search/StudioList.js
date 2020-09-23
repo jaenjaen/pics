@@ -81,7 +81,7 @@ export default {
             this.loading = true;
             this.isDone = true;
             axios
-                .post("http://54.180.25.91:7777/studio/search/filter", this.filters)
+                .post("http://localhost:7777/studio/search/filter", this.filters)
                 .then(response => {
                     this.doSearch = true; //호출 시 동글뱅이 시작
                     setTimeout(() => {
@@ -130,9 +130,9 @@ export default {
         async setBookMark(index, stuId, $event) {
             try {
                 this.doBookMark = false;
-                const bookmark = await axios.get("http://54.180.25.91:7777/bookmark/custId/" + this.filters.session + "/stuId/" + stuId)
+                const bookmark = await axios.get("http://localhost:7777/bookmark/custId/" + this.filters.session + "/stuId/" + stuId)
                 if (bookmark.data) { //찜목록에 있다면
-                    await axios.delete("http://54.180.25.91:7777/bookmark/" + bookmark.data.bookId);
+                    await axios.delete("http://localhost:7777/bookmark/" + bookmark.data.bookId);
                     // alert(deleteStatus.data); // 에러 페이지용
                     this.$modal.show("delBook");
                     this.isBooked[index] = false;
@@ -146,7 +146,7 @@ export default {
                             custId: this.filters.session
                         }
                     };
-                    await axios.post("http://54.180.25.91:7777/bookmark", regBookmark);
+                    await axios.post("http://localhost:7777/bookmark", regBookmark);
                     // alert(insertStatus.data); // 에러 페이지용
                     this.$modal.show("regBook");
                     this.isBooked[index] = true;

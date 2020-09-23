@@ -93,7 +93,7 @@ export default {
         ////////////////////////////// 스튜디오 기본 정보 불러오기  //////////////////////////////
         this.customer = JSON.parse(sessionStorage.getItem('customer'));
         axios
-            .get("http://54.180.25.91:7777/studio/info/" + this.stuId)
+            .get("http://localhost:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
                 // 메인 이미지 split
@@ -121,7 +121,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://54.180.25.91:7777/studio/tags/" + this.stuId)
+            .get("http://localhost:7777/studio/tags/" + this.stuId)
             .then(response => (this.tags = response.data))
             .catch(error => {
                 console.log(error);
@@ -129,7 +129,7 @@ export default {
             })
             .finally(() => (this.loading = false));
         axios
-            .get("http://54.180.25.91:7777/studio/accCustomer/" + this.stuId)
+            .get("http://localhost:7777/studio/accCustomer/" + this.stuId)
             .then(response => (this.accCustomer = response.data))
             .catch(error => {
                 console.log(error);
@@ -139,7 +139,7 @@ export default {
 
         if (this.customer != undefined) {
             axios
-                .get("http://54.180.25.91:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
+                .get("http://localhost:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
                 .then(response => {
                     this.isBooked = Number(response.data.bookId);
                 })
@@ -208,9 +208,9 @@ export default {
         // 찜 추가/제거 // axios 여러번 쓰기 때문에 async ~ await로 에러 제거
         async setBookMark() {
             try {
-                const bookmark = await axios.get("http://54.180.25.91:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
+                const bookmark = await axios.get("http://localhost:7777/bookmark/custId/" + this.customer.custId + "/stuId/" + this.stuId)
                 if (bookmark.data) { //찜목록에 있다면
-                    await axios.delete("http://54.180.25.91:7777/bookmark/" + bookmark.data.bookId);
+                    await axios.delete("http://localhost:7777/bookmark/" + bookmark.data.bookId);
                     // alert(deleteStatus.data); // 에러 페이지용
                     this.$modal.show("delBook");
                     this.isBooked = false;
@@ -224,7 +224,7 @@ export default {
                             custId: this.customer.custId
                         }
                     };
-                    await axios.post("http://54.180.25.91:7777/bookmark", regBookmark);
+                    await axios.post("http://localhost:7777/bookmark", regBookmark);
                     // alert(insertStatus.data); // 에러 페이지용
                     this.$modal.show("regBook");
                     this.isBooked = true;

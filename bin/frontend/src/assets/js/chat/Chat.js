@@ -10,19 +10,19 @@ export default {
     name: 'chat',
     data() {
         return {
-            chatRoute: 'http://54.180.25.91:7777/upload/chat/',
+            chatRoute: 'http://localhost:7777/upload/chat/',
             defaultImg: {
-                list: 'http://54.180.25.91:7777/upload/default/list.png',
-                listHover: 'http://54.180.25.91:7777/upload/default/listHover.png',
-                back: 'http://54.180.25.91:7777/upload/default/back.png',
-                backHover: 'http://54.180.25.91:7777/upload/default/backHover.png',
-                search: 'http://54.180.25.91:7777/upload/default/search.png',
-                searchHover: 'http://54.180.25.91:7777/upload/default/searchHover.png',
-                user: 'http://54.180.25.91:7777/upload/default/user.png',
-                add: 'http://54.180.25.91:7777/upload/default/add.png',
-                addHover: 'http://54.180.25.91:7777/upload/default/addHover.png',
-                send: 'http://54.180.25.91:7777/upload/default/send.png',
-                sendHover: 'http://54.180.25.91:7777/upload/default/sendHover.png'
+                list: 'http://localhost:7777/upload/default/list.png',
+                listHover: 'http://localhost:7777/upload/default/listHover.png',
+                back: 'http://localhost:7777/upload/default/back.png',
+                backHover: 'http://localhost:7777/upload/default/backHover.png',
+                search: 'http://localhost:7777/upload/default/search.png',
+                searchHover: 'http://localhost:7777/upload/default/searchHover.png',
+                user: 'http://localhost:7777/upload/default/user.png',
+                add: 'http://localhost:7777/upload/default/add.png',
+                addHover: 'http://localhost:7777/upload/default/addHover.png',
+                send: 'http://localhost:7777/upload/default/send.png',
+                sendHover: 'http://localhost:7777/upload/default/sendHover.png'
             },
             chat: {
                 chatId: '',
@@ -89,7 +89,7 @@ export default {
 
             /* DB에서 해당 company 정보 모두 가져오기(스튜디오 포함) */
             axios
-                .get('http://54.180.25.91:7777/companyifo/' + company.comId)
+                .get('http://localhost:7777/companyifo/' + company.comId)
                 .then(response => {
                     console.log('company 정보 가져오기 성공')
                     this.company = response.data //company 데이터에 바인딩
@@ -197,7 +197,7 @@ export default {
         /* 고객의 스튜디오별 최근 수신 대화 */
         getRecentCustChat() {
             axios
-                .get('http://54.180.25.91:7777/chat/recent/cust/' + customer.custId)
+                .get('http://localhost:7777/chat/recent/cust/' + customer.custId)
                 .then(response => {
                     if (response.data != -1) {
                         console.log('customer 최근 대화 가져오기 성공')
@@ -217,7 +217,7 @@ export default {
         getRecentComChatNoRpeat() {
             axios
                 .get(
-                    'http://54.180.25.91:7777/chat/recent/comNoRepeat/' + company.comId
+                    'http://localhost:7777/chat/recent/comNoRepeat/' + company.comId
                 )
                 .then(response => {
                     if (response.data != -1) {
@@ -237,7 +237,7 @@ export default {
         /* 업체의 스튜디오 및 고객별 최근 수신 대화 */
         getRecentComChat() {
             axios
-                .get('http://54.180.25.91:7777/chat/recent/com/' + company.comId)
+                .get('http://localhost:7777/chat/recent/com/' + company.comId)
                 .then(response => {
                     if (response.data != -1) {
                         console.log('company 최근 대화 가져오기 성공')
@@ -256,7 +256,7 @@ export default {
         /* 스튜디오의 고객별 최근 수신 대화 */
         getRecentStuChat(stuId) {
             axios
-                .get('http://54.180.25.91:7777/chat/recent/stu/' + stuId)
+                .get('http://localhost:7777/chat/recent/stu/' + stuId)
                 .then(response => {
                     if (response.data != -1) {
                         console.log('studio 최근 대화 가져오기 성공')
@@ -276,7 +276,7 @@ export default {
         getRecentChatByStuName(stuName) {
             axios
                 .get(
-                    'http://54.180.25.91:7777/chat/recent/cust/' +
+                    'http://localhost:7777/chat/recent/cust/' +
                     customer.custId +
                     '/' +
                     stuName
@@ -304,7 +304,7 @@ export default {
         getRecentChatByStuIdAndCustName(stuId, custName) {
             axios
                 .get(
-                    'http://54.180.25.91:7777/chat/recent/com/' +
+                    'http://localhost:7777/chat/recent/com/' +
                     company.comId +
                     '/' +
                     stuId +
@@ -334,7 +334,7 @@ export default {
         getRecentChatByCustName(custName) {
             axios
                 .get(
-                    'http://54.180.25.91:7777/chat/recent/com/' +
+                    'http://localhost:7777/chat/recent/com/' +
                     company.comId +
                     '/' +
                     custName
@@ -357,7 +357,7 @@ export default {
         /* 현재 대화 중인 스튜디오 정보 가져오기 */
         getPresentStu() {
             axios
-                .get('http://54.180.25.91:7777/chat/info/stu/' + this.chat.stuId)
+                .get('http://localhost:7777/chat/info/stu/' + this.chat.stuId)
                 .then(response => {
                     if (response.data != -1) {
                         console.log('현재 대화 중인 Studio 정보 가져오기 성공')
@@ -378,7 +378,7 @@ export default {
         /* 현재 대화 중인 고객 정보 가져오기 */
         getPresentCust() {
             axios
-                .get('http://54.180.25.91:7777/chat/info/cust/' + this.chat.custId)
+                .get('http://localhost:7777/chat/info/cust/' + this.chat.custId)
                 .then(response => {
                     if (response.data != -1) {
                         console.log('현재 대화 중인 Customer 정보 가져오기 성공')
@@ -408,7 +408,7 @@ export default {
             }
             axios
                 .put(
-                    'http://54.180.25.91:7777/chat/prev/' +
+                    'http://localhost:7777/chat/prev/' +
                     this.chat.stuId +
                     '/' +
                     this.chat.custId +
@@ -431,7 +431,7 @@ export default {
             if (company != null) {
                 //업체 로그인
                 axios
-                    .get('http://54.180.25.91:7777/chat/unread/com/' + company.comId)
+                    .get('http://localhost:7777/chat/unread/com/' + company.comId)
                     .then(response => {
                         if (response.data != -1) {
                             console.log('업체의 읽지 않은 대화 개수 가져오기 성공')
@@ -447,7 +447,7 @@ export default {
             } else if (customer != null) {
                 //고객 로그인
                 axios
-                    .get('http://54.180.25.91:7777/chat/unread/cust/' + customer.custId)
+                    .get('http://localhost:7777/chat/unread/cust/' + customer.custId)
                     .then(response => {
                         if (response.data != -1) {
                             console.log('고객의 읽지 않은 대화 개수 가져오기 성공')
@@ -467,7 +467,7 @@ export default {
         getPrevAllChat() {
             axios
                 .get(
-                    'http://54.180.25.91:7777/chat/prev/' +
+                    'http://localhost:7777/chat/prev/' +
                     this.chat.stuId +
                     '/' +
                     this.chat.custId
@@ -498,7 +498,7 @@ export default {
                     this.deleteChatFile(fileName)
                 }
                 axios
-                    .delete('http://54.180.25.91:7777/chat/delete/' + chatId)
+                    .delete('http://localhost:7777/chat/delete/' + chatId)
                     .then(response => {
                         if (response.data == 1) {
                             console.log('대화 삭제 성공')
@@ -523,7 +523,7 @@ export default {
         /* 파일 삭제 */
         deleteChatFile(fileName) {
             axios
-                .delete('http://54.180.25.91:7777/filedelte/chat/' + fileName)
+                .delete('http://localhost:7777/filedelte/chat/' + fileName)
                 .then(response => {
                     if (response.data === 'OK') {
                         console.log('파일 삭제 성공')
@@ -538,7 +538,7 @@ export default {
 
         /* 웹소켓 연결 */
         connect() {
-            const serverURL = 'http://54.180.25.91:7777/webSocket'
+            const serverURL = 'http://localhost:7777/webSocket'
             let socket = new SockJS(serverURL)
             this.stompClient = Stomp.over(socket)
             console.log(`소켓 연결 시도... 서버 주소: ${serverURL}`)
@@ -630,7 +630,7 @@ export default {
                 id = customer.custId
             }
             axios
-                .post('http://54.180.25.91:7777/fileUpload/chat/' + id, formData, {
+                .post('http://localhost:7777/fileUpload/chat/' + id, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

@@ -36,7 +36,7 @@ export default {
 
         await axios
         // .get("http://localhost:5000/tag/" + this.stuId)
-            .get("http://localhost:5000//tag/" + this.stuId)
+            .get("http://localhost:5000/tag/" + this.stuId)
             .then(response => {
                 this.studio_infos = response.data
                 for (let j = 0; j < (this.studio_infos).length; j++) {

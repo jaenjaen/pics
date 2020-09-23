@@ -97,9 +97,9 @@ def getTop8(topSim) :
   
             cursor.execute(sql)
             db.commit()
-
             result= cursor.fetchall()
-            result_list.append(result[0])
+            if len(result)>0:
+                result_list.append(result)
         return result_list
     finally:
         db.close()

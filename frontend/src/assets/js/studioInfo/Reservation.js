@@ -3,7 +3,9 @@ import Vue from 'vue';
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
 import VueMaterial from 'vue-material';
+import VModal from 'vue-js-modal'
 
+Vue.use(VModal);
 Vue.use(VueMaterial);
 // 요일 변환을 위한 리스트
 const week = ["fri", "sat", "sun", "mon", "tue", "wed", "thu"];
@@ -144,13 +146,13 @@ export default {
             }
         },
         totalPriceCalculate: function() {
-            console.log(this.start_date + "  여기~~1")
+            // console.log(this.start_date + "  여기~~1")
             if (this.start_date == undefined | this.end_date == undefined) {
                 this.start_date = "";
                 this.end_date = "";
             } else {
-                console.log(this.start_date + "  여기~~2")
-                    // 1. 날짜 연산을 위한 변수 선언 : 초/시/일/요일/월/연 단위로 변환
+                // console.log(this.start_date + "  여기~~2")
+                // 1. 날짜 연산을 위한 변수 선언 : 초/시/일/요일/월/연 단위로 변환
                 if ((this.start_date != "" | this.end_date != "" | this.start_time < 25 | this.end_time < 25)) {
                     this.startDay = this.transWeekDay(this.start_date); //시작일의 요일(숫자)
                     this.endDay = this.transWeekDay(this.end_date); //종료일의 요일(숫자)
@@ -166,9 +168,9 @@ export default {
                     var endTime = parseInt(this.end_time);
                 }
 
-                console.log(this.start_date + "  여기~~3")
-                    // 2. 개별 항목 체크
-                    // 2-1) 날짜 조건
+                // console.log(this.start_date + "  여기~~3")
+                // 2. 개별 항목 체크
+                // 2-1) 날짜 조건
                 if (this.start_date != "") {
                     this.startTimes = this.setTime(this.startDay);
                     console.log("ddd");
@@ -353,10 +355,10 @@ export default {
                     // startDayTime : 새로운 예약 시작 날짜 + 시간의 초단위 환산, endDayTime : 새로운 예약 종료 날짜 + 시간의 초단위 환산
                     if ((this.startDayTime <= res_startDate & res_startDate < this.endDayTime) |
                         (this.startDayTime < res_endDate & res_endDate <= this.endDayTime)) {
-                        console.log("else : res_startDate" + res_startDate + "res_endDate : " + res_endDate)
+                        // console.log("else : res_startDate" + res_startDate + "res_endDate : " + res_endDate)
                         return 0;
                     } else {
-                        console.log("else : res_startDate" + res_startDate + "res_endDate : " + res_endDate)
+                        // console.log("else : res_startDate" + res_startDate + "res_endDate : " + res_endDate)
                         continue;
                     }
                 }
@@ -386,14 +388,10 @@ export default {
         // 예약 등록 로직
         async addReserve() {
             // 유저 Id 가져오기
-            try {
-                this.customer = JSON.parse(sessionStorage.getItem('customer'));
-            } catch (error) {
-                console.log(error);
-            }
-
-            if (this.customer == undefined) {
-                this.$modal.show("login-required");
+            this.customer = JSON.parse(sessionStorage.getItem('customer'));
+            if (this.customer == undefined | (this.customer == "")) {
+                // this.$modal.show("login-required");
+                alert("로그인 먼저 진행해주세요.");
             } else {
                 await axios
                     .get("http://localhost:7777/customer/" + this.customer.custId)
@@ -409,19 +407,20 @@ export default {
             //2. 예약 정보 확인 reservation 변수 설정
             if (this.total_price > 0 & this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
                 let reservation = {
-                    stuId: this.stuIdData,
+                    stuId: this.stuId,
                     custId: this.customer.custId,
-                    customer: this.customer,
                     startDate: this.start_date + " " + this.start_time,
                     endDate: this.end_date + " " + this.end_time,
                     totalPrice: this.total_price,
                     totalPeople: this.total_people
-                };
+                }
+                console.log(reservation);
                 await axios
                     .post("http://localhost:7777/studio/reservation", reservation)
                     .then(response => {
                         console.log(response.data);
-                        this.$modal.show("success");
+                        // this.$modal.show("success");
+                        alert("예약이 완료 되었습니다.");
                     })
                     .catch(error => {
                         console.log(error + "post에서 에러");
@@ -431,12 +430,11 @@ export default {
                         this.loading = false;
                     });
             }
-        },
-        // 모달창 닫기
-        closePop() {
-            this.$modal.hide("success");
-            this.$modal.hide("login-required");
-        },
-    }
-
+        }
+    },
+    // 모달창 닫기
+    // async closePop() {
+    //     this.$modal.hide("success");
+    //     this.$modal.hide("login-required");
+    // },
 }

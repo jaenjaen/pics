@@ -255,7 +255,7 @@ hr {
     height: 200px;
 }
 
-.vm--modal {
+modal {
     vertical-align: middle;
     margin-top: 25%;
     margin: auto !important;

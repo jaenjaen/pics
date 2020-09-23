@@ -86,7 +86,6 @@ export default {
             // Chart
             datacollection: null,
             options: null,
-
         };
     },
     async mounted() { //async mount로 비동기 처리

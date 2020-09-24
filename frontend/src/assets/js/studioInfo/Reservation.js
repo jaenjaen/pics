@@ -99,7 +99,7 @@ export default {
             .get("http://localhost:7777/studio/info/" + this.stuId)
             .then(response => {
                 this.studios = response.data;
-                console.log(this.studios);
+                // console.log(this.studios);
             })
             .catch(error => {
                 console.log(error);
@@ -110,7 +110,7 @@ export default {
             .get("http://localhost:7777/studio/schedule/" + this.stuId)
             .then(response => {
                 this.schedule = response.data;
-                console.log(this.schedule);
+                // console.log(this.schedule);
                 var exceptionDate = (response.data.exceptionDate);
                 var repeatDate = (response.data.repeatDate);
                 var reservation = (response.data.reservation);
@@ -392,30 +392,19 @@ export default {
             if (this.customer == undefined | (this.customer == "")) {
                 // this.$modal.show("login-required");
                 alert("로그인 먼저 진행해주세요.");
-                // } else {
-                //     await axios
-                //         .get("http://localhost:7777/customer/" + this.custId)
-                //         .then(response => {
-                //             this.customer = response.data;
-                //         })
-                //         .catch(error => {
-                //             console.log(error);
-                //             this.errored = true;
-                //         })
-                //         .finally(() => (this.loading = false));
             }
             //2. 예약 정보 확인 reservation 변수 설정
             if (this.total_price > 0 & this.start_date != "" & this.end_date != "" & this.start_time < 24 & this.end_time < 24) {
-                console.log(this.custId);
+                // console.log(this.custId);
                 let reservation = {
-                    stuId: this.stuId,
-                    custId: this.custId,
-                    startDate: this.start_date + " " + this.start_time,
-                    endDate: this.end_date + " " + this.end_time,
-                    totalPrice: this.total_price,
-                    totalPeople: this.total_people
-                }
-                console.log(reservation);
+                        stuId: this.stuId,
+                        custId: this.custId,
+                        startDate: this.start_date + " " + this.start_time,
+                        endDate: this.end_date + " " + this.end_time,
+                        totalPrice: this.total_price,
+                        totalPeople: this.total_people
+                    }
+                    // console.log(reservation);
                 await axios
                     .post("http://localhost:7777/studio/reservation", reservation)
                     .then(response => {
@@ -424,7 +413,7 @@ export default {
                         alert("예약이 완료 되었습니다.");
                     })
                     .catch(error => {
-                        console.log(error + "post에서 에러");
+                        console.log(error);
                         this.errored = true;
                     })
                     .finally(() => {

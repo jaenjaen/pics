@@ -36,7 +36,6 @@ export default {
         VueDaumMap,axios
     },
     created: function() {
-        console.log("Props로 데이터 받음~~!!");
         this.stuId = this.stuIdData;
     },
     methods: {
@@ -72,7 +71,7 @@ export default {
         .get("http://127.0.0.1:7777/studio/info/" + this.stuId)
         .then(response => {
             this.studios = response.data;
-            console.log("Map Done~!");
+            // console.log("Map Done~!");
         })
         .catch(error => {
             console.log(error);

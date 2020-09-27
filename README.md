@@ -69,6 +69,7 @@
 
 <br>
 ### (6) 개발팀 소개
+
 ![](https://images.velog.io/images/wpdud94/post/a66322de-67ca-4116-bf1f-a193c2639e1e/1_6_members.png)
 
 -------------------

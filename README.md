@@ -105,24 +105,11 @@
 ## 3. 구현
 ### (1) Software Architecture (Completed)
 #### A. Restful - SpringBoot
-- 전체
 ![](https://images.velog.io/images/wpdud94/post/45e11aab-5256-4746-a543-ea77e65454f6/3_1_softwareAchritecture1.png)
-- 상세
-![](https://images.velog.io/images/wpdud94/post/b0c6f57c-9941-438c-9cba-0995a79ad5ad/3_1_softwareAchritecture2png.png)
-- 폴더구조
-![](https://images.velog.io/images/wpdud94/post/0c2be9a1-6f97-40af-a759-22dcaf9d31f6/3_1_folderstructure1.png)
-![](https://images.velog.io/images/wpdud94/post/2581e275-eaf0-41bd-aacd-e21934daa7fd/3_1_folderstructure2.png)
-![](https://images.velog.io/images/wpdud94/post/a6b33b30-e760-4e6a-b782-c61bd68f7f15/3_1_folderstructure3.png)
 
 #### B. Restful - Flask
 - 전체
 ![](https://images.velog.io/images/wpdud94/post/9fc7f939-2231-43ea-bf88-9419ffe07d07/3_1_softwareAchritecture_flask1.png)
-- 상세
-![](https://images.velog.io/images/wpdud94/post/40bfaec4-da9d-4883-be1d-8b5c0333e9a7/3_1_softwareAchritecture_flask2.png)
-- 폴더구조
-![](https://images.velog.io/images/wpdud94/post/26251aef-8076-4bc3-a776-da874c7ed4d8/3_2_softwareAchritecture_folder1.png)
-![](https://images.velog.io/images/wpdud94/post/72355c12-b520-4084-992a-09a57730db6e/3_2_softwareAchritecture_folder2.png)
-
 ### (2) 실제 구현 화면 및 코드
 
 <a href="https://drive.google.com/file/d/15XsCKff8jFVu8iNK09mMp_M-iUgW52tR/view?usp=sharing">
